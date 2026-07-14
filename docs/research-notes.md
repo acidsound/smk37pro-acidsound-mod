@@ -537,6 +537,58 @@ local two-part FM path are therefore verified on hardware. The next unknown is
 no longer local routing; it is selecting a different FM patch snapshot for
 each GM drum note.
 
+### M07 16-note FM map
+
+M07 extends the verified M06 wrapper with note capture at both stock snapshot
+hooks. At the Note Off memcpy hook, the note/channel are retained in r5/r8;
+at the Note On hook they are retained in r8/r9. The wrapper normalizes those
+values before any loader calls, preserves the note in r7, and computes the
+same-bank preset as `(N + ((note - 35) & 31)) & 31`. Physical Ch10 notes 36-51
+therefore select N+1 through N+16. Ch1 and local keys continue to snapshot N.
+
+The wrapper and local-pad bridge occupy 168 of the 296 bytes in the replaced
+Yamaha single-voice SysEx function. The M07 application SHA-256 is
+`43e40ee627a33d06da589f036fc98ac13ed7edbbe1639ba6277e77385aa4423a`;
+the package SHA-256 is
+`b80ed7480152f07652eb8f809305f50d2bdb2990fb89875c317f27d5e99de082`.
+The protected boot/config and resource hashes are unchanged. This offline
+build is a 16-timbre routing proof, not yet a claim that the chosen factory
+presets sound like finished GM percussion.
+
+M07 then installed from the running M06 application. Both OTA stages completed
+and normal USB identity 012 returned. The install transcript is
+`backups/ota-M07-install-20260715.log`. Owner audio testing confirmed distinct,
+independent note timbres, but also found that Ch1/local keys were contaminated
+by the same note-dependent patch selection. The M07 channel gate is therefore
+a regression even though the per-note snapshot mechanism itself works.
+
+M07 also deliberately used current UI state: physical pad note `p` selected
+`(N + p - 35) & 31` in the currently selected bank. Consequently it was never
+independent of Patch UI changes. The corrected architecture needs Ch1 to use
+the current UI patch while Ch10 selects fixed bank/preset IDs from its own
+drum map.
+
+### M08 channel isolation and fixed logical drum bank
+
+M08 removes M07's pre-gate note move. Note On and Note Off now have separate
+entry stubs that compare the M06-proven channel registers first; non-Ch10
+events immediately call the stock memcpy path. Ch10 then maps notes 36-51 to
+fixed Bank 0 preset IDs 0-15. Before loading that preset it saves the current
+UI bank and Bank 0 preset index, and restores both after copying the per-voice
+snapshot. UI Patch changes should therefore affect Ch1 only.
+
+The application SHA-256 is
+`73ae9baa5c732f91e91e7133cda4a9146a00d3b70333ed53814e3747a1297e25`;
+the package SHA-256 is
+`4498a935951e32d21b85167e5ba369a5051d32d93ba66e51229d5d255c8dc31f`.
+The package safety gate, deterministic rebuild, packet dry-run, both live OTA
+stages, and post-update USB identity 012 all passed. Owner audio verification
+then confirmed the intended behavior: Ch1 retained the UI-selected patch,
+Ch10 retained its fixed per-note map across UI Patch changes, and no problem
+was observed in normal simultaneous use. The test did not saturate the voice
+pool, so the maximum usable polyphony and voice-stealing behavior remain
+unmeasured.
+
 Pi32v2 processor source used for this pass:
 
 - repository: <https://github.com/quarkslab/ghidra-jieli>

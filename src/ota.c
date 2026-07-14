@@ -64,6 +64,18 @@ static const uint8_t SMK37_M06_PACKAGE_SHA256[SMK37_SHA256_LENGTH] = {
     0x02, 0x7d, 0xe7, 0x2f, 0x37, 0x7d, 0x56, 0xad,
     0xc9, 0xd6, 0x8d, 0x6e, 0xd3, 0x02, 0xaa, 0xc4,
 };
+static const uint8_t SMK37_M07_PACKAGE_SHA256[SMK37_SHA256_LENGTH] = {
+    0xb8, 0x0e, 0xd7, 0x48, 0x01, 0x52, 0xf0, 0x76,
+    0x52, 0xeb, 0x8f, 0x80, 0x93, 0x05, 0xf5, 0x0d,
+    0x2b, 0xdb, 0x29, 0x90, 0xfb, 0x89, 0x87, 0x5c,
+    0x31, 0x7f, 0x27, 0xd5, 0xe9, 0x9d, 0xe0, 0x82,
+};
+static const uint8_t SMK37_M08_PACKAGE_SHA256[SMK37_SHA256_LENGTH] = {
+    0x44, 0x98, 0xa9, 0x35, 0x95, 0x1e, 0x32, 0xd2,
+    0x1b, 0x85, 0x16, 0x7e, 0x5b, 0xa3, 0x69, 0xa5,
+    0x05, 0x1d, 0x32, 0xd9, 0x3b, 0xa6, 0x6e, 0x51,
+    0x22, 0x9d, 0x5d, 0x25, 0x5c, 0x8d, 0xc3, 0x1f,
+};
 
 struct ota_usb {
     libusb_context *context;
@@ -771,6 +783,26 @@ int smk37_ota_upload_m06(const char *firmware_path,
         SMK37_M06_PACKAGE_SHA256, "SMK37ProMod M06 local-pad channel-10 FM",
         "INSTALL-SMK37PRO-M06-61B2F570",
         "M06 OTA install: USB identity 012 verified; test local keys/pads");
+}
+
+int smk37_ota_upload_m07(const char *firmware_path,
+                         const char *transcript_path,
+                         const char *confirmation) {
+    return ota_upload_exact(
+        firmware_path, transcript_path, confirmation,
+        SMK37_M07_PACKAGE_SHA256, "SMK37ProMod M07 per-note channel-10 FM",
+        "INSTALL-SMK37PRO-M07-B80ED748",
+        "M07 OTA install: USB identity 012 verified; test all 16 pads");
+}
+
+int smk37_ota_upload_m08(const char *firmware_path,
+                         const char *transcript_path,
+                         const char *confirmation) {
+    return ota_upload_exact(
+        firmware_path, transcript_path, confirmation,
+        SMK37_M08_PACKAGE_SHA256, "SMK37ProMod M08 isolated fixed Ch10 map",
+        "INSTALL-SMK37PRO-M08-4498A935",
+        "M08 OTA install: USB identity 012 verified; test Ch1/Ch10 isolation");
 }
 
 int smk37_ota_resume_v12(const char *firmware_path,

@@ -160,6 +160,8 @@ modified package acceptance and custom-to-custom OTA are confirmed.
 | M06 local Ch10 pad-to-FM bridge | PASS offline | raw pad output is preserved and one internal FM dispatch is added before the per-voice Ch10 snapshot |
 | M06 application install and boot | PASS live | both OTA stages and 1,241 stage-2 requests completed; normal USB identity 012 returned |
 | M06 simultaneous local key N plus local pad N+1 audio | PASS live | owner confirmed intended local-key Ch1/N and local-pad Ch10/N+1 FM behavior |
+| M07 Ch10 notes 36-51 use N+1 through N+16 | PARTIAL / FAIL isolation | 16 independent per-note timbres confirmed, but Ch1/local keys were contaminated by the same mapping |
+| M08 Ch1 UI patch plus fixed Ch10 Bank 0 map | PASS live | owner confirmed Ch1/Ch10 isolation and UI Patch independence; maximum-polyphony stress remains pending |
 | Forced recovery independent of app | FAIL / unknown | no SMK-specific mask-ROM or forced-download entry has been demonstrated |
 | Staged application-only live testing | GRANTED | owner authorized and validated M001 then M02 on 2026-07-15 |
 
@@ -302,6 +304,33 @@ FM patch snapshots.
 Live result, 2026-07-15: the owner confirmed that M06 worked as intended. The
 local-input bridge checkpoint passes, so the next implementation branch is a
 Ch10 note-to-FM-patch table for the physical GM notes 36-51.
+
+## M07 checkpoint definition
+
+M07 implements that branch for all 16 physical pads in one build. Ch10 notes
+36-51 select same-bank patches N+1 through N+16 respectively, with wrap at the
+32-preset boundary. Ch1/local keys retain N, and both Ch10 Note On and Note Off
+derive the same per-note snapshot. This is the full routing and voice-retention
+test for a 16-entry drum map. The selected factory presets are intentionally a
+diagnostic palette; percussion-specific FM parameter design follows only after
+the hardware proves that every note retains its own timbre.
+
+Live result, 2026-07-15: both OTA stages completed and normal USB identity 012
+returned. The owner confirmed that notes retained independent timbres, but
+Ch1/local keys incorrectly received the same note-dependent mapping. M07 is a
+per-note snapshot proof only; channel isolation failed. The next build must
+restore the exact M06 channel gate before adding note selection and must use a
+fixed Ch10 bank/map rather than the UI-relative N base.
+
+## M08 checkpoint definition
+
+M08 puts the channel gate before note capture. Ch1/local keys use the stock
+current-patch snapshot. Ch10 notes 36-51 use fixed Bank 0 preset IDs 0-15;
+the UI bank and preset state are restored after each event. This is the first
+build intended to keep the Ch10 map unchanged across UI Patch changes. Both
+OTA stages completed and USB identity 012 returned on 2026-07-15; live audio
+verification then passed in normal use. The owner did not yet push the engine
+to maximum polyphony, so voice-pool saturation and stealing policy remain open.
 
 The decoder patch needed to reproduce current Pi32v2 analysis is
 `patches/ghidra-jieli-pi32v2-smk37.patch`.

@@ -44,6 +44,10 @@ static void usage(FILE *stream, const char *program) {
             "             Install exact minimal two-timbre M05 package\n"
             "  upload-m06 <firmware.fwsc> <transcript> --confirm <token>\n"
             "             Install exact local-pad channel-10 FM M06 package\n"
+            "  upload-m07 <firmware.fwsc> <transcript> --confirm <token>\n"
+            "             Install exact per-note channel-10 FM M07 package\n"
+            "  upload-m08 <firmware.fwsc> <transcript> --confirm <token>\n"
+            "             Install exact isolated fixed-map channel-10 M08 package\n"
             "  upload-resume-v12 <firmware.fwsc> <transcript> --confirm <token>\n"
             "             Resume stage 2 from the exact archived v12 image\n"
             "  self-test  Verify build-time invariants without a device\n",
@@ -214,6 +218,22 @@ int main(int argc, char **argv) {
             return 2;
         }
         return smk37_ota_upload_m06(argv[2], argv[3], argv[5]);
+    }
+
+    if (strcmp(argv[1], "upload-m07") == 0) {
+        if (argc != 6 || strcmp(argv[4], "--confirm") != 0) {
+            usage(stderr, argv[0]);
+            return 2;
+        }
+        return smk37_ota_upload_m07(argv[2], argv[3], argv[5]);
+    }
+
+    if (strcmp(argv[1], "upload-m08") == 0) {
+        if (argc != 6 || strcmp(argv[4], "--confirm") != 0) {
+            usage(stderr, argv[0]);
+            return 2;
+        }
+        return smk37_ota_upload_m08(argv[2], argv[3], argv[5]);
     }
 
     if (strcmp(argv[1], "upload-resume-v12") == 0) {

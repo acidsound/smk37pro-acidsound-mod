@@ -176,6 +176,45 @@ After boot, hold a local-key note and strike/release each pad. Verify that the
 key retains patch N, pads use N+1, attacks are not doubled, released pads do
 not stick, and the pads still transmit Ch10 over USB.
 
+## M07 per-note channel-10 FM checkpoint
+
+M07 keeps local keys and USB Ch1 on current patch N. Ch10 notes 36-51 use
+different same-bank FM snapshots: N+1 through N+16, wrapping within the
+32-preset bank. Note pitch, velocity, paired Note Off, and the original local
+pad MIDI output are preserved. The selected factory presets are a diagnostic
+16-timbre palette, not yet a curated percussion bank.
+
+Package SHA-256:
+`b80ed7480152f07652eb8f809305f50d2bdb2990fb89875c317f27d5e99de082`.
+
+```sh
+scripts/smk37-fw-direct upload-m07 \
+  build/SMK37ProMod-M07-per-note-pads-base012.fwsc \
+  backups/ota-M07-install-20260715.log \
+  --confirm INSTALL-SMK37PRO-M07-B80ED748
+```
+
+After boot, verify the display reads M07. Hold a local-key note and press all
+16 pads. Each pad should have a different FM timbre while the key retains N.
+Then run repeated hits and releases on every pad to detect doubled attacks,
+stuck notes, or a Note Off that terminates another pad.
+
+## M08 isolated fixed channel-10 map
+
+M08 restores the Ch1 stock path and maps Ch10 notes 36-51 to fixed Bank 0
+preset IDs 0-15. It saves and restores the UI bank and preset state around
+each Ch10 snapshot, so UI Patch changes should affect Ch1 only.
+
+Package SHA-256:
+`4498a935951e32d21b85167e5ba369a5051d32d93ba66e51229d5d255c8dc31f`.
+
+```sh
+scripts/smk37-fw-direct upload-m08 \
+  build/SMK37ProMod-M08-fixed-drum-map-base012.fwsc \
+  backups/ota-M08-install-20260715.log \
+  --confirm INSTALL-SMK37PRO-M08-4498A935
+```
+
 ## Confirmed live result
 
 The verification stage completed with 49 requests. The resumed write stage
@@ -209,6 +248,13 @@ Confirmed custom sequence on 2026-07-15:
     completed, then M06 booted and reported USB identity 012. The owner
     confirmed intended simultaneous local-key Ch1/N and local-pad Ch10/N+1 FM
     behavior.
+11. Running M06 installed M07; both OTA stages completed and normal USB
+    identity 012 returned. The owner confirmed independent per-note timbres,
+    but Ch1/local keys were also remapped; M07 fails channel isolation.
+12. Running M07 installed M08; both OTA stages completed and normal USB
+    identity 012 returned. The owner then verified Ch1/Ch10 isolation and UI
+    Patch independence in normal simultaneous use. Maximum-polyphony stress
+    remains pending.
 
 This is a complete custom-to-official round trip for a normally booting
 application-only modification. Transcript:
@@ -216,6 +262,8 @@ application-only modification. Transcript:
 
 M05 install transcript: `backups/ota-M05-install-20260715.log`.
 M06 install transcript: `backups/ota-M06-install-20260715.log`.
+M07 install transcript: `backups/ota-M07-install-20260715.log`.
+M08 install transcript: `backups/ota-M08-install-20260715.log`.
 
 If an operation reaches a state where a power cycle or button action is
 required, stop host-side commands and perform only the explicitly identified

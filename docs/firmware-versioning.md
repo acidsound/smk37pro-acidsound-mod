@@ -39,6 +39,8 @@ recovery semantics.
 | M04 | updater 012 / display 1.05 | Exact two-line `Hello,` / `acidsound` display test | `fffb9552d3ea8433b98e150d4c529e95e3dd6b2bb103b8839be06f2f5f7e6246` | INSTALLED and verified; then successfully restored to exact official v12/display 1.05 |
 | M05 | updater 012 / display 1.05 | Minimal two-timbre checkpoint: Ch1 = N, Ch2 = `(N + 1) & 31` | `0beab977977bd175ea484be44851c76958d22de4e787b9cbc34ddfaa8400c1f6` | INSTALLED and VERIFIED; owner confirmed intended simultaneous Ch1/N and Ch2/N+1 playback |
 | M06 | updater 012 / display 1.05 | Local keys/Ch1 = N; local pads and USB Ch10 = `(N + 1) & 31` | `61b2f5707a2b5779ffa118612957b232027de72f377d56adc9d68d6ed302aac4` | INSTALLED and VERIFIED; owner confirmed intended simultaneous local-key N and local-pad N+1 FM playback |
+| M07 | updater 012 / display 1.05 | Intended Ch10 notes 36-51 = same-bank patches `N+1` through `N+16` | `b80ed7480152f07652eb8f809305f50d2bdb2990fb89875c317f27d5e99de082` | INSTALLED; 16 per-note timbres PASS, Ch1 isolation FAIL because local keys also received per-note timbres |
+| M08 | updater 012 / display 1.05 | Ch1 = UI patch; Ch10 notes 36-51 = fixed Bank 0 presets 0-15 | `4498a935951e32d21b85167e5ba369a5051d32d93ba66e51229d5d255c8dc31f` | INSTALLED and VERIFIED; Ch1/Ch10 isolation and UI Patch independence pass, maximum-polyphony stress pending |
 
 M001 artifact paths:
 
@@ -133,3 +135,53 @@ continued to use Ch1/current patch N, while the physical pads used Ch10/patch
 N+1 through the new FM bridge. This verifies the first local-input two-part FM
 configuration. It does not yet assign different FM patches to individual pad
 notes.
+
+M07 artifact paths:
+
+- `build/SMK37ProMod-M07-per-note-pads-base012.fwsc`
+- `build/SMK37ProMod-M07-per-note-pads-base012-manifest.json`
+- `build/SMK37ProMod-M07-app.bin`
+- `build/SMK37ProMod-M07-app-manifest.json`
+
+M07 keeps local keys and USB Ch1 on current patch N. For Ch10, it derives a
+per-note preset offset as `(note - 35) & 31`, so the physical notes 36-51 map
+to same-bank patches N+1 through N+16. Both Note On and Note Off use the same
+mapping, and the original note, velocity, release timing, and pad MIDI output
+are retained. The application SHA-256 is
+`43e40ee627a33d06da589f036fc98ac13ed7edbbe1639ba6277e77385aa4423a`.
+The repack verifier reports 192 changed application bytes, 200 changed Flash
+bytes including CRC fields, and 206 changed FWSC bytes. All protected hashes
+remain identical to official v12.
+
+This checkpoint proves 16 independent note-to-FM-patch selections; it does
+not claim that the selected factory presets are already tuned as percussion.
+After live verification, the N-relative selection can be replaced by a fixed
+curated GM drum table without changing the proven Ch10/local-pad route.
+
+M07 completed both OTA stages and returned to normal USB identity 012. Install
+transcript: `backups/ota-M07-install-20260715.log`. This proves installation
+and application startup. Owner audio test found that the 16 per-note timbres
+were independent, but the same note-dependent mapping contaminated Ch1/local
+keys. M07 therefore fails the channel-isolation requirement and must not be
+treated as the drum-map baseline.
+
+M08 artifact paths:
+
+- `build/SMK37ProMod-M08-fixed-drum-map-base012.fwsc`
+- `build/SMK37ProMod-M08-fixed-drum-map-base012-manifest.json`
+- `build/SMK37ProMod-M08-app.bin`
+- `build/SMK37ProMod-M08-app-manifest.json`
+
+M08 gates the channel before moving the note into any temporary register.
+Ch1/local keys take the stock snapshot path. Ch10 notes 36-51 temporarily
+select fixed Bank 0 presets 0-15, snapshot the timbre, then restore both the
+UI bank selector and Bank 0 preset index before returning. The application
+SHA-256 is
+`73ae9baa5c732f91e91e7133cda4a9146a00d3b70333ed53814e3747a1297e25`.
+M08 completed both OTA stages and returned to normal USB identity 012.
+Transcript: `backups/ota-M08-install-20260715.log`. Audio isolation and UI
+Patch independence were then verified by the owner. Ch1 retained the selected
+UI patch while Ch10 retained its fixed 16-note map across UI Patch changes.
+No functional problem was observed in normal simultaneous use. Maximum
+polyphony, voice stealing, and release behavior under saturation remain
+untested.
