@@ -1,0 +1,10 @@
+# v12 app.bin addresses. Each entry is the nearest strong Pi32v2 push
+# prologue preceding one or more absolute references to "midi_route".
+0x02000932	midi_route_ref_group_0
+0x020009a6	midi_route_ref_group_1
+0x0200149e	midi_route_ref_group_2
+0x0200777c	midi_route_ref_group_3
+0x02007ca2	midi_route_ref_group_4
+0x0201c01c	midi_route_ref_group_5
+0x0201d1a4	midi_route_ref_group_6
+0x0202cac0	midi_route_ref_group_7

@@ -1,0 +1,7 @@
+range=0201c1b8..0201c1cf
+0201c1b8  00e1a240  add r0,r4,#0xa2
+0201c1bc  c1ff0451c301  mov r1,#0x1c35104
+0201c1c2  623c  mov r2,#0x9c
+0201c1c4  80ff4e1a0000  call 0x0201dc18
+0201c1ca  00e13e41  add r0,r4,#0x13e
+0201c1ce  52ee0080  sb r0,[r0 + 0x0]

@@ -1,0 +1,46 @@
+range=0202a470..0202a4ef
+0202a470  9845  sb r0,[r1 + 0x5]
+0202a472  2490  goto 0x0202a514
+0202a474  50ee5a02  lb.z r0,[r5 + 0x20a]
+0202a478  4121  mov r1,#0x1
+0202a47a  0041  jz r0,0x0202a47e
+0202a47c  4120  mov r1,#0x0
+0202a47e  52ee5a12  sb r1,[r5 + 0x2a]
+0202a482  2048  jz r0,0x0202a514
+0202a484  c114  clr r9
+0202a486  52ee5d92  sb r1,[r5 + 0x2d]
+0202a48a  bfea66c4  call 0x02022d5a
+0202a48e  40e00704  movz r0,#0x407
+0202a492  d8ed5990  sh r9,[r5 + r0]
+0202a496  40e07020  movz r0,#0x2070
+0202a49a  b4e050a0  add r10,r5,r0
+0202a49e  c8ffb08fc001  mov r8,#0x1c08fb0
+0202a4a4  7f3f  mov r7,#0xff
+0202a4a6  0495  goto 0x0202a4d2
+0202a4a8  4426  mov r4,#0x6
+0202a4aa  a616  mov r6,r10
+0202a4ac  048d  goto 0x0202a4c8
+0202a4ae  6840  lb.z r0,[r6 + 0x0]
+0202a4b0  10f808fe  je r0,0xff,0x0202a4c4
+0202a4b4  5a4a  lb.z r2,[r5 + 0xa]
+0202a4b6  5120  mov r1,#0x40
+0202a4b8  bfeae88e  call 0x0201c28c
+0202a4bc  6840  lb.z r0,[r6 + 0x0]
+0202a4be  bfeab890  call 0x0201c632
+0202a4c2  ef40  sb r7,[r6 + 0x0]
+0202a4c4  fc3f  add r4,#-0x1
+0202a4c6  c621  add r6,#0x1
+0202a4c8  f452  jnz r4,0x0202a4ae
+0202a4ca  0ae107a0  add r10,r10,#0x7
+0202a4ce  09e10190  add r9,r9,#0x1
+0202a4d2  50ee8000  lb.z r0,[r8 + 0x0]
+0202a4d6  80ede791  jl r9,r0,0x0202a4a8
+0202a4da  4020  mov r0,#0x0
+0202a4dc  01f18a50  add r1,r5,#0x8a
+0202a4e0  d848  _sb r0,[r5 + 0x8]
+0202a4e2  d849  sb r0,[r5 + 0x9]
+0202a4e4  9860  sh r0,[r1 + 0x0]
+0202a4e6  9861  sh r0,[r1 + 0x2]
+0202a4e8  9862  sh r0,[r1 + 0x4]
+0202a4ea  00f1b857  add r0,r5,#0x7b8
+0202a4ee  9863  _sh r0,[r1 + 0x6]

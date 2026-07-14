@@ -1,0 +1,146 @@
+diff --git a/data/languages/pi32v2.slaspec b/data/languages/pi32v2.slaspec
+index 47d8f64..93087e2 100644
+--- a/data/languages/pi32v2.slaspec
++++ b/data/languages/pi32v2.slaspec
+@@ -97,11 +97,14 @@ define token instr(16)
+ # Used by the group=7 instructions
+ define token instr2(16)
+ 	imm1631 = (0,15)
++	imm1624s = (0,8) signed
++	imm2531 = (9,15)
+ ;
+ 
+ # Even more bits for some group=7 instructions (ins0812=0x1f)
+ define token instr3(16)
+ 	imm3247 = (0,15)
++	imm3247s = (0,15) signed
+ ;
+ 
+ #############################################################################
+@@ -184,6 +187,13 @@ jaddr23: res is imm0005s ; imm1631
+ 	[ res = ((imm0005s << 17) | (imm1631 << 1)) + inst_next; ]
+ 	{ export *:4 res; }
+ 
++#
++# 9-bit signed branch displacement in the second word of a 32-bit instruction
++#
++longjaddr10: res is imm1624s
++	[ res = (imm1624s << 1) + inst_next; ]
++	{ export *:4 res; }
++
+ #############################################################################
+ #
+ # Instructions
+diff --git a/data/languages/pi32v2_ins_loadimm.sinc b/data/languages/pi32v2_ins_loadimm.sinc
+index 0745920..c7600f9 100644
+--- a/data/languages/pi32v2_ins_loadimm.sinc
++++ b/data/languages/pi32v2_ins_loadimm.sinc
+@@ -8,6 +8,15 @@
+ # Zero-extended load
+ ###########################################################################################
+ 
++#
++# rA = negative imm6 (encoded as 1xxxxx)
++#
++:mov regAl, #imm6 is group=1 & ins0307=0x02 & regAl & imm0812
++[ imm6 = (-32) + imm0812; ]
++{
++	regAl = imm6;
++}
++
+ #
+ # rA = imm8
+ # => mov rA, #imm8
+diff --git a/data/languages/pi32v2_ins_loadstore.sinc b/data/languages/pi32v2_ins_loadstore.sinc
+index 5d9ea1d..1cdb1b3 100644
+--- a/data/languages/pi32v2_ins_loadstore.sinc
++++ b/data/languages/pi32v2_ins_loadstore.sinc
+@@ -5,6 +5,20 @@
+ ##################
+ 
+ 
++###########################################################################################
++# Stack-relative word load
++###########################################################################################
++
++#
++# rA = [sp + imm5 * 4]
++#
++:lw regA, [sp + imm7] is group=1 & ins0407=0 & regA & imm0812 & sp
++[ imm7 = imm0812 << 2; ]
++{
++	local addr:4 = sp + imm7;
++	regA = *:4 addr;
++}
++
+ ###########################################################################################
+ # Load Word
+ ###########################################################################################
+diff --git a/data/languages/pi32v2_ins_move.sinc b/data/languages/pi32v2_ins_move.sinc
+index f2e2e00..d2fe524 100644
+--- a/data/languages/pi32v2_ins_move.sinc
++++ b/data/languages/pi32v2_ins_move.sinc
+@@ -62,6 +62,14 @@
+ 	regA = regB;
+ }
+ 
++#
++# rA = rB, in a parallel-execution instruction word
++#
++:mov regA, regB " #" is group=6 & ins0812=0x16 & regA & regB
++{
++	regA = regB;
++}
++
+ ###########################################################################################
+ # Zero-extend byte
+ ###########################################################################################
+diff --git a/data/languages/pi32v2_ins_progflow.sinc b/data/languages/pi32v2_ins_progflow.sinc
+index e5b7766..370e881 100644
+--- a/data/languages/pi32v2_ins_progflow.sinc
++++ b/data/languages/pi32v2_ins_progflow.sinc
+@@ -4,6 +4,12 @@
+ #
+ ##################
+ 
++pcrel32: res is imm1631 ; imm3247s
++[ res = (imm1631 | (imm3247s << 16)) + inst_next; ]
++{
++	export *:4 res;
++}
++
+ ###########################################################################################
+ # Return from Subroutine/Interrupt/eXception/Emulation
+ ###########################################################################################
+@@ -68,6 +74,14 @@
+ 	call jaddr23;
+ }
+ 
++#
++# call pcrel32
++#
++:call pcrel32 is group=7 & ins0012=0x1F80 ; pcrel32
++{
++	call pcrel32;
++}
++
+ ###########################################################################################
+ # Goto (Jump)
+ ###########################################################################################
+@@ -124,6 +138,16 @@
+ # Condititonal branch
+ ###########################################################################################
+ 
++#
++# if (rA == signed imm10) goto signed reladdr10
++#
++:jeq regA, #cmpimm10, longjaddr10 is group=7 & ins0712=0x30 & regA & imm0406s ; imm2531 & longjaddr10
++[ cmpimm10 = (imm0406s << 7) | imm2531; ]
++{
++	if (regA == cmpimm10:4)
++		goto longjaddr10;
++}
++
+ #
+ # if (rA == 0) goto reladdr9
+ # => jz rA, reladdr9

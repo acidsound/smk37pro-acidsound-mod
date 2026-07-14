@@ -1,0 +1,222 @@
+# SMK-37 Pro firmware runbook
+
+Last verified: 2026-07-15 (KST)
+
+This runbook covers the native direct-USB path on macOS. It does not use a
+Windows VM, CoreMIDI API, or SysEx API. The USB-MIDI class transport is accessed
+directly through libusb bulk endpoints.
+
+## Safety boundary
+
+The stock restore command accepts only the exact official SMK-37 Pro v12
+package:
+
+- updater identity: `SMK-37 Pro_012`
+- display version: 1.05
+- file size: 701,140 bytes
+- file SHA-256:
+  `c6a9187e706aeae921447ec88e29fecbc618e3f1fc3de54c743c78e41781580a`
+
+Do not substitute firmware 015 or firmware for Elite, MKE-P37, or Starrykey.
+The stock `upload` and `upload-resume-v12` paths reject every package whose
+SHA-256 is not the official v12 hash. Named custom commands accept only their
+one recorded build hash, so experimental and recovery paths cannot be crossed
+accidentally. Downgrade remains untested.
+
+## Build
+
+```sh
+make test
+```
+
+The Makefile rejects libusb older than 1.0.30 because 1.0.29 deadlocked during
+a Darwin USB detach transition on this machine.
+
+Set the package path once:
+
+```sh
+FWSC=~/Downloads/SMK-37_Pro_012.fwsc
+```
+
+## Read-only checks and backup
+
+```sh
+scripts/smk37-fw-direct device-info
+build/smk37-fw inspect "$FWSC"
+scripts/smk37-fw-direct upload-check "$FWSC"
+build/smk37-fw upload-dry-run "$FWSC"
+scripts/smk37-fw-direct dump backups/smk37-pro-live.bin 0x100000
+shasum -a 256 backups/smk37-pro-live.bin
+```
+
+The dump is the raw encrypted/scrambled flash representation. It is valuable
+evidence and input for analysis, but it is not yet a proven standalone recovery
+image.
+
+## Guarded stock restore
+
+Keep the SMK directly connected by USB-C and on external power. Close DAWs,
+Audio MIDI Setup, and other MIDI clients. Then run:
+
+```sh
+scripts/smk37-fw-direct upload "$FWSC" backups/ota-restore.log \
+  --confirm SMK-37-Pro-012
+```
+
+Expected transport sequence:
+
+1. Normal device `4C4A:C755`, MIDI Streaming interface 4, endpoints
+   `0x04/0x84`.
+2. Verification completion request `0xE0000000` and `success\0` response.
+3. Automatic re-enumeration on the same physical port as update device
+   `4D4A:4155`.
+4. Update-mode MIDI Streaming interface 1, endpoints `0x04/0x84`.
+5. Write completion request `0xF0000000` and `success\0` response.
+6. Automatic normal-mode reboot and identity `SMK-37 Pro_012`.
+
+The `upload-resume-v12` command exists only to recover a process that stopped
+after verification while the device is visibly present as `4D4A:4155`. It is
+locked to the exact v12 hash and a separate confirmation token. Do not use it
+from normal mode.
+
+## Offline application-only repack gate
+
+The experimental packer is intentionally separate from the live uploader:
+
+```sh
+make test-safe-repack FWSC="$FWSC"
+```
+
+This command decrypts and re-encrypts every v12 application container layer,
+recomputes the JLFS and UFW CRC chain, and requires the resulting no-change
+file to be byte-for-byte identical to the official package. The verified
+result on 2026-07-15 had the same package SHA-256 shown above and zero changed
+bytes.
+
+An offline mutation can be generated with `tools/smk37_app_patch.py`, but the
+tool accepts only the exact official v12 input and only equal-length changes
+inside `app.bin`. Its manifest requires these protected hashes to remain
+identical:
+
+- flash header, boot/update loader, and top-level layout before `0x4000`
+- raw `uboot.boot`
+- raw `isd_config.ini`
+- resources and reserved definitions after the application container
+
+Modified-image live commands are permitted only as named, exact-SHA build
+commands. `upload-m001`, `upload-m02`, and `upload-m05` each accept one
+recorded package hash; the stock `upload` and `upload-resume-v12` commands
+still reject custom packages. Never replace this allow-list with a generic
+modified-image switch.
+
+M001 proved modified-package acceptance and normal boot. While M001 was
+running, it accepted the normal OTA command, entered update loader
+`4D4A:4155`, installed M02, and booted again. This proves the normal custom-app
+update line. It still does not prove recovery from a future custom application
+that crashes before normal USB and the OTA command handler initialize. See
+`docs/fm-drum-plan.md` for that remaining boundary.
+
+## M05 minimal two-timbre checkpoint
+
+M05 is a behavior experiment, not a confirmed multitimbral result. It keeps
+the stock patch selector and implements only this fixed routing:
+
+- human MIDI channel 1: current patch N;
+- human MIDI channel 2: same-bank patch `(N + 1) & 31`;
+- all other channels: stock current-patch behavior.
+
+The exact package SHA-256 is
+`0beab977977bd175ea484be44851c76958d22de4e787b9cbc34ddfaa8400c1f6`.
+After read-only `device-info`, `inspect`, `upload-check`, and `upload-dry-run`
+all pass, the guarded install command is:
+
+```sh
+scripts/smk37-fw-direct upload-m05 \
+  build/SMK37ProMod-M05-two-timbre-base012.fwsc \
+  backups/ota-M05-install-20260715.log \
+  --confirm INSTALL-SMK37PRO-M05-0BEAB977
+```
+
+Do not send Yamaha preset SysEx while M05 is installed; its single-voice
+pack/save routine supplies the temporary code space for this checkpoint.
+Program Change is not implemented.
+
+For the audio test, create two overlapping Logic tracks targeting the SMK:
+
+1. Track A transmits sustained notes on MIDI channel 1.
+2. Track B transmits overlapping notes on MIDI channel 2.
+3. Use a current patch whose adjacent patch is audibly distinct.
+4. Confirm that the channel-1 note retains patch N while channel 2 sounds N+1.
+5. Release notes in both orders and run a short repeated-note loop to check for
+   stuck notes or cross-channel note-off.
+6. As a boundary test, select patch 31 and confirm channel 2 uses patch 0.
+
+The physical keyboard alone cannot prove this build because it does not
+generate both test channels. Success requires two different timbres to remain
+audible at the same time; merely receiving both channels is insufficient.
+
+## M06 local-pad channel-10 FM checkpoint
+
+M06 keeps local keys and USB Ch1 on current patch N. It bridges the factory
+local pads, and incoming USB Ch10, to same-bank patch `(N + 1) & 31`. All 16
+factory pad notes 36-51, velocity, Note Off, and original MIDI output are
+preserved. This build still uses one FM patch across the pad range.
+
+Package SHA-256:
+`61b2f5707a2b5779ffa118612957b232027de72f377d56adc9d68d6ed302aac4`.
+
+```sh
+scripts/smk37-fw-direct upload-m06 \
+  build/SMK37ProMod-M06-local-pads-base012.fwsc \
+  backups/ota-M06-install-20260715.log \
+  --confirm INSTALL-SMK37PRO-M06-61B2F570
+```
+
+After boot, hold a local-key note and strike/release each pad. Verify that the
+key retains patch N, pads use N+1, attacks are not doubled, released pads do
+not stick, and the pads still transmit Ch10 over USB.
+
+## Confirmed live result
+
+The verification stage completed with 49 requests. The resumed write stage
+completed with 1,241 requests and acknowledged `0xF0000000`. The unit then
+booted normally and reported version `012`. A complete post-restore 1-MiB dump
+also succeeded.
+
+Subsequent M001 and M02 writes completed normally. The earlier post-restore
+verification timeouts did not prevent later same-base writes and are no longer
+an active blocker, though unnecessary repeat writes should still be avoided.
+
+Confirmed custom sequence on 2026-07-15:
+
+1. Official v12/display 1.05 installed M001.
+2. M001 booted and displayed `M00`, proving the UI field is only three
+   characters wide.
+3. Running M001 entered OTA loader `4D4A:4155` and installed M02.
+4. M02 booted, retained USB identity 012, and displayed `M02` in full.
+5. M03 booted; its first display string worked, revealing that the proposed
+   second string was not part of the active screen.
+6. M04 booted and displayed the exact two lines `Hello,` and `acidsound`.
+7. Running M04 entered OTA loader `4D4A:4155` and installed the exact archived
+   official v12 package.
+8. The official app booted with USB identity 012; the owner verified display
+   version 1.05 and the restored stock Reset UI.
+9. Official v12 installed M05; both OTA stages and 1,241 stage-2 requests
+   completed, then M05 booted and reported USB identity 012. The owner then
+   confirmed intended simultaneous Ch1/N and Ch2/N+1 playback from overlapping
+   host-sequencer loops.
+10. Running M05 installed M06; both OTA stages and 1,241 stage-2 requests
+    completed, then M06 booted and reported USB identity 012. The owner
+    confirmed intended simultaneous local-key Ch1/N and local-pad Ch10/N+1 FM
+    behavior.
+
+This is a complete custom-to-official round trip for a normally booting
+application-only modification. Transcript:
+`backups/ota-M04-to-official-v12-20260715.log`.
+
+M05 install transcript: `backups/ota-M05-install-20260715.log`.
+M06 install transcript: `backups/ota-M06-install-20260715.log`.
+
+If an operation reaches a state where a power cycle or button action is
+required, stop host-side commands and perform only the explicitly identified
+device action.

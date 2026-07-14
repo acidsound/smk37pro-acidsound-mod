@@ -1,0 +1,20 @@
+target=02023576
+  from=02029ff2 type=UNCONDITIONAL_CALL instruction=call 0x02023576 function=FUN_02029f0e@02029f0e
+count=1
+
+target=02023724
+  from=02029fc0 type=UNCONDITIONAL_CALL instruction=call 0x02023724 function=FUN_02029f0e@02029f0e
+count=1
+
+target=02023852
+  from=02029fdc type=UNCONDITIONAL_CALL instruction=call 0x02023852 function=FUN_02029f0e@02029f0e
+count=1
+
+target=02023894
+  from=0202a008 type=UNCONDITIONAL_CALL instruction=call 0x02023894 function=FUN_02029f0e@02029f0e
+count=1
+
+target=0202305e
+  from=02029f9e type=UNCONDITIONAL_CALL instruction=call 0x0202305e function=FUN_02029f0e@02029f0e
+  from=0202a024 type=UNCONDITIONAL_CALL instruction=call 0x0202305e function=FUN_02029f0e@02029f0e
+count=2

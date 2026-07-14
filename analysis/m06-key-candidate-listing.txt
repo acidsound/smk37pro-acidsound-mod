@@ -1,0 +1,37 @@
+range=0202ac40..0202acaf
+0202ac40  d8ee0002  lb.z r0,[r0 + r2]
+0202ac44  9046  jnz r0,0x0202ac92
+0202ac46  40e0e349  movz r0,#0x49e3
+0202ac4a  101b  mul r0,r1
+0202ac4c  b4e00078  add r7,r0,r8
+0202ac50  4520  mov r5,#0x0
+0202ac52  49e0840a  movz r9,#0xa84
+0202ac56  4ae0c40a  movz r10,#0xac4
+0202ac5a  4be0830a  movz r11,#0xa83
+0202ac5e  4620  mov r6,#0x0
+0202ac60  0495  goto 0x0202ac8c
+0202ac62  94e1c206  bit.and r0,r12,r6
+0202ac66  0050  jz r0,0x0202ac88
+0202ac68  50eed405  lb.z r0,[r13 + 0x504]
+0202ac6c  5018  add r0,r5
+0202ac6e  7018  add r0,r7
+0202ac70  d8ee0219  lb.z r1,[r0 + r9]
+0202ac74  81fd0802  jl r1,#0x1,0x0202ac88
+0202ac78  781d  add r0,r7,r5
+0202ac7a  d8ee002a  lb.z r2,[r0 + r10]
+0202ac7e  d8ee000b  lb.z r0,[r0 + r11]
+0202ac82  1117  uxtb r1,r1
+0202ac84  bfea028b  call 0x0201c28c
+0202ac88  d522  add r5,#0x42
+0202ac8a  c621  add r6,#0x1
+0202ac8c  01ff2054e8ff  jne r5,#0x420,0x0202ac62
+0202ac92  40e02916  movz r0,#0x1629
+0202ac96  d8eed000  lb.z r0,[r13 + r0]
+0202ac9a  d018  add r0,r13
+0202ac9c  41e02a16  movz r1,#0x162a
+0202aca0  d8ee0001  lb.z r0,[r0 + r1]
+0202aca4  f83f  add r0,#-0x1
+0202aca6  0017  uxtb r0,r0
+0202aca8  00fc2602  ja r0,0x1,0x0202acf8
+0202acac  c114  clr r9
+0202acae  462c  mov r6,#0xc
