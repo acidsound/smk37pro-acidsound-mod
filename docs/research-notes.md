@@ -589,6 +589,124 @@ was observed in normal simultaneous use. The test did not saturate the voice
 pool, so the maximum usable polyphony and voice-stealing behavior remain
 unmeasured.
 
+### DX7 VMEM identity and physical voice storage
+
+Confirmed offline, 2026-07-15:
+
+- Every supplied preset file is a 4,104-byte Yamaha message with header
+  `F0 43 00 09 20 00`, 4,096 data bytes, checksum, and `F7` terminator.
+- The body is 32 voices of 128-byte DX7 VMEM data. Voice names begin at byte
+  118. The standard six-operator VMEM fields and bit packing round-trip
+  exactly through `tools/dx7_vmem.py`.
+- The stock loader at `0x020051E2` expands the selected 128-byte voice to the
+  156-byte runtime form at `0x01C35104`: six operators of 21 bytes, pitch EG,
+  algorithm, feedback/sync, LFO, transpose, ten-byte name, and operator mask.
+- The live 1 MiB flash stores four packed banks at physical offsets
+  `0xF4000`, `0xF5000`, `0xF6000`, and `0xF7000`. The first two contain owner
+  edits; banks 3 and 4 exactly match the archived SysEx bodies. These sectors
+  are outside the v12 OTA payload ending at `0x9BFFF` and must not be treated
+  as disposable app space.
+- The related 163-byte per-preset records begin at `0xF8000`. The loader first
+  copies one such record, then overwrites its DX7 voice fields from the packed
+  bank. Runtime bytes 156-162 carry non-voice settings and are not part of the
+  per-event 156-byte timbre snapshot.
+
+This resolves the engine family: the SMK voice format is DX7-compatible
+six-operator FM, not a TX81Z/DX21 four-operator format. It also identifies a
+candidate Ch10 architecture: an event needs only an independent 156-byte
+snapshot; it does not need to mutate a factory/user bank or call the global
+patch loader. M09 later proved that its chosen storage and wrapper must not be
+classified as safe from this format result alone.
+
+DX7 format implementation reference used for independent confirmation:
+
+- Dexed repository: <https://github.com/asb2m10/dexed>
+- inspected commit: `2e182b3db85c09083ab13c8b9b00565ce7d9ff85`
+- format and pack/unpack references: `Documentation/sysex-format.txt` and
+  `Source/PluginData.cpp`
+
+### M09 app-resident FM drum kit
+
+M09 stores eight expanded 156-byte DX7 percussion templates plus a 16-byte
+GM-note map at application addresses `0x020959EE..0x02095EDD`. The official-v12
+range was all zero and a full Ghidra destination-reference scan over the larger
+`0x020959ED..0x02095F95` cave found zero references. The runtime data occupies
+1,264 of 1,448 available aligned bytes.
+
+For Ch10 Note On and Note Off, `(note - 36) & 15` selects the note-map entry,
+the wrapper copies that template directly to the existing event/voice
+destination, and the stock downstream allocator retains it. Ch1, local keys,
+and every non-Ch10 channel take the stock memcpy path. No bank selector,
+preset index, factory/user flash sector, or current UI patch buffer is touched.
+
+The initial GM subset is:
+
+| Note | GM role | M09 template |
+| --- | --- | --- |
+| 36 | Bass Drum 1 | kick |
+| 37 | Side Stick | stick |
+| 38 | Acoustic Snare | snare |
+| 39 | Hand Clap | clap |
+| 40 | Electric Snare | snare |
+| 41, 43, 45, 47, 48, 50 | Toms | tom at incoming note pitch |
+| 42, 44 | Closed/Pedal Hi-Hat | closed-hat at incoming note pitch |
+| 46 | Open Hi-Hat | open-hat |
+| 49, 51 | Crash/Ride | cymbal at incoming note pitch |
+
+Template provenance is byte-audited in `tools/m09_drum_voices.py`. The initial
+prototype uses SynprezFM cartridges bundled by the GPL-3.0 Dexed repository,
+but that ZIP states no separate patch-data license. Treat the templates as
+local research material and replace them with originally authored voices
+before distributing firmware without a separate license review.
+
+Build identity: application SHA-256
+`8c63f6f44877810b7f23ba88a91870aa758add099cb02d3de9721b6f636ecdbe`;
+package SHA-256
+`5ac1264eba85ce5f1747458a90203bc144d21f87dc66f189ca055b74700ab5c8`.
+The protected-region gate, exact wrapper disassembly, deterministic build,
+host self-tests, and OTA packet dry-run pass.
+
+Live OTA on 2026-07-15 completed both stages through request 1241 and received
+the updater's final completion acknowledgement. The expected normal USB
+identity did not reopen afterward. A fresh descriptor-only host scan then
+found neither `4c4a:c755` normal mode nor `4d4a:4155` updater mode, so this is
+not merely a claimed MIDI/audio interface. The device's physical display and
+power state must be checked before choosing between a delayed normal boot,
+power-cycle recovery, and the v12 recovery path. Until then M09 is
+flash-transfer-complete but boot/audio unverified.
+
+Owner-side follow-up established the failure state. Before the true power
+cycle the display was black while previously lit pad LEDs remained on. Merely
+unplugging and reconnecting USB-C did not change the state or create a USB
+device because the internal battery kept the unit powered. After explicitly
+turning the instrument off, waiting, and powering it on normally, both the
+display and pad LEDs remained off. A subsequent host scan still found neither
+normal nor updater identity. Classify M09 as `BOOT-FAILED / NO-USB` and never
+reinstall it.
+
+The strongest M09-specific fault hypothesis is that the large zero-filled
+application range was not a safe persistent-data cave despite having no
+statically discoverable direct references. It may be reached through an
+indirect base pointer, initialized as required-zero runtime state, or checked
+by an internal application invariant. M08 used only the replaced code region
+and booted. M09 allocated 1,264 bytes in the new range, of which 789 bytes
+actually differ from zero. M09 also changed 162 bytes of wrapper/bridge code,
+so the data range is not a proven sole cause. Static destination-reference
+scans are insufficient evidence for writable application data storage. The
+ranked hypotheses, counter-evidence, and process causes are recorded in
+`docs/m09-brick-incident.md`.
+
+Official AC79 documentation says internal-Flash parts require the Jieli
+forced-upgrade tool when normal firmware cannot enter download mode. The tool
+forces a reset while transmitting a mask-ROM handshake such as `usbkey`;
+switch 1 periodically interrupts target power and sends `usbkey`, while the
+default/manual and switch-3 modes send the same handshake with different reset
+timing. This product-specific path has not yet been exercised on SMK-37 Pro.
+Recovery now requires obtaining that hardware path, identifying the resulting
+WL82 download identity/protocol, and writing an exact official-v12-compatible
+image. Do not open, short, probe, or reset the mainboard until that procedure
+and image format are established.
+
 Pi32v2 processor source used for this pass:
 
 - repository: <https://github.com/quarkslab/ghidra-jieli>
@@ -1044,6 +1162,64 @@ Confirmed from official v12 and enforced by `tools/smk37_app_patch.py`:
 The live stock-restore commands remain independently locked to the official
 v12 package SHA. Each experimental command is separately locked to one build
 SHA. This prevents accidental crossing of recovery and experiment paths.
+
+### ESP32-C3 forced-entry tool checkpoint
+
+On 2026-07-15 an ESP32-C3 SuperMini was identified over its native USB
+Serial/JTAG interface and loaded with the independent `esp32c3-usbkey/`
+project. The tool implements the researched WL82 `USB_KEY` frame `0x16EF`,
+MSB-first, with target D+ as the approximately 50 kHz clock and target D- as
+data. GPIO4/GPIO5 are input-only with pulls disabled at boot, between attempts,
+and after attempts. Output requires the exact console confirmation
+`SEND USBKEY 16EF` following a three-second countdown.
+
+Live board-only verification established that the firmware boots, waits for
+console input, and rejects an invalid command while keeping both signal GPIOs
+high impedance. The real key was deliberately not sent because no reviewed
+SMK/host data-line harness was attached. This tool has one responsibility:
+pre-enumeration electrical forced entry. Native macOS SCSI transport remains a
+separate host tool, and M09 sector preparation remains an offline third tool.
+
+The first console implementation exposed two related behaviors of ESP-IDF's
+default USB Serial/JTAG VFS: an empty non-blocking read appeared as end-of-file,
+and a later `PING` test was split into individual input fragments. Four
+solutions were evaluated: manual byte accumulation, the interrupt-driven USB
+Serial/JTAG VFS driver, an `esp_console` REPL, or a separate UART console. The
+tool now installs `usb_serial_jtag_driver` and selects its blocking VFS before
+using `fgets()`. A repeated `PING` test then produced exactly one rejected
+command and left both output lines high impedance.
+
+### `jl-uboot-tool` scope audit
+
+Repository `kagaimiq/jl-uboot-tool` was checked at current `main` commit
+`adb3f18889e88ac512ce0a3c4d8cc3d3cb30696a` (2025-03-16). It is the
+post-entry host-program half of recovery, not a replacement for the electrical
+forced-entry dongle:
+
+- `jldevfind.py` searches Linux SCSI generic devices or Windows disk volumes
+  and selects devices whose SCSI product string begins with `UBOOT`, `UDISK`,
+  or `DEVICE`;
+- `jltech/uboot.py` implements Jieli vendor CDBs over USB Mass Storage for RAM
+  read/write/jump and loader-level Flash read/write/erase operations;
+- `jluboottool.py` uploads a family-specific loader when the device reports
+  `UBOOT1.00`, jumps to it, then exposes interactive `read`, `write`, `erase`,
+  `erasechip`, `dump`, and memory commands;
+- `jlrunner.py` uploads and runs arbitrary RAM payloads;
+- `scsiio/` provides only Linux `SG_IO` and Windows
+  `SCSI_PASS_THROUGH_DIRECT` transports. There is no Darwin/macOS backend;
+- there is no executable `USB_KEY` signal generator in the repository.
+
+WL82/AC791N metadata is present: protocol v2, the MengLi-encrypted memory-I/O
+quirk, `wl82loader.bin`, RAM load address `0x1c02000`, and 512-byte encrypted
+loader blocks. However the project README marks real WL82 support `unknown`.
+Therefore its first permissible use on this unit would be identification and a
+read-only dump after external forced entry, not any erase/write command.
+
+The repository's `docs/how-to-enter-uboot.md` also conflicts with the same
+author's newer dedicated USB_KEY page about D+/D- roles: the repository file
+labels D- as clock and D+ as data, while the newer page labels D+ as clock and
+D- as data. Neither wiring orientation has been validated on SMK-37 Pro, so the
+older repository page must not be treated as sufficient wiring authority.
 
 ## Next measurements
 

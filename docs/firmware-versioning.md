@@ -41,6 +41,7 @@ recovery semantics.
 | M06 | updater 012 / display 1.05 | Local keys/Ch1 = N; local pads and USB Ch10 = `(N + 1) & 31` | `61b2f5707a2b5779ffa118612957b232027de72f377d56adc9d68d6ed302aac4` | INSTALLED and VERIFIED; owner confirmed intended simultaneous local-key N and local-pad N+1 FM playback |
 | M07 | updater 012 / display 1.05 | Intended Ch10 notes 36-51 = same-bank patches `N+1` through `N+16` | `b80ed7480152f07652eb8f809305f50d2bdb2990fb89875c317f27d5e99de082` | INSTALLED; 16 per-note timbres PASS, Ch1 isolation FAIL because local keys also received per-note timbres |
 | M08 | updater 012 / display 1.05 | Ch1 = UI patch; Ch10 notes 36-51 = fixed Bank 0 presets 0-15 | `4498a935951e32d21b85167e5ba369a5051d32d93ba66e51229d5d255c8dc31f` | INSTALLED and VERIFIED; Ch1/Ch10 isolation and UI Patch independence pass, maximum-polyphony stress pending |
+| M09 | updater 012 / display 1.05 | Ch1 = UI patch; Ch10 notes 36-51 = app-resident DX7 FM drum templates | `5ac1264eba85ce5f1747458a90203bc144d21f87dc66f189ca055b74700ab5c8` | BOOT-FAILED / NO-USB; OTA request 1241 and completion acknowledgement passed, then display remained black; a true power cycle left display and pad LEDs off, with neither normal nor updater USB identity present |
 
 M001 artifact paths:
 
@@ -185,3 +186,37 @@ UI patch while Ch10 retained its fixed 16-note map across UI Patch changes.
 No functional problem was observed in normal simultaneous use. Maximum
 polyphony, voice stealing, and release behavior under saturation remain
 untested.
+
+M09 artifact paths:
+
+- `build/SMK37ProMod-M09-dx7-drums-base012.fwsc`
+- `build/SMK37ProMod-M09-dx7-drums-base012-manifest.json`
+- `build/SMK37ProMod-M09-app.bin`
+- `build/SMK37ProMod-M09-app-manifest.json`
+
+M09 bypasses the factory patch loader for Ch10. Eight 156-byte DX7 runtime
+snapshots and a 16-byte GM-note map were placed in a zero-filled application
+tail range that static analysis found unreferenced but live failure shows must
+not be classified as a safe data cave. Ch1 and the Patch UI retain the stock
+path; Ch10 neither reads nor writes the global bank, preset index, or
+current-patch buffer. Notes 36-51 map to kick, stick, snare, clap, tom,
+closed/open hi-hat, and cymbal templates. Reused tom/cymbal templates retain
+the incoming note pitch. The application SHA-256 is
+`8c63f6f44877810b7f23ba88a91870aa758add099cb02d3de9721b6f636ecdbe`.
+
+The live OTA transcript is `backups/ota-M09-install-20260715.log`. Both stages
+completed through request 1241, and the updater acknowledged the final
+`0xf0000000` completion request. The immediate post-update open failed. A
+subsequent descriptor-only macOS USB-tree scan found neither normal identity
+`4c4a:c755` nor updater identity `4d4a:4155`; the normal-device probe also
+reported not found. Therefore the flash transfer is established, but boot,
+display marker, audio behavior, and recovery-path availability were not
+established by the transfer itself. Physical inspection then confirmed a
+black display. USB-only reconnection did not help; after a true power cycle,
+the display and all pad LEDs remained off and a fresh scan again found neither
+USB identity. M09 is therefore a demonstrated pre-USB boot failure, not a
+verified build. Do not reinstall it.
+
+The incident analysis is `docs/m09-brick-incident.md`. It separates the
+confirmed M09 application failure boundary from the still-unproven exact root
+cause and from the independent failure to establish forced recovery first.

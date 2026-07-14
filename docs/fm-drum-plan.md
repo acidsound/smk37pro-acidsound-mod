@@ -162,7 +162,7 @@ modified package acceptance and custom-to-custom OTA are confirmed.
 | M06 simultaneous local key N plus local pad N+1 audio | PASS live | owner confirmed intended local-key Ch1/N and local-pad Ch10/N+1 FM behavior |
 | M07 Ch10 notes 36-51 use N+1 through N+16 | PARTIAL / FAIL isolation | 16 independent per-note timbres confirmed, but Ch1/local keys were contaminated by the same mapping |
 | M08 Ch1 UI patch plus fixed Ch10 Bank 0 map | PASS live | owner confirmed Ch1/Ch10 isolation and UI Patch independence; maximum-polyphony stress remains pending |
-| Forced recovery independent of app | FAIL / unknown | no SMK-specific mask-ROM or forced-download entry has been demonstrated |
+| Forced recovery independent of app | REQUIRED / not yet demonstrated | M09 now proves the pre-USB app-failure boundary: black display after true power cycle and neither normal nor updater USB identity; recovery requires the Jieli forced-upgrade path |
 | Staged application-only live testing | GRANTED | owner authorized and validated M001 then M02 on 2026-07-15 |
 
 The official v11-v15 SMK packages contain identical `uboot.boot` and
@@ -334,6 +334,34 @@ to maximum polyphony, so voice-pool saturation and stealing policy remain open.
 
 The decoder patch needed to reproduce current Pi32v2 analysis is
 `patches/ghidra-jieli-pi32v2-smk37.patch`.
+
+## M09 checkpoint definition
+
+**Historical failed checkpoint; do not install.** M09 completed OTA but never
+returned display or either USB identity. The investigation is recorded in
+`docs/m09-brick-incident.md`.
+
+M09 replaces M08's temporary factory-bank selection with an app-resident drum
+ROM. Static analysis confirmed a Yamaha DX7 six-operator storage/runtime pair:
+128-byte VMEM voices expand to the exact 156-byte snapshot already retained by
+each event/voice. Eight expanded percussion templates and a 16-entry map fit in
+a zero-filled range with no statically visible references. That evidence did
+not establish a safe data cave; the range and the new direct-copy wrapper were
+both unproven changes in the failed image.
+
+The intended invariant was stronger than M08:
+
+- Ch1/local keys always use the UI-selected stock current patch;
+- Ch10/local pads always use the embedded FM drum map;
+- UI Patch changes cannot affect Ch10 because Ch10 does not read or modify any
+  bank/preset selector;
+- user-edited packed banks at flash `0xF4000..0xF7FFF` remain untouched;
+- Note On and Note Off derive the same template from the same note.
+
+M09 was intended as a first playable FM-drum palette, not the final sound
+design, but it never reached live audio verification. Any successor requires a
+new build ID, a proven application-independent recovery path, and isolation of
+the data-storage and wrapper changes.
 
 PCM/sample replacement is explicitly out of scope. The target is FM-only
 multitimbral playback. Drum Seq may supply the timing, step grid, pattern

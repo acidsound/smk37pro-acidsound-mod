@@ -1,0 +1,52 @@
+address=020051e2
+function=FUN_020051e2 entry=020051e2
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Removing unreachable block (ram,0x02005294) */
+/* WARNING: Removing unreachable block (ram,0x020052a2) */
+/* WARNING: Removing unreachable block (ram,0x020052a6) */
+/* WARNING: Removing unreachable block (ram,0x020052be) */
+/* WARNING: Removing unreachable block (ram,0x020052c2) */
+/* WARNING: Removing unreachable block (ram,0x020052e4) */
+/* WARNING: Removing unreachable block (ram,0x020052e8) */
+/* WARNING: Removing unreachable block (ram,0x02005344) */
+/* WARNING: Removing unreachable block (ram,0x02005336) */
+/* WARNING: Removing unreachable block (ram,0x02005338) */
+/* WARNING: Removing unreachable block (ram,0x02005350) */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void FUN_020051e2(void)
+
+{
+  undefined1 uVar1;
+  byte bVar2;
+  undefined1 *puVar3;
+  uint uVar4;
+  undefined1 *puVar5;
+  uint uVar6;
+  undefined1 *puVar7;
+  int iVar8;
+
+  iVar8 = _DAT_01c33860;
+  uVar4 = (uint)DAT_01c33a94;
+  if ((uVar4 < 4) && (uVar6 = (uint)*(byte *)(uVar4 + 0x1c33a90), uVar6 < 0x20)) {
+    FUN_0204850c(0x1c35104,(uVar4 * 0x20 + uVar6) * 0xa3 + _DAT_01c33860 + 0x4000,0xa3);
+    puVar3 = (undefined1 *)(uVar4 * 0x1000 + uVar6 * 0x80 + iVar8);
+    puVar5 = (undefined1 *)0x1c35104;
+    iVar8 = 0xb;
+    puVar7 = puVar3;
+    do {
+      uVar1 = *puVar7;
+      puVar7 = puVar7 + 1;
+      *puVar5 = uVar1;
+      puVar5 = puVar5 + 1;
+      iVar8 = iVar8 + -1;
+    } while (iVar8 != 0);
+    bVar2 = puVar3[0xb];
+    bRam01c3510f = bVar2 & 3;
+    uRam01c35110 = (char)((bVar2 & 0xc) >> 2);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+  return;
+}

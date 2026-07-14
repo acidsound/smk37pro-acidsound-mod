@@ -215,6 +215,25 @@ scripts/smk37-fw-direct upload-m08 \
   --confirm INSTALL-SMK37PRO-M08-4498A935
 ```
 
+## M09 app-resident DX7 FM drums
+
+**REVOKED: DO NOT INSTALL.** M09 completed OTA but failed before display and
+USB initialization. After a true power cycle neither normal nor updater USB
+identity was present. The action below is retained only as an incident record
+and must not be executed. See `docs/m09-brick-incident.md`.
+
+M09 no longer borrows factory presets. Ch1/local keys retain the UI patch and
+Ch10/local pads use eight embedded DX7 percussion templates through a 16-note
+GM map. The build does not write the user preset sectors at
+`0xF4000..0xF7FFF`.
+
+Package SHA-256:
+`5ac1264eba85ce5f1747458a90203bc144d21f87dc66f189ca055b74700ab5c8`.
+
+Historical upload action: `upload-m09` with confirmation token
+`INSTALL-SMK37PRO-M09-5AC1264E`. It is deliberately not presented as a
+copyable command.
+
 ## Confirmed live result
 
 The verification stage completed with 49 requests. The resumed write stage

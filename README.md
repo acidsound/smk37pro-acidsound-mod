@@ -30,6 +30,8 @@ See `docs/firmware-runbook.md` for the guarded upload procedure and
 unknowns. The safety gates and static implementation route for the FM drum
 extension are tracked in `docs/fm-drum-plan.md`. Custom display/build IDs and
 their immutable artifact ledger are defined in `docs/firmware-versioning.md`.
+The M09 boot failure, likely causes, and recovery-safety lessons are recorded
+in `docs/m09-brick-incident.md`.
 
 The offline v12 application-only verifier/repacker is
 `tools/smk37_app_patch.py`. It does not communicate with the device, and the
