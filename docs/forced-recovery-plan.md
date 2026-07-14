@@ -38,6 +38,38 @@ Keep the recovery components separate:
   hash manifest;
 - normal SMK application patch/OTA tools: never a dependency of forced entry.
 
+### Procurement decision
+
+Prefer purchasing a genuine Jieli Forced Upgrade Tool 4.0 over completing a
+one-off ESP32-C3 USB mux harness. The vendor tool already integrates the hard
+parts that remain unvalidated here: reset/power handling, continuous
+`USB_KEY`, target acknowledgement, and the data-bus handoff to the host. A
+dated market check on 2026-07-15 found a third-party V4 listing around USD 37
+before international shipping, while the reference TI USB-mux evaluation
+module was not available directly from TI. The exact seller, authenticity,
+cable set, and shipping cost still require checking at purchase time.
+
+Buying V4 does not force the Flash host to be Windows. In switch-3 mode the
+hardware continuously sends `usbkey` without a PC command; after successful
+entry the target should enumerate to the attached host as a mass-storage/SCSI
+device. macOS or Linux software may then operate that device independently of
+the dongle. The present software is not yet a complete Windows-tool
+replacement, however:
+
+- `tools/smk37_wl82_macos.c` currently performs only standard read-only SCSI
+  `INQUIRY`; its self-test passes but it has never seen the real target;
+- `jl-uboot-tool` has loader/read/write logic, but no macOS transport and marks
+  actual WL82 support unknown;
+- the official Windows `isd_download.exe` plus the AC79 WL82 loader remains the
+  only researched vendor-supported complete path.
+
+Therefore use V4 first to prove forced entry on the Mac without a Flash write.
+If `WL82 UBOOT1.00` appears, extend the native macOS host in the staged order
+INQUIRY -> loader identity -> full read-only dump -> verified sector readback.
+Do not add erase or write commands merely because the hardware entry succeeds.
+The ESP32-C3 project remains a documented fallback and protocol test source,
+not the preferred first connection to the failed instrument.
+
 Because SMK-37 Pro has an internal battery, the dongle's switch-1 VBUS cycling
 does not guarantee a processor reset. The likely entry sequence is:
 
@@ -72,6 +104,84 @@ a powered USB Y cable. A hub may supply power and an isolated host port, but it
 does not replace the data-pair tap or phase switch. Hub traffic from unrelated
 full/low-speed devices may also disturb the target's initial USB clock
 measurement, so use a dedicated/otherwise empty path for first validation.
+
+### Breadboard and data-switch correction
+
+The ESP32-C3 SuperMini pinout must be read with its USB-C connector at the top.
+In that orientation GPIO4 is the fourth castellated pad down the left edge and
+GPIO5 is the first pad down the right edge. A bare SuperMini needs two soldered
+2.54 mm male-header rows before it can straddle a solderless breadboard's
+center trench.
+
+On a conventional breadboard, the five holes in each numbered A-E strip are
+connected together, the five holes in the matching F-J strip are connected
+together, and the center trench separates those two strips. Power rails are
+separate from the numbered strips and may themselves be split midway. Verify
+the actual board with continuity mode; do not infer connection from physical
+proximity.
+
+A three-pin slide switch is one SPDT pole. It cannot switch both D+ and D- and
+must not carry the USB pair directly. It can instead drive the `SEL` input of a
+proper dual-channel 2:1 USB 2.0 mux.
+
+The mux board itself is not a protocol requirement. The required function is a
+two-pole, break-before-make handoff of D+ and D- from the ESP key source to the
+Mac host. The available implementations are:
+
+1. a USB 2.0 2:1 mux PCB or evaluation module: preferred and repeatable;
+2. a six-terminal DPDT center-off switch with extremely short paired data
+   wiring: possible for a Full-Speed prototype, but less reliable;
+3. physically replacing the ESP target cable with the Mac cable after key
+   transmission: no extra switch, but unverified because VBUS loss or reconnect
+   timing may make the target leave forced mode.
+
+The ESP32-C3 alone cannot perform the handoff. Its native connector is a USB
+Serial/JTAG device connected to the Mac; it is neither a transparent analog
+path nor a general USB host for the SMK. GPIO4/GPIO5 can generate the key and
+then become high impedance, but they cannot forward the Mac's differential USB
+waveform to the target.
+
+This handoff requirement was missing from the first ESP32-C3-only wiring
+concept. The vendor tool is an inline device between the PC and target, while
+the reverse-engineered dongle description explicitly says that it sends the
+key and then passes the USB bus through to the host. Therefore the current C3
+firmware is only the key-source half of a complete recovery adapter.
+
+A robust mux-based prototype keeps these parts on separate electrical domains:
+
+- breadboard: SuperMini, its 3.3 V/GND rails, GPIO4/GPIO5 protection
+  resistors, and low-speed `SEL`/`OE` control;
+- USB-switch PCB or evaluation module: Mac D+/D-, protected ESP D+/D-, and the
+  common SMK D+/D- pair, all with short differential routing;
+- target cable/breakout: SMK USB-C D+/D-, VBUS, and GND with every conductor
+  identified by continuity rather than trusting cable colors.
+
+USB-switch candidates with an explicit disconnect state include TI
+TS3USB221A and onsemi FSUSB42. Both switch D+ and D- together; `OE=HIGH`
+disconnects all ports. FSUSB42 additionally specifies internal
+break-before-make timing. TI's TS3USB221EVM/221EEVM is the reference-module
+route and uses controlled-impedance PCB traces. The small bare IC packages are
+not solderless-breadboard parts.
+
+For the 50 kHz ESP-only key branches, use equal-value series resistors on both
+GPIO4 and GPIO5 before the mux. `330 ohm`, 1/8 W or 1/4 W, is the conservative
+first bench value: a hard 3.3 V contention is limited to approximately 10 mA.
+This value is an engineering starting point, not a Jieli-validated component
+value; verify the waveform and target levels before connection. Do not put
+these 330-ohm resistors in the Mac USB host branch. Do not substitute arbitrary
+very-low or multi-kilohm values.
+
+Pinout reference supplied for the board in use:
+
+- <https://europe1.discourse-cdn.com/arduino/original/4X/c/2/8/c286595a99d202f8a3aef6d6caf1f2c90474200d.jpeg>
+
+Switch and electrical references:
+
+- <https://www.ti.com/product/TS3USB221A>
+- <https://www.ti.com/lit/pdf/scdu001>
+- <https://www.onsemi.com/download/data-sheet/pdf/fsusb42-d.pdf>
+- <https://documentation.espressif.com/esp32-c3_datasheet_en.html>
+- <https://github.com/kagaimiq/jl-uboot-tool/blob/main/docs/how-to-enter-uboot.md>
 
 ## Host software candidates
 

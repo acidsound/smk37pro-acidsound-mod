@@ -34,6 +34,51 @@ the key is accepted. This project currently provides the key waveform and
 high-impedance release only; the external two-line switch/handoff hardware is
 not yet implemented or validated.
 
+## Breadboard boundary
+
+With the SuperMini USB-C connector pointing upward, GPIO4 is the fourth pad
+down the left edge and GPIO5 is the first pad down the right edge. Solder two
+male-header rows before mounting the board across the breadboard center trench.
+The A-E holes of one numbered row are common, F-J of that row are separately
+common, and the center trench isolates the two sides. Confirm the exact board
+and split power rails with a continuity meter.
+
+Only low-speed key-generation wiring belongs on the solderless breadboard:
+
+- GPIO4 -> 330-ohm series resistor -> USB mux key-side D+;
+- GPIO5 -> 330-ohm series resistor -> USB mux key-side D-;
+- GND -> common ground;
+- optional three-pin SPDT slide switch -> USB mux `SEL` control.
+
+The two resistors must have the same value. `330 ohm`, 1/8 W or 1/4 W, limits
+a worst-case 3.3 V contention to about 10 mA, but remains a provisional bench
+value until the waveform is measured. It is not permission to connect the SMK.
+Do not add 330-ohm resistors to the Mac USB D+/D- branch.
+
+A three-pin SPDT switch cannot carry both D+ and D-. Use it only as a logic
+selector for a dual 2:1 USB 2.0 mux such as TS3USB221A or FSUSB42. Keep the Mac
+USB pair and common SMK pair on a purpose-built mux PCB/evaluation module with
+short differential routing, not through breadboard rows or long jumpers. A
+safe mux also needs a defined `OE` state that disconnects all ports during
+reset or rewiring.
+
+The mux PCB is the preferred implementation, not the only possible one. A
+six-terminal DPDT center-off switch can provide the same two-pole handoff for
+an experimental Full-Speed path if its paired wiring is extremely short.
+Manual cable replacement after key transmission removes the switch but remains
+unverified because the target may lose forced mode during VBUS disconnect.
+
+The SuperMini by itself cannot replace any of these handoff methods. Its native
+USB-C is a USB Serial/JTAG device used for the Mac console, not a transparent
+USB switch or target-facing USB host. GPIO4/GPIO5 generate only the electrical
+key waveform and then release to high impedance.
+
+This external handoff was omitted from the initial C3-only wiring concept. The
+vendor forced-upgrade tool is connected inline between the PC and target, and
+the reverse-engineered dongle description reports the same two phases: send
+the special signal, then pass the USB bus through to the host. This project is
+therefore not yet a complete replacement for that dongle.
+
 Build and upload:
 
 ```sh
