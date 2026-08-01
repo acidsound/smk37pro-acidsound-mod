@@ -1,0 +1,8 @@
+*
+!.gitignore
+!README.md
+!SHA256SUMS
+!*.json
+!*.md
+!*.txt
+
