@@ -1,0 +1,25 @@
+image_sha256=36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+image_size=617012
+package_app_data_start=0x4120
+base_test=0x02000000 long_string_targets=5 refs=7
+  target=0x57954 va=0x02057954 refs=0x4a62 text='app_area_head'
+  target=0x57b20 va=0x02057b20 refs=0x1e044 text='Enable SEQ first'
+  target=0x5d9c5 va=0x0205d9c5 refs=0x58304 text='Pad Bank-'
+  target=0x5d9e9 va=0x0205d9e9 refs=0x58314 text='Keys Channel-'
+  target=0x5da41 va=0x0205da41 refs=0x57a80,0x57a90,0x58174 text='sdfile_fat'
+base_test=0x02004120 long_string_targets=0 refs=0
+derived_aligned_base_candidates=0x02000000:7refs/5targets,0x02290000:2refs/1targets,0x010f0000:1refs/1targets,0x01630000:1refs/1targets,0x01c00000:1refs/1targets,0x01fd0000:1refs/1targets,0x01ff0000:1refs/1targets,0x02050000:1refs/1targets,0x02130000:1refs/1targets,0x021d0000:1refs/1targets
+selected_runtime_base=0x02000000
+pattern=usb_device_descriptor hits=1 file=0x57b53/va=0x02057b53/flash=0x5bc73
+pattern=midi_streaming_interface hits=1 file=0x579ae/va=0x020579ae/flash=0x5bace
+pattern=midi_streaming_header hits=1 file=0x579b7/va=0x020579b7/flash=0x5bad7
+pattern=midi_in_endpoint hits=1 file=0x57fc6/va=0x02057fc6/flash=0x5c0e6
+pattern=midi_in_cs_endpoint hits=1 file=0x57fcf/va=0x02057fcf/flash=0x5c0ef
+pattern=midi_out_endpoint hits=1 file=0x57fd6/va=0x02057fd6/flash=0x5c0f6
+pattern=midi_out_cs_endpoint hits=1 file=0x57fdf/va=0x02057fdf/flash=0x5c0ff
+pattern=midi_jack_graph hits=1 file=0x58274/va=0x02058274/flash=0x5c394
+pattern=usb_midi_cin_payload_lengths hits=1 file=0x57ab0/va=0x02057ab0/flash=0x5bbd0
+pattern=midi_route_ascii hits=1 file=0x5773b/va=0x0205773b/flash=0x5b85b
+pattern=midi_product_utf16le hits=1 file=0x57fa8/va=0x02057fa8/flash=0x5c0c8
+device_descriptor=usb=0x0200 vid=0x4353 pid=0x4b4d ep0=64
+entry_point_status=not_identified

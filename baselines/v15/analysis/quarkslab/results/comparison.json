@@ -1,0 +1,418 @@
+{
+  "classification_policy": {
+    "exhaustive": "aligned sweep; may decode data and cannot establish a function by itself",
+    "recursive": "flow-followed and internal-pointer-seeded; still heuristic",
+    "zero_xref": "not absence when decoder/p-code errors or incomplete coverage remain"
+  },
+  "variants": {
+    "kagaimiq-patched": {
+      "errors": {
+        "constant_propagation_exception": 2,
+        "cross_build_error": 0,
+        "delay_slot_context_error": 0,
+        "pcode_error": 153,
+        "report_script_error": 0,
+        "unresolved_constructor": 153
+      },
+      "metrics": {
+        "exhaustive": {
+          "branch_instruction_count": 10679,
+          "call_instruction_count": 7370,
+          "code_region_bytes": 356352,
+          "computed_flow_count": 552,
+          "decoded_byte_percent_x1000": 59979,
+          "direct_call_reference_count": 6720,
+          "evidence_pcode_constant_count": 178,
+          "evidence_reference_count": 6,
+          "evidence_scalar_count": 178,
+          "function_count": 1375,
+          "instruction_bytes": 213736,
+          "instruction_count": 91248,
+          "no_pcode_instruction_count": 1043,
+          "pcode_exception_count": 0,
+          "undecoded_even_slots": 71308
+        },
+        "recursive": {
+          "branch_instruction_count": 204,
+          "call_instruction_count": 198,
+          "code_region_bytes": 356352,
+          "computed_flow_count": 0,
+          "decoded_byte_percent_x1000": 1296,
+          "direct_call_reference_count": 184,
+          "evidence_pcode_constant_count": 6,
+          "evidence_reference_count": 0,
+          "evidence_scalar_count": 6,
+          "function_count": 133,
+          "instruction_bytes": 4618,
+          "instruction_count": 1893,
+          "no_pcode_instruction_count": 79,
+          "pcode_exception_count": 0,
+          "undecoded_even_slots": 175867
+        }
+      },
+      "path": "baselines/v15/analysis/quarkslab/results/kagaimiq-patched-headless.log",
+      "provenance": {
+        "image_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055 (GhidraScript)",
+        "image_size": "617012 (GhidraScript)",
+        "language": "pi32v2:LE:32:default (GhidraScript)",
+        "mapped_memory_base": "02000000 (GhidraScript)",
+        "program_image_base_metadata": "00000000 (GhidraScript)",
+        "script_args": "[/Users/spectrum/Documents/SMK37ProMod/baselines/v15/analysis/quarkslab/results/kagaimiq-patched] (GhidraScript)"
+      },
+      "raw_pointer_counts": {
+        "midi_in_cs_endpoint": {
+          "exact": 0,
+          "interior": 0
+        },
+        "midi_in_endpoint": {
+          "exact": 0,
+          "interior": 0
+        },
+        "midi_jack_graph": {
+          "exact": 0,
+          "interior": 0
+        },
+        "midi_out_cs_endpoint": {
+          "exact": 0,
+          "interior": 0
+        },
+        "midi_out_endpoint": {
+          "exact": 0,
+          "interior": 0
+        },
+        "midi_product_utf16le": {
+          "exact": 0,
+          "interior": 0
+        },
+        "midi_route_ascii": {
+          "exact": 0,
+          "interior": 0
+        },
+        "midi_streaming_header": {
+          "exact": 0,
+          "interior": 0
+        },
+        "midi_streaming_interface": {
+          "exact": 0,
+          "interior": 0
+        },
+        "usb_device_descriptor": {
+          "exact": 0,
+          "interior": 0
+        },
+        "usb_midi_cin_payload_lengths": {
+          "exact": 0,
+          "interior": 0
+        }
+      },
+      "target_xref_counts": {
+        "exhaustive": {
+          "midi_in_cs_endpoint": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_in_endpoint": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_jack_graph": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_out_cs_endpoint": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_out_endpoint": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_product_utf16le": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_route_ascii": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_streaming_header": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_streaming_interface": {
+            "exact": 0,
+            "interior": 0
+          },
+          "usb_device_descriptor": {
+            "exact": 0,
+            "interior": 0
+          },
+          "usb_midi_cin_payload_lengths": {
+            "exact": 0,
+            "interior": 0
+          }
+        },
+        "recursive": {
+          "midi_in_cs_endpoint": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_in_endpoint": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_jack_graph": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_out_cs_endpoint": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_out_endpoint": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_product_utf16le": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_route_ascii": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_streaming_header": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_streaming_interface": {
+            "exact": 0,
+            "interior": 0
+          },
+          "usb_device_descriptor": {
+            "exact": 0,
+            "interior": 0
+          },
+          "usb_midi_cin_payload_lengths": {
+            "exact": 0,
+            "interior": 0
+          }
+        }
+      },
+      "target_xrefs": []
+    },
+    "quarkslab": {
+      "errors": {
+        "constant_propagation_exception": 0,
+        "cross_build_error": 2,
+        "delay_slot_context_error": 357,
+        "pcode_error": 1831,
+        "report_script_error": 0,
+        "unresolved_constructor": 394
+      },
+      "metrics": {
+        "exhaustive": {
+          "branch_instruction_count": 14786,
+          "call_instruction_count": 8227,
+          "code_region_bytes": 356352,
+          "computed_flow_count": 725,
+          "decoded_byte_percent_x1000": 91205,
+          "direct_call_reference_count": 7831,
+          "evidence_pcode_constant_count": 206,
+          "evidence_reference_count": 759,
+          "evidence_scalar_count": 206,
+          "function_count": 1668,
+          "instruction_bytes": 325010,
+          "instruction_count": 112211,
+          "no_pcode_instruction_count": 0,
+          "pcode_exception_count": 0,
+          "undecoded_even_slots": 15671
+        },
+        "recursive": {
+          "branch_instruction_count": 6713,
+          "call_instruction_count": 4430,
+          "code_region_bytes": 356352,
+          "computed_flow_count": 271,
+          "decoded_byte_percent_x1000": 41906,
+          "direct_call_reference_count": 4214,
+          "evidence_pcode_constant_count": 98,
+          "evidence_reference_count": 479,
+          "evidence_scalar_count": 98,
+          "function_count": 1055,
+          "instruction_bytes": 149332,
+          "instruction_count": 51089,
+          "no_pcode_instruction_count": 0,
+          "pcode_exception_count": 0,
+          "undecoded_even_slots": 103510
+        }
+      },
+      "path": "baselines/v15/analysis/quarkslab/results/quarkslab-headless.log",
+      "provenance": {
+        "image_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055 (GhidraScript)",
+        "image_size": "617012 (GhidraScript)",
+        "language": "pi32v2:LE:32:default (GhidraScript)",
+        "mapped_memory_base": "02000000 (GhidraScript)",
+        "program_image_base_metadata": "00000000 (GhidraScript)",
+        "script_args": "[/Users/spectrum/Documents/SMK37ProMod/baselines/v15/analysis/quarkslab/results/quarkslab] (GhidraScript)"
+      },
+      "raw_pointer_counts": {
+        "midi_in_cs_endpoint": {
+          "exact": 0,
+          "interior": 0
+        },
+        "midi_in_endpoint": {
+          "exact": 0,
+          "interior": 0
+        },
+        "midi_jack_graph": {
+          "exact": 0,
+          "interior": 0
+        },
+        "midi_out_cs_endpoint": {
+          "exact": 0,
+          "interior": 0
+        },
+        "midi_out_endpoint": {
+          "exact": 0,
+          "interior": 0
+        },
+        "midi_product_utf16le": {
+          "exact": 0,
+          "interior": 0
+        },
+        "midi_route_ascii": {
+          "exact": 0,
+          "interior": 0
+        },
+        "midi_streaming_header": {
+          "exact": 0,
+          "interior": 0
+        },
+        "midi_streaming_interface": {
+          "exact": 0,
+          "interior": 0
+        },
+        "usb_device_descriptor": {
+          "exact": 0,
+          "interior": 0
+        },
+        "usb_midi_cin_payload_lengths": {
+          "exact": 0,
+          "interior": 0
+        }
+      },
+      "target_xref_counts": {
+        "exhaustive": {
+          "midi_in_cs_endpoint": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_in_endpoint": {
+            "exact": 0,
+            "interior": 2
+          },
+          "midi_jack_graph": {
+            "exact": 0,
+            "interior": 3
+          },
+          "midi_out_cs_endpoint": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_out_endpoint": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_product_utf16le": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_route_ascii": {
+            "exact": 0,
+            "interior": 3
+          },
+          "midi_streaming_header": {
+            "exact": 2,
+            "interior": 0
+          },
+          "midi_streaming_interface": {
+            "exact": 0,
+            "interior": 0
+          },
+          "usb_device_descriptor": {
+            "exact": 0,
+            "interior": 0
+          },
+          "usb_midi_cin_payload_lengths": {
+            "exact": 0,
+            "interior": 1
+          }
+        },
+        "recursive": {
+          "midi_in_cs_endpoint": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_in_endpoint": {
+            "exact": 0,
+            "interior": 1
+          },
+          "midi_jack_graph": {
+            "exact": 0,
+            "interior": 2
+          },
+          "midi_out_cs_endpoint": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_out_endpoint": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_product_utf16le": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_route_ascii": {
+            "exact": 0,
+            "interior": 0
+          },
+          "midi_streaming_header": {
+            "exact": 2,
+            "interior": 0
+          },
+          "midi_streaming_interface": {
+            "exact": 0,
+            "interior": 0
+          },
+          "usb_device_descriptor": {
+            "exact": 0,
+            "interior": 0
+          },
+          "usb_midi_cin_payload_lengths": {
+            "exact": 0,
+            "interior": 0
+          }
+        }
+      },
+      "target_xrefs": [
+        "TARGET_XREF phase=recursive target=midi_streaming_header from=02024dd2 to=020579b7 type=PARAM source=ANALYSIS function=FUN_02024d4c@02024d4c (GhidraScript)",
+        "TARGET_XREF phase=recursive target=midi_streaming_header from=02024da2 to=020579b7 type=PARAM source=ANALYSIS function=FUN_02024d4c@02024d4c (GhidraScript)",
+        "TARGET_XREF phase=recursive target=midi_in_endpoint from=02027a36 to=02057fc8 type=DATA source=ANALYSIS function=- (GhidraScript)",
+        "TARGET_XREF phase=recursive target=midi_jack_graph from=020277d4 to=02058278 type=PARAM source=ANALYSIS function=- (GhidraScript)",
+        "TARGET_XREF phase=recursive target=midi_jack_graph from=0205827e to=02058280 type=DATA source=ANALYSIS function=- (GhidraScript)",
+        "TARGET_XREF phase=exhaustive target=midi_route_ascii from=02005010 to=0205773c type=PARAM source=ANALYSIS function=FUN_02004f06@02004f06 (GhidraScript)",
+        "TARGET_XREF phase=exhaustive target=midi_route_ascii from=02005026 to=02057742 type=READ source=ANALYSIS function=FUN_02004f06@02004f06 (GhidraScript)",
+        "TARGET_XREF phase=exhaustive target=midi_route_ascii from=02005026 to=02057744 type=READ source=ANALYSIS function=FUN_02004f06@02004f06 (GhidraScript)",
+        "TARGET_XREF phase=exhaustive target=midi_streaming_header from=02024dd2 to=020579b7 type=PARAM source=ANALYSIS function=FUN_02024d4c@02024d4c (GhidraScript)",
+        "TARGET_XREF phase=exhaustive target=midi_streaming_header from=02024da2 to=020579b7 type=PARAM source=ANALYSIS function=FUN_02024d4c@02024d4c (GhidraScript)",
+        "TARGET_XREF phase=exhaustive target=usb_midi_cin_payload_lengths from=0200100c to=02057abe type=PARAM source=ANALYSIS function=- (GhidraScript)",
+        "TARGET_XREF phase=exhaustive target=midi_in_endpoint from=02027a36 to=02057fc8 type=DATA source=ANALYSIS function=- (GhidraScript)",
+        "TARGET_XREF phase=exhaustive target=midi_in_endpoint from=02055be2 to=02057fc8 type=CONDITIONAL_JUMP source=DEFAULT function=- (GhidraScript)",
+        "TARGET_XREF phase=exhaustive target=midi_jack_graph from=020277d4 to=02058278 type=PARAM source=ANALYSIS function=- (GhidraScript)",
+        "TARGET_XREF phase=exhaustive target=midi_jack_graph from=0205827e to=02058280 type=DATA source=ANALYSIS function=- (GhidraScript)",
+        "TARGET_XREF phase=exhaustive target=midi_jack_graph from=020096a6 to=0205829c type=PARAM source=ANALYSIS function=- (GhidraScript)"
+      ]
+    }
+  }
+}

@@ -1,0 +1,957 @@
+{
+  "archives": {
+    "cpu/wl82/liba/audio_server.a": [
+      {
+        "format": "llvm-bitcode",
+        "name": "midi_ctrl_decoder.c.o",
+        "sha256": "b689323c0f1b5a12c23b29289bf4a9784c7bbe4d5a62ebfc621d29c41d3f7e88",
+        "size": 29788
+      },
+      {
+        "format": "llvm-bitcode",
+        "name": "midi_dec.c.o",
+        "sha256": "65bcde837323646284b04e8f4eb3237e823b13753efdf1722ded9ca6676517c5",
+        "size": 115972
+      },
+      {
+        "format": "llvm-bitcode",
+        "name": "midi_event.c.o",
+        "sha256": "1e687cac28d974bf9f04f4a608edff64e9d7816223f9fc5aad5852950806552f",
+        "size": 115568
+      },
+      {
+        "format": "llvm-bitcode",
+        "name": "midi_play.c.o",
+        "sha256": "b5d70cddb12d8bffbd55a58323a716b7ad63c7dd6e5d6edd2558635a38b01143",
+        "size": 73944
+      }
+    ],
+    "cpu/wl82/liba/lib_midi_dec.a": [
+      {
+        "format": "llvm-bitcode",
+        "name": "midi_fread_tone.o",
+        "sha256": "9e40881f024389b7a7586337735daf627a7ff55ec517476e75f8a9475a333a0a",
+        "size": 19268
+      },
+      {
+        "format": "llvm-bitcode",
+        "name": "midi_synth.o",
+        "sha256": "cdf37140e8ed16cf5fd9584f68eae03f45c838998893e4e6f264342fa2834460",
+        "size": 62952
+      },
+      {
+        "format": "llvm-bitcode",
+        "name": "midi_tabs.o",
+        "sha256": "bdbcbc023669ee799ddc10aab51660b2844766d3793e445542e31e45bcb95c7f",
+        "size": 1888
+      }
+    ]
+  },
+  "format": "smk37-v15-pinned-ac79-sdk-signatures-v1",
+  "inputs": {
+    "app": {
+      "runtime_base": 33554432,
+      "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "size": 617012
+    },
+    "files": {
+      "cpu/wl82/liba/audio_server.a": {
+        "sha256": "16de11ce1f363f37cdc9c1e84cb169ebdc3bfc802d6f932172bcb40f07d2f6ae",
+        "size": 2109722
+      },
+      "cpu/wl82/liba/lib_midi_dec.a": {
+        "sha256": "3f4a38dbec69eb2f85c56838eaa461252c8ee0e419211d06aebf46ce9bc62f03",
+        "size": 84628
+      },
+      "cpu/wl82/tools/loader_tools/sdk.elf": {
+        "sha256": "250b0534fee9f57208b42e38c97c36982875fac901db1d9979e781f0d26e0cf3",
+        "size": 1295788
+      }
+    },
+    "sdk_commit": "e30b1ee375d1f2993fc23bf92c8b99006a6e5f9d"
+  },
+  "policy": "Exact and relocation-aware matches are anchors. A v15 synth/API identity requires two independent specific matches.",
+  "sdk_elf_exact": {
+    "all_matches": [
+      {
+        "app_address": 33555576,
+        "app_offset": 1144,
+        "body_sha256": "0e7916a3dd1c3c41aa8ad2cd837d44a7faa49b38435551835da7dc0aced05755",
+        "name": "sp_ovf_unen",
+        "sdk_address": 33574920,
+        "size": 20
+      },
+      {
+        "app_address": 33559766,
+        "app_offset": 5334,
+        "body_sha256": "c8ff8b77f3765a1098538276d477964d00a8e5bad699b36ed3af883f9b06d22e",
+        "name": "disable_int",
+        "sdk_address": 33555562,
+        "size": 12
+      },
+      {
+        "app_address": 33559778,
+        "app_offset": 5346,
+        "body_sha256": "f3541a52163d009d3ef53517120a30100f967a69f85004a8974a9fb3ca99e1bd",
+        "name": "enable_int",
+        "sdk_address": 33555574,
+        "size": 12
+      },
+      {
+        "app_address": 33559790,
+        "app_offset": 5358,
+        "body_sha256": "a769261d70ac72da7e73325aba8d2649b4f2f12468bdacd80b2f7f37071fd699",
+        "name": "interrupt_init",
+        "sdk_address": 33555586,
+        "size": 60
+      },
+      {
+        "app_address": 33563638,
+        "app_offset": 9206,
+        "body_sha256": "b77701d9f32ea44ed8a4d308077676200fcc102b3bd79b9f68a24bec6bfd2a87",
+        "name": "LP_NK",
+        "sdk_address": 33564354,
+        "size": 46
+      },
+      {
+        "app_address": 33570608,
+        "app_offset": 16176,
+        "body_sha256": "dcb555b6d1b97392c15d8b809a514b2a49788b1eee6c12ab4455b52cb99a2623",
+        "name": "usb_set_pull_up",
+        "sdk_address": 33570364,
+        "size": 66
+      },
+      {
+        "app_address": 33570896,
+        "app_offset": 16464,
+        "body_sha256": "9844c76ba7d3d9c1ffd43030dca15ea3ca6c77edbb13ab506d29c3acdc7000d9",
+        "name": "usb_set_pull_down",
+        "sdk_address": 33570674,
+        "size": 84
+      },
+      {
+        "app_address": 33571180,
+        "app_offset": 16748,
+        "body_sha256": "8c652c911be4c49f1d3cd0968e4a31e87dee5fc34af996657162838ddfb10709",
+        "name": "usb_set_direction",
+        "sdk_address": 33569896,
+        "size": 38
+      },
+      {
+        "app_address": 33571218,
+        "app_offset": 16786,
+        "body_sha256": "bc1b0a6316279f886fea689d7ebbba686d119a8bea4ba238755acc7f7b88a593",
+        "name": "usb_output",
+        "sdk_address": 33569934,
+        "size": 94
+      },
+      {
+        "app_address": 33571580,
+        "app_offset": 17148,
+        "body_sha256": "54b7cefa1260374794dd955625a14af34d92cd27ec04fafd857e676241c1c3ff",
+        "name": "usb_set_die",
+        "sdk_address": 33571002,
+        "size": 38
+      },
+      {
+        "app_address": 33572410,
+        "app_offset": 17978,
+        "body_sha256": "bc02972af508ef99f54ffc286f685d52a80533aead5f7931966ba43962a11aeb",
+        "name": "fget_attrs",
+        "sdk_address": 33598966,
+        "size": 20
+      },
+      {
+        "app_address": 33572456,
+        "app_offset": 18024,
+        "body_sha256": "16e39a1e0988cc64abde9a4ff07aec97a197dc278668024ee4854b424f945c55",
+        "name": "dev_ioctl",
+        "sdk_address": 33598986,
+        "size": 16
+      },
+      {
+        "app_address": 33572996,
+        "app_offset": 18564,
+        "body_sha256": "3f6c16c36e893d2b70eeacffaf5774f1693782380feae2c047fe18b03a6d75a8",
+        "name": "_pow",
+        "sdk_address": 33600222,
+        "size": 18
+      },
+      {
+        "app_address": 33740710,
+        "app_offset": 186278,
+        "body_sha256": "4bb7ab9ae94abdb00df6f6b9880bfc7a5c93a522d05f98a96213f8307c4f6313",
+        "name": "sdfile_str_to_upper",
+        "sdk_address": 33606440,
+        "size": 26
+      },
+      {
+        "app_address": 33740822,
+        "app_offset": 186390,
+        "body_sha256": "964b24528e5a2d6db59cd317e841b474c74ddee52a75154617ad1b5cfecf2698",
+        "name": "sdfile_strcase_cmp",
+        "sdk_address": 33606552,
+        "size": 134
+      },
+      {
+        "app_address": 33741306,
+        "app_offset": 186874,
+        "body_sha256": "af4ec6b546dd80734f2d15e6a98528b084803f51a6212bcfbb1bcfd54e9863fb",
+        "name": "sdfile_open_spc_part_file",
+        "sdk_address": 33607028,
+        "size": 26
+      },
+      {
+        "app_address": 33742136,
+        "app_offset": 187704,
+        "body_sha256": "fd0815005c685c2cddd090cbc92e39d0e9a45a2a3b25390752a5e79fcaafba60",
+        "name": "sdfile_seek",
+        "sdk_address": 33607890,
+        "size": 34
+      },
+      {
+        "app_address": 33742170,
+        "app_offset": 187738,
+        "body_sha256": "4c98bd5cd816fdc885d9b04ef1504ba10996c0947683453e20c399edceb0a1ff",
+        "name": "sdfile_len",
+        "sdk_address": 33607924,
+        "size": 14
+      },
+      {
+        "app_address": 33742184,
+        "app_offset": 187752,
+        "body_sha256": "714432b4f39f3c6fbd574216527171c2c60492464fda3aaac3b6f9354d97c035",
+        "name": "sdfile_pos",
+        "sdk_address": 33607938,
+        "size": 14
+      },
+      {
+        "app_address": 33742198,
+        "app_offset": 187766,
+        "body_sha256": "d270bf43334cc0361ad7220b1051891e1f4de526d9d195f9b2bd2dc05a6e596a",
+        "name": "sdfile_get_name",
+        "sdk_address": 33607952,
+        "size": 42
+      },
+      {
+        "app_address": 33742348,
+        "app_offset": 187916,
+        "body_sha256": "20d92463b529b6e4945981d2269c5e377e0d08248c2894a6ffb56b65973ed986",
+        "name": "sdfile_get_attrs",
+        "sdk_address": 33609494,
+        "size": 36
+      },
+      {
+        "app_address": 33743146,
+        "app_offset": 188714,
+        "body_sha256": "3815c62f73d092c2edb15fe05e4a24e3819911cf7970626303797be4b0bfe12c",
+        "name": "ASCII_StrCmp",
+        "sdk_address": 33571806,
+        "size": 58
+      },
+      {
+        "app_address": 33744046,
+        "app_offset": 189614,
+        "body_sha256": "be2f65b5884780c7a7c0e1d1194c5ba75f8a851b847235ce5c2039e02cff7f84",
+        "name": "get_powerof2",
+        "sdk_address": 33611990,
+        "size": 12
+      },
+      {
+        "app_address": 33744068,
+        "app_offset": 189636,
+        "body_sha256": "85c33a89657b50aecfea77369e48af03baa5b04f04473391cd2677924881bbfe",
+        "name": "ld_dword_func",
+        "sdk_address": 33612012,
+        "size": 22
+      },
+      {
+        "app_address": 33744090,
+        "app_offset": 189658,
+        "body_sha256": "9f8bdf06e52324c5a5143eada735401ab3fcd16e18615a6c8ee36e876db04b10",
+        "name": "check_dpt",
+        "sdk_address": 33612034,
+        "size": 80
+      },
+      {
+        "app_address": 33744802,
+        "app_offset": 190370,
+        "body_sha256": "2b703e7f8cef719539a1152792df47af3571fc04e9b9380fb884c5ccd42c13d8",
+        "name": "sync_window",
+        "sdk_address": 33612796,
+        "size": 66
+      },
+      {
+        "app_address": 33744868,
+        "app_offset": 190436,
+        "body_sha256": "30e44d5f30b3ffb79913944835b436575b7f34cfc8fad3fc76b6cb1eb05ac4fa",
+        "name": "move_window",
+        "sdk_address": 33612862,
+        "size": 86
+      },
+      {
+        "app_address": 33745906,
+        "app_offset": 191474,
+        "body_sha256": "1872a3d1211193c75cc30ecdd048171b449d2cdcfc2b6ca34990bbf498275233",
+        "name": "st_dword_func",
+        "sdk_address": 33614004,
+        "size": 16
+      },
+      {
+        "app_address": 33745922,
+        "app_offset": 191490,
+        "body_sha256": "a5b8d7f53b257c90083b81e6b8b3c5818b848815bdd5242266df0967c61458a3",
+        "name": "st_qword",
+        "sdk_address": 33614020,
+        "size": 64
+      },
+      {
+        "app_address": 33749824,
+        "app_offset": 195392,
+        "body_sha256": "3f6bd5f96de087a5b0f813c9a5116a96c816736f9bf1430cb0a71ff93729a5ed",
+        "name": "ASCII_ToLower",
+        "sdk_address": 33618478,
+        "size": 38
+      },
+      {
+        "app_address": 33749862,
+        "app_offset": 195430,
+        "body_sha256": "c3c97ba284539056d420fa1f9350368499ebccc8befe1b9a728e0e91c7c20911",
+        "name": "ASCII_ToUpper",
+        "sdk_address": 33618516,
+        "size": 38
+      },
+      {
+        "app_address": 33752008,
+        "app_offset": 197576,
+        "body_sha256": "5aedcd8e0fc9fd1f823f39224b9a66f13a8b640a83de02510892631375a63227",
+        "name": "__fat_fget_free_space",
+        "sdk_address": 33620866,
+        "size": 20
+      },
+      {
+        "app_address": 33752560,
+        "app_offset": 198128,
+        "body_sha256": "90762be71a856655130311007b29459bf528c02f6ce828f801e81304172d844d",
+        "name": "ASCII_IntToStr",
+        "sdk_address": 33621418,
+        "size": 42
+      },
+      {
+        "app_address": 33752834,
+        "app_offset": 198402,
+        "body_sha256": "dfa739d3495d02b7e0de0f8c479a52c92f922287c13a0118279720b6607aeb7d",
+        "name": "my_pow10",
+        "sdk_address": 33621762,
+        "size": 20
+      },
+      {
+        "app_address": 33753468,
+        "app_offset": 199036,
+        "body_sha256": "e92133da1e1aa94a53e8d2a0db1399bd495ec0d3d304434c47f834a634e1405e",
+        "name": "long_name_fix",
+        "sdk_address": 33622396,
+        "size": 56
+      },
+      {
+        "app_address": 33753776,
+        "app_offset": 199344,
+        "body_sha256": "4bef7380e64a2194551e6ef90b12d1af8dec01779cdad222b69a084a6569fe4e",
+        "name": "check_space",
+        "sdk_address": 33622704,
+        "size": 26
+      },
+      {
+        "app_address": 33753802,
+        "app_offset": 199370,
+        "body_sha256": "4d8e6964988926111b68e8f6f88729b5f04235b2a1b80c09e9de565734602359",
+        "name": "create_name",
+        "sdk_address": 33622730,
+        "size": 88
+      },
+      {
+        "app_address": 33753890,
+        "app_offset": 199458,
+        "body_sha256": "0cc5abf79290c181a2755b298e7968720b42a0e7506e6f41b5ca08843d1019ef",
+        "name": "load_dirinfo",
+        "sdk_address": 33622818,
+        "size": 20
+      },
+      {
+        "app_address": 33754284,
+        "app_offset": 199852,
+        "body_sha256": "431efaf3e5848de84e5ed6e4b5fd43c802b629744a2c89b358debc3769985899",
+        "name": "xdir_sum",
+        "sdk_address": 33623220,
+        "size": 42
+      },
+      {
+        "app_address": 33755554,
+        "app_offset": 201122,
+        "body_sha256": "e04b6fdaeb36f1a53420acd29646753188c07e9ac7ee5e488b6615107f1c5f4d",
+        "name": "fs_Caculatechecksum",
+        "sdk_address": 33624502,
+        "size": 32
+      },
+      {
+        "app_address": 33761508,
+        "app_offset": 207076,
+        "body_sha256": "a9247fb9daa246a27b8f7e3796ec9ba13b78a71b776d1b12f84962dae5315e4c",
+        "name": "__fat_fseek",
+        "sdk_address": 33630548,
+        "size": 16
+      },
+      {
+        "app_address": 33763900,
+        "app_offset": 209468,
+        "body_sha256": "5975820acf16eb89ca441c7398b2f774e1d304e270ced7cccbee0fb1b52925b3",
+        "name": "ff_delete_file",
+        "sdk_address": 33633078,
+        "size": 226
+      },
+      {
+        "app_address": 33764794,
+        "app_offset": 210362,
+        "body_sha256": "f00fadc47a78adf10b9a736e10bd9b58809ea1ac992ad71dd5f3a1a4c76ab173",
+        "name": "__fat_fdelete",
+        "sdk_address": 33633972,
+        "size": 36
+      },
+      {
+        "app_address": 33766488,
+        "app_offset": 212056,
+        "body_sha256": "85328ca4f09d0afab2baa6ae74bbd42483cde2695d95717794a76304e5878c9e",
+        "name": "decode_lfn",
+        "sdk_address": 33635802,
+        "size": 154
+      },
+      {
+        "app_address": 33766822,
+        "app_offset": 212390,
+        "body_sha256": "d22ee01ae9329664311506b258a4337e16b19dc50db358b244672fd05d0ee18e",
+        "name": "fs_load_file",
+        "sdk_address": 33636136,
+        "size": 66
+      },
+      {
+        "app_address": 33767512,
+        "app_offset": 213080,
+        "body_sha256": "ccbfdabaa5c027657e4d616c0a0de22a080f15cdbb8a044c60853dd238722058",
+        "name": "get_last_file",
+        "sdk_address": 33636864,
+        "size": 42
+      },
+      {
+        "app_address": 33767554,
+        "app_offset": 213122,
+        "body_sha256": "9dfb2caacaa17559248f5fe3c0e4d67cdeb3f570e27a75baeeb518e3a9522326",
+        "name": "get_first_file",
+        "sdk_address": 33636906,
+        "size": 36
+      },
+      {
+        "app_address": 33767590,
+        "app_offset": 213158,
+        "body_sha256": "3249a3b4142abb3a70317ec1773c89acbbfec5cdf4bfa1c7bebd14d71a9bbea1",
+        "name": "get_next_file",
+        "sdk_address": 33636942,
+        "size": 34
+      },
+      {
+        "app_address": 33767624,
+        "app_offset": 213192,
+        "body_sha256": "cae19de1a7d2d7657281cc0755218f3c97c6ecc0682964fec14d58c81571f2c3",
+        "name": "get_prev_file",
+        "sdk_address": 33636976,
+        "size": 34
+      },
+      {
+        "app_address": 33767658,
+        "app_offset": 213226,
+        "body_sha256": "6e7864029f102dd925fa098b8a1d48c2562c43861fb553c20804dea093ea402b",
+        "name": "get_file_by_number",
+        "sdk_address": 33637010,
+        "size": 100
+      },
+      {
+        "app_address": 33769026,
+        "app_offset": 214594,
+        "body_sha256": "efdb66d60a33325344382af0b3c83904ec13c61480d443d8df3111c5d5156490",
+        "name": "__fat_fget_attr",
+        "sdk_address": 33638378,
+        "size": 32
+      },
+      {
+        "app_address": 33769060,
+        "app_offset": 214628,
+        "body_sha256": "a54304004e65aa831328a3555052b359780a18926cbab93015b954a0e511e80a",
+        "name": "fattime2systime",
+        "sdk_address": 33638436,
+        "size": 42
+      },
+      {
+        "app_address": 33769102,
+        "app_offset": 214670,
+        "body_sha256": "f5f55de10176da63538c9ab4e07efac3a55661aeab22afcebc69087fb70d7040",
+        "name": "__fat_fget_attrs",
+        "sdk_address": 33638478,
+        "size": 70
+      },
+      {
+        "app_address": 33773568,
+        "app_offset": 219136,
+        "body_sha256": "d2735a7d0bca4fe263b4dd3ad995171111f8959c4f64cd23a4aea0cb68e3891c",
+        "name": "sdfile_fat_flen",
+        "sdk_address": 33643028,
+        "size": 12
+      },
+      {
+        "app_address": 33773842,
+        "app_offset": 219410,
+        "body_sha256": "66efac10c333b6a96517804d4c6bc23961ac3ab79daeff100e30667a3c2e132d",
+        "name": "store_number",
+        "sdk_address": 33643302,
+        "size": 20
+      },
+      {
+        "app_address": 33773862,
+        "app_offset": 219430,
+        "body_sha256": "170e3f2a6f592c6ef47a458c1ff58087d36a5acf21980ef0947dc0b04e482195",
+        "name": "seach_file_by_number",
+        "sdk_address": 33643322,
+        "size": 36
+      },
+      {
+        "app_address": 33773898,
+        "app_offset": 219466,
+        "body_sha256": "d438c874bc73f1b399c0cf61d07aabb4071a7be03444329234b3f6e7f48c563b",
+        "name": "seach_file_by_clust",
+        "sdk_address": 33643358,
+        "size": 36
+      },
+      {
+        "app_address": 33781968,
+        "app_offset": 227536,
+        "body_sha256": "524b17fb1c98d718619648cae79f3b67d794125c81337f439723950b4efcc133",
+        "name": "vm_check_id",
+        "sdk_address": 33605080,
+        "size": 14
+      },
+      {
+        "app_address": 33783334,
+        "app_offset": 228902,
+        "body_sha256": "8aa7da92e5cdb599d7cf24765905fcbad087d8d7745f49fbffa804607803863f",
+        "name": "syscfg_bin_check_id",
+        "sdk_address": 33599540,
+        "size": 14
+      },
+      {
+        "app_address": 33783636,
+        "app_offset": 229204,
+        "body_sha256": "31d6bf76f1da42e6c5eb5c43516d03f6955d2608185c483ad8c9a774b451c665",
+        "name": "syscfg_bin_group_read",
+        "sdk_address": 33599842,
+        "size": 14
+      },
+      {
+        "app_address": 33783718,
+        "app_offset": 229286,
+        "body_sha256": "74a0bc95e43ed694e760658fddf1fe01abbf6ec9cc7ec42e53e363db96fd1f94",
+        "name": "syscfg_bin_ptr_read",
+        "sdk_address": 33599924,
+        "size": 76
+      },
+      {
+        "app_address": 33786418,
+        "app_offset": 231986,
+        "body_sha256": "0a182ad53218d8e7dd7c6974cb845793cb164842c42d594804ac784e661311c7",
+        "name": "dac_idle_query",
+        "sdk_address": 33585686,
+        "size": 18
+      },
+      {
+        "app_address": 33788550,
+        "app_offset": 234118,
+        "body_sha256": "6c7e4f1cb7a021f9dda8410c016e4fa902dd94e3569700acdb1a5a024c625afe",
+        "name": "ecvtbuf",
+        "sdk_address": 33556816,
+        "size": 24
+      },
+      {
+        "app_address": 33793424,
+        "app_offset": 238992,
+        "body_sha256": "d462ad6eb761277ad32b3a6b9f85af5ae06022133249466fcac96be1ea06db20",
+        "name": "mktime",
+        "sdk_address": 33648956,
+        "size": 104
+      },
+      {
+        "app_address": 33852566,
+        "app_offset": 298134,
+        "body_sha256": "2629c8815cb3dadd1bab28610ac721b12a5b55978ed3cb68a8190d30da6a8c23",
+        "name": "memcmp",
+        "sdk_address": 33649076,
+        "size": 56
+      },
+      {
+        "app_address": 33852816,
+        "app_offset": 298384,
+        "body_sha256": "ca062c2e056dbbf795ca5709954175b26086d75a4ec5c9414b39fef5f0ad0842",
+        "name": "strcat",
+        "sdk_address": 33650224,
+        "size": 24
+      },
+      {
+        "app_address": 33852840,
+        "app_offset": 298408,
+        "body_sha256": "a8d49e74f9324ed9c000916fa6a8df7ca214c0b8fc78da9b2935f0ef27061fcd",
+        "name": "strchr",
+        "sdk_address": 33649132,
+        "size": 20
+      },
+      {
+        "app_address": 33853130,
+        "app_offset": 298698,
+        "body_sha256": "97e4c7bad7c6ce9717169ef76bfb687634fd030f3aa0cd9d2e76925ff6e674cc",
+        "name": "strlen",
+        "sdk_address": 33649422,
+        "size": 12
+      },
+      {
+        "app_address": 33853142,
+        "app_offset": 298710,
+        "body_sha256": "531ed2c20edd5a3e52391f34119b5c3a8f7ec23908ae9e5e387bc2e9ee5184d3",
+        "name": "strncmp",
+        "sdk_address": 33649434,
+        "size": 26
+      },
+      {
+        "app_address": 33853168,
+        "app_offset": 298736,
+        "body_sha256": "b48f254e22b901c29e3697fb807800019fda89bcc614067c4e3df1fa804b19d2",
+        "name": "strnlen",
+        "sdk_address": 33650248,
+        "size": 20
+      },
+      {
+        "app_address": 33853224,
+        "app_offset": 298792,
+        "body_sha256": "7da33f39437e14c31ee94b901ce3dae3d223e5f4c574cc5f211c9ca9639407a6",
+        "name": "strstr",
+        "sdk_address": 33650304,
+        "size": 42
+      },
+      {
+        "app_address": 33853520,
+        "app_offset": 299088,
+        "body_sha256": "25d0d02b227dc5ba6d2eb7bee2024a26774826a94d07201e712454b16d82cd74",
+        "name": "rep_clz",
+        "sdk_address": 33650600,
+        "size": 30
+      },
+      {
+        "app_address": 33853550,
+        "app_offset": 299118,
+        "body_sha256": "ae22c118305cd320eefe079e9e327b0f0e8b42e3362885120aae8e32e2ea7bd0",
+        "name": "normalize",
+        "sdk_address": 33650630,
+        "size": 34
+      },
+      {
+        "app_address": 33854308,
+        "app_offset": 299876,
+        "body_sha256": "8fb12b9367386a0d3e7e9cdff98c3ea1cd790b51f0ac6a6ad747cca7aed79c77",
+        "name": "__cmpdf2",
+        "sdk_address": 33651388,
+        "size": 176
+      },
+      {
+        "app_address": 33854308,
+        "app_offset": 299876,
+        "body_sha256": "8fb12b9367386a0d3e7e9cdff98c3ea1cd790b51f0ac6a6ad747cca7aed79c77",
+        "name": "__ledf2",
+        "sdk_address": 33651388,
+        "size": 176
+      },
+      {
+        "app_address": 33854484,
+        "app_offset": 300052,
+        "body_sha256": "05d9e81aa856c16db4a49d14862a1dbdf68598cb40e41c00579fd5d6e5d0dfd7",
+        "name": "__gedf2",
+        "sdk_address": 33651564,
+        "size": 168
+      },
+      {
+        "app_address": 33854652,
+        "app_offset": 300220,
+        "body_sha256": "16626875c2099b1370ea760a6095ebe92571f2e7ee77c935607324b3c4f7c81c",
+        "name": "__unorddf2",
+        "sdk_address": 33651732,
+        "size": 64
+      },
+      {
+        "app_address": 33855562,
+        "app_offset": 301130,
+        "body_sha256": "b27266093a984bdc7ff05287149a6a5975a48feb0a880c6dd940d93e8b044dc8",
+        "name": "__floatsidf",
+        "sdk_address": 33652726,
+        "size": 76
+      },
+      {
+        "app_address": 33856572,
+        "app_offset": 302140,
+        "body_sha256": "2b08ed43a52b1abbd29ac80ff6f4d5018c01274640f283fcd897f5d7be1a2a49",
+        "name": "__fixdfsi",
+        "sdk_address": 33652642,
+        "size": 84
+      },
+      {
+        "app_address": 33939270,
+        "app_offset": 384838,
+        "body_sha256": "4d2855a5812a60d19526352d2d4acac3edd80762027024a39b4893f652d46da3",
+        "name": "clust2sect",
+        "sdk_address": 33674810,
+        "size": 54
+      },
+      {
+        "app_address": 33941710,
+        "app_offset": 387278,
+        "body_sha256": "571e6e8da262bbabb77ed13a9cab4f6c381abcdf685f4360d9440cc87ad94be6",
+        "name": "sdfile_fat_fseek",
+        "sdk_address": 33677312,
+        "size": 30
+      },
+      {
+        "app_address": 33951622,
+        "app_offset": 397190,
+        "body_sha256": "09e6a28ffaf3312b17651ca47fae18cd410c1cd1f902b138480a99f7e0344da2",
+        "name": "prvSearchForNameWithinSingleList",
+        "sdk_address": 33701704,
+        "size": 80
+      },
+      {
+        "app_address": 33951824,
+        "app_offset": 397392,
+        "body_sha256": "a6638b9ae8badf619a75091f3949b8d60662ad2f0bfb09fc4ef8d4f7e71a21c9",
+        "name": "vListInsertEnd",
+        "sdk_address": 33690916,
+        "size": 22
+      },
+      {
+        "app_address": 33954496,
+        "app_offset": 400064,
+        "body_sha256": "ae3324358c901b50e4e88da120be60f419d17d059f758ecf09643e92c63c965f",
+        "name": "vListInsert",
+        "sdk_address": 33691034,
+        "size": 42
+      },
+      {
+        "app_address": 33955432,
+        "app_offset": 401000,
+        "body_sha256": "52363e08dd2e7299ab7000725d7d2751c4bacaa0b797c7bc3127436edd665747",
+        "name": "vListInitialise",
+        "sdk_address": 33697840,
+        "size": 18
+      },
+      {
+        "app_address": 33964714,
+        "app_offset": 410282,
+        "body_sha256": "6f1edeab25825fedb6fb9acd41a1626a423aec712ff383305cc0f94f608c43a0",
+        "name": "clock_critical_enter.777",
+        "sdk_address": 33703056,
+        "size": 12
+      },
+      {
+        "app_address": 34132148,
+        "app_offset": 577716,
+        "body_sha256": "640b35085a61c2eb1f4a80e1b8eafe2afcbb7bdec1d52b10270b99851cab76e3",
+        "name": "sfc_nop_delay",
+        "sdk_address": 29360238,
+        "size": 22
+      },
+      {
+        "app_address": 34132170,
+        "app_offset": 577738,
+        "body_sha256": "b8fcefcb4d5deaba59f98a3471f7fe94a769f574948d851eda05196e897c9194",
+        "name": "spi_cs",
+        "sdk_address": 29360260,
+        "size": 32
+      },
+      {
+        "app_address": 34135488,
+        "app_offset": 581056,
+        "body_sha256": "f257f25d080eb85975e3a4b34a14f085321462118ccddc9d8313ef77c76a4323",
+        "name": "icache_flush",
+        "sdk_address": 29364332,
+        "size": 50
+      },
+      {
+        "app_address": 34136072,
+        "app_offset": 581640,
+        "body_sha256": "51b8559ad19172fe937e3baacdf5d5ca8c1e543edc81a426319d1278e238eae3",
+        "name": "p33_buf",
+        "sdk_address": 29364448,
+        "size": 26
+      },
+      {
+        "app_address": 34145954,
+        "app_offset": 591522,
+        "body_sha256": "9a3815b0b4a0e46449b6208b5a5f00da6a899e33c0abcc278447c3ac0790fef3",
+        "name": "dsp_corex_enter_hold",
+        "sdk_address": 29365354,
+        "size": 36
+      },
+      {
+        "app_address": 34146202,
+        "app_offset": 591770,
+        "body_sha256": "621603795268b8f80f99907bbac5ace41cbc902f7be0061031eafdbe31dff0e1",
+        "name": "dsp_corex_exit_hold",
+        "sdk_address": 29368620,
+        "size": 24
+      },
+      {
+        "app_address": 34151652,
+        "app_offset": 597220,
+        "body_sha256": "b0c46dd285ba458835e9764c93b9249fb4b62acf2d0c71f743bbe2fdc56196fc",
+        "name": "sys_clk_source_rc_clk_on",
+        "sdk_address": 29365168,
+        "size": 84
+      },
+      {
+        "app_address": 34151764,
+        "app_offset": 597332,
+        "body_sha256": "070a061302fcc078edc18085b24097b22efba718b2d148b9abff936b7caaae3e",
+        "name": "sys_clk_source_rc_clk_off",
+        "sdk_address": 29365274,
+        "size": 80
+      },
+      {
+        "app_address": 34154700,
+        "app_offset": 600268,
+        "body_sha256": "6694c6ac66b1155a29bed58234543667f7b272a27f7f5adb6c533dd5acd14dfe",
+        "name": "RC16M_udelay",
+        "sdk_address": 29365252,
+        "size": 22
+      }
+    ],
+    "functions_considered": 560,
+    "midi_named_matches": [],
+    "unique_exact_matches": 95,
+    "usb_anchors": [
+      {
+        "app_address": 33570608,
+        "app_offset": 16176,
+        "body_sha256": "dcb555b6d1b97392c15d8b809a514b2a49788b1eee6c12ab4455b52cb99a2623",
+        "name": "usb_set_pull_up",
+        "sdk_address": 33570364,
+        "size": 66
+      },
+      {
+        "app_address": 33570896,
+        "app_offset": 16464,
+        "body_sha256": "9844c76ba7d3d9c1ffd43030dca15ea3ca6c77edbb13ab506d29c3acdc7000d9",
+        "name": "usb_set_pull_down",
+        "sdk_address": 33570674,
+        "size": 84
+      },
+      {
+        "app_address": 33571180,
+        "app_offset": 16748,
+        "body_sha256": "8c652c911be4c49f1d3cd0968e4a31e87dee5fc34af996657162838ddfb10709",
+        "name": "usb_set_direction",
+        "sdk_address": 33569896,
+        "size": 38
+      },
+      {
+        "app_address": 33571218,
+        "app_offset": 16786,
+        "body_sha256": "bc1b0a6316279f886fea689d7ebbba686d119a8bea4ba238755acc7f7b88a593",
+        "name": "usb_output",
+        "sdk_address": 33569934,
+        "size": 94
+      },
+      {
+        "app_address": 33571580,
+        "app_offset": 17148,
+        "body_sha256": "54b7cefa1260374794dd955625a14af34d92cd27ec04fafd857e676241c1c3ff",
+        "name": "usb_set_die",
+        "sdk_address": 33571002,
+        "size": 38
+      }
+    ]
+  },
+  "v15_fingerprints": {
+    "eleven_pointer_runs": [
+      {
+        "addresses": [
+          33724690,
+          33724726,
+          33724788,
+          33724878,
+          33724914,
+          33724950,
+          33724974,
+          33724998,
+          33725048,
+          33725098,
+          33702814
+        ],
+        "offset": 361032
+      }
+    ],
+    "raw_regions": [
+      {
+        "address": 33558608,
+        "bytes": "7f04e290141605160bff01409301584071e13f00cdff6032c30131e880c070e1c00052eed407fc3fc521c01449e084024be090284ee08c054ce001004020249f10f85aee90f925e0c1ff50720502101841e0a008d8ee00614bff00466b018880a0185116621680ff127c040040e06101d8ecda10c41f65184020214140e06001d8ecda204ee06201d8ecda0eb4e0603a648c71e10f00e12001fc2bc084fd1004511658ee112012f804e012f802ee92f907f0b82752eed507fc3fa0161516049f81a4c2ff50720502211842e08009d8ee106241210481c12106ed061004ed0410d8ee522102fdf70181e80360d8eed10ed796b82752eed507fc3fc521a0160a160bff01401701d8eed0195840214990f851eed2ecd8181881d2ecd908d1187a37d8ee112b41e06101d8ecda21124ff93fd8ecda314fe06201d8ecda1f35e42170981cb4e0d01baa1e35e42167621680ff2a7b0400f21f0248d8ecda0fb4e0601db11880ff167b040000e180d500eb06007118fa3fa1198160c0ff5072050200e10b064121622080ff540c0600fc3fc521d8eed189d2ecd988d8eed18ea016d78f90f815e0d8eed1c97830d8eed10bd2ecd9c8d78250e89d3bd2ecd818b1ecffc11a81d2ecd928d118d8ee110bc79550e8563ad8eed00e405081a4c2ff50720502211842e08009d8ee10f236e1ffff86eda1408980dcee110a18815116621680ff7a7a040040e06101d8ecda10c41f6518402001f8740140e06001d8ecda204ee06201d8ecda0eb4e0f03a35e411732018911e35e411678980621680ff3e7a0400f21f0247d8ecda0e8980611880ff2c7a040000e180d500eb06007118fa3fa1198160c0ff5072050200e10b064121622080ff6a0b060040204ee08c05a78003fff800defe84fd0b04511658ee112012f810e112f80eef52e8023892fc0adf31e1080f01fc290d523d94e1221101f824018980d8ee110afc3fc52101e101a0044410d65a4012f81be140e06101d8ecda20402002f8140140e06001d8ecda304ae06201d8ecda0a35e421713018a91e35e411678980621680ff82790400f21f0247d8ecda0a8980611880ff7079040000e180d500eb06007118fa3fa1198160c0ff5072050200e10b064121622080ffae0a0600478402905f04",
+        "name": "raw_midi_stream_parser",
+        "offset": 4176,
+        "sha256": "d3ffb8bd02262c066e42d572fa5ae7c296fda9f2e2e3268905157e87e4b47ac2",
+        "size": 824
+      },
+      {
+        "address": 33678922,
+        "bytes": "77040b40c1ff6032c30113f80a2013f81d3e93f82c600a41a258084200f81cca5704422252ee17220a41084282f84ee6b0e800b010e1ac1360e07f23231610e1ac134220432050ec012057040a4182f83cfe084280f839fe402252ee170210e19c134120622080ffe0b40200570472e10f3092f82ac042e01c16d8ee102244e0e349421bc4ff20dec001421802e1b82073e1f030442045e0a00404952e5e86f810042e4086e80d304e1cd8ee6065864907f104170e42d8ed796407e12417d8ed7964c226c42184f8e9215704211842e09c13d8ee11025704",
+        "name": "product_midi_message_handler",
+        "offset": 124490,
+        "sha256": "25562e19c36d144159780b5987b4feb54d01a093ea026492d20ed5b0c563cbb9",
+        "size": 216
+      },
+      {
+        "address": 33739188,
+        "bytes": "b4e0a015d2ec7917684081f81f0e6a4190f81ce0684282f8196a6a4680f816b292f814ee10e1837f42f080ff09401219b1e11022f118d8ee101b8a40bfea2b8a",
+        "name": "product_midi_handler_callsite",
+        "offset": 184756,
+        "sha256": "a26878bc608f094bc648bbfc5c86113978e3849284e7d6f8bd3b7ff8430a7c5c",
+        "size": 64
+      }
+    ],
+    "sample_rate_sequence": {
+      "classification": "rejected: immediately followed by USB Audio Class interface descriptors",
+      "offsets": [
+        361468
+      ],
+      "values_hz": [
+        48000,
+        44100,
+        32000,
+        24000,
+        22050,
+        16000,
+        12000,
+        11025,
+        8000
+      ]
+    },
+    "strings": {
+      "Keys Channel-": [
+        383465
+      ],
+      "Pad Bank-": [
+        383429
+      ],
+      "midi_route": [
+        358203
+      ]
+    }
+  }
+}
