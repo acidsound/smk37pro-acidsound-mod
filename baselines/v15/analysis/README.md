@@ -20,3 +20,16 @@
 
 추정 기반 v15 M01~M08 실험은 폐기되었다. 공식 v15 패키지와 장치 기준선,
 원본 추출·검증 도구 및 복구 수단만 유효한 출발점으로 취급한다.
+
+The current clean-room PI32 and USB MIDI result is documented in
+[`evidence.md`](evidence.md). Reproduction artifacts are:
+
+- [`analyze_v15.py`](analyze_v15.py): exact-image hash guard, package layout,
+  runtime-base derivation, and USB MIDI byte-pattern evidence.
+- [`run_ghidra_upstream.sh`](run_ghidra_upstream.sh): pinned upstream Ghidra
+  processor setup and headless invocation.
+- [`V15Pi32Xrefs.java`](V15Pi32Xrefs.java): heuristic PI32 disassembly, call
+  accounting, and USB/MIDI xref probe.
+
+No receive/dispatch entry point was identified defensibly. No patch or flash
+artifact was produced.
