@@ -1,0 +1,1049 @@
+{
+  "artifacts": {
+    "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "r02_app_sha256": "eebc5190b2e19dedbba68becb27851e9a26cf35f8356319f75bd9f6c20714948",
+    "r02_changed_app_bytes": 53,
+    "r02_package_sha256": "93bdf1a7212738b06be8b78919324902729befce8ea07626b0b7aaf7c91e640b",
+    "r03_app_sha256": "3ff9c46b9686c0cea1348a11bed553ebd2d677e2d3452a0f436ce14f3ba5c788",
+    "r03_changed_app_bytes": 187,
+    "r03_package_sha256": "001582c097277d6a4a619ed407cf121d5f30097ef82f312d53a2e45c4a9a5a62",
+    "shared_mooger_packet_sha256": "6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27"
+  },
+  "delta_matrix": [
+    {
+      "r02": "both Note Off and Note On call 0x0201e13e",
+      "r03": "Note Off calls 0x0201e13e; Note On calls 0x0201e16e",
+      "risk": "low; ABI is preserved and R03 trace validates both calls",
+      "topic": "consumer callsites"
+    },
+    {
+      "r02": "r9 -> r3, compare to 9",
+      "r03": "same",
+      "risk": "low",
+      "topic": "channel register"
+    },
+    {
+      "r02": "stock dispatcher r0, preserved/restored",
+      "r03": "same, preserved in r5",
+      "risk": "low",
+      "topic": "memcpy destination"
+    },
+    {
+      "r02": "0x01c37fd0 transient staging",
+      "r03": "0x01c46520 former heap-prefix owned buffer after valid==1",
+      "risk": "high; first live fault appears only when this new owned source is selected",
+      "topic": "memcpy source"
+    },
+    {
+      "r02": "0x9c",
+      "r03": "0x9c",
+      "risk": "low for direct copy overrun; no R03 copy exceeds the live-proven tone block",
+      "topic": "copy size"
+    },
+    {
+      "r02": "no new producer; handler copy populates staging and stock packer calls are zeroed",
+      "r03": "product calls short-call producer, then stock reload remains",
+      "risk": "medium; publication is new but source pointer and memcpy ABI are simple",
+      "topic": "producer"
+    },
+    {
+      "r02": "uses official staging workspace without claiming ownership",
+      "r03": "extends BSS and shifts HEAP_BEGIN by 0xa0",
+      "risk": "highest; previous exact-v15 heap-boundary analysis warned no complete allocator/task/DMA no-alias proof",
+      "topic": "RAM ownership"
+    },
+    {
+      "r02": "consumer reads only first 0x9c from staging",
+      "r03": "owned object is exactly 0xa0: 0x9c voice + valid + lock + 2 reserved bytes",
+      "risk": "not a direct memcpy overrun, but it removes the earlier 0xa4/0xc0 metadata/generation margin and puts metadata at the old heap base tail",
+      "topic": "0xa0 vs 0x9c tail"
+    },
+    {
+      "r02": "no new data publish",
+      "r03": "csync around testset/unlock, no explicit csync between voice memcpy and valid store",
+      "risk": "medium-low; could matter for weak ordering, DMA, or cross-context visibility, but less supported than heap/source fault",
+      "topic": "cache/sync"
+    }
+  ],
+  "live_evidence": {
+    "r02_live_path": "baselines/v15/analysis/flash-candidates/R02/live-validation-20260802.md",
+    "r02_result": "PASS controlled checkpoint; Pad Ch10 matched Mooger #1, Note Off worked, Ch1 UI patch change did not overwrite Ch10",
+    "r03_live_path": "baselines/v15/analysis/r03-owned-ram/live-validation-20260802.md",
+    "r03_result": "LIVE FAIL; first physical Pad Ch10 input after exact product packet immediately rebooted"
+  },
+  "path_hashes": {
+    "atomic_publish": "05e75cec0f9e9ee8d4d05caf6321eaa19178d8d72c7516822d7eff3da10df9c6",
+    "factory_loader": "1cd72971bf4db3bdf1dcdf113d5c795e0bb54f27af735b4ecda1319ef6b90d0d",
+    "heap_boundary": "107dfa402661a62b11ec72bb786c2e78faaf88d07bc17aa621547281bea29349",
+    "heap_prefix": "d85a8daf5d7bd14e696c0e04a138c23d47d7df887aad41957c2f4c7f1b993995",
+    "official_app": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "r02_app": "eebc5190b2e19dedbba68becb27851e9a26cf35f8356319f75bd9f6c20714948",
+    "r02_live": "d6563ae8759154fe9bbbac490d27c93b39d5f175d3a706d8c6af349a8e81674d",
+    "r02_manifest": "ec78ec0cf8e50e6ac99a841af91a26768b29c98d5ab98dae7e7163b0ccb2e158",
+    "r02_package_manifest": "d41e8f184a0d41aacd343fa42fa3292fe1ccc015f66df16f4b053a2d1fa6ac60",
+    "r02_review": "7efe6912d854b356c64daee4758b5442a07175b4a0c6d215f5fe4f9e4bae50f0",
+    "r03_app": "3ff9c46b9686c0cea1348a11bed553ebd2d677e2d3452a0f436ce14f3ba5c788",
+    "r03_live": "adeb091750887b65558951205c91bf5ca60c0b2900766fff1de89d4e28366a10",
+    "r03_manifest": "b0e756d32b4b5855be003b218fc080f205cb2cd799f4f16e92ee355259e0dfbd",
+    "r03_package_manifest": "c00e8d58f1c606074399bc401d4b2f5b25a65e283b2ba4c20b11453543a7d966",
+    "r03_trace": "b0e473926ff033bd178ab12fb79017499b52822a644c956659bb30e42f3a89be",
+    "r03_trace_provenance": "9814c12a7db405603f1accee2be5db5ceaea8cfd9b601992a4fce9e8b2d5ebdd",
+    "runtime_source": "cafbbf22c4f9751a0134ecb0ab9734d6c62be4e5f06cbcb34448e70d8c308932",
+    "sysex_staging": "cfabba55680bbee2f699316547ef28ec496434d886a3b2edf4d7e3a421c8d6f8",
+    "validator": "57fb026009163637e7386bedd7fcb758a00dfd3ecbb12ff41e6cea6da59b4801"
+  },
+  "paths": {
+    "atomic_publish": "baselines/v15/analysis/r03-owned-ram/atomic-publish/report.md",
+    "factory_loader": "baselines/v15/analysis/channel-separation-reanalysis/factory-loader/report.md",
+    "heap_boundary": "baselines/v15/analysis/r03-owned-ram/heap-boundary/report.md",
+    "heap_prefix": "baselines/v15/analysis/r03-owned-ram/heap-prefix-reservation/report.md",
+    "official_app": "build/v15-official-app.bin",
+    "r02_app": "build/v15-R02-sysex-staging-app.bin",
+    "r02_live": "baselines/v15/analysis/flash-candidates/R02/live-validation-20260802.md",
+    "r02_manifest": "baselines/v15/analysis/flash-candidates/R02/app-manifest.json",
+    "r02_package_manifest": "baselines/v15/analysis/flash-candidates/R02/package-manifest.json",
+    "r02_review": "baselines/v15/analysis/channel-separation-reanalysis/r02-review/report.md",
+    "r03_app": "build/v15-R03-fixed-prefix-app.bin",
+    "r03_live": "baselines/v15/analysis/r03-owned-ram/live-validation-20260802.md",
+    "r03_manifest": "baselines/v15/analysis/flash-candidates/R03/app-manifest.json",
+    "r03_package_manifest": "baselines/v15/analysis/flash-candidates/R03/package-manifest.json",
+    "r03_trace": "baselines/v15/analysis/flash-candidates/R03/decoder-trace.tsv",
+    "r03_trace_provenance": "baselines/v15/analysis/flash-candidates/R03/decoder-provenance.json",
+    "runtime_source": "baselines/v15/analysis/channel-separation-reanalysis/runtime-source/report.md",
+    "sysex_staging": "baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md",
+    "validator": "tools/validate_v15_r03.py"
+  },
+  "r02_wrapper": {
+    "bytes": "7904931683f80a120416c1ffd07fc3014016623c80ff76ab0200590480ff6eab02005904",
+    "instructions": [
+      {
+        "address": "0x0201e13e",
+        "bytes": "7904",
+        "semantics": "save wrapper callee state",
+        "size": 2,
+        "text": "push {rets,r9,r8,r7,r6,r5,r4}"
+      },
+      {
+        "address": "0x0201e140",
+        "bytes": "9316",
+        "semantics": "copy live channel nibble",
+        "size": 2,
+        "text": "mov r3,r9"
+      },
+      {
+        "address": "0x0201e142",
+        "bytes": "83f80a12",
+        "semantics": "non-Ch10 falls back to stock memcpy",
+        "size": 4,
+        "text": "jne r3,#0x9,0x0201e15a"
+      },
+      {
+        "address": "0x0201e146",
+        "bytes": "0416",
+        "semantics": "preserve destination object",
+        "size": 2,
+        "text": "mov r4,r0"
+      },
+      {
+        "address": "0x0201e148",
+        "bytes": "c1ffd07fc301",
+        "semantics": "R02 source is official SysEx staging",
+        "size": 6,
+        "text": "mov r1,#0x01c37fd0"
+      },
+      {
+        "address": "0x0201e14e",
+        "bytes": "4016",
+        "semantics": "restore destination in r0",
+        "size": 2,
+        "text": "mov r0,r4"
+      },
+      {
+        "address": "0x0201e150",
+        "bytes": "623c",
+        "semantics": "copy exactly the runtime voice block",
+        "size": 2,
+        "text": "mov r2,#0x9c"
+      },
+      {
+        "address": "0x0201e152",
+        "bytes": "80ff76ab0200",
+        "semantics": "memcpy(dest=slot, src=stage, len=0x9c)",
+        "size": 6,
+        "text": "call 0x02048cce"
+      },
+      {
+        "address": "0x0201e158",
+        "bytes": "5904",
+        "semantics": "return",
+        "size": 2,
+        "text": "pop {pc,r9,r8,r7,r6,r5,r4}"
+      },
+      {
+        "address": "0x0201e15a",
+        "bytes": "80ff6eab0200",
+        "semantics": "stock memcpy with untouched r0/r1/r2",
+        "size": 6,
+        "text": "call 0x02048cce"
+      },
+      {
+        "address": "0x0201e160",
+        "bytes": "5904",
+        "semantics": "return",
+        "size": 2,
+        "text": "pop {pc,r9,r8,r7,r6,r5,r4}"
+      }
+    ],
+    "layout": {
+      "end": "0x0201e162",
+      "entry": "0x0201e13e",
+      "special": "0x0201e146",
+      "stock": "0x0201e15a"
+    },
+    "semantics": {
+      "channel_register": "r9 copied to r3; Ch10 nibble is 9",
+      "copy": "memcpy(r0=destination, r1=0x01c37fd0, r2=0x9c)",
+      "destination": "r0 preserved in r4 then restored before memcpy",
+      "entry_shared_by_note_on_off": "0x0201e13e",
+      "producer_or_owner": "none; product-packer calls are neutralized, so publication is the stock handler staging copy",
+      "source": "r1 = 0x01c37fd0 official SysEx staging only for Ch10",
+      "stock_fallback": "non-Ch10 calls original memcpy with untouched stock arguments"
+    }
+  },
+  "r03_wrapper_and_producer": {
+    "consumer_semantics": {
+      "channel_register": "r9 copied to r3; Ch10 nibble is 9",
+      "copy": "memcpy(r0=destination, r1=0x01c46520, r2=0x9c)",
+      "destination": "r0 preserved in r5 and restored before owned memcpy",
+      "note_off_entry": "0x0201e13e",
+      "note_on_entry": "0x0201e16e",
+      "owned_source": "r1 = 0x01c46520",
+      "stock_fallback": "non-Ch10 or valid!=1 calls original memcpy with untouched stock r0/r1/r2",
+      "valid_probe": "load byte from 0x01c465bc; owned source only if value == 1"
+    },
+    "layout": {
+      "end": "0x0201e1e8",
+      "off_entry": "0x0201e13e",
+      "off_stock": "0x0201e166",
+      "on_entry": "0x0201e16e",
+      "on_stock": "0x0201e196",
+      "producer": "0x0201e19e",
+      "producer_return": "0x0201e1e6",
+      "producer_unlock": "0x0201e1d8",
+      "try_fail_branch": "0x0201e1ac"
+    },
+    "owned_ram": {
+      "end": "0x01c465c0",
+      "lock": "0x01c465bd",
+      "size": "0xa0",
+      "valid": "0x01c465bc",
+      "voice": "0x01c46520..0x01c465bc"
+    },
+    "producer_semantics": {
+      "already_valid": "if valid != 0, branch to unlock without recopying",
+      "copy_direction": "memcpy(r0=0x01c46520 destination, r1=r4 accepted staging source, r2=0x9c)",
+      "producer_calls": [
+        "0x0201e468",
+        "0x0201e49c"
+      ],
+      "publication_assessment": "more likely than not published after the exact product packet, because lock and valid boot zero, callsites reach producer after final-F7 gates, source pointer is the same live-proven R02 staging pointer, and failure waited for first consumer rather than packet send in the recorded sequence",
+      "publish_order": "store valid=1 at 0x01c465bc after memcpy; then unlock lock byte",
+      "source_pointer": "r0 = 0x01c37fd0 from accepted product handler, preserved in r4",
+      "trylock": "csync; testset b[0x01c465bd]; ifeq returns at 0x0201e1e6; official object says fall-through means acquired"
+    },
+    "selected_trace": [
+      {
+        "address": "0x0201c630",
+        "bytes": "e1e1a020",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201c5ec@0201c5ec",
+        "mnemonic": "mul",
+        "size": 4,
+        "text": "mul r1,r2,#0xa0"
+      },
+      {
+        "address": "0x0201c636",
+        "bytes": "00e1a260",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201c5ec@0201c5ec",
+        "mnemonic": "add",
+        "size": 4,
+        "text": "add r0,r6,#0xa2"
+      },
+      {
+        "address": "0x0201c63a",
+        "bytes": "623c",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201c5ec@0201c5ec",
+        "mnemonic": "mov",
+        "size": 2,
+        "text": "mov r2,#0x9c"
+      },
+      {
+        "address": "0x0201c63c",
+        "bytes": "8116",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201c5ec@0201c5ec",
+        "mnemonic": "mov",
+        "size": 2,
+        "text": "mov r1,r8"
+      },
+      {
+        "address": "0x0201c63e",
+        "bytes": "80fffa1a0000",
+        "flow": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201c5ec@0201c5ec",
+        "mnemonic": "call",
+        "size": 6,
+        "text": "call 0x0201e13e"
+      },
+      {
+        "address": "0x0201c666",
+        "bytes": "72f1f040",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201c5ec@0201c5ec",
+        "mnemonic": "and",
+        "size": 4,
+        "text": "and r2,r4,#0xffffff0f"
+      },
+      {
+        "address": "0x0201c66c",
+        "bytes": "e1f1a020",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201c5ec@0201c5ec",
+        "mnemonic": "mul",
+        "size": 4,
+        "text": "mul r1,r2,#0xa0"
+      },
+      {
+        "address": "0x0201c674",
+        "bytes": "00e1a270",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201c5ec@0201c5ec",
+        "mnemonic": "add",
+        "size": 4,
+        "text": "add r0,r7,#0xa2"
+      },
+      {
+        "address": "0x0201c678",
+        "bytes": "623c",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201c5ec@0201c5ec",
+        "mnemonic": "mov",
+        "size": 2,
+        "text": "mov r2,#0x9c"
+      },
+      {
+        "address": "0x0201c67a",
+        "bytes": "8116",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201c5ec@0201c5ec",
+        "mnemonic": "mov",
+        "size": 2,
+        "text": "mov r1,r8"
+      },
+      {
+        "address": "0x0201c67c",
+        "bytes": "80ffec1a0000",
+        "flow": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201c5ec@0201c5ec",
+        "mnemonic": "call",
+        "size": 6,
+        "text": "call 0x0201e16e"
+      },
+      {
+        "address": "0x0201e13e",
+        "bytes": "7904",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "push",
+        "size": 2,
+        "text": "push {rets,r9,r8,r7,r6,r5,r4}"
+      },
+      {
+        "address": "0x0201e140",
+        "bytes": "9316",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "mov",
+        "size": 2,
+        "text": "mov r3,r9"
+      },
+      {
+        "address": "0x0201e142",
+        "bytes": "83f81012",
+        "flow": "CONDITIONAL_JUMP",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "jne",
+        "size": 4,
+        "text": "jne r3,#0x9,0x0201e166"
+      },
+      {
+        "address": "0x0201e146",
+        "bytes": "0516",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "mov",
+        "size": 2,
+        "text": "mov r5,r0"
+      },
+      {
+        "address": "0x0201e148",
+        "bytes": "c4ffbc65c401",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "mov",
+        "size": 6,
+        "text": "mov r4,#0x1c465bc"
+      },
+      {
+        "address": "0x0201e14e",
+        "bytes": "4840",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "lb.z",
+        "size": 2,
+        "text": "lb.z r0,[r4 + 0x0]"
+      },
+      {
+        "address": "0x0201e150",
+        "bytes": "80f80902",
+        "flow": "CONDITIONAL_JUMP",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "jne",
+        "size": 4,
+        "text": "jne r0,#0x1,0x0201e166"
+      },
+      {
+        "address": "0x0201e154",
+        "bytes": "5016",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "mov",
+        "size": 2,
+        "text": "mov r0,r5"
+      },
+      {
+        "address": "0x0201e156",
+        "bytes": "c1ff2065c401",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "mov",
+        "size": 6,
+        "text": "mov r1,#0x1c46520"
+      },
+      {
+        "address": "0x0201e15c",
+        "bytes": "623c",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "mov",
+        "size": 2,
+        "text": "mov r2,#0x9c"
+      },
+      {
+        "address": "0x0201e15e",
+        "bytes": "80ff6aab0200",
+        "flow": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "call",
+        "size": 6,
+        "text": "call 0x02048cce"
+      },
+      {
+        "address": "0x0201e164",
+        "bytes": "5904",
+        "flow": "TERMINATOR",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "pop",
+        "size": 2,
+        "text": "pop {pc,r9,r8,r7,r6,r5,r4}"
+      },
+      {
+        "address": "0x0201e166",
+        "bytes": "80ff62ab0200",
+        "flow": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "call",
+        "size": 6,
+        "text": "call 0x02048cce"
+      },
+      {
+        "address": "0x0201e16c",
+        "bytes": "5904",
+        "flow": "TERMINATOR",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "pop",
+        "size": 2,
+        "text": "pop {pc,r9,r8,r7,r6,r5,r4}"
+      },
+      {
+        "address": "0x0201e16e",
+        "bytes": "7904",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "push",
+        "size": 2,
+        "text": "push {rets,r9,r8,r7,r6,r5,r4}"
+      },
+      {
+        "address": "0x0201e170",
+        "bytes": "9316",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "mov",
+        "size": 2,
+        "text": "mov r3,r9"
+      },
+      {
+        "address": "0x0201e172",
+        "bytes": "83f81012",
+        "flow": "CONDITIONAL_JUMP",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "jne",
+        "size": 4,
+        "text": "jne r3,#0x9,0x0201e196"
+      },
+      {
+        "address": "0x0201e176",
+        "bytes": "0516",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "mov",
+        "size": 2,
+        "text": "mov r5,r0"
+      },
+      {
+        "address": "0x0201e178",
+        "bytes": "c4ffbc65c401",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "mov",
+        "size": 6,
+        "text": "mov r4,#0x1c465bc"
+      },
+      {
+        "address": "0x0201e17e",
+        "bytes": "4840",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "lb.z",
+        "size": 2,
+        "text": "lb.z r0,[r4 + 0x0]"
+      },
+      {
+        "address": "0x0201e180",
+        "bytes": "80f80902",
+        "flow": "CONDITIONAL_JUMP",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "jne",
+        "size": 4,
+        "text": "jne r0,#0x1,0x0201e196"
+      },
+      {
+        "address": "0x0201e184",
+        "bytes": "5016",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "mov",
+        "size": 2,
+        "text": "mov r0,r5"
+      },
+      {
+        "address": "0x0201e186",
+        "bytes": "c1ff2065c401",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "mov",
+        "size": 6,
+        "text": "mov r1,#0x1c46520"
+      },
+      {
+        "address": "0x0201e18c",
+        "bytes": "623c",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "mov",
+        "size": 2,
+        "text": "mov r2,#0x9c"
+      },
+      {
+        "address": "0x0201e18e",
+        "bytes": "80ff3aab0200",
+        "flow": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "call",
+        "size": 6,
+        "text": "call 0x02048cce"
+      },
+      {
+        "address": "0x0201e194",
+        "bytes": "5904",
+        "flow": "TERMINATOR",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "pop",
+        "size": 2,
+        "text": "pop {pc,r9,r8,r7,r6,r5,r4}"
+      },
+      {
+        "address": "0x0201e196",
+        "bytes": "80ff32ab0200",
+        "flow": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "call",
+        "size": 6,
+        "text": "call 0x02048cce"
+      },
+      {
+        "address": "0x0201e19c",
+        "bytes": "5904",
+        "flow": "TERMINATOR",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "pop",
+        "size": 2,
+        "text": "pop {pc,r9,r8,r7,r6,r5,r4}"
+      },
+      {
+        "address": "0x0201e19e",
+        "bytes": "7904",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e19e@0201e19e",
+        "mnemonic": "push",
+        "size": 2,
+        "text": "push {rets,r9,r8,r7,r6,r5,r4}"
+      },
+      {
+        "address": "0x0201e1a0",
+        "bytes": "0416",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e19e@0201e19e",
+        "mnemonic": "mov",
+        "size": 2,
+        "text": "mov r4,r0"
+      },
+      {
+        "address": "0x0201e1a2",
+        "bytes": "c0ffbd65c401",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e19e@0201e19e",
+        "mnemonic": "mov",
+        "size": 6,
+        "text": "mov r0,#0x1c465bd"
+      },
+      {
+        "address": "0x0201e1a8",
+        "bytes": "2000",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e19e@0201e19e",
+        "mnemonic": "csync",
+        "size": 2,
+        "text": "csync"
+      },
+      {
+        "address": "0x0201e1aa",
+        "bytes": "b000",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e19e@0201e19e",
+        "mnemonic": "testset",
+        "size": 2,
+        "text": "testset b[r0]"
+      },
+      {
+        "address": "0x0201e1ac",
+        "bytes": "40e81b00",
+        "flow": "CONDITIONAL_JUMP",
+        "function": "decoder gap documented by decoder-provenance.json and official objdump",
+        "mnemonic": "ifeq",
+        "size": 4,
+        "text": "ifeq goto 0x0201e1e6"
+      },
+      {
+        "address": "0x0201e1b0",
+        "bytes": "2000",
+        "flow": "FALL_THROUGH",
+        "function": "-",
+        "mnemonic": "csync",
+        "size": 2,
+        "text": "csync"
+      },
+      {
+        "address": "0x0201e1b2",
+        "bytes": "c5ffbc65c401",
+        "flow": "FALL_THROUGH",
+        "function": "-",
+        "mnemonic": "mov",
+        "size": 6,
+        "text": "mov r5,#0x1c465bc"
+      },
+      {
+        "address": "0x0201e1b8",
+        "bytes": "5840",
+        "flow": "FALL_THROUGH",
+        "function": "-",
+        "mnemonic": "lb.z",
+        "size": 2,
+        "text": "lb.z r0,[r5 + 0x0]"
+      },
+      {
+        "address": "0x0201e1ba",
+        "bytes": "80f80d00",
+        "flow": "CONDITIONAL_JUMP",
+        "function": "-",
+        "mnemonic": "jne",
+        "size": 4,
+        "text": "jne r0,#0x0,0x0201e1d8"
+      },
+      {
+        "address": "0x0201e1be",
+        "bytes": "c0ff2065c401",
+        "flow": "FALL_THROUGH",
+        "function": "-",
+        "mnemonic": "mov",
+        "size": 6,
+        "text": "mov r0,#0x1c46520"
+      },
+      {
+        "address": "0x0201e1c4",
+        "bytes": "4116",
+        "flow": "FALL_THROUGH",
+        "function": "-",
+        "mnemonic": "mov",
+        "size": 2,
+        "text": "mov r1,r4"
+      },
+      {
+        "address": "0x0201e1c6",
+        "bytes": "623c",
+        "flow": "FALL_THROUGH",
+        "function": "-",
+        "mnemonic": "mov",
+        "size": 2,
+        "text": "mov r2,#0x9c"
+      },
+      {
+        "address": "0x0201e1c8",
+        "bytes": "80ff00ab0200",
+        "flow": "UNCONDITIONAL_CALL",
+        "function": "-",
+        "mnemonic": "call",
+        "size": 6,
+        "text": "call 0x02048cce"
+      },
+      {
+        "address": "0x0201e1ce",
+        "bytes": "c5ffbc65c401",
+        "flow": "FALL_THROUGH",
+        "function": "-",
+        "mnemonic": "mov",
+        "size": 6,
+        "text": "mov r5,#0x1c465bc"
+      },
+      {
+        "address": "0x0201e1d4",
+        "bytes": "4021",
+        "flow": "FALL_THROUGH",
+        "function": "-",
+        "mnemonic": "mov",
+        "size": 2,
+        "text": "mov r0,#0x1"
+      },
+      {
+        "address": "0x0201e1d6",
+        "bytes": "d840",
+        "flow": "FALL_THROUGH",
+        "function": "-",
+        "mnemonic": "sb",
+        "size": 2,
+        "text": "sb r0,[r5 + 0x0]"
+      },
+      {
+        "address": "0x0201e1d8",
+        "bytes": "c0ffbd65c401",
+        "flow": "FALL_THROUGH",
+        "function": "-",
+        "mnemonic": "mov",
+        "size": 6,
+        "text": "mov r0,#0x1c465bd"
+      },
+      {
+        "address": "0x0201e1de",
+        "bytes": "2000",
+        "flow": "FALL_THROUGH",
+        "function": "-",
+        "mnemonic": "csync",
+        "size": 2,
+        "text": "csync"
+      },
+      {
+        "address": "0x0201e1e0",
+        "bytes": "4120",
+        "flow": "FALL_THROUGH",
+        "function": "-",
+        "mnemonic": "mov",
+        "size": 2,
+        "text": "mov r1,#0x0"
+      },
+      {
+        "address": "0x0201e1e2",
+        "bytes": "8940",
+        "flow": "FALL_THROUGH",
+        "function": "-",
+        "mnemonic": "sb",
+        "size": 2,
+        "text": "sb r1,[r0 + 0x0]"
+      },
+      {
+        "address": "0x0201e1e4",
+        "bytes": "2000",
+        "flow": "FALL_THROUGH",
+        "function": "-",
+        "mnemonic": "csync",
+        "size": 2,
+        "text": "csync"
+      },
+      {
+        "address": "0x0201e1e6",
+        "bytes": "5904",
+        "flow": "TERMINATOR",
+        "function": "-",
+        "mnemonic": "pop",
+        "size": 2,
+        "text": "pop {pc,r9,r8,r7,r6,r5,r4}"
+      },
+      {
+        "address": "0x0201e468",
+        "bytes": "bfea99fe",
+        "flow": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201e254@0201e254",
+        "mnemonic": "call",
+        "size": 4,
+        "text": "call 0x0201e19e"
+      },
+      {
+        "address": "0x0201e46c",
+        "bytes": "bfeaf838",
+        "flow": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201e254@0201e254",
+        "mnemonic": "call",
+        "size": 4,
+        "text": "call 0x02005660"
+      },
+      {
+        "address": "0x0201e49c",
+        "bytes": "bfea7ffe",
+        "flow": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201e254@0201e254",
+        "mnemonic": "call",
+        "size": 4,
+        "text": "call 0x0201e19e"
+      },
+      {
+        "address": "0x0201e4a0",
+        "bytes": "bfeade38",
+        "flow": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201e254@0201e254",
+        "mnemonic": "call",
+        "size": 4,
+        "text": "call 0x02005660"
+      }
+    ]
+  },
+  "ranked_hypotheses": [
+    {
+      "evidence_against": [
+        "The R03 app did boot and accepted enough host traffic to send the packet, so not every use of the shifted heap boundary is immediately fatal.",
+        "The sbrk HEAP_BEGIN literal was later identified and patched consistently, reducing but not eliminating hidden consumer risk."
+      ],
+      "evidence_for": [
+        "R02 live success proves the same Pad Ch10 dispatcher, r9 channel test, r0 destination, r2=0x9c length, and Mooger payload can work when source is 0x01c37fd0.",
+        "R03 changes the source to 0x01c46520 only after valid==1 and also changes BSS/HEAP_BEGIN to claim 0x01c46520..0x01c465c0.",
+        "The recorded R03 failure occurs on first Pad Ch10 input after product packet, exactly when the consumer first reads valid and then copies from the new owned source.",
+        "Prior exact-v15 heap-boundary evidence explicitly blocked heap/gap ownership without complete allocator/task/DMA/high-water proof."
+      ],
+      "first_fault_model": "producer publishes valid=1; Note On wrapper copies 0x9c bytes from 0x01c46520; the owned range or reduced heap collides with first-note allocator/audio state or leaves first-note allocation without required headroom, causing reboot shortly after the consumer call.",
+      "likelihood": "high",
+      "name": "first consumer selects a published owned source at the former heap lower bound and triggers an allocator/audio/hidden-owner fault",
+      "rank": 1
+    },
+    {
+      "evidence_against": [
+        "memcpy is an ordinary CPU call in exact traces, consumers are CPU memcpy callers too, and R03 does use csync around lock/unlock.",
+        "A visibility race would be timing-sensitive; the report says the first physical pad reliably rebooted rather than intermittent corruption."
+      ],
+      "evidence_for": [
+        "R03 has a new cross-context publication protocol and no explicit csync immediately between memcpy completion and valid=1.",
+        "The first post-publish consumer is the first time the voice is used by the event/audio path."
+      ],
+      "first_fault_model": "valid becomes observable before the complete owned voice is safely observable to the consumer/audio path.",
+      "likelihood": "medium-low",
+      "name": "R03 publication/order/cache visibility bug exposes malformed or partially visible owned voice to the first consumer",
+      "rank": 2
+    },
+    {
+      "evidence_against": [
+        "The exact Note On/Off consumer memcpy length is 0x9c in both R02 and R03.",
+        "R02's live success proves the first 0x9c runtime Mooger payload is sufficient for the constrained audible Pad Ch10 path.",
+        "Stock per-voice event metadata after the 0x9c destination copy is written by the dispatcher, not sourced from 0x01c46520+0x9c."
+      ],
+      "evidence_for": [
+        "Factory-loader evidence shows live current snapshot has meaningful bytes at 0x9c..0xa2 and helper side effects from 0x9c..0x9f.",
+        "Earlier requirements discussed at least 0xa0 of voice plus metadata, and earlier heap-prefix design allowed 0xc0, while final R03 reserves only 0xa0 and copies only 0x9c."
+      ],
+      "first_fault_model": "some downstream path, not the immediate dispatcher memcpy, dereferences source-adjacent or current-snapshot tail state that R03 did not preserve.",
+      "likelihood": "low-medium",
+      "name": "hidden 0xa0/0xa3 tail dependency not represented by R03's 0x9c-only owned copy",
+      "rank": 3
+    },
+    {
+      "evidence_against": [
+        "With valid=0, R03 falls back to stock memcpy with untouched stock r0/r1/r2, close to the R02/R01 live-booted primitive.",
+        "The valid byte is in the BSS-extended reserved range, and boot success argues a simple byte load from that RAM is not enough to fault."
+      ],
+      "evidence_for": [
+        "No live RAM readback exists, so publication is inferred, not proven.",
+        "If the product packet was not accepted, valid would remain zero."
+      ],
+      "first_fault_model": "valid load or branch/fallback faults before owned memcpy, despite not selecting the owned source.",
+      "likelihood": "low",
+      "name": "producer did not publish; consumer fallback or valid probe itself faults",
+      "rank": 4
+    },
+    {
+      "evidence_against": [
+        "Both wrappers save/restore {rets,r9..r4}; r0 destination is preserved/restored; r1/r2 are set exactly for memcpy; stock fallback preserves original r0/r1/r2.",
+        "Decoder trace and validator bind every relevant call target and instruction byte."
+      ],
+      "evidence_for": [
+        "R03 wrappers are longer and have separate entries, unlike R02."
+      ],
+      "first_fault_model": "misdecoded branch/call or clobbered register causes bad memcpy arguments, but exact bytes make this less likely.",
+      "likelihood": "low",
+      "name": "PI32 call/ABI/register/stack mismatch in R03 consumer wrappers",
+      "rank": 5
+    }
+  ],
+  "safest_next_discriminating_checkpoint": {
+    "current_task_action": "Do not patch or flash now. Only build/review offline if requested.",
+    "name": "offline-prepare, later-live heap-only H0 before any owned-source consumer retry",
+    "proposal": [
+      "Create an exact v15 H0 candidate that applies only the two R03 memory-boundary patches: BSS zero length through the shifted HEAP_BEGIN and HEAP_BEGIN=0x01c465c0. Leave Note On/Off, product/SAVE calls, and the packer stock.",
+      "If live testing is later authorized with rollback ready, test only normal boot, identity, and one stock Pad Ch10 Note On/Off with no product packet and no SAVE.",
+      "If H0 reboots on first pad, the former-heap-prefix/allocator/audio-owner hypothesis is strongly confirmed and R03 owned-source work should stop.",
+      "If H0 passes, the next lower-risk discriminator is H1: R02 live-success consumers from 0x01c37fd0 plus R03 producer present but unconsumed, still without using 0x01c46520 as a Note source."
+    ],
+    "why_safest": "It removes the new owned-source memcpy and producer from the first live discriminator, testing the highest-ranked heap-prefix hypothesis with the fewest event-path changes."
+  },
+  "scope": "exact v15 offline evidence only; no device access, patching, flashing, or binary modification",
+  "validations": [
+    {
+      "detail": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "name": "official app sha",
+      "status": "PASS"
+    },
+    {
+      "detail": "eebc5190b2e19dedbba68becb27851e9a26cf35f8356319f75bd9f6c20714948",
+      "name": "R02 app sha",
+      "status": "PASS"
+    },
+    {
+      "detail": "3ff9c46b9686c0cea1348a11bed553ebd2d677e2d3452a0f436ce14f3ba5c788",
+      "name": "R03 app sha",
+      "status": "PASS"
+    },
+    {
+      "detail": "93bdf1a7212738b06be8b78919324902729befce8ea07626b0b7aaf7c91e640b",
+      "name": "R02 manifest package sha",
+      "status": "PASS"
+    },
+    {
+      "detail": "001582c097277d6a4a619ed407cf121d5f30097ef82f312d53a2e45c4a9a5a62",
+      "name": "R03 manifest package sha",
+      "status": "PASS"
+    },
+    {
+      "detail": "6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27",
+      "name": "R02 packet sha",
+      "status": "PASS"
+    },
+    {
+      "detail": "0x01c37fd0",
+      "name": "R03 source staging",
+      "status": "PASS"
+    },
+    {
+      "detail": "7904931683f80a120416c1ffd07fc3014016623c80ff76ab0200590480ff6eab02005904",
+      "name": "R02 wrapper bytes",
+      "status": "PASS"
+    },
+    {
+      "detail": "7904931683f810120516c4ffbc65c401484080f809025016c1ff2065c401623c80ff6aab0200590480ff62ab020059047904931683f810120516c4ffbc65c401484080f809025016c1ff2065c401623c80ff3aab0200590480ff32ab0200590479040416c0ffbd65c4012000b00040e81b002000c5ffbc65c401584080f80d00c0ff2065c4014116623c80ff00ab0200c5ffbc65c4014021d840c0ffbd65c40120004120894020005904",
+      "name": "R03 cave bytes",
+      "status": "PASS"
+    },
+    {
+      "detail": "40e81b00",
+      "name": "R03 ifeq gap bytes",
+      "status": "PASS"
+    },
+    {
+      "detail": "80fffa1a0000",
+      "name": "R03 Note Off target",
+      "status": "PASS"
+    },
+    {
+      "detail": "80ffec1a0000",
+      "name": "R03 Note On target",
+      "status": "PASS"
+    },
+    {
+      "detail": "bfea99fe",
+      "name": "R03 product call one-shot accepted product packet",
+      "status": "PASS"
+    },
+    {
+      "detail": "bfea7ffe",
+      "name": "R03 product call segmented accepted product packet",
+      "status": "PASS"
+    },
+    {
+      "detail": "c2ffeccb0300",
+      "name": "R03 BSS patch",
+      "status": "PASS"
+    },
+    {
+      "detail": "c5ffc065c401",
+      "name": "R03 HEAP_BEGIN patch",
+      "status": "PASS"
+    },
+    {
+      "detail": "04960000",
+      "name": "R03 SAVE reject",
+      "status": "PASS"
+    },
+    {
+      "detail": "00000000",
+      "name": "R03 SAVE packer neutralized",
+      "status": "PASS"
+    },
+    {
+      "detail": "voice=0x1c46520 valid=0x1c465bc",
+      "name": "R03 owned voice/valid adjacency",
+      "status": "PASS"
+    },
+    {
+      "detail": "0xa0",
+      "name": "R03 owned reservation size",
+      "status": "PASS"
+    },
+    {
+      "detail": "R02=156 R03=156",
+      "name": "R02 and R03 voice copy size",
+      "status": "PASS"
+    },
+    {
+      "detail": "0x01c37fd0",
+      "name": "R02/R03 same staging address",
+      "status": "PASS"
+    }
+  ]
+}
