@@ -1,0 +1,11 @@
+Jcode UI runtime plan validation
+report_exists: True
+evidence_json_valid: True
+official_v15_sha_present: True
+pending_range_present: True
+read_only_boundary_present: True
+firmware_instrumentation_boundary_present: True
+hardware_watchpoint_nonclaim_present: True
+stop_conditions_present: True
+rollback_requirements_present: True
+no_device_or_patch_performed_declared: True
