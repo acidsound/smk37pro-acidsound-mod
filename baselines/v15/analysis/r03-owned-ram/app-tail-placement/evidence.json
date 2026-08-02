@@ -1,0 +1,439 @@
+{
+  "app_text_as_voice_ram": {
+    "decision": "BLOCK",
+    "evidence": [
+      "public-research.md identifies 0x02000120 as SFC/XIP code and read-only data link address, with internal RAM near 0x01c00000.",
+      "r03-owned-ram/ram-ownership/report.md keeps Gate A BLOCKED and requires explicit RAM owner/lifetime/writer proof.",
+      "post-r02-roadmap.md retains the hard rule: No app/text-resident runtime voice source."
+    ],
+    "why_unsuitable": "A 0x020xxxxx app/text address can be an immutable flash literal/code source, not an owned mutable RAM buffer. R03 needs in-session copy, valid/generation state, and rejection/update semantics without sector erase/program side effects."
+  },
+  "branch_and_relocation": {
+    "pi32_call32_pc_relative_examples": {
+      "existing_code_cave_to_tail": {
+        "at": "0x0201e13e",
+        "displacement_bytes": 493808,
+        "encoding_if_used": "80fff0880700",
+        "fits_signed_32bit_pc_relative": true,
+        "length_bytes": 6,
+        "pc_after_instruction": "0x0201e144",
+        "target": "0x02096a34"
+      },
+      "note_off_memcpy_callsite_to_tail": {
+        "at": "0x0201c63e",
+        "displacement_bytes": 500720,
+        "encoding_if_used": "80fff0a30700",
+        "fits_signed_32bit_pc_relative": true,
+        "length_bytes": 6,
+        "pc_after_instruction": "0x0201c644",
+        "target": "0x02096a34"
+      },
+      "note_on_memcpy_callsite_to_tail": {
+        "at": "0x0201c67c",
+        "displacement_bytes": 500658,
+        "encoding_if_used": "80ffb2a30700",
+        "fits_signed_32bit_pc_relative": true,
+        "length_bytes": 6,
+        "pc_after_instruction": "0x0201c682",
+        "target": "0x02096a34"
+      },
+      "tail_to_factory_loader_if_call_at_tail_start": {
+        "at": "0x02096a34",
+        "displacement_bytes": -594906,
+        "encoding_if_used": "80ff26ecf6ff",
+        "fits_signed_32bit_pc_relative": true,
+        "length_bytes": 6,
+        "pc_after_instruction": "0x02096a3a",
+        "target": "0x02005660"
+      },
+      "tail_to_memcpy_if_call_at_tail_start": {
+        "at": "0x02096a34",
+        "displacement_bytes": -318828,
+        "encoding_if_used": "80ff9422fbff",
+        "fits_signed_32bit_pc_relative": true,
+        "length_bytes": 6,
+        "pc_after_instruction": "0x02096a3a",
+        "target": "0x02048cce"
+      }
+    },
+    "pi32_jne_imm7_local_branch_model": {
+      "encoding_source": "tools/build_v15_r01_hand_drum.py jne_imm7",
+      "range_bytes_from_pc_plus_4": [
+        -512,
+        510
+      ],
+      "range_halfwords_from_pc_plus_4": [
+        -256,
+        255
+      ],
+      "tail_size_fits_local_conditional_branches": true
+    },
+    "prior_r01d_wrapper_size": {
+      "bytes": 150,
+      "end_exclusive": "0x0201e1d4",
+      "entry": "0x0201e13e",
+      "would_fit_383_bytes_if_space_were_free": true
+    },
+    "relocation_requirements": [
+      "Regenerate every 6-byte call32 displacement after moving code.",
+      "Regenerate every local conditional branch and prove it remains within signed 9-bit halfword range.",
+      "Regenerate every mov_imm32 absolute literal that names code/data; do not memcpy relocated stock bytes with embedded PC-relative calls/literal references.",
+      "Audit any 4-byte short bfea call separately because it is window-limited and not equivalent to call32."
+    ],
+    "short_call_window": {
+      "decision": "BLOCK for direct 4-byte post-init short-call-to-tail replacement; R03 requirements also prohibit new early/post-init hooks without independent boot proof.",
+      "encoding_source": "tools/build_v15_r01d_ram_mooger1.py short_call",
+      "post_init_and_tail_same_0x20000_window": false,
+      "post_init_callsite": "0x02005f9c",
+      "window_bytes": 131072
+    },
+    "tail_entry_candidate": "0x02096a34",
+    "tail_size_bytes": 383
+  },
+  "changed_sector_inventory_if_tail_were_modified": {
+    "jlfs_header_crc_fields_if_app_or_area_entry_changed": [
+      {
+        "end_exclusive": "0x05000",
+        "overlap_end_exclusive": "0x04040",
+        "overlap_start": "0x04000",
+        "start": "0x04000"
+      }
+    ],
+    "post_app_suffix_if_app_extended_to_flash_end": [
+      {
+        "end_exclusive": "0x9b000",
+        "overlap_end_exclusive": "0x9b000",
+        "overlap_start": "0x9acd3",
+        "start": "0x9a000"
+      },
+      {
+        "end_exclusive": "0x9c000",
+        "overlap_end_exclusive": "0x9c000",
+        "overlap_start": "0x9b000",
+        "start": "0x9b000"
+      }
+    ],
+    "risk": "Even a minimal tail overwrite affects sector 0x9a000, which also contains protected post-app suffix bytes after 0x9acd3. Any rollback would need exact sector handling, and preserving cfg_tool.bin leaves no tail bytes to modify.",
+    "tail_payload_only": [
+      {
+        "end_exclusive": "0x9b000",
+        "overlap_end_exclusive": "0x9acd3",
+        "overlap_start": "0x9ab54",
+        "start": "0x9a000"
+      }
+    ]
+  },
+  "decisions": [
+    {
+      "decision": "BLOCK",
+      "reason": "The entire 383-byte app.bin-to-app-area gap is cfg_tool.bin data in the official JLFS directory, not free padding.",
+      "use": "append R03 executable code to official app.bin by consuming the app-area tail"
+    },
+    {
+      "decision": "BLOCK",
+      "reason": "This destroys or repurposes a named official JLFS file with no proof that cfg_tool.bin is unused at boot/update/runtime.",
+      "use": "overwrite cfg_tool.bin tail bytes and branch/call into them"
+    },
+    {
+      "decision": "BLOCK",
+      "reason": "Bytes after app_area_end are protected post-app resources/reserved data and are outside the app_area_head size/CRC envelope.",
+      "use": "extend app.bin past the app-area end toward flash.bin end"
+    },
+    {
+      "decision": "BLOCK",
+      "reason": "Changing only app.bin size overlaps cfg_tool.bin. Preserving JLFS would also require moving/removing cfg_tool.bin and auditing its consumers.",
+      "use": "modified packer that only updates app.bin size/CRC"
+    },
+    {
+      "decision": "BLOCK",
+      "reason": "tools/smk37_v15_app_patch.py enforces fixed app.bin size 617012 and replace_app_bytes() can change only app.bin bytes plus JLFS CRC fields.",
+      "use": "current stock v15 application-only packer for tail placement"
+    },
+    {
+      "decision": "BLOCK",
+      "reason": "The 0x02000000 app/text range is SFC/XIP code/read-only data, not a proven writable RAM allocation with owner, lifetime, valid, and generation semantics.",
+      "use": "app/text or tail as owned, data-writable voice RAM"
+    }
+  ],
+  "format": "smk37-v15-r03-app-tail-placement-evidence-v1",
+  "inputs": {
+    "app_bin": {
+      "path": "build/v15-official-app.bin",
+      "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "size": 617012
+    },
+    "manifest": {
+      "path": "baselines/v15/official/package-manifest.json",
+      "sha256": "21041cf36426923c81e1d5c583af928b74aed43b4661dadb81a26ad9349e00a8",
+      "size": 2302
+    },
+    "package": {
+      "path": "build/SMK-37_Pro_015.fwsc",
+      "sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+      "size": 701140
+    },
+    "packer": {
+      "path": "tools/smk37_v15_app_patch.py",
+      "sha256": "2a355a5d2da789a085ca6d1b196ed42f36400ad5115fc23c9af79c3d454eff33",
+      "size": 24833
+    },
+    "post_r02_roadmap": {
+      "path": "baselines/v15/analysis/channel-separation-reanalysis/post-r02-roadmap.md",
+      "sha256": "2dd1879a6020096804bb21fe538dabb81bf3c1b71cd1a225c69b9cbf34facb12"
+    },
+    "public_research": {
+      "path": "baselines/v15/analysis/public-research.md",
+      "sha256": "d3feb02466f7e6a3578f2f24fca51e893cccc6ec3175dd5980f79a4465a30d38"
+    },
+    "r03_ram_report": {
+      "path": "baselines/v15/analysis/r03-owned-ram/ram-ownership/report.md",
+      "sha256": "02a9727886da2643bf58f8f9b6dc65fa3c9cc6e34ba8fbaa4f4c1358d9ea691e"
+    },
+    "r03_requirements": {
+      "path": "baselines/v15/analysis/r03-owned-ram/requirements.md",
+      "sha256": "0cce1eccb7803be71c91489ee9ce4e2af2358f656bf0124ab877f6604d02653a"
+    }
+  },
+  "jlfs_directory_entries_from_app_area_header_block": [
+    {
+      "data_crc16": "0xfee9",
+      "data_flash_end_exclusive": "0x9ab54",
+      "data_flash_start": "0x04120",
+      "data_offset_relative_to_app_area": "0x120",
+      "flags": "0x82",
+      "header_flash_offset": "0x04020",
+      "index": 0,
+      "name": "app.bin",
+      "overlaps_app_tail_candidate": false,
+      "reserved": "0xff",
+      "size": 617012
+    },
+    {
+      "data_crc16": "0x2e75",
+      "data_flash_end_exclusive": "0x9acd3",
+      "data_flash_start": "0x9ab54",
+      "data_offset_relative_to_app_area": "0x96b54",
+      "flags": "0x82",
+      "header_flash_offset": "0x04040",
+      "index": 0,
+      "name": "cfg_tool.bin",
+      "overlaps_app_tail_candidate": true,
+      "reserved": "0xff",
+      "size": 383
+    },
+    {
+      "data_crc16": "0xffff",
+      "data_flash_end_exclusive": "0xc4000",
+      "data_flash_start": "0xa0000",
+      "data_offset_relative_to_app_area": "0x9c000",
+      "flags": "0x12",
+      "header_flash_offset": "0x04060",
+      "index": 0,
+      "name": "VM",
+      "overlaps_app_tail_candidate": false,
+      "reserved": "0x81",
+      "size": 147456
+    },
+    {
+      "data_crc16": "0xffff",
+      "data_flash_end_exclusive": "0xa0000",
+      "data_flash_start": "0x04000",
+      "data_offset_relative_to_app_area": "0x0",
+      "flags": "0x92",
+      "header_flash_offset": "0x04080",
+      "index": 0,
+      "name": "PRCT",
+      "overlaps_app_tail_candidate": true,
+      "reserved": "0x82",
+      "size": 638976
+    },
+    {
+      "data_crc16": "0xffff",
+      "data_flash_end_exclusive": "0xc5000",
+      "data_flash_start": "0xc4000",
+      "data_offset_relative_to_app_area": "0xc0000",
+      "flags": "0x92",
+      "header_flash_offset": "0x040a0",
+      "index": 0,
+      "name": "BTIF",
+      "overlaps_app_tail_candidate": false,
+      "reserved": "0x82",
+      "size": 4096
+    },
+    {
+      "data_crc16": "0xffff",
+      "data_flash_end_exclusive": "0xc6000",
+      "data_flash_start": "0xc5000",
+      "data_offset_relative_to_app_area": "0xc1000",
+      "flags": "0x92",
+      "header_flash_offset": "0x040c0",
+      "index": 0,
+      "name": "USRTRIM",
+      "overlaps_app_tail_candidate": false,
+      "reserved": "0x81",
+      "size": 4096
+    },
+    {
+      "data_crc16": "0xffff",
+      "data_flash_end_exclusive": "0xef000",
+      "data_flash_start": "0xc6000",
+      "data_offset_relative_to_app_area": "0xc2000",
+      "flags": "0x92",
+      "header_flash_offset": "0x040e0",
+      "index": 0,
+      "name": "USRFLASH",
+      "overlaps_app_tail_candidate": false,
+      "reserved": "0x81",
+      "size": 167936
+    },
+    {
+      "data_crc16": "0xffff",
+      "data_flash_end_exclusive": "0x102000",
+      "data_flash_start": "0xf8000",
+      "data_offset_relative_to_app_area": "0xf4000",
+      "flags": "0x92",
+      "header_flash_offset": "0x04100",
+      "index": 1,
+      "name": "USR",
+      "overlaps_app_tail_candidate": false,
+      "reserved": "0x81",
+      "size": 40960
+    }
+  ],
+  "layout": {
+    "app_area_end_exclusive": "0x9acd3",
+    "app_area_size": 617683,
+    "app_area_start": "0x04000",
+    "app_bin_flash_end_exclusive": "0x9ab54",
+    "app_bin_flash_start": "0x04120",
+    "app_bin_runtime_end_exclusive": "0x02096a34",
+    "app_bin_runtime_start": "0x02000000",
+    "app_bin_size": 617012,
+    "flash_end_exclusive": "0x9c000",
+    "flash_size": 638976,
+    "jlfs_preserving_available_bytes_for_append": 0,
+    "naive_app_bin_to_app_area_tail": {
+      "bytes": 383,
+      "flash_end_exclusive": "0x9acd3",
+      "flash_start": "0x9ab54",
+      "runtime_end_exclusive_if_mapped_contiguously": "0x02096bb3",
+      "runtime_start_if_mapped_contiguously": "0x02096a34",
+      "sha256": "276579954f076886a6a7694f65dc71c034a63a2c204b76749065c0ac7b010d1b"
+    },
+    "naive_app_bin_to_flash_end_tail": {
+      "bytes": 5292,
+      "flash_end_exclusive": "0x9c000",
+      "flash_start": "0x9ab54",
+      "split": {
+        "cfg_tool_inside_app_area": 383,
+        "protected_post_app_resources_and_reserved": 4909
+      }
+    },
+    "runtime_base_for_app_bytes": "0x02000000"
+  },
+  "loader_mapping_implications": {
+    "app_bin_logical_runtime_range": [
+      "0x02000000",
+      "0x02096a34"
+    ],
+    "contiguous_tail_runtime_range_if_sfc_maps_past_app_bin": [
+      "0x02096a34",
+      "0x02096bb3"
+    ],
+    "entry_point_in_app_area_head": "0x02000120",
+    "offline_limit": "The package proves SFC-encrypted bytes exist there, but the JLFS directory does not describe them as app.bin. Without device execution proof, a tail branch target past app.bin remains an unpromoted mapping assumption."
+  },
+  "scope": "official v15 only; static/package analysis only; no patch, flash, or device access",
+  "suffix_after_app_area": {
+    "bytes": 4909,
+    "flash_end_exclusive": "0x9c000",
+    "flash_start": "0x9acd3",
+    "protected_hash_name": "post_app_resources_and_reserved",
+    "sha256": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7"
+  },
+  "tail_occupancy": {
+    "cfg_tool_entry": {
+      "data_crc16": "0x2e75",
+      "data_flash_end_exclusive": "0x9acd3",
+      "data_flash_start": "0x9ab54",
+      "data_offset_relative_to_app_area": "0x96b54",
+      "flags": "0x82",
+      "header_flash_offset": "0x04040",
+      "index": 0,
+      "name": "cfg_tool.bin",
+      "overlaps_app_tail_candidate": true,
+      "reserved": "0xff",
+      "size": 383
+    },
+    "first_64_bytes_hex": "7b010000008b52000050433030008d02024754535749464900000000000000000000000000000000000000000000000000008e02040000000000000000000000",
+    "last_64_bytes_hex": "0020c200008cc20000803f00008cc2000040c0000080400000a03fec51b83dcdcccc3d0000803f9b8c0201cdcc4c40666606403333b33fae47a13fa55b120005",
+    "occupant": "cfg_tool.bin",
+    "occupies_entire_naive_app_area_tail": true,
+    "unique_byte_count": 84
+  },
+  "validation": [
+    {
+      "check": "official-package-sha256",
+      "detail": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+      "status": "PASS"
+    },
+    {
+      "check": "official-app-sha256",
+      "detail": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "status": "PASS"
+    },
+    {
+      "check": "manifest-package-binding",
+      "detail": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+      "status": "PASS"
+    },
+    {
+      "check": "manifest-app-binding",
+      "detail": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "status": "PASS"
+    },
+    {
+      "check": "app-area-tail-arithmetic",
+      "detail": {
+        "bytes": 383,
+        "end_exclusive": "0x9acd3",
+        "start": "0x9ab54"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "cfg-tool-occupies-entire-app-area-tail",
+      "detail": {
+        "data_crc16": "0x2e75",
+        "data_flash_end_exclusive": "0x9acd3",
+        "data_flash_start": "0x9ab54",
+        "data_offset_relative_to_app_area": "0x96b54",
+        "flags": "0x82",
+        "header_flash_offset": "0x04040",
+        "index": 0,
+        "name": "cfg_tool.bin",
+        "overlaps_app_tail_candidate": true,
+        "reserved": "0xff",
+        "size": 383
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "jlfs-preserving-available-bytes",
+      "detail": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "all-decisions-block",
+      "detail": {
+        "app/text or tail as owned, data-writable voice RAM": "BLOCK",
+        "append R03 executable code to official app.bin by consuming the app-area tail": "BLOCK",
+        "current stock v15 application-only packer for tail placement": "BLOCK",
+        "extend app.bin past the app-area end toward flash.bin end": "BLOCK",
+        "modified packer that only updates app.bin size/CRC": "BLOCK",
+        "overwrite cfg_tool.bin tail bytes and branch/call into them": "BLOCK"
+      },
+      "status": "PASS"
+    }
+  ]
+}

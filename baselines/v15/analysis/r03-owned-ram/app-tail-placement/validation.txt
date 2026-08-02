@@ -1,0 +1,9 @@
+PASS official-package-sha256: f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff
+PASS official-app-sha256: 36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS manifest-package-binding: f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff
+PASS manifest-app-binding: 36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS app-area-tail-arithmetic: {'start': '0x9ab54', 'end_exclusive': '0x9acd3', 'bytes': 383}
+PASS cfg-tool-occupies-entire-app-area-tail: {'name': 'cfg_tool.bin', 'header_flash_offset': '0x04040', 'data_crc16': '0x2e75', 'data_offset_relative_to_app_area': '0x96b54', 'data_flash_start': '0x9ab54', 'data_flash_end_exclusive': '0x9acd3', 'size': 383, 'flags': '0x82', 'index': 0, 'reserved': '0xff', 'overlaps_app_tail_candidate': True}
+PASS jlfs-preserving-available-bytes: 0
+PASS all-decisions-block: {'append R03 executable code to official app.bin by consuming the app-area tail': 'BLOCK', 'overwrite cfg_tool.bin tail bytes and branch/call into them': 'BLOCK', 'extend app.bin past the app-area end toward flash.bin end': 'BLOCK', 'modified packer that only updates app.bin size/CRC': 'BLOCK', 'current stock v15 application-only packer for tail placement': 'BLOCK', 'app/text or tail as owned, data-writable voice RAM': 'BLOCK'}
+OVERALL PASS
