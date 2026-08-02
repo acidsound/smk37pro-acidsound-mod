@@ -38,6 +38,14 @@ revision, 필수 근거, 상태 표시와 링크를 검증한다.
 python3 tools/validate_v15_subsystem_feasibility.py
 ```
 
+장치 연결 전 UI renderer, event/state, Patch selection과 persistence 정적 분석은
+[`ui-preflash/README.md`](ui-preflash/README.md)에 통합했다. 공식 v15 입력에서
+분석 script와 JSON evidence를 다시 생성하고 핵심 주소 및 미확정 상태를 확인하려면:
+
+```sh
+python3 tools/validate_v15_ui_preflash.py
+```
+
 The current clean-room PI32 and USB MIDI result is documented in
 [`evidence.md`](evidence.md). Reproduction artifacts are:
 
