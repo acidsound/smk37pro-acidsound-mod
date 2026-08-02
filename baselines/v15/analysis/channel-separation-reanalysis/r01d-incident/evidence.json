@@ -1,0 +1,787 @@
+{
+  "artifact_hashes": {},
+  "conclusion": {
+    "confidence": "high for address family, medium for exact failing instruction inside preload body without trace hardware",
+    "most_likely_pre_usb_cause": "0x02005f9c post-init callsite redirection to the new R01d preload body at 0x0201e13e",
+    "reason": "It is the only R01d-only executable change that can run before USB enumeration. All other R01d addresses were previously live-booted as event-path or stale-caller changes, or cannot execute until after USB MIDI is available."
+  },
+  "format": "smk37-v15-r01d-incident-reanalysis-v1",
+  "r01d_address_classification": [
+    {
+      "address": "0x0201e13e",
+      "app_file_offset": 123198,
+      "cause_likelihood": "medium_as_callee_of_high_risk_post_init",
+      "classification": "unsafe code-cave expansion when invoked at init; post-USB wrapper primitive only partly proven",
+      "flash_offset": "0x2225e",
+      "new_hex": "7904c4ff6032c30140e0a403d8ee4050501d41e0a003d8ee006140e0a303d8ee407040e0a4034123d8ee411040e0a303412dd8ee411080ffe674feffc0ffd07fc301c1ff744cc301623c80ff40ab0200501d41e0a003d8ee016140e0a303d8ee417040e0a403d8ee415080ffb274feff59047904931683f80a120416c1ffd07fc3014016623c80ff04ab0200590480fffcaa02005904",
+      "new_len": 150,
+      "old_hex": "7604e2808980c13042201492831c34e1f01f3516108a5607c60758ee3b4074f1fc403d4155a265e10c5054199c5b3c4274f1f8403d4955a365e1785054199c5c3c4374f1fc403d4455a265e11c5054199c5d3c459c5e3c4674f1fe403d4755a165e13e5054199c5f3b48d2ee1131c23582f8ccfd8b8001e17e0002e16630141610884507a5071a4972f1f8201c4a44a364e108404219",
+      "old_len": 150,
+      "present_in_live_booted_prior_variants": [
+        "R01",
+        "R01b",
+        "R01c"
+      ],
+      "r01d_status": "same cave entry reused, contents materially new",
+      "rationale": "The code-cave location itself was used by live-booted R01/R01b/R01c. R01d replaced the old static snapshot wrapper with a new preload routine plus note wrapper. The unsafe part is executing the cave from post-init before runtime lifecycle is established.",
+      "reusable_primitive": "code cave occupancy and compact channel compare wrapper were live-booted; loader-preload body was not"
+    },
+    {
+      "address": "0x02005f9c",
+      "app_file_offset": 24476,
+      "cause_likelihood": "high",
+      "classification": "unsafe post-init loader/preload assumption",
+      "flash_offset": "0x0a0bc",
+      "new_hex": "bfeacfc0",
+      "new_len": 4,
+      "old_hex": "bfea60fb",
+      "old_len": 4,
+      "present_in_live_booted_prior_variants": [],
+      "r01d_status": "new_in_R01d",
+      "rationale": "Only R01d patches this early post-init callsite. It changes an existing call to route into a cave that mutates selection state, calls the factory loader twice, and copies from current-source RAM before USB enumeration. The note hooks cannot execute before USB MIDI traffic, while this hook can execute during boot.",
+      "reusable_primitive": "none"
+    },
+    {
+      "address": "0x0201c67c",
+      "app_file_offset": 116348,
+      "cause_likelihood": "low_for_pre_usb",
+      "classification": "previously live-booted Note On memcpy call redirection primitive",
+      "flash_offset": "0x2079c",
+      "new_hex": "80ff2e1b0000",
+      "new_len": 6,
+      "old_hex": "80ff4cc60200",
+      "old_len": 6,
+      "present_in_live_booted_prior_variants": [
+        "R01",
+        "R01b",
+        "R01c"
+      ],
+      "r01d_status": "reused_from_live_R01_R01b_R01c_with_different_target",
+      "rationale": "R01/R01b/R01c changed this Note On callsite and booted. It requires MIDI event dispatch and is not expected to fire before USB enumeration.",
+      "reusable_primitive": "r9 channel-gated Note On source redirection, behavior beyond branch separation not proven"
+    },
+    {
+      "address": "0x0201c63e",
+      "app_file_offset": 116286,
+      "cause_likelihood": "low_for_pre_usb",
+      "classification": "previously live-booted Note Off memcpy call redirection primitive",
+      "flash_offset": "0x2075e",
+      "new_hex": "80ff6c1b0000",
+      "new_len": 6,
+      "old_hex": "80ff8ac60200",
+      "old_len": 6,
+      "present_in_live_booted_prior_variants": [
+        "R01b",
+        "R01c"
+      ],
+      "r01d_status": "reused_from_live_R01b_R01c_with_different_target",
+      "rationale": "R01b/R01c introduced this matched Note Off hook and live-booted. It is reached from the MIDI note-off path, not during pre-USB boot.",
+      "reusable_primitive": "matched Note On/Off source wrapper redirection, but only post-USB event-path usage is proven"
+    },
+    {
+      "address": "0x0201e468",
+      "app_file_offset": 124008,
+      "cause_likelihood": "low",
+      "classification": "previously live-booted old SysEx direct caller neutralization",
+      "flash_offset": "0x22588",
+      "new_hex": "00000000",
+      "new_len": 4,
+      "old_hex": "bfea69fe",
+      "old_len": 4,
+      "present_in_live_booted_prior_variants": [
+        "R01",
+        "R01b",
+        "R01c"
+      ],
+      "r01d_status": "reused_from_live_R01_R01b_R01c",
+      "rationale": "All R01 variants zeroed this old direct caller and booted. It is not the R01d-specific early-boot change.",
+      "reusable_primitive": "neutralize stale direct caller at this exact address only"
+    },
+    {
+      "address": "0x0201e49c",
+      "app_file_offset": 124060,
+      "cause_likelihood": "low",
+      "classification": "previously live-booted old SysEx direct caller neutralization",
+      "flash_offset": "0x225bc",
+      "new_hex": "00000000",
+      "new_len": 4,
+      "old_hex": "bfea4ffe",
+      "old_len": 4,
+      "present_in_live_booted_prior_variants": [
+        "R01",
+        "R01b",
+        "R01c"
+      ],
+      "r01d_status": "reused_from_live_R01_R01b_R01c",
+      "rationale": "All R01 variants zeroed this old direct caller and booted. It is not the R01d-specific early-boot change.",
+      "reusable_primitive": "neutralize stale direct caller at this exact address only"
+    }
+  ],
+  "r01d_diff_ranges": {
+    "actual_app_diff_ranges_vs_official": [
+      {
+        "end_exclusive": 24480,
+        "end_exclusive_hex": "0x05fa0",
+        "size": 2,
+        "start": 24478,
+        "start_hex": "0x05f9e"
+      },
+      {
+        "end_exclusive": 116291,
+        "end_exclusive_hex": "0x1c643",
+        "size": 3,
+        "start": 116288,
+        "start_hex": "0x1c640"
+      },
+      {
+        "end_exclusive": 116353,
+        "end_exclusive_hex": "0x1c681",
+        "size": 3,
+        "start": 116350,
+        "start_hex": "0x1c67e"
+      },
+      {
+        "end_exclusive": 123199,
+        "end_exclusive_hex": "0x1e13f",
+        "size": 1,
+        "start": 123198,
+        "start_hex": "0x1e13e"
+      },
+      {
+        "end_exclusive": 123348,
+        "end_exclusive_hex": "0x1e1d4",
+        "size": 148,
+        "start": 123200,
+        "start_hex": "0x1e140"
+      },
+      {
+        "end_exclusive": 124012,
+        "end_exclusive_hex": "0x1e46c",
+        "size": 4,
+        "start": 124008,
+        "start_hex": "0x1e468"
+      },
+      {
+        "end_exclusive": 124064,
+        "end_exclusive_hex": "0x1e4a0",
+        "size": 4,
+        "start": 124060,
+        "start_hex": "0x1e49c"
+      }
+    ],
+    "app_ranges_manifest": [
+      {
+        "end_exclusive": 24480,
+        "start": 24478
+      },
+      {
+        "end_exclusive": 116291,
+        "start": 116288
+      },
+      {
+        "end_exclusive": 116353,
+        "start": 116350
+      },
+      {
+        "end_exclusive": 123199,
+        "start": 123198
+      },
+      {
+        "end_exclusive": 123348,
+        "start": 123200
+      },
+      {
+        "end_exclusive": 124012,
+        "start": 124008
+      },
+      {
+        "end_exclusive": 124064,
+        "start": 124060
+      }
+    ],
+    "changed_sectors_vs_official_v15": [
+      "0x04000",
+      "0x0a000",
+      "0x20000",
+      "0x22000"
+    ],
+    "flash_ranges_manifest": [
+      {
+        "end_exclusive": 16388,
+        "start": 16384
+      },
+      {
+        "end_exclusive": 16420,
+        "start": 16416
+      },
+      {
+        "end_exclusive": 41152,
+        "start": 41150
+      },
+      {
+        "end_exclusive": 132963,
+        "start": 132960
+      },
+      {
+        "end_exclusive": 133025,
+        "start": 133022
+      },
+      {
+        "end_exclusive": 139871,
+        "start": 139870
+      },
+      {
+        "end_exclusive": 140020,
+        "start": 139872
+      },
+      {
+        "end_exclusive": 140684,
+        "start": 140680
+      },
+      {
+        "end_exclusive": 140736,
+        "start": 140732
+      }
+    ]
+  },
+  "reusable_patch_primitives": [
+    "At 0x0201c67c, redirecting Note On memcpy to a small wrapper is live-booted by R01/R01b/R01c, but only for post-USB event-path use.",
+    "At 0x0201c63e, redirecting Note Off memcpy to the same Ch10 source wrapper is live-booted by R01b/R01c and fixes the R01 stuck-note class.",
+    "At 0x0201e468 and 0x0201e49c, zeroing the two stale SysEx direct callers is live-booted by R01/R01b/R01c.",
+    "The code cave starting at 0x0201e13e can hold a compact channel-gated wrapper in live-booted builds. R01d's early preload body is not included in this reusable primitive."
+  ],
+  "scope": "official v15 plus R01/R01b/R01c live-booted artifacts and R01d bricked artifact; no v12 assumptions",
+  "unsafe_assumptions": [
+    "Calling the factory loader from a post-init callsite before USB enumeration is safe.",
+    "The live object base 0x01c33260 and selected-bank offsets 0x03a0..0x03a4 are valid and initialized at 0x02005f9c time.",
+    "The current-source buffer at 0x01c34c74 is populated by the loader and stable immediately after the injected early call.",
+    "A dedicated RAM staging buffer at 0x01c37fd0 is unused by official firmware and survives until MIDI events.",
+    "The 0x0201e13e cave is safe as both an early-boot callee and a later MIDI-event callee, despite prior live proof covering only event-path use.",
+    "A 156-byte runtime source object can be cloned or staged without recovering its full producer, lifecycle, and post-load initialization."
+  ],
+  "variants": {
+    "R01": {
+      "actual_app_diff_ranges_vs_official": [
+        {
+          "end_exclusive": 116353,
+          "end_exclusive_hex": "0x1c681",
+          "size": 3,
+          "start": 116350,
+          "start_hex": "0x1c67e"
+        },
+        {
+          "end_exclusive": 123199,
+          "end_exclusive_hex": "0x1e13f",
+          "size": 1,
+          "start": 123198,
+          "start_hex": "0x1e13e"
+        },
+        {
+          "end_exclusive": 123390,
+          "end_exclusive_hex": "0x1e1fe",
+          "size": 190,
+          "start": 123200,
+          "start_hex": "0x1e140"
+        },
+        {
+          "end_exclusive": 124012,
+          "end_exclusive_hex": "0x1e46c",
+          "size": 4,
+          "start": 124008,
+          "start_hex": "0x1e468"
+        },
+        {
+          "end_exclusive": 124064,
+          "end_exclusive_hex": "0x1e4a0",
+          "size": 4,
+          "start": 124060,
+          "start_hex": "0x1e49c"
+        }
+      ],
+      "app_path": "build/v15-R01-hand-drum-app.bin",
+      "app_sha256": "e12ac71df2be155a977b6135eedee2bda821226bf354cf8062d3a9624df474c7",
+      "app_sha256_expected": "e12ac71df2be155a977b6135eedee2bda821226bf354cf8062d3a9624df474c7",
+      "hashes_match_expected": true,
+      "input_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "live_status": "live-booted; Ch10 branch reached; Note Off stuck voice remained",
+      "manifest_changed_addresses": [
+        "0x0201e13e",
+        "0x0201c67c",
+        "0x0201e468",
+        "0x0201e49c"
+      ],
+      "manifest_format": "smk37-v15-r01-channel10-factory-hand-drum-v1",
+      "output_app_sha256": "e12ac71df2be155a977b6135eedee2bda821226bf354cf8062d3a9624df474c7",
+      "package_app_ranges": [
+        {
+          "end_exclusive": 116353,
+          "start": 116350
+        },
+        {
+          "end_exclusive": 123199,
+          "start": 123198
+        },
+        {
+          "end_exclusive": 123390,
+          "start": 123200
+        },
+        {
+          "end_exclusive": 124012,
+          "start": 124008
+        },
+        {
+          "end_exclusive": 124064,
+          "start": 124060
+        }
+      ],
+      "package_flash_ranges": [
+        {
+          "end_exclusive": 16388,
+          "start": 16384
+        },
+        {
+          "end_exclusive": 16420,
+          "start": 16416
+        },
+        {
+          "end_exclusive": 133025,
+          "start": 133022
+        },
+        {
+          "end_exclusive": 139871,
+          "start": 139870
+        },
+        {
+          "end_exclusive": 140062,
+          "start": 139872
+        },
+        {
+          "end_exclusive": 140684,
+          "start": 140680
+        },
+        {
+          "end_exclusive": 140736,
+          "start": 140732
+        }
+      ],
+      "package_path": "build/SMK37Pro-v15-R01-hand-drum.fwsc",
+      "package_sha256": "292809383e89ba7032619ae338dfb5bd195409600f417de5e8edb98149f66462",
+      "package_sha256_expected": "292809383e89ba7032619ae338dfb5bd195409600f417de5e8edb98149f66462"
+    },
+    "R01b": {
+      "actual_app_diff_ranges_vs_official": [
+        {
+          "end_exclusive": 116291,
+          "end_exclusive_hex": "0x1c643",
+          "size": 3,
+          "start": 116288,
+          "start_hex": "0x1c640"
+        },
+        {
+          "end_exclusive": 116353,
+          "end_exclusive_hex": "0x1c681",
+          "size": 3,
+          "start": 116350,
+          "start_hex": "0x1c67e"
+        },
+        {
+          "end_exclusive": 123199,
+          "end_exclusive_hex": "0x1e13f",
+          "size": 1,
+          "start": 123198,
+          "start_hex": "0x1e13e"
+        },
+        {
+          "end_exclusive": 123390,
+          "end_exclusive_hex": "0x1e1fe",
+          "size": 190,
+          "start": 123200,
+          "start_hex": "0x1e140"
+        },
+        {
+          "end_exclusive": 124012,
+          "end_exclusive_hex": "0x1e46c",
+          "size": 4,
+          "start": 124008,
+          "start_hex": "0x1e468"
+        },
+        {
+          "end_exclusive": 124064,
+          "end_exclusive_hex": "0x1e4a0",
+          "size": 4,
+          "start": 124060,
+          "start_hex": "0x1e49c"
+        }
+      ],
+      "app_path": "build/v15-R01b-buzz-bass-app.bin",
+      "app_sha256": "1bd69fa20d4e4dab35d1d9df12bda36e25516ce2d0c1dff00fd2b7c9e3e96c7f",
+      "app_sha256_expected": "1bd69fa20d4e4dab35d1d9df12bda36e25516ce2d0c1dff00fd2b7c9e3e96c7f",
+      "hashes_match_expected": true,
+      "input_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "live_status": "live-booted; matched Note On/Off source fixed R01 stuck note; named voice failed",
+      "manifest_changed_addresses": [
+        "0x0201e13e",
+        "0x0201c67c",
+        "0x0201c63e",
+        "0x0201e468",
+        "0x0201e49c"
+      ],
+      "manifest_format": "smk37-v15-r01b-channel10-factory-buzz-bass-noteoff-v1",
+      "output_app_sha256": "1bd69fa20d4e4dab35d1d9df12bda36e25516ce2d0c1dff00fd2b7c9e3e96c7f",
+      "package_app_ranges": [
+        {
+          "end_exclusive": 116291,
+          "start": 116288
+        },
+        {
+          "end_exclusive": 116353,
+          "start": 116350
+        },
+        {
+          "end_exclusive": 123199,
+          "start": 123198
+        },
+        {
+          "end_exclusive": 123390,
+          "start": 123200
+        },
+        {
+          "end_exclusive": 124012,
+          "start": 124008
+        },
+        {
+          "end_exclusive": 124064,
+          "start": 124060
+        }
+      ],
+      "package_flash_ranges": [
+        {
+          "end_exclusive": 16388,
+          "start": 16384
+        },
+        {
+          "end_exclusive": 16420,
+          "start": 16416
+        },
+        {
+          "end_exclusive": 132963,
+          "start": 132960
+        },
+        {
+          "end_exclusive": 133025,
+          "start": 133022
+        },
+        {
+          "end_exclusive": 139871,
+          "start": 139870
+        },
+        {
+          "end_exclusive": 140062,
+          "start": 139872
+        },
+        {
+          "end_exclusive": 140684,
+          "start": 140680
+        },
+        {
+          "end_exclusive": 140736,
+          "start": 140732
+        }
+      ],
+      "package_path": "build/SMK37Pro-v15-R01b-buzz-bass.fwsc",
+      "package_sha256": "50aa3b27b17e4f9f8c682dd0ff053d2e3d198b7c736da63ed7b957627ccfa08d",
+      "package_sha256_expected": "50aa3b27b17e4f9f8c682dd0ff053d2e3d198b7c736da63ed7b957627ccfa08d"
+    },
+    "R01c": {
+      "actual_app_diff_ranges_vs_official": [
+        {
+          "end_exclusive": 116291,
+          "end_exclusive_hex": "0x1c643",
+          "size": 3,
+          "start": 116288,
+          "start_hex": "0x1c640"
+        },
+        {
+          "end_exclusive": 116353,
+          "end_exclusive_hex": "0x1c681",
+          "size": 3,
+          "start": 116350,
+          "start_hex": "0x1c67e"
+        },
+        {
+          "end_exclusive": 123199,
+          "end_exclusive_hex": "0x1e13f",
+          "size": 1,
+          "start": 123198,
+          "start_hex": "0x1e13e"
+        },
+        {
+          "end_exclusive": 123292,
+          "end_exclusive_hex": "0x1e19c",
+          "size": 92,
+          "start": 123200,
+          "start_hex": "0x1e140"
+        },
+        {
+          "end_exclusive": 123390,
+          "end_exclusive_hex": "0x1e1fe",
+          "size": 97,
+          "start": 123293,
+          "start_hex": "0x1e19d"
+        },
+        {
+          "end_exclusive": 124012,
+          "end_exclusive_hex": "0x1e46c",
+          "size": 4,
+          "start": 124008,
+          "start_hex": "0x1e468"
+        },
+        {
+          "end_exclusive": 124064,
+          "end_exclusive_hex": "0x1e4a0",
+          "size": 4,
+          "start": 124060,
+          "start_hex": "0x1e49c"
+        }
+      ],
+      "app_path": "build/v15-R01c-mooger1-app.bin",
+      "app_sha256": "37fe48e8215b7d8036c5cd98a0ff0962abe260dc2af13f633b749c527b96e2cb",
+      "app_sha256_expected": "37fe48e8215b7d8036c5cd98a0ff0962abe260dc2af13f633b749c527b96e2cb",
+      "hashes_match_expected": true,
+      "input_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "live_status": "live-booted; matched Note On/Off source worked; named Mooger #1 failed",
+      "manifest_changed_addresses": [
+        "0x0201e13e",
+        "0x0201c67c",
+        "0x0201c63e",
+        "0x0201e468",
+        "0x0201e49c"
+      ],
+      "manifest_format": "smk37-v15-r01c-channel10-factory-mooger1-noteoff-v1",
+      "output_app_sha256": "37fe48e8215b7d8036c5cd98a0ff0962abe260dc2af13f633b749c527b96e2cb",
+      "package_app_ranges": [
+        {
+          "end_exclusive": 116291,
+          "start": 116288
+        },
+        {
+          "end_exclusive": 116353,
+          "start": 116350
+        },
+        {
+          "end_exclusive": 123199,
+          "start": 123198
+        },
+        {
+          "end_exclusive": 123292,
+          "start": 123200
+        },
+        {
+          "end_exclusive": 123390,
+          "start": 123293
+        },
+        {
+          "end_exclusive": 124012,
+          "start": 124008
+        },
+        {
+          "end_exclusive": 124064,
+          "start": 124060
+        }
+      ],
+      "package_flash_ranges": [
+        {
+          "end_exclusive": 16388,
+          "start": 16384
+        },
+        {
+          "end_exclusive": 16420,
+          "start": 16416
+        },
+        {
+          "end_exclusive": 132963,
+          "start": 132960
+        },
+        {
+          "end_exclusive": 133025,
+          "start": 133022
+        },
+        {
+          "end_exclusive": 139871,
+          "start": 139870
+        },
+        {
+          "end_exclusive": 139964,
+          "start": 139872
+        },
+        {
+          "end_exclusive": 140062,
+          "start": 139965
+        },
+        {
+          "end_exclusive": 140684,
+          "start": 140680
+        },
+        {
+          "end_exclusive": 140736,
+          "start": 140732
+        }
+      ],
+      "package_path": "build/SMK37Pro-v15-R01c-mooger1.fwsc",
+      "package_sha256": "b34d19e144281e21d1aae141315c3214950d4cf06aa9b0db840d9ebdc15770a7",
+      "package_sha256_expected": "b34d19e144281e21d1aae141315c3214950d4cf06aa9b0db840d9ebdc15770a7"
+    },
+    "R01d": {
+      "actual_app_diff_ranges_vs_official": [
+        {
+          "end_exclusive": 24480,
+          "end_exclusive_hex": "0x05fa0",
+          "size": 2,
+          "start": 24478,
+          "start_hex": "0x05f9e"
+        },
+        {
+          "end_exclusive": 116291,
+          "end_exclusive_hex": "0x1c643",
+          "size": 3,
+          "start": 116288,
+          "start_hex": "0x1c640"
+        },
+        {
+          "end_exclusive": 116353,
+          "end_exclusive_hex": "0x1c681",
+          "size": 3,
+          "start": 116350,
+          "start_hex": "0x1c67e"
+        },
+        {
+          "end_exclusive": 123199,
+          "end_exclusive_hex": "0x1e13f",
+          "size": 1,
+          "start": 123198,
+          "start_hex": "0x1e13e"
+        },
+        {
+          "end_exclusive": 123348,
+          "end_exclusive_hex": "0x1e1d4",
+          "size": 148,
+          "start": 123200,
+          "start_hex": "0x1e140"
+        },
+        {
+          "end_exclusive": 124012,
+          "end_exclusive_hex": "0x1e46c",
+          "size": 4,
+          "start": 124008,
+          "start_hex": "0x1e468"
+        },
+        {
+          "end_exclusive": 124064,
+          "end_exclusive_hex": "0x1e4a0",
+          "size": 4,
+          "start": 124060,
+          "start_hex": "0x1e49c"
+        }
+      ],
+      "app_path": "build/v15-R01d-ram-mooger1-app.bin",
+      "app_sha256": "bdcfdcf1b5e6d60e04e8c9316db94aa38e6cae4a7bcfaf63abefd38bb5347bb3",
+      "app_sha256_expected": "bdcfdcf1b5e6d60e04e8c9316db94aa38e6cae4a7bcfaf63abefd38bb5347bb3",
+      "hashes_match_expected": true,
+      "input_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "live_status": "BRICKED/REVOKED; OTA completed but firmware did not live-boot to normal USB",
+      "manifest_changed_addresses": [
+        "0x0201e13e",
+        "0x02005f9c",
+        "0x0201c67c",
+        "0x0201c63e",
+        "0x0201e468",
+        "0x0201e49c"
+      ],
+      "manifest_format": "smk37-v15-r01d-ram-preload-mooger1-noteoff-v1",
+      "output_app_sha256": "bdcfdcf1b5e6d60e04e8c9316db94aa38e6cae4a7bcfaf63abefd38bb5347bb3",
+      "package_app_ranges": [
+        {
+          "end_exclusive": 24480,
+          "start": 24478
+        },
+        {
+          "end_exclusive": 116291,
+          "start": 116288
+        },
+        {
+          "end_exclusive": 116353,
+          "start": 116350
+        },
+        {
+          "end_exclusive": 123199,
+          "start": 123198
+        },
+        {
+          "end_exclusive": 123348,
+          "start": 123200
+        },
+        {
+          "end_exclusive": 124012,
+          "start": 124008
+        },
+        {
+          "end_exclusive": 124064,
+          "start": 124060
+        }
+      ],
+      "package_flash_ranges": [
+        {
+          "end_exclusive": 16388,
+          "start": 16384
+        },
+        {
+          "end_exclusive": 16420,
+          "start": 16416
+        },
+        {
+          "end_exclusive": 41152,
+          "start": 41150
+        },
+        {
+          "end_exclusive": 132963,
+          "start": 132960
+        },
+        {
+          "end_exclusive": 133025,
+          "start": 133022
+        },
+        {
+          "end_exclusive": 139871,
+          "start": 139870
+        },
+        {
+          "end_exclusive": 140020,
+          "start": 139872
+        },
+        {
+          "end_exclusive": 140684,
+          "start": 140680
+        },
+        {
+          "end_exclusive": 140736,
+          "start": 140732
+        }
+      ],
+      "package_path": "build/SMK37Pro-v15-R01d-ram-mooger1.fwsc",
+      "package_sha256": "add7baacc38d90bcd28cf51a1d096abe0737c8430ec01f70d5b41423d5dc9a96",
+      "package_sha256_expected": "add7baacc38d90bcd28cf51a1d096abe0737c8430ec01f70d5b41423d5dc9a96"
+    },
+    "official_v15": {
+      "app_path": "build/v15-official-app.bin",
+      "app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "app_sha256_expected": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "hashes_match_expected": true,
+      "live_status": "official baseline, restored and device-info observed as 015",
+      "manifest_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "manifest_package_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+      "package_path": "build/SMK-37_Pro_015.fwsc",
+      "package_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+      "package_sha256_expected": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff"
+    }
+  }
+}
