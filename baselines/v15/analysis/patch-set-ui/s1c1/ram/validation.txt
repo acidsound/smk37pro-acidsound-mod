@@ -1,3 +1,4 @@
+PASS	evidence-format	smk37-v15-s1c1-two-slot-ram-v2
 PASS	scope	official-v15/H2 only; no build/device/flash/v12
 PASS	input-exists	build/v15-official-app.bin
 PASS	input-sha256	36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055  build/v15-official-app.bin
@@ -21,6 +22,10 @@ PASS	input-exists	baselines/v15/analysis/patch-set-ui/architecture.md
 PASS	input-sha256	049732dc4eccc0b1e99fb7f1a6390a1e1bd774f560f461fd08cb4ccd3cd00993  baselines/v15/analysis/patch-set-ui/architecture.md
 PASS	input-exists	baselines/v15/analysis/patch-set-ui/checkpoints/report.md
 PASS	input-sha256	0d948334dc67fc76d0ad1fa65d3674dc5e5e06d355cc27ce309ea0aefe9a4cc5  baselines/v15/analysis/patch-set-ui/checkpoints/report.md
+PASS	input-exists	baselines/v15/analysis/patch-set-ui/s1c1/ingress/report.md
+PASS	input-sha256	c6b5e86fc1a0e66912c54aa361f8309ba6e918914ac5ed254b094935ed64b76c  baselines/v15/analysis/patch-set-ui/s1c1/ingress/report.md
+PASS	input-exists	baselines/v15/analysis/patch-set-ui/s1c1/ingress/evidence.json
+PASS	input-sha256	3b30cdb6904fd81156f4be1b919eda9b44259873055f9e1aad2b029c156bcf34  baselines/v15/analysis/patch-set-ui/s1c1/ingress/evidence.json
 PASS	official-bss-instruction	c2ff48cb0300
 PASS	h2-bss-instruction	c2ffeccb0300
 PASS	official-heap-begin-instruction	c5ff2065c401
@@ -33,16 +38,23 @@ PASS	proposed-heap-begin-encoding	c5ff6066c401
 PASS	layout-base	0x01c46520
 PASS	layout-end	0x01c46660
 PASS	two-slot-size	2 * 0xa0 = 0x140
-PASS	minimum-metadata-size	state + lock + note0 + note1 = 4
+PASS	minimum-functional-metadata	valid0 + lock + note0 + state + valid1 + tx + note1 = 7
+PASS	slot-tail-capacity	7 functional + 1 reserved = 8
 PASS	metadata-embedded	no bytes beyond two 0xa0 strides
 PASS	h2-slot0-voice	0x01c46520..0x01c465bc
-PASS	h2-slot0-state	0x01c465bc
+PASS	h2-slot0-valid	0x01c465bc
 PASS	h2-global-lock	0x01c465bd
 PASS	slot0-voice-range	0x01c46520..0x01c465bc
-PASS	h2-metadata-addresses	state=0x01c465bc lock=0x01c465bd
-PASS	two-note-map-addresses	note0=0x01c465be note1=0x01c465bf
+PASS	h2-metadata-addresses	valid0=0x01c465bc lock=0x01c465bd
+PASS	slot0-tail-addresses	note0=0x01c465be state=0x01c465bf
 PASS	slot1-voice-range	0x01c465c0..0x01c4665c
-PASS	slot1-tail-range	0x01c4665c..0x01c46660
+PASS	slot1-tail-range	valid1=0x01c4665c tx=0x01c4665d note1=0x01c4665e reserved=0x01c4665f
+PASS	publication-states	EMPTY=0 LOADING=1 ARMED=2
+PASS	h2-empty-valid0-compatibility	EMPTY and valid0==1 selects exact H2 slot0 for all Ch10 events; private loading is rejected after a legacy H2 publication until reboot
+PASS	ingress-ram-boundary	0x01c46520..0x01c46660
+PASS	ingress-metadata-contract	{'0x01c465bc': 'valid0, exact H2', '0x01c465bd': 'global nonblocking lock, exact H2', '0x01c465be': 'note0', '0x01c465bf': 'state', '0x01c4665c': 'valid1', '0x01c4665d': 'transaction id', '0x01c4665e': 'note1', '0x01c4665f': 'reserved zero'}
+PASS	ingress-state-machine	{'EMPTY': 0, 'LOADING': 1, 'ARMED': 2}
+PASS	ingress-h2-compatibility	EMPTY and valid0==1 selects slot0 for Ch10
 PASS	official-bss-arithmetic	0x01c099d4 + 0x3cb48 = 0x01c4651c
 PASS	official-linker-padding	4 bytes
 PASS	h2-reservation	0xa0
@@ -69,11 +81,14 @@ PASS	headroom-delta	0xa0
 PASS	strict-headroom-inequality	Bmax + 0xa0 < HEAP_END; equality blocked
 PASS	offline-headroom-status	BLOCK_NO_HIGH_WATER_OR_COMPLETE_MODEL
 PASS	paired-live-gate-status	REQUIRED_BEFORE_S1C1_SELECTOR
-PASS	gate-set	{'exact-static-placement': 'PASS', 'h2-slot0-address-compatibility': 'PASS', 'minimum-map-state-metadata': 'PASS', 'existing-live-boundary-discriminator': 'PASS_NARROW', 'additional-0xa0-headroom': 'BLOCK', 's1c1-firmware-build-or-live-selector': 'BLOCK'}
+PASS	gate-set	{'exact-static-placement': 'PASS', 'h2-slot0-address-compatibility': 'PASS', 'minimum-ingress-map-state-metadata': 'PASS', 'existing-live-boundary-discriminator': 'PASS_NARROW', 'additional-0xa0-headroom': 'BLOCK', 's1c1-firmware-build-or-live-selector': 'BLOCK'}
 PASS	report-marker	`0x01c46520..0x01c46660`
 PASS	report-marker	0x0003cc8c
 PASS	report-marker	`c2ff8ccc0300`
 PASS	report-marker	`c5ff6066c401`
+PASS	report-marker	0x01c4665e
+PASS	report-marker	Seven functional bytes plus one reserved byte
+PASS	report-marker	when state is EMPTY and the existing H2 producer has written `valid0 == 1`
 PASS	report-marker	Bmax + 0x000000a0 < 0x01c7fd30
 PASS	report-marker	A no-reboot observation is not a heap high-water measurement.
 PASS	report-marker	**Additional S1-C1 heap headroom: BLOCK.**

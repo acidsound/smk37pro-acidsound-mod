@@ -1,5 +1,5 @@
 {
-  "format": "smk37-v15-s1c1-two-slot-ram-v1",
+  "format": "smk37-v15-s1c1-two-slot-ram-v2",
   "date_utc": "2026-08-02",
   "scope": {
     "firmware_basis": "official-v15 plus recorded H0/H1/H2 evidence, with H2 as the live parent",
@@ -63,6 +63,16 @@
       "path": "baselines/v15/analysis/patch-set-ui/checkpoints/report.md",
       "sha256": "0d948334dc67fc76d0ad1fa65d3674dc5e5e06d355cc27ce309ea0aefe9a4cc5",
       "role": "S1-C1 checkpoint and discriminator contract"
+    },
+    {
+      "path": "baselines/v15/analysis/patch-set-ui/s1c1/ingress/report.md",
+      "sha256": "c6b5e86fc1a0e66912c54aa361f8309ba6e918914ac5ed254b094935ed64b76c",
+      "role": "committed guarded-ingress metadata and publication contract"
+    },
+    {
+      "path": "baselines/v15/analysis/patch-set-ui/s1c1/ingress/evidence.json",
+      "sha256": "3b30cdb6904fd81156f4be1b919eda9b44259873055f9e1aad2b029c156bcf34",
+      "role": "machine-readable authoritative S1-C1 metadata addresses"
     }
   ],
   "official_memory": {
@@ -87,7 +97,7 @@
     "owned_size": 160,
     "owned_size_hex": "0x000000a0",
     "slot0_voice": "0x01c46520..0x01c465bc",
-    "slot0_state_valid": "0x01c465bc",
+    "slot0_valid": "0x01c465bc",
     "global_lock": "0x01c465bd"
   },
   "minimum_two_note_layout": {
@@ -100,9 +110,12 @@
     "slot_stride_hex": "0x000000a0",
     "payload_size": 156,
     "payload_size_hex": "0x0000009c",
-    "metadata_size": 4,
-    "metadata_size_hex": "0x00000004",
-    "metadata_is_embedded_in_slot0_tail": true,
+    "functional_metadata_size": 7,
+    "functional_metadata_size_hex": "0x00000007",
+    "tail_capacity": 8,
+    "tail_capacity_hex": "0x00000008",
+    "reserved_tail_bytes": 1,
+    "metadata_is_embedded_in_both_slot_tails": true,
     "layout": [
       {
         "range": "0x01c46520..0x01c465bc",
@@ -112,7 +125,7 @@
       {
         "range": "0x01c465bc",
         "size": 1,
-        "purpose": "global set_state; 0 means fallback/unarmed, exactly 1 means both slots and both note bytes are immutable and armed; exact H2 valid address"
+        "purpose": "valid0; exact H2 valid address and legacy H2 publication byte"
       },
       {
         "range": "0x01c465bd",
@@ -127,7 +140,7 @@
       {
         "range": "0x01c465bf",
         "size": 1,
-        "purpose": "allowlisted MIDI note selecting slot 1"
+        "purpose": "state; 0 EMPTY, 1 LOADING, 2 ARMED"
       },
       {
         "range": "0x01c465c0..0x01c4665c",
@@ -135,32 +148,50 @@
         "purpose": "slot 1 immutable voice"
       },
       {
-        "range": "0x01c4665c..0x01c46660",
-        "size": 4,
-        "purpose": "zero reserved tail retaining the required second 0xa0 stride"
+        "range": "0x01c4665c",
+        "size": 1,
+        "purpose": "valid1; written after the complete slot 1 copy"
+      },
+      {
+        "range": "0x01c4665d",
+        "size": 1,
+        "purpose": "transaction ID joining LOAD0 and LOAD1_COMMIT"
+      },
+      {
+        "range": "0x01c4665e",
+        "size": 1,
+        "purpose": "allowlisted MIDI note selecting slot 1"
+      },
+      {
+        "range": "0x01c4665f",
+        "size": 1,
+        "purpose": "reserved zero"
       }
     ],
     "publication": {
       "boot_state": 0,
-      "armed_state": 1,
+      "loading_state": 1,
+      "armed_state": 2,
       "rules": [
         "producer takes the H2 nonblocking lock",
-        "state remains 0 while validating notes and copying both complete 0x9c payloads",
-        "reject note values above 127 and reject equal note values",
-        "write both note bytes before publication",
-        "execute csync and write state 1 last",
-        "reject every mutation after state becomes 1 until reboot",
-        "consumers never lock and use stock fallback unless state is exactly 1"
+        "LOAD0 is admitted only from EMPTY with valid0==0 and valid1==0",
+        "LOAD0 writes state=LOADING then csync before note0, transaction ID, and the complete slot0 copy; valid0=1 is written last",
+        "LOAD1_COMMIT requires matching transaction ID, valid0==1, valid1==0, bounded distinct note1, and a valid full-set checksum",
+        "LOAD1_COMMIT writes note1 and the complete slot1 copy, then valid1=1, then state=ARMED last",
+        "reject every mutation after state becomes ARMED until reboot",
+        "consumers never lock; LOADING and invalid state use stock fallback"
       ]
     },
     "lookup": [
       "if channel is not Ch10, use stock fallback",
-      "if state is not exactly 1, use stock fallback",
-      "if note equals note_slot0, use 0x01c46520",
-      "else if note equals note_slot1, use 0x01c465c0",
+      "if state is EMPTY and valid0 is exactly 1, use 0x01c46520 for all Ch10 events to preserve exact H2 behavior",
+      "if state is LOADING or any value other than EMPTY or ARMED, use stock fallback",
+      "if state is ARMED and note equals note0, use 0x01c46520",
+      "else if state is ARMED and note equals note1, use 0x01c465c0",
       "else use stock fallback"
     ],
-    "minimality": "The two fixed note bytes encode the complete two-entry map, state doubles as H2-compatible valid-last publication, and the H2 lock is retained. These four bytes exactly fill slot 0's 0x9c..0x9f tail, so no header or third range is required."
+    "minimality": "The committed two-message ingress needs seven functional bytes: exact H2 valid0 and lock, note0, three-state publication state, valid1, transaction ID, and note1. They occupy seven of the eight tail bytes already present in the two required 0xa0 records; the final byte remains reserved zero, so no header or third range is required.",
+    "h2_compatibility": "EMPTY and valid0==1 selects exact H2 slot0 for all Ch10 events; private loading is rejected after a legacy H2 publication until reboot"
   },
   "boundary_changes": {
     "new_bss_size": 248972,
@@ -257,12 +288,12 @@
     {
       "id": "h2-slot0-address-compatibility",
       "status": "PASS",
-      "reason": "Slot 0 voice, state/valid, and lock remain at 0x01c46520, 0x01c465bc, and 0x01c465bd."
+      "reason": "Slot 0 voice, valid0, and lock remain at 0x01c46520, 0x01c465bc, and 0x01c465bd."
     },
     {
-      "id": "minimum-map-state-metadata",
+      "id": "minimum-ingress-map-state-metadata",
       "status": "PASS",
-      "reason": "Four global bytes are sufficient for immutable all-or-none publication and two exact note comparisons; they fit the retained slot-0 tail."
+      "reason": "Seven functional ingress/map/state bytes plus one reserved byte fit exactly in the two slot tails and preserve exact H2 valid0/lock semantics."
     },
     {
       "id": "existing-live-boundary-discriminator",

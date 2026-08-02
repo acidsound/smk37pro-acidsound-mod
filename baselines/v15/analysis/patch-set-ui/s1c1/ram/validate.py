@@ -54,6 +54,9 @@ def main() -> None:
     report = REPORT_PATH.read_text()
     checks: list[str] = []
 
+    require(evidence["format"] == "smk37-v15-s1c1-two-slot-ram-v2",
+            "evidence-format", evidence["format"], checks)
+
     scope = evidence["scope"]
     require(scope == {
         "firmware_basis": "official-v15 plus recorded H0/H1/H2 evidence, with H2 as the live parent",
@@ -112,16 +115,19 @@ def main() -> None:
             "layout-end", f"0x{end:08x}", checks)
     require(end - base == 2 * SLOT_STRIDE == layout["total_size"] == 0x140,
             "two-slot-size", f"2 * 0xa0 = 0x{end - base:03x}", checks)
-    require(layout["metadata_size"] == SLOT_STRIDE - VOICE_SIZE == 4,
-            "minimum-metadata-size", "state + lock + note0 + note1 = 4", checks)
-    require(layout["metadata_is_embedded_in_slot0_tail"] is True,
+    tail_capacity = 2 * (SLOT_STRIDE - VOICE_SIZE)
+    require(layout["functional_metadata_size"] == 7,
+            "minimum-functional-metadata", "valid0 + lock + note0 + state + valid1 + tx + note1 = 7", checks)
+    require(layout["tail_capacity"] == tail_capacity == 8 and layout["reserved_tail_bytes"] == 1,
+            "slot-tail-capacity", "7 functional + 1 reserved = 8", checks)
+    require(layout["metadata_is_embedded_in_both_slot_tails"] is True,
             "metadata-embedded", "no bytes beyond two 0xa0 strides", checks)
 
     h2_mem = evidence["h2_memory"]
     require(h2_mem["slot0_voice"] == "0x01c46520..0x01c465bc",
             "h2-slot0-voice", h2_mem["slot0_voice"], checks)
-    require(h2_mem["slot0_state_valid"] == "0x01c465bc",
-            "h2-slot0-state", h2_mem["slot0_state_valid"], checks)
+    require(h2_mem["slot0_valid"] == "0x01c465bc",
+            "h2-slot0-valid", h2_mem["slot0_valid"], checks)
     require(h2_mem["global_lock"] == "0x01c465bd",
             "h2-global-lock", h2_mem["global_lock"], checks)
 
@@ -129,13 +135,41 @@ def main() -> None:
     require(ranges["0x01c46520..0x01c465bc"]["size"] == VOICE_SIZE,
             "slot0-voice-range", "0x01c46520..0x01c465bc", checks)
     require(ranges["0x01c465bc"]["size"] == 1 and ranges["0x01c465bd"]["size"] == 1,
-            "h2-metadata-addresses", "state=0x01c465bc lock=0x01c465bd", checks)
+            "h2-metadata-addresses", "valid0=0x01c465bc lock=0x01c465bd", checks)
     require(ranges["0x01c465be"]["size"] == 1 and ranges["0x01c465bf"]["size"] == 1,
-            "two-note-map-addresses", "note0=0x01c465be note1=0x01c465bf", checks)
+            "slot0-tail-addresses", "note0=0x01c465be state=0x01c465bf", checks)
     require(ranges["0x01c465c0..0x01c4665c"]["size"] == VOICE_SIZE,
             "slot1-voice-range", "0x01c465c0..0x01c4665c", checks)
-    require(ranges["0x01c4665c..0x01c46660"]["size"] == 4,
-            "slot1-tail-range", "0x01c4665c..0x01c46660", checks)
+    require(all(ranges[f"0x{address:08x}"]["size"] == 1 for address in range(0x01C4665C, 0x01C46660)),
+            "slot1-tail-range", "valid1=0x01c4665c tx=0x01c4665d note1=0x01c4665e reserved=0x01c4665f", checks)
+
+    publication = layout["publication"]
+    require((publication["boot_state"], publication["loading_state"], publication["armed_state"]) == (0, 1, 2),
+            "publication-states", "EMPTY=0 LOADING=1 ARMED=2", checks)
+    require("EMPTY and valid0==1 selects exact H2 slot0" in layout["h2_compatibility"],
+            "h2-empty-valid0-compatibility", layout["h2_compatibility"], checks)
+
+    ingress = json.loads((ROOT / "baselines/v15/analysis/patch-set-ui/s1c1/ingress/evidence.json").read_text())
+    ingress_ram = ingress["ram"]
+    require(ingress_ram["base"] == layout["base"] and ingress_ram["end_exclusive"] == layout["end_exclusive"],
+            "ingress-ram-boundary", f"{ingress_ram['base']}..{ingress_ram['end_exclusive']}", checks)
+    ingress_rows = {(row.get("range") or row.get("address")): row for row in ingress_ram["layout"]}
+    expected_purposes = {
+        "0x01c465bc": "valid0, exact H2",
+        "0x01c465bd": "global nonblocking lock, exact H2",
+        "0x01c465be": "note0",
+        "0x01c465bf": "state",
+        "0x01c4665c": "valid1",
+        "0x01c4665d": "transaction id",
+        "0x01c4665e": "note1",
+        "0x01c4665f": "reserved zero",
+    }
+    require({address: ingress_rows[address]["purpose"] for address in expected_purposes} == expected_purposes,
+            "ingress-metadata-contract", expected_purposes, checks)
+    require(ingress["state_machine"]["states"] == {"EMPTY": 0, "LOADING": 1, "ARMED": 2},
+            "ingress-state-machine", ingress["state_machine"]["states"], checks)
+    require(ingress["consumer"]["legacy_h2_selection"] == "EMPTY and valid0==1 selects slot0 for Ch10",
+            "ingress-h2-compatibility", ingress["consumer"]["legacy_h2_selection"], checks)
 
     boundary = evidence["boundary_changes"]
     require(OFFICIAL_BSS_END == BSS_START + OFFICIAL_BSS_SIZE,
@@ -211,7 +245,7 @@ def main() -> None:
     require(gates == {
         "exact-static-placement": "PASS",
         "h2-slot0-address-compatibility": "PASS",
-        "minimum-map-state-metadata": "PASS",
+        "minimum-ingress-map-state-metadata": "PASS",
         "existing-live-boundary-discriminator": "PASS_NARROW",
         "additional-0xa0-headroom": "BLOCK",
         "s1c1-firmware-build-or-live-selector": "BLOCK",
@@ -222,6 +256,9 @@ def main() -> None:
         "0x0003cc8c",
         "`c2ff8ccc0300`",
         "`c5ff6066c401`",
+        "0x01c4665e",
+        "Seven functional bytes plus one reserved byte",
+        "when state is EMPTY and the existing H2 producer has written `valid0 == 1`",
         "Bmax + 0x000000a0 < 0x01c7fd30",
         "A no-reboot observation is not a heap high-water measurement.",
         "**Additional S1-C1 heap headroom: BLOCK.**",

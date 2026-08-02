@@ -7,8 +7,8 @@ Scope: official v15 static evidence and the recorded H0/H1/H2 live results only.
 ## Decision
 
 - **Static two-slot placement: PASS.** Reserve exactly `0x140` bytes at `0x01c46520..0x01c46660`.
-- **H2 address compatibility: PASS.** Slot 0 voice, state/valid, and lock stay at `0x01c46520`, `0x01c465bc`, and `0x01c465bd`.
-- **Minimum map/state metadata: PASS.** Four bytes are sufficient and already fit in slot 0's `0x9c..0x9f` tail.
+- **H2 address compatibility: PASS.** Slot 0 voice, `valid0`, and lock stay at `0x01c46520`, `0x01c465bc`, and `0x01c465bd`.
+- **Minimum ingress/map/state metadata: PASS.** Seven functional bytes plus one reserved byte fit in the two existing slot tails, so the reservation remains exactly `0x140`.
 - **Existing H0/H1/H2 boundary discriminator: PASS only for the recorded H2-sized `0xa0` smoke sequence.**
 - **Additional S1-C1 heap headroom: BLOCK.** Nothing recorded proves safety after removing another `0xa0` from the H2 heap.
 - **S1-C1 firmware build/live selector: BLOCK** until the exact headroom gate below passes. Other code placement, parser, and note-register gates are outside this RAM-only result.
@@ -45,35 +45,38 @@ The S1-C1 requirement is exactly two `0xa0` slots plus the smallest map/state me
 
 ```text
 0x01c46520..0x01c465bc  0x9c  slot 0 immutable voice, exact H2 source
-0x01c465bc              1     global set_state, exact H2 valid address
+0x01c465bc              1     valid0, exact H2 valid address
 0x01c465bd              1     global nonblocking producer lock, exact H2 lock
 0x01c465be              1     allowlisted MIDI note selecting slot 0
-0x01c465bf              1     allowlisted MIDI note selecting slot 1
+0x01c465bf              1     state: 0 EMPTY, 1 LOADING, 2 ARMED
 0x01c465c0..0x01c4665c  0x9c  slot 1 immutable voice
-0x01c4665c..0x01c46660  4     zero reserved tail, preserving slot 1 stride
+0x01c4665c              1     valid1
+0x01c4665d              1     transaction ID joining LOAD0 and LOAD1_COMMIT
+0x01c4665e              1     allowlisted MIDI note selecting slot 1
+0x01c4665f              1     reserved zero
 ```
 
-The four metadata bytes are not an extra reservation. They exactly fill slot 0's tail:
+The metadata is not an extra reservation. It uses seven of the eight tail bytes already present in the two required records:
 
 ```text
 2 * 0xa0 = 0x140 total bytes
-slot 0 = 0x9c voice + 4 global map/state bytes = 0xa0
-slot 1 = 0x9c voice + 4 zero reserved bytes     = 0xa0
+slot 0 = 0x9c voice + valid0 + lock + note0 + state = 0xa0
+slot 1 = 0x9c voice + valid1 + tx + note1 + reserved = 0xa0
 ```
 
-This is smaller than a direct 128-byte note table and is complete for exactly two allowlisted notes. Two byte comparisons encode the whole map. A slot index, count, generation, checksum field, or per-slot valid byte is not required for the first immutable, all-or-none selector.
+This is smaller than a direct 128-byte note table and is complete for the committed two-message ingress. Two note bytes encode the whole map. Separate `valid0`, `valid1`, and three-state publication state prevent either partial load from becoming the private selector. The transaction byte binds `LOAD1_COMMIT` to its accepted `LOAD0` without a larger header.
 
 ### Publication rule
 
-1. Boot zero leaves `set_state == 0`, so both consumers use H2/stock fallback.
-2. The producer takes the existing nonblocking lock at `0x01c465bd`.
-3. It rejects notes above 127 and rejects equal note values.
-4. While state remains zero, it copies both complete `0x9c` payloads and writes both note bytes.
-5. It executes `csync`, then writes `set_state = 1` at `0x01c465bc` last.
-6. Once state is one, every mutation is rejected until reboot.
-7. Consumers never lock. They select slot 0 or slot 1 only when state is exactly one, otherwise they preserve H2 fallback.
+1. Boot zero leaves `state == EMPTY`, `valid0 == 0`, and `valid1 == 0`.
+2. `LOAD0` takes the existing nonblocking lock, writes `state = LOADING`, executes `csync`, writes transaction/note0 and the complete slot 0 payload, then writes `valid0 = 1` last.
+3. While state is LOADING, consumers use stock fallback even though `valid0` is one.
+4. `LOAD1_COMMIT` requires the matching transaction, `valid0 == 1`, `valid1 == 0`, distinct bounded notes, and the full-set checksum before mutation.
+5. It writes note1 and the complete slot 1 payload, then `valid1 = 1`, executes `csync`, and writes `state = ARMED` last.
+6. Once state is ARMED, every mutation is rejected until reboot.
+7. Consumers never lock. ARMED note0 selects slot 0, ARMED note1 selects slot 1, and every other note uses stock fallback.
 
-Using `0x01c465bc` as the global armed state retains H2's valid-last contract. It also avoids exposing one valid slot while the other slot or map is incomplete.
+Exact H2 compatibility requires a separate rule before private loading: when state is EMPTY and the existing H2 producer has written `valid0 == 1`, all Ch10 events continue selecting exact H2 slot 0. A private `LOAD0` is rejected in that condition until reboot. This preserves H2 rather than reinterpreting its valid byte as a different state machine.
 
 ## 3. Exact BSS and heap arithmetic
 
@@ -197,7 +200,7 @@ Any difference is **BLOCK/STOP**. Only after this boundary-only gate passes may 
 | two `0xa0` slot placement | **PASS** | `0x01c46520..0x01c46660`, size `0x140`; arithmetic closes |
 | constructive ownership | **PASS if paired changes are applied** | BSS zero ends exactly at new `HEAP_BEGIN`; allocator cannot return the prefix |
 | H2 slot-0 compatibility | **PASS** | voice/state/lock addresses unchanged |
-| smallest two-note map/state | **PASS** | state + lock + two note bytes = 4 bytes in slot-0 tail |
+| smallest ingress/map/state | **PASS** | seven functional bytes plus one reserved byte fit in the two existing slot tails |
 | H0/H1/H2 immediate smoke discriminator | **PASS_NARROW** | supports only the existing H2 `0xa0` boundary and recorded sequences |
 | extra `0xa0` allocator headroom | **BLOCK** | no `Bmax`, exact replay, or complete allocation model |
 | S1-C1 selector build/live admission | **BLOCK** | required offline/paired-live headroom gate has not passed |
