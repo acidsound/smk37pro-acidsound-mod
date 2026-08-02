@@ -1,0 +1,93 @@
+{
+  "artifact_scope": "offline integrity and ABI checkpoint only; not a live functional claim",
+  "changes": [
+    {
+      "address": "0x0201e13e",
+      "file_offset": 123198,
+      "new_hex": "7904931683f810120516c4ffbc65c401484080f809025016c1ff2065c401623c80ff6aab0200590480ff62ab020059047904931683f810120516c4ffbc65c401484080f809025016c1ff2065c401623c80ff3aab0200590480ff32ab0200590479040416c5ffbc65c401584080f80d00c0ff2065c4014116623c80ff10ab0200c5ffbc65c4014021d8405904",
+      "old_hex": "7604e2808980c13042201492831c34e1f01f3516108a5607c60758ee3b4074f1fc403d4155a265e10c5054199c5b3c4274f1f8403d4955a365e1785054199c5c3c4374f1fc403d4455a265e11c5054199c5d3c459c5e3c4674f1fe403d4755a165e13e5054199c5f3b48d2ee1131c23582f8ccfd8b8001e17e0002e16630141610884507a5071a4972f1f820"
+    },
+    {
+      "address": "0x0201c63e",
+      "file_offset": 116286,
+      "new_hex": "80fffa1a0000",
+      "old_hex": "80ff8ac60200"
+    },
+    {
+      "address": "0x0201c67c",
+      "file_offset": 116348,
+      "new_hex": "80ffec1a0000",
+      "old_hex": "80ff4cc60200"
+    },
+    {
+      "address": "0x0201e468",
+      "file_offset": 124008,
+      "new_hex": "bfea99fe",
+      "old_hex": "bfea69fe",
+      "purpose": "one-shot accepted product packet"
+    },
+    {
+      "address": "0x0201e49c",
+      "file_offset": 124060,
+      "new_hex": "bfea7ffe",
+      "old_hex": "bfea4ffe",
+      "purpose": "segmented accepted product packet"
+    },
+    {
+      "address": "0x02026dac",
+      "file_offset": 159148,
+      "new_hex": "00000000",
+      "old_hex": "bfeac7b9",
+      "purpose": "explicitly reject SAVE while controlled checkpoint is installed"
+    },
+    {
+      "address": "0x0200001e",
+      "file_offset": 30,
+      "new_hex": "c2ffeccb0300",
+      "old_hex": "c2ff48cb0300"
+    },
+    {
+      "address": "0x0205e9f8",
+      "file_offset": 387576,
+      "new_hex": "c5ffc065c401",
+      "old_hex": "c5ff2065c401"
+    }
+  ],
+  "format": "smk37-v15-r03-fixed-heap-prefix-v1",
+  "hard_stops": [
+    "normal boot or identity 015 fails before pad input",
+    "any pad is used before the exact guarded product packet",
+    "SAVE is required during this checkpoint",
+    "unexpected reboot, USB loss, stuck note, or cross-channel timbre change",
+    "heap or allocation stress shows a regression"
+  ],
+  "input_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+  "layout": {
+    "end": "0x0201e1ca",
+    "off_entry": "0x0201e13e",
+    "off_stock": "0x0201e166",
+    "on_entry": "0x0201e16e",
+    "on_stock": "0x0201e196",
+    "producer": "0x0201e19e",
+    "producer_return": "0x0201e1c8"
+  },
+  "output_app_sha256": "b0696dee5e772a18b96e63505c22258eb535042cac1ea52988295dec21de6944",
+  "owned_ram": {
+    "heap_capacity_reduction": 160,
+    "initialization": "boot BSS zero extension, ending exactly at shifted HEAP_BEGIN",
+    "range": "0x01c46520..0x01c465c0",
+    "size": 160,
+    "valid": "0x01c465bc",
+    "voice": "0x01c46520..0x01c465bc"
+  },
+  "protocol": {
+    "copy_size": 156,
+    "invalid_ch10": "falls back to stock source",
+    "publish_order": "voice, valid=1",
+    "reload_after_first_publish": "rejected until reboot",
+    "save": "disabled/rejected",
+    "segmented_and_one_shot_product_packets": "the first accepted post-F7 callsite publishes; later packets cannot replace the snapshot",
+    "source": "0x01c37fd0"
+  },
+  "runtime_base": "0x02000000"
+}

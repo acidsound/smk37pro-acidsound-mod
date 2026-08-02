@@ -1,0 +1,13 @@
+{
+  "format": "smk37-v15-r03-pi32-decode-v1",
+  "candidate_app_sha256": "b0696dee5e772a18b96e63505c22258eb535042cac1ea52988295dec21de6944",
+  "runtime_base": "0x02000000",
+  "language": "pi32v2:LE:32:default",
+  "decoder": "Quarkslab PI32v2 Ghidra processor in the pinned local ghidra-quarkslab run",
+  "script": "V15DecoderAnalysis.java with an exact candidate SHA-256 gate",
+  "source_listing": "clean local Ghidra project output, reduced to the retained trace below",
+  "retained_trace": "decoder-trace.tsv",
+  "retained_rows": 111,
+  "scope": "patched boot BSS instruction, Note On/Off callsites, replacement wrapper and producer, accepted SysEx callsites, and disabled SAVE caller",
+  "result": "all retained instructions decoded; all patched branch and call targets match the builder layout"
+}
