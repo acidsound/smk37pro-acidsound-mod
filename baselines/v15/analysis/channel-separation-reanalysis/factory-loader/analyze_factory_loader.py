@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """Official-v15-only factory-loader reanalysis for 0x02005660.
 
-Inputs are official v15 app/package metadata, the v15 Ghidra/Quarkslab listing,
-and clean v15 full-flash baseline dumps. The script performs no patching,
-flashing, v12 reads, or firmware writes. It regenerates JSON evidence and a
-human report under this directory.
+Primary evidence inputs are the official v15 app/package metadata, the v15
+Ghidra/Quarkslab listing, and clean v15 full-flash baseline dumps. The recorded
+R01c manifest is read only to compare the prior static snapshot hash. The script
+performs no patching, flashing, v12 reads, or firmware writes. It regenerates
+JSON evidence and a human report under this directory.
 """
 from __future__ import annotations
 
 import gzip
 import hashlib
 import json
+import struct
 from pathlib import Path
 from typing import Any
 
@@ -23,6 +25,7 @@ LISTING = ROOT / "baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-
 LISTING_PROVENANCE = ROOT / "baselines/v15/analysis/quarkslab/results/provenance.txt"
 DUMP_A = ROOT / "baselines/v15/device-dumps/v15-clean-baseline-a.bin"
 DUMP_B = ROOT / "baselines/v15/device-dumps/v15-clean-baseline-b.bin"
+R01C_MANIFEST = ROOT / "baselines/v15/analysis/flash-candidates/R01c/app-manifest.json"
 
 RUNTIME_BASE = 0x02000000
 RAM_BASE = 0x01C33260
@@ -52,6 +55,8 @@ RANGES = {
     "previous_function_tail_02005650_0200565e": (0x02005650, 0x0200565E),
     "factory_loader_02005660_020057de": (0x02005660, 0x020057DE),
     "next_function_head_020057e0_020057f0": (0x020057E0, 0x020057F0),
+    "post_load_state_initializer_020057e0_02005886": (0x020057E0, 0x02005886),
+    "tail_helper_state_initializers_0200552e_0200565e": (0x0200552E, 0x0200565E),
     "caller_post_init_02005f80_02005faa": (0x02005F80, 0x02005FAA),
     "caller_sysex_short_0201e448_0201e470": (0x0201E448, 0x0201E470),
     "caller_sysex_long_0201e480_0201e4a4": (0x0201E480, 0x0201E4A4),
@@ -331,11 +336,35 @@ def build_gates(manifest: dict[str, Any], package: bytes, dump_a: bytes, dump_b:
     return gates
 
 
+def raw_target_references(app: bytes, rows: list[dict[str, str]]) -> dict[str, Any]:
+    direct_calls = [row_text(r) for r in rows if r["text"].strip() == "call 0x02005660"]
+    pointer_hits: dict[str, list[str]] = {}
+    for value in (0x02005660, 0x02005661):
+        pattern = struct.pack("<I", value)
+        pointer_hits[f"0x{value:08x}"] = [
+            f"0x{RUNTIME_BASE + off:08x}"
+            for off in range(0, len(app) - len(pattern) + 1)
+            if app.startswith(pattern, off)
+        ]
+    return {
+        "direct_call_count": len(direct_calls),
+        "direct_calls": direct_calls,
+        "raw_little_endian_function_pointer_hits": pointer_hits,
+        "interpretation": (
+            "The official app has five decoded direct calls and no raw 32-bit little-endian "
+            "0x02005660/0x02005661 function pointer. This excludes a simple absolute indirect "
+            "call table, but cannot exclude a computed or encoded target."
+        ),
+    }
+
+
 def render_report(data: dict[str, Any]) -> str:
     gates = data["sha_gates"]
     sel = data["bank_d_mooger_path"]
     loader = data["factory_loader"]
     cmp = sel["static_vs_live_source"]
+    refs = data["target_reference_census"]
+    r01c = data["r01c_static_snapshot_comparison"]
     ranges = data["listing_ranges"]
 
     def gate_line(name: str) -> str:
@@ -365,7 +394,7 @@ def render_report(data: dict[str, Any]) -> str:
 
     return f"""# v15 factory loader 0x02005660 reanalysis
 
-Scope: official v15 artifacts only. This script does not read v12, generate a patch, touch flash, or modify firmware images.
+Scope: loader conclusions use official v15 artifacts only. The recorded R01c manifest is comparison-only evidence for the prior static snapshot hash. This script does not read v12, generate a patch, touch flash, or modify firmware images.
 
 ## SHA gates
 
@@ -383,11 +412,14 @@ Scope: official v15 artifacts only. This script does not read v12, generate a pa
 - 인자는 호출자 전달값을 사용하지 않는 `void factory_loader(void)` 형태다. 함수 내부에서 전역 RAM base `0x01c33260`, selected bank `+0x3a4`, selected preset `+0x3a0+bank`를 직접 읽는다.
 - destination은 `0x01c33260+0x1a14 = 0x01c34c74`이다. 이 주소는 Note On/Off dispatcher `0x0201c5ec`의 `0x9c` byte memcpy source이기도 하다.
 - Bank D display 14, zero-based index 13 `Mooger #1` 경로는 index `109`, packed128 dump offset `{sel['offsets']['packed128']}`, raw163 offset `{sel['offsets']['raw163']}`, flag offset `{sel['offsets']['flag']}`이다.
-- R01식 128→156 정적 expansion은 clean Mooger #1의 첫 `0x9c` bytes와는 같다. 그러나 live source object와 동등하지는 않다. loader는 먼저 `0xa3` bytes를 복사하고, tail `0x9c..0xa2`, flag-dependent display byte swap/copy, helper side effects를 추가 수행한다.
+- `R01c` 128→156 정적 expansion은 clean Mooger #1의 첫 `0x9c` bytes와는 같다. 그러나 live source object와 동등하지는 않다. loader는 먼저 `0xa3` bytes를 복사하고, tail `0x9c..0xa2`, flag-dependent display byte swap/copy, helper side effects를 추가 수행한다.
+- 따라서 clean-data 모델은 "주입된 156 bytes 자체가 달랐다"는 설명을 지지하지 않는다. 확인된 차이는 loader lifecycle/state side effect이고, 그것이 연속 pitch 하강의 정확한 원인인지는 runtime RAM/state capture 없이 미입증이다.
 
 ## Function boundary and callers
 
 {callers}
+
+Target census: decoded direct call count `{refs['direct_call_count']}`. Raw official-app little-endian pointer hits are `0x02005660={refs['raw_little_endian_function_pointer_hits']['0x02005660']}` and `0x02005661={refs['raw_little_endian_function_pointer_hits']['0x02005661']}`. This rules out a simple absolute function-pointer table, but not a computed or encoded indirect target.
 
 ### Boundary evidence
 
@@ -450,6 +482,30 @@ Expansion and raw copy are inside `0x02005682..0x02005766`; helper/UI/flag postp
 - `0x0200579c..0x020057b4`: recomputes selected `bank*32+preset` and loads `+0x129c[index]`.
 - `0x020057b8..0x020057dc`: flag `0` copies `cur[0x86..0x87]` to tail `cur[0xa0..0xa1]`; flag `1` copies tail `cur[0xa0..0xa1]` back into `cur[0x86..0x87]`.
 
+### Tail-driven state initialization
+
+For clean Mooger #1, `cur[0x9c..0x9f] = 64 00 00 00`:
+
+- `0x0200552e(100)` clears `0x01c33260+0x16`; values `0..99` instead calculate/store a derived value at `0x01c08b10+0x10` and set the flag.
+- `0x0200558e(0)` clears `0x01c33260+0x170`; nonzero values initialize the object at `*(0x01c33260+0x16c)` and set the flag.
+- `0x020055f8(0)` clears `0x01c33260+0x178`; nonzero values initialize `*(0x01c33260+0x174)` and set the flag.
+- `0x0200562c(0)` clears `0x01c33260+0x180`; nonzero values initialize `*(0x01c33260+0x17c)` and set the flag.
+
+{block('tail_helper_state_initializers_0200552e_0200565e')}
+
+### Optional caller-side initializer `0x020057e0`
+
+Only the init/refresh caller (`0x02005fa4`) and UI bank/preset caller (`0x02024236`) invoke it immediately after the loader. The two SysEx reload sites and default-bank site do not invoke it locally. Its argument is `r0 = *(0x01c33260+0x15c)`. It consumes current-patch bytes `cur[137]`, `cur[138]`, `cur[141]`, and `cur[142]` through aliases `+0x1a9d`, `+0x1a9e`, `+0x1aa1`, and `+0x1aa2`, then writes derived fields in the pointed object at offsets including `+0x24`, `+0x28`, `+0x2a`, `+0x30`, and `+0x34`. Clean Mooger values for those four bytes are `23 00 01 00`. A static per-note `0x9c` copy does not execute this initializer.
+
+{block('post_load_state_initializer_020057e0_02005886')}
+
+## Static Mooger mismatch: proved facts and limit
+
+- Proven: the recorded R01c blob hash `{r01c['recorded_runtime_sha256']}` and this clean-data loader model's first `0x9c` hash `{r01c['modeled_first_0x9c_sha256']}` compare `{r01c['status']}`.
+- Proven: the stock loader additionally owns bytes `0x9c..0xa2`, executes four tail helpers, writes through `*(+0x15c)`, and on two normal selection paths is followed by `0x020057e0`; the static Note On/Off wrapper executed none of those producers.
+- Limited: the first-`0x9c` equality is a static model comparison, not a captured official-device RAM image or independent instruction-level emulation. The listing also has decoder gaps/mislabels inside the dense bitfield loop, so the model is supported by address/dataflow consistency but is not a runtime oracle.
+- Not proven: which omitted state, if any, caused the reported continuously falling pitch. The experiment also changed dispatch calls and did not record the contemporaneous UI patch/global synth state. The correct conclusion is that direct snapshot injection bypassed a proven lifecycle and cannot establish Mooger #1 identity, not that one specific tail byte or helper is the demonstrated acoustic root cause.
+
 ## Return consumers and live source consumer
 
 ### `0x02005f9c` caller
@@ -482,13 +538,15 @@ Expansion and raw copy are inside `0x02005682..0x02005766`; helper/UI/flag postp
 python3 baselines/v15/analysis/channel-separation-reanalysis/factory-loader/analyze_factory_loader.py
 ```
 
-The command regenerates `factory_loader_evidence.json` and this report from official-v15 inputs only.
+The command regenerates `factory_loader_evidence.json` and this report from official-v15 primary evidence plus the recorded R01c comparison manifest. It does not patch or flash anything.
 """
 
 
 def main() -> None:
     OUTDIR.mkdir(parents=True, exist_ok=True)
     manifest = json.loads(OFFICIAL_MANIFEST.read_text())
+    r01c_manifest = json.loads(R01C_MANIFEST.read_text())
+    app = APP.read_bytes()
     package = PACKAGE.read_bytes()
     dump_a = DUMP_A.read_bytes()
     dump_b = DUMP_B.read_bytes()
@@ -498,7 +556,7 @@ def main() -> None:
 
     data: dict[str, Any] = {
         "format": "smk37-v15-channel-separation-factory-loader-reanalysis-v1",
-        "scope": "official v15 app/package/listing and clean v15 dumps only; no v12; no patch; no flash",
+        "scope": "loader conclusions from official v15 app/package/listing and clean v15 dumps; recorded R01c manifest used only for static-snapshot hash comparison; no v12; no patch; no flash",
         "sha_gates": gates,
         "provenance_excerpt": LISTING_PROVENANCE.read_text(errors="replace").splitlines()[:30] if LISTING_PROVENANCE.exists() else [],
         "factory_loader": {
@@ -536,9 +594,56 @@ def main() -> None:
                 {"callsite": "0x0200577c", "target": "0x020055f8", "source": "cur[0x9e] = *(0x01c33260+0x1ab2)"},
                 {"callsite": "0x02005782", "target": "0x0200562c", "source": "cur[0x9f] = *(0x01c33260+0x1ab3)"},
             ],
+            "state_initialization": {
+                "clean_mooger_tail_inputs": {
+                    "cur_0x9c_through_0x9f_hex": "64000000",
+                    "helper_results": [
+                        "0x0200552e(100) clears 0x01c33260+0x16",
+                        "0x0200558e(0) clears 0x01c33260+0x170",
+                        "0x020055f8(0) clears 0x01c33260+0x178",
+                        "0x0200562c(0) clears 0x01c33260+0x180",
+                    ],
+                },
+                "optional_post_load_020057e0": {
+                    "direct_callers": ["0x02005fa4", "0x02024236"],
+                    "not_locally_called_after_loader_sites": ["0x0201e46c", "0x0201e4a0", "0x020255a6"],
+                    "argument": "r0 = *(uint32_t *)(0x01c33260+0x15c)",
+                    "current_patch_inputs": {
+                        "cur_137_via_0x1a9d": "0x23",
+                        "cur_138_via_0x1a9e": "0x00",
+                        "cur_141_via_0x1aa1": "0x01",
+                        "cur_142_via_0x1aa2": "0x00",
+                    },
+                    "derived_destination_offsets": ["+0x24", "+0x28", "+0x2a", "+0x30", "+0x34"],
+                    "limit": "Dense pi32v2 decode gaps prevent promoting the exact arithmetic formula beyond the listed reads/writes without runtime or instruction-level emulation.",
+                },
+            },
             "pseudocode": PSEUDOCODE,
         },
         "bank_d_mooger_path": simulate_loader_for_mooger(dump_a),
+        "r01c_static_snapshot_comparison": {
+            "manifest_path": str(R01C_MANIFEST.relative_to(ROOT)),
+            "recorded_runtime_sha256": r01c_manifest["voice"]["runtime_sha256"],
+            "modeled_first_0x9c_sha256": simulate_loader_for_mooger(dump_a)["hashes"]["simulated_live_first_0x9c_sha256"],
+            "status": (
+                "EQUAL"
+                if r01c_manifest["voice"]["runtime_sha256"]
+                == simulate_loader_for_mooger(dump_a)["hashes"]["simulated_live_first_0x9c_sha256"]
+                else "DIFFERENT"
+            ),
+        },
+        "target_reference_census": raw_target_references(app, rows),
+        "mismatch_assessment": {
+            "proved": [
+                "The clean-data model produces the same first 0x9c SHA-256 as the R01c static blob recorded in the repository.",
+                "The stock loader additionally owns tail bytes 0x9c..0xa2 and performs helper, pointer-target, flag-dependent, and optional 0x020057e0 state initialization not executed by the static Note On/Off wrapper.",
+            ],
+            "limited": [
+                "The first-0x9c equality is a static model comparison, not an official-device RAM capture or independent instruction-level emulation.",
+                "The exhaustive listing contains decoder gaps/mislabels in the dense 128-to-156 bitfield loop.",
+            ],
+            "not_proven": "No specific omitted tail byte/helper/state write is demonstrated as the acoustic cause of the continuously falling pitch; the exact root cause remains unproven.",
+        },
         "listing_search_hits": search(rows),
         "listing_ranges": listing_ranges,
     }

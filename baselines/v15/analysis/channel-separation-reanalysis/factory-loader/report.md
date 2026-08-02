@@ -1,6 +1,6 @@
 # v15 factory loader 0x02005660 reanalysis
 
-Scope: official v15 artifacts only. This script does not read v12, generate a patch, touch flash, or modify firmware images.
+Scope: loader conclusions use official v15 artifacts only. The recorded R01c manifest is comparison-only evidence for the prior static snapshot hash. This script does not read v12, generate a patch, touch flash, or modify firmware images.
 
 ## SHA gates
 
@@ -18,7 +18,8 @@ Scope: official v15 artifacts only. This script does not read v12, generate a pa
 - 인자는 호출자 전달값을 사용하지 않는 `void factory_loader(void)` 형태다. 함수 내부에서 전역 RAM base `0x01c33260`, selected bank `+0x3a4`, selected preset `+0x3a0+bank`를 직접 읽는다.
 - destination은 `0x01c33260+0x1a14 = 0x01c34c74`이다. 이 주소는 Note On/Off dispatcher `0x0201c5ec`의 `0x9c` byte memcpy source이기도 하다.
 - Bank D display 14, zero-based index 13 `Mooger #1` 경로는 index `109`, packed128 dump offset `0x000f7680`, raw163 offset `0x000fc567`, flag offset `0x000fd1ed`이다.
-- R01식 128→156 정적 expansion은 clean Mooger #1의 첫 `0x9c` bytes와는 같다. 그러나 live source object와 동등하지는 않다. loader는 먼저 `0xa3` bytes를 복사하고, tail `0x9c..0xa2`, flag-dependent display byte swap/copy, helper side effects를 추가 수행한다.
+- `R01c` 128→156 정적 expansion은 clean Mooger #1의 첫 `0x9c` bytes와는 같다. 그러나 live source object와 동등하지는 않다. loader는 먼저 `0xa3` bytes를 복사하고, tail `0x9c..0xa2`, flag-dependent display byte swap/copy, helper side effects를 추가 수행한다.
+- 따라서 clean-data 모델은 "주입된 156 bytes 자체가 달랐다"는 설명을 지지하지 않는다. 확인된 차이는 loader lifecycle/state side effect이고, 그것이 연속 pitch 하강의 정확한 원인인지는 runtime RAM/state capture 없이 미입증이다.
 
 ## Function boundary and callers
 
@@ -27,6 +28,8 @@ Scope: official v15 artifacts only. This script does not read v12, generate a pa
 - `0x0201e4a0`: alternate SysEx/product packet path after 0x0201e13e; return consumer: jumps to common continuation 0x0201e538; return value ignored
 - `0x0202422e`: UI bank/preset change; invokes 0x02024070 before loader; return consumer: loads *(0x01c33260+0x15c) and calls 0x020057e0 at 0x02024236
 - `0x020255a6`: default-load/bank-block path after writing bank block and clearing flag table; return consumer: falls through with r0=0x64; loader return ignored
+
+Target census: decoded direct call count `5`. Raw official-app little-endian pointer hits are `0x02005660=[]` and `0x02005661=[]`. This rules out a simple absolute function-pointer table, but not a computed or encoded indirect target.
 
 ### Boundary evidence
 
@@ -326,6 +329,159 @@ Expansion and raw copy are inside `0x02005682..0x02005766`; helper/UI/flag postp
 - `0x0200579c..0x020057b4`: recomputes selected `bank*32+preset` and loads `+0x129c[index]`.
 - `0x020057b8..0x020057dc`: flag `0` copies `cur[0x86..0x87]` to tail `cur[0xa0..0xa1]`; flag `1` copies tail `cur[0xa0..0xa1]` back into `cur[0x86..0x87]`.
 
+### Tail-driven state initialization
+
+For clean Mooger #1, `cur[0x9c..0x9f] = 64 00 00 00`:
+
+- `0x0200552e(100)` clears `0x01c33260+0x16`; values `0..99` instead calculate/store a derived value at `0x01c08b10+0x10` and set the flag.
+- `0x0200558e(0)` clears `0x01c33260+0x170`; nonzero values initialize the object at `*(0x01c33260+0x16c)` and set the flag.
+- `0x020055f8(0)` clears `0x01c33260+0x178`; nonzero values initialize `*(0x01c33260+0x174)` and set the flag.
+- `0x0200562c(0)` clears `0x01c33260+0x180`; nonzero values initialize `*(0x01c33260+0x17c)` and set the flag.
+
+```text
+0200552e	1004	2	push	push rets	FALL_THROUGH	FUN_0200552e@0200552e
+02005530	00fc24c6	4	ja	ja r0,0x63,0x0200557c	CONDITIONAL_JUMP	FUN_0200552e@0200552e
+02005534	80ff56470400	6	call	call 0x02049c90	UNCONDITIONAL_CALL	FUN_0200552e@0200552e
+0200553a	c2ff33624481	6	mov	mov r2,#0x81446233	FALL_THROUGH	FUN_0200552e@0200552e
+02005540	c3ffe6dd1140	6	mov	mov r3,#0x4011dde6	FALL_THROUGH	FUN_0200552e@0200552e
+02005546	80ff8c2c0400	6	call	call 0x020481d8	UNCONDITIONAL_CALL	FUN_0200552e@0200552e
+0200554c	c3ff3653f83e	6	mov	mov r3,#0x3ef85336	FALL_THROUGH	FUN_0200552e@0200552e
+02005552	60e00024	4	mov	mov r2,#0x80000000	FALL_THROUGH	FUN_0200552e@0200552e
+02005556	80ff70430400	6	call	call 0x020498cc	UNCONDITIONAL_CALL	FUN_0200552e@0200552e
+0200555c	c3ff00005940	6	mov	mov r3,#0x40590000	FALL_THROUGH	FUN_0200552e@0200552e
+02005562	4220	2	mov	mov r2,#0x0	FALL_THROUGH	FUN_0200552e@0200552e
+02005564	80ff263b0400	6	call	call 0x02049090	UNCONDITIONAL_CALL	FUN_0200552e@0200552e
+0200556a	80ffcc460400	6	call	call 0x02049c3c	UNCONDITIONAL_CALL	FUN_0200552e@0200552e
+02005570	c1ff108bc001	6	mov	mov r1,#0x1c08b10	FALL_THROUGH	FUN_0200552e@0200552e
+02005576	9064	2	sw	sw r0,[r1 + 0x10]	FALL_THROUGH	FUN_0200552e@0200552e
+02005578	4121	2	mov	mov r1,#0x1	FALL_THROUGH	FUN_0200552e@0200552e
+0200557a	0483	2	goto	goto 0x02005582	UNCONDITIONAL_JUMP	FUN_0200552e@0200552e
+0200557c	4120	2	mov	mov r1,#0x0	FALL_THROUGH	FUN_0200552e@0200552e
+0200557e	80f805c8	4	jne	jne r0,#0x64,0x0200558c	CONDITIONAL_JUMP	FUN_0200552e@0200552e
+02005582	c0ff6032c301	6	mov	mov r0,#0x1c33260	FALL_THROUGH	FUN_0200552e@0200552e
+02005588	52ee0611	4	sb	sb r1,[r0 + 0x16]	FALL_THROUGH	FUN_0200552e@0200552e
+0200558c	0004	2	pop	pop pc	TERMINATOR	FUN_0200552e@0200552e
+0200558e	7404	2	push	push {rets,r4}	FALL_THROUGH	FUN_0200558e@0200558e
+02005590	c1ff6032c301	6	mov	mov r1,#0x1c33260	FALL_THROUGH	FUN_0200558e@0200558e
+02005596	104a	2	jz	jz r0,0x020055ec	CONDITIONAL_JUMP	FUN_0200558e@0200558e
+02005598	42e07001	4	movz	movz r2,#0x170	FALL_THROUGH	FUN_0200558e@0200558e
+0200559c	4321	2	mov	mov r3,#0x1	FALL_THROUGH	FUN_0200558e@0200558e
+0200559e	d8ee1132	4	sb	sb r3,[r1 + r2]	FALL_THROUGH	FUN_0200558e@0200558e
+020055a6	c3ff000080bf	6	mov	mov r3,#0xbf800000	FALL_THROUGH	-
+020055b0	c3ff6666e640	6	mov	mov r3,#0x40e66666	FALL_THROUGH	-
+020055ba	c3ff0000c642	6	mov	mov r3,#0x42c60000	FALL_THROUGH	-
+020055c4	d1ec1c46	4	ldw	ldw r4,r1,#0x16c	FALL_THROUGH	-
+020055c8	c1ff98620502	6	mov	mov r1,#0x2056298	FALL_THROUGH	-
+020055ce	00a3	2	lsl	lsl r0,r0,0x3	FALL_THROUGH	-
+020055d0	1018	2	add	add r0,r1	FALL_THROUGH	-
+020055d2	50ec0000	4	ldw	ldw r0_r1,[r0 + 0x0]	FALL_THROUGH	-
+020055d6	c3ffcdcc4c3f	6	mov	mov r3,#0x3f4ccccd	FALL_THROUGH	-
+020055e0	c262	2	sw	sw r2,[r4 + 0x8]	FALL_THROUGH	-
+020055e2	80ffdc460400	6	call	call 0x02049cc4	UNCONDITIONAL_CALL	-
+020055e8	c061	2	sw	sw r0,[r4 + 0x4]	FALL_THROUGH	-
+020055ea	5404	2	pop	pop {pc,r4}	TERMINATOR	-
+020055ec	40e07001	4	movz	movz r0,#0x170	FALL_THROUGH	FUN_0200558e@0200558e
+020055f0	4220	2	mov	mov r2,#0x0	FALL_THROUGH	FUN_0200558e@0200558e
+020055f2	d8ee1120	4	sb	sb r2,[r1 + r0]	FALL_THROUGH	FUN_0200558e@0200558e
+020055f6	5404	2	pop	pop {pc,r4}	TERMINATOR	FUN_0200558e@0200558e
+020055f8	c1ff6032c301	6	mov	mov r1,#0x1c33260	FALL_THROUGH	FUN_020055f8@020055f8
+020055fe	0050	2	jz	jz r0,0x02005620	CONDITIONAL_JUMP	FUN_020055f8@020055f8
+02005600	d1ec1427	4	ldw	ldw r2,r1,#0x174	FALL_THROUGH	FUN_020055f8@020055f8
+02005608	c3ff0ad7233c	6	mov	mov r3,#0x3c23d70a	FALL_THROUGH	-
+02005610	0203	2	rep	rep 0x2,r2	FALL_THROUGH	-
+02005612	a061	2	sw	sw r0,[r2 + 0x4]	FALL_THROUGH	-
+02005614	c0ffcdcc4c3f	6	mov	mov r0,#0x3f4ccccd	FALL_THROUGH	-
+0200561a	a060	2	sw	sw r0,[r2 + 0x0]	FALL_THROUGH	-
+0200561c	4021	2	mov	mov r0,#0x1	FALL_THROUGH	-
+0200561e	0481	2	goto	goto 0x02005622	UNCONDITIONAL_JUMP	-
+02005620	4020	2	mov	mov r0,#0x0	FALL_THROUGH	FUN_020055f8@020055f8
+02005622	42e07801	4	movz	movz r2,#0x178	FALL_THROUGH	FUN_020055f8@020055f8
+02005626	d8ee1102	4	sb	sb r0,[r1 + r2]	FALL_THROUGH	FUN_020055f8@020055f8
+0200562a	8000	2	rts	rts	TERMINATOR	FUN_020055f8@020055f8
+0200562c	c1ff6032c301	6	mov	mov r1,#0x1c33260	FALL_THROUGH	FUN_0200562c@0200562c
+02005632	0050	2	jz	jz r0,0x02005654	CONDITIONAL_JUMP	FUN_0200562c@0200562c
+02005634	d1ec1c27	4	ldw	ldw r2,r1,#0x17c	FALL_THROUGH	FUN_0200562c@0200562c
+0200563c	c3ff0ad7233c	6	mov	mov r3,#0x3c23d70a	FALL_THROUGH	-
+02005644	0203	2	rep	rep 0x2,r2	FALL_THROUGH	-
+02005646	a06c	2	sw	sw r0,[r2 + 0x30]	FALL_THROUGH	-
+02005648	c0ff3333b33e	6	mov	mov r0,#0x3eb33333	FALL_THROUGH	-
+0200564e	a06b	2	sw	sw r0,[r2 + 0x2c]	FALL_THROUGH	-
+02005650	4021	2	mov	mov r0,#0x1	FALL_THROUGH	-
+02005652	0481	2	goto	goto 0x02005656	UNCONDITIONAL_JUMP	-
+02005654	4020	2	mov	mov r0,#0x0	FALL_THROUGH	FUN_0200562c@0200562c
+02005656	42e08001	4	movz	movz r2,#0x180	FALL_THROUGH	FUN_0200562c@0200562c
+0200565a	d8ee1102	4	sb	sb r0,[r1 + r2]	FALL_THROUGH	FUN_0200562c@0200562c
+0200565e	8000	2	rts	rts	TERMINATOR	FUN_0200562c@0200562c
+```
+
+### Optional caller-side initializer `0x020057e0`
+
+Only the init/refresh caller (`0x02005fa4`) and UI bank/preset caller (`0x02024236`) invoke it immediately after the loader. The two SysEx reload sites and default-bank site do not invoke it locally. Its argument is `r0 = *(0x01c33260+0x15c)`. It consumes current-patch bytes `cur[137]`, `cur[138]`, `cur[141]`, and `cur[142]` through aliases `+0x1a9d`, `+0x1a9e`, `+0x1aa1`, and `+0x1aa2`, then writes derived fields in the pointed object at offsets including `+0x24`, `+0x28`, `+0x2a`, `+0x30`, and `+0x34`. Clean Mooger values for those four bytes are `23 00 01 00`. A static per-note `0x9c` copy does not execute this initializer.
+
+```text
+020057e0	7504	2	push	push {rets,r5,r4}	FALL_THROUGH	FUN_020057e0@020057e0
+020057e2	42f09d1a	4	movz	movz r2,#0x1a9d	FALL_THROUGH	FUN_020057e0@020057e0
+020057e6	0162	2	_lw	_lw r1,[r0 + 0x8]	FALL_THROUGH	FUN_020057e0@020057e0
+020057e8	c3ff18608001	6	mov	mov r3,#0x1806018	FALL_THROUGH	FUN_020057e0@020057e0
+020057ee	13db	2	mul	mul r3,r1	FALL_THROUGH	FUN_020057e0@020057e0
+020057f0	0560	2	_lw	_lw r5,[r0 + 0x0]	FALL_THROUGH	FUN_020057e0@020057e0
+020057f2	c1ff6032c301	6	mov	mov r1,#0x1c33260	FALL_THROUGH	FUN_020057e0@020057e0
+020057f8	d8ee1042	4	lb.z	lb.z r4,[r1 + r2]	FALL_THROUGH	FUN_020057e0@020057e0
+020057fc	f4e13125	4	div.s	div.s r2,r3,r5	FALL_THROUGH	FUN_020057e0@020057e0
+02005802	8f22	2	sw	sw r15,[sp+0x8]	FALL_THROUGH	-
+02005804	60e07c35	4	mov	mov r3,#0x3f000000	FALL_THROUGH	-
+0200580e	5f22	2	mov	mov r7,#0x62	FALL_THROUGH	-
+02005810	432b	2	mov	mov r3,#0xb	FALL_THROUGH	-
+02005812	044a	2	jz	jz r4,0x02005828	CONDITIONAL_JUMP	-
+02005814	e5e1a540	4	mul	mul r5,r4,#0xa5	FALL_THROUGH	-
+02005818	d4a6	2	lsr	lsr r4,r5,0x6	FALL_THROUGH	-
+0200581a	25e9208d	4	if	if (r5 >= #0x2800) {	FALL_THROUGH	-
+0200581e	33e1604f	4	add	add r3,r4,#-0xa0	FALL_THROUGH	-
+02005822	bba4	2	qasr	qasr r3,r3,0x4	FALL_THROUGH	-
+02005824	c32b	2	add	add r3,#0xb	FALL_THROUGH	-
+02005826	0481	2	} 	}  goto 0x0200582a	UNCONDITIONAL_JUMP	-
+02005828	4421	2	mov	mov r4,#0x1	FALL_THROUGH	-
+0200582a	241b	2	mul	mul r4,r2	FALL_THROUGH	-
+0200582c	431b	2	mul	mul r3,r4	FALL_THROUGH	-
+0200582e	43f09e1a	4	movz	movz r3,#0x1a9e	FALL_THROUGH	-
+02005832	8369	2	_sw	_sw r3,[r0 + 0x24]	FALL_THROUGH	-
+02005834	d8ee1033	4	lb.z	lb.z r3,[r1 + r3]	FALL_THROUGH	-
+02005838	a5e06330	4	sub	sub r5,#0x63,r3	FALL_THROUGH	-
+0200583c	133f	2	movs	movs r3,#-0x1	FALL_THROUGH	-
+0200583e	143f	2	movs	movs r4,#-0x1	FALL_THROUGH	-
+02005840	05f810c6	4	je	je r5,0x63,0x02005864	CONDITIONAL_JUMP	-
+02005844	dba4	2	qasr	qasr r3,r5,0x4	FALL_THROUGH	-
+02005846	c321	2	add	add r3,#0x1	FALL_THROUGH	-
+02005848	64e10f50	4	and	and r4,r5,#0xf	FALL_THROUGH	-
+0200584c	3424	2	bitset	bitset r4,0x4	FALL_THROUGH	-
+0200584e	341a	2	lsl	lsl r4,r3	FALL_THROUGH	-
+02005850	f0e14032	4	mul	mul r3,r4,r2	FALL_THROUGH	-
+02005854	c5ff80ff0000	6	mov	mov r5,#0xff80	FALL_THROUGH	-
+0200585a	d419	2	not	not r4,r5	FALL_THROUGH	-
+0200585c	b4ec8000	4	if	if (r4 <= #0x80) {	FALL_THROUGH	-
+02005860	6420	2	mov	mov r4,#0x80	FALL_THROUGH	-
+02005862	241b	2	} 	}  mul r4, r2	FALL_THROUGH	-
+02005864	42f0a21a	4	movz	movz r2,#0x1aa2	FALL_THROUGH	-
+02005868	836c	2	_sw	_sw r3,[r0 + 0x30]	FALL_THROUGH	-
+0200586a	846d	2	sw	sw r4,[r0 + 0x34]	FALL_THROUGH	-
+0200586c	d8ee1022	4	lb.z	lb.z r2,[r1 + r2]	FALL_THROUGH	-
+02005870	52ee0822	4	sb	sb r2,[r0 + 0x28]	FALL_THROUGH	-
+02005874	42e0a11a	4	movz	movz r2,#0x1aa1	FALL_THROUGH	-
+02005878	d8ee1022	4	lb.z	lb.z r2,[r1 + r2]	FALL_THROUGH	-
+0200587c	4121	2	mov	mov r1,#0x1	FALL_THROUGH	-
+0200587e	8241	2	jnz	jnz r2,0x02005882	CONDITIONAL_JUMP	-
+02005880	2116	2	mov	mov r1,r2	FALL_THROUGH	-
+02005882	52ee0a12	4	sb	sb r1,[r0 + 0x2a]	FALL_THROUGH	-
+02005886	5504	2	pop	pop {pc,r5,r4}	TERMINATOR	-
+```
+
+## Static Mooger mismatch: proved facts and limit
+
+- Proven: the recorded R01c blob hash `e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275` and this clean-data loader model's first `0x9c` hash `e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275` compare `EQUAL`.
+- Proven: the stock loader additionally owns bytes `0x9c..0xa2`, executes four tail helpers, writes through `*(+0x15c)`, and on two normal selection paths is followed by `0x020057e0`; the static Note On/Off wrapper executed none of those producers.
+- Limited: the first-`0x9c` equality is a static model comparison, not a captured official-device RAM image or independent instruction-level emulation. The listing also has decoder gaps/mislabels inside the dense bitfield loop, so the model is supported by address/dataflow consistency but is not a runtime oracle.
+- Not proven: which omitted state, if any, caused the reported continuously falling pitch. The experiment also changed dispatch calls and did not record the contemporaneous UI patch/global synth state. The correct conclusion is that direct snapshot injection bypassed a proven lifecycle and cannot establish Mooger #1 identity, not that one specific tail byte or helper is the demonstrated acoustic root cause.
+
 ## Return consumers and live source consumer
 
 ### `0x02005f9c` caller
@@ -514,4 +670,4 @@ Expansion and raw copy are inside `0x02005682..0x02005766`; helper/UI/flag postp
 python3 baselines/v15/analysis/channel-separation-reanalysis/factory-loader/analyze_factory_loader.py
 ```
 
-The command regenerates `factory_loader_evidence.json` and this report from official-v15 inputs only.
+The command regenerates `factory_loader_evidence.json` and this report from official-v15 primary evidence plus the recorded R01c comparison manifest. It does not patch or flash anything.

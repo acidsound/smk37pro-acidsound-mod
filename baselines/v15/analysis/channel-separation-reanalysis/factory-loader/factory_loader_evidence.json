@@ -1,6 +1,6 @@
 {
   "format": "smk37-v15-channel-separation-factory-loader-reanalysis-v1",
-  "scope": "official v15 app/package/listing and clean v15 dumps only; no v12; no patch; no flash",
+  "scope": "loader conclusions from official v15 app/package/listing and clean v15 dumps; recorded R01c manifest used only for static-snapshot hash comparison; no v12; no patch; no flash",
   "sha_gates": {
     "app": {
       "path": "build/v15-official-app.bin",
@@ -157,6 +157,43 @@
         "source": "cur[0x9f] = *(0x01c33260+0x1ab3)"
       }
     ],
+    "state_initialization": {
+      "clean_mooger_tail_inputs": {
+        "cur_0x9c_through_0x9f_hex": "64000000",
+        "helper_results": [
+          "0x0200552e(100) clears 0x01c33260+0x16",
+          "0x0200558e(0) clears 0x01c33260+0x170",
+          "0x020055f8(0) clears 0x01c33260+0x178",
+          "0x0200562c(0) clears 0x01c33260+0x180"
+        ]
+      },
+      "optional_post_load_020057e0": {
+        "direct_callers": [
+          "0x02005fa4",
+          "0x02024236"
+        ],
+        "not_locally_called_after_loader_sites": [
+          "0x0201e46c",
+          "0x0201e4a0",
+          "0x020255a6"
+        ],
+        "argument": "r0 = *(uint32_t *)(0x01c33260+0x15c)",
+        "current_patch_inputs": {
+          "cur_137_via_0x1a9d": "0x23",
+          "cur_138_via_0x1a9e": "0x00",
+          "cur_141_via_0x1aa1": "0x01",
+          "cur_142_via_0x1aa2": "0x00"
+        },
+        "derived_destination_offsets": [
+          "+0x24",
+          "+0x28",
+          "+0x2a",
+          "+0x30",
+          "+0x34"
+        ],
+        "limit": "Dense pi32v2 decode gaps prevent promoting the exact arithmetic formula beyond the listed reads/writes without runtime or instruction-level emulation."
+      }
+    },
     "pseudocode": "void factory_loader_02005660(void) {\n    uint8_t *g = (uint8_t *)0x01c33260;\n    uint8_t bank = g[0x3a4];\n    if (bank > 3) return;\n    uint8_t preset = g[0x3a0 + bank];\n    if (preset > 31) return;\n\n    uint8_t *factory = *(uint8_t **)(g + 0x164);\n    unsigned index = bank * 32u + preset;\n    uint8_t *raw163 = factory + 0x4000 + index * 0xa3;\n    uint8_t *packed128 = factory + bank * 0x1000 + preset * 0x80;\n    uint8_t *cur = g + 0x1a14;       // 0x01c34c74 live source\n\n    memcpy(cur, raw163, 0xa3);       // preserves cur[0x9c..0xa2]\n\n    for (unsigned op = 0; op < 6; op++) {\n        uint8_t *src = packed128 + op * 17;\n        uint8_t *dst = cur + op * 21;\n        memcpy(dst, src, 11);\n        dst[11] = src[11] & 3;\n        dst[12] = (src[11] >> 2) & 3;\n        dst[13] = src[12] & 7;\n        dst[20] = (src[12] >> 3) & 15;\n        dst[14] = src[13] & 3;\n        dst[15] = (src[13] >> 2) & 7;\n        dst[16] = src[14];\n        dst[17] = src[15] & 1;\n        dst[18] = (src[15] >> 1) & 31;\n        dst[19] = src[16];\n    }\n\n    memcpy(cur + 126, packed128 + 102, 9);\n    cur[135] = packed128[111] & 7;\n    cur[136] = (packed128[111] >> 3) & 1;\n    memcpy(cur + 137, packed128 + 112, 4);\n    cur[141] = packed128[116] & 1;\n    cur[142] = (packed128[116] >> 1) & 7;\n    cur[143] = (packed128[116] >> 4) & 7;\n    cur[144] = packed128[117];\n    memcpy(cur + 145, packed128 + 118, 10);\n    cur[155] = 0x3f;\n\n    update_0200552e(cur[0x9c]);\n    update_0200558e(cur[0x9d]);\n    update_020055f8(cur[0x9e]);\n    update_0200562c(cur[0x9f]);\n\n    *(uint8_t *)(*(uint32_t *)(g + 0x15c) + 0x16) = cur[0xa2];\n    *(uint32_t *)(*(uint32_t *)(g + 0x15c) + 0x9c) = 0x1b9;\n\n    switch (g[0x129c + index]) {\n    case 0:\n        cur[0xa0] = cur[0x86];\n        cur[0xa1] = cur[0x87];\n        break;\n    case 1:\n        cur[0x86] = cur[0xa0];\n        cur[0x87] = cur[0xa1];\n        break;\n    default:\n        break;\n    }\n}"
   },
   "bank_d_mooger_path": {
@@ -273,6 +310,38 @@
       "static156_hex": "4b32634163000000000000000000000055000132074b1e0e41635f5500000000030000000050000000074b1e2841635f0000000000030000000055000100074b1e0e41635f55001b000f030000000063000100074b1e0e41635f5500000000030000000055000000074b1e0e41635f55001b000a0300000000630000000763636363323232320c060123000000010003184d6f6f676572202331203f",
       "simulated_live163_hex": "4b32634163000000000000000000000055000132074b1e0e41635f5500000000030000000050000000074b1e2841635f0000000000030000000055000100074b1e0e41635f55001b000f030000000063000100074b1e0e41635f5500000000030000000055000000074b1e0e41635f55001b000a0300000000630000000763636363323232320c060123000000010003184d6f6f676572202331203f640000000c0600"
     }
+  },
+  "r01c_static_snapshot_comparison": {
+    "manifest_path": "baselines/v15/analysis/flash-candidates/R01c/app-manifest.json",
+    "recorded_runtime_sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275",
+    "modeled_first_0x9c_sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275",
+    "status": "EQUAL"
+  },
+  "target_reference_census": {
+    "direct_call_count": 5,
+    "direct_calls": [
+      "02005f9c\tbfea60fb\t4\tcall\tcall 0x02005660\tUNCONDITIONAL_CALL\t-",
+      "0201e46c\tbfeaf838\t4\tcall\tcall 0x02005660\tUNCONDITIONAL_CALL\tFUN_0201e254@0201e254",
+      "0201e4a0\tbfeade38\t4\tcall\tcall 0x02005660\tUNCONDITIONAL_CALL\tFUN_0201e254@0201e254",
+      "0202422e\tbfea170a\t4\tcall\tcall 0x02005660\tUNCONDITIONAL_CALL\tFUN_020241e0@020241e0",
+      "020255a6\tbfea5b00\t4\tcall\tcall 0x02005660\tUNCONDITIONAL_CALL\t-"
+    ],
+    "raw_little_endian_function_pointer_hits": {
+      "0x02005660": [],
+      "0x02005661": []
+    },
+    "interpretation": "The official app has five decoded direct calls and no raw 32-bit little-endian 0x02005660/0x02005661 function pointer. This excludes a simple absolute indirect call table, but cannot exclude a computed or encoded target."
+  },
+  "mismatch_assessment": {
+    "proved": [
+      "The clean-data model produces the same first 0x9c SHA-256 as the R01c static blob recorded in the repository.",
+      "The stock loader additionally owns tail bytes 0x9c..0xa2 and performs helper, pointer-target, flag-dependent, and optional 0x020057e0 state initialization not executed by the static Note On/Off wrapper."
+    ],
+    "limited": [
+      "The first-0x9c equality is a static model comparison, not an official-device RAM capture or independent instruction-level emulation.",
+      "The exhaustive listing contains decoder gaps/mislabels in the dense 128-to-156 bitfield loop."
+    ],
+    "not_proven": "No specific omitted tail byte/helper/state write is demonstrated as the acoustic cause of the continuously falling pitch; the exact root cause remains unproven."
   },
   "listing_search_hits": {
     "call 0x02005660": [
@@ -683,6 +752,137 @@
       "020057e8\tc3ff18608001\t6\tmov\tmov r3,#0x1806018\tFALL_THROUGH\tFUN_020057e0@020057e0",
       "020057ee\t13db\t2\tmul\tmul r3,r1\tFALL_THROUGH\tFUN_020057e0@020057e0",
       "020057f0\t0560\t2\t_lw\t_lw r5,[r0 + 0x0]\tFALL_THROUGH\tFUN_020057e0@020057e0"
+    ],
+    "post_load_state_initializer_020057e0_02005886": [
+      "020057e0\t7504\t2\tpush\tpush {rets,r5,r4}\tFALL_THROUGH\tFUN_020057e0@020057e0",
+      "020057e2\t42f09d1a\t4\tmovz\tmovz r2,#0x1a9d\tFALL_THROUGH\tFUN_020057e0@020057e0",
+      "020057e6\t0162\t2\t_lw\t_lw r1,[r0 + 0x8]\tFALL_THROUGH\tFUN_020057e0@020057e0",
+      "020057e8\tc3ff18608001\t6\tmov\tmov r3,#0x1806018\tFALL_THROUGH\tFUN_020057e0@020057e0",
+      "020057ee\t13db\t2\tmul\tmul r3,r1\tFALL_THROUGH\tFUN_020057e0@020057e0",
+      "020057f0\t0560\t2\t_lw\t_lw r5,[r0 + 0x0]\tFALL_THROUGH\tFUN_020057e0@020057e0",
+      "020057f2\tc1ff6032c301\t6\tmov\tmov r1,#0x1c33260\tFALL_THROUGH\tFUN_020057e0@020057e0",
+      "020057f8\td8ee1042\t4\tlb.z\tlb.z r4,[r1 + r2]\tFALL_THROUGH\tFUN_020057e0@020057e0",
+      "020057fc\tf4e13125\t4\tdiv.s\tdiv.s r2,r3,r5\tFALL_THROUGH\tFUN_020057e0@020057e0",
+      "02005802\t8f22\t2\tsw\tsw r15,[sp+0x8]\tFALL_THROUGH\t-",
+      "02005804\t60e07c35\t4\tmov\tmov r3,#0x3f000000\tFALL_THROUGH\t-",
+      "0200580e\t5f22\t2\tmov\tmov r7,#0x62\tFALL_THROUGH\t-",
+      "02005810\t432b\t2\tmov\tmov r3,#0xb\tFALL_THROUGH\t-",
+      "02005812\t044a\t2\tjz\tjz r4,0x02005828\tCONDITIONAL_JUMP\t-",
+      "02005814\te5e1a540\t4\tmul\tmul r5,r4,#0xa5\tFALL_THROUGH\t-",
+      "02005818\td4a6\t2\tlsr\tlsr r4,r5,0x6\tFALL_THROUGH\t-",
+      "0200581a\t25e9208d\t4\tif\tif (r5 >= #0x2800) {\tFALL_THROUGH\t-",
+      "0200581e\t33e1604f\t4\tadd\tadd r3,r4,#-0xa0\tFALL_THROUGH\t-",
+      "02005822\tbba4\t2\tqasr\tqasr r3,r3,0x4\tFALL_THROUGH\t-",
+      "02005824\tc32b\t2\tadd\tadd r3,#0xb\tFALL_THROUGH\t-",
+      "02005826\t0481\t2\t} \t}  goto 0x0200582a\tUNCONDITIONAL_JUMP\t-",
+      "02005828\t4421\t2\tmov\tmov r4,#0x1\tFALL_THROUGH\t-",
+      "0200582a\t241b\t2\tmul\tmul r4,r2\tFALL_THROUGH\t-",
+      "0200582c\t431b\t2\tmul\tmul r3,r4\tFALL_THROUGH\t-",
+      "0200582e\t43f09e1a\t4\tmovz\tmovz r3,#0x1a9e\tFALL_THROUGH\t-",
+      "02005832\t8369\t2\t_sw\t_sw r3,[r0 + 0x24]\tFALL_THROUGH\t-",
+      "02005834\td8ee1033\t4\tlb.z\tlb.z r3,[r1 + r3]\tFALL_THROUGH\t-",
+      "02005838\ta5e06330\t4\tsub\tsub r5,#0x63,r3\tFALL_THROUGH\t-",
+      "0200583c\t133f\t2\tmovs\tmovs r3,#-0x1\tFALL_THROUGH\t-",
+      "0200583e\t143f\t2\tmovs\tmovs r4,#-0x1\tFALL_THROUGH\t-",
+      "02005840\t05f810c6\t4\tje\tje r5,0x63,0x02005864\tCONDITIONAL_JUMP\t-",
+      "02005844\tdba4\t2\tqasr\tqasr r3,r5,0x4\tFALL_THROUGH\t-",
+      "02005846\tc321\t2\tadd\tadd r3,#0x1\tFALL_THROUGH\t-",
+      "02005848\t64e10f50\t4\tand\tand r4,r5,#0xf\tFALL_THROUGH\t-",
+      "0200584c\t3424\t2\tbitset\tbitset r4,0x4\tFALL_THROUGH\t-",
+      "0200584e\t341a\t2\tlsl\tlsl r4,r3\tFALL_THROUGH\t-",
+      "02005850\tf0e14032\t4\tmul\tmul r3,r4,r2\tFALL_THROUGH\t-",
+      "02005854\tc5ff80ff0000\t6\tmov\tmov r5,#0xff80\tFALL_THROUGH\t-",
+      "0200585a\td419\t2\tnot\tnot r4,r5\tFALL_THROUGH\t-",
+      "0200585c\tb4ec8000\t4\tif\tif (r4 <= #0x80) {\tFALL_THROUGH\t-",
+      "02005860\t6420\t2\tmov\tmov r4,#0x80\tFALL_THROUGH\t-",
+      "02005862\t241b\t2\t} \t}  mul r4, r2\tFALL_THROUGH\t-",
+      "02005864\t42f0a21a\t4\tmovz\tmovz r2,#0x1aa2\tFALL_THROUGH\t-",
+      "02005868\t836c\t2\t_sw\t_sw r3,[r0 + 0x30]\tFALL_THROUGH\t-",
+      "0200586a\t846d\t2\tsw\tsw r4,[r0 + 0x34]\tFALL_THROUGH\t-",
+      "0200586c\td8ee1022\t4\tlb.z\tlb.z r2,[r1 + r2]\tFALL_THROUGH\t-",
+      "02005870\t52ee0822\t4\tsb\tsb r2,[r0 + 0x28]\tFALL_THROUGH\t-",
+      "02005874\t42e0a11a\t4\tmovz\tmovz r2,#0x1aa1\tFALL_THROUGH\t-",
+      "02005878\td8ee1022\t4\tlb.z\tlb.z r2,[r1 + r2]\tFALL_THROUGH\t-",
+      "0200587c\t4121\t2\tmov\tmov r1,#0x1\tFALL_THROUGH\t-",
+      "0200587e\t8241\t2\tjnz\tjnz r2,0x02005882\tCONDITIONAL_JUMP\t-",
+      "02005880\t2116\t2\tmov\tmov r1,r2\tFALL_THROUGH\t-",
+      "02005882\t52ee0a12\t4\tsb\tsb r1,[r0 + 0x2a]\tFALL_THROUGH\t-",
+      "02005886\t5504\t2\tpop\tpop {pc,r5,r4}\tTERMINATOR\t-"
+    ],
+    "tail_helper_state_initializers_0200552e_0200565e": [
+      "0200552e\t1004\t2\tpush\tpush rets\tFALL_THROUGH\tFUN_0200552e@0200552e",
+      "02005530\t00fc24c6\t4\tja\tja r0,0x63,0x0200557c\tCONDITIONAL_JUMP\tFUN_0200552e@0200552e",
+      "02005534\t80ff56470400\t6\tcall\tcall 0x02049c90\tUNCONDITIONAL_CALL\tFUN_0200552e@0200552e",
+      "0200553a\tc2ff33624481\t6\tmov\tmov r2,#0x81446233\tFALL_THROUGH\tFUN_0200552e@0200552e",
+      "02005540\tc3ffe6dd1140\t6\tmov\tmov r3,#0x4011dde6\tFALL_THROUGH\tFUN_0200552e@0200552e",
+      "02005546\t80ff8c2c0400\t6\tcall\tcall 0x020481d8\tUNCONDITIONAL_CALL\tFUN_0200552e@0200552e",
+      "0200554c\tc3ff3653f83e\t6\tmov\tmov r3,#0x3ef85336\tFALL_THROUGH\tFUN_0200552e@0200552e",
+      "02005552\t60e00024\t4\tmov\tmov r2,#0x80000000\tFALL_THROUGH\tFUN_0200552e@0200552e",
+      "02005556\t80ff70430400\t6\tcall\tcall 0x020498cc\tUNCONDITIONAL_CALL\tFUN_0200552e@0200552e",
+      "0200555c\tc3ff00005940\t6\tmov\tmov r3,#0x40590000\tFALL_THROUGH\tFUN_0200552e@0200552e",
+      "02005562\t4220\t2\tmov\tmov r2,#0x0\tFALL_THROUGH\tFUN_0200552e@0200552e",
+      "02005564\t80ff263b0400\t6\tcall\tcall 0x02049090\tUNCONDITIONAL_CALL\tFUN_0200552e@0200552e",
+      "0200556a\t80ffcc460400\t6\tcall\tcall 0x02049c3c\tUNCONDITIONAL_CALL\tFUN_0200552e@0200552e",
+      "02005570\tc1ff108bc001\t6\tmov\tmov r1,#0x1c08b10\tFALL_THROUGH\tFUN_0200552e@0200552e",
+      "02005576\t9064\t2\tsw\tsw r0,[r1 + 0x10]\tFALL_THROUGH\tFUN_0200552e@0200552e",
+      "02005578\t4121\t2\tmov\tmov r1,#0x1\tFALL_THROUGH\tFUN_0200552e@0200552e",
+      "0200557a\t0483\t2\tgoto\tgoto 0x02005582\tUNCONDITIONAL_JUMP\tFUN_0200552e@0200552e",
+      "0200557c\t4120\t2\tmov\tmov r1,#0x0\tFALL_THROUGH\tFUN_0200552e@0200552e",
+      "0200557e\t80f805c8\t4\tjne\tjne r0,#0x64,0x0200558c\tCONDITIONAL_JUMP\tFUN_0200552e@0200552e",
+      "02005582\tc0ff6032c301\t6\tmov\tmov r0,#0x1c33260\tFALL_THROUGH\tFUN_0200552e@0200552e",
+      "02005588\t52ee0611\t4\tsb\tsb r1,[r0 + 0x16]\tFALL_THROUGH\tFUN_0200552e@0200552e",
+      "0200558c\t0004\t2\tpop\tpop pc\tTERMINATOR\tFUN_0200552e@0200552e",
+      "0200558e\t7404\t2\tpush\tpush {rets,r4}\tFALL_THROUGH\tFUN_0200558e@0200558e",
+      "02005590\tc1ff6032c301\t6\tmov\tmov r1,#0x1c33260\tFALL_THROUGH\tFUN_0200558e@0200558e",
+      "02005596\t104a\t2\tjz\tjz r0,0x020055ec\tCONDITIONAL_JUMP\tFUN_0200558e@0200558e",
+      "02005598\t42e07001\t4\tmovz\tmovz r2,#0x170\tFALL_THROUGH\tFUN_0200558e@0200558e",
+      "0200559c\t4321\t2\tmov\tmov r3,#0x1\tFALL_THROUGH\tFUN_0200558e@0200558e",
+      "0200559e\td8ee1132\t4\tsb\tsb r3,[r1 + r2]\tFALL_THROUGH\tFUN_0200558e@0200558e",
+      "020055a6\tc3ff000080bf\t6\tmov\tmov r3,#0xbf800000\tFALL_THROUGH\t-",
+      "020055b0\tc3ff6666e640\t6\tmov\tmov r3,#0x40e66666\tFALL_THROUGH\t-",
+      "020055ba\tc3ff0000c642\t6\tmov\tmov r3,#0x42c60000\tFALL_THROUGH\t-",
+      "020055c4\td1ec1c46\t4\tldw\tldw r4,r1,#0x16c\tFALL_THROUGH\t-",
+      "020055c8\tc1ff98620502\t6\tmov\tmov r1,#0x2056298\tFALL_THROUGH\t-",
+      "020055ce\t00a3\t2\tlsl\tlsl r0,r0,0x3\tFALL_THROUGH\t-",
+      "020055d0\t1018\t2\tadd\tadd r0,r1\tFALL_THROUGH\t-",
+      "020055d2\t50ec0000\t4\tldw\tldw r0_r1,[r0 + 0x0]\tFALL_THROUGH\t-",
+      "020055d6\tc3ffcdcc4c3f\t6\tmov\tmov r3,#0x3f4ccccd\tFALL_THROUGH\t-",
+      "020055e0\tc262\t2\tsw\tsw r2,[r4 + 0x8]\tFALL_THROUGH\t-",
+      "020055e2\t80ffdc460400\t6\tcall\tcall 0x02049cc4\tUNCONDITIONAL_CALL\t-",
+      "020055e8\tc061\t2\tsw\tsw r0,[r4 + 0x4]\tFALL_THROUGH\t-",
+      "020055ea\t5404\t2\tpop\tpop {pc,r4}\tTERMINATOR\t-",
+      "020055ec\t40e07001\t4\tmovz\tmovz r0,#0x170\tFALL_THROUGH\tFUN_0200558e@0200558e",
+      "020055f0\t4220\t2\tmov\tmov r2,#0x0\tFALL_THROUGH\tFUN_0200558e@0200558e",
+      "020055f2\td8ee1120\t4\tsb\tsb r2,[r1 + r0]\tFALL_THROUGH\tFUN_0200558e@0200558e",
+      "020055f6\t5404\t2\tpop\tpop {pc,r4}\tTERMINATOR\tFUN_0200558e@0200558e",
+      "020055f8\tc1ff6032c301\t6\tmov\tmov r1,#0x1c33260\tFALL_THROUGH\tFUN_020055f8@020055f8",
+      "020055fe\t0050\t2\tjz\tjz r0,0x02005620\tCONDITIONAL_JUMP\tFUN_020055f8@020055f8",
+      "02005600\td1ec1427\t4\tldw\tldw r2,r1,#0x174\tFALL_THROUGH\tFUN_020055f8@020055f8",
+      "02005608\tc3ff0ad7233c\t6\tmov\tmov r3,#0x3c23d70a\tFALL_THROUGH\t-",
+      "02005610\t0203\t2\trep\trep 0x2,r2\tFALL_THROUGH\t-",
+      "02005612\ta061\t2\tsw\tsw r0,[r2 + 0x4]\tFALL_THROUGH\t-",
+      "02005614\tc0ffcdcc4c3f\t6\tmov\tmov r0,#0x3f4ccccd\tFALL_THROUGH\t-",
+      "0200561a\ta060\t2\tsw\tsw r0,[r2 + 0x0]\tFALL_THROUGH\t-",
+      "0200561c\t4021\t2\tmov\tmov r0,#0x1\tFALL_THROUGH\t-",
+      "0200561e\t0481\t2\tgoto\tgoto 0x02005622\tUNCONDITIONAL_JUMP\t-",
+      "02005620\t4020\t2\tmov\tmov r0,#0x0\tFALL_THROUGH\tFUN_020055f8@020055f8",
+      "02005622\t42e07801\t4\tmovz\tmovz r2,#0x178\tFALL_THROUGH\tFUN_020055f8@020055f8",
+      "02005626\td8ee1102\t4\tsb\tsb r0,[r1 + r2]\tFALL_THROUGH\tFUN_020055f8@020055f8",
+      "0200562a\t8000\t2\trts\trts\tTERMINATOR\tFUN_020055f8@020055f8",
+      "0200562c\tc1ff6032c301\t6\tmov\tmov r1,#0x1c33260\tFALL_THROUGH\tFUN_0200562c@0200562c",
+      "02005632\t0050\t2\tjz\tjz r0,0x02005654\tCONDITIONAL_JUMP\tFUN_0200562c@0200562c",
+      "02005634\td1ec1c27\t4\tldw\tldw r2,r1,#0x17c\tFALL_THROUGH\tFUN_0200562c@0200562c",
+      "0200563c\tc3ff0ad7233c\t6\tmov\tmov r3,#0x3c23d70a\tFALL_THROUGH\t-",
+      "02005644\t0203\t2\trep\trep 0x2,r2\tFALL_THROUGH\t-",
+      "02005646\ta06c\t2\tsw\tsw r0,[r2 + 0x30]\tFALL_THROUGH\t-",
+      "02005648\tc0ff3333b33e\t6\tmov\tmov r0,#0x3eb33333\tFALL_THROUGH\t-",
+      "0200564e\ta06b\t2\tsw\tsw r0,[r2 + 0x2c]\tFALL_THROUGH\t-",
+      "02005650\t4021\t2\tmov\tmov r0,#0x1\tFALL_THROUGH\t-",
+      "02005652\t0481\t2\tgoto\tgoto 0x02005656\tUNCONDITIONAL_JUMP\t-",
+      "02005654\t4020\t2\tmov\tmov r0,#0x0\tFALL_THROUGH\tFUN_0200562c@0200562c",
+      "02005656\t42e08001\t4\tmovz\tmovz r2,#0x180\tFALL_THROUGH\tFUN_0200562c@0200562c",
+      "0200565a\td8ee1102\t4\tsb\tsb r0,[r1 + r2]\tFALL_THROUGH\tFUN_0200562c@0200562c",
+      "0200565e\t8000\t2\trts\trts\tTERMINATOR\tFUN_0200562c@0200562c"
     ],
     "caller_post_init_02005f80_02005faa": [
       "02005f80\t40e0a603\t4\tmovz\tmovz r0,#0x3a6\tFALL_THROUGH\t-",
