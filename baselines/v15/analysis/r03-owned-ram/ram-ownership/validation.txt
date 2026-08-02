@@ -1,0 +1,16 @@
+R03 RAM ownership validation
+
+PASS	official-v15-app-sha256	36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS	official-v15-package-sha256	f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff
+PASS	quarkslab-exhaustive-sha256	f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347
+PASS	kagaimiq-patched-exhaustive-sha256	814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013
+PASS	manifest-app-binding	36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS	manifest-package-binding	f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff
+PASS	current-alias-arithmetic	0x01c33260+0x1a14=0x01c34c74
+PASS	sysex-stage-arithmetic	0x01c37030+0x0fa0=0x01c37fd0
+PASS	r03-requires-metadata	0xa0
+PASS	all-candidates-explicitly-decided	{"dispatcher_per_voice_slot_engine_plus_index_times_0xa0_plus_0xa2": "BLOCK", "generic_zeroed_bss_gap": "BLOCK", "hypothetical_r03_owned_copy_buffer": "BLOCK", "product_ram_stride_workspace_0x01c0de20": "BLOCK", "stock_current_snapshot_0x01c34c74": "BLOCK", "sysex_staging_0x01c37fd0": "BLOCK", "ui_alt_block_or_gap_near_0x01c34894": "BLOCK"}
+PASS	no-pass-without-owned-allocation	[]
+PASS	stock-current-direct-xref-known	{"count": 1, "refs": ["0x0201c604"], "value": "0x01c34c74"}
+PASS	sysex-stage-not-direct-immediate	{"count": 0, "refs": [], "value": "0x01c37fd0"}
+PASS	ui-alt-base-direct-immediates	{"count": 2, "refs": ["0x02029a22", "0x02029a58"], "value": "0x01c34894"}

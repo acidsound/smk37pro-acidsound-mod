@@ -1,0 +1,330 @@
+label	address	bytes	mnemonic	text	flow_type	function
+boot_zero_and_stack_init	02000004	eeffd4a2c301	mov	mov sp,#0x1c3a2d4	FALL_THROUGH	-
+boot_zero_and_stack_init	0200000a	edffd4b2c301	mov	mov ssp,#0x1c3b2d4	FALL_THROUGH	-
+boot_zero_and_stack_init	02000010	80ffb0000000	call	call 0x020000c6	UNCONDITIONAL_CALL	-
+boot_zero_and_stack_init	02000016	c3ffd499c001	mov	mov r3,#0x1c099d4	FALL_THROUGH	-
+boot_zero_and_stack_init	0200001c	4120	mov	mov r1,#0x0	FALL_THROUGH	-
+boot_zero_and_stack_init	0200001e	c2ff48cb0300	mov	mov r2,#0x3cb48	FALL_THROUGH	-
+boot_zero_and_stack_init	02000024	a2a2	lsr	lsr r2,r2,0x2	FALL_THROUGH	-
+boot_zero_and_stack_init	02000026	0203	rep	rep 0x2,r2	FALL_THROUGH	-
+boot_zero_and_stack_init	02000028	b105	sw	sw r1,[r3 ++= 4]	FALL_THROUGH	-
+boot_zero_and_stack_init	0200002a	f25d	jnz	jnz r2,0x02000026	CONDITIONAL_JUMP	-
+boot_zero_and_stack_init	0200002c	c4ff0000c001	mov	mov r4,#0x1c00000	FALL_THROUGH	-
+stock_loader_current_copy	02005682	d1ec4476	ldw	ldw r7,r4,#0x164	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	02005686	50a5	lsl	lsl r0,r5,0x5	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	02005688	6018	add	add r0,r6	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	0200568a	e0e1a300	mul	mul r0,r0,#0xa3	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	0200568e	7018	add	add r0,r7	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	02005690	e1e0800c	add	add r1,r0,0x4000	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	02005694	10e1144a	add	add r0,r4,0x1a14	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	02005698	6a23	mov	mov r2,#0xa3	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	0200569a	80ff2e360400	call	call 0x02048cce	UNCONDITIONAL_CALL	FUN_02005660@02005660
+stock_loader_current_copy	020056a0	51ac	lsl	lsl r1,r5,0xc	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056a2	781c	add	add r0,r7,r1	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056a4	62a7	lsl	lsl r2,r6,0x7	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056a6	b4e00082	add	add r8,r0,r2	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056aa	2118	add	add r1,r2	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056ac	7118	add	add r1,r7	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056ae	c130	add	add r1,#0x10	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056b0	4220	mov	mov r2,#0x0	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056b2	148d	goto	goto 0x0200570e	UNCONDITIONAL_JUMP	FUN_02005660@02005660
+stock_loader_current_copy	020056b4	231d	add	add r3,r2,r4	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056b6	15e1143a	add	add r5,r3,0x1a14	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056ba	36e1f01f	add	add r6,r1,#-0x10	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056be	5716	mov	mov r7,r5	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056c0	108a	rep	rep #0x4,#0xb	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056c2	6007	lb.z	lb.z r0,[r6 ++= 1]	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056c4	f007	sb	sb r0,[r7 ++= 1]	CONDITIONAL_JUMP	FUN_02005660@02005660
+stock_loader_current_copy	020056c6	185b	lb.z	lb.z r0,[r1 + -0x5]	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056c8	76e1fc00	and	and r6,r0,#0xffffff03	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056cc	b0f10801	uextra	uextra r0,r0,0x2,0x2	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056d0	de4b	_sb	_sb r6,[r5 + 0xb]	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056d2	d84c	sb	sb r0,[r5 + 0xc]	FALL_THROUGH	FUN_02005660@02005660
+stock_loader_current_copy	020056d8	66e10700	and	and r6,r0,#0x7	FALL_THROUGH	-
+stock_loader_current_copy	020056dc	80a3	lsr	lsr r0,r0,0x3	FALL_THROUGH	-
+stock_loader_current_copy	020056de	13f1243a	add	add r3,r3,0x1a24	FALL_THROUGH	-
+stock_loader_current_copy	020056e2	de4d	_sb	_sb r6,[r5 + 0xd]	FALL_THROUGH	-
+stock_loader_current_copy	020056e4	b844	sb	sb r0,[r3 + 0x4]	FALL_THROUGH	-
+stock_loader_current_copy	020056ea	66e10300	and	and r6,r0,#0x3	FALL_THROUGH	-
+stock_loader_current_copy	020056ee	de4e	sb	sb r6,[r5 + 0xe]	FALL_THROUGH	-
+stock_loader_current_copy	020056f0	80a2	lsr	lsr r0,r0,0x2	FALL_THROUGH	-
+stock_loader_current_copy	020056f2	d84f	sb	sb r0,[r5 + 0xf]	FALL_THROUGH	-
+stock_loader_current_copy	020056f4	185e	lb.z	lb.z r0,[r1 + -0x2]	FALL_THROUGH	-
+stock_loader_current_copy	020056f6	b840	sb	sb r0,[r3 + 0x0]	FALL_THROUGH	-
+stock_loader_current_copy	020056fc	65e10100	and	and r5,r0,#0x1	FALL_THROUGH	-
+stock_loader_current_copy	02005700	bd41	sb	sb r5,[r3 + 0x1]	FALL_THROUGH	-
+stock_loader_current_copy	02005702	80a1	lsr	lsr r0,r0,0x1	FALL_THROUGH	-
+stock_loader_current_copy	02005704	b842	sb	sb r0,[r3 + 0x2]	FALL_THROUGH	-
+stock_loader_current_copy	02005708	1101	tbh	tbh r1	COMPUTED_JUMP	-
+stock_loader_current_copy	0200570a	b843	sb	sb r0,[r3 + 0x3]	FALL_THROUGH	-
+stock_loader_current_copy	0200570c	c235	add	add r2,#0x15	FALL_THROUGH	-
+stock_loader_current_copy	0200570e	82f8d1fd	jne	jne r2,#0x7e,0x020056b4	CONDITIONAL_JUMP	FUN_02005660@02005660
+stock_loader_current_copy	02005712	15e1904a	add	add r5,r4,0x1a90	FALL_THROUGH	FUN_02005660@02005660
+stock_note_dispatcher_copies	0201c5ec	7a04	push	push {rets,r10,r9,r8,r7,r6,r5,r4}	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c5ee	1b40	lb.z	lb.z r3,[r1 + 0x0]	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c5f0	b4a4	lsr	lsr r4,r3,0x4	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c5f2	56e10840	xor	xor r6,r4,#0x8	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c5f6	07e13c00	add	add r7,r0,#0x3c	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c5fa	06fc4e0a	ja	ja r6,0x5,0x0201c69a	CONDITIONAL_JUMP	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c5fe	79e1f030	and	and r9,r3,#0xffffff0f	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c602	c8ff744cc301	mov	mov r8,#0x1c34c74	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c608	0c8c	add	add r4,r0,#0xc	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c60a	0ae1a000	add	add r10,r0,#0xa0	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c60e	0601	tbb	tbb r6	COMPUTED_JUMP	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c616	82fd7b06	jl	jl r2,#0x3,0x0201c710	CONDITIONAL_JUMP	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c61a	50eea120	lb.z	lb.z r2,[r10 + 0x1]	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c61e	50eea040	lb.z	lb.z r4,[r10 + 0x0]	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c622	c21e	sub	sub r2,r4,r2	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c624	2217	uxtb	uxtb r2,r2	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c626	02fc731e	ja	ja r2,0xf,0x0201c710	CONDITIONAL_JUMP	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c62a	72f1f040	and	and r2,r4,#0xffffff0f	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c62e	1d41	_lb.z	_lb.z r5,[r1 + 0x1]	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c630	e1e1a020	mul	mul r1,r2,#0xa0	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c634	0e1c	add	add r6,r0,r1	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c636	00e1a260	add	add r0,r6,#0xa2	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c63a	623c	mov	mov r2,#0x9c	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c63c	8116	mov	mov r1,r8	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c63e	80ff8ac60200	call	call 0x02048cce	UNCONDITIONAL_CALL	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c644	00e13e61	add	add r0,r6,#0x13e	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c648	8d40	sb	sb r5,[r0 + 0x0]	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c64a	52ee0190	sb	sb r1,[r0 + 0x1]	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c64e	5135	mov	mov r1,#0x55	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c650	049f	goto	goto 0x0201c690	UNCONDITIONAL_JUMP	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c652	82fd5d06	jl	jl r2,#0x3,0x0201c710	CONDITIONAL_JUMP	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c656	50eea120	lb.z	lb.z r2,[r10 + 0x1]	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c65a	50eea040	lb.z	lb.z r4,[r10 + 0x0]	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c65e	c21e	sub	sub r2,r4,r2	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c660	2217	uxtb	uxtb r2,r2	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c662	02fc551e	ja	ja r2,0xf,0x0201c710	CONDITIONAL_JUMP	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c666	72f1f040	and	and r2,r4,#0xffffff0f	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c66a	1d42	_lb.z	_lb.z r5,[r1 + 0x2]	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c66c	e1f1a020	mul	mul r1,r2,#0xa0	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c670	1e41	_lb.z	_lb.z r6,[r1 + 0x1]	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c672	0f1c	add	add r7,r0,r1	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c674	00e1a270	add	add r0,r7,#0xa2	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c678	623c	mov	mov r2,#0x9c	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c67a	8116	mov	mov r1,r8	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c67c	80ff4cc60200	call	call 0x02048cce	UNCONDITIONAL_CALL	FUN_0201c5ec@0201c5ec
+stock_note_dispatcher_copies	0201c682	00e13e71	add	add r0,r7,#0x13e	FALL_THROUGH	FUN_0201c5ec@0201c5ec
+sysex_complete_stage_copy	0201e3ee	50ee7602	lb.z	lb.z r0,[r7 + 0x206]	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e3f2	00ff00002801	je	je r0,#0x0,0x0201e648	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e3f8	50ee7401	lb.z	lb.z r0,[r7 + 0x104]	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e3fc	c6ff3070c301	mov	mov r6,#0x1c37030	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e402	00f83604	je	je r0,0x2,0x0201e472	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e406	00f84e02	je	je r0,0x1,0x0201e4a6	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e40a	80f8fc00	jne	jne r0,#0x0,0x0201e606	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e40e	4840	lb.z	lb.z r0,[r4 + 0x0]	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e410	90f8f9e0	jne	jne r0,#0xf0	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e414	4841	lb.z	lb.z r0,[r4 + 0x1]	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e416	80f8f686	jne	jne r0,#0x43,0x0201e606	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e41a	4842	lb.z	lb.z r0,[r4 + 0x2]	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e41c	8049	jnz	jnz r0,0x0201e430	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e41e	4843	lb.z	lb.z r0,[r4 + 0x3]	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e420	80f80612	jne	jne r0,#0x9,0x0201e430	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e424	4844	lb.z	lb.z r0,[r4 + 0x4]	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e426	80f80340	jne	jne r0,#0x20,0x0201e430	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e42a	4845	lb.z	lb.z r0,[r4 + 0x5]	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e42c	00f8a500	je	je r0,0x0,0x0201e57a	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e430	4842	lb.z	lb.z r0,[r4 + 0x2]	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e432	80f8e800	jne	jne r0,#0x0,0x0201e606	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e436	4843	lb.z	lb.z r0,[r4 + 0x3]	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e438	80f8e500	jne	jne r0,#0x0,0x0201e606	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e43c	4844	lb.z	lb.z r0,[r4 + 0x4]	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e43e	80f8e202	jne	jne r0,#0x1,0x0201e606	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e442	4845	lb.z	lb.z r0,[r4 + 0x5]	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e444	80f8df36	jne	jne r0,#0x1b,0x0201e606	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e448	08e1a06f	add	add r8,r6,#0xfa0	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e44c	4986	add	add r1,r4,#0x6	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e44e	36e1fa9f	add	add r6,r9,#-0x6	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e452	8016	mov	mov r0,r8	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e454	6216	mov	mov r2,r6	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e456	80ff72a80200	call	call 0x02048cce	UNCONDITIONAL_CALL	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e45c	b4e04009	add	add r0,r4,r9	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e460	085f	lb.z	lb.z r0,[r0 + -0x1]	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e462	90f8cbee	jne	jne r0,#0xf7	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e466	8016	mov	mov r0,r8	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e468	bfea69fe	call	call 0x0201e13e	UNCONDITIONAL_CALL	FUN_0201e254@0201e254
+sysex_complete_stage_copy	0201e46c	bfeaf838	call	call 0x02005660	UNCONDITIONAL_CALL	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4c0	6018	add	add r0,r6	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4c2	00e1a00f	add	add r0,r0,#0xfa0	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4c6	35e1fe9f	add	add r5,r9,#-0x2	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4ca	4116	mov	mov r1,r4	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4cc	5216	mov	mov r2,r5	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4ce	80fffaa70200	call	call 0x02048cce	UNCONDITIONAL_CALL	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4d4	4020	mov	mov r0,#0x0	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4d6	41e0a00f	movz	movz r1,#0xfa0	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4da	4220	mov	mov r2,#0x0	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4dc	0487	goto	goto 0x0201e4ec	UNCONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4de	831d	add	add r3,r0,r6	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4e0	d8ee3031	lb.z	lb.z r3,[r3 + r1]	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4e4	bb19	and	and r3,r3	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4e6	3218	add	add r2,r3	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4e8	2217	uxtb	uxtb r2,r2	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4ea	c021	add	add r0,#0x1	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4ec	21ff800df6ff	jne	jne r0,#0x1000,0x0201e4de	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4f2	d8ee4005	lb.z	lb.z r0,[r4 + r5]	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4f6	71e18020	and	and r1,r2,#0xffffff7f	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4fa	80e8a510	jne	jne r1,r0,0x0201e648	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e4fe	4021	mov	mov r0,#0x1	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e500	52ee7f02	sb	sb r0,[r7 + 0x2f]	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e504	40e01417	movz	movz r0,#0x1714	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e508	793f	mov	mov r1,#0xff	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e50a	d8ee7110	sb	sb r1,[r7 + r0]	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e50e	4038	mov	mov r0,#0x18	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e510	bfeaacfd	call	call 0x0201e06c	UNCONDITIONAL_CALL	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e514	0491	goto	goto 0x0201e538	UNCONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e516	95fc0438	jbe	jbe r5,0x9c,0x0201e522	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e51a	048e	goto	goto 0x0201e538	UNCONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e51c	08ffff5f0b00	ja	ja r5,#0xfff,0x0201e538	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e522	6018	add	add r0,r6	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e524	00e1a00f	add	add r0,r0,#0xfa0	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e528	4116	mov	mov r1,r4	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e52a	9216	mov	mov r2,r9	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_other_stage_overwrites	0201e52c	80ff9ca70200	call	call 0x02048cce	UNCONDITIONAL_CALL	FUN_0201e254@0201e254
+sysex_segmented_stage_copy	0201e57a	4021	mov	mov r0,#0x1	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_segmented_stage_copy	0201e57c	52ee7401	sb	sb r0,[r7 + 0x14]	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_segmented_stage_copy	0201e580	00e1a06f	add	add r0,r6,#0xfa0	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_segmented_stage_copy	0201e584	4986	add	add r1,r4,#0x6	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_segmented_stage_copy	0201e586	34e1fa9f	add	add r4,r9,#-0x6	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_segmented_stage_copy	0201e58a	4216	mov	mov r2,r4	FALL_THROUGH	FUN_0201e254@0201e254
+sysex_segmented_stage_copy	0201e58c	80ff3ca70200	call	call 0x02048cce	UNCONDITIONAL_CALL	FUN_0201e254@0201e254
+sysex_segmented_stage_copy	0201e592	50ed7d49	sh	sh r4,[r7 + 0x9c]	FALL_THROUGH	FUN_0201e254@0201e254
+single_parameter_current_write	0201e606	89f8180e	jne	jne r9,#0x7,0x0201e63a	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+single_parameter_current_write	0201e60a	4840	lb.z	lb.z r0,[r4 + 0x0]	FALL_THROUGH	FUN_0201e254@0201e254
+single_parameter_current_write	0201e60c	90f815e0	jne	jne r0,#0xf0	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+single_parameter_current_write	0201e610	4841	lb.z	lb.z r0,[r4 + 0x1]	FALL_THROUGH	FUN_0201e254@0201e254
+single_parameter_current_write	0201e612	80f81286	jne	jne r0,#0x43,0x0201e63a	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+single_parameter_current_write	0201e616	4842	lb.z	lb.z r0,[r4 + 0x2]	FALL_THROUGH	FUN_0201e254@0201e254
+single_parameter_current_write	0201e618	80f80f20	jne	jne r0,#0x10,0x0201e63a	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+single_parameter_current_write	0201e61c	4846	lb.z	lb.z r0,[r4 + 0x6]	FALL_THROUGH	FUN_0201e254@0201e254
+single_parameter_current_write	0201e61e	90f80cee	jne	jne r0,#0xf7	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+single_parameter_current_write	0201e622	42f0141a	movz	movz r2,#0x1a14	FALL_THROUGH	FUN_0201e254@0201e254
+single_parameter_current_write	0201e626	4843	_lb.z	_lb.z r0,[r4 + 0x3]	FALL_THROUGH	FUN_0201e254@0201e254
+single_parameter_current_write	0201e628	4944	lb.z	lb.z r1,[r4 + 0x4]	FALL_THROUGH	FUN_0201e254@0201e254
+single_parameter_current_write	0201e62a	00a7	lsl	lsl r0,r0,0x7	FALL_THROUGH	FUN_0201e254@0201e254
+single_parameter_current_write	0201e62c	10d8	add	add r0,r1	FALL_THROUGH	FUN_0201e254@0201e254
+single_parameter_current_write	0201e62e	4945	_lb.z	_lb.z r1,[r4 + 0x5]	FALL_THROUGH	FUN_0201e254@0201e254
+single_parameter_current_write	0201e630	0017	uxtb	uxtb r0,r0	FALL_THROUGH	FUN_0201e254@0201e254
+single_parameter_current_write	0201e632	7018	add	add r0,r7	FALL_THROUGH	FUN_0201e254@0201e254
+single_parameter_current_write	0201e634	d8ee0112	sb	sb r1,[r0 + r2]	FALL_THROUGH	FUN_0201e254@0201e254
+single_parameter_current_write	0201e638	5904	pop	pop {pc,r9,r8,r7,r6,r5,r4}	TERMINATOR	FUN_0201e254@0201e254
+single_parameter_current_write	0201e63a	d1ec7c05	ldw	ldw r0,r7,#0x15c	FALL_THROUGH	FUN_0201e254@0201e254
+single_parameter_current_write	0201e63e	0044	jz	jz r0,0x0201e648	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+single_parameter_current_write	0201e640	4116	mov	mov r1,r4	FALL_THROUGH	FUN_0201e254@0201e254
+single_parameter_current_write	0201e642	9216	mov	mov r2,r9	FALL_THROUGH	FUN_0201e254@0201e254
+single_parameter_current_write	0201e644	bfead2ef	call	call 0x0201c5ec	UNCONDITIONAL_CALL	FUN_0201e254@0201e254
+ui_pending_consumer	02029152	50ee4c03	} 	}  lb.z r0, [r4 + 0x30c]	FALL_THROUGH	-
+ui_pending_consumer	02029156	0047	jz	jz r0,0x02029166	CONDITIONAL_JUMP	-
+ui_pending_consumer	02029158	b0ec1350	if	if (r0 <= #0x13) {	FALL_THROUGH	-
+ui_pending_consumer	0202915c	c021	add	add r0,#0x1	FALL_THROUGH	-
+ui_pending_consumer	0202915e	52ee4c03	sb	sb r0,[r4 + 0x3c]	FALL_THROUGH	-
+ui_pending_consumer	02029162	bfea70fe	} else { 	} else {  call 0x02028e46	CONDITIONAL_CALL	-
+ui_pending_consumer	02029166	50ee4b03	} 	}  lb.z r0, [r4 + 0x30b]	FALL_THROUGH	-
+ui_pending_consumer	0202916a	0047	jz	jz r0,0x0202917a	CONDITIONAL_JUMP	-
+ui_pending_consumer	0202916c	b0ec1350	if	if (r0 <= #0x13) {	FALL_THROUGH	-
+ui_pending_consumer	02029170	c021	add	add r0,#0x1	FALL_THROUGH	-
+ui_pending_consumer	02029172	52ee4b03	sb	sb r0,[r4 + 0x3b]	FALL_THROUGH	-
+ui_pending_consumer	02029176	bfea75fe	} else { 	} else {  call 0x02028e64	CONDITIONAL_CALL	-
+ui_pending_consumer	0202917a	50ee4e03	} 	}  lb.z r0, [r4 + 0x30e]	FALL_THROUGH	-
+ui_pending_consumer	0202917e	0047	jz	jz r0,0x0202918e	CONDITIONAL_JUMP	-
+ui_pending_consumer	02029180	b0ec1350	if	if (r0 <= #0x13) {	FALL_THROUGH	-
+ui_pending_consumer	02029184	c021	add	add r0,#0x1	FALL_THROUGH	-
+ui_pending_consumer	02029186	52ee4e03	sb	sb r0,[r4 + 0x3e]	FALL_THROUGH	-
+ui_pending_consumer	0202918a	bfea7cfe	} else { 	} else {  call 0x02028e86	CONDITIONAL_CALL	-
+ui_pending_consumer	0202918e	50ee4d03	} 	}  lb.z r0, [r4 + 0x30d]	FALL_THROUGH	-
+ui_pending_consumer	02029192	0047	jz	jz r0,0x020291a2	CONDITIONAL_JUMP	-
+ui_pending_consumer	02029194	b0ec1350	if	if (r0 <= #0x13) {	FALL_THROUGH	-
+ui_pending_consumer	02029198	c021	add	add r0,#0x1	FALL_THROUGH	-
+ui_pending_consumer	0202919a	52ee4d03	sb	sb r0,[r4 + 0x3d]	FALL_THROUGH	-
+ui_pending_consumer	0202919e	bfea82fe	} else { 	} else {  call 0x02028ea6	CONDITIONAL_CALL	-
+ui_pending_consumer	020291a2	50ee4a03	} 	}  lb.z r0, [r4 + 0x30a]	FALL_THROUGH	-
+ui_pending_consumer	020291a6	0047	jz	jz r0,0x020291b6	CONDITIONAL_JUMP	-
+ui_pending_consumer	020291a8	b0ec1350	if	if (r0 <= #0x13) {	FALL_THROUGH	-
+ui_pending_consumer	020291ac	c021	add	add r0,#0x1	FALL_THROUGH	-
+ui_pending_consumer	020291ae	52ee4a03	sb	sb r0,[r4 + 0x3a]	FALL_THROUGH	-
+ui_pending_consumer	020291b2	bfea89fe	} else { 	} else {  call 0x02028ec8	CONDITIONAL_CALL	-
+ui_pending_consumer	020291b6	50ee4903	} 	}  lb.z r0, [r4 + 0x309]	FALL_THROUGH	-
+ui_pending_consumer	020291ba	0048	jz	jz r0,0x020291cc	CONDITIONAL_JUMP	-
+ui_pending_consumer	020291bc	00fc0426	ja	ja r0,0x13,0x020291c8	CONDITIONAL_JUMP	-
+ui_pending_consumer	020291c0	c021	add	add r0,#0x1	FALL_THROUGH	-
+ui_pending_consumer	020291c2	52ee4903	sb	sb r0,[r4 + 0x39]	FALL_THROUGH	-
+ui_pending_consumer	020291c6	5504	pop	pop {pc,r5,r4}	TERMINATOR	-
+ui_pending_consumer	020291c8	bfea8ffe	call	call 0x02028eea	UNCONDITIONAL_CALL	-
+ui_pending_consumer	020291cc	5504	pop	pop {pc,r5,r4}	TERMINATOR	-
+ui_alt_base_handlers	02029a1e	7504	push	push {rets,r5,r4}	FALL_THROUGH	-
+ui_alt_base_handlers	02029a20	c5ff9448c301	mov	mov r5,#0x1c34894	FALL_THROUGH	-
+ui_alt_base_handlers	02029a26	04d6	mov	mov r4,r0	FALL_THROUGH	-
+ui_alt_base_handlers	02029a28	5941	_lb.z	_lb.z r1,[r5 + 0x1]	FALL_THROUGH	-
+ui_alt_base_handlers	02029a2a	4220	mov	mov r2,#0x0	FALL_THROUGH	-
+ui_alt_base_handlers	02029a2c	432b	mov	mov r3,#0xb	FALL_THROUGH	-
+ui_alt_base_handlers	02029a2e	1016	mov	mov r0,r1	FALL_THROUGH	-
+ui_alt_base_handlers	02029a30	4116	mov	mov r1,r4	FALL_THROUGH	-
+ui_alt_base_handlers	02029a32	bfea4690	call	call 0x0201bac2	CALL_TERMINATOR	-
+ui_alt_base_handlers	02029a36	70f17f0c	and	and r0,r0,#0xffff00ff	FALL_THROUGH	-
+ui_alt_base_handlers	02029a3a	d841	_sb	_sb r0,[r5 + 0x1]	FALL_THROUGH	-
+ui_alt_base_handlers	02029a3c	5940	lb.z	lb.z r1,[r5 + 0x0]	FALL_THROUGH	-
+ui_alt_base_handlers	02029a3e	e1e10c10	mul	mul r1,r1,#0xc	FALL_THROUGH	-
+ui_alt_base_handlers	02029a44	5072	lw	lw r0,[r5 + -0x38]	FALL_THROUGH	-
+ui_alt_base_handlers	02029a46	0502	pfetch	pfetch [r5]	FALL_THROUGH	-
+ui_alt_base_handlers	02029a48	2118	add	add r1,r2	FALL_THROUGH	-
+ui_alt_base_handlers	02029a4a	11e1bc16	add	add r1,r1,0x16bc	FALL_THROUGH	-
+ui_alt_base_handlers	02029a4e	beea80db	call	call 0x02005152	UNCONDITIONAL_CALL	-
+ui_alt_base_handlers	02029a52	5504	pop	pop {pc,r5,r4}	TERMINATOR	-
+ui_alt_base_handlers	02029a54	7504	push	push {rets,r5,r4}	FALL_THROUGH	-
+ui_alt_base_handlers	02029a56	c5ff9448c301	mov	mov r5,#0x1c34894	FALL_THROUGH	-
+ui_alt_base_handlers	02029a5c	04d6	mov	mov r4,r0	FALL_THROUGH	-
+ui_alt_base_handlers	02029a5e	5940	_lb.z	_lb.z r1,[r5 + 0x0]	FALL_THROUGH	-
+ui_alt_base_handlers	02029a60	4220	mov	mov r2,#0x0	FALL_THROUGH	-
+ui_alt_base_handlers	02029a62	4329	mov	mov r3,#0x9	FALL_THROUGH	-
+ui_alt_base_handlers	02029a64	1016	mov	mov r0,r1	FALL_THROUGH	-
+ui_alt_base_handlers	02029a66	4116	mov	mov r1,r4	FALL_THROUGH	-
+ui_alt_base_handlers	02029a68	bfea2b90	call	call 0x0201bac2	CALL_TERMINATOR	-
+ui_alt_base_handlers	02029a6c	70f17f0c	and	and r0,r0,#0xffff00ff	FALL_THROUGH	-
+ui_alt_base_handlers	02029a70	d840	_sb	_sb r0,[r5 + 0x0]	FALL_THROUGH	-
+ui_alt_base_handlers	02029a72	e0f10c00	mul	mul r0,r0,#0xc	FALL_THROUGH	-
+ui_alt_base_handlers	02029a76	5a41	_lb.z	_lb.z r2,[r5 + 0x1]	FALL_THROUGH	-
+ui_alt_base_handlers	02029a78	c1ff50720502	mov	mov r1,#0x2057250	FALL_THROUGH	-
+ui_alt_base_handlers	02029a7e	1018	add	add r0,r1	FALL_THROUGH	-
+ui_alt_base_handlers	02029a80	11e1bc06	add	add r1,r0,0x16bc	FALL_THROUGH	-
+ui_alt_base_handlers	02029a84	2016	mov	mov r0,r2	FALL_THROUGH	-
+ui_alt_base_handlers	02029a86	beea64db	call	call 0x02005152	UNCONDITIONAL_CALL	-
+ui_alt_base_handlers	02029a8a	5504	pop	pop {pc,r5,r4}	TERMINATOR	-
+product_ram_handlers	02025dd6	41e0e349	movz	movz r1,#0x49e3	FALL_THROUGH	-
+product_ram_handlers	02025dda	101b	mul	mul r0,r1	FALL_THROUGH	-
+product_ram_handlers	02025ddc	c1ff20dec001	mov	mov r1,#0x1c0de20	FALL_THROUGH	-
+product_ram_handlers	02025de2	1018	add	add r0,r1	FALL_THROUGH	-
+product_ram_handlers	02025de4	01e17e0a	add	add r1,r0,#0xa7e	FALL_THROUGH	-
+product_ram_handlers	02025de8	e817	sxth	sxth r0,r6	FALL_THROUGH	-
+product_ram_handlers	02025dea	bfeabdf2	call	call 0x02024368	UNCONDITIONAL_CALL	-
+product_ram_handlers	02025dee	c0ea5a0b	goto	goto 0x020274a6	UNCONDITIONAL_JUMP	-
+product_ram_handlers	02025df2	41e0e349	movz	movz r1,#0x49e3	FALL_THROUGH	-
+product_ram_handlers	02025df6	101b	mul	mul r0,r1	FALL_THROUGH	-
+product_ram_handlers	02025df8	c1ff20dec001	mov	mov r1,#0x1c0de20	FALL_THROUGH	-
+product_ram_handlers	02025dfe	1018	add	add r0,r1	FALL_THROUGH	-
+product_ram_handlers	02025e00	01e17f0a	add	add r1,r0,#0xa7f	FALL_THROUGH	-
+product_ram_handlers	02025e04	e817	sxth	sxth r0,r6	FALL_THROUGH	-
+product_ram_handlers	02025e06	bfea1af3	call	call 0x0202443e	UNCONDITIONAL_CALL	-
+product_ram_handlers	02025e0a	c0ea4c0b	goto	goto 0x020274a6	UNCONDITIONAL_JUMP	-
+product_ram_handlers	02025e0e	b4e04058	add	add r5,r4,r8	FALL_THROUGH	-
+product_ram_handlers	02025e12	40e0e004	movz	movz r0,#0x4e0	FALL_THROUGH	-
+product_ram_handlers	02025e16	d8ee5000	lb.z	lb.z r0,[r5 + r0]	FALL_THROUGH	-
+product_ram_handlers	02025e1a	00ffff00fc02	je	je r0,#0xff,0x02026418	CONDITIONAL_JUMP	-
+product_ram_handlers	02025e20	41e01c16	movz	movz r1,#0x161c	FALL_THROUGH	-
+product_ram_handlers	02025e24	d8ee8011	lb.z	lb.z r1,[r8 + r1]	FALL_THROUGH	-
+product_ram_handlers	02025e28	42e0c004	movz	movz r2,#0x4c0	FALL_THROUGH	-
+product_ram_handlers	02025e2c	d8ee51b2	sb	sb r11,[r5 + r2]	FALL_THROUGH	-
+product_ram_handlers	02025e30	c230	add	add r2,#0x10	FALL_THROUGH	-
+product_ram_handlers	02025e32	d8ee51b2	sb	sb r11,[r5 + r2]	FALL_THROUGH	-
+product_ram_handlers	02025e36	7a3f	mov	mov r2,#0xff	FALL_THROUGH	-
+product_ram_handlers	02025e38	eb30	add	add r3,#-0x50	FALL_THROUGH	-
+product_ram_handlers	02025e3a	d8ee5123	sb	sb r2,[r5 + r3]	FALL_THROUGH	-
+product_ram_handlers	02025e3e	42e0e349	movz	movz r2,#0x49e3	FALL_THROUGH	-
+product_ram_handlers	02025e42	211b	mul	mul r1,r2	FALL_THROUGH	-
+product_ram_handlers	02025e44	e0e14a00	mul	mul r0,r0,#0x4a	FALL_THROUGH	-
+product_ram_handlers	02025e48	1018	add	add r0,r1	FALL_THROUGH	-
+product_ram_handlers	02025e4a	c1ff20dec001	mov	mov r1,#0x1c0de20	FALL_THROUGH	-
+product_ram_handlers	02025e50	1018	add	add r0,r1	FALL_THROUGH	-
+product_ram_handlers	02025e52	41e01601	movz	movz r1,#0x116	FALL_THROUGH	-
+product_ram_handlers	02025e56	d8ee0011	lb.z	lb.z r1,[r0 + r1]	FALL_THROUGH	-
+product_ram_handlers	02025e5a	00ff0410d502	je	je r1,#0x4,0x0202640a	CONDITIONAL_JUMP	-
+product_ram_handlers	02025e60	00ff0210c702	je	je r1,#0x2,0x020263f4	CONDITIONAL_JUMP	-
