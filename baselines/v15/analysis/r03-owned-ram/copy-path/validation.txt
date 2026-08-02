@@ -1,0 +1,36 @@
+PASS sha256-app: 36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS sha256-package: f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff
+PASS sha256-quark: f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347
+PASS sha256-kaga: 814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013
+PASS requirements-read: /Users/spectrum/Documents/SMK37ProMod/baselines/v15/analysis/r03-owned-ram/requirements.md
+PASS official-v15-only: ["build/v15-official-app.bin", "build/SMK-37_Pro_015.fwsc", "baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz", "baselines/v15/analysis/quarkslab/results/kagaimiq-patched-exhaustive-listing.tsv.gz", "baselines/v15/analysis/r03-owned-ram/requirements.md", "baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/sysex_staging_trace.json", "baselines/v15/analysis/channel-separation-reanalysis/runtime-source/runtime_source_trace.json", "baselines/v15/analysis/flash-candidates/R02/app-manifest.json"]
+PASS row-0x0201e3ee: lb.z r0,[r7 + 0x206]
+PASS row-0x0201e3f8: lb.z r0,[r7 + 0x104]
+PASS row-0x0201e448: add r8,r6,#0xfa0
+PASS row-0x0201e456: call 0x02048cce
+PASS row-0x0201e462: jne r0,#0xf7
+PASS row-0x0201e466: mov r0,r8
+PASS row-0x0201e468: call 0x0201e13e
+PASS row-0x0201e46c: call 0x02005660
+PASS row-0x0201e484: jne r5,#0x9e
+PASS row-0x0201e494: call 0x02048cce
+PASS row-0x0201e49c: call 0x0201e13e
+PASS row-0x0201e4a0: call 0x02005660
+PASS row-0x0201e580: add r0,r6,#0xfa0
+PASS row-0x0201e58c: call 0x02048cce
+PASS row-0x0201e634: sb r1,[r0 + r2]
+PASS row-0x0201e644: call 0x0201c5ec
+PASS row-0x0201c63a: mov r2,#0x9c
+PASS row-0x0201c63e: call 0x02048cce
+PASS row-0x0201c678: mov r2,#0x9c
+PASS row-0x0201c67c: call 0x02048cce
+PASS row-0x0201e236: call 0x02004b02
+PASS row-0x02026dac: call 0x0201e13e
+PASS stock-packer-callers-exact: 0x0201e468,0x0201e49c,0x02026dac
+PASS loader-callers-include-stock-sysex-reloads: 0x02005f9c,0x0201e46c,0x0201e4a0,0x0202422e,0x020255a6
+PASS dispatcher-callers-exact: 0x0201c736,0x0201e644
+PASS r02-wrapper-length-known: {"entry": "0x0201e13e", "end": "0x0201e162", "wrapper_bytes": 36, "note_on_memcpy": "0x0201c67c", "note_off_memcpy": "0x0201c63e", "source_length": 156}
+PASS stage-arithmetic: 0x01c37030+0x0fa0=0x01c37fd0
+PASS gate-a-block-recorded: No exact owned RAM start/end, owner, lifetime, initialization, and complete alias exclusion are proven. 0x01c37fd0 is transient staging, not owned R03 storage.
+PASS placement-block-recorded: The only live-booted compact wrapper placement reused 0x0201e13e, but preserving stock SAVE/SysEx requires retaining the stock packer body and all three callers. No alternate executable cave is proven.
+PASS no-patch-output: copy-path directory contains no firmware binary/package outputs

@@ -1,0 +1,520 @@
+{
+  "callers": {
+    "dispatcher_0x0201c5ec": [
+      {
+        "address": "0201c736",
+        "bytes": "bfea59ff",
+        "flow_type": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201c722@0201c722",
+        "mnemonic": "call",
+        "text": "call 0x0201c5ec"
+      },
+      {
+        "address": "0201e644",
+        "bytes": "bfead2ef",
+        "flow_type": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201e254@0201e254",
+        "mnemonic": "call",
+        "text": "call 0x0201c5ec"
+      }
+    ],
+    "loader_0x02005660": [
+      {
+        "address": "02005f9c",
+        "bytes": "bfea60fb",
+        "flow_type": "UNCONDITIONAL_CALL",
+        "function": "-",
+        "mnemonic": "call",
+        "text": "call 0x02005660"
+      },
+      {
+        "address": "0201e46c",
+        "bytes": "bfeaf838",
+        "flow_type": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201e254@0201e254",
+        "mnemonic": "call",
+        "text": "call 0x02005660"
+      },
+      {
+        "address": "0201e4a0",
+        "bytes": "bfeade38",
+        "flow_type": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201e254@0201e254",
+        "mnemonic": "call",
+        "text": "call 0x02005660"
+      },
+      {
+        "address": "0202422e",
+        "bytes": "bfea170a",
+        "flow_type": "UNCONDITIONAL_CALL",
+        "function": "FUN_020241e0@020241e0",
+        "mnemonic": "call",
+        "text": "call 0x02005660"
+      },
+      {
+        "address": "020255a6",
+        "bytes": "bfea5b00",
+        "flow_type": "UNCONDITIONAL_CALL",
+        "function": "-",
+        "mnemonic": "call",
+        "text": "call 0x02005660"
+      }
+    ],
+    "memcpy_0x02048cce_count": 149,
+    "stock_packer_0x0201e13e": [
+      {
+        "address": "0201e468",
+        "bytes": "bfea69fe",
+        "flow_type": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201e254@0201e254",
+        "mnemonic": "call",
+        "text": "call 0x0201e13e"
+      },
+      {
+        "address": "0201e49c",
+        "bytes": "bfea4ffe",
+        "flow_type": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201e254@0201e254",
+        "mnemonic": "call",
+        "text": "call 0x0201e13e"
+      },
+      {
+        "address": "02026dac",
+        "bytes": "bfeac7b9",
+        "flow_type": "UNCONDITIONAL_CALL",
+        "function": "-",
+        "mnemonic": "call",
+        "text": "call 0x0201e13e"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "detail": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "name": "sha256-app",
+      "status": "PASS"
+    },
+    {
+      "detail": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+      "name": "sha256-package",
+      "status": "PASS"
+    },
+    {
+      "detail": "f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347",
+      "name": "sha256-quark",
+      "status": "PASS"
+    },
+    {
+      "detail": "814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013",
+      "name": "sha256-kaga",
+      "status": "PASS"
+    },
+    {
+      "detail": "/Users/spectrum/Documents/SMK37ProMod/baselines/v15/analysis/r03-owned-ram/requirements.md",
+      "name": "requirements-read",
+      "status": "PASS"
+    },
+    {
+      "detail": "[\"build/v15-official-app.bin\", \"build/SMK-37_Pro_015.fwsc\", \"baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz\", \"baselines/v15/analysis/quarkslab/results/kagaimiq-patched-exhaustive-listing.tsv.gz\", \"baselines/v15/analysis/r03-owned-ram/requirements.md\", \"baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/sysex_staging_trace.json\", \"baselines/v15/analysis/channel-separation-reanalysis/runtime-source/runtime_source_trace.json\", \"baselines/v15/analysis/flash-candidates/R02/app-manifest.json\"]",
+      "name": "official-v15-only",
+      "status": "PASS"
+    },
+    {
+      "detail": "lb.z r0,[r7 + 0x206]",
+      "name": "row-0x0201e3ee",
+      "status": "PASS"
+    },
+    {
+      "detail": "lb.z r0,[r7 + 0x104]",
+      "name": "row-0x0201e3f8",
+      "status": "PASS"
+    },
+    {
+      "detail": "add r8,r6,#0xfa0",
+      "name": "row-0x0201e448",
+      "status": "PASS"
+    },
+    {
+      "detail": "call 0x02048cce",
+      "name": "row-0x0201e456",
+      "status": "PASS"
+    },
+    {
+      "detail": "jne r0,#0xf7",
+      "name": "row-0x0201e462",
+      "status": "PASS"
+    },
+    {
+      "detail": "mov r0,r8",
+      "name": "row-0x0201e466",
+      "status": "PASS"
+    },
+    {
+      "detail": "call 0x0201e13e",
+      "name": "row-0x0201e468",
+      "status": "PASS"
+    },
+    {
+      "detail": "call 0x02005660",
+      "name": "row-0x0201e46c",
+      "status": "PASS"
+    },
+    {
+      "detail": "jne r5,#0x9e",
+      "name": "row-0x0201e484",
+      "status": "PASS"
+    },
+    {
+      "detail": "call 0x02048cce",
+      "name": "row-0x0201e494",
+      "status": "PASS"
+    },
+    {
+      "detail": "call 0x0201e13e",
+      "name": "row-0x0201e49c",
+      "status": "PASS"
+    },
+    {
+      "detail": "call 0x02005660",
+      "name": "row-0x0201e4a0",
+      "status": "PASS"
+    },
+    {
+      "detail": "add r0,r6,#0xfa0",
+      "name": "row-0x0201e580",
+      "status": "PASS"
+    },
+    {
+      "detail": "call 0x02048cce",
+      "name": "row-0x0201e58c",
+      "status": "PASS"
+    },
+    {
+      "detail": "sb r1,[r0 + r2]",
+      "name": "row-0x0201e634",
+      "status": "PASS"
+    },
+    {
+      "detail": "call 0x0201c5ec",
+      "name": "row-0x0201e644",
+      "status": "PASS"
+    },
+    {
+      "detail": "mov r2,#0x9c",
+      "name": "row-0x0201c63a",
+      "status": "PASS"
+    },
+    {
+      "detail": "call 0x02048cce",
+      "name": "row-0x0201c63e",
+      "status": "PASS"
+    },
+    {
+      "detail": "mov r2,#0x9c",
+      "name": "row-0x0201c678",
+      "status": "PASS"
+    },
+    {
+      "detail": "call 0x02048cce",
+      "name": "row-0x0201c67c",
+      "status": "PASS"
+    },
+    {
+      "detail": "call 0x02004b02",
+      "name": "row-0x0201e236",
+      "status": "PASS"
+    },
+    {
+      "detail": "call 0x0201e13e",
+      "name": "row-0x02026dac",
+      "status": "PASS"
+    },
+    {
+      "detail": "0x0201e468,0x0201e49c,0x02026dac",
+      "name": "stock-packer-callers-exact",
+      "status": "PASS"
+    },
+    {
+      "detail": "0x02005f9c,0x0201e46c,0x0201e4a0,0x0202422e,0x020255a6",
+      "name": "loader-callers-include-stock-sysex-reloads",
+      "status": "PASS"
+    },
+    {
+      "detail": "0x0201c736,0x0201e644",
+      "name": "dispatcher-callers-exact",
+      "status": "PASS"
+    },
+    {
+      "detail": "{\"entry\": \"0x0201e13e\", \"end\": \"0x0201e162\", \"wrapper_bytes\": 36, \"note_on_memcpy\": \"0x0201c67c\", \"note_off_memcpy\": \"0x0201c63e\", \"source_length\": 156}",
+      "name": "r02-wrapper-length-known",
+      "status": "PASS"
+    },
+    {
+      "detail": "0x01c37030+0x0fa0=0x01c37fd0",
+      "name": "stage-arithmetic",
+      "status": "PASS"
+    },
+    {
+      "detail": "No exact owned RAM start/end, owner, lifetime, initialization, and complete alias exclusion are proven. 0x01c37fd0 is transient staging, not owned R03 storage.",
+      "name": "gate-a-block-recorded",
+      "status": "PASS"
+    },
+    {
+      "detail": "The only live-booted compact wrapper placement reused 0x0201e13e, but preserving stock SAVE/SysEx requires retaining the stock packer body and all three callers. No alternate executable cave is proven.",
+      "name": "placement-block-recorded",
+      "status": "PASS"
+    },
+    {
+      "detail": "copy-path directory contains no firmware binary/package outputs",
+      "name": "no-patch-output",
+      "status": "PASS"
+    }
+  ],
+  "constants": {
+    "current_source": "0x01c34c74",
+    "dispatcher": "0x0201c5ec",
+    "loader": "0x02005660",
+    "memcpy": "0x02048cce",
+    "note_off_memcpy_call": "0x0201c63e",
+    "note_on_memcpy_call": "0x0201c67c",
+    "one_shot_packer_call": "0x0201e468",
+    "one_shot_reload_call": "0x0201e46c",
+    "save_packer_call": "0x02026dac",
+    "segmented_packer_call": "0x0201e49c",
+    "segmented_reload_call": "0x0201e4a0",
+    "stage": "0x01c37fd0",
+    "stage_base": "0x01c37030",
+    "stock_packer_end_exclusive": "0x0201e252",
+    "stock_packer_start": "0x0201e13e",
+    "sysex_handler": "0x0201e254"
+  },
+  "decision": {
+    "code_placement": "BLOCK",
+    "code_placement_reason": "The only live-booted compact wrapper placement reused 0x0201e13e, but preserving stock SAVE/SysEx requires retaining the stock packer body and all three callers. No alternate executable cave is proven.",
+    "gate_a_owned_ram": "BLOCK",
+    "gate_a_owned_ram_reason": "No exact owned RAM start/end, owner, lifetime, initialization, and complete alias exclusion are proven. 0x01c37fd0 is transient staging, not owned R03 storage.",
+    "overall": "BLOCK",
+    "patch_candidate": false
+  },
+  "format": "smk37-v15-r03-owned-ram-copy-path-evidence-v1",
+  "inputs": [
+    "build/v15-official-app.bin",
+    "build/SMK-37_Pro_015.fwsc",
+    "baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz",
+    "baselines/v15/analysis/quarkslab/results/kagaimiq-patched-exhaustive-listing.tsv.gz",
+    "baselines/v15/analysis/r03-owned-ram/requirements.md",
+    "baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/sysex_staging_trace.json",
+    "baselines/v15/analysis/channel-separation-reanalysis/runtime-source/runtime_source_trace.json",
+    "baselines/v15/analysis/flash-candidates/R02/app-manifest.json"
+  ],
+  "minimal_design": {
+    "consumer_hooks": [
+      "0x0201c63e",
+      "0x0201c67c"
+    ],
+    "consumer_rule": "r9 != 9 stock memcpy; r9 == 9 and valid use owned source for both Note On and Note Off",
+    "generation_policy": "producer rejects publication while active_count != 0",
+    "producer_copy": "memcpy(owned_voice, 0x01c37fd0, 0x9c); publish generation and valid only after copy",
+    "producer_hook": "0x0201e468",
+    "producer_input": "r0 == 0x01c37fd0 after official complete-message acceptance; additionally require r9 == 0xa3",
+    "ram_candidate": null,
+    "ram_minimum_bytes": 164,
+    "stock_preservation": "call stock 0x0201e13e after copy/reject decision, then return to existing 0x0201e46c reload"
+  },
+  "r02_live_primitive": {
+    "end": "0x0201e162",
+    "entry": "0x0201e13e",
+    "note_off_memcpy": "0x0201c63e",
+    "note_on_memcpy": "0x0201c67c",
+    "source_length": 156,
+    "wrapper_bytes": 36
+  },
+  "required_rows": {
+    "0x0201c63a": {
+      "address": "0201c63a",
+      "bytes": "623c",
+      "flow_type": "FALL_THROUGH",
+      "function": "FUN_0201c5ec@0201c5ec",
+      "mnemonic": "mov",
+      "text": "mov r2,#0x9c"
+    },
+    "0x0201c63e": {
+      "address": "0201c63e",
+      "bytes": "80ff8ac60200",
+      "flow_type": "UNCONDITIONAL_CALL",
+      "function": "FUN_0201c5ec@0201c5ec",
+      "mnemonic": "call",
+      "text": "call 0x02048cce"
+    },
+    "0x0201c678": {
+      "address": "0201c678",
+      "bytes": "623c",
+      "flow_type": "FALL_THROUGH",
+      "function": "FUN_0201c5ec@0201c5ec",
+      "mnemonic": "mov",
+      "text": "mov r2,#0x9c"
+    },
+    "0x0201c67c": {
+      "address": "0201c67c",
+      "bytes": "80ff4cc60200",
+      "flow_type": "UNCONDITIONAL_CALL",
+      "function": "FUN_0201c5ec@0201c5ec",
+      "mnemonic": "call",
+      "text": "call 0x02048cce"
+    },
+    "0x0201e236": {
+      "address": "0201e236",
+      "bytes": "bfea6434",
+      "flow_type": "UNCONDITIONAL_CALL",
+      "function": "-",
+      "mnemonic": "call",
+      "text": "call 0x02004b02"
+    },
+    "0x0201e3ee": {
+      "address": "0201e3ee",
+      "bytes": "50ee7602",
+      "flow_type": "FALL_THROUGH",
+      "function": "FUN_0201e254@0201e254",
+      "mnemonic": "lb.z",
+      "text": "lb.z r0,[r7 + 0x206]"
+    },
+    "0x0201e3f8": {
+      "address": "0201e3f8",
+      "bytes": "50ee7401",
+      "flow_type": "FALL_THROUGH",
+      "function": "FUN_0201e254@0201e254",
+      "mnemonic": "lb.z",
+      "text": "lb.z r0,[r7 + 0x104]"
+    },
+    "0x0201e448": {
+      "address": "0201e448",
+      "bytes": "08e1a06f",
+      "flow_type": "FALL_THROUGH",
+      "function": "FUN_0201e254@0201e254",
+      "mnemonic": "add",
+      "text": "add r8,r6,#0xfa0"
+    },
+    "0x0201e456": {
+      "address": "0201e456",
+      "bytes": "80ff72a80200",
+      "flow_type": "UNCONDITIONAL_CALL",
+      "function": "FUN_0201e254@0201e254",
+      "mnemonic": "call",
+      "text": "call 0x02048cce"
+    },
+    "0x0201e462": {
+      "address": "0201e462",
+      "bytes": "90f8cbee",
+      "flow_type": "CONDITIONAL_JUMP",
+      "function": "FUN_0201e254@0201e254",
+      "mnemonic": "jne",
+      "text": "jne r0,#0xf7"
+    },
+    "0x0201e466": {
+      "address": "0201e466",
+      "bytes": "8016",
+      "flow_type": "FALL_THROUGH",
+      "function": "FUN_0201e254@0201e254",
+      "mnemonic": "mov",
+      "text": "mov r0,r8"
+    },
+    "0x0201e468": {
+      "address": "0201e468",
+      "bytes": "bfea69fe",
+      "flow_type": "UNCONDITIONAL_CALL",
+      "function": "FUN_0201e254@0201e254",
+      "mnemonic": "call",
+      "text": "call 0x0201e13e"
+    },
+    "0x0201e46c": {
+      "address": "0201e46c",
+      "bytes": "bfeaf838",
+      "flow_type": "UNCONDITIONAL_CALL",
+      "function": "FUN_0201e254@0201e254",
+      "mnemonic": "call",
+      "text": "call 0x02005660"
+    },
+    "0x0201e484": {
+      "address": "0201e484",
+      "bytes": "95f8583c",
+      "flow_type": "CONDITIONAL_JUMP",
+      "function": "FUN_0201e254@0201e254",
+      "mnemonic": "jne",
+      "text": "jne r5,#0x9e"
+    },
+    "0x0201e494": {
+      "address": "0201e494",
+      "bytes": "80ff34a80200",
+      "flow_type": "UNCONDITIONAL_CALL",
+      "function": "FUN_0201e254@0201e254",
+      "mnemonic": "call",
+      "text": "call 0x02048cce"
+    },
+    "0x0201e49c": {
+      "address": "0201e49c",
+      "bytes": "bfea4ffe",
+      "flow_type": "UNCONDITIONAL_CALL",
+      "function": "FUN_0201e254@0201e254",
+      "mnemonic": "call",
+      "text": "call 0x0201e13e"
+    },
+    "0x0201e4a0": {
+      "address": "0201e4a0",
+      "bytes": "bfeade38",
+      "flow_type": "UNCONDITIONAL_CALL",
+      "function": "FUN_0201e254@0201e254",
+      "mnemonic": "call",
+      "text": "call 0x02005660"
+    },
+    "0x0201e580": {
+      "address": "0201e580",
+      "bytes": "00e1a06f",
+      "flow_type": "FALL_THROUGH",
+      "function": "FUN_0201e254@0201e254",
+      "mnemonic": "add",
+      "text": "add r0,r6,#0xfa0"
+    },
+    "0x0201e58c": {
+      "address": "0201e58c",
+      "bytes": "80ff3ca70200",
+      "flow_type": "UNCONDITIONAL_CALL",
+      "function": "FUN_0201e254@0201e254",
+      "mnemonic": "call",
+      "text": "call 0x02048cce"
+    },
+    "0x0201e634": {
+      "address": "0201e634",
+      "bytes": "d8ee0112",
+      "flow_type": "FALL_THROUGH",
+      "function": "FUN_0201e254@0201e254",
+      "mnemonic": "sb",
+      "text": "sb r1,[r0 + r2]"
+    },
+    "0x0201e644": {
+      "address": "0201e644",
+      "bytes": "bfead2ef",
+      "flow_type": "UNCONDITIONAL_CALL",
+      "function": "FUN_0201e254@0201e254",
+      "mnemonic": "call",
+      "text": "call 0x0201c5ec"
+    },
+    "0x02026dac": {
+      "address": "02026dac",
+      "bytes": "bfeac7b9",
+      "flow_type": "UNCONDITIONAL_CALL",
+      "function": "-",
+      "mnemonic": "call",
+      "text": "call 0x0201e13e"
+    }
+  },
+  "sha256": {
+    "app": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "kaga": "814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013",
+    "package": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "quark": "f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347"
+  },
+  "stock_traces_reused": {
+    "runtime_current_source_alias": "0x01c33260+0x1a14 == 0x01c34c74",
+    "sysex_staging_decision": "see sysex_staging_trace/report"
+  }
+}
