@@ -40,6 +40,22 @@ def run_build(output: Path) -> None:
     ], check=True, cwd=ROOT)
 
 
+def expect_config_rejected(config: dict[str, object], label: str) -> None:
+    with tempfile.TemporaryDirectory(prefix="smk37-v15-patch-set-reject-") as temp_name:
+        temp = Path(temp_name)
+        config_path = temp / "config.json"
+        config_path.write_text(json.dumps(config), encoding="utf-8")
+        result = subprocess.run([
+            sys.executable,
+            str(BUILDER),
+            "build",
+            str(DUMP),
+            str(config_path),
+            str(temp / "output"),
+        ], cwd=ROOT, capture_output=True, text=True)
+        require(result.returncode != 0, f"invalid config accepted: {label}")
+
+
 def main() -> int:
     require(digest(DUMP) == EXPECTED_DUMP_SHA, "official v15 clean dump SHA")
     catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
@@ -53,6 +69,16 @@ def main() -> int:
     require(all(slot["bank"] == 4 and slot["patch"] == index + 1
                 for index, slot in enumerate(sorted(config["slots"], key=lambda item: item["note"]))),
             "1-based Bank D patch 1..16 mapping")
+
+    invalid_bank = json.loads(json.dumps(config))
+    invalid_bank["slots"][0]["bank"] = 0
+    expect_config_rejected(invalid_bank, "zero-based bank")
+    invalid_patch = json.loads(json.dumps(config))
+    invalid_patch["slots"][0]["patch"] = 0
+    expect_config_rejected(invalid_patch, "zero-based patch")
+    duplicate_note = json.loads(json.dumps(config))
+    duplicate_note["slots"][0]["note"] = duplicate_note["slots"][1]["note"]
+    expect_config_rejected(duplicate_note, "duplicate note")
 
     voices = {(voice["bank"], voice["patch"]): voice for voice in catalog["voices"]}
     require(voices[(4, 1)]["name"] == "BUZZ BASS", "Bank D patch 1 identity")
