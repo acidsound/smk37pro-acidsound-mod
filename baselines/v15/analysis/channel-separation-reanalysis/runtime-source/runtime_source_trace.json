@@ -5,6 +5,8 @@
     "no_patch_or_flash": true,
     "inputs": [
       "build/v15-official-app.bin",
+      "build/SMK-37_Pro_015.fwsc",
+      "baselines/v15/official/package-manifest.json",
       "baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz",
       "baselines/v15/analysis/quarkslab/results/kagaimiq-patched-exhaustive-listing.tsv.gz",
       "baselines/v15/analysis/quarkslab/results/provenance.txt"
@@ -23,6 +25,7 @@
   },
   "sha256": {
     "app": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "package": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
     "quarkslab_exhaustive": "f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347",
     "kagaimiq_patched_exhaustive": "814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013"
   },
@@ -1591,6 +1594,66 @@
           "function": "FUN_02005660@02005660"
         }
       ],
+      "0x1a9a": [
+        {
+          "address": "020057be",
+          "bytes": "13e19a4a",
+          "mnemonic": "add",
+          "text": "add r3,r4,0x1a9a",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_02005660@02005660"
+        },
+        {
+          "address": "0201bb9a",
+          "bytes": "43e09a1a",
+          "mnemonic": "movz",
+          "text": "movz r3,#0x1a9a",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bbc8",
+          "bytes": "45e09a1a",
+          "mnemonic": "movz",
+          "text": "movz r5,#0x1a9a",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027f7c",
+          "bytes": "40e09a1a",
+          "mnemonic": "movz",
+          "text": "movz r0,#0x1a9a",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        }
+      ],
+      "0x1a9b": [
+        {
+          "address": "0201bb82",
+          "bytes": "41e09b1a",
+          "mnemonic": "movz",
+          "text": "movz r1,#0x1a9b",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bbf8",
+          "bytes": "45e09b1a",
+          "mnemonic": "movz",
+          "text": "movz r5,#0x1a9b",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027f88",
+          "bytes": "40f09b1a",
+          "mnemonic": "movz",
+          "text": "movz r0,#0x1a9b",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        }
+      ],
       "0x1aa0": [
         {
           "address": "02005746",
@@ -1599,6 +1662,16 @@
           "text": "add r3,r4,0x1aa0",
           "flow_type": "FALL_THROUGH",
           "function": "FUN_02005660@02005660"
+        }
+      ],
+      "0x1aae": [
+        {
+          "address": "02027e26",
+          "bytes": "40f0ae1a",
+          "mnemonic": "movz",
+          "text": "movz r0,#0x1aae",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
         }
       ],
       "0x1ab0": [
@@ -3910,7 +3983,52 @@
       "0x1a14": [],
       "0x1a24": [],
       "0x1a90": [],
+      "0x1a9a": [
+        {
+          "address": "0201bb9a",
+          "bytes": "43e09a1a",
+          "mnemonic": "movz",
+          "text": "movz r3,#0x1a9a",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbc8",
+          "bytes": "45e09a1a",
+          "mnemonic": "movz",
+          "text": "movz r5,#0x1a9a",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027f7c",
+          "bytes": "40e09a1a",
+          "mnemonic": "movz",
+          "text": "movz r0,#0x1a9a",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        }
+      ],
+      "0x1a9b": [
+        {
+          "address": "0201bb82",
+          "bytes": "41e09b1a",
+          "mnemonic": "movz",
+          "text": "movz r1,#0x1a9b",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bbf8",
+          "bytes": "45e09b1a",
+          "mnemonic": "movz",
+          "text": "movz r5,#0x1a9b",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        }
+      ],
       "0x1aa0": [],
+      "0x1aae": [],
       "0x1ab0": [
         {
           "address": "0201bada",
@@ -6834,6 +6952,26 @@
           "flow_type": "UNCONDITIONAL_CALL",
           "function": "FUN_02041b7a@02041b7a"
         }
+      ],
+      "0x0201bbc6": [],
+      "0x0201bbf6": [],
+      "0x0201bb80": [
+        {
+          "address": "0201bbf2",
+          "bytes": "6186",
+          "mnemonic": "call",
+          "text": "call 0x0201bb80",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "-"
+        },
+        {
+          "address": "0201bc22",
+          "bytes": "518e",
+          "mnemonic": "call",
+          "text": "call 0x0201bb80",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "-"
+        }
       ]
     },
     "kagaimiq": {
@@ -8414,6 +8552,26 @@
           "mnemonic": "call",
           "text": "call 0x02048cce",
           "flow_type": "CALL_TERMINATOR",
+          "function": "-"
+        }
+      ],
+      "0x0201bbc6": [],
+      "0x0201bbf6": [],
+      "0x0201bb80": [
+        {
+          "address": "0201bbf2",
+          "bytes": "6186",
+          "mnemonic": "call",
+          "text": "call 0x0201bb80",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "-"
+        },
+        {
+          "address": "0201bc22",
+          "bytes": "518e",
+          "mnemonic": "call",
+          "text": "call 0x0201bb80",
+          "flow_type": "UNCONDITIONAL_CALL",
           "function": "-"
         }
       ]
@@ -17606,6 +17764,1288 @@
         }
       ]
     },
+    "current_field_setter_86_0201bbc6": {
+      "range": [
+        "0x0201bbc6",
+        "0x0201bbf4"
+      ],
+      "quarkslab": [
+        {
+          "address": "0201bbc6",
+          "bytes": "7604",
+          "mnemonic": "push",
+          "text": "push {rets,r6,r5,r4}",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbc8",
+          "bytes": "45e09a1a",
+          "mnemonic": "movz",
+          "text": "movz r5,#0x1a9a",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbcc",
+          "bytes": "c6ff6032c301",
+          "mnemonic": "mov",
+          "text": "mov r6,#0x1c33260",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbd2",
+          "bytes": "d8ee6015",
+          "mnemonic": "lb.z",
+          "text": "lb.z r1,[r6 + r5]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbd6",
+          "bytes": "0416",
+          "mnemonic": "mov",
+          "text": "mov r4,r0",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbd8",
+          "bytes": "4220",
+          "mnemonic": "mov",
+          "text": "mov r2,#0x0",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbda",
+          "bytes": "433f",
+          "mnemonic": "mov",
+          "text": "mov r3,#0x1f",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbdc",
+          "bytes": "1016",
+          "mnemonic": "mov",
+          "text": "mov r0,r1",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbde",
+          "bytes": "4116",
+          "mnemonic": "mov",
+          "text": "mov r1,r4",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbe0",
+          "bytes": "bfea6fff",
+          "mnemonic": "call",
+          "text": "call 0x0201bac2",
+          "flow_type": "CALL_TERMINATOR",
+          "function": "-"
+        },
+        {
+          "address": "0201bbe4",
+          "bytes": "d8ee6105",
+          "mnemonic": "sb",
+          "text": "sb r0,[r6 + r5]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbe8",
+          "bytes": "599a",
+          "mnemonic": "add",
+          "text": "add r1,r5,#0x1a",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbea",
+          "bytes": "d8ee6101",
+          "mnemonic": "sb",
+          "text": "sb r0,[r6 + r1]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbee",
+          "bytes": "d1ec6c05",
+          "mnemonic": "ldw",
+          "text": "ldw r0,r6,#0x15c",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbf2",
+          "bytes": "6186",
+          "mnemonic": "call",
+          "text": "call 0x0201bb80",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "-"
+        },
+        {
+          "address": "0201bbf4",
+          "bytes": "5604",
+          "mnemonic": "pop",
+          "text": "pop {pc,r6,r5,r4}",
+          "flow_type": "TERMINATOR",
+          "function": "-"
+        }
+      ],
+      "kagaimiq": [
+        {
+          "address": "0201bbc6",
+          "bytes": "7604",
+          "mnemonic": "push",
+          "text": "push {0x6}",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbc8",
+          "bytes": "45e09a1a",
+          "mnemonic": "movz",
+          "text": "movz r5,#0x1a9a",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbcc",
+          "bytes": "c6ff6032c301",
+          "mnemonic": "mov",
+          "text": "mov r6,#0x1c33260",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbd4",
+          "bytes": "6015",
+          "mnemonic": "mov",
+          "text": "mov r0_r1,r6_r7",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbd6",
+          "bytes": "0416",
+          "mnemonic": "mov",
+          "text": "mov r4,r0",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbd8",
+          "bytes": "4220",
+          "mnemonic": "mov",
+          "text": "mov r2,#0x0",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbda",
+          "bytes": "433f",
+          "mnemonic": "mov",
+          "text": "mov r3,#0x1f",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbdc",
+          "bytes": "1016",
+          "mnemonic": "mov",
+          "text": "mov r0,r1",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbde",
+          "bytes": "4116",
+          "mnemonic": "mov",
+          "text": "mov r1,r4",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbe0",
+          "bytes": "bfea6fff",
+          "mnemonic": "call",
+          "text": "call 0x0201bac2",
+          "flow_type": "CALL_TERMINATOR",
+          "function": "-"
+        },
+        {
+          "address": "0201bbe6",
+          "bytes": "6105",
+          "mnemonic": "lw",
+          "text": "lw r1,[r6 ++= 4]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbe8",
+          "bytes": "599a",
+          "mnemonic": "add",
+          "text": "add r1,r5,#0x1a",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbf0",
+          "bytes": "6c05",
+          "mnemonic": "lw",
+          "text": "lw r4,[r6 --= 4]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbf2",
+          "bytes": "6186",
+          "mnemonic": "call",
+          "text": "call 0x0201bb80",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "-"
+        },
+        {
+          "address": "0201bbf4",
+          "bytes": "5604",
+          "mnemonic": "pop",
+          "text": "pop {pc,0x6}",
+          "flow_type": "TERMINATOR",
+          "function": "-"
+        }
+      ]
+    },
+    "current_field_setter_87_0201bbf6": {
+      "range": [
+        "0x0201bbf6",
+        "0x0201bc24"
+      ],
+      "quarkslab": [
+        {
+          "address": "0201bbf6",
+          "bytes": "7604",
+          "mnemonic": "push",
+          "text": "push {rets,r6,r5,r4}",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbf8",
+          "bytes": "45e09b1a",
+          "mnemonic": "movz",
+          "text": "movz r5,#0x1a9b",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbfc",
+          "bytes": "c6ff6032c301",
+          "mnemonic": "mov",
+          "text": "mov r6,#0x1c33260",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc02",
+          "bytes": "d8ee6015",
+          "mnemonic": "lb.z",
+          "text": "lb.z r1,[r6 + r5]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc06",
+          "bytes": "0416",
+          "mnemonic": "mov",
+          "text": "mov r4,r0",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc08",
+          "bytes": "4220",
+          "mnemonic": "mov",
+          "text": "mov r2,#0x0",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc0a",
+          "bytes": "4327",
+          "mnemonic": "mov",
+          "text": "mov r3,#0x7",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc0c",
+          "bytes": "1016",
+          "mnemonic": "mov",
+          "text": "mov r0,r1",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc0e",
+          "bytes": "4116",
+          "mnemonic": "mov",
+          "text": "mov r1,r4",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc10",
+          "bytes": "bfea57ff",
+          "mnemonic": "call",
+          "text": "call 0x0201bac2",
+          "flow_type": "CALL_TERMINATOR",
+          "function": "-"
+        },
+        {
+          "address": "0201bc14",
+          "bytes": "d8ee6105",
+          "mnemonic": "sb",
+          "text": "sb r0,[r6 + r5]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc18",
+          "bytes": "599a",
+          "mnemonic": "add",
+          "text": "add r1,r5,#0x1a",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc1a",
+          "bytes": "d8ee6101",
+          "mnemonic": "sb",
+          "text": "sb r0,[r6 + r1]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc1e",
+          "bytes": "d1ec6c05",
+          "mnemonic": "ldw",
+          "text": "ldw r0,r6,#0x15c",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc22",
+          "bytes": "518e",
+          "mnemonic": "call",
+          "text": "call 0x0201bb80",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "-"
+        },
+        {
+          "address": "0201bc24",
+          "bytes": "5604",
+          "mnemonic": "pop",
+          "text": "pop {pc,r6,r5,r4}",
+          "flow_type": "TERMINATOR",
+          "function": "-"
+        }
+      ],
+      "kagaimiq": [
+        {
+          "address": "0201bbf6",
+          "bytes": "7604",
+          "mnemonic": "push",
+          "text": "push {0x6}",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbf8",
+          "bytes": "45e09b1a",
+          "mnemonic": "movz",
+          "text": "movz r5,#0x1a9b",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbfc",
+          "bytes": "c6ff6032c301",
+          "mnemonic": "mov",
+          "text": "mov r6,#0x1c33260",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc04",
+          "bytes": "6015",
+          "mnemonic": "mov",
+          "text": "mov r0_r1,r6_r7",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc06",
+          "bytes": "0416",
+          "mnemonic": "mov",
+          "text": "mov r4,r0",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc08",
+          "bytes": "4220",
+          "mnemonic": "mov",
+          "text": "mov r2,#0x0",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc0a",
+          "bytes": "4327",
+          "mnemonic": "mov",
+          "text": "mov r3,#0x7",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc0c",
+          "bytes": "1016",
+          "mnemonic": "mov",
+          "text": "mov r0,r1",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc0e",
+          "bytes": "4116",
+          "mnemonic": "mov",
+          "text": "mov r1,r4",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc10",
+          "bytes": "bfea57ff",
+          "mnemonic": "call",
+          "text": "call 0x0201bac2",
+          "flow_type": "CALL_TERMINATOR",
+          "function": "-"
+        },
+        {
+          "address": "0201bc16",
+          "bytes": "6105",
+          "mnemonic": "lw",
+          "text": "lw r1,[r6 ++= 4]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc18",
+          "bytes": "599a",
+          "mnemonic": "add",
+          "text": "add r1,r5,#0x1a",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc20",
+          "bytes": "6c05",
+          "mnemonic": "lw",
+          "text": "lw r4,[r6 --= 4]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bc22",
+          "bytes": "518e",
+          "mnemonic": "call",
+          "text": "call 0x0201bb80",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "-"
+        },
+        {
+          "address": "0201bc24",
+          "bytes": "5604",
+          "mnemonic": "pop",
+          "text": "pop {pc,0x6}",
+          "flow_type": "TERMINATOR",
+          "function": "-"
+        }
+      ]
+    },
+    "active_voice_field_propagator_0201bb80": {
+      "range": [
+        "0x0201bb80",
+        "0x0201bbc4"
+      ],
+      "quarkslab": [
+        {
+          "address": "0201bb80",
+          "bytes": "7704",
+          "mnemonic": "push",
+          "text": "push {rets,r7,r6,r5,r4}",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bb82",
+          "bytes": "41e09b1a",
+          "mnemonic": "movz",
+          "text": "movz r1,#0x1a9b",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bb86",
+          "bytes": "c2ff6032c301",
+          "mnemonic": "mov",
+          "text": "mov r2,#0x1c33260",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bb8c",
+          "bytes": "d8ee2041",
+          "mnemonic": "lb.z",
+          "text": "lb.z r4,[r2 + r1]",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bb90",
+          "bytes": "a3e00840",
+          "mnemonic": "sub",
+          "text": "sub r3,#0x8,r4",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bb94",
+          "bytes": "4130",
+          "mnemonic": "mov",
+          "text": "mov r1,#0x10",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bb96",
+          "bytes": "0441",
+          "mnemonic": "jz",
+          "text": "jz r4,0x0201bb9a",
+          "flow_type": "CONDITIONAL_JUMP",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bb98",
+          "bytes": "3116",
+          "mnemonic": "mov",
+          "text": "mov r1,r3",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bb9a",
+          "bytes": "43e09a1a",
+          "mnemonic": "movz",
+          "text": "movz r3,#0x1a9a",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bb9e",
+          "bytes": "d8ee2023",
+          "mnemonic": "lb.z",
+          "text": "lb.z r2,[r2 + r3]",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bba2",
+          "bytes": "44f09c01",
+          "mnemonic": "movz",
+          "text": "movz r4,#0x19c",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bba6",
+          "bytes": "0b4c",
+          "mnemonic": "_lb.z",
+          "text": "_lb.z r3,[r0 + 0xc]",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bba8",
+          "bytes": "45e068fe",
+          "mnemonic": "movz",
+          "text": "movz r5,#0xfe68",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bbac",
+          "bytes": "048a",
+          "mnemonic": "goto",
+          "text": "goto 0x0201bbc2",
+          "flow_type": "UNCONDITIONAL_JUMP",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bbae",
+          "bytes": "0664",
+          "mnemonic": "lw",
+          "text": "lw r6,[r0 + 0x10]",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bbb0",
+          "bytes": "4618",
+          "mnemonic": "add",
+          "text": "add r6,r4",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bbb2",
+          "bytes": "d8ee6075",
+          "mnemonic": "lb.z",
+          "text": "lb.z r7,[r6 + r5]",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bbb6",
+          "bytes": "0742",
+          "mnemonic": "jz",
+          "text": "jz r7,0x0201bbbc",
+          "flow_type": "CONDITIONAL_JUMP",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bbb8",
+          "bytes": "26eb0600",
+          "mnemonic": "sw",
+          "text": "sw {r2,r1},[r6]",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bbbc",
+          "bytes": "04e1b041",
+          "mnemonic": "add",
+          "text": "add r4,r4,#0x1b0",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bbc0",
+          "bytes": "fb3f",
+          "mnemonic": "add",
+          "text": "add r3,#-0x1",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bbc2",
+          "bytes": "f355",
+          "mnemonic": "jnz",
+          "text": "jnz r3,0x0201bbae",
+          "flow_type": "CONDITIONAL_JUMP",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bbc4",
+          "bytes": "5704",
+          "mnemonic": "pop",
+          "text": "pop {pc,r7,r6,r5,r4}",
+          "flow_type": "TERMINATOR",
+          "function": "FUN_0201bb80@0201bb80"
+        }
+      ],
+      "kagaimiq": [
+        {
+          "address": "0201bb80",
+          "bytes": "7704",
+          "mnemonic": "push",
+          "text": "push {0x7}",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bb82",
+          "bytes": "41e09b1a",
+          "mnemonic": "movz",
+          "text": "movz r1,#0x1a9b",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bb86",
+          "bytes": "c2ff6032c301",
+          "mnemonic": "mov",
+          "text": "mov r2,#0x1c33260",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_0201bb80@0201bb80"
+        },
+        {
+          "address": "0201bb8e",
+          "bytes": "2041",
+          "mnemonic": "jz",
+          "text": "jz r0,0x0201bc12",
+          "flow_type": "CONDITIONAL_JUMP",
+          "function": "-"
+        },
+        {
+          "address": "0201bb92",
+          "bytes": "0840",
+          "mnemonic": "lb.z",
+          "text": "lb.z r0,[r0 + 0x0]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bb94",
+          "bytes": "4130",
+          "mnemonic": "mov",
+          "text": "mov r1,#0x10",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bb96",
+          "bytes": "0441",
+          "mnemonic": "jz",
+          "text": "jz r4,0x0201bb9a",
+          "flow_type": "CONDITIONAL_JUMP",
+          "function": "-"
+        },
+        {
+          "address": "0201bb98",
+          "bytes": "3116",
+          "mnemonic": "mov",
+          "text": "mov r1,r3",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bb9a",
+          "bytes": "43e09a1a",
+          "mnemonic": "movz",
+          "text": "movz r3,#0x1a9a",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bba6",
+          "bytes": "0b4c",
+          "mnemonic": "lb.z",
+          "text": "lb.z r3,[r0 + 0xc]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bba8",
+          "bytes": "45e068fe",
+          "mnemonic": "movz",
+          "text": "movz r5,#0xfe68",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbac",
+          "bytes": "048a",
+          "mnemonic": "goto",
+          "text": "goto 0x0201bbc2",
+          "flow_type": "UNCONDITIONAL_JUMP",
+          "function": "-"
+        },
+        {
+          "address": "0201bbae",
+          "bytes": "0664",
+          "mnemonic": "lw",
+          "text": "lw r6,[r0 + 0x10]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbb0",
+          "bytes": "4618",
+          "mnemonic": "add",
+          "text": "add r6,r4",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbb4",
+          "bytes": "6075",
+          "mnemonic": "lw",
+          "text": "lw r0,[r6 + -0x2c]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbb6",
+          "bytes": "0742",
+          "mnemonic": "jz",
+          "text": "jz r7,0x0201bbbc",
+          "flow_type": "CONDITIONAL_JUMP",
+          "function": "-"
+        },
+        {
+          "address": "0201bbbe",
+          "bytes": "b041",
+          "mnemonic": "jnz",
+          "text": "jnz r0,0x0201bc82",
+          "flow_type": "CONDITIONAL_JUMP",
+          "function": "-"
+        },
+        {
+          "address": "0201bbc0",
+          "bytes": "fb3f",
+          "mnemonic": "add",
+          "text": "add r3,#-0x1",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0201bbc2",
+          "bytes": "f355",
+          "mnemonic": "jnz",
+          "text": "jnz r3,0x0201bbae",
+          "flow_type": "CONDITIONAL_JUMP",
+          "function": "-"
+        },
+        {
+          "address": "0201bbc4",
+          "bytes": "5704",
+          "mnemonic": "pop",
+          "text": "pop {pc,0x7}",
+          "flow_type": "TERMINATOR",
+          "function": "-"
+        }
+      ]
+    },
+    "ui_handler_base_anchor_02024ff8": {
+      "range": [
+        "0x02024ff8",
+        "0x02025008"
+      ],
+      "quarkslab": [
+        {
+          "address": "02024ff8",
+          "bytes": "e29c",
+          "mnemonic": "add",
+          "text": "add sp,#-0x10",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02024ffa",
+          "bytes": "40e00401",
+          "mnemonic": "movz",
+          "text": "movz r0,#0x104",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02024ffe",
+          "bytes": "c8ff6032c301",
+          "mnemonic": "mov",
+          "text": "mov r8,#0x1c33260",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02025004",
+          "bytes": "d8ee8000",
+          "mnemonic": "lb.z",
+          "text": "lb.z r0,[r8 + r0]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02025008",
+          "bytes": "a055",
+          "mnemonic": "jnz",
+          "text": "jnz r0,0x020250b4",
+          "flow_type": "CONDITIONAL_JUMP",
+          "function": "-"
+        }
+      ],
+      "kagaimiq": [
+        {
+          "address": "02024ff8",
+          "bytes": "e29c",
+          "mnemonic": "add",
+          "text": "add sp,#-0x10",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02024ffa",
+          "bytes": "40e00401",
+          "mnemonic": "movz",
+          "text": "movz r0,#0x104",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02024ffe",
+          "bytes": "c8ff6032c301",
+          "mnemonic": "mov",
+          "text": "mov r8,#0x1c33260",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02025006",
+          "bytes": "8000",
+          "mnemonic": "rts",
+          "text": "rts",
+          "flow_type": "TERMINATOR",
+          "function": "-"
+        },
+        {
+          "address": "02025008",
+          "bytes": "a055",
+          "mnemonic": "jnz",
+          "text": "jnz r0,0x020250b4",
+          "flow_type": "CONDITIONAL_JUMP",
+          "function": "-"
+        }
+      ]
+    },
+    "ui_mode_reset_writer_02027df6": {
+      "range": [
+        "0x02027df6",
+        "0x02027e3c"
+      ],
+      "quarkslab": [
+        {
+          "address": "02027df6",
+          "bytes": "50ee8002",
+          "mnemonic": "lb.z",
+          "text": "lb.z r0,[r8 + 0x200]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027dfa",
+          "bytes": "00ff03000203",
+          "mnemonic": "je",
+          "text": "je r0,#0x3,0x02028404",
+          "flow_type": "CONDITIONAL_JUMP",
+          "function": "-"
+        },
+        {
+          "address": "02027e00",
+          "bytes": "01ff0600a503",
+          "mnemonic": "jne",
+          "text": "jne r0,#0x6,0x02028550",
+          "flow_type": "CONDITIONAL_JUMP",
+          "function": "-"
+        },
+        {
+          "address": "02027e06",
+          "bytes": "4020",
+          "mnemonic": "mov",
+          "text": "mov r0,#0x0",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e08",
+          "bytes": "bfeaa0e7",
+          "mnemonic": "call",
+          "text": "call 0x02024d4c",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "-"
+        },
+        {
+          "address": "02027e0c",
+          "bytes": "d581",
+          "mnemonic": "goto",
+          "text": "goto 0x02028550",
+          "flow_type": "UNCONDITIONAL_JUMP",
+          "function": "-"
+        },
+        {
+          "address": "02027e0e",
+          "bytes": "40e0a403",
+          "mnemonic": "movz",
+          "text": "movz r0,#0x3a4",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e12",
+          "bytes": "d8ee8000",
+          "mnemonic": "lb.z",
+          "text": "lb.z r0,[r8 + r0]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e16",
+          "bytes": "11e11487",
+          "mnemonic": "add",
+          "text": "add r1,r8,0x1714",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e1a",
+          "bytes": "80d8",
+          "mnemonic": "add",
+          "text": "add r0,r8",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e1c",
+          "bytes": "9840",
+          "mnemonic": "_sb",
+          "text": "_sb r0,[r1 + 0x0]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e1e",
+          "bytes": "42e0a003",
+          "mnemonic": "movz",
+          "text": "movz r2,#0x3a0",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e22",
+          "bytes": "d8ee0022",
+          "mnemonic": "lb.z",
+          "text": "lb.z r2,[r0 + r2]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e26",
+          "bytes": "40f0ae1a",
+          "mnemonic": "movz",
+          "text": "movz r0,#0x1aae",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e2a",
+          "bytes": "9a41",
+          "mnemonic": "_sb",
+          "text": "_sb r2,[r1 + 0x1]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e2c",
+          "bytes": "4520",
+          "mnemonic": "mov",
+          "text": "mov r5,#0x0",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e2e",
+          "bytes": "d8ee8150",
+          "mnemonic": "sb",
+          "text": "sb r5,[r8 + r0]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e32",
+          "bytes": "13e1a58a",
+          "mnemonic": "add",
+          "text": "add r3,r8,0x1aa5",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e36",
+          "bytes": "40f0e801",
+          "mnemonic": "movz",
+          "text": "movz r0,#0x1e8",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e3a",
+          "bytes": "9361",
+          "mnemonic": "_sw",
+          "text": "_sw r3,[r1 + 0x4]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e3c",
+          "bytes": "d8ee8000",
+          "mnemonic": "lb.z",
+          "text": "lb.z r0,[r8 + r0]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        }
+      ],
+      "kagaimiq": [
+        {
+          "address": "02027dfc",
+          "bytes": "0300",
+          "mnemonic": "hbkpt",
+          "text": "hbkpt",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027dfe",
+          "bytes": "0203",
+          "mnemonic": "rep",
+          "text": "rep 0x2,r2",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e04",
+          "bytes": "a503",
+          "mnemonic": "rep",
+          "text": "rep 0x16,r5",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e06",
+          "bytes": "4020",
+          "mnemonic": "mov",
+          "text": "mov r0,#0x0",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e08",
+          "bytes": "bfeaa0e7",
+          "mnemonic": "call",
+          "text": "call 0x02024d4c",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "-"
+        },
+        {
+          "address": "02027e0c",
+          "bytes": "d581",
+          "mnemonic": "goto",
+          "text": "goto 0x02028550",
+          "flow_type": "UNCONDITIONAL_JUMP",
+          "function": "-"
+        },
+        {
+          "address": "02027e0e",
+          "bytes": "40e0a403",
+          "mnemonic": "movz",
+          "text": "movz r0,#0x3a4",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e14",
+          "bytes": "8000",
+          "mnemonic": "rts",
+          "text": "rts",
+          "flow_type": "TERMINATOR",
+          "function": "-"
+        },
+        {
+          "address": "02027e18",
+          "bytes": "1487",
+          "mnemonic": "goto",
+          "text": "goto 0x02027e68",
+          "flow_type": "UNCONDITIONAL_JUMP",
+          "function": "-"
+        },
+        {
+          "address": "02027e1c",
+          "bytes": "9840",
+          "mnemonic": "sb",
+          "text": "sb r0,[r1 + 0x0]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e1e",
+          "bytes": "42e0a003",
+          "mnemonic": "movz",
+          "text": "movz r2,#0x3a0",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e24",
+          "bytes": "0022",
+          "mnemonic": "lw",
+          "text": "lw r0,[sp + 0x8]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e28",
+          "bytes": "ae1a",
+          "mnemonic": "qasr",
+          "text": "qasr r6,r2",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e2a",
+          "bytes": "9a41",
+          "mnemonic": "sb",
+          "text": "sb r2,[r1 + 0x1]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e2c",
+          "bytes": "4520",
+          "mnemonic": "mov",
+          "text": "mov r5,#0x0",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02027e30",
+          "bytes": "8150",
+          "mnemonic": "jnz",
+          "text": "jnz r1,0x02027e52",
+          "flow_type": "CONDITIONAL_JUMP",
+          "function": "-"
+        },
+        {
+          "address": "02027e34",
+          "bytes": "a58a",
+          "mnemonic": "goto",
+          "text": "goto 0x020284ca",
+          "flow_type": "UNCONDITIONAL_JUMP",
+          "function": "-"
+        },
+        {
+          "address": "02027e3a",
+          "bytes": "9361",
+          "mnemonic": "sw",
+          "text": "sw r3,[r1 + 0x4]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        }
+      ]
+    },
     "note_dispatcher_0201c5ec": {
       "range": [
         "0x0201c5ec",
@@ -20686,6 +22126,664 @@
         }
       ]
     },
+    "storage_read_comparator_020047d8_02004882": {
+      "range": [
+        "0x020047d8",
+        "0x02004882"
+      ],
+      "quarkslab": [
+        {
+          "address": "020047d8",
+          "bytes": "7a04",
+          "mnemonic": "push",
+          "text": "push {rets,r10,r9,r8,r7,r6,r5,r4}",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "020047da",
+          "bytes": "c8ffb054c401",
+          "mnemonic": "mov",
+          "text": "mov r8,#0x1c454b0",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "020047e0",
+          "bytes": "d0ec8033",
+          "mnemonic": "ldw",
+          "text": "ldw r3,r8,#0x30",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "020047e4",
+          "bytes": "2716",
+          "mnemonic": "mov",
+          "text": "mov r7,r2",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "020047e6",
+          "bytes": "1416",
+          "mnemonic": "mov",
+          "text": "mov r4,r1",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "020047e8",
+          "bytes": "0916",
+          "mnemonic": "mov",
+          "text": "mov r9,r0",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "020047ea",
+          "bytes": "751d",
+          "mnemonic": "add",
+          "text": "add r5,r7,r4",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "020047ec",
+          "bytes": "07ec0a30",
+          "mnemonic": "ja",
+          "text": "ja r3,r7,0x02004804",
+          "flow_type": "CONDITIONAL_JUMP",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "020047f0",
+          "bytes": "c0ff01f0ff00",
+          "mnemonic": "mov",
+          "text": "mov r0,#0xfff001",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "020047f6",
+          "bytes": "80e92f50",
+          "mnemonic": "jb",
+          "text": "jb r5,r0,0x02004858",
+          "flow_type": "CONDITIONAL_JUMP",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "020047fa",
+          "bytes": "d0ec8801",
+          "mnemonic": "ldw",
+          "text": "ldw r0,r8,#0x18",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "020047fe",
+          "bytes": "29ff80072a00",
+          "mnemonic": "jbe",
+          "text": "jbe r0,#0x1000000,0x02004858",
+          "flow_type": "CONDITIONAL_JUMP",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "02004804",
+          "bytes": "caff6032c301",
+          "mnemonic": "mov",
+          "text": "mov r10,#0x1c33260",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "0200480a",
+          "bytes": "06e11cad",
+          "mnemonic": "add",
+          "text": "add r6,r10,#0xd1c",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "0200480e",
+          "bytes": "6016",
+          "mnemonic": "mov",
+          "text": "mov r0,r6",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "02004810",
+          "bytes": "80ff4aea0500",
+          "mnemonic": "call",
+          "text": "call 0x02063260",
+          "flow_type": "CALL_TERMINATOR",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "02004858",
+          "bytes": "7016",
+          "mnemonic": "mov",
+          "text": "mov r0,r7",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "0200485a",
+          "bytes": "80ff14bbbfff",
+          "mnemonic": "call",
+          "text": "call 0x01c00374",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "02004860",
+          "bytes": "0116",
+          "mnemonic": "mov",
+          "text": "mov r1,r0",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "02004862",
+          "bytes": "9016",
+          "mnemonic": "mov",
+          "text": "mov r0,r9",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "02004864",
+          "bytes": "4216",
+          "mnemonic": "mov",
+          "text": "mov r2,r4",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "02004866",
+          "bytes": "80ff62440400",
+          "mnemonic": "call",
+          "text": "call 0x02048cce",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "0200486c",
+          "bytes": "4016",
+          "mnemonic": "mov",
+          "text": "mov r0,r4",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "0200486e",
+          "bytes": "5a04",
+          "mnemonic": "pop",
+          "text": "pop {pc,r10,r9,r8,r7,r6,r5,r4}",
+          "flow_type": "TERMINATOR",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "02004870",
+          "bytes": "7404",
+          "mnemonic": "push",
+          "text": "push {rets,r4}",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_02004870@02004870"
+        },
+        {
+          "address": "02004872",
+          "bytes": "2416",
+          "mnemonic": "mov",
+          "text": "mov r4,r2",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_02004870@02004870"
+        },
+        {
+          "address": "02004874",
+          "bytes": "1216",
+          "mnemonic": "mov",
+          "text": "mov r2,r1",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_02004870@02004870"
+        },
+        {
+          "address": "02004876",
+          "bytes": "4116",
+          "mnemonic": "mov",
+          "text": "mov r1,r4",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_02004870@02004870"
+        },
+        {
+          "address": "02004878",
+          "bytes": "518f",
+          "mnemonic": "call",
+          "text": "call 0x020047d8",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "FUN_02004870@02004870"
+        },
+        {
+          "address": "0200487a",
+          "bytes": "90e80004",
+          "mnemonic": "if",
+          "text": "if (r0 != r4) {",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_02004870@02004870"
+        },
+        {
+          "address": "0200487e",
+          "bytes": "4420",
+          "mnemonic": "mov",
+          "text": "mov r4,#0x0",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_02004870@02004870"
+        },
+        {
+          "address": "02004880",
+          "bytes": "4016",
+          "mnemonic": "} ",
+          "text": "}  mov r0, r4",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_02004870@02004870"
+        },
+        {
+          "address": "02004882",
+          "bytes": "5404",
+          "mnemonic": "pop",
+          "text": "pop {pc,r4}",
+          "flow_type": "TERMINATOR",
+          "function": "FUN_02004870@02004870"
+        }
+      ],
+      "kagaimiq": [
+        {
+          "address": "020047d8",
+          "bytes": "7a04",
+          "mnemonic": "push",
+          "text": "push {0xa}",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "020047da",
+          "bytes": "c8ffb054c401",
+          "mnemonic": "mov",
+          "text": "mov r8,#0x1c454b0",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_020047d8@020047d8"
+        },
+        {
+          "address": "020047e4",
+          "bytes": "2716",
+          "mnemonic": "mov",
+          "text": "mov r7,r2",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "020047e6",
+          "bytes": "1416",
+          "mnemonic": "mov",
+          "text": "mov r4,r1",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "020047e8",
+          "bytes": "0916",
+          "mnemonic": "mov",
+          "text": "mov r9,r0",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "020047ea",
+          "bytes": "751d",
+          "mnemonic": "add",
+          "text": "add r5,r7,r4",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "020047ee",
+          "bytes": "0a30",
+          "mnemonic": "lw",
+          "text": "lw r10,[sp + 0x40]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "020047f0",
+          "bytes": "c0ff01f0ff00",
+          "mnemonic": "mov",
+          "text": "mov r0,#0xfff001",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "020047f8",
+          "bytes": "2f50",
+          "mnemonic": "lb.z",
+          "text": "lb.z r7,[r2 + -0x10]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02004800",
+          "bytes": "8007",
+          "mnemonic": "sb",
+          "text": "sb r0,[r0 ++= 1]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02004804",
+          "bytes": "caff6032c301",
+          "mnemonic": "mov",
+          "text": "mov r10,#0x1c33260",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0200480c",
+          "bytes": "1cad",
+          "mnemonic": "qasl",
+          "text": "qasl r4,r1,0xd",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0200480e",
+          "bytes": "6016",
+          "mnemonic": "mov",
+          "text": "mov r0,r6",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02004810",
+          "bytes": "80ff4aea0500",
+          "mnemonic": "call",
+          "text": "call 0x02063260",
+          "flow_type": "CALL_TERMINATOR",
+          "function": "-"
+        },
+        {
+          "address": "02004818",
+          "bytes": "ae07",
+          "mnemonic": "sb",
+          "text": "sb r6,[r2 --= 1]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0200481a",
+          "bytes": "c021",
+          "mnemonic": "add",
+          "text": "add r0,#0x1",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0200481e",
+          "bytes": "ae07",
+          "mnemonic": "sb",
+          "text": "sb r6,[r2 --= 1]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02004820",
+          "bytes": "9016",
+          "mnemonic": "mov",
+          "text": "mov r0,r9",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02004822",
+          "bytes": "7116",
+          "mnemonic": "mov",
+          "text": "mov r1,r7",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02004824",
+          "bytes": "4216",
+          "mnemonic": "mov",
+          "text": "mov r2,r4",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02004826",
+          "bytes": "80ff1cbbbfff",
+          "mnemonic": "call",
+          "text": "call 0x01c00348",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "-"
+        },
+        {
+          "address": "02004832",
+          "bytes": "0850",
+          "mnemonic": "lb.z",
+          "text": "lb.z r0,[r0 + -0x10]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02004834",
+          "bytes": "c0ff50fdc701",
+          "mnemonic": "mov",
+          "text": "mov r0,#0x1c7fd50",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0200483a",
+          "bytes": "91d6",
+          "mnemonic": "mov",
+          "text": "mov r1,r9  #",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0200483c",
+          "bytes": "086e",
+          "mnemonic": "lh.z",
+          "text": "lh.z r0,[r0 + 0x1c]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0200483e",
+          "bytes": "4320",
+          "mnemonic": "mov",
+          "text": "mov r3,#0x0",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02004840",
+          "bytes": "4216",
+          "mnemonic": "mov",
+          "text": "mov r2,r4",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02004842",
+          "bytes": "5189",
+          "mnemonic": "call",
+          "text": "call 0x02004796",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "-"
+        },
+        {
+          "address": "02004846",
+          "bytes": "ae07",
+          "mnemonic": "sb",
+          "text": "sb r6,[r2 --= 1]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02004848",
+          "bytes": "f83f",
+          "mnemonic": "add",
+          "text": "add r0,#-0x1",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0200484c",
+          "bytes": "ae07",
+          "mnemonic": "sb",
+          "text": "sb r6,[r2 --= 1]",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0200484e",
+          "bytes": "6016",
+          "mnemonic": "mov",
+          "text": "mov r0,r6",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02004850",
+          "bytes": "80ffa8eb0500",
+          "mnemonic": "call",
+          "text": "call 0x020633fe",
+          "flow_type": "CALL_TERMINATOR",
+          "function": "-"
+        },
+        {
+          "address": "02004858",
+          "bytes": "7016",
+          "mnemonic": "mov",
+          "text": "mov r0,r7",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "0200485a",
+          "bytes": "80ff14bbbfff",
+          "mnemonic": "call",
+          "text": "call 0x01c00374",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "-"
+        },
+        {
+          "address": "02004860",
+          "bytes": "0116",
+          "mnemonic": "mov",
+          "text": "mov r1,r0",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02004862",
+          "bytes": "9016",
+          "mnemonic": "mov",
+          "text": "mov r0,r9",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02004864",
+          "bytes": "4216",
+          "mnemonic": "mov",
+          "text": "mov r2,r4",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02004866",
+          "bytes": "80ff62440400",
+          "mnemonic": "call",
+          "text": "call 0x02048cce",
+          "flow_type": "CALL_TERMINATOR",
+          "function": "-"
+        },
+        {
+          "address": "02004870",
+          "bytes": "7404",
+          "mnemonic": "push",
+          "text": "push {0x4}",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_02004870@02004870"
+        },
+        {
+          "address": "02004872",
+          "bytes": "2416",
+          "mnemonic": "mov",
+          "text": "mov r4,r2",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_02004870@02004870"
+        },
+        {
+          "address": "02004874",
+          "bytes": "1216",
+          "mnemonic": "mov",
+          "text": "mov r2,r1",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_02004870@02004870"
+        },
+        {
+          "address": "02004876",
+          "bytes": "4116",
+          "mnemonic": "mov",
+          "text": "mov r1,r4",
+          "flow_type": "FALL_THROUGH",
+          "function": "FUN_02004870@02004870"
+        },
+        {
+          "address": "02004878",
+          "bytes": "518f",
+          "mnemonic": "call",
+          "text": "call 0x020047d8",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "FUN_02004870@02004870"
+        },
+        {
+          "address": "0200487c",
+          "bytes": "0004",
+          "mnemonic": "pop",
+          "text": "pop pc",
+          "flow_type": "TERMINATOR",
+          "function": "-"
+        },
+        {
+          "address": "0200487e",
+          "bytes": "4420",
+          "mnemonic": "mov",
+          "text": "mov r4,#0x0",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02004880",
+          "bytes": "4016",
+          "mnemonic": "mov",
+          "text": "mov r0,r4",
+          "flow_type": "FALL_THROUGH",
+          "function": "-"
+        },
+        {
+          "address": "02004882",
+          "bytes": "5404",
+          "mnemonic": "pop",
+          "text": "pop {pc,0x4}",
+          "flow_type": "TERMINATOR",
+          "function": "-"
+        }
+      ]
+    },
     "memcpy_02048cce": {
       "range": [
         "0x02048c96",
@@ -21896,7 +23994,7 @@
         "destination": "0x01c33260+0x1a14+(parameter_index & 0xff)",
         "source": "UI/SysEx message byte msg[5]",
         "length": "0x01",
-        "summary": "0x0201e254 recognizes a 7-byte F0 43 10 ... F7 message and stores msg[5] to 0x01c33260+0x1a14+((msg[3]<<7)+msg[4] & 0xff). This is a direct current-patch field writer.",
+        "summary": "0x0201e254 recognizes a 7-byte F0 43 10 ... F7 message and stores msg[5] to 0x01c33260+0x1a14+(((msg[3]<<7)+msg[4]) & 0xff). It overlaps the dispatcher's source exactly when idx is 0x00..0x9b; idx 0x9c..0xff writes the following current-record tail/object bytes instead.",
         "evidence": [
           {
             "address": "0201e622",
@@ -21945,6 +24043,196 @@
             "text": "sb r1,[r0 + r2]",
             "flow_type": "FALL_THROUGH",
             "function": "FUN_0201e254@0201e254"
+          }
+        ]
+      },
+      {
+        "kind": "field_write",
+        "role": "bounded_setter_current_field_0x86",
+        "destination": "0x01c34c74+0x86 == 0x01c34cfa",
+        "source": "clamped current field plus caller-supplied delta",
+        "length": "0x01",
+        "summary": "The setter beginning at 0x0201bbc6 clamps an input delta to 0..31, writes the result to obj+0x1a9a (current+0x86), mirrors it outside the 0x9c copy at obj+0x1ab4, and calls 0x0201bb80 to propagate the paired fields to active voice state.",
+        "evidence": [
+          {
+            "address": "0201bbc8",
+            "bytes": "45e09a1a",
+            "mnemonic": "movz",
+            "text": "movz r5,#0x1a9a",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
+          },
+          {
+            "address": "0201bbcc",
+            "bytes": "c6ff6032c301",
+            "mnemonic": "mov",
+            "text": "mov r6,#0x1c33260",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
+          },
+          {
+            "address": "0201bbd2",
+            "bytes": "d8ee6015",
+            "mnemonic": "lb.z",
+            "text": "lb.z r1,[r6 + r5]",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
+          },
+          {
+            "address": "0201bbe0",
+            "bytes": "bfea6fff",
+            "mnemonic": "call",
+            "text": "call 0x0201bac2",
+            "flow_type": "CALL_TERMINATOR",
+            "function": "-"
+          },
+          {
+            "address": "0201bbe4",
+            "bytes": "d8ee6105",
+            "mnemonic": "sb",
+            "text": "sb r0,[r6 + r5]",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
+          },
+          {
+            "address": "0201bbe8",
+            "bytes": "599a",
+            "mnemonic": "add",
+            "text": "add r1,r5,#0x1a",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
+          },
+          {
+            "address": "0201bbf2",
+            "bytes": "6186",
+            "mnemonic": "call",
+            "text": "call 0x0201bb80",
+            "flow_type": "UNCONDITIONAL_CALL",
+            "function": "-"
+          }
+        ]
+      },
+      {
+        "kind": "field_write",
+        "role": "bounded_setter_current_field_0x87",
+        "destination": "0x01c34c74+0x87 == 0x01c34cfb",
+        "source": "clamped current field plus caller-supplied delta",
+        "length": "0x01",
+        "summary": "The setter beginning at 0x0201bbf6 clamps an input delta to 0..7, writes the result to obj+0x1a9b (current+0x87), mirrors it outside the 0x9c copy at obj+0x1ab5, and calls 0x0201bb80 to propagate the paired fields to active voice state.",
+        "evidence": [
+          {
+            "address": "0201bbf8",
+            "bytes": "45e09b1a",
+            "mnemonic": "movz",
+            "text": "movz r5,#0x1a9b",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
+          },
+          {
+            "address": "0201bbfc",
+            "bytes": "c6ff6032c301",
+            "mnemonic": "mov",
+            "text": "mov r6,#0x1c33260",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
+          },
+          {
+            "address": "0201bc02",
+            "bytes": "d8ee6015",
+            "mnemonic": "lb.z",
+            "text": "lb.z r1,[r6 + r5]",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
+          },
+          {
+            "address": "0201bc10",
+            "bytes": "bfea57ff",
+            "mnemonic": "call",
+            "text": "call 0x0201bac2",
+            "flow_type": "CALL_TERMINATOR",
+            "function": "-"
+          },
+          {
+            "address": "0201bc14",
+            "bytes": "d8ee6105",
+            "mnemonic": "sb",
+            "text": "sb r0,[r6 + r5]",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
+          },
+          {
+            "address": "0201bc18",
+            "bytes": "599a",
+            "mnemonic": "add",
+            "text": "add r1,r5,#0x1a",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
+          },
+          {
+            "address": "0201bc22",
+            "bytes": "518e",
+            "mnemonic": "call",
+            "text": "call 0x0201bb80",
+            "flow_type": "UNCONDITIONAL_CALL",
+            "function": "-"
+          }
+        ]
+      },
+      {
+        "kind": "field_write",
+        "role": "ui_mode_entry_reset_current_field_0x9a",
+        "destination": "0x01c34c74+0x9a == 0x01c34d0e",
+        "source": "constant zero on UI mode/state entry",
+        "length": "0x01",
+        "summary": "A large UI handler anchors r8 to 0x01c33260 at 0x02024ffe. In the state==6 branch at 0x02027df6..0x02027e00 it clears obj+0x1aae, which is current+0x9a and therefore the penultimate byte of the dispatcher's 0x9c source range.",
+        "evidence": [
+          {
+            "address": "02024ffe",
+            "bytes": "c8ff6032c301",
+            "mnemonic": "mov",
+            "text": "mov r8,#0x1c33260",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
+          },
+          {
+            "address": "02027df6",
+            "bytes": "50ee8002",
+            "mnemonic": "lb.z",
+            "text": "lb.z r0,[r8 + 0x200]",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
+          },
+          {
+            "address": "02027e00",
+            "bytes": "01ff0600a503",
+            "mnemonic": "jne",
+            "text": "jne r0,#0x6,0x02028550",
+            "flow_type": "CONDITIONAL_JUMP",
+            "function": "-"
+          },
+          {
+            "address": "02027e26",
+            "bytes": "40f0ae1a",
+            "mnemonic": "movz",
+            "text": "movz r0,#0x1aae",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
+          },
+          {
+            "address": "02027e2c",
+            "bytes": "4520",
+            "mnemonic": "mov",
+            "text": "mov r5,#0x0",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
+          },
+          {
+            "address": "02027e2e",
+            "bytes": "d8ee8150",
+            "mnemonic": "sb",
+            "text": "sb r5,[r8 + r0]",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
           }
         ]
       },
@@ -22093,6 +24381,104 @@
             "text": "call 0x02005660",
             "flow_type": "UNCONDITIONAL_CALL",
             "function": "-"
+          }
+        ]
+      },
+      {
+        "kind": "persistence_consumer",
+        "role": "save_path_reads_current_snapshot",
+        "destination": "selected persistent raw163 record and packed128 record (confirmed RAM-to-storage)",
+        "source": "0x01c33260+0x1a14",
+        "length": "0xa3",
+        "summary": "The SAVE path passes obj+0x1a14 and length 0xa3 to 0x02004b02, then passes the same pointer to 0x0201e13e. The v15-only persistence-direction analysis establishes 0x02004b02 as RAM/source to storage and contrasts it with the separate 0x02004870 read wrapper, whose inner path copies an allocated/read buffer to the caller destination at 0x02004866. SAVE is therefore a confirmed outbound lifecycle sink, not a current-snapshot writer. The primitive request command ID remains a decoder gap.",
+        "evidence": [
+          {
+            "address": "02026d9e",
+            "bytes": "14e1148a",
+            "mnemonic": "add",
+            "text": "add r4,r8,0x1a14",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
+          },
+          {
+            "address": "02026da2",
+            "bytes": "6a23",
+            "mnemonic": "mov",
+            "text": "mov r2,#0xa3",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
+          },
+          {
+            "address": "02026da4",
+            "bytes": "4016",
+            "mnemonic": "mov",
+            "text": "mov r0,r4",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
+          },
+          {
+            "address": "02026da6",
+            "bytes": "beeaacee",
+            "mnemonic": "call",
+            "text": "call 0x02004b02",
+            "flow_type": "UNCONDITIONAL_CALL",
+            "function": "-"
+          },
+          {
+            "address": "02026daa",
+            "bytes": "4016",
+            "mnemonic": "mov",
+            "text": "mov r0,r4",
+            "flow_type": "FALL_THROUGH",
+            "function": "-"
+          },
+          {
+            "address": "02026dac",
+            "bytes": "bfeac7b9",
+            "mnemonic": "call",
+            "text": "call 0x0201e13e",
+            "flow_type": "UNCONDITIONAL_CALL",
+            "function": "-"
+          },
+          {
+            "address": "02004b04",
+            "bytes": "2416",
+            "mnemonic": "mov",
+            "text": "mov r4,r2",
+            "flow_type": "FALL_THROUGH",
+            "function": "FUN_02004b02@02004b02"
+          },
+          {
+            "address": "02004b06",
+            "bytes": "1216",
+            "mnemonic": "mov",
+            "text": "mov r2,r1",
+            "flow_type": "FALL_THROUGH",
+            "function": "FUN_02004b02@02004b02"
+          },
+          {
+            "address": "02004b08",
+            "bytes": "4116",
+            "mnemonic": "mov",
+            "text": "mov r1,r4",
+            "flow_type": "FALL_THROUGH",
+            "function": "FUN_02004b02@02004b02"
+          },
+          {
+            "address": "02004b0a",
+            "bytes": "5197",
+            "mnemonic": "call",
+            "text": "call 0x02004a7a",
+            "flow_type": "UNCONDITIONAL_CALL",
+            "function": "FUN_02004b02@02004b02"
+          },
+          {
+            "address": "02004866",
+            "bytes": "80ff62440400",
+            "mnemonic": "call",
+            "text": "call 0x02048cce",
+            "flow_type": "UNCONDITIONAL_CALL",
+            "function": "FUN_020047d8@020047d8"
           }
         ]
       },
@@ -22279,5 +24665,132 @@
     "0x0201e13e": "void pack_expanded_current_patch_to_selected_record(uint8_t *expanded) {\n    uint8_t packed80[0x80];\n    for (int off = 0; off != 0x7e; off += 0x15) {\n        // Six 0x15-byte expanded operator blocks become compact packed bytes.\n        pack_one_operator_block(expanded + off, packed80 + operator_packed_offset(off));\n    }\n    pack_global_tail(expanded + 0x7e, packed80 + 0x66);\n    obj = (uint8_t *)0x01c33260;\n    bank = obj[0x3a4]; preset = obj[0x3a0 + bank];\n    dst = *(uint8_t **)(obj + 0x160) + bank * 0x1000 + preset * 0x80;\n    storage_transfer(packed80, dst, 0x80); // 0x02004b02\n    obj[0x129c + bank * 32 + preset] = 0;\n}",
     "0x02026d6c": "void save_current_patch_candidate(void) {\n    obj = (uint8_t *)0x01c33260;\n    if (obj[0x1ec] != 0 || state == 0xff) goto out;\n    bank = obj[0x3a4]; preset = obj[0x3a0 + bank];\n    storage_dst = *(uint8_t **)(obj + 0x160) + 0x4000 + (bank * 32 + preset) * 0xa3;\n    storage_transfer(obj + 0x1a14, storage_dst, 0xa3);\n    pack_expanded_current_patch_to_selected_record(obj + 0x1a14);\n    obj[0x129c + bank * 32 + preset] = 0xff;\n    storage_transfer(/*save flags*/, *(uint8_t **)(obj + 0x160) + 0x9180, 0x80);\nout:\n    obj[0x1ec] = 0xff;\n}",
     "0x0201c5ec": "void dispatch_midi_like_event(void *engine, uint8_t *msg, uint32_t len) {\n    status = msg[0]; status_hi = status >> 4; channel = status & 0x0f;\n    if (status_hi == 0x8 || status_hi == 0x9) {\n        voice = allocate_or_select_voice_index(engine);\n        slot = (uint8_t *)engine + voice * 0xa0;\n        memcpy(slot + 0xa2, (void *)0x01c34c74, 0x9c);\n        // bytes at slot+0x13e..0x141 are event metadata, outside the 0x9c tone copy.\n        write_note_velocity_and_marker(slot, msg);\n        return;\n    }\n    if ((status & 0xf0) == 0xe0 && len >= 3) {\n        *(uint16_t *)((uint8_t *)engine + 0x3e) = msg[1] | (msg[2] << 7);\n        return;\n    }\n    handle_cc_program_or_pressure_like_messages(engine, msg, len);\n}"
-  }
+  },
+  "validation": [
+    {
+      "name": "official-v15-app-sha256",
+      "status": "PASS",
+      "detail": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055"
+    },
+    {
+      "name": "official-v15-package-sha256",
+      "status": "PASS",
+      "detail": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff"
+    },
+    {
+      "name": "manifest-app-gate",
+      "status": "PASS",
+      "detail": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055"
+    },
+    {
+      "name": "manifest-package-gate",
+      "status": "PASS",
+      "detail": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff"
+    },
+    {
+      "name": "quarkslab-listing-sha256",
+      "status": "PASS",
+      "detail": "f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347"
+    },
+    {
+      "name": "kagaimiq-listing-sha256",
+      "status": "PASS",
+      "detail": "814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013"
+    },
+    {
+      "name": "alias-arithmetic",
+      "status": "PASS",
+      "detail": "0x01c33260+0x1a14=0x01c34c74"
+    },
+    {
+      "name": "single-direct-current-immediate",
+      "status": "PASS",
+      "detail": "{\"count\": 1, \"refs\": [\"0x0201c604\"], \"value\": \"0x01c34c74\"}"
+    },
+    {
+      "name": "listing-row-0x02005694",
+      "status": "PASS",
+      "detail": "add r0,r4,0x1a14"
+    },
+    {
+      "name": "listing-row-0x0200569a",
+      "status": "PASS",
+      "detail": "call 0x02048cce"
+    },
+    {
+      "name": "listing-row-0x0201bbe4",
+      "status": "PASS",
+      "detail": "sb r0,[r6 + r5]"
+    },
+    {
+      "name": "listing-row-0x0201bc14",
+      "status": "PASS",
+      "detail": "sb r0,[r6 + r5]"
+    },
+    {
+      "name": "listing-row-0x0201e634",
+      "status": "PASS",
+      "detail": "sb r1,[r0 + r2]"
+    },
+    {
+      "name": "listing-row-0x02024ffe",
+      "status": "PASS",
+      "detail": "mov r8,#0x1c33260"
+    },
+    {
+      "name": "listing-row-0x02027e2e",
+      "status": "PASS",
+      "detail": "sb r5,[r8 + r0]"
+    },
+    {
+      "name": "listing-row-0x0201c63e",
+      "status": "PASS",
+      "detail": "call 0x02048cce"
+    },
+    {
+      "name": "listing-row-0x0201c67c",
+      "status": "PASS",
+      "detail": "call 0x02048cce"
+    },
+    {
+      "name": "listing-row-0x02004866",
+      "status": "PASS",
+      "detail": "call 0x02048cce"
+    },
+    {
+      "name": "listing-row-0x02004b0a",
+      "status": "PASS",
+      "detail": "call 0x02004a7a"
+    },
+    {
+      "name": "factory-loader-callers",
+      "status": "PASS",
+      "detail": "0x02005f9c,0x0201e46c,0x0201e4a0,0x0202422e,0x020255a6"
+    },
+    {
+      "name": "dispatcher-callers",
+      "status": "PASS",
+      "detail": "0x0201c736,0x0201e644"
+    },
+    {
+      "name": "bounded-setter-direct-callers",
+      "status": "PASS",
+      "detail": "field86=[],field87=[]"
+    },
+    {
+      "name": "active-voice-propagator-callers",
+      "status": "PASS",
+      "detail": "0x0201bbf2,0x0201bc22"
+    },
+    {
+      "name": "writer-producer-role-coverage",
+      "status": "PASS",
+      "detail": "complete"
+    },
+    {
+      "name": "v12-excluded",
+      "status": "PASS",
+      "detail": "[\"build/v15-official-app.bin\", \"build/SMK-37_Pro_015.fwsc\", \"baselines/v15/official/package-manifest.json\", \"baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz\", \"baselines/v15/analysis/quarkslab/results/kagaimiq-patched-exhaustive-listing.tsv.gz\", \"baselines/v15/analysis/quarkslab/results/provenance.txt\"]"
+    }
+  ]
 }
