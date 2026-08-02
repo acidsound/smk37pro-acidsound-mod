@@ -1,0 +1,13 @@
+PASS	scope	official-v15 static evidence plus recorded live-proven H2; no v12; no candidate; no flash; no device
+PASS	input-sha256	18 exact inputs
+PASS	dispatcher	Ch10=r9==9; Note Off note candidate r5; Note On note candidate r6; copy=0x9c
+PASS	h2-contract	voice=0x01c46520 valid=0x01c465bc lock=0x01c465bd corrected fallback
+PASS	runtime-packet	163 bytes; 156-byte seven-bit payload; SHA-256 6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27
+PASS	slot-counts	128 MIDI note keys; 16 resident patch slots; one proven physical note mapping
+PASS	ram-layout	0x01c46520..0x01c46fb0 size 0x0a90; slot0 H2-compatible; heap arithmetic closed
+PASS	lookup	O(1) direct map; explicit note/slot/valid bounds; stock fallback
+PASS	concurrency	nonblocking producer lock; ARMED-last; immutable after commit; consumers do not lock
+PASS	packet-model	BEGIN=18 PUT_SLOT=173 PUT_MAP=144 COMMIT=19; seven-bit envelope and CRC-16
+PASS	polyphony-boundary	16 indexed records are not treated as 16-note polyphony proof
+PASS	decision	data model PASS; firmware candidate BLOCKED by eight explicit gates
+OVERALL	PASS
