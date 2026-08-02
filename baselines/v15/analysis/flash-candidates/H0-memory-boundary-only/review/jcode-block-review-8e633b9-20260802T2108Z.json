@@ -1,0 +1,84 @@
+{
+  "decision": "BLOCK",
+  "reviewer": "Jcode",
+  "reviewed_commit": "8e633b92ebf246aaf4fa68acb5d98d9c639fa909",
+  "scope": "H0 memory-boundary-only baseline and generated ignored H0 build artifacts",
+  "device_or_flash_action": false,
+  "blockers": [
+    {
+      "id": "missing-h0-exact-ota-install-gate",
+      "summary": "No H0-specific exact-hash OTA install gate exists.",
+      "evidence": [
+        "No smk37-v15-h0-ota or H0 upload executable/source found under tools, src, or top-level build executables.",
+        "H0 package SHA 114d814b5def641c979a5f0fbd2e5dc06d982c807662d5221dc2e0e936e5e566 appears only in build/rollback/manifests and tools/build_v15_h0_rollback.py, not an OTA install command.",
+        "src/main.c has no upload-h0 or upload-v15-h0 command.",
+        "src/ota.c has no H0 package SHA constant or H0 ota_upload_exact wrapper.",
+        "build/smk37-v15-r03-ota check rejects H0 as not exact v15 R03.",
+        "build/smk37-fw upload-dry-run accepts packet generation but is generic offline validation, not an H0 exact-hash install gate."
+      ],
+      "required_fix": "Add H0-specific exact-hash OTA checker/uploader with H0 SHA, H0 confirmation token, check mode accepting only H0, and upload mode calling ota_upload_exact."
+    }
+  ],
+  "passing_checks": {
+    "deterministic_h0_package_rebuild": true,
+    "deterministic_h0_guarded_rollback_zip_rebuild": true,
+    "h0_guard_self_test": "self-test PASS: FakeTransport erase/write/readback, CRC, CDB guards, failure cases",
+    "only_two_app_bytes_change": true,
+    "critical_stock_paths_unchanged": true,
+    "repacker_metadata_only": true,
+    "protected_prefix_unchanged": true,
+    "baseline_sector_replacement_restores_stock": true,
+    "guarded_rollback_sector_replacement_restores_stock": true,
+    "guarded_rollback_operationally_sufficient_offline": true
+  },
+  "hashes": {
+    "official_v15_app": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "official_v15_fwsc": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "official_v15_flash": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+    "h0_app": "ab2d4d210605f20e35b96a8471c9f2e1102c24e18f3b062d6eabd4970f9794ce",
+    "h0_fwsc": "114d814b5def641c979a5f0fbd2e5dc06d982c807662d5221dc2e0e936e5e566",
+    "h0_flash": "458d1c0a1e08e5f74ad07ab3dd04cf7d7b591a421668f5ff822a15b250746998",
+    "h0_guarded_rollback_zip": "05e22531e82b9b3a15338e09d1fde274e18f4697a17c60e00fcba063c7ea60ed"
+  },
+  "app_diff": {
+    "offsets": ["0x20", "0x5e9fa"],
+    "bss_size_insn": {
+      "address": "0x0200001e",
+      "stock": "c2ff48cb0300",
+      "h0": "c2ffeccb0300"
+    },
+    "heap_begin_insn": {
+      "address": "0x0205e9f8",
+      "stock": "c5ff2065c401",
+      "h0": "c5ffc065c401"
+    }
+  },
+  "stock_paths_checked": {
+    "code_cave_prefix": "0x0201e13e 7604e2808980c13042201492831c34e1f01f3516108a5607c60758ee3b4074f1fc403d41",
+    "note_off_memcpy_call": "0x0201c63e 80ff8ac60200",
+    "note_on_memcpy_call": "0x0201c67c 80ff4cc60200",
+    "product_direct_packer_call": "0x0201e468 bfea69fe",
+    "product_segmented_packer_call": "0x0201e49c bfea4ffe",
+    "save_first_persistent_write": "0x02026da6 beeaacee",
+    "save_packer_call": "0x02026dac bfeac7b9"
+  },
+  "flash_diff": {
+    "offsets": ["0x04000", "0x04001", "0x04002", "0x04003", "0x04020", "0x04021", "0x04022", "0x04023", "0x04140", "0x62b1a"],
+    "app_offsets": ["0x04140", "0x62b1a"],
+    "repacker_metadata_offsets": ["0x04000", "0x04001", "0x04002", "0x04003", "0x04020", "0x04021", "0x04022", "0x04023"],
+    "changed_4k_sectors": ["0x04000", "0x62000"],
+    "protected_prefix": "0x0000..0x3fff unchanged",
+    "protected_prefix_sha256": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67"
+  },
+  "guarded_rollback": {
+    "zip_sha256": "05e22531e82b9b3a15338e09d1fde274e18f4697a17c60e00fcba063c7ea60ed",
+    "sectors": ["0x04000", "0x62000"],
+    "confirmations": [
+      "I_UNDERSTAND_THIS_ERASES_EXACTLY_TWO_H0_SECTORS",
+      "I_HAVE_TWO_IDENTICAL_1MIB_DUMPS_AND_H0_TARGET_HASHES",
+      "RESTORE_OFFICIAL_V15_SECTORS_NOW"
+    ],
+    "zip_stale_r02_text_entries": 0,
+    "requires_two_identical_1mib_dumps_and_exact_h0_target_hashes": true
+  }
+}
