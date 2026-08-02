@@ -1,0 +1,518 @@
+{
+  "constants": {
+    "direct_callsite": "0x0201e468",
+    "direct_exact_total_length": 163,
+    "direct_return_lr": "0x0201e46c",
+    "producer": "0x0201e1a2",
+    "producer_end": "0x0201e1ec",
+    "runtime_base": "0x02000000",
+    "segmented_callsite": "0x0201e49c",
+    "segmented_final_total_gate": 158,
+    "segmented_return_lr": "0x0201e4a0",
+    "staging": "0x01c37fd0",
+    "voice_size": 156
+  },
+  "direct_product_producer_entry": {
+    "exact_length_gate": "accept direct only if rets/LR == 0x0201e46c, r0 == 0x01c37fd0, and r9 == 0xa3; otherwise return before 0x0201e1ae",
+    "producer_entry_live_registers_before_first_h2_owned_mutation": {
+      "r0": "0x01c37fd0 (official 0x0201e466 mov r0,r8)",
+      "r4": "original completed-message pointer from handler entry; producer will overwrite it after entry",
+      "r6": "r9 - 6, preserved across memcpy because 0x02048cce saves/restores r6",
+      "r8": "0x01c37fd0 (0x0201e448 r8 = 0x01c37030 + 0xfa0)",
+      "r9": "original completed-message length from 0x0201e258 mov r9,r1; not modified by direct-path instructions or memcpy",
+      "rets_lr": "0x0201e46c"
+    },
+    "route_identity": {
+      "caller_return_address_rets_lr": "0x0201e46c",
+      "callsite": "0x0201e468",
+      "h2_s1c1_call_bytes": "bfea9bfe",
+      "target": "0x0201e1a2"
+    },
+    "safe_exclusion": "direct can also be excluded by rejecting rets/LR == 0x0201e46c before 0x0201e1ae; this leaves H2-owned slot/valid/lock unchanged and still returns to 0x0201e46c reload behavior",
+    "stable_memory_at_entry": {
+      "copy_before_entry": "0x0201e456 memcpy(stage, msg+6, r9-6)",
+      "for_exact_163_byte_packet": "r9 == 0xa3; copied bytes == 0x9d; stage[0..0x9b] is the 156-byte voice body and stage[0x9c] is the already-checked F7 terminator",
+      "h2_owned_state": "unchanged until 0x0201e1ae testset of 0x01c465bd",
+      "staging_base": "0x01c37fd0"
+    }
+  },
+  "format": "smk37-v15-s1c2-producer-abi-unblock-v1",
+  "h2_callers_to_producer": [
+    {
+      "address": "0x0201e468",
+      "bytes": "bfea9bfe",
+      "kind": "short_call",
+      "target": "0x0201e1a2"
+    },
+    {
+      "address": "0x0201e49c",
+      "bytes": "bfea81fe",
+      "kind": "short_call",
+      "target": "0x0201e1a2"
+    }
+  ],
+  "h2_s1c1_producer_stream": [
+    {
+      "address": "0x0201e1a2",
+      "bytes": "7904",
+      "instruction": "push {rets,r9,r8,r7,r6,r5,r4}",
+      "meaning": "first producer instruction; no H2-owned mutation yet"
+    },
+    {
+      "address": "0x0201e1a4",
+      "bytes": "0416",
+      "instruction": "mov r4,r0",
+      "meaning": "save accepted staging pointer"
+    },
+    {
+      "address": "0x0201e1a6",
+      "bytes": "c0ffbd65c401",
+      "instruction": "mov r0,#0x01c465bd",
+      "meaning": "lock address"
+    },
+    {
+      "address": "0x0201e1ac",
+      "bytes": "2000",
+      "instruction": "csync",
+      "meaning": "pre-testset barrier"
+    },
+    {
+      "address": "0x0201e1ae",
+      "bytes": "b000",
+      "instruction": "testset b[r0]",
+      "meaning": "first H2-owned state mutation: lock byte"
+    },
+    {
+      "address": "0x0201e1b0",
+      "bytes": "40e81b00",
+      "instruction": "ifeq 0x0201e1ea",
+      "meaning": "busy path returns without copy/publish"
+    },
+    {
+      "address": "0x0201e1b4",
+      "bytes": "2000",
+      "instruction": "csync",
+      "meaning": "post-acquire barrier"
+    },
+    {
+      "address": "0x0201e1b6",
+      "bytes": "c5ffbc65c401",
+      "instruction": "mov r5,#0x01c465bc",
+      "meaning": "valid0 address"
+    },
+    {
+      "address": "0x0201e1bc",
+      "bytes": "5840",
+      "instruction": "lb.z r0,[r5]",
+      "meaning": "load valid0"
+    },
+    {
+      "address": "0x0201e1be",
+      "bytes": "80f80d00",
+      "instruction": "jne r0,#0,0x0201e1dc",
+      "meaning": "reject if already valid"
+    },
+    {
+      "address": "0x0201e1c2",
+      "bytes": "c0ff2065c401",
+      "instruction": "mov r0,#0x01c46520",
+      "meaning": "owned destination"
+    },
+    {
+      "address": "0x0201e1c8",
+      "bytes": "4116",
+      "instruction": "mov r1,r4",
+      "meaning": "source = accepted staging pointer"
+    },
+    {
+      "address": "0x0201e1ca",
+      "bytes": "623c",
+      "instruction": "mov r2,#0x9c",
+      "meaning": "fixed voice copy size"
+    },
+    {
+      "address": "0x0201e1cc",
+      "bytes": "80fffcaa0200",
+      "instruction": "call 0x02048cce",
+      "meaning": "copy 156 bytes to owned slot0"
+    },
+    {
+      "address": "0x0201e1d2",
+      "bytes": "c5ffbc65c401",
+      "instruction": "mov r5,#0x01c465bc",
+      "meaning": "valid0 address reload"
+    },
+    {
+      "address": "0x0201e1d8",
+      "bytes": "4021",
+      "instruction": "mov r0,#1",
+      "meaning": "valid value"
+    },
+    {
+      "address": "0x0201e1da",
+      "bytes": "d840",
+      "instruction": "sb r0,[r5]",
+      "meaning": "publish valid0 last"
+    },
+    {
+      "address": "0x0201e1dc",
+      "bytes": "c0ffbd65c401",
+      "instruction": "mov r0,#0x01c465bd",
+      "meaning": "lock address"
+    },
+    {
+      "address": "0x0201e1e2",
+      "bytes": "2000",
+      "instruction": "csync",
+      "meaning": "pre-unlock barrier"
+    },
+    {
+      "address": "0x0201e1e4",
+      "bytes": "4120",
+      "instruction": "mov r1,#0",
+      "meaning": "unlock value"
+    },
+    {
+      "address": "0x0201e1e6",
+      "bytes": "8940",
+      "instruction": "sb r1,[r0]",
+      "meaning": "unlock"
+    },
+    {
+      "address": "0x0201e1e8",
+      "bytes": "2000",
+      "instruction": "csync",
+      "meaning": "post-unlock barrier"
+    },
+    {
+      "address": "0x0201e1ea",
+      "bytes": "5904",
+      "instruction": "pop {pc,r9,r8,r7,r6,r5,r4}",
+      "meaning": "return to caller LR/rets"
+    }
+  ],
+  "inputs": {
+    "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/app-manifest.json": {
+      "sha256": "dc6fba4ddb887424d6bd76b6d1477f66f97096e2d6656f203eec423680572cf3",
+      "size": 5420
+    },
+    "baselines/v15/analysis/flash-candidates/S1C1-boundary-only/app-manifest.json": {
+      "sha256": "51f20f38d5c73eef34f2b45834dd428819725249395f5317786443fd9290b40b",
+      "size": 1400
+    },
+    "baselines/v15/analysis/quarkslab/results/kagaimiq-patched-exhaustive-listing.tsv.gz": {
+      "sha256": "814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013",
+      "size": 751407
+    },
+    "baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz": {
+      "sha256": "f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347",
+      "size": 1069936
+    },
+    "build/SMK37Pro-v15-H2-owned-source-corrected-fallback/app.bin": {
+      "sha256": "d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59",
+      "size": 617012
+    },
+    "build/SMK37Pro-v15-S1C1-boundary-only/app.bin": {
+      "sha256": "16023c9006f2d4d6467ef2d72d6165c14ffeb6cb758d074f7d8163a68146fb2e",
+      "size": 617012
+    },
+    "build/v15-official-app.bin": {
+      "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "size": 617012
+    }
+  },
+  "memcpy_preserved_register_proof": {
+    "conclusion": "0x02048cce saves/restores r5 and r6 and no listed instruction references r9, so direct r9 and segmented r5/r6 survive the pre-producer staging memcpy calls.",
+    "rows": [
+      "02048cce\t7604\t2\tpush\tpush {rets,r6,r5,r4}\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048cd0\t00ec0310\t4\tja\tja r1,r0,0x02048cda\tCONDITIONAL_JUMP\tFUN_02048cce@02048cce",
+      "02048cd4\t931c\t2\tadd\tadd r3,r1,r2\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048cd6\t00ec2930\t4\tja\tja r3,r0,0x02048d2c\tCONDITIONAL_JUMP\tFUN_02048cce@02048cce",
+      "02048cda\t0316\t2\tmov\tmov r3,r0\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048cdc\t82f91410\t4\tjb\tjb r2,0x8,0x02048d08\tCONDITIONAL_JUMP\tFUN_02048cce@02048cce",
+      "02048ce0\t65e10310\t4\tand\tand r5,r1,#0x3\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048ce4\t64e10330\t4\tand\tand r4,r3,#0x3\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048ce8\t0446\t2\tjz\tjz r4,0x02048cf6\tCONDITIONAL_JUMP\tFUN_02048cce@02048cce",
+      "02048cea\ta6e00440\t4\tsub\tsub r6,#0x4,r4\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048cee\ta21f\t2\tsub\tsub r2,r2,r6\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048cf0\t1603\t2\trep\trep 0x4,r6\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048cf2\t1607\t2\tlb.z\tlb.z r6,[r1 ++= 1]\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048cf4\tb607\t2\tsb\tsb r6,[r3 ++= 1]\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048cf6\t5c19\t2\txor\txor r4,r5\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048cf8\ta5a2\t2\tlsr\tlsr r5,r2,0x2\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048cfa\t844a\t2\tjnz\tjnz r4,0x02048d10\tCONDITIONAL_JUMP\tFUN_02048cce@02048cce",
+      "02048cfc\t1503\t2\trep\trep 0x4,r5\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048cfe\t1605\t2\tlw\tlw r6,[r1 ++= 4]\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048d00\tb605\t2\tsw\tsw r6,[r3 ++= 4]\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048d02\tf55c\t2\tjnz\tjnz r5,0x02048cfc\tCONDITIONAL_JUMP\tFUN_02048cce@02048cce",
+      "02048d04\t62e10320\t4\tand\tand r2,r2,#0x3\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048d08\t1203\t2\trep\trep 0x4,r2\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048d0a\t1207\t2\tlb.z\tlb.z r2,[r1 ++= 1]\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048d0c\tb207\t2\tsb\tsb r2,[r3 ++= 1]\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048d0e\t5604\t2\tpop\tpop {pc,r6,r5,r4}\tTERMINATOR\tFUN_02048cce@02048cce"
+    ]
+  },
+  "minimal_acceptance_rule": {
+    "c_pseudocode": "// Runs at 0x0201e1a2 before the current producer's testset/copy/publish.\nvoid extended_h2_producer(uint8_t *stage /* r0 */) {\n    uintptr_t lr = read_rets_lr();\n\n    bool direct_exact =\n        lr == 0x0201e46c &&\n        stage == (uint8_t *)0x01c37fd0 &&\n        r9 == 0x000000a3;      // original completed message length\n\n    bool segmented_exact_final =\n        lr == 0x0201e4a0 &&\n        stage == (uint8_t *)0x01c37fd0 &&\n        r6 == 0x01c37fd0 &&\n        r5 == 0x0000009e;      // official segmented total gate\n\n    if (!(direct_exact || segmented_exact_final))\n        return;                // no lock, no copy, no valid-byte mutation\n\n    // Existing H2 publication is then permitted:\n    // try_lock(0x01c465bd); reject if busy or valid0 != 0;\n    // memcpy(0x01c46520, stage, 0x9c);\n    // *(uint8_t *)0x01c465bc = 1; unlock.\n}\n",
+    "decision": "PASS",
+    "direct_can_be_safely_excluded": true,
+    "direct_exclusion_rule": "if LR/rets == 0x0201e46c, return before testset unless direct single-packet support is intentionally admitted by r9 == 0xa3",
+    "reason": "At producer entry, route identity is distinguishable by LR/rets and exact direct/segmented length evidence remains live before the first H2-owned mutation at 0x0201e1ae.",
+    "segmented_only_rule": "if accepting only segmented final packets, require LR/rets == 0x0201e4a0 and r5 == 0x9e before any H2-owned mutation"
+  },
+  "official_callers_to_replaced_packer_0x0201e13e": [
+    {
+      "address": "0x0201e468",
+      "bytes": "bfea69fe",
+      "kind": "quarkslab_listing_call",
+      "row": "0201e468\tbfea69fe\t4\tcall\tcall 0x0201e13e\tUNCONDITIONAL_CALL\tFUN_0201e254@0201e254",
+      "target": "0x0201e13e"
+    },
+    {
+      "address": "0x0201e49c",
+      "bytes": "bfea4ffe",
+      "kind": "quarkslab_listing_call",
+      "row": "0201e49c\tbfea4ffe\t4\tcall\tcall 0x0201e13e\tUNCONDITIONAL_CALL\tFUN_0201e254@0201e254",
+      "target": "0x0201e13e"
+    },
+    {
+      "address": "0x02026dac",
+      "bytes": "bfeac7b9",
+      "kind": "quarkslab_listing_call",
+      "row": "02026dac\tbfeac7b9\t4\tcall\tcall 0x0201e13e\tUNCONDITIONAL_CALL\t-",
+      "target": "0x0201e13e"
+    }
+  ],
+  "official_h2_s1c1_callsite_streams": {
+    "direct": {
+      "h2_bytes": "bfea9bfe",
+      "h2_target": "0x0201e1a2",
+      "official_bytes": "bfea69fe",
+      "official_target": "0x0201e13e",
+      "s1c1_bytes": "bfea9bfe",
+      "s1c1_target": "0x0201e1a2"
+    },
+    "post_return_reloads": {
+      "direct_return_0x0201e46c": {
+        "bytes": "bfeaf838",
+        "target": "0x02005660"
+      },
+      "segmented_return_0x0201e4a0": {
+        "bytes": "bfeade38",
+        "target": "0x02005660"
+      }
+    },
+    "save_path": {
+      "0x02026da6": "04960000",
+      "0x02026dac": "00000000"
+    },
+    "segmented": {
+      "h2_bytes": "bfea81fe",
+      "h2_target": "0x0201e1a2",
+      "official_bytes": "bfea4ffe",
+      "official_target": "0x0201e13e",
+      "s1c1_bytes": "bfea81fe",
+      "s1c1_target": "0x0201e1a2"
+    }
+  },
+  "official_listing_slices": {
+    "kagaimiq": {
+      "0x0201e254": "0201e254\t7904\t2\tpush\tpush {0x9}\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e256": "0201e256\t0416\t2\tmov\tmov r4,r0\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e258": "0201e258\t19d6\t2\tmov\tmov r9,r1  #\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e3fc": "0201e3fc\tc6ff3070c301\t6\tmov\tmov r6,#0x1c37030\tFALL_THROUGH\t-",
+      "0x0201e402": "0201e402\t00f83604\t4\tjeq\tjeq r0,#0x2,0x0201e472\tCONDITIONAL_JUMP\t-",
+      "0x0201e406": "0201e406\t00f84e02\t4\tjeq\tjeq r0,#0x1,0x0201e4a6\tCONDITIONAL_JUMP\t-",
+      "0x0201e41c": "0201e41c\t8049\t2\tjnz\tjnz r0,0x0201e430\tCONDITIONAL_JUMP\t-",
+      "0x0201e430": "0201e430\t4842\t2\tlb.z\tlb.z r0,[r4 + 0x2]\tFALL_THROUGH\t-",
+      "0x0201e44c": "0201e44c\t4986\t2\tadd\tadd r1,r4,#0x6\tFALL_THROUGH\t-",
+      "0x0201e452": "0201e452\t8016\t2\tmov\tmov r0,r8\tFALL_THROUGH\t-",
+      "0x0201e454": "0201e454\t6216\t2\tmov\tmov r2,r6\tFALL_THROUGH\t-",
+      "0x0201e456": "0201e456\t80ff72a80200\t6\tcall\tcall 0x02048cce\tCALL_TERMINATOR\t-",
+      "0x0201e460": "0201e460\t085f\t2\tlb.z\tlb.z r0,[r0 + -0x1]\tFALL_THROUGH\t-",
+      "0x0201e466": "0201e466\t8016\t2\tmov\tmov r0,r8\tFALL_THROUGH\t-",
+      "0x0201e468": "0201e468\tbfea69fe\t4\tcall\tcall 0x0201e13e\tUNCONDITIONAL_CALL\t-",
+      "0x0201e46c": "0201e46c\tbfeaf838\t4\tcall\tcall 0x02005660\tCALL_TERMINATOR\t-",
+      "0x0201e47e": "0201e47e\t195f\t2\tlb.z\tlb.z r1,[r1 + -0x1]\tFALL_THROUGH\t-",
+      "0x0201e48c": "0201e48c\t6018\t2\tadd\tadd r0,r6\tFALL_THROUGH\t-",
+      "0x0201e492": "0201e492\t4116\t2\tmov\tmov r1,r4\tFALL_THROUGH\t-",
+      "0x0201e494": "0201e494\t80ff34a80200\t6\tcall\tcall 0x02048cce\tCALL_TERMINATOR\t-",
+      "0x0201e49a": "0201e49a\t6016\t2\tmov\tmov r0,r6\tFALL_THROUGH\t-",
+      "0x0201e49c": "0201e49c\tbfea4ffe\t4\tcall\tcall 0x0201e13e\tUNCONDITIONAL_CALL\t-",
+      "0x0201e4a0": "0201e4a0\tbfeade38\t4\tcall\tcall 0x02005660\tCALL_TERMINATOR\t-",
+      "0x02026da6": "02026da6\tbeeaacee\t4\tcall\tcall 0x02004b02\tCALL_TERMINATOR\t-",
+      "0x0202d18a": "0202d18a\t149b\t2\tgoto\tgoto 0x0202d202\tUNCONDITIONAL_JUMP\t-",
+      "0x0202d200": "0202d200\t6016\t2\tmov\tmov r0,r6\tFALL_THROUGH\t-",
+      "0x0202d202": "0202d202\tbfea2788\t4\tcall\tcall 0x0201e254\tUNCONDITIONAL_CALL\t-",
+      "0x02048cce": "02048cce\t7604\t2\tpush\tpush {0x6}\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048cd4": "02048cd4\t931c\t2\tadd\tadd r3,r1,r2\tFALL_THROUGH\t-",
+      "0x02048cda": "02048cda\t0316\t2\tmov\tmov r3,r0\tFALL_THROUGH\t-",
+      "0x02048ce8": "02048ce8\t0446\t2\tjz\tjz r4,0x02048cf6\tCONDITIONAL_JUMP\t-",
+      "0x02048cee": "02048cee\ta21f\t2\tsub\tsub r2,r2,r6\tFALL_THROUGH\t-",
+      "0x02048cf0": "02048cf0\t1603\t2\trep\trep 0x4,r6\tFALL_THROUGH\t-",
+      "0x02048cf2": "02048cf2\t1607\t2\tlb.z\tlb.z r6,[r1 ++= 2]\tFALL_THROUGH\t-",
+      "0x02048cf4": "02048cf4\tb607\t2\tsb\tsb r6,[r3 ++= 1]\tFALL_THROUGH\t-",
+      "0x02048cf6": "02048cf6\t5c19\t2\txor\txor r4,r5\tFALL_THROUGH\t-",
+      "0x02048cf8": "02048cf8\ta5a2\t2\tlsr\tlsr r5,r2,0x2\tFALL_THROUGH\t-",
+      "0x02048cfa": "02048cfa\t844a\t2\tjnz\tjnz r4,0x02048d10\tCONDITIONAL_JUMP\t-",
+      "0x02048cfc": "02048cfc\t1503\t2\trep\trep 0x4,r5\tFALL_THROUGH\t-",
+      "0x02048cfe": "02048cfe\t1605\t2\tlw\tlw r6,[r1 ++= 4]\tFALL_THROUGH\t-",
+      "0x02048d00": "02048d00\tb605\t2\tsw\tsw r6,[r3 ++= 4]\tFALL_THROUGH\t-",
+      "0x02048d02": "02048d02\tf55c\t2\tjnz\tjnz r5,0x02048cfc\tCONDITIONAL_JUMP\t-",
+      "0x02048d08": "02048d08\t1203\t2\trep\trep 0x4,r2\tFALL_THROUGH\t-",
+      "0x02048d0a": "02048d0a\t1207\t2\tlb.z\tlb.z r2,[r1 ++= 2]\tFALL_THROUGH\t-",
+      "0x02048d0c": "02048d0c\tb207\t2\tsb\tsb r2,[r3 ++= 1]\tFALL_THROUGH\t-",
+      "0x02048d0e": "02048d0e\t5604\t2\tpop\tpop {pc,0x6}\tTERMINATOR\t-"
+    },
+    "quarkslab": {
+      "0x0201e254": "0201e254\t7904\t2\tpush\tpush {rets,r9,r8,r7,r6,r5,r4}\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e256": "0201e256\t0416\t2\tmov\tmov r4,r0\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e258": "0201e258\t19d6\t2\tmov\tmov r9,r1\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e3fc": "0201e3fc\tc6ff3070c301\t6\tmov\tmov r6,#0x1c37030\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e402": "0201e402\t00f83604\t4\tje\tje r0,0x2,0x0201e472\tCONDITIONAL_JUMP\tFUN_0201e254@0201e254",
+      "0x0201e406": "0201e406\t00f84e02\t4\tje\tje r0,0x1,0x0201e4a6\tCONDITIONAL_JUMP\tFUN_0201e254@0201e254",
+      "0x0201e40a": "0201e40a\t80f8fc00\t4\tjne\tjne r0,#0x0,0x0201e606\tCONDITIONAL_JUMP\tFUN_0201e254@0201e254",
+      "0x0201e410": "0201e410\t90f8f9e0\t4\tjne\tjne r0,#0xf0\tCONDITIONAL_JUMP\tFUN_0201e254@0201e254",
+      "0x0201e416": "0201e416\t80f8f686\t4\tjne\tjne r0,#0x43,0x0201e606\tCONDITIONAL_JUMP\tFUN_0201e254@0201e254",
+      "0x0201e41c": "0201e41c\t8049\t2\tjnz\tjnz r0,0x0201e430\tCONDITIONAL_JUMP\tFUN_0201e254@0201e254",
+      "0x0201e420": "0201e420\t80f80612\t4\tjne\tjne r0,#0x9,0x0201e430\tCONDITIONAL_JUMP\tFUN_0201e254@0201e254",
+      "0x0201e426": "0201e426\t80f80340\t4\tjne\tjne r0,#0x20,0x0201e430\tCONDITIONAL_JUMP\tFUN_0201e254@0201e254",
+      "0x0201e430": "0201e430\t4842\t2\tlb.z\tlb.z r0,[r4 + 0x2]\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e438": "0201e438\t80f8e500\t4\tjne\tjne r0,#0x0,0x0201e606\tCONDITIONAL_JUMP\tFUN_0201e254@0201e254",
+      "0x0201e43e": "0201e43e\t80f8e202\t4\tjne\tjne r0,#0x1,0x0201e606\tCONDITIONAL_JUMP\tFUN_0201e254@0201e254",
+      "0x0201e444": "0201e444\t80f8df36\t4\tjne\tjne r0,#0x1b,0x0201e606\tCONDITIONAL_JUMP\tFUN_0201e254@0201e254",
+      "0x0201e448": "0201e448\t08e1a06f\t4\tadd\tadd r8,r6,#0xfa0\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e44c": "0201e44c\t4986\t2\tadd\tadd r1,r4,#0x6\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e44e": "0201e44e\t36e1fa9f\t4\tadd\tadd r6,r9,#-0x6\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e452": "0201e452\t8016\t2\tmov\tmov r0,r8\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e454": "0201e454\t6216\t2\tmov\tmov r2,r6\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e456": "0201e456\t80ff72a80200\t6\tcall\tcall 0x02048cce\tUNCONDITIONAL_CALL\tFUN_0201e254@0201e254",
+      "0x0201e45c": "0201e45c\tb4e04009\t4\tadd\tadd r0,r4,r9\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e460": "0201e460\t085f\t2\tlb.z\tlb.z r0,[r0 + -0x1]\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e462": "0201e462\t90f8cbee\t4\tjne\tjne r0,#0xf7\tCONDITIONAL_JUMP\tFUN_0201e254@0201e254",
+      "0x0201e466": "0201e466\t8016\t2\tmov\tmov r0,r8\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e468": "0201e468\tbfea69fe\t4\tcall\tcall 0x0201e13e\tUNCONDITIONAL_CALL\tFUN_0201e254@0201e254",
+      "0x0201e46c": "0201e46c\tbfeaf838\t4\tcall\tcall 0x02005660\tUNCONDITIONAL_CALL\tFUN_0201e254@0201e254",
+      "0x0201e470": "0201e470\t5904\t2\tpop\tpop {pc,r9,r8,r7,r6,r5,r4}\tTERMINATOR\tFUN_0201e254@0201e254",
+      "0x0201e472": "0201e472\t50ed7c09\t4\tlh.z\tlh.z r0,[r7 + 0x9c]\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e476": "0201e476\tb4e04019\t4\tadd\tadd r1,r4,r9\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e47a": "0201e47a\tb4f00059\t4\tadd\tadd r5,r0,r9\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e47e": "0201e47e\t195f\t2\t_lb.z\t_lb.z r1,[r1 + -0x1]\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e480": "0201e480\t91f849ee\t4\tjne\tjne r1,#0xf7\tCONDITIONAL_JUMP\tFUN_0201e254@0201e254",
+      "0x0201e484": "0201e484\t95f8583c\t4\tjne\tjne r5,#0x9e\tCONDITIONAL_JUMP\tFUN_0201e254@0201e254",
+      "0x0201e488": "0201e488\t06e1a06f\t4\tadd\tadd r6,r6,#0xfa0\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e48c": "0201e48c\t6018\t2\tadd\tadd r0,r6\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e48e": "0201e48e\t32e1fe9f\t4\tadd\tadd r2,r9,#-0x2\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e492": "0201e492\t4116\t2\tmov\tmov r1,r4\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e494": "0201e494\t80ff34a80200\t6\tcall\tcall 0x02048cce\tUNCONDITIONAL_CALL\tFUN_0201e254@0201e254",
+      "0x0201e49a": "0201e49a\t6016\t2\tmov\tmov r0,r6\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e49c": "0201e49c\tbfea4ffe\t4\tcall\tcall 0x0201e13e\tUNCONDITIONAL_CALL\tFUN_0201e254@0201e254",
+      "0x0201e4a0": "0201e4a0\tbfeade38\t4\tcall\tcall 0x02005660\tUNCONDITIONAL_CALL\tFUN_0201e254@0201e254",
+      "0x0201e4a4": "0201e4a4\t2489\t2\tgoto\tgoto 0x0201e538\tUNCONDITIONAL_JUMP\tFUN_0201e254@0201e254",
+      "0x02026da6": "02026da6\tbeeaacee\t4\tcall\tcall 0x02004b02\tUNCONDITIONAL_CALL\t-",
+      "0x02026dac": "02026dac\tbfeac7b9\t4\tcall\tcall 0x0201e13e\tUNCONDITIONAL_CALL\t-",
+      "0x0202d182": "0202d182\t91f942fc\t4\tjb\tjb r1,0xfe,0x0202d20a\tCONDITIONAL_JUMP\tFUN_0202d15a@0202d15a",
+      "0x0202d186": "0202d186\t10e1807f\t4\tadd\tadd r0,r7,0x1f80\tFALL_THROUGH\tFUN_0202d15a@0202d15a",
+      "0x0202d18a": "0202d18a\t149b\t2\tgoto\tgoto 0x0202d202\tUNCONDITIONAL_JUMP\tFUN_0202d15a@0202d15a",
+      "0x0202d1be": "0202d1be\t81f81f0e\t4\tjne\tjne r1,#0x7,0x0202d200\tCONDITIONAL_JUMP\tFUN_0202d15a@0202d15a",
+      "0x0202d200": "0202d200\t6016\t2\tmov\tmov r0,r6\tFALL_THROUGH\tFUN_0202d15a@0202d15a",
+      "0x0202d202": "0202d202\tbfea2788\t4\tcall\tcall 0x0201e254\tUNCONDITIONAL_CALL\tFUN_0202d15a@0202d15a",
+      "0x02048cce": "02048cce\t7604\t2\tpush\tpush {rets,r6,r5,r4}\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048cd0": "02048cd0\t00ec0310\t4\tja\tja r1,r0,0x02048cda\tCONDITIONAL_JUMP\tFUN_02048cce@02048cce",
+      "0x02048cd4": "02048cd4\t931c\t2\tadd\tadd r3,r1,r2\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048cd6": "02048cd6\t00ec2930\t4\tja\tja r3,r0,0x02048d2c\tCONDITIONAL_JUMP\tFUN_02048cce@02048cce",
+      "0x02048cda": "02048cda\t0316\t2\tmov\tmov r3,r0\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048cdc": "02048cdc\t82f91410\t4\tjb\tjb r2,0x8,0x02048d08\tCONDITIONAL_JUMP\tFUN_02048cce@02048cce",
+      "0x02048ce0": "02048ce0\t65e10310\t4\tand\tand r5,r1,#0x3\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048ce4": "02048ce4\t64e10330\t4\tand\tand r4,r3,#0x3\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048ce8": "02048ce8\t0446\t2\tjz\tjz r4,0x02048cf6\tCONDITIONAL_JUMP\tFUN_02048cce@02048cce",
+      "0x02048cea": "02048cea\ta6e00440\t4\tsub\tsub r6,#0x4,r4\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048cee": "02048cee\ta21f\t2\tsub\tsub r2,r2,r6\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048cf0": "02048cf0\t1603\t2\trep\trep 0x4,r6\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048cf2": "02048cf2\t1607\t2\tlb.z\tlb.z r6,[r1 ++= 1]\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048cf4": "02048cf4\tb607\t2\tsb\tsb r6,[r3 ++= 1]\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048cf6": "02048cf6\t5c19\t2\txor\txor r4,r5\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048cf8": "02048cf8\ta5a2\t2\tlsr\tlsr r5,r2,0x2\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048cfa": "02048cfa\t844a\t2\tjnz\tjnz r4,0x02048d10\tCONDITIONAL_JUMP\tFUN_02048cce@02048cce",
+      "0x02048cfc": "02048cfc\t1503\t2\trep\trep 0x4,r5\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048cfe": "02048cfe\t1605\t2\tlw\tlw r6,[r1 ++= 4]\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048d00": "02048d00\tb605\t2\tsw\tsw r6,[r3 ++= 4]\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048d02": "02048d02\tf55c\t2\tjnz\tjnz r5,0x02048cfc\tCONDITIONAL_JUMP\tFUN_02048cce@02048cce",
+      "0x02048d04": "02048d04\t62e10320\t4\tand\tand r2,r2,#0x3\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048d08": "02048d08\t1203\t2\trep\trep 0x4,r2\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048d0a": "02048d0a\t1207\t2\tlb.z\tlb.z r2,[r1 ++= 1]\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048d0c": "02048d0c\tb207\t2\tsb\tsb r2,[r3 ++= 1]\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "0x02048d0e": "02048d0e\t5604\t2\tpop\tpop {pc,r6,r5,r4}\tTERMINATOR\tFUN_02048cce@02048cce"
+    }
+  },
+  "post_return_reload_behavior": {
+    "direct": "producer returns to 0x0201e46c; H2/S1-C1 execute preserved call 0x02005660 at 0x0201e46c, then pop at 0x0201e470",
+    "impact": "the preserved reload happens after producer return on both admitted routes; a reject-before-testset leaves H2-owned slot/valid/lock unchanged but still resumes the stock/H2 post-return path",
+    "segmented": "producer returns to 0x0201e4a0; H2/S1-C1 execute preserved call 0x02005660 at 0x0201e4a0, then goto 0x0201e538"
+  },
+  "scope": "analysis-only; official/H2/S1-C1 app bytes and Quarkslab/Kagaimiq listings; no candidate/device/flash",
+  "segmented_final_producer_entry": {
+    "exact_length_gate": "accept segmented final only if rets/LR == 0x0201e4a0, r0 == 0x01c37fd0, r6 == 0x01c37fd0, and r5 == 0x9e; otherwise return before 0x0201e1ae",
+    "producer_entry_live_registers_before_first_h2_owned_mutation": {
+      "r0": "0x01c37fd0 (0x0201e49a mov r0,r6)",
+      "r4": "current final segment pointer from handler entry; producer will overwrite it after entry",
+      "r5": "0x9e, because 0x0201e47a computes previous_count + current_len and 0x0201e484 gates r5 == 0x9e before memcpy/producer",
+      "r6": "0x01c37fd0 after 0x0201e488 adds 0xfa0 to 0x01c37030; preserved by memcpy",
+      "r9": "current segment length, not the full accepted assembled length",
+      "rets_lr": "0x0201e4a0"
+    },
+    "route_identity": {
+      "caller_return_address_rets_lr": "0x0201e4a0",
+      "callsite": "0x0201e49c",
+      "h2_s1c1_call_bytes": "bfea81fe",
+      "target": "0x0201e1a2"
+    },
+    "stable_memory_at_entry": {
+      "append_copy": "0x0201e494 memcpy(stage + previous_count, final_segment, r9-2)",
+      "exact_gate_before_copy": "0x0201e480 checks final F7, then 0x0201e484 checks r5 == 0x9e",
+      "h2_owned_state": "unchanged until 0x0201e1ae testset of 0x01c465bd",
+      "preappend_count_source": "lh.z r0,[r7+0x9c] at 0x0201e472",
+      "staging_base": "0x01c37fd0"
+    }
+  },
+  "validation": [
+    "PASS\tsha-build/v15-official-app.bin\t36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "PASS\tsha-build/SMK37Pro-v15-H2-owned-source-corrected-fallback/app.bin\td71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59",
+    "PASS\tsha-build/SMK37Pro-v15-S1C1-boundary-only/app.bin\t16023c9006f2d4d6467ef2d72d6165c14ffeb6cb758d074f7d8163a68146fb2e",
+    "PASS\tsha-baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz\tf51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347",
+    "PASS\tsha-baselines/v15/analysis/quarkslab/results/kagaimiq-patched-exhaustive-listing.tsv.gz\t814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013",
+    "PASS\th2-manifest-producer\t0x0201e1a2",
+    "PASS\ts1c1-parent-h2\td71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59",
+    "PASS\ts1c1-code-identical-flag\tmanifest invariant",
+    "PASS\tofficial-direct-calls-packer\tbfea69fe",
+    "PASS\tofficial-segmented-calls-packer\tbfea4ffe",
+    "PASS\th2-direct-calls-producer\tbfea9bfe",
+    "PASS\th2-segmented-calls-producer\tbfea81fe",
+    "PASS\ts1c1-direct-calls-producer\tbfea9bfe",
+    "PASS\ts1c1-segmented-calls-producer\tbfea81fe",
+    "PASS\th2-s1c1-producer-body-identical\t0x0201e1a2..0x0201e1ec",
+    "PASS\th2-s1c1-callsite-region-identical\t0x0201e448..0x0201e4a4",
+    "PASS\tpost-direct-reload-preserved\tbfeaf838",
+    "PASS\tpost-segmented-reload-preserved\tbfeade38",
+    "PASS\tsave-packer-call-neutralized\t04960000 00000000",
+    "PASS\tall-h2-producer-callers\t0x0201e468,0x0201e49c",
+    "PASS\tfirst-h2-owned-mutation-after-entry\ttestset b[r0]",
+    "PASS\tall-official-packer-callers\t0x0201e468,0x0201e49c,0x02026dac",
+    "PASS\tquark-row-0x02048cce\t02048cce\t7604\t2\tpush\tpush {rets,r6,r5,r4}\tFALL_THROUGH\tFUN_02048cce@02048cce",
+    "PASS\tquark-row-0x02048d0e\t02048d0e\t5604\t2\tpop\tpop {pc,r6,r5,r4}\tTERMINATOR\tFUN_02048cce@02048cce",
+    "PASS\tquark-row-0x0201e448\t0201e448\t08e1a06f\t4\tadd\tadd r8,r6,#0xfa0\tFALL_THROUGH\tFUN_0201e254@0201e254",
+    "PASS\tquark-row-0x0201e44e\t0201e44e\t36e1fa9f\t4\tadd\tadd r6,r9,#-0x6\tFALL_THROUGH\tFUN_0201e254@0201e254",
+    "PASS\tquark-row-0x0201e456\t0201e456\t80ff72a80200\t6\tcall\tcall 0x02048cce\tUNCONDITIONAL_CALL\tFUN_0201e254@0201e254",
+    "PASS\tquark-row-0x0201e462\t0201e462\t90f8cbee\t4\tjne\tjne r0,#0xf7\tCONDITIONAL_JUMP\tFUN_0201e254@0201e254",
+    "PASS\tquark-row-0x0201e466\t0201e466\t8016\t2\tmov\tmov r0,r8\tFALL_THROUGH\tFUN_0201e254@0201e254",
+    "PASS\tquark-row-0x0201e468\t0201e468\tbfea69fe\t4\tcall\tcall 0x0201e13e\tUNCONDITIONAL_CALL\tFUN_0201e254@0201e254",
+    "PASS\tquark-row-0x0201e484\t0201e484\t95f8583c\t4\tjne\tjne r5,#0x9e\tCONDITIONAL_JUMP\tFUN_0201e254@0201e254",
+    "PASS\tquark-row-0x0201e494\t0201e494\t80ff34a80200\t6\tcall\tcall 0x02048cce\tUNCONDITIONAL_CALL\tFUN_0201e254@0201e254",
+    "PASS\tquark-row-0x0201e49a\t0201e49a\t6016\t2\tmov\tmov r0,r6\tFALL_THROUGH\tFUN_0201e254@0201e254",
+    "PASS\tquark-row-0x0201e49c\t0201e49c\tbfea4ffe\t4\tcall\tcall 0x0201e13e\tUNCONDITIONAL_CALL\tFUN_0201e254@0201e254",
+    "PASS\tquark-row-0x0202d202\t0202d202\tbfea2788\t4\tcall\tcall 0x0201e254\tUNCONDITIONAL_CALL\tFUN_0202d15a@0202d15a",
+    "PASS\tmemcpy-helper-does-not-touch-r9\t0x02048cce..0x02048d0e",
+    "PASS\tmemcpy-helper-preserves-r5-r6\tr5/r6 saved and restored",
+    "PASS\tpass-minimal-acceptance-distinguishes-route\tAt producer entry, route identity is distinguishable by LR/rets and exact direct/segmented length evidence remains live before the first H2-owned mutation at 0x0201e1ae."
+  ]
+}

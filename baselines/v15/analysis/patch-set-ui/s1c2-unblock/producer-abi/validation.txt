@@ -1,0 +1,38 @@
+PASS	sha-build/v15-official-app.bin	36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS	sha-build/SMK37Pro-v15-H2-owned-source-corrected-fallback/app.bin	d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59
+PASS	sha-build/SMK37Pro-v15-S1C1-boundary-only/app.bin	16023c9006f2d4d6467ef2d72d6165c14ffeb6cb758d074f7d8163a68146fb2e
+PASS	sha-baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz	f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347
+PASS	sha-baselines/v15/analysis/quarkslab/results/kagaimiq-patched-exhaustive-listing.tsv.gz	814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013
+PASS	h2-manifest-producer	0x0201e1a2
+PASS	s1c1-parent-h2	d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59
+PASS	s1c1-code-identical-flag	manifest invariant
+PASS	official-direct-calls-packer	bfea69fe
+PASS	official-segmented-calls-packer	bfea4ffe
+PASS	h2-direct-calls-producer	bfea9bfe
+PASS	h2-segmented-calls-producer	bfea81fe
+PASS	s1c1-direct-calls-producer	bfea9bfe
+PASS	s1c1-segmented-calls-producer	bfea81fe
+PASS	h2-s1c1-producer-body-identical	0x0201e1a2..0x0201e1ec
+PASS	h2-s1c1-callsite-region-identical	0x0201e448..0x0201e4a4
+PASS	post-direct-reload-preserved	bfeaf838
+PASS	post-segmented-reload-preserved	bfeade38
+PASS	save-packer-call-neutralized	04960000 00000000
+PASS	all-h2-producer-callers	0x0201e468,0x0201e49c
+PASS	first-h2-owned-mutation-after-entry	testset b[r0]
+PASS	all-official-packer-callers	0x0201e468,0x0201e49c,0x02026dac
+PASS	quark-row-0x02048cce	02048cce	7604	2	push	push {rets,r6,r5,r4}	FALL_THROUGH	FUN_02048cce@02048cce
+PASS	quark-row-0x02048d0e	02048d0e	5604	2	pop	pop {pc,r6,r5,r4}	TERMINATOR	FUN_02048cce@02048cce
+PASS	quark-row-0x0201e448	0201e448	08e1a06f	4	add	add r8,r6,#0xfa0	FALL_THROUGH	FUN_0201e254@0201e254
+PASS	quark-row-0x0201e44e	0201e44e	36e1fa9f	4	add	add r6,r9,#-0x6	FALL_THROUGH	FUN_0201e254@0201e254
+PASS	quark-row-0x0201e456	0201e456	80ff72a80200	6	call	call 0x02048cce	UNCONDITIONAL_CALL	FUN_0201e254@0201e254
+PASS	quark-row-0x0201e462	0201e462	90f8cbee	4	jne	jne r0,#0xf7	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+PASS	quark-row-0x0201e466	0201e466	8016	2	mov	mov r0,r8	FALL_THROUGH	FUN_0201e254@0201e254
+PASS	quark-row-0x0201e468	0201e468	bfea69fe	4	call	call 0x0201e13e	UNCONDITIONAL_CALL	FUN_0201e254@0201e254
+PASS	quark-row-0x0201e484	0201e484	95f8583c	4	jne	jne r5,#0x9e	CONDITIONAL_JUMP	FUN_0201e254@0201e254
+PASS	quark-row-0x0201e494	0201e494	80ff34a80200	6	call	call 0x02048cce	UNCONDITIONAL_CALL	FUN_0201e254@0201e254
+PASS	quark-row-0x0201e49a	0201e49a	6016	2	mov	mov r0,r6	FALL_THROUGH	FUN_0201e254@0201e254
+PASS	quark-row-0x0201e49c	0201e49c	bfea4ffe	4	call	call 0x0201e13e	UNCONDITIONAL_CALL	FUN_0201e254@0201e254
+PASS	quark-row-0x0202d202	0202d202	bfea2788	4	call	call 0x0201e254	UNCONDITIONAL_CALL	FUN_0202d15a@0202d15a
+PASS	memcpy-helper-does-not-touch-r9	0x02048cce..0x02048d0e
+PASS	memcpy-helper-preserves-r5-r6	r5/r6 saved and restored
+PASS	pass-minimal-acceptance-distinguishes-route	At producer entry, route identity is distinguishable by LR/rets and exact direct/segmented length evidence remains live before the first H2-owned mutation at 0x0201e1ae.
