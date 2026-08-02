@@ -1,141 +1,90 @@
 {
-  "format": "smk37-v15-channel10-factory-timbre-design-matrix-v1",
-  "scope": "official v15 direct evidence only; design comparison, no firmware patch",
-  "created_utc": "2026-08-02T18:00:00Z",
-  "evidence_policy": {
-    "allowed": [
-      "baselines/v15/analysis/ui-preflash/state-persistence/report.md",
-      "baselines/v15/analysis/ui-preflash/followup/persistence-direction.md",
-      "baselines/v15/analysis/ui-preflash/final-pass/events/report.md",
-      "baselines/v15/analysis/flash-candidates/R01/live-validation-20260802.md",
-      "baselines/v15/analysis/flash-candidates/R01b/app-manifest.json",
-      "baselines/v15/analysis/flash-candidates/R01c/app-manifest.json",
-      "baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz"
-    ],
-    "forbidden": "No unsupported firmware patch, no v12-derived offset promotion, no SDK ABI promotion into v15 synth/voice paths"
-  },
+  "format": "smk37-v15-channel10-abc-design-matrix-v2",
+  "scope": "official v15 static evidence plus R01/R01b/R01c live evidence; no patch addresses inferred",
+  "status": "design_ready_not_patch_ready",
   "fixed_evidence": {
+    "current_object_alias": "0x01c33260+0x1a14 == 0x01c34c74",
+    "loader": {
+      "address": "0x02005660",
+      "function_end": "0x020057de",
+      "caller_supplied_destination": false,
+      "fixed_object_base": "0x01c33260",
+      "raw_copy_size": "0xa3",
+      "note_source_prefix_size": "0x9c",
+      "external_side_effects": [
+        "four helper calls driven by current tail 0x9c..0x9f",
+        "writes through object field +0x15c",
+        "flag-dependent exchange between current +0x86/+0x87 and tail +0xa0/+0xa1"
+      ]
+    },
     "dispatcher": {
       "address": "0x0201c5ec",
       "channel_register": "r9",
-      "source_register": "r8",
-      "stock_source": "0x1c34c74",
-      "copy_size": "0x9c",
       "note_off_copy_callsite": "0x0201c63e",
-      "note_on_copy_callsite": "0x0201c67c"
+      "note_on_copy_callsite": "0x0201c67c",
+      "copy_size": "0x9c",
+      "stock_source": "0x01c34c74"
     },
-    "loader": {
-      "address": "0x02005660",
-      "selection_bank_field": "0x1c33260+0x3a4",
-      "selection_preset_field": "0x1c33260+0x3a0+bank",
-      "packed_source_formula": "*(0x1c33260+0x164)+0x4000+(bank*32+preset)*0xa3",
-      "fixed_destination": "0x1c33260+0x1a14",
-      "record_size": "0xa3",
-      "postprocess_fields": [
-        "0x1c33260+0x1a90",
-        "0x1c33260+0x1aa0"
-      ],
-      "postprocess_helpers": [
-        "0x0200552e",
-        "0x0200558e",
-        "0x020055f8",
-        "0x0200562c"
-      ],
-      "caller_supplied_destination_supported": false
+    "live": {
+      "channel_branch_separation": "PASS",
+      "matched_note_on_off_source": "PASS in R01b/R01c",
+      "static_named_factory_snapshot": "FAIL",
+      "intentional_known_ch10_patch": "NOT ESTABLISHED"
     },
-    "product_ram": {
-      "base": "0x1c0de20",
-      "unit_size_seen": "0x49e3",
-      "direct_note_source_proven": false,
-      "known_uses": [
-        "product/default bank image source in storage write paths",
-        "encoder enclosing routines with +0xa7e/+0xa7f fields"
-      ]
+    "clean_mooger_negative_evidence": {
+      "r01c_source_sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275",
+      "simulated_loader_first_0x9c_sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275",
+      "byte_equal": true,
+      "implication": "A first-0x9c clone alone is not yet a credible fix for the R01c wrong-timbre failure. Tail/helper external state must be isolated or disproven with actual live capture."
     }
   },
-  "risk_scale": {
-    "1": "low",
-    "2": "low-medium",
-    "3": "medium",
-    "4": "high",
-    "5": "reject-level"
-  },
-  "options": [
+  "designs": [
     {
-      "id": "preloaded_expanded_record_pointer",
-      "description": "Ch10 Note On/Off wrapper points to a preloaded immutable 0x9c/156-byte expanded snapshot.",
-      "abi_risk": 2,
-      "polyphony_risk": 1,
-      "reentrancy_risk": 1,
-      "factory_timbre_fidelity_risk": 2,
-      "evidence_support": "Note source pointer swap and 0x9c copy are proven; buffer ownership/provenance not yet proven.",
-      "requires_before_patch": [
-        "Dedicated buffer address and lifetime proof",
-        "Proof preload bytes are official-loader materialized, not hand-expanded static bytes",
-        "Matched Note On/Off wrapper uses identical Ch10 source pointer"
-      ],
-      "decision": "preferred_design_not_patch_ready"
+      "id": "A",
+      "name": "full UI Patch/runtime object clone then loader call",
+      "decision": "reject",
+      "source_destination_lifetime": "Full object boundary, pointee ownership, and deep-copy lifetime are unknown. A shallow clone aliases live UI, synth, and storage objects.",
+      "polyphony": "Global/helper aliases can contaminate overlapping Ch1/Ch10 events. The 16 indexed dispatcher slots do not prove 16-note polyphony.",
+      "note_off": "The same cloned source/state generation would still be required for Note On and Note Off.",
+      "ui_impact": "High because loader and helpers are hardcoded to the live global object.",
+      "code_cave": "At least the approximately 0x180-byte loader plus helper adaptation and deep-clone RAM would be needed. No safe cave or RAM region is proven."
     },
     {
-      "id": "loader_call_into_dedicated_buffer",
-      "description": "Use 0x02005660 to fill a dedicated Ch10 buffer directly.",
-      "abi_risk": 5,
-      "polyphony_risk": 4,
-      "reentrancy_risk": 5,
-      "factory_timbre_fidelity_risk": 3,
-      "evidence_support": "0x02005660 has fixed destination 0x1c33260+0x1a14 and no caller-supplied destination ABI.",
-      "reject_reasons": [
-        "Requires unsupported loader ABI or loader clone/internal rewrite",
-        "Loader mutates global UI/current fields and calls UI/update helpers",
-        "Unsafe for Note hot path"
-      ],
-      "decision": "reject"
+      "id": "B",
+      "name": "existing loader loads a factory bank entry into a separate RAM object",
+      "decision": "literal_design_reject; first_0x9c_clone_variant_on_hold",
+      "source_destination_lifetime": "The existing loader has no destination argument and always overwrites the live current object. Dedicated RAM owner and preload lifetime are unknown.",
+      "polyphony": "An immutable self-contained source would be low risk, but self-containment is currently contradicted by the clean Mooger first-0x9c equality and R01c live failure.",
+      "note_off": "Any viable variant must use the identical Ch10 source/state generation for Note On and Note Off.",
+      "ui_impact": "Low only after a side-effect-free preload exists. Temporary live selection/load/restore is high impact and rejected.",
+      "code_cave": "No preload writer, owned RAM, or safe executable cave is proven."
     },
     {
-      "id": "existing_patch_object_clone",
-      "description": "Clone official-loader current object at 0x1c33260+0x1a14 into a Ch10 buffer, then use the clone as Note On/Off source.",
-      "abi_risk": 3,
-      "polyphony_risk": 1,
-      "reentrancy_risk": 2,
-      "factory_timbre_fidelity_risk": 1,
-      "evidence_support": "0x1c33260+0x1a14 is the loader destination/current snapshot; 0x1c34c74 consumer copies same 0x9c shape into voice slots.",
-      "requires_before_patch": [
-        "Safe preload trigger outside Note path",
-        "Dedicated buffer ownership proof",
-        "No UI selection persistence side effect during clone phase"
-      ],
-      "decision": "recommended_minimal_implementation_shape_not_patch_ready"
-    },
-    {
-      "id": "temporary_selection",
-      "description": "Temporarily mutate 0x1c33260 selection fields to target factory patch around each Ch10 event and call loader.",
-      "abi_risk": 5,
-      "polyphony_risk": 5,
-      "reentrancy_risk": 5,
-      "factory_timbre_fidelity_risk": 3,
-      "evidence_support": "Selection fields and loader path are proven, but all effects are global UI/current-state effects.",
-      "reject_reasons": [
-        "Can desynchronize Note On/Off source identity",
-        "Mutates current UI patch and SAVE/SAVED-related state",
-        "Calls non-reentrant UI/update helper path from Note hot path"
-      ],
-      "decision": "reject"
+      "id": "C",
+      "name": "switch current object pointer or state at Note On",
+      "decision": "global_state_switch_reject; source_pointer_dispatch_only_conditional",
+      "source_destination_lifetime": "A source-pointer switch is usable only if an independently valid immutable source exists. Global selection/loader state is shared and mutable.",
+      "polyphony": "Per-event global switching has the highest cross-channel race and release-order risk.",
+      "note_off": "Note-On-only switching is directly disproven by R01 stuck voice. Note Off must select the same source/state generation.",
+      "ui_impact": "Global state switching changes current Patch, helper state, and SAVE/SAVED-related behavior.",
+      "code_cave": "A source-only wrapper can be small, but its source producer is blocked. Save/load/restore and synchronization are not a minimal trampoline."
     }
   ],
   "final_decision": {
-    "status": "design_ready_not_patch_ready",
-    "recommended": "existing_patch_object_clone backed by preloaded_expanded_record_pointer semantics",
-    "minimal_safe_shape": "Precompute or clone a firmware-loader-materialized 0x9c/156-byte Ch10 snapshot outside the Note path, keep it immutable, and route both Note On and Note Off wrappers to that same source pointer for r9==9.",
-    "blocked_on": [
-      "Dedicated RAM buffer ownership and lifetime proof",
-      "Safe preload/clone trigger proof",
-      "Proof that bytes come from official loader output rather than static hand-expanded snapshot"
+    "approved_patch_spec": null,
+    "reason": "No design currently has a proven self-contained Ch10 timbre source, owned lifetime, and safe code cave.",
+    "next_proof": [
+      "Capture actual live full 0xa3 current object immediately after stock target-Patch load.",
+      "Capture helper-updated external state and compare actual first 0x9c to the R01c/simulated hash.",
+      "If first 0x9c is equal, reject 0x9c-only clone and trace the external per-voice dependency.",
+      "Only after self-containment, RAM ownership, and safe cave proofs, route both Note On and Note Off to the same Ch10 source."
     ],
-    "explicitly_forbidden_now": [
+    "forbidden_now": [
       "Calling 0x02005660 in the Note hot path",
-      "Assuming 0x02005660 can load into a caller-provided buffer",
-      "Promoting 0x1c0de20 offsets to Note voice snapshot sources without writer/consumer proof",
-      "Temporary UI selection mutation around Note On/Off"
+      "Assuming 0x02005660 accepts a caller-provided destination",
+      "Using 0x0201e13e as a safe cave",
+      "Assigning any unproven RAM or executable address",
+      "Switching only Note On without matched Note Off"
     ]
   }
 }

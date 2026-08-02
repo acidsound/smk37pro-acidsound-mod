@@ -1,0 +1,8 @@
+v15 Ch10 A/B/C design validation: PASS
+official app:     36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+official listing: f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347
+alias:            0x01c33260 + 0x1a14 == 0x01c34c74
+stock hooks:      Note Off 0x0201c63e, Note On 0x0201c67c
+live gates:       branch PASS, matched On/Off PASS, static snapshot FAIL
+Mooger gate:      R01c source == clean simulated-loader first 0x9c
+patch status:     design-ready, no cave/RAM address approved
