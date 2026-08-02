@@ -1,154 +1,165 @@
-# R03 owned-RAM copy-path design, official v15
+# R03 owned-RAM copy-path design gate
 
 Decision: **BLOCK**.
 
-This report designs the smallest producer/consumer shape that would satisfy the R03 copy-path requirements, then blocks it because two mandatory proofs are missing: no owned RAM destination is proven, and no executable placement is proven that preserves stock `0x0201e13e` SAVE/SysEx behavior. No cave, patch, flash package, or device operation is chosen.
+Official-v15-only read-only analysis. No patch, flash, device access, boot hook, R01d address, v12 address, guessed RAM, or guessed executable cave is used.
 
-## Scope and gates
+## SHA gates
 
-- Requirements read: `baselines/v15/analysis/r03-owned-ram/requirements.md`.
-- Inputs are exact official v15 only.
-- app SHA-256: `36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055`.
-- FWSC SHA-256: `f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff`.
-- Quarkslab listing SHA-256: `f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347`.
-- Kagaimiq listing SHA-256: `814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013`.
-- No v12, M08, R01d boot-hook, arbitrary SysEx fuzzing, PCM, UI, persistence, flashing, or device access was used.
+- app: `36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055`
+- FWSC: `f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff`
+- Quarkslab listing: `f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347`
+- Kagaimiq listing: `814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013`
 
-## Smallest viable design contract, not patch-ready
+## Minimal semantic path, not patch-ready
 
-### Producer
+The only stock-preserving producer shape is a wrapper at the two accepted product packer callsites, `0x0201e468` and `0x0201e49c`. Both are reached only after the official handler has accepted a complete product payload into `0x01c37fd0`. A valid wrapper would preserve the stage pointer, call stock `0x0201e13e(stage)`, copy exactly `0x9c` bytes from stage into a separately proven owned destination, then publish `generation++` and `valid=1` only after the copy completes. The stock reload calls at `0x0201e46c` and `0x0201e4a0` stay in place.
 
-Patch concept if and only if a later review proves owned RAM and executable placement:
+This remains blocked because the listings prove neither the owned destination nor the executable body placement required by that wrapper.
 
-1. Replace only the one-shot complete-product call at `0x0201e468` with a call to a producer wrapper. Do not use a boot hook.
-2. At entry, the stock handler has already copied `message+6` to `0x01c37030+0x0fa0 == 0x01c37fd0`, verified final `F7`, and put `r0 = 0x01c37fd0`.
-3. The wrapper additionally requires `r9 == 0xa3` so only `F0 43 00 00 01 1B` + exactly `0x9c` payload bytes + `F7` publishes Ch10-owned data.
-4. If `active_count != 0`, do not copy and do not publish. Still tail-call or call/return through stock `0x0201e13e` so stock product SysEx behavior is preserved.
-5. If `active_count == 0`, copy exactly `0x9c` bytes from staging to owned destination, then increment `generation`, then set `valid = 1`. Publication occurs only after the copy completes.
-6. Call stock `0x0201e13e` after the R03 copy decision, then return to the existing `0x0201e46c` stock reload path. This preserves stock product storage/reload semantics.
-7. Leave the segmented-final product caller `0x0201e49c` and SAVE caller `0x02026dac` stock for the minimal R03 contract. Segmented/partial/unsupported packets therefore do not publish Ch10-owned data and continue stock behavior.
+## Exact accepted SysEx callsites
 
-### Owned destination metadata required by Gate A
+Direct complete message: `F0 43 00 00 01 1B + 0x9c payload/checksum + F7`, total `0xa3` bytes. The direct path computes `0x01c37030 + 0x0fa0 = 0x01c37fd0`, copies `message+6`, checks final `F7`, then calls packer and loader. The segmented-final path is also accepted only after final `F7` and accumulated length `0x9e`.
 
-Minimum layout that must be proven before a Flash candidate exists:
+### direct_complete_accept
 
-| Offset | Size | Meaning | Publication rule |
-|---:|---:|---|---|
-| `+0x00` | `0x9c` | immutable Ch10 voice source | written before metadata publish |
-| `+0x9c` | `1` | `valid` | `0` at reset, `1` only after full copy |
-| `+0x9d` | `1` | `active_count` | increment/decrement only on accepted Ch10 Note On/Off wrapper path |
-| `+0x9e` | `2` | reserved/alignment | zero or reserved |
-| `+0xa0` | `4` | `generation` | increment after copy, before valid publish |
+- `0201e3ee	50ee7602	lb.z	lb.z r0,[r7 + 0x206]	FALL_THROUGH	FUN_0201e254@0201e254`
+- `0201e3f2	00ff00002801	je	je r0,#0x0,0x0201e648	CONDITIONAL_JUMP	FUN_0201e254@0201e254`
+- `0201e3f8	50ee7401	lb.z	lb.z r0,[r7 + 0x104]	FALL_THROUGH	FUN_0201e254@0201e254`
+- `0201e3fc	c6ff3070c301	mov	mov r6,#0x1c37030	FALL_THROUGH	FUN_0201e254@0201e254`
+- `0201e402	00f83604	je	je r0,0x2,0x0201e472	CONDITIONAL_JUMP	FUN_0201e254@0201e254`
+- `0201e406	00f84e02	je	je r0,0x1,0x0201e4a6	CONDITIONAL_JUMP	FUN_0201e254@0201e254`
+- `0201e40a	80f8fc00	jne	jne r0,#0x0,0x0201e606	CONDITIONAL_JUMP	FUN_0201e254@0201e254`
+- `0201e410	90f8f9e0	jne	jne r0,#0xf0	CONDITIONAL_JUMP	FUN_0201e254@0201e254`
+- `0201e416	80f8f686	jne	jne r0,#0x43,0x0201e606	CONDITIONAL_JUMP	FUN_0201e254@0201e254`
+- `0201e432	80f8e800	jne	jne r0,#0x0,0x0201e606	CONDITIONAL_JUMP	FUN_0201e254@0201e254`
+- `0201e438	80f8e500	jne	jne r0,#0x0,0x0201e606	CONDITIONAL_JUMP	FUN_0201e254@0201e254`
+- `0201e43e	80f8e202	jne	jne r0,#0x1,0x0201e606	CONDITIONAL_JUMP	FUN_0201e254@0201e254`
+- `0201e444	80f8df36	jne	jne r0,#0x1b,0x0201e606	CONDITIONAL_JUMP	FUN_0201e254@0201e254`
+- `0201e448	08e1a06f	add	add r8,r6,#0xfa0	FALL_THROUGH	FUN_0201e254@0201e254`
+- `0201e44c	4986	add	add r1,r4,#0x6	FALL_THROUGH	FUN_0201e254@0201e254`
+- `0201e44e	36e1fa9f	add	add r6,r9,#-0x6	FALL_THROUGH	FUN_0201e254@0201e254`
+- `0201e452	8016	mov	mov r0,r8	FALL_THROUGH	FUN_0201e254@0201e254`
+- `0201e454	6216	mov	mov r2,r6	FALL_THROUGH	FUN_0201e254@0201e254`
+- `0201e456	80ff72a80200	call	call 0x02048cce	UNCONDITIONAL_CALL	FUN_0201e254@0201e254`
+- `0201e45c	b4e04009	add	add r0,r4,r9	FALL_THROUGH	FUN_0201e254@0201e254`
+- `0201e462	90f8cbee	jne	jne r0,#0xf7	CONDITIONAL_JUMP	FUN_0201e254@0201e254`
+- `0201e466	8016	mov	mov r0,r8	FALL_THROUGH	FUN_0201e254@0201e254`
+- `0201e468	bfea69fe	call	call 0x0201e13e	UNCONDITIONAL_CALL	FUN_0201e254@0201e254`
+- `0201e46c	bfeaf838	call	call 0x02005660	UNCONDITIONAL_CALL	FUN_0201e254@0201e254`
+- `0201e470	5904	pop	pop {pc,r9,r8,r7,r6,r5,r4}	TERMINATOR	FUN_0201e254@0201e254`
 
-Required alignment: at least 4-byte aligned so generation can be read/written atomically under the firmware's normal aligned word conventions. Required span: `0xa4` bytes minimum. This report does not assign a start/end address because doing so from absence of xrefs would violate Gate A.
+### segmented_final_accept
 
-### Consumer
+- `0201e472	50ed7c09	lh.z	lh.z r0,[r7 + 0x9c]	FALL_THROUGH	FUN_0201e254@0201e254`
+- `0201e480	91f849ee	jne	jne r1,#0xf7	CONDITIONAL_JUMP	FUN_0201e254@0201e254`
+- `0201e484	95f8583c	jne	jne r5,#0x9e	CONDITIONAL_JUMP	FUN_0201e254@0201e254`
+- `0201e488	06e1a06f	add	add r6,r6,#0xfa0	FALL_THROUGH	FUN_0201e254@0201e254`
+- `0201e48c	6018	add	add r0,r6	FALL_THROUGH	FUN_0201e254@0201e254`
+- `0201e48e	32e1fe9f	add	add r2,r9,#-0x2	FALL_THROUGH	FUN_0201e254@0201e254`
+- `0201e492	4116	mov	mov r1,r4	FALL_THROUGH	FUN_0201e254@0201e254`
+- `0201e494	80ff34a80200	call	call 0x02048cce	UNCONDITIONAL_CALL	FUN_0201e254@0201e254`
+- `0201e49a	6016	mov	mov r0,r6	FALL_THROUGH	FUN_0201e254@0201e254`
+- `0201e49c	bfea4ffe	call	call 0x0201e13e	UNCONDITIONAL_CALL	FUN_0201e254@0201e254`
+- `0201e4a0	bfeade38	call	call 0x02005660	UNCONDITIONAL_CALL	FUN_0201e254@0201e254`
+- `0201e4a4	2489	goto	goto 0x0201e538	UNCONDITIONAL_JUMP	FUN_0201e254@0201e254`
 
-1. Redirect both dispatcher copy callsites, not Note On alone: Note Off `0x0201c63e`, Note On `0x0201c67c`.
-2. Preserve stock ABI: wrapper receives `r0 = per-voice destination`, `r1 = stock current source`, `r2 = 0x9c`, and `r9 = MIDI channel nibble`; non-Ch10 calls `memcpy(r0, r1, 0x9c)` unchanged.
-3. For Ch10 with `valid == 1`, call `memcpy(r0, owned_voice, 0x9c)`. For invalid state, fall back to stock Ch10 source or suppress deterministically. This report chooses stock fallback for smallest allocator-neutral behavior, but this remains a design choice to review before patching.
-4. Use separate Note On and Note Off entrypoints or callsite identity so `active_count` can be incremented on accepted Ch10 Note On and decremented after accepted Ch10 Note Off. This prohibits producer generation changes while a Ch10 note is active.
-5. Do not alter the voice allocator, claimed polyphony, or Ch1 path.
+## Register, stack ABI, and SAVE behavior
 
-## Proven callsites and callers
+- At `0x0201e468`, `r0 = r8 = 0x01c37fd0`. At `0x0201e49c`, `r0 = r6 = 0x01c37fd0`.
+- Packer `0x0201e13e` pushes `{rets,r6,r5,r4}`, allocates `0x80` stack bytes, packs from input `r0`, calls `0x02004b02` with `r0=packed80`, selected persistent destination in `r1`, and `r2=0x80`, then restores stack and pops `{pc,r6,r5,r4}`.
+- SAVE also calls `0x0201e13e` at `0x02026dac` after staging `r0 = 0x01c33260+0x1a14`. Therefore `0x0201e13e` is stock pack/SAVE code, not a cave.
 
-| Function / callsite | Evidence | R03 implication |
+### packer_sink
+
+- `0201e13e	7604	push	push {rets,r6,r5,r4}	FALL_THROUGH	FUN_0201e13e@0201e13e`
+- `0201e140	e280	add	add sp,#-0x80	FALL_THROUGH	FUN_0201e13e@0201e13e`
+- `0201e216	c4ff6032c301	mov	mov r4,#0x1c33260	FALL_THROUGH	-`
+- `0201e232	6220	mov	mov r2,#0x80	FALL_THROUGH	-`
+- `0201e234	3016	mov	mov r0,r3	FALL_THROUGH	-`
+- `0201e236	bfea6434	call	call 0x02004b02	UNCONDITIONAL_CALL	-`
+- `0201e250	2280	add	add sp,#0x80	FALL_THROUGH	-`
+- `0201e252	5604	pop	pop {pc,r6,r5,r4}	TERMINATOR	-`
+
+### save_packer_caller
+
+- `02026d9e	14e1148a	add	add r4,r8,0x1a14	FALL_THROUGH	-`
+- `02026da2	6a23	mov	mov r2,#0xa3	FALL_THROUGH	-`
+- `02026da4	4016	mov	mov r0,r4	FALL_THROUGH	-`
+- `02026da6	beeaacee	call	call 0x02004b02	UNCONDITIONAL_CALL	-`
+- `02026daa	4016	mov	mov r0,r4	FALL_THROUGH	-`
+- `02026dac	bfeac7b9	call	call 0x0201e13e	UNCONDITIONAL_CALL	-`
+
+### other_stage_overwrites
+
+- `0201e4ce	80fffaa70200	call	call 0x02048cce	UNCONDITIONAL_CALL	FUN_0201e254@0201e254`
+- `0201e52c	80ff9ca70200	call	call 0x02048cce	UNCONDITIONAL_CALL	FUN_0201e254@0201e254`
+- `0201e580	00e1a06f	add	add r0,r6,#0xfa0	FALL_THROUGH	FUN_0201e254@0201e254`
+- `0201e58c	80ff3ca70200	call	call 0x02048cce	UNCONDITIONAL_CALL	FUN_0201e254@0201e254`
+- `0201e592	50ed7d49	sh	sh r4,[r7 + 0x9c]	FALL_THROUGH	FUN_0201e254@0201e254`
+
+## Instruction budgets and caller effects
+
+- `0x0201e468`: `bfea69fe`, inline budget `4` bytes.
+- `0x0201e49c`: `bfea4ffe`, inline budget `4` bytes.
+- `0x0201c63e`: `80ff8ac60200`, inline budget `6` bytes.
+- `0x0201c67c`: `80ff4cc60200`, inline budget `6` bytes.
+- Producer logic necessarily exceeds the 4-byte SysEx callsite budget because it must preserve stage, preserve/call stock packer, perform a second `0x9c` copy, and publish metadata. No executable body is proven.
+- Direct packer callers are exactly `0x0201e468`, `0x0201e49c`, and `0x02026dac`. Hooking the first two only is the stock-SAVE-preserving strategy, but it still needs unproven placement.
+
+## Note On/Off valid and generation behavior
+
+Stock `0x0201c5ec` has no Ch10-owned valid flag, no generation counter, and no valid-source branch. It only checks message/voice bounds, then both Note Off and Note On set `r1 = r8 = 0x01c34c74`, `r2 = 0x9c`, and copy to `engine + voice*0xa0 + 0xa2`. Event metadata follows the `0x9c` copied block. A safe R03 consumer must add metadata: `valid=0` at reset; set `valid=1` only after the producer copy completes; reject or defer generation changes while any Ch10 note is active, or otherwise prove per-active-note generation identity. No storage or code budget for that state is proven here.
+
+### note_off_copy
+
+- `0201c5ec	7a04	push	push {rets,r10,r9,r8,r7,r6,r5,r4}	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c5ee	1b40	lb.z	lb.z r3,[r1 + 0x0]	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c5f0	b4a4	lsr	lsr r4,r3,0x4	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c5fe	79e1f030	and	and r9,r3,#0xffffff0f	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c602	c8ff744cc301	mov	mov r8,#0x1c34c74	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c616	82fd7b06	jl	jl r2,#0x3,0x0201c710	CONDITIONAL_JUMP	FUN_0201c5ec@0201c5ec`
+- `0201c62a	72f1f040	and	and r2,r4,#0xffffff0f	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c630	e1e1a020	mul	mul r1,r2,#0xa0	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c636	00e1a260	add	add r0,r6,#0xa2	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c63a	623c	mov	mov r2,#0x9c	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c63c	8116	mov	mov r1,r8	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c63e	80ff8ac60200	call	call 0x02048cce	UNCONDITIONAL_CALL	FUN_0201c5ec@0201c5ec`
+- `0201c644	00e13e61	add	add r0,r6,#0x13e	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+
+### note_on_copy
+
+- `0201c5ec	7a04	push	push {rets,r10,r9,r8,r7,r6,r5,r4}	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c5ee	1b40	lb.z	lb.z r3,[r1 + 0x0]	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c5f0	b4a4	lsr	lsr r4,r3,0x4	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c5fe	79e1f030	and	and r9,r3,#0xffffff0f	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c602	c8ff744cc301	mov	mov r8,#0x1c34c74	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c652	82fd5d06	jl	jl r2,#0x3,0x0201c710	CONDITIONAL_JUMP	FUN_0201c5ec@0201c5ec`
+- `0201c666	72f1f040	and	and r2,r4,#0xffffff0f	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c66c	e1f1a020	mul	mul r1,r2,#0xa0	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c674	00e1a270	add	add r0,r7,#0xa2	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c678	623c	mov	mov r2,#0x9c	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c67a	8116	mov	mov r1,r8	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c67c	80ff4cc60200	call	call 0x02048cce	UNCONDITIONAL_CALL	FUN_0201c5ec@0201c5ec`
+- `0201c682	00e13e71	add	add r0,r7,#0x13e	FALL_THROUGH	FUN_0201c5ec@0201c5ec`
+- `0201c698	5a04	pop	pop {pc,r10,r9,r8,r7,r6,r5,r4}	TERMINATOR	FUN_0201c5ec@0201c5ec`
+
+## PASS/BLOCK matrix
+
+| Gate | Result | Reason |
 |---|---|---|
-| `0x0201e468` | one-shot product path calls stock packer after staging and `F7` gate | only plausible minimal producer hook |
-| `0x0201e49c` | segmented-final path calls stock packer after accumulated length/F7 checks | leave stock in minimal R03 so partial/segmented does not publish |
-| `0x02026dac` | UI SAVE path calls stock packer | must remain stock or SAVE is regressed |
-| `0x0201e46c`, `0x0201e4a0` | post-packer stock reload calls | preserved when producer wrapper calls stock packer |
-| `0x0201c63e` | Note Off `memcpy` call with `r2 = 0x9c` | redirect with same source rule as Note On |
-| `0x0201c67c` | Note On `memcpy` call with `r2 = 0x9c` | redirect with same source rule as Note Off |
-| `0x0201c736`, `0x0201e644` | only static callers of dispatcher in listing | caller inventory for hot consumer path |
+| Exact accepted product callsites | PASS | `0x0201e468` and `0x0201e49c` are post-F7 acceptance packer calls |
+| Producer source/length | PASS | stage is `0x01c37fd0`; required copy is first `0x9c` bytes |
+| Stock packer/SAVE preservation | BLOCK | semantic strategy exists, but needs unproven wrapper body; overwriting packer affects SAVE |
+| Owned RAM destination | BLOCK | no exact start/end, owner, lifetime, initialization, alias, DMA/stack/heap exclusion proof |
+| Valid/generation | BLOCK | required semantics defined, but no owned metadata storage or consumer budget proven |
+| Avoid boot hooks | PASS semantically | producer would run only from already-live SysEx accept path |
+| No guessed cave/address | PASS by refusal | no cave or RAM address is proposed |
 
-Stock `0x0201e13e` callers from the listing:
+## Reproduce
 
-- `0201e468` `bfea69fe` call 0x0201e13e (FUN_0201e254@0201e254)
-- `0201e49c` `bfea4ffe` call 0x0201e13e (FUN_0201e254@0201e254)
-- `02026dac` `bfeac7b9` call 0x0201e13e (-)
-
-Loader `0x02005660` callers from the listing:
-
-- `02005f9c` `bfea60fb` call 0x02005660 (-)
-- `0201e46c` `bfeaf838` call 0x02005660 (FUN_0201e254@0201e254)
-- `0201e4a0` `bfeade38` call 0x02005660 (FUN_0201e254@0201e254)
-- `0202422e` `bfea170a` call 0x02005660 (FUN_020241e0@020241e0)
-- `020255a6` `bfea5b00` call 0x02005660 (-)
-
-Dispatcher `0x0201c5ec` callers from the listing:
-
-- `0201c736` `bfea59ff` call 0x0201c5ec (FUN_0201c722@0201c722)
-- `0201e644` `bfead2ef` call 0x0201c5ec (FUN_0201e254@0201e254)
-
-## ABI proof
-
-- SysEx producer wrapper entry at `0x0201e468`: official rows show `r0 = r8 = 0x01c37fd0` immediately before the stock packer call. The handler length register `r9` is still live in this basic block because it is used to compute the copied length at `0x0201e44e` and the last-byte check at `0x0201e45c..0x0201e460`. The wrapper must preserve callee-saved registers and call stock `0x0201e13e(r0=stage)` after the R03 copy decision.
-- Stock packer ABI: `0x0201e13e` takes `r0 = expanded source`, packs into a stack `0x80` buffer, then calls `0x02004b02` with `r0=packed80`, `r1=selected persistent slot`, `r2=0x80`. This is why replacing it, as R02 did, regresses SAVE unless every caller is handled.
-- Consumer wrapper ABI: prior live-booted R01/R02 primitive proves a compact wrapper can preserve `r0`, branch on `r9 == 9`, set `r1` to an alternate source only for Ch10, set `r2 = 0x9c`, call `0x02048cce`, and return through the original dispatcher control flow. R03 must add valid/active metadata around the same source-selection primitive.
-
-## Instruction budget and placement
-
-- Proven compact consumer wrapper budget from R02 manifest: `36` bytes for source selection plus `memcpy`, occupying `0x0201e13e..0x0201e162` in R02. That budget excludes R03 valid/generation/active-count checks.
-- R03 producer wrapper cannot use `0x0201e13e` if stock SAVE/SysEx is to be preserved, because `0x0201e13e..0x0201e252` is the stock packer body and has three direct callers including SAVE.
-- Stock packer occupied span used for placement accounting: `0x0201e13e..0x0201e252` (`0x114` bytes, end-exclusive).
-- No alternate executable cave is proven by these inputs. A later candidate must provide exact start/end, original bytes, all static callers/fallthroughs, execute permissions, sector impact, and a relocation story if any stock code is displaced.
-- Therefore exact R03 instruction budget cannot be closed to a placed binary. Treat the producer plus R03-augmented consumer as design-only until placement is proven independently.
-
-## Gate decisions
-
-| Gate | Decision | Reason |
-|---|---|---|
-| A owned RAM | **BLOCK** | No exact owned start/end/lifetime/reader/writer inventory is proven. Using `0x01c37fd0` is disallowed because it is transient SysEx staging. Any other address would be an unsupported cave guess. |
-| B producer | **BLOCK** | The callsite and ABI are proven, but destination and placement are not. The safe repeated-packet policy is defined as no-publish while `active_count != 0`. |
-| C consumer/generation | **BLOCK** | Matched Note On/Off callsites are proven and the active-count policy is defined, but metadata storage is not. |
-| D offline artifact safety | **BLOCK** | No changed-address manifest, sector inventory, rollback package, deterministic build, or uploader tests were produced because no patch candidate is approved. |
-| E live pass | **BLOCK** | No device access was performed or requested. |
-
-## Malformed, partial, repeated, and unsupported behavior
-
-- Malformed or unsupported messages: no R03 publish because the wrapper is reached only from the accepted one-shot callsite and additionally checks `r9 == 0xa3`. Stock behavior continues through stock packer/handler paths where applicable.
-- Partial/segmented product packets: no R03 publish in the minimal design because `0x0201e49c` is left stock. This is intentionally conservative.
-- Repeated exact one-shot product packet with no active Ch10 note: copy, increment generation, set valid, then preserve stock pack/reload.
-- Repeated exact one-shot product packet while Ch10 active: do not copy, do not increment generation, do not clear valid, and still preserve stock pack/reload. Ch10 remains on the old generation until all Ch10 notes are off.
-
-## Validation output
-
-```text
-PASS sha256-app: 36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
-PASS sha256-package: f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff
-PASS sha256-quark: f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347
-PASS sha256-kaga: 814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013
-PASS requirements-read: /Users/spectrum/Documents/SMK37ProMod/baselines/v15/analysis/r03-owned-ram/requirements.md
-PASS official-v15-only: ["build/v15-official-app.bin", "build/SMK-37_Pro_015.fwsc", "baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz", "baselines/v15/analysis/quarkslab/results/kagaimiq-patched-exhaustive-listing.tsv.gz", "baselines/v15/analysis/r03-owned-ram/requirements.md", "baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/sysex_staging_trace.json", "baselines/v15/analysis/channel-separation-reanalysis/runtime-source/runtime_source_trace.json", "baselines/v15/analysis/flash-candidates/R02/app-manifest.json"]
-PASS row-0x0201e3ee: lb.z r0,[r7 + 0x206]
-PASS row-0x0201e3f8: lb.z r0,[r7 + 0x104]
-PASS row-0x0201e448: add r8,r6,#0xfa0
-PASS row-0x0201e456: call 0x02048cce
-PASS row-0x0201e462: jne r0,#0xf7
-PASS row-0x0201e466: mov r0,r8
-PASS row-0x0201e468: call 0x0201e13e
-PASS row-0x0201e46c: call 0x02005660
-PASS row-0x0201e484: jne r5,#0x9e
-PASS row-0x0201e494: call 0x02048cce
-PASS row-0x0201e49c: call 0x0201e13e
-PASS row-0x0201e4a0: call 0x02005660
-PASS row-0x0201e580: add r0,r6,#0xfa0
-PASS row-0x0201e58c: call 0x02048cce
-PASS row-0x0201e634: sb r1,[r0 + r2]
-PASS row-0x0201e644: call 0x0201c5ec
-PASS row-0x0201c63a: mov r2,#0x9c
-PASS row-0x0201c63e: call 0x02048cce
-PASS row-0x0201c678: mov r2,#0x9c
-PASS row-0x0201c67c: call 0x02048cce
-PASS row-0x0201e236: call 0x02004b02
-PASS row-0x02026dac: call 0x0201e13e
-PASS stock-packer-callers-exact: 0x0201e468,0x0201e49c,0x02026dac
-PASS loader-callers-include-stock-sysex-reloads: 0x02005f9c,0x0201e46c,0x0201e4a0,0x0202422e,0x020255a6
-PASS dispatcher-callers-exact: 0x0201c736,0x0201e644
-PASS r02-wrapper-length-known: {"entry": "0x0201e13e", "end": "0x0201e162", "wrapper_bytes": 36, "note_on_memcpy": "0x0201c67c", "note_off_memcpy": "0x0201c63e", "source_length": 156}
-PASS stage-arithmetic: 0x01c37030+0x0fa0=0x01c37fd0
-PASS gate-a-block-recorded: No exact owned RAM start/end, owner, lifetime, initialization, and complete alias exclusion are proven. 0x01c37fd0 is transient staging, not owned R03 storage.
-PASS placement-block-recorded: The only live-booted compact wrapper placement reused 0x0201e13e, but preserving stock SAVE/SysEx requires retaining the stock packer body and all three callers. No alternate executable cave is proven.
-PASS no-patch-output: copy-path directory contains no firmware binary/package outputs
+```sh
+python3 baselines/v15/analysis/r03-owned-ram/copy-path/analyze_copy_path.py
+cd baselines/v15/analysis/r03-owned-ram/copy-path
+shasum -a 256 -c SHA256SUMS
 ```
