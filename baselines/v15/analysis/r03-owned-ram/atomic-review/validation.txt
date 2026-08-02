@@ -1,0 +1,59 @@
+# R03 atomic independent review validation
+date_utc: 2026-08-02T20:24Z
+cwd: /Users/spectrum/Documents/SMK37ProMod
+git_head_before_review_commit: 8049328837ca387a88a33ce9709e70d54ff6cc44
+
+## command: python3 tools/validate_v15_r03.py
+v15 R03 fixed-prefix artifact, PI32 decode, package, and rollback: PASS
+not a live functional claim; no device access performed
+app 1fff37674f4bb1d5b988dc1415ab29c7114bbcad9e12bfcd7cec9b687d1f6ecb
+package 0ed23e567a623db4b143fa30a6846626d746098ed126c149ac724c0fab6c1937
+rollback 6396f253825d067986131d830bcca8cce16ff9ca39b21c4220369958e90344f1
+sectors 0x04000 0x20000 0x22000 0x2a000 0x62000
+
+## command: deterministic rebuild in scratch
+workdir: /Users/spectrum/.jcode/scratch/r03-atomic-review-2685
+## build app
+R03 app 1fff37674f4bb1d5b988dc1415ab29c7114bbcad9e12bfcd7cec9b687d1f6ecb
+cave 0x0201e13e..0x0201e1f8 186 bytes
+1fff37674f4bb1d5b988dc1415ab29c7114bbcad9e12bfcd7cec9b687d1f6ecb  /Users/spectrum/.jcode/scratch/r03-atomic-review-2685/v15-R03-fixed-prefix-app.bin
+ae44ae027b52a905c1176944625f5f4d1bdc0c6b499350179e6b472b4b656859  /Users/spectrum/.jcode/scratch/r03-atomic-review-2685/app-manifest.json
+app cmp: identical to build/v15-R03-fixed-prefix-app.bin
+## repack package
+safety gate: PASS; manifest: /Users/spectrum/.jcode/scratch/r03-atomic-review-2685/package-manifest.json
+0ed23e567a623db4b143fa30a6846626d746098ed126c149ac724c0fab6c1937  /Users/spectrum/.jcode/scratch/r03-atomic-review-2685/SMK37Pro-v15-R03-fixed-prefix.fwsc
+ea5f0d3ffafe3afa5d68896a4ec4854634a9586ec6f465469649e2f5ea8fe52e  /Users/spectrum/.jcode/scratch/r03-atomic-review-2685/package-manifest.json
+package cmp: identical to build/SMK37Pro-v15-R03-fixed-prefix.fwsc
+## build rollback
+self-test PASS: FakeTransport erase/write/readback, CRC, CDB guards, failure cases
+R03 rollback bundle 6396f253825d067986131d830bcca8cce16ff9ca39b21c4220369958e90344f1
+sectors 0x04000 0x20000 0x22000 0x2a000 0x62000
+offline only; no device access or Flash mutation performed
+6396f253825d067986131d830bcca8cce16ff9ca39b21c4220369958e90344f1  /Users/spectrum/.jcode/scratch/r03-atomic-review-2685/rollback/SMK37Pro-WL82-v15-R03-rollback-20260802-v2.zip
+8fb850c865ea8a113898c9cdc6a3f4dd668e5c77ee6d798fb3a3e81d9340436b  /Users/spectrum/.jcode/scratch/r03-atomic-review-2685/rollback/SMK37Pro-WL82-v15-R03-rollback-20260802-v2/recovery-sectors/manifest.json
+ae11344e75d252b8eb706d593cfc66f1428d797128ffca17b1e365df1b2d4c30  /Users/spectrum/.jcode/scratch/r03-atomic-review-2685/rollback/SMK37Pro-WL82-v15-R03-rollback-20260802-v2/restore/smk37_wl82_guarded_restore.py
+8708f6e5562167488f30bc3924145c1311416040564c0c9b0093caf2b3396d32  /Users/spectrum/.jcode/scratch/r03-atomic-review-2685/rollback/SMK37Pro-WL82-v15-R03-rollback-20260802-v2/SHA256SUMS.txt
+rollback zip cmp: identical to build/SMK37Pro-WL82-v15-R03-rollback-20260802-v2.zip
+
+## command: byte inspection for SAVE and atomic branch gap
+SAVE first persistent write call: 0x02026da6 official=beeaacee r03=beeaacee
+SAVE stock packer call: 0x02026dac official=bfeac7b9 r03=00000000
+embedded r03_lock body: 0x0201e19e official=65e13e5054199c5f3b48d2ee r03=2000b00040e8fdff20008000
+embedded r03_unlock body: 0x0201e1aa official=1131c23582f8ccfd8b80 r03=20004120894020008000
+Quarkslab-omitted lock loop branch: 0x0201e1a2 official=54199c5f r03=40e8fdff
+baselines/v15/analysis/r03-owned-ram/atomic-publish/r03-spinlock.c: sha256=9a19e5b85b37c1b7c6e0efafbf86e6847791d4e38db1172fee5cb1e1be8b4b9b size=456
+baselines/v15/analysis/r03-owned-ram/atomic-publish/r03-spinlock.pi32.o: sha256=754ae849bed042a05294bfa9d5cab2e2b7045b107e91da1cbee1b0e80adfdd32 size=380
+atomic_lock_unlock_exact_bodies_offset_in_object: 52
+
+## command: decoder trace rows around SAVE and atomic
+0201e19e	2000	2	csync	csync	FALL_THROUGH	FUN_0201e19e@0201e19e
+0201e1a0	b000	2	testset	testset b[r0]	FALL_THROUGH	FUN_0201e19e@0201e19e
+0201e1a2	MISSING
+0201e1a6	2000	2	csync	csync	FALL_THROUGH	-
+0201e1aa	2000	2	csync	csync	FALL_THROUGH	FUN_0201e1aa@0201e1aa
+0201e1be	80ffdaffffff	6	call	call 0x0201e19e	UNCONDITIONAL_CALL	FUN_0201e1b4@0201e1b4
+0201e1f0	80ffb4ffffff	6	call	call 0x0201e1aa	UNCONDITIONAL_CALL	FUN_0201e1b4@0201e1b4
+0201e468	bfeaa4fe	4	call	call 0x0201e1b4	UNCONDITIONAL_CALL	FUN_0201e254@0201e254
+0201e49c	bfea8afe	4	call	call 0x0201e1b4	UNCONDITIONAL_CALL	FUN_0201e254@0201e254
+02026da6	beeaacee	4	call	call 0x02004b02	UNCONDITIONAL_CALL	-
+02026dac	0000	2	nop	nop	FALL_THROUGH	-
