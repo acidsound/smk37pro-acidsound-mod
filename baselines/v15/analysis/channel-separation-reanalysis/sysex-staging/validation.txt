@@ -1,0 +1,43 @@
+PASS	official-v15-app-sha256	36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS	official-v15-package-sha256	f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff
+PASS	manifest-app-gate	36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS	manifest-package-gate	f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff
+PASS	quarkslab-listing-sha256	f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347
+PASS	kagaimiq-listing-sha256	814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013
+PASS	stage-arithmetic	0x01c37030+0xfa0=0x01c37fd0
+PASS	voice-length	0x9c
+PASS	listing-row-0x0201e3f8	lb.z r0,[r7 + 0x104]
+PASS	listing-row-0x0201e3fc	mov r6,#0x1c37030
+PASS	listing-row-0x0201e448	add r8,r6,#0xfa0
+PASS	listing-row-0x0201e44c	add r1,r4,#0x6
+PASS	listing-row-0x0201e44e	add r6,r9,#-0x6
+PASS	listing-row-0x0201e456	call 0x02048cce
+PASS	listing-row-0x0201e462	jne r0,#0xf7
+PASS	listing-row-0x0201e468	call 0x0201e13e
+PASS	listing-row-0x0201e46c	call 0x02005660
+PASS	listing-row-0x0201e472	lh.z r0,[r7 + 0x9c]
+PASS	listing-row-0x0201e484	jne r5,#0x9e
+PASS	listing-row-0x0201e488	add r6,r6,#0xfa0
+PASS	listing-row-0x0201e494	call 0x02048cce
+PASS	listing-row-0x0201e49c	call 0x0201e13e
+PASS	listing-row-0x0201e4a0	call 0x02005660
+PASS	listing-row-0x0201e516	jbe r5,0x9c,0x0201e522
+PASS	listing-row-0x0201e522	add r0,r6
+PASS	listing-row-0x0201e524	add r0,r0,#0xfa0
+PASS	listing-row-0x0201e52c	call 0x02048cce
+PASS	listing-row-0x0201e57c	sb r0,[r7 + 0x14]
+PASS	listing-row-0x0201e580	add r0,r6,#0xfa0
+PASS	listing-row-0x0201e58c	call 0x02048cce
+PASS	listing-row-0x0201e592	sh r4,[r7 + 0x9c]
+PASS	listing-row-0x0201e606	jne r9,#0x7,0x0201e63a
+PASS	listing-row-0x0201e634	sb r1,[r0 + r2]
+PASS	listing-row-0x0201e644	call 0x0201c5ec
+PASS	listing-row-0x0201c63e	call 0x02048cce
+PASS	listing-row-0x0201c67c	call 0x02048cce
+PASS	listing-row-0x0201e236	call 0x02004b02
+PASS	packer-callers-include-sysex-staging	0x0201e468,0x0201e49c,0x02026dac
+PASS	loader-callers-include-post-packer-reloads	0x02005f9c,0x0201e46c,0x0201e4a0,0x0202422e,0x020255a6
+PASS	dispatcher-callers	0x0201c736,0x0201e644
+PASS	no-direct-stage-immediate	{"value": "0x01c37fd0", "count": 0, "refs": []}
+PASS	v12-excluded	["build/v15-official-app.bin", "build/SMK-37_Pro_015.fwsc", "baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz", "baselines/v15/analysis/quarkslab/results/kagaimiq-patched-exhaustive-listing.tsv.gz"]
+PASS	check-count	42
