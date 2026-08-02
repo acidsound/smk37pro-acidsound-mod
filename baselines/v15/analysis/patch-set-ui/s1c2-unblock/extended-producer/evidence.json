@@ -1,0 +1,414 @@
+{
+  "artifact_scope": "analysis-only producer bytes; no app.bin, FWSC, ZIP, device, flash, OTA, or rollback",
+  "branch_proofs": [
+    {
+      "address": "0x0201e1b0",
+      "kind": "ifeq",
+      "reach_bytes": 114,
+      "status": "PASS",
+      "target": "0x0201e226"
+    },
+    {
+      "address": "0x0201e1be",
+      "kind": "jne_imm7",
+      "reach_bytes": 34,
+      "status": "PASS",
+      "target": "0x0201e1e4"
+    },
+    {
+      "address": "0x0201e1e2",
+      "kind": "forward_goto",
+      "reach_bytes": 52,
+      "status": "PASS",
+      "target": "0x0201e218"
+    },
+    {
+      "address": "0x0201e1e4",
+      "kind": "jne_imm7",
+      "reach_bytes": 48,
+      "status": "PASS",
+      "target": "0x0201e218"
+    },
+    {
+      "address": "0x0201e1ea",
+      "kind": "jne_imm7",
+      "reach_bytes": 42,
+      "status": "PASS",
+      "target": "0x0201e218"
+    },
+    {
+      "address": "0x0201e1f4",
+      "kind": "jne_imm7",
+      "reach_bytes": 32,
+      "status": "PASS",
+      "target": "0x0201e218"
+    }
+  ],
+  "candidate_created": true,
+  "candidate_end_exclusive": "0x0201e228",
+  "candidate_hex": "79040416c0ffbd65c4012000b00040e839002000c5ffbc65c401584380f811004021d84320004824d842c0ff2065c4014116623c80fff2aa020020004021d840049a80f81802584080f8150206e1a050684080f81000482de842c0ffc065c4014116623c80ffc2aa020020004021e84020004022d843c0ffbd65c40120004120894020005904",
+  "candidate_sha256": "d989d7e852102126ae8dc2e4025b2717808e4f808bc2bf7885cb9c77ddeb05f7",
+  "candidate_size": 134,
+  "candidate_start": "0x0201e1a2",
+  "decision": "CANDIDATE",
+  "forbidden_ranges_untouched": {
+    "gap": "0x0201e19e..0x0201e1a2",
+    "official_handler_entry": "0x0201e254",
+    "selector": "0x0201e13e..0x0201e19e"
+  },
+  "format": "smk37-v15-s1c2-extended-producer-candidate-v1",
+  "instruction_ledger": [
+    {
+      "address": "0x0201e1a2",
+      "bytes": "7904",
+      "meaning": "save rets,r9..r4 like H2 producer",
+      "name": "push_saved"
+    },
+    {
+      "address": "0x0201e1a4",
+      "bytes": "0416",
+      "meaning": "r4 = accepted product staging pointer from H2 producer ABI",
+      "name": "save_stage"
+    },
+    {
+      "address": "0x0201e1a6",
+      "bytes": "c0ffbd65c401",
+      "meaning": "r0 = lock byte 0x01c465bd",
+      "name": "lock_pointer"
+    },
+    {
+      "address": "0x0201e1ac",
+      "bytes": "2000b000",
+      "meaning": "csync; testset b[r0], nonblocking H2-compatible trylock",
+      "name": "trylock"
+    },
+    {
+      "address": "0x0201e1b0",
+      "bytes": "40e83900",
+      "meaning": "ifeq -> return without clearing somebody else's lock",
+      "name": "trylock_failed_return_branch"
+    },
+    {
+      "address": "0x0201e1b4",
+      "bytes": "2000",
+      "meaning": "csync after acquired lock",
+      "name": "acquired_csync"
+    },
+    {
+      "address": "0x0201e1b6",
+      "bytes": "c5ffbc65c401",
+      "meaning": "r5 = slot0 metadata base: valid0",
+      "name": "metadata_base"
+    },
+    {
+      "address": "0x0201e1bc",
+      "bytes": "5843",
+      "meaning": "r0 = state byte at 0x01c465bf",
+      "name": "state_load"
+    },
+    {
+      "address": "0x0201e1be",
+      "bytes": "80f81100",
+      "meaning": "state != EMPTY -> loading/armed path",
+      "name": "state_not_empty_branch"
+    },
+    {
+      "address": "0x0201e1c2",
+      "bytes": "4021",
+      "meaning": "r0 = LOADING",
+      "name": "state_loading_value"
+    },
+    {
+      "address": "0x0201e1c4",
+      "bytes": "d843",
+      "meaning": "state = LOADING before slot0 copy",
+      "name": "state_loading_store"
+    },
+    {
+      "address": "0x0201e1c6",
+      "bytes": "2000",
+      "meaning": "order LOADING before slot0 data publication",
+      "name": "loading_csync"
+    },
+    {
+      "address": "0x0201e1c8",
+      "bytes": "4824",
+      "meaning": "r0 = fixed note 36",
+      "name": "note0_value"
+    },
+    {
+      "address": "0x0201e1ca",
+      "bytes": "d842",
+      "meaning": "note0 = 36",
+      "name": "note0_store"
+    },
+    {
+      "address": "0x0201e1cc",
+      "bytes": "c0ff2065c401",
+      "meaning": "r0 = slot0 destination",
+      "name": "slot0_destination"
+    },
+    {
+      "address": "0x0201e1d2",
+      "bytes": "4116",
+      "meaning": "r1 = accepted staging pointer",
+      "name": "slot0_source"
+    },
+    {
+      "address": "0x0201e1d4",
+      "bytes": "623c",
+      "meaning": "r2 = 0x9c",
+      "name": "copy_size"
+    },
+    {
+      "address": "0x0201e1d6",
+      "bytes": "80fff2aa0200",
+      "meaning": "memcpy(slot0, staging, 0x9c)",
+      "name": "slot0_memcpy"
+    },
+    {
+      "address": "0x0201e1dc",
+      "bytes": "2000",
+      "meaning": "order slot0 copy before valid0",
+      "name": "slot0_csync"
+    },
+    {
+      "address": "0x0201e1de",
+      "bytes": "4021",
+      "meaning": "r0 = 1",
+      "name": "valid0_value"
+    },
+    {
+      "address": "0x0201e1e0",
+      "bytes": "d840",
+      "meaning": "valid0 = 1 last for first product",
+      "name": "valid0_store"
+    },
+    {
+      "address": "0x0201e1e2",
+      "bytes": "049a",
+      "meaning": "skip loading path and unlock",
+      "name": "empty_done_unlock_goto"
+    },
+    {
+      "address": "0x0201e1e4",
+      "bytes": "80f81802",
+      "meaning": "state != LOADING -> unlock/no mutation, including ARMED",
+      "name": "state_not_loading_branch"
+    },
+    {
+      "address": "0x0201e1e8",
+      "bytes": "5840",
+      "meaning": "r0 = valid0",
+      "name": "valid0_load"
+    },
+    {
+      "address": "0x0201e1ea",
+      "bytes": "80f81502",
+      "meaning": "valid0 != 1 -> unlock/no mutation",
+      "name": "valid0_missing_branch"
+    },
+    {
+      "address": "0x0201e1ee",
+      "bytes": "06e1a050",
+      "meaning": "r6 = slot1 metadata base: valid1",
+      "name": "slot1_metadata_base"
+    },
+    {
+      "address": "0x0201e1f2",
+      "bytes": "6840",
+      "meaning": "r0 = valid1",
+      "name": "valid1_load"
+    },
+    {
+      "address": "0x0201e1f4",
+      "bytes": "80f81000",
+      "meaning": "valid1 != 0 -> unlock/no mutation",
+      "name": "valid1_present_branch"
+    },
+    {
+      "address": "0x0201e1f8",
+      "bytes": "482d",
+      "meaning": "r0 = fixed note 45",
+      "name": "note1_value"
+    },
+    {
+      "address": "0x0201e1fa",
+      "bytes": "e842",
+      "meaning": "note1 = 45",
+      "name": "note1_store"
+    },
+    {
+      "address": "0x0201e1fc",
+      "bytes": "c0ffc065c401",
+      "meaning": "r0 = slot1 destination",
+      "name": "slot1_destination"
+    },
+    {
+      "address": "0x0201e202",
+      "bytes": "4116",
+      "meaning": "r1 = accepted staging pointer",
+      "name": "slot1_source"
+    },
+    {
+      "address": "0x0201e204",
+      "bytes": "623c",
+      "meaning": "r2 = 0x9c",
+      "name": "slot1_copy_size"
+    },
+    {
+      "address": "0x0201e206",
+      "bytes": "80ffc2aa0200",
+      "meaning": "memcpy(slot1, staging, 0x9c)",
+      "name": "slot1_memcpy"
+    },
+    {
+      "address": "0x0201e20c",
+      "bytes": "2000",
+      "meaning": "order slot1 copy before valid1",
+      "name": "slot1_csync"
+    },
+    {
+      "address": "0x0201e20e",
+      "bytes": "4021",
+      "meaning": "r0 = 1",
+      "name": "valid1_value"
+    },
+    {
+      "address": "0x0201e210",
+      "bytes": "e840",
+      "meaning": "valid1 = 1 before ARMED",
+      "name": "valid1_store"
+    },
+    {
+      "address": "0x0201e212",
+      "bytes": "2000",
+      "meaning": "order valid1 before ARMED",
+      "name": "armed_csync"
+    },
+    {
+      "address": "0x0201e214",
+      "bytes": "4022",
+      "meaning": "r0 = ARMED",
+      "name": "armed_value"
+    },
+    {
+      "address": "0x0201e216",
+      "bytes": "d843",
+      "meaning": "state = ARMED last",
+      "name": "armed_store"
+    },
+    {
+      "address": "0x0201e218",
+      "bytes": "c0ffbd65c401",
+      "meaning": "r0 = lock byte",
+      "name": "unlock_pointer"
+    },
+    {
+      "address": "0x0201e21e",
+      "bytes": "2000",
+      "meaning": "csync before unlock store",
+      "name": "unlock_csync_before"
+    },
+    {
+      "address": "0x0201e220",
+      "bytes": "4120",
+      "meaning": "r1 = 0",
+      "name": "unlock_zero"
+    },
+    {
+      "address": "0x0201e222",
+      "bytes": "8940",
+      "meaning": "lock = 0",
+      "name": "unlock_store"
+    },
+    {
+      "address": "0x0201e224",
+      "bytes": "2000",
+      "meaning": "csync after unlock store",
+      "name": "unlock_csync_after"
+    },
+    {
+      "address": "0x0201e226",
+      "bytes": "5904",
+      "meaning": "pop pc,r9..r4; caller reload/return ABI preserved",
+      "name": "return_restore"
+    }
+  ],
+  "layout": {
+    "empty_done_goto": "0x0201e1e2",
+    "empty_path": "0x0201e1c2",
+    "end": "0x0201e228",
+    "entry": "0x0201e1a2",
+    "not_empty_path": "0x0201e1e4",
+    "return": "0x0201e226",
+    "state_not_empty_branch": "0x0201e1be",
+    "state_not_loading_branch": "0x0201e1e4",
+    "try_fail_branch": "0x0201e1b0",
+    "unlock": "0x0201e218",
+    "valid0_missing_branch": "0x0201e1ea",
+    "valid1_present_branch": "0x0201e1f4"
+  },
+  "listing_rows": {
+    "kagaimiq": {
+      "0x0201e254": "0201e254\t7904\t2\tpush\tpush {0x9}\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e468": "0201e468\tbfea69fe\t4\tcall\tcall 0x0201e13e\tUNCONDITIONAL_CALL\t-",
+      "0x0201e46c": "0201e46c\tbfeaf838\t4\tcall\tcall 0x02005660\tCALL_TERMINATOR\t-",
+      "0x0201e49c": "0201e49c\tbfea4ffe\t4\tcall\tcall 0x0201e13e\tUNCONDITIONAL_CALL\t-",
+      "0x0201e4a0": "0201e4a0\tbfeade38\t4\tcall\tcall 0x02005660\tCALL_TERMINATOR\t-"
+    },
+    "quarkslab": {
+      "0x0201e254": "0201e254\t7904\t2\tpush\tpush {rets,r9,r8,r7,r6,r5,r4}\tFALL_THROUGH\tFUN_0201e254@0201e254",
+      "0x0201e468": "0201e468\tbfea69fe\t4\tcall\tcall 0x0201e13e\tUNCONDITIONAL_CALL\tFUN_0201e254@0201e254",
+      "0x0201e46c": "0201e46c\tbfeaf838\t4\tcall\tcall 0x02005660\tUNCONDITIONAL_CALL\tFUN_0201e254@0201e254",
+      "0x0201e49c": "0201e49c\tbfea4ffe\t4\tcall\tcall 0x0201e13e\tUNCONDITIONAL_CALL\tFUN_0201e254@0201e254",
+      "0x0201e4a0": "0201e4a0\tbfeade38\t4\tcall\tcall 0x02005660\tUNCONDITIONAL_CALL\tFUN_0201e254@0201e254"
+    }
+  },
+  "max_size": 178,
+  "memory_contract": {
+    "fixed_notes": [
+      36,
+      45
+    ],
+    "lock": "0x01c465bd",
+    "note0": "0x01c465be",
+    "note1": "0x01c4665e",
+    "slot0": "0x01c46520..0x01c465bc",
+    "slot1": "0x01c465c0..0x01c4665c",
+    "state": "0x01c465bf",
+    "states": {
+      "ARMED": 2,
+      "EMPTY": 0,
+      "LOADING": 1
+    },
+    "valid0": "0x01c465bc",
+    "valid1": "0x01c4665c"
+  },
+  "old_h2_bytes_covered_hex": "79040416c0ffbd65c4012000b00040e81b002000c5ffbc65c401584080f80d00c0ff2065c4014116623c80fffcaa0200c5ffbc65c4014021d840c0ffbd65c40120004120894020005904fe200d4144a164e10e40421954a464e170404219dee974200842dee9750000e17630c133108912078207c4ff6032c30105e1a0435844d1ec4016d8ee",
+  "old_h2_bytes_covered_sha256": "ea2af7ef2e05b7b929e45776f0b1db54ef92952b798a9489bdeb9fe931be3f2b",
+  "producer_abi": {
+    "all_acquired_exits_unlock": true,
+    "entry_length_register": "not proven at producer entry",
+    "entry_r0": "accepted product staging pointer",
+    "entry_route_state": "not proven at producer entry",
+    "h2_accepted_packet_ingress_preserved": true,
+    "h2_publication_policy_changed_by_s1c2_requirement": "one-slot immediate valid0 is replaced with two-slot LOADING then ARMED publication",
+    "packet_route_length_gate": "omitted because ABI evidence is absent; existing official/H2 product callsites are the only admitted entry source",
+    "saved_register_shape": "push/pop rets,r9..r4, matching H2 producer",
+    "trylock_fail_unlock_reason": "no lock was acquired; clearing lock on trylock failure would break nonblocking H2 semantics",
+    "trylock_fail_unlocks": false
+  },
+  "replaced_h2_producer_range": "0x0201e1a2..0x0201e1ec",
+  "residual_tail_available": "0x0201e1ec..0x0201e254",
+  "residual_tail_used_bytes": 60,
+  "runtime_base": "0x02000000",
+  "size_margin": 44,
+  "source_hashes": {
+    "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/app-manifest.json": "dc6fba4ddb887424d6bd76b6d1477f66f97096e2d6656f203eec423680572cf3",
+    "baselines/v15/analysis/patch-set-ui/s1c2-unblock/protocol-alternatives/report.md": "5fd0e202eafdbd45d2e263793d4921c11092712c29cb7bd529986c2bb9e36da4",
+    "baselines/v15/analysis/patch-set-ui/s1c2-unblock/stock-helpers/report.md": "2ce63e512b28a9deb8cce1c61f00c12ca46405b492730206ab1014e765a06c55",
+    "build/SMK37Pro-v15-H2-owned-source-corrected-fallback/app.bin": "d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59",
+    "build/v15-official-app.bin": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055"
+  }
+}
