@@ -1,0 +1,99 @@
+{
+  "artifact_scope": "artifact integrity only; not a functional success claim",
+  "branch_ranges": {
+    "note_off_call_new_hex": "80ff6c1b0000",
+    "note_on_call_new_hex": "80ff2e1b0000",
+    "post_init_call_new_hex": "bfeacfc0",
+    "post_init_short_call_window_bytes": 131072
+  },
+  "changes": [
+    {
+      "address": "0x0201e13e",
+      "file_offset": 123198,
+      "new_hex": "7904c4ff6032c30140e0a403d8ee4050501d41e0a003d8ee006140e0a303d8ee407040e0a4034123d8ee411040e0a303412dd8ee411080ffe674feffc0ffd07fc301c1ff744cc301623c80ff40ab0200501d41e0a003d8ee016140e0a303d8ee417040e0a403d8ee415080ffb274feff59047904931683f80a120416c1ffd07fc3014016623c80ff04ab0200590480fffcaa02005904",
+      "old_hex": "7604e2808980c13042201492831c34e1f01f3516108a5607c60758ee3b4074f1fc403d4155a265e10c5054199c5b3c4274f1f8403d4955a365e1785054199c5c3c4374f1fc403d4455a265e11c5054199c5d3c459c5e3c4674f1fe403d4755a165e13e5054199c5f3b48d2ee1131c23582f8ccfd8b8001e17e0002e16630141610884507a5071a4972f1f8201c4a44a364e108404219"
+    },
+    {
+      "address": "0x02005f9c",
+      "file_offset": 24476,
+      "new_hex": "bfeacfc0",
+      "old_hex": "bfea60fb"
+    },
+    {
+      "address": "0x0201c67c",
+      "file_offset": 116348,
+      "new_hex": "80ff2e1b0000",
+      "old_hex": "80ff4cc60200"
+    },
+    {
+      "address": "0x0201c63e",
+      "file_offset": 116286,
+      "new_hex": "80ff6c1b0000",
+      "old_hex": "80ff8ac60200"
+    },
+    {
+      "address": "0x0201e468",
+      "file_offset": 124008,
+      "new_hex": "00000000",
+      "old_hex": "bfea69fe"
+    },
+    {
+      "address": "0x0201e49c",
+      "file_offset": 124060,
+      "new_hex": "00000000",
+      "old_hex": "bfea4ffe"
+    }
+  ],
+  "evidence": {
+    "channel_10_nibble": 9,
+    "channel_register": "r9",
+    "current_source": "0x01c34c74",
+    "dispatcher": "0x0201c5ec",
+    "factory_loader": "0x02005660",
+    "memcpy": "0x02048cce",
+    "neutralized_old_sysex_direct_callers": [
+      "0x0201e468",
+      "0x0201e49c"
+    ],
+    "note_off_memcpy": "0x0201c63e",
+    "note_on_memcpy": "0x0201c67c",
+    "post_init_loader_callsite": "0x02005f9c",
+    "ram_staging": "0x01c37fd0"
+  },
+  "format": "smk37-v15-r01d-ram-preload-mooger1-noteoff-v1",
+  "input_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+  "layout": {
+    "cave": {
+      "end": "0x0201e1d4",
+      "entry": "0x0201e13e"
+    },
+    "note_wrapper": {
+      "end": "0x0201e1d4",
+      "entry": "0x0201e1b0",
+      "special": "0x0201e1b8",
+      "stock": "0x0201e1cc"
+    },
+    "preload": {
+      "capture_memcpy_call": "0x0201e188",
+      "end": "0x0201e1b0",
+      "entry": "0x0201e13e",
+      "first_loader_call": "0x0201e174",
+      "restore_loader_call": "0x0201e1a8",
+      "state_saved": "selected bank, selected-bank preset, Bank D preset slot"
+    }
+  },
+  "output_app_sha256": "bdcfdcf1b5e6d60e04e8c9316db94aa38e6cae4a7bcfaf63abefd38bb5347bb3",
+  "preload": {
+    "bank_zero_based": 3,
+    "captured_bytes": 156,
+    "current_source": "0x01c34c74",
+    "name": "Mooger #1 ",
+    "packed_flash_offset": "0x000f7680",
+    "packed_sha256": "cf44a49e6157945f70bb144e42d7add0d88ee8ef1f2658ef8ab4a657e6e6a77c",
+    "preset_zero_based": 13,
+    "ram_staging": "0x01c37fd0",
+    "state_preservation": "selected bank, selected-bank preset, and Bank D preset slot are saved/restored before final loader call"
+  },
+  "runtime_base": "0x02000000",
+  "source_dump_sha256": "1c202201a81ed6d956ec5398adff75ffcd805594a27370a56caafaf18223383b"
+}
