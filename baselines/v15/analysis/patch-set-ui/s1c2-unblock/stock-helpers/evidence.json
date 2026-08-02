@@ -1,0 +1,90 @@
+{
+  "format": "s1c2-stock-helper-unblock-evidence-v1",
+  "date_utc": "2026-08-02",
+  "scope": "read-only official-v15/H2/S1-C1 evidence investigation; no candidate, device, or flash action",
+  "decision": "BLOCK",
+  "summary": "Official v15 exposes memcpy and stock product SysEx delegation, but no verified callable helper set for exact private length/framing, seven-bit field decode, CRC-16 packet/set validation, two-slot bounded note checks, or ARMED-last atomic publication. A tiny trampoline alone cannot implement S1-C2 safely.",
+  "input_hashes": {
+    "build/v15-official-app.bin": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "build/SMK-37_Pro_015.fwsc": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz": "f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347",
+    "baselines/v15/analysis/quarkslab/results/kagaimiq-patched-exhaustive-listing.tsv.gz": "814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013",
+    "baselines/v15/analysis/sdk-signatures/report.json": "e9f02dfe9ba1987353df14c82b18b321f960960fcd66d987db183fe71b0f75fe",
+    "baselines/v15/analysis/sdk-signatures/evidence.md": "ba0a18e389f84a294f56a1b84f8a045b9b6a7d59b58a237d42e17e84fcb873ac",
+    "baselines/v15/analysis/channel-separation-reanalysis/runtime-source/runtime_source_trace.json": "bc619891389c9f1183b36686b706a67136a8852a0de3e8b0fdd6c21d75022d4c",
+    "baselines/v15/analysis/channel-separation-reanalysis/factory-loader/factory_loader_evidence.json": "efdda52181e3736221354acfe36633a1fd55cc3f7b83918a03e073bab3ebcd09",
+    "baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/sysex_staging_trace.json": "9cb78c3149b78c5c56569a6e17ef4f36b6c73f25a2bed018bbc2c0d1c0f6b655",
+    "baselines/v15/analysis/patch-set-ui/s1c1/ingress/evidence.json": "3b30cdb6904fd81156f4be1b919eda9b44259873055f9e1aad2b029c156bcf34",
+    "baselines/v15/analysis/patch-set-ui/s1c1/code/evidence.json": "44b2cb1d7d758c8b85ae19461a05aaa78f9a7579b90f1fddf4575b09079b672c",
+    "baselines/v15/analysis/flash-candidates/S1C2-two-slot-selector/evidence.json": "b0e60b37e05ffa8075aaa9b39acf0149f1cd5b822579d2e3535e6f217da1af60"
+  },
+  "required_capability_results": [
+    {
+      "capability": "complete-message pointer/length ABI",
+      "status": "PASS as hook ABI only",
+      "addresses": ["0x0202d200", "0x0202d202", "0x0201e254", "0x0201e256", "0x0201e258"],
+      "reason": "The completed-message caller passes r0=assembled message and r1=accumulated length to 0x0201e254. This is not a callable private parser helper."
+    },
+    {
+      "capability": "exact private message length checking",
+      "status": "BLOCK",
+      "addresses": ["0x0202d182", "0x0201e44e", "0x0201e462", "0x0201e484"],
+      "reason": "The assembler threshold and stock Yamaha paths check their own product states. The direct path copies r9-6 before checking only final F7; it does not enforce private 173/176-byte exact lengths."
+    },
+    {
+      "capability": "framing/prefix checking",
+      "status": "BLOCK for helper reuse",
+      "addresses": ["0x0201e410", "0x0201e416", "0x0201e462", "0x0201e606"],
+      "reason": "Official framing is inline in the product handler for F0 43 and single-parameter traffic. It is not a parameterized callable helper for F0 7D 53 4D 4B 0F 01."
+    },
+    {
+      "capability": "seven-bit field decode/copy",
+      "status": "BLOCK for helper reuse",
+      "addresses": ["0x0201e626", "0x0201e62a", "0x0201e630", "0x02005660"],
+      "reason": "Only inline product-specific 14-bit index reconstruction and factory packed-record expansion were found. Neither decodes arbitrary private LEN/CRC fields into caller-owned state."
+    },
+    {
+      "capability": "bulk copy",
+      "status": "PASS",
+      "addresses": ["0x02048cce"],
+      "reason": "memcpy/memmove-style helper has the established scalar ABI r0=dst, r1=src, r2=len and is called from stock loaders and consumers."
+    },
+    {
+      "capability": "CRC-16 or packet checksum",
+      "status": "BLOCK",
+      "addresses": [],
+      "reason": "No verified callable CRC-16/CCITT helper is identified. Deterministic listing scans find no 0x1021, 0x8408, or 0xa001 constants, and the direct Yamaha path does not prove a checksum gate."
+    },
+    {
+      "capability": "bounded index/note validation",
+      "status": "BLOCK for S1-C2",
+      "addresses": ["0x02005670", "0x0200567e", "0x0201e630"],
+      "reason": "Factory loader bounds bank <=3 and preset <=31 using globals; single-parameter writer truncates an address to u8. No callable helper validates NOTE0/NOTE1 0..127 and distinct."
+    },
+    {
+      "capability": "atomic publication, lock, state",
+      "status": "BLOCK for two slots",
+      "addresses": ["0x0201e1a2", "0x0201e1aa", "0x01c46520", "0x01c465bc", "0x01c465bd"],
+      "reason": "The H2 producer has a one-slot nonblocking lock/copy/valid-last sequence for accepted product SysEx. It has no note fields, no slot1, no transaction ID, no LOADING/ARMED state, and cannot be sequenced into all-or-none two-slot publication."
+    },
+    {
+      "capability": "unchanged delegation to stock product SysEx",
+      "status": "PASS as required trampoline behavior",
+      "addresses": ["0x0202d202", "0x0201e254"],
+      "reason": "A trampoline can tail-call the exact preserved handler with original r0/r1 for non-private traffic. This does not solve private parser/helper absence."
+    }
+  ],
+  "code_budget": {
+    "s1c1_selector": "96 bytes at 0x0201e13e..0x0201e19e",
+    "internal_gap": "4 bytes at 0x0201e19e..0x0201e1a2",
+    "unchanged_h2_producer": "74 bytes at 0x0201e1a2..0x0201e1ec",
+    "remaining_audited_tail": "104 bytes at 0x0201e1ec..0x0201e254",
+    "maximum_reusable_free_budget_if_h2_producer_is_preserved": "108 bytes total non-contiguous/local tail budget, before any trampoline body constraints",
+    "finding": "Only memcpy and tail delegation are reusable helpers, so exact prefix, length, 7-bit, two CRC loops, distinct-note checks, two-slot copy, lock rechecks, reject paths, and ARMED-last state still require new parser/publication code exceeding the proven tiny-trampoline route."
+  },
+  "negative_scans": {
+    "listing_constants_absent": ["0x1021", "0x8408", "0xa001"],
+    "private_parser_candidate": "none verified",
+    "stock_checksum_gate_for_live_163_packet": "not proven; S1-C1 ingress showed live R02 payload does not satisfy assumed Yamaha sum-to-zero"
+  }
+}

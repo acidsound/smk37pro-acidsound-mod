@@ -1,0 +1,151 @@
+PASS	evidence decision BLOCK
+PASS	report decision BLOCK
+PASS	tiny trampoline BLOCK gate
+PASS	no candidate/device/flash statement
+PASS	input exists build/v15-official-app.bin
+PASS	sha256 build/v15-official-app.bin
+PASS	input exists build/SMK-37_Pro_015.fwsc
+PASS	sha256 build/SMK-37_Pro_015.fwsc
+PASS	input exists baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz
+PASS	sha256 baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz
+PASS	input exists baselines/v15/analysis/quarkslab/results/kagaimiq-patched-exhaustive-listing.tsv.gz
+PASS	sha256 baselines/v15/analysis/quarkslab/results/kagaimiq-patched-exhaustive-listing.tsv.gz
+PASS	input exists baselines/v15/analysis/sdk-signatures/report.json
+PASS	sha256 baselines/v15/analysis/sdk-signatures/report.json
+PASS	input exists baselines/v15/analysis/sdk-signatures/evidence.md
+PASS	sha256 baselines/v15/analysis/sdk-signatures/evidence.md
+PASS	input exists baselines/v15/analysis/channel-separation-reanalysis/runtime-source/runtime_source_trace.json
+PASS	sha256 baselines/v15/analysis/channel-separation-reanalysis/runtime-source/runtime_source_trace.json
+PASS	input exists baselines/v15/analysis/channel-separation-reanalysis/factory-loader/factory_loader_evidence.json
+PASS	sha256 baselines/v15/analysis/channel-separation-reanalysis/factory-loader/factory_loader_evidence.json
+PASS	input exists baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/sysex_staging_trace.json
+PASS	sha256 baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/sysex_staging_trace.json
+PASS	input exists baselines/v15/analysis/patch-set-ui/s1c1/ingress/evidence.json
+PASS	sha256 baselines/v15/analysis/patch-set-ui/s1c1/ingress/evidence.json
+PASS	input exists baselines/v15/analysis/patch-set-ui/s1c1/code/evidence.json
+PASS	sha256 baselines/v15/analysis/patch-set-ui/s1c1/code/evidence.json
+PASS	input exists baselines/v15/analysis/flash-candidates/S1C2-two-slot-selector/evidence.json
+PASS	sha256 baselines/v15/analysis/flash-candidates/S1C2-two-slot-selector/evidence.json
+PASS	listing header quarkslab-exhaustive-listing.tsv.gz
+PASS	listing header kagaimiq-patched-exhaustive-listing.tsv.gz
+PASS	quarkslab row 0202d182
+PASS	quarkslab row 0202d182 contains jb
+PASS	quarkslab row 0202d182 contains 0xfe
+PASS	quarkslab row 0202d200
+PASS	quarkslab row 0202d200 contains mov
+PASS	quarkslab row 0202d200 contains r0,r6
+PASS	quarkslab row 0202d202
+PASS	quarkslab row 0202d202 contains call
+PASS	quarkslab row 0202d202 contains 0x0201e254
+PASS	quarkslab row 0201e254
+PASS	quarkslab row 0201e254 contains push
+PASS	quarkslab row 0201e256
+PASS	quarkslab row 0201e256 contains mov
+PASS	quarkslab row 0201e256 contains r4,r0
+PASS	quarkslab row 0201e258
+PASS	quarkslab row 0201e258 contains mov
+PASS	quarkslab row 0201e258 contains r9,r1
+PASS	quarkslab row 0201e410
+PASS	quarkslab row 0201e410 contains jne
+PASS	quarkslab row 0201e410 contains #0xf0
+PASS	quarkslab row 0201e416
+PASS	quarkslab row 0201e416 contains jne
+PASS	quarkslab row 0201e416 contains #0x43
+PASS	quarkslab row 0201e44e
+PASS	quarkslab row 0201e44e contains r9,#-0x6
+PASS	quarkslab row 0201e456
+PASS	quarkslab row 0201e456 contains call
+PASS	quarkslab row 0201e456 contains 0x02048cce
+PASS	quarkslab row 0201e462
+PASS	quarkslab row 0201e462 contains jne
+PASS	quarkslab row 0201e462 contains #0xf7
+PASS	quarkslab row 0201e468
+PASS	quarkslab row 0201e468 contains call
+PASS	quarkslab row 0201e468 contains 0x0201e13e
+PASS	quarkslab row 0201e46c
+PASS	quarkslab row 0201e46c contains call
+PASS	quarkslab row 0201e46c contains 0x02005660
+PASS	quarkslab row 0201e484
+PASS	quarkslab row 0201e484 contains jne
+PASS	quarkslab row 0201e484 contains #0x9e
+PASS	quarkslab row 0201e494
+PASS	quarkslab row 0201e494 contains call
+PASS	quarkslab row 0201e494 contains 0x02048cce
+PASS	quarkslab row 0201e49c
+PASS	quarkslab row 0201e49c contains call
+PASS	quarkslab row 0201e49c contains 0x0201e13e
+PASS	quarkslab row 0201e4a0
+PASS	quarkslab row 0201e4a0 contains call
+PASS	quarkslab row 0201e4a0 contains 0x02005660
+PASS	quarkslab row 0201e626
+PASS	quarkslab row 0201e626 contains r4 + 0x3
+PASS	quarkslab row 0201e62a
+PASS	quarkslab row 0201e62a contains lsl
+PASS	quarkslab row 0201e62a contains 0x7
+PASS	quarkslab row 0201e630
+PASS	quarkslab row 0201e630 contains uxtb
+PASS	quarkslab row 02005660
+PASS	quarkslab row 02005660 contains push
+PASS	quarkslab row 02005670
+PASS	quarkslab row 02005670 contains ja
+PASS	quarkslab row 02005670 contains 0x3
+PASS	quarkslab row 0200567e
+PASS	quarkslab row 0200567e contains ja
+PASS	quarkslab row 0200567e contains 0x1f
+PASS	quarkslab row 02005694
+PASS	quarkslab row 02005694 contains 0x1a14
+PASS	quarkslab row 02005698
+PASS	quarkslab row 02005698 contains #0xa3
+PASS	quarkslab row 0200569a
+PASS	quarkslab row 0200569a contains call
+PASS	quarkslab row 0200569a contains 0x02048cce
+PASS	quarkslab row 02048cce
+PASS	quarkslab row 02048cce contains push
+PASS	quarkslab row 0201c63e
+PASS	quarkslab row 0201c63e contains call
+PASS	quarkslab row 0201c63e contains 0x02048cce
+PASS	quarkslab row 0201c67c
+PASS	quarkslab row 0201c67c contains call
+PASS	quarkslab row 0201c67c contains 0x02048cce
+PASS	kagaimiq row 0202d202
+PASS	kagaimiq row 0202d202 contains call
+PASS	kagaimiq row 0202d202 contains 0x0201e254
+PASS	kagaimiq row 0201e254
+PASS	kagaimiq row 0201e254 contains push
+PASS	kagaimiq row 0201e256
+PASS	kagaimiq row 0201e256 contains mov
+PASS	kagaimiq row 0201e256 contains r4,r0
+PASS	kagaimiq row 0201e258
+PASS	kagaimiq row 0201e258 contains mov
+PASS	kagaimiq row 0201e258 contains r9,r1
+PASS	kagaimiq row 0201e456
+PASS	kagaimiq row 0201e456 contains call
+PASS	kagaimiq row 0201e456 contains 0x02048cce
+PASS	kagaimiq row 0201e468
+PASS	kagaimiq row 0201e468 contains call
+PASS	kagaimiq row 0201e468 contains 0x0201e13e
+PASS	kagaimiq row 0201e46c
+PASS	kagaimiq row 0201e46c contains call
+PASS	kagaimiq row 0201e46c contains 0x02005660
+PASS	kagaimiq row 0200569a
+PASS	kagaimiq row 0200569a contains call
+PASS	kagaimiq row 0200569a contains 0x02048cce
+PASS	kagaimiq row 02048cce
+PASS	kagaimiq row 02048cce contains push
+PASS	kagaimiq row 0201c63e
+PASS	kagaimiq row 0201c63e contains call
+PASS	kagaimiq row 0201c63e contains 0x02048cce
+PASS	kagaimiq row 0201c67c
+PASS	kagaimiq row 0201c67c contains call
+PASS	kagaimiq row 0201c67c contains 0x02048cce
+PASS	quarkslab lacks CRC constant 0x1021
+PASS	kagaimiq lacks CRC constant 0x1021
+PASS	quarkslab lacks CRC constant 0x8408
+PASS	kagaimiq lacks CRC constant 0x8408
+PASS	quarkslab lacks CRC constant 0xa001
+PASS	kagaimiq lacks CRC constant 0xa001
+PASS	bulk copy PASS
+PASS	CRC helper BLOCK
+PASS	two-slot atomic publication BLOCK
+PASS	delegation PASS
+S1-C2 stock-helper unblock investigation: BLOCK PASS
