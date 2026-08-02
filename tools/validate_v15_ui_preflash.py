@@ -19,6 +19,8 @@ SCRIPTS = [
     BASE / "followup/analyze_renderer_xref.py",
     BASE / "followup/analyze_event_dispatcher.py",
     BASE / "followup/analyze_persistence_direction.py",
+    BASE / "final-pass/renderer/trace_renderer_paths.py",
+    BASE / "final-pass/events/analyze_final_pass_events.py",
 ]
 JSON_FILES = [
     BASE / "renderer/evidence.json",
@@ -27,6 +29,9 @@ JSON_FILES = [
     BASE / "followup/renderer-xref.json",
     BASE / "followup/event-dispatcher.json",
     BASE / "followup/persistence-direction.json",
+    BASE / "final-pass/renderer/renderer-trace.json",
+    BASE / "final-pass/events/final-pass-events.json",
+    BASE / "final-pass/sdk-match/ui-sdk-match.json",
 ]
 REPORTS = [
     BASE / "README.md",
@@ -36,6 +41,9 @@ REPORTS = [
     BASE / "followup/renderer-xref.md",
     BASE / "followup/event-dispatcher.md",
     BASE / "followup/persistence-direction.md",
+    BASE / "final-pass/renderer/report.md",
+    BASE / "final-pass/events/report.md",
+    BASE / "final-pass/sdk-match/report.md",
     BASE / "review/requirements.md",
 ]
 REQUIRED = {
@@ -77,20 +85,25 @@ def main() -> int:
     for address in REQUIRED:
         require(address in combined, f"required address absent from reports: {address}")
 
-    require("renderer/LCD/button" in (BASE / "README.md").read_text(), "checkpoint limitation missing")
+    require("장치 연결 전 수행 가능한 정적 분석은 완료" in (BASE / "README.md").read_text(), "static closure statement missing")
     require("미확정" in (BASE / "renderer/evidence-report.md").read_text(), "renderer unresolved state missing")
     require("caller remains unresolved" in (BASE / "events/report.md").read_text(), "event-vector limitation missing")
     require("exact-storage-primitive-direction" in (BASE / "state-persistence/report.md").read_text(), "storage direction limitation missing")
     require("Direct chain found:** no" in (BASE / "followup/renderer-xref.md").read_text(), "renderer follow-up limitation missing")
     require("physical event IDs 승격: **불가**" in (BASE / "followup/event-dispatcher.md").read_text(), "event promotion guard missing")
     require("RAM -> storage" in (BASE / "followup/persistence-direction.md").read_text(), "storage write direction missing")
+    require("paths from starts to targets" in (BASE / "final-pass/renderer/report.md").read_text(), "renderer final-pass coverage missing")
+    require("Producer/consumer boundary" in (BASE / "final-pass/events/report.md").read_text(), "event final-pass boundary missing")
+    require("Accepted official/public AC79 SDK UI/input/LCD/display/widget matches in v15: **0**" in (BASE / "final-pass/sdk-match/report.md").read_text(), "SDK zero-match conclusion missing")
+    sdk_match = json.loads((BASE / "final-pass/sdk-match/ui-sdk-match.json").read_text())
+    require(sdk_match["summary"]["accepted_count"] == 0, "unexpected accepted SDK UI match")
     require("REQ-10" in (BASE / "review/requirements.md").read_text(), "evidence requirements incomplete")
 
     print("v15 UI preflash evidence: PASS")
     print(f"official app: {APP_SHA}")
-    print("reproduced: renderer, events, state-persistence, and three targeted follow-ups")
+    print("reproduced: base analyses, three targeted follow-ups, renderer/event final passes")
     print("confirmed Patch selection fields: bank +0x3a4, preset +0x3a0+bank")
-    print("UI patch remains blocked on renderer-to-redraw chain, physical event dispatcher, and RAM ownership")
+    print("static preflash analysis closed; runtime trace remains required for final LCD callback and physical input producer")
     return 0
 
 

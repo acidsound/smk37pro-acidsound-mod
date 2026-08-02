@@ -9,19 +9,21 @@ Flash는 수행하지 않았다. 분석 입력은 app SHA-256
 `36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055`, runtime
 base `0x02000000`로 고정한다.
 
-현재 결론은 **UI 구조의 핵심 상태와 Patch 데이터 흐름, 저장 방향과 bounds/return
-규약은 상당 부분 확보했지만, 안전한 UI patch를 작성할 정도로 renderer/LCD/button
-ABI가 모두 닫히지는 않았다**는 것이다.
+현재 결론은 **장치 연결 전 수행 가능한 정적 분석은 완료되었다**는 것이다. UI 구조의
+핵심 상태와 Patch 데이터 흐름, 저장 방향과 bounds/return 규약은 확보했다. 반면
+renderer의 최종 LCD write와 물리 입력 producer/ID는 네 종류 listing, raw relocation,
+RAM alias, SDK signature final pass에서도 회수되지 않았다. 이 두 항목은 근거 없이
+주소를 지정하지 않고 장치 runtime trace checkpoint로 이관한다.
 
 ## 요구사항 상태
 
 | Requirement | 상태 | 현재 근거 | 남은 차단점 |
 |---|---|---|---|
 | REQ-01 주소 provenance | 완료 | 모든 분석 script가 official app SHA와 runtime base를 확인 | 없음 |
-| REQ-02 renderer entry | 부분 | `0x02020376 -> 0x0201a67c`에서 `Keys Channel-` descriptor `0x02058314` 전달을 직접 확인. `0x0200ea9a` text parser, `0x0200f74c` render traversal 후보 | setter에서 traversal/redraw까지 직접 caller/data-flow chain 미확보 |
+| REQ-02 renderer entry | 정적 조사 완료, runtime 필요 | `0x02020376 -> 0x0201a67c`에서 `Keys Channel-` descriptor `0x02058314` 전달을 직접 확인. 4개 listing에서 start→traversal/redraw path 0건 | setter 이후 computed callback target과 최종 LCD write는 runtime trace 필요 |
 | REQ-03 same-length text/color | 정적 완료, 과거 실기 있음 | 문자열/색상 위치와 v15 M01/M02 표시 관찰 | 재사용 가능한 exact-SHA UI builder 미작성 |
 | REQ-04 menu state | 부분-강함 | RAM base `0x01c33260`, screen/submode와 grid state field 확인 | 각 state value와 실제 화면 이름의 대응 미확정 |
-| REQ-05 button/input ABI | 부분 | 11-entry vector `0x02058248`, encoder enclosing entry/caller, pending event consumer 확인 | exhaustive listing에도 vector base/index dispatcher와 pending producer가 없어 실제 물리 button ID 미확정 |
+| REQ-05 button/input ABI | 정적 조사 완료, runtime 필요 | pending `+0x309..+0x30f`→live `+0x39..+0x3f` consumer boundary와 encoder enclosing caller 확인 | producer write와 physical ID는 raw/listing/alias 검색에 없어 watchpoint trace 필요 |
 | REQ-06 LCD/update | 미완료 | ST7789-like bytes는 존재 | overlapping halfword-table 사용이 있어 LCD table로 확정 불가, write/framebuffer 경로 없음 |
 | REQ-07 RAM ownership | 미완료 | 주 UI object base와 여러 field access 확인 | free RAM, callback context, reentrancy, scratch ownership 미확정 |
 | REQ-08 persistence | 정적 완료 | `0x02004b02` ABI와 모든 decoded caller에서 RAM→storage 방향, bounds, count-style return, 별도 read wrapper를 확인 | `0x02063260` 내부 command 이름과 실제 전원차단/매체 오류 동작은 runtime 검증 필요 |
@@ -132,6 +134,26 @@ struct DrumSet {
 7. LCD write/framebuffer path. 기존 grid/widget를 그대로 재사용한다면 R06 초기 버전에
    필수는 아닐 수 있지만 custom graphics에는 필수다.
 
+## Static-analysis closure
+
+Final pass는 남은 두 항목을 단순히 “못 찾음”으로 남기지 않고 정적 증거의 경계를
+재현 가능하게 고정했다.
+
+- Renderer: Quarkslab recursive/exhaustive와 Kagaimiq patched recursive/exhaustive에서
+  `0x02020376`/`0x0201a67c`에서 `0x0200f74c`/`0x0201e06c`로 가는 direct 또는 named
+  indirect path는 모두 0건이다. computed-call source는 기록했지만 target을 추정 승격하지
+  않았다.
+- Event: pending byte consumer는 `0x02028f0c`/`0x02029152`, long-hold consumer는
+  `0x02029612`로 경계를 확정했다. RAM base alias, absolute field, copy/call window,
+  queue/task string, relocation search에도 producer write는 0건이다.
+- SDK: pinned AC79 SDK의 UI/input/LCD/display/widget exact 및 relocation-aware accepted
+  match는 0건이다. `sync_window`, `move_window`, `icache_flush`는 각각 filesystem/cache
+  함수이므로 UI 근거에서 명시적으로 제외했다.
+
+따라서 preflash 정적 Todo는 완료하며 다음 단계는 별도 runtime Todo로 관리한다. 장치가
+연결되면 `0x01c33569..0x01c3356f` write watch와 object callback/dirty transition trace를
+먼저 수행하고, 그 결과가 확보되기 전에는 새 button ID나 LCD ABI를 패치에 사용하지 않는다.
+
 ## Reproduction
 
 ```sh
@@ -141,6 +163,8 @@ python3 baselines/v15/analysis/ui-preflash/state-persistence/analyze_state_persi
 python3 baselines/v15/analysis/ui-preflash/followup/analyze_renderer_xref.py
 python3 baselines/v15/analysis/ui-preflash/followup/analyze_event_dispatcher.py
 python3 baselines/v15/analysis/ui-preflash/followup/analyze_persistence_direction.py
+python3 baselines/v15/analysis/ui-preflash/final-pass/renderer/trace_renderer_paths.py
+python3 baselines/v15/analysis/ui-preflash/final-pass/events/analyze_final_pass_events.py
 python3 tools/validate_v15_ui_preflash.py
 ```
 
@@ -152,4 +176,7 @@ python3 tools/validate_v15_ui_preflash.py
 - [`followup/renderer-xref.md`](followup/renderer-xref.md)
 - [`followup/event-dispatcher.md`](followup/event-dispatcher.md)
 - [`followup/persistence-direction.md`](followup/persistence-direction.md)
+- [`final-pass/renderer/report.md`](final-pass/renderer/report.md)
+- [`final-pass/events/report.md`](final-pass/events/report.md)
+- [`final-pass/sdk-match/report.md`](final-pass/sdk-match/report.md)
 - [`review/requirements.md`](review/requirements.md)
