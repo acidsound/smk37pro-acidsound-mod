@@ -1,0 +1,58 @@
+{
+  "format": "smk37-v15-post-recovery-baseline-v1",
+  "recorded_utc": "2026-08-02T18:44:56Z",
+  "device_identity": {
+    "name": "SMK-37 Pro",
+    "firmware_version": "015",
+    "evidence": "read-only device-info"
+  },
+  "official_package": {
+    "path": "build/SMK-37_Pro_015.fwsc",
+    "sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "flash_bin_size": 638976,
+    "managed_range": "0x00000..0x9bfff"
+  },
+  "double_dump": {
+    "a": "baselines/v15/device-dumps/v15-post-recovery-upgrade-20260802-a.bin",
+    "b": "baselines/v15/device-dumps/v15-post-recovery-upgrade-20260802-b.bin",
+    "size": 1048576,
+    "sha256": "2795c51dbac4f82ff6fb6c38ffcf27a596829ea9ef5354f7959fc3657f85dcfb",
+    "byte_identical": true
+  },
+  "package_managed_range": {
+    "range": "0x00000..0x9bfff",
+    "sha256": "9d68aaece688d23f487cad734c387399a720e9dbebed613a09304dc666a11936",
+    "matches_original_clean_v15_dump": true
+  },
+  "persistent_tail": {
+    "range": "0x9c000..0xfffff",
+    "policy": "preserve unless independently proven damaged; never include in an application rollback by default",
+    "sectors_different_from_original_clean_v15": [
+      "0xbe000",
+      "0xc2000",
+      "0xf8000",
+      "0xfd000"
+    ]
+  },
+  "r01d_recovery": {
+    "status": "BRICKED_REVOKED",
+    "failed_package_sha256": "add7baacc38d90bcd28cf51a1d096abe0737c8430ec01f70d5b41423d5dc9a96",
+    "changed_sectors_vs_official_v15": [
+      "0x04000",
+      "0x0a000",
+      "0x20000",
+      "0x22000"
+    ],
+    "guarded_bundle": "build/SMK37Pro-WL82-v15-R01d-rollback-20260802-v1.zip",
+    "guarded_bundle_sha256": "47fc436920a6b24c6bc7aaa0b2acb438e14da6c30018f724459b3e7ea3e17307",
+    "use_condition": "only when all current target-sector hashes exactly match the original R01d failed image"
+  },
+  "future_recovery_policy": [
+    "acquire two identical fresh 1 MiB forced-loader dumps before writing",
+    "derive the changed 4 KiB sector set from the exact failed v15 image versus the exact official v15 package",
+    "require every current target-sector SHA-256 to match the failed image before erase",
+    "write only the official v15 versions of those target sectors",
+    "verify erase-to-FF, immediate readback SHA-256, and post-restore outside-sector invariance",
+    "do not repeat the historical 148-sector v012 emergency restore for a target-specific v15 failure"
+  ]
+}
