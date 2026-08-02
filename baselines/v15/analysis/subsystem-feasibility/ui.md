@@ -9,7 +9,7 @@ Status: 조사 문서. 펌웨어 패치, 리패키지, 플래시를 수행하지
 - 공식 v15 기준 이미지: `build/v15-official-app.bin`, 617,012 bytes, SHA-256 `36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055`.
 - 주소 모델: file offset `x`, runtime VA `0x02000000 + x`, package/flash storage offset `x + 0x4120`. 근거: `baselines/v15/analysis/evidence.md`.
 - 공개 SDK 기준: `https://gitee.com/Jieli-Tech/fw-AC79_AIoT_SDK`, branch `release/AC79NN_SDK_V1.2.0`, commit `e30b1ee375d1f2993fc23bf92c8b99006a6e5f9d`. 근거: `baselines/v15/analysis/sdk-signatures/evidence.md` 및 `baselines/v15/analysis/public-research.md`.
-- 공개 제품 문서 기준: `https://github.com/jonathaslacerda/smk-37-pro-docs`, 정확한 revision은 이 저장소 문서에 고정되어 있지 않다. 다음 단계에서 `git ls-remote` 또는 vendor snapshot pinning이 필요하다.
+- 공개 제품 문서 기준: `https://github.com/jonathaslacerda/smk-37-pro-docs`, pinned HEAD `8f1bf1115cc8fe874bbac326d4f1f1513d743844`. 계보와 fork/링크 검증은 `smk-docs-lineage.md`에 기록한다.
 
 가능성 등급:
 
@@ -29,7 +29,7 @@ Status: 조사 문서. 펌웨어 패치, 리패키지, 플래시를 수행하지
 | UI state | 중간 | 일부 UI 문자열 포인터와 화면 문자열은 확인된다. `Pad Bank-` 포인터가 `0x058304 -> 0x0205d9c5`, `Keys Channel-` 포인터가 `0x058314 -> 0x0205d9e9`로 확인됐다. | 공개 SDK는 UI 상태 모델을 제공하지만 v15의 struct layout으로 직접 매칭되지는 않았다. SDK-signatures에서 MIDI/버튼 유사 operation table 후보는 UI/button-state callback으로 보였으나 공개 MIDI ABI와 불일치해 폐기됐다. | 제품 UI에는 패치/뱅크/설정 화면이 존재한다는 추론은 가능하나 상태 변수 위치는 제품 문서만으로 알 수 없다. | 각 문자열 xref의 렌더 호출자, 선택 패치 상태 변수, 화면 전환 state machine, 저장/로드 VM 접근 경로. |
 | buttons | 낮음-중간 | `sdk-signatures/evidence.md`는 `0x58248`의 11-code-pointer run을 공개 MIDI context로 보지 않고 product UI/button-state callback 후보로 폐기했다. 이는 버튼/UI 관련 코드가 근처에 있을 수 있다는 단서일 뿐 ABI는 아니다. | 공개 SDK GPIO/key/button 예제는 AC79에서 버튼 스캔이 가능함을 보이지만 v15 key matrix 주소를 제공하지 않는다. | `smk-37-pro-docs`의 보드 사진/제품 설명은 물리 버튼 존재와 패널 배치를 추론하게 하지만 scan line/pin mapping은 미확정이다. | key scan 함수, debounce/state struct, GPIO pin map, 버튼 이벤트 dispatcher xref, 실기 read-only trace. |
 | LED | 낮음 | 공식 v15 분석에서 LED 제어 주소나 ABI는 아직 없다. 기존 capability matrix도 `UI-03` 버튼 이벤트 및 LED 제어를 미조사로 표시한다. | 공개 SDK는 GPIO/PWM/LED 제어 가능성을 제공한다. v15 LED 함수 매칭은 없다. | 제품에는 pad LEDs/panel LEDs가 존재한다. M09 incident 문서의 관찰은 전원/앱 부팅 상태 추론에는 쓰이나 LED 제어 ABI 근거는 아니다. | LED GPIO/PWM pin map, pad LED update table, brightness/state buffer, UI 이벤트와 LED 갱신 xref, 비파괴 logic capture. |
-| patch-name/version rendering | 높음 for same-length ASCII, 중간 for layout/font | v15 `app.bin`에 UI 문자열과 색상이 직접 있다. 확인한 file offset/VA/flash: `Firmware` `0x5d8f5`/`0x0205d8f5`/`0x61a15`, `Pad Bank-` `0x5d9c5`/`0x0205d9c5`/`0x61ae5`, `Keys Channel-` `0x5d9e9`/`0x0205d9e9`/`0x61b09`, `Cut Off-` `0x5d852`/`0x0205d852`/`0x61972`, `Distortion-` `0x5d85b`/`0x0205d85b`/`0x6197b`, `Algorithm-` `0x5d876`/`0x0205d876`/`0x61996`, `Feedback-` `0x5d881`/`0x0205d881`/`0x619a1`, `Mono/Poly` `0x5d88b`/`0x0205d88b`/`0x619ab`, `SAVE` `0x57298`/`0x02057298`/`0x5b3b8`, `SAVED` `0x5d990`/`0x0205d990`/`0x61ab0`, color strings `#F5BC27` `0x57ce4`/`0x02057ce4`/`0x5be04`, `#D9D9D9` `0x57730`/`0x02057730`/`0x5b850`. | SDK UI framework/tool docs explain text/resource rendering concepts, but v15 renderer ABI is not matched. | v12 live experiments in `docs/firmware-versioning.md` showed same-length version/display strings can render, including `M02` and two-line `Hello,`/`acidsound`. That is product-line inference from v12, not direct v15 proof. | For v15, same-length string patch dry-run manifest only. Before any flash, need v15-specific renderer xrefs, bounds behavior for NUL/length, CRC/package verifier, and recovery-safe policy approval. |
+| patch-name/version rendering | 높음 for same-length ASCII, 중간 for layout/font | v15 `app.bin`에 UI 문자열과 색상이 직접 있다. 확인한 file offset/VA/flash: `Firmware` `0x5d8f5`/`0x0205d8f5`/`0x61a15`, `Pad Bank-` `0x5d9c5`/`0x0205d9c5`/`0x61ae5`, `Keys Channel-` `0x5d9e9`/`0x0205d9e9`/`0x61b09`, `Cut Off-` `0x5d852`/`0x0205d852`/`0x61972`, `Distortion-` `0x5d85b`/`0x0205d85b`/`0x6197b`, `Algorithm-` `0x5d876`/`0x0205d876`/`0x61996`, `Feedback-` `0x5d881`/`0x0205d881`/`0x619a1`, `Mono/Poly` `0x5d88b`/`0x0205d88b`/`0x619ab`, `SAVE` `0x57298`/`0x02057298`/`0x5b3b8`, `SAVED` `0x5d990`/`0x0205d990`/`0x61ab0`, color strings `#F5BC27` `0x57ce4`/`0x02057ce4`/`0x5be04`, `#D9D9D9` `0x57730`/`0x02057730`/`0x5b850`. | SDK UI framework/tool docs explain text/resource rendering concepts, but v15 renderer ABI is not matched. | 본 프로젝트의 폐기된 v15 marker-only M01/M02에서 사용자가 표시 변경과 정상 부팅을 확인했다. 이는 같은 길이 문자열 변경의 v15 실기 근거지만, 렌더러 ABI나 R01의 근거는 아니다. | renderer xrefs, bounds behavior for NUL/length, 재사용 가능한 v15 UI patch profile, 현재 공식 v15 기준의 별도 회귀 시험. |
 
 ## 직접 v15 근거
 
@@ -99,13 +99,13 @@ Status: 조사 문서. 펌웨어 패치, 리패키지, 플래시를 수행하지
 - Repository: `https://github.com/jonathaslacerda/smk-37-pro-docs`.
 - Firmware index URL: `https://github.com/jonathaslacerda/smk-37-pro-docs/blob/main/firmware/FIRMWARE.md`.
 - Board/product images URL used elsewhere in this repo: `https://github.com/jonathaslacerda/smk-37-pro-docs/tree/main/images/smk37pro`.
-- Revision: 현재 `baselines/v15/analysis/public-research.md`에는 이 repository의 commit pin이 없다. 다음 증거로 commit hash를 고정해야 한다.
+- Revision: pinned HEAD `8f1bf1115cc8fe874bbac326d4f1f1513d743844`; 상세 계보는 [`smk-docs-lineage.md`](smk-docs-lineage.md).
 
 추론:
 
 1. SMK-37 Pro에는 화면, 물리 버튼, 패드/패널 LED가 있으므로 UI state와 button/LED coupling이 존재할 가능성이 높다.
 2. 제품별 v11-v15 application이 distinct하므로 다른 제품/버전의 UI address를 v15에 이식해서는 안 된다.
-3. v12 실기 기록(`docs/firmware-versioning.md`)은 같은 제품군에서 display/version 문자열 변경이 실제 표시될 수 있음을 보인다. 하지만 v12 결과는 v15 주소/렌더러 직접 근거가 아니므로 v15에서는 dry-run과 정적 xref가 먼저다.
+3. 본 프로젝트의 폐기된 v15 M01/M02 실기 기록은 같은 길이 display/version 문자열 변경과 정상 부팅을 직접 확인했다. 다만 해당 실험은 현재 R01 근거에서 제외됐고 renderer ABI를 입증하지 않으므로, 재사용 가능한 v15 UI patch profile은 별도로 만들어야 한다.
 
 ## 하위 시스템별 상세 판정
 
@@ -224,7 +224,7 @@ Status: 조사 문서. 펌웨어 패치, 리패키지, 플래시를 수행하지
 
 - 문자열 길이를 늘리면 adjacent data와 포인터 테이블을 손상할 수 있다.
 - 한글/아이콘은 font/resource/renderer 분석 전에는 불가에 가깝다.
-- v12 실기 display string 성공은 v15에 대한 직접 증명이 아니다.
+- 폐기된 v15 M01/M02의 표시 성공은 같은 길이 ASCII 변경의 실기 근거지만, 현재 R01의 실기 검증이나 renderer ABI 증명은 아니다.
 
 필요한 다음 증거:
 

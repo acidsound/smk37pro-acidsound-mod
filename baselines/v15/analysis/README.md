@@ -29,6 +29,15 @@
 python3 tools/validate_v15_mod_capabilities.py
 ```
 
+UI, MIDI, FM, PCM 재생과 실시간 synthesis의 공개 자료 조사 및 가능성 비교는
+[`subsystem-feasibility/matrix.md`](subsystem-feasibility/matrix.md)에 통합했다.
+분야별 근거 문서와 `smk-37-pro-docs` 계보는 같은 디렉터리에 있으며 다음 명령으로
+revision, 필수 근거, 상태 표시와 링크를 검증한다.
+
+```sh
+python3 tools/validate_v15_subsystem_feasibility.py
+```
+
 The current clean-room PI32 and USB MIDI result is documented in
 [`evidence.md`](evidence.md). Reproduction artifacts are:
 
