@@ -1,0 +1,103 @@
+{
+  "format": "smk37-v15-pad-patch-set-v1",
+  "purpose": "diagnostic example only; not a user-selected production drum set",
+  "set_name": "BANK D 01-16 DIAGNOSTIC",
+  "slots": [
+    {
+      "bank": 4,
+      "expected_name": "BUZZ BASS",
+      "note": 36,
+      "patch": 1
+    },
+    {
+      "bank": 4,
+      "expected_name": "Bang ?????",
+      "note": 37,
+      "patch": 2
+    },
+    {
+      "bank": 4,
+      "expected_name": "BASSE BIEN",
+      "note": 38,
+      "patch": 3
+    },
+    {
+      "bank": 4,
+      "expected_name": "BASS-THING",
+      "note": 39,
+      "patch": 4
+    },
+    {
+      "bank": 4,
+      "expected_name": "BASS SLAP",
+      "note": 40,
+      "patch": 5
+    },
+    {
+      "bank": 4,
+      "expected_name": "BEAMER 2",
+      "note": 41,
+      "patch": 6
+    },
+    {
+      "bank": 4,
+      "expected_name": "Onglon",
+      "note": 42,
+      "patch": 7
+    },
+    {
+      "bank": 4,
+      "expected_name": "SOFTSTEEL",
+      "note": 43,
+      "patch": 8
+    },
+    {
+      "bank": 4,
+      "expected_name": "BASS-ROADS",
+      "note": 44,
+      "patch": 9
+    },
+    {
+      "bank": 4,
+      "expected_name": "E.ORGAN 1",
+      "note": 45,
+      "patch": 10
+    },
+    {
+      "bank": 4,
+      "expected_name": "YEAAAHH",
+      "note": 46,
+      "patch": 11
+    },
+    {
+      "bank": 4,
+      "expected_name": "HAND DRUM",
+      "note": 47,
+      "patch": 12
+    },
+    {
+      "bank": 4,
+      "expected_name": "HAND CLAP1",
+      "note": 48,
+      "patch": 13
+    },
+    {
+      "bank": 4,
+      "expected_name": "Mooger #1",
+      "note": 49,
+      "patch": 14
+    },
+    {
+      "bank": 4,
+      "expected_name": "Moog Solo2",
+      "note": 50,
+      "patch": 15
+    },
+    {
+      "bank": 4,
+      "expected_name": "Mooger Low",
+      "note": 51,
+      "patch": 16
+    }
+  ]
+}

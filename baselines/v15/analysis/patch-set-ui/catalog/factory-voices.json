@@ -1,0 +1,1161 @@
+{
+  "factory_table_offset": "0x000f4000",
+  "format": "smk37-v15-factory-voice-catalog-v1",
+  "numbering": "bank and patch are 1-based; runtime slot index is note-36",
+  "source_dump_sha256": "1c202201a81ed6d956ec5398adff75ffcd805594a27370a56caafaf18223383b",
+  "voice_count": 128,
+  "voices": [
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "WATER GDN",
+      "packed_dump_offset": "0x000f4000",
+      "packed_sha256": "3312e973f7f8c6c3948c2616098448187a0f4dc24dabea6d61385d925a8a1fb9",
+      "patch": 1,
+      "runtime_sha256": "09c1f99e32a8e3cb898f65abf24ffd0b306a9b462cbb64473da7d66099a6bb82"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "E.ORGAN 1",
+      "packed_dump_offset": "0x000f4080",
+      "packed_sha256": "3567a5bb2eb391e3d4fed3b0621bea0d52b29125f492cf7c10eed515160d5d67",
+      "patch": 2,
+      "runtime_sha256": "7df8c02e30cabaa25861f1c36f90685517f9812269550401e12c2bd4db8ddc3d"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "XMAS BELLS",
+      "packed_dump_offset": "0x000f4100",
+      "packed_sha256": "7eb1f934f639e6c3f1548d250c6165ce33f6b2abada5f0eba16fe4f49621d2b3",
+      "patch": 3,
+      "runtime_sha256": "85eb6ad3e4246a77e812c83bc3865f5dfbc28526be95c244fab3ebdefe9030c3"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "PI-3.14R0D",
+      "packed_dump_offset": "0x000f4180",
+      "packed_sha256": "3ae6aa100839f8a35192e04f28c3b67bec8cd2907d823d1f66d9883a6da4b085",
+      "patch": 4,
+      "runtime_sha256": "bf0234a5674f28458634f9e288db194ef209fe86846ec0d2ccbb3be6295bbd23"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "MuzakBachs",
+      "packed_dump_offset": "0x000f4200",
+      "packed_sha256": "20f27d6495ae2e12839b298dd0e518765ad477c2027e7f58e34e6f6b7797e1b2",
+      "patch": 5,
+      "runtime_sha256": "01f5d533b3f09ff125fb099ec99b249c22f9835fc72de8662ff2012adba990e3"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "Tamboura 4",
+      "packed_dump_offset": "0x000f4280",
+      "packed_sha256": "ecdfa6cddfa825734952428ce9e26348853b5cb3b957f3c1895f2b0d227faf85",
+      "patch": 6,
+      "runtime_sha256": "78484731c06d1a5a8702ede8e92471c41cc8c2604f7c826df40c0eb7a71c7c4f"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "CELESTE",
+      "packed_dump_offset": "0x000f4300",
+      "packed_sha256": "7d3c0ef62161e6ded123e5d9f04f4ee0d9d9891afd2a8c247dd606f4dc2199b4",
+      "patch": 7,
+      "runtime_sha256": "a4e8da190386820c8edbbf7c17a62419d882849037d08a3715e0706489728197"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "TECH PULSE",
+      "packed_dump_offset": "0x000f4380",
+      "packed_sha256": "c5270cdf754891dad2d73402ff540d010b87793d480e2c80d93888be86a15522",
+      "patch": 8,
+      "runtime_sha256": "e5b0da2a7d13fea2162b53a9fe81f65dfb6dd4702b5b2883b372235e207efb94"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "FmPiano.03",
+      "packed_dump_offset": "0x000f4400",
+      "packed_sha256": "57a1460610ae07f59a5982ddc4013d2a640c6c4890bbd155067ccca2f05e0ce4",
+      "patch": 9,
+      "runtime_sha256": "d4bb88aa2a88f56b962b9e9e597cce2e86f3a2369f0eb14c96ec92a141b64777"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "HARP    2",
+      "packed_dump_offset": "0x000f4480",
+      "packed_sha256": "61b3f450d42ffe3385a0f6b03afac3cc0c16c6294f98967e217f540f6ae59f36",
+      "patch": 10,
+      "runtime_sha256": "734193f7065ebe6e83310d5920b32fc51a7153ea579dd1d52121b0799ff186d5"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "T.BL-EXPA",
+      "packed_dump_offset": "0x000f4500",
+      "packed_sha256": "c0daaed9c212ab60802bec42ab96cc539ca6e2fc0e06d9687915d87884846815",
+      "patch": 11,
+      "runtime_sha256": "69ffb0549b5fefb4f3142ce2fae7413844387a67f8ecefeef82bc6805d294021"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "*Kurzweil2",
+      "packed_dump_offset": "0x000f4580",
+      "packed_sha256": "71c05c8800030e771b805d5c71ce2206d3e30894ac1427c8d66275228a1dc23d",
+      "patch": 12,
+      "runtime_sha256": "2cd82afa00909d2d4c694aa8e6b2a110a674ae33c1c323229008a6afd8a9b302"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "4BD-SD-TD",
+      "packed_dump_offset": "0x000f4600",
+      "packed_sha256": "5fbe2847cb3d1e927ca28bc21fb2e75aba443319b0880b6074db4231a26ded14",
+      "patch": 13,
+      "runtime_sha256": "ec26cd3c2943204d4d8d9834a0a09703da0c87348ab275565d20bdb86102b1e0"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "WHITE-EAGL",
+      "packed_dump_offset": "0x000f4680",
+      "packed_sha256": "06be5d5b5d0401495e5913982623769c10f2a5e50f6292cac18d50c69d4537e0",
+      "patch": 14,
+      "runtime_sha256": "247c5ef13da9679ec5c8335779b3e64d668d9f6f6f20d221503e7efa2feadd93"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "SYN CLAVCN",
+      "packed_dump_offset": "0x000f4700",
+      "packed_sha256": "2d88bfbf2c73a0d50aad5dda5b7d944019190c33ea526c96a8af0e6c37b0d1b4",
+      "patch": 15,
+      "runtime_sha256": "c380e2f3959c6b827d7d7b363d46d675e716d76f1ed8ddfd6856ba29afc73128"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "CEMBALO",
+      "packed_dump_offset": "0x000f4780",
+      "packed_sha256": "e365799dca505df46658679076167c1f607d86ec75a0a9cde333f1e7ab7f64bf",
+      "patch": 16,
+      "runtime_sha256": "d621ab6f1b062234edec8d6095c20c3a40fa66fc22e961fb8f2d72a1029582d6"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "CHIPS 2",
+      "packed_dump_offset": "0x000f4800",
+      "packed_sha256": "aa2a6837a2d3d70cdc09addbb2b9cae0f70e99bc6960c5a53888afcec38db896",
+      "patch": 17,
+      "runtime_sha256": "7a0c22ca0b94fb38d0b641d1744a14d96ffbbed92333cd485145f5553064e83a"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "Formant",
+      "packed_dump_offset": "0x000f4880",
+      "packed_sha256": "7a8b2b58cce795c19ec808ddd0f916ca517d77b7d83730781f289b5586aadc8c",
+      "patch": 18,
+      "runtime_sha256": "ae0bd633e61929cb514f7762cf81490b1a24330c8b71455ad02ade4edb3f1364"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "E.-PIANO",
+      "packed_dump_offset": "0x000f4900",
+      "packed_sha256": "9ffea049c558cb494db8574dbd2fda060d57a73fc8273cfdfbbfd2e191c94b6a",
+      "patch": 19,
+      "runtime_sha256": "aa8262cde5d915b910977995b2b7ad85474c312b98ac2b486d70ab5944fc134c"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "HAMMOND2",
+      "packed_dump_offset": "0x000f4980",
+      "packed_sha256": "5c4eedb7d89ef140cf3fd2d9e05a896d441f4628efa640d38f479409e7ecf87f",
+      "patch": 20,
+      "runtime_sha256": "a059cb6c4dd2afdf6a79ceb77e7fa203e09d345ff556b2e99035bbe608f117eb"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "E.ORGAN 2",
+      "packed_dump_offset": "0x000f4a00",
+      "packed_sha256": "5441780e00f721da4257df098b6b6fcacd79e0cf3954cadf98e97ee1db94650d",
+      "patch": 21,
+      "runtime_sha256": "c2e832532c516ca93213d3384a5c3feef1e7e91be3604d0b814bcd232b04f20d"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "AnlgSyn.26",
+      "packed_dump_offset": "0x000f4a80",
+      "packed_sha256": "9bda881793eb191e5e0b9f424266cf38b75d7f32c3546af2aeb1652513e69c8e",
+      "patch": 22,
+      "runtime_sha256": "7dc2c352ddd5234f64cedb87190f865a6e492f2427a9e8a97428bac077fc4e7f"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "BR.ANALOG1",
+      "packed_dump_offset": "0x000f4b00",
+      "packed_sha256": "f64363b123be8630e516b9d2175d7b8cdd52df417bcb8b773396db1f6ad3af27",
+      "patch": 23,
+      "runtime_sha256": "e34efd00a37d3c70fed341bf27166d9b34881afad002f5ba24bac5e999906fad"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "DYNO MYTE",
+      "packed_dump_offset": "0x000f4b80",
+      "packed_sha256": "7d22239d075e9d305778ef7830e188e353658d86f229108b27537a2132bfe2f8",
+      "patch": 24,
+      "runtime_sha256": "ff16b3d5a3d6e1f84feed5b2744e114b9dcf03c66c9606b627c2ebdfb2bf5331"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "Claves",
+      "packed_dump_offset": "0x000f4c00",
+      "packed_sha256": "5963c45b5c51f8fdbf281a0f63d6129cd8af2273b784905059e1f353514d6711",
+      "patch": 25,
+      "runtime_sha256": "f6e494d9faa5a1e8a0a0b145d27784d8867c930265b931238cc39712a5b7acd5"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "POLY.SYN 2",
+      "packed_dump_offset": "0x000f4c80",
+      "packed_sha256": "c611f1ae503453f525de41229de2821e75296c021a48c88d035d64b1c0b782fa",
+      "patch": 26,
+      "runtime_sha256": "bd576ee89f87133c90a3dc811f76a9db566527aabdbb5c260032f4b55a56775c"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "Glide",
+      "packed_dump_offset": "0x000f4d00",
+      "packed_sha256": "d2cb51234bf7ca0c6176c203f0580d10696299d7fd46906dc6bfb709b13d5221",
+      "patch": 27,
+      "runtime_sha256": "e1b587e71cefe507ae9a26cf6a5461c7bfcf66fb1b6ac8a4bea345c9827ed7d0"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "BRASS",
+      "packed_dump_offset": "0x000f4d80",
+      "packed_sha256": "e2e8ff373f91c2f76e0f249e630ec3657626fc43fd657d31ad96623b51353f69",
+      "patch": 28,
+      "runtime_sha256": "4984f680f862e22bbd0c285da91702c5a88fba11c950c59d252edf136ccff61c"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "PipeOrgan",
+      "packed_dump_offset": "0x000f4e00",
+      "packed_sha256": "f959dd70a0b7740d72b9cd1d2a18d5b7fad1a44c4f56f45a01eeb9b5d6a1a35c",
+      "patch": 29,
+      "runtime_sha256": "374c53a79e37897198edd0aae8083919825c1f4082de7a0d2b34d450573f9407"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "Tree piano",
+      "packed_dump_offset": "0x000f4e80",
+      "packed_sha256": "8f712b764e0516a7b3878aa811fb22eaf691d7f50bd5cfa889bb880f22795697",
+      "patch": 30,
+      "runtime_sha256": "4f1a9867c4ac391ea7f8f9b1f85808b412b4eb6aeff558c7c2e43b207cd819a2"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "BASSOON  1",
+      "packed_dump_offset": "0x000f4f00",
+      "packed_sha256": "781de2fd5ad58a37092163cccd41ed4e392410a9ca60bae8a8fd2b2fff1567ab",
+      "patch": 31,
+      "runtime_sha256": "39fd41d51b311d699bb10502548b7b2420b7ecd2cfe850247c97421771977ba4"
+    },
+    {
+      "bank": 1,
+      "bank_letter": "A",
+      "name": "PORTATIVE",
+      "packed_dump_offset": "0x000f4f80",
+      "packed_sha256": "3eb4678b0e0579f815c65226d8aca3a58517c946a66ea30b7415b0541ee3760c",
+      "patch": 32,
+      "runtime_sha256": "6858ab96dc0a5d5eac0e872df0ee0b920a41af2086c560b60a3f9bbdc93224dd"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "AN.STRG 1A",
+      "packed_dump_offset": "0x000f5000",
+      "packed_sha256": "2b0791e2380f79cf03fb2b4c7d228b7cce12b0d8e706af7d0a3529ae67fb91b1",
+      "patch": 1,
+      "runtime_sha256": "a113a4ec1d173b0681687fd922d032f10daeab5bf0642ae345d7b8ad181dd844"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "BRASS   2",
+      "packed_dump_offset": "0x000f5080",
+      "packed_sha256": "b928efae89232ca25bd893a5cc5681fc00bae3da8fb216dfe42a26acd30976f2",
+      "patch": 2,
+      "runtime_sha256": "9498c537a073df436d3a5372001de4551960d752391b2ecbb944fb0d9a8da2ff"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "BRASS   3",
+      "packed_dump_offset": "0x000f5100",
+      "packed_sha256": "0fefc2be1dbca7185c2c07cb6a66ff8b365ecec8766803042359a8574394a6bc",
+      "patch": 3,
+      "runtime_sha256": "adf07abd602134e8a5456dd40a36290cd7b354dd0b961c814660cc8f7d8b28f5"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "FLUTE   1",
+      "packed_dump_offset": "0x000f5180",
+      "packed_sha256": "5578324801cf1f8ce257bf626d5684723121b50833626b7dfeb1ec3ba60a8a3d",
+      "patch": 4,
+      "runtime_sha256": "b24dc9582a1994e5a088addc562c9970bdf47e5221bc48aee5cafdbdb0eb2ed2"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "ClaviPluck",
+      "packed_dump_offset": "0x000f5200",
+      "packed_sha256": "20e95c7a2d629b690feb7b59adf34292e7525dd10c987f75efbee6880d4541c6",
+      "patch": 5,
+      "runtime_sha256": "effc3d6a3c9447d839ba4801d365e28b21d93f2c54d7492cda560b933ea64afe"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "HARP-FLUTE",
+      "packed_dump_offset": "0x000f5280",
+      "packed_sha256": "0def97f3905d51a31b6ef295ced419698308c6d2459db2c711aa2f73ddb1fa1e",
+      "patch": 6,
+      "runtime_sha256": "14940e9aa8d5c9b7f6b780804693f7e5f6e644ab8af19f352c64aede4b3c4006"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "Onglon",
+      "packed_dump_offset": "0x000f5300",
+      "packed_sha256": "d8bc7cee6940ea1494e6e8b443884389f2426d0a2bd9ec4d99b4d919af321d21",
+      "patch": 7,
+      "runtime_sha256": "7727f3b7856a73b3c32bca1b6e15ed74672d6dc97e00641761ef14237b0d8a44"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "SYN-VOX",
+      "packed_dump_offset": "0x000f5380",
+      "packed_sha256": "aca936a05055c2ed139c6aa4dc30a2614056adba83be314e772d68f02080cfa2",
+      "patch": 8,
+      "runtime_sha256": "c27354afbbcec50192cab41af8e487a54e7308491ca94c0e7d627775ba97d0aa"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "BASS-ROADS",
+      "packed_dump_offset": "0x000f5400",
+      "packed_sha256": "a086dec6ed80f04ef9b2c01815f0ba4a19ce678c2c5051a12b7f023525fca964",
+      "patch": 9,
+      "runtime_sha256": "1602db2d94930482f631d087bf4b645d626f12b88da1e8deee21202210b7177c"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "SYN-ORCH",
+      "packed_dump_offset": "0x000f5480",
+      "packed_sha256": "10e325806f9035762c1eea281c3863cb03b69156111c32cd3ed50d7b1e6a9be6",
+      "patch": 10,
+      "runtime_sha256": "59101b074b6b5f13da4c846279da16659c8159c6188baf106b5f69a6214392fd"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "SYN-LEAD 2",
+      "packed_dump_offset": "0x000f5500",
+      "packed_sha256": "1fba9376b42d2a0ea39aa5039bb469b65accd95c30f194e97067d7a8cfa01960",
+      "patch": 11,
+      "runtime_sha256": "842523276c8c61d01023431ba87201c5af6a620251f1f5215c6f390312f6a630"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "SYN-LEAD 3",
+      "packed_dump_offset": "0x000f5580",
+      "packed_sha256": "e52b0ee092d51652acd68d4090de8b3a1989d57496179ce035054e233962e1f3",
+      "patch": 12,
+      "runtime_sha256": "05b24ec92154567b96653db8019681ba8f5fa21b11598f95418239e371fe5c89"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "SYN-LEAD 4",
+      "packed_dump_offset": "0x000f5600",
+      "packed_sha256": "0f2cce62eccbb573954a48b6254ebc32a6d60d0ef4e222787d729dfd5630a409",
+      "patch": 13,
+      "runtime_sha256": "2771aea95e09dc6549c3a67a99553436f73c0935432978638efa7577d6fce4bf"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "FunkyPluck",
+      "packed_dump_offset": "0x000f5680",
+      "packed_sha256": "ebd18a55ecc478395d97e3546e49cea1adac5495b708ae6a2f3bf49a7e0bd0f5",
+      "patch": 14,
+      "runtime_sha256": "2cd678e19327bb82fed051ea33b604141741a7a26c2b2945fac5c862d9012b58"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "SoniCrystl",
+      "packed_dump_offset": "0x000f5700",
+      "packed_sha256": "afd728adcc96c7dd096eab33a7f60f53ceb011ba404a8ff639f827e54c43579b",
+      "patch": 15,
+      "runtime_sha256": "daba84b0a2dc065391660215ee40cd65d7a3adc1055a6e115d8ca6438b3b88ab"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "RECORDERS",
+      "packed_dump_offset": "0x000f5780",
+      "packed_sha256": "fd3587f0f748dfff2216a5794b8635f93636fb6d78bea0cdad98aa473dd350fc",
+      "patch": 16,
+      "runtime_sha256": "d10ded330582a390880a7d3b4bff6692d2232888d066130a965236c2da22f435"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "FANTASY 2",
+      "packed_dump_offset": "0x000f5800",
+      "packed_sha256": "afc4e5bac3400fa4f0679ac07cf8da7f794d861b253a453ae4bb46fd659fe0b5",
+      "patch": 17,
+      "runtime_sha256": "e6952f1117e009d7d9a72177366b6a2b37deaeb60646bf172ede5c9404db666d"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "PAN FLUTE",
+      "packed_dump_offset": "0x000f5880",
+      "packed_sha256": "86a3e52b5850ad2ad5169137c6a93783816388e017c3351bf017b7ffa3b8565d",
+      "patch": 18,
+      "runtime_sha256": "1697e0ad81ed2217d8ec14ec5a372019dd7880f8b54c1f58c70eccb4c12afd05"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "SOLO TBONE",
+      "packed_dump_offset": "0x000f5900",
+      "packed_sha256": "92d0eba5cabab6c5f99a683dd27742066e5f02e6900953dc8c002f1a02963618",
+      "patch": 19,
+      "runtime_sha256": "69a8a1d332fb7dc5e87bcc483a153821591e25b8561840ba755cd6f046ac8927"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "JAMACA",
+      "packed_dump_offset": "0x000f5980",
+      "packed_sha256": "78a9977c4d758b4179467b6f2b5d2e1f90c8a7b960c0d1240e072fd5c1d5be4c",
+      "patch": 20,
+      "runtime_sha256": "12c0ccac648ff297693ebe75535374f0a14477a46ab4a3b3a6e9b3aa8ce9175a"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "SW. DREAM2",
+      "packed_dump_offset": "0x000f5a00",
+      "packed_sha256": "c63dc68050e5d2a5663806e6a80431e63bd9ca895ebb0f361e8866dbff58ad72",
+      "patch": 21,
+      "runtime_sha256": "cad6d9648854a8f557d62f476e36aa8ae302cb3fb22ba7db53385efac9e7a6f1"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "VOICES",
+      "packed_dump_offset": "0x000f5a80",
+      "packed_sha256": "dd5b2bbc799ef9a8708e04ba6e0ddc8618fa5df76ed283f1c37c4b9bb7d56d9f",
+      "patch": 22,
+      "runtime_sha256": "4f42fa22ce5842941a58f66f78baf3c77007783368b6b86859e40dcaf11aac5f"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "STGS 5THS",
+      "packed_dump_offset": "0x000f5b00",
+      "packed_sha256": "1d02d7484a0da021bc0300be791b5ef30de927936101521c22a8e2fac34c2e56",
+      "patch": 23,
+      "runtime_sha256": "4c43ca5ed93745601b7dc27a59dfb813d053bd0df7125f98b22441a10d70cfd9"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "HORNS",
+      "packed_dump_offset": "0x000f5b80",
+      "packed_sha256": "21af70a1af86a24eb604033431b08f5575faf5f27da760f2ae0022cf3385d050",
+      "patch": 24,
+      "runtime_sha256": "d0e4551ca5459217765eb00b420ad7c7278f222b6642780023ebe93010582132"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "DIRTYFLUTE",
+      "packed_dump_offset": "0x000f5c00",
+      "packed_sha256": "ce3e5d2994386c588d4a405fa733f52eb6affdc8c5e47f750aa5c7a6cbbeae6f",
+      "patch": 25,
+      "runtime_sha256": "244f3a203c31402605565e1eab7815f3dd10a66239ca475574c32f9bfac97a46"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "OCTAVE WAR",
+      "packed_dump_offset": "0x000f5c80",
+      "packed_sha256": "931e3fee38b39334612e066a19f4331c16bd67bd4c31c3732196661673ec927e",
+      "patch": 26,
+      "runtime_sha256": "87ad3247fbcab77005c5c39655cbc313827b258ba621e486691f120ba0056140"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "  CIRRUS",
+      "packed_dump_offset": "0x000f5d00",
+      "packed_sha256": "e6df72a54f9c1da0a97c2ff667915735ba0bb5435f827eec956411ee5f83a016",
+      "patch": 27,
+      "runtime_sha256": "a2036886cad1f88a05a8c5dac2d4cfb82b820075306a51d5f5215c7ee90105ca"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "KotoSawTo",
+      "packed_dump_offset": "0x000f5d80",
+      "packed_sha256": "9c27672e690ad59d998c63d0db561ab89a8384bb34b56b6f27fb5b39c6358ed5",
+      "patch": 28,
+      "runtime_sha256": "2eb85901bc6b25c31553518e0b33922805f1e83dbafcbf6f11ea7fef65674013"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "FUNKY RISE",
+      "packed_dump_offset": "0x000f5e00",
+      "packed_sha256": "ee3e9d7926443781819cb1426bab4376fd00930c40d9abb4d3a4bdae365ea6f0",
+      "patch": 29,
+      "runtime_sha256": "145f6001509530c0c89d84b8dd94aaad338e7396933906adbb17400ef08339df"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "ORG-BRS BC",
+      "packed_dump_offset": "0x000f5e80",
+      "packed_sha256": "e37d50d2fc49a3c5683a0192c9233686a780a676d108cdc321d2a6fe8f1d2987",
+      "patch": 30,
+      "runtime_sha256": "cd96402e8305c8f134ced70a45f1288064ed0fe51363dfe63141fd1b17de7225"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "BRASS EN.2",
+      "packed_dump_offset": "0x000f5f00",
+      "packed_sha256": "8a3457db746475f72d0a1095e8db7dbaa8f6299902ec85ffb73421c0d29a4d3b",
+      "patch": 31,
+      "runtime_sha256": "546b5b6c73d7b03e5b99ad95134d09de82a1a34c3e2f5d9dbc9bf8f6cf5eeb34"
+    },
+    {
+      "bank": 2,
+      "bank_letter": "B",
+      "name": "BRASS EN.6",
+      "packed_dump_offset": "0x000f5f80",
+      "packed_sha256": "8322665e46b48a07b118635914a4d5cea1b73ea9f0d3cd49c370afd50ef75b7d",
+      "patch": 32,
+      "runtime_sha256": "7f593c645d89e3de15b569713e0d6cf81dbbb26fc318cfab4004310450ec7868"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "ANALG STR2",
+      "packed_dump_offset": "0x000f6000",
+      "packed_sha256": "d3724878a31142ba8bae459ac1fdbf0db363d87c3bbfd320edb4ca3c5f721ed6",
+      "patch": 1,
+      "runtime_sha256": "10af416290f45bbf8b979319be995021b137e00c9672111ac500c86fc56d0cae"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "ANALG SYN2",
+      "packed_dump_offset": "0x000f6080",
+      "packed_sha256": "3ee1ac8dd8cafe9799b861633f840e735675fd00d474465249734986917e7490",
+      "patch": 2,
+      "runtime_sha256": "de14cdd058b8b3bca2a2d6028e23ac553fca4c2fe381eb317501a713dc35aa81"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "ANALGSYN15",
+      "packed_dump_offset": "0x000f6100",
+      "packed_sha256": "25098d5c2bd72fcc7b02337e5e678d13cde45371bf257cf3ec2a330499cc69f5",
+      "patch": 3,
+      "runtime_sha256": "4bf5dc54a8d4a65123094f1354d61e800adf63f7d1a4cf721a642deed5aa02ad"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "ANALG SYN9",
+      "packed_dump_offset": "0x000f6180",
+      "packed_sha256": "01778a722cf1a6c71691161e8e9925d2b3d6e3b5634b619c6f3396fd32bdac86",
+      "patch": 4,
+      "runtime_sha256": "42bc0e6731e15a0fa69bd67c17ea4f4f869e791f3b41922b2eae77f01802a243"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "ANALOG-STG",
+      "packed_dump_offset": "0x000f6200",
+      "packed_sha256": "f9490624ed3096a92e5702ab349e12c35c6a08d0f6150fccd4c565602d4709be",
+      "patch": 5,
+      "runtime_sha256": "bee4e14fedb6a0ab1f9f2ac02c9b84d82b65272451028fa45e3f90b842cdae14"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "ANALOG SNC",
+      "packed_dump_offset": "0x000f6280",
+      "packed_sha256": "7dd68fcd2f99c496d3276f170c4749ab552b82f94e0f7f9f5b4e4933b017eba5",
+      "patch": 6,
+      "runtime_sha256": "39e72e396b6a222054478be98741b4e34b660a4d6fd3ffe5b2804fb4c12bbfba"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "Africa   2",
+      "packed_dump_offset": "0x000f6300",
+      "packed_sha256": "7b6f654b92671f158dd8d41f2761ba0f5ccc935a42076bdd8fbca9ea4a6f9bc1",
+      "patch": 7,
+      "runtime_sha256": "8f9b608de8a457ceb485cd0b6a150648b2d5ff94cc53bc224784eea2bacabd1b"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "jl ORGAN B",
+      "packed_dump_offset": "0x000f6380",
+      "packed_sha256": "b34f6f9b711d8698882fbd016e97a11912769bea0dc404b837873a1754273834",
+      "patch": 8,
+      "runtime_sha256": "4f76679038845204ddfc6e5293b7642cb242d3035b3faccd77b8349247f9e454"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "Air*Flute1",
+      "packed_dump_offset": "0x000f6400",
+      "packed_sha256": "ac3e18da9b9c21f9d381f29950f13271e5e792e518dff45f64c5c74ab224b6e6",
+      "patch": 9,
+      "runtime_sha256": "f29032660dc7ddb88c56006940ad3e568c66f793f5c180062fe3bf874920221e"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "AirFltMal3",
+      "packed_dump_offset": "0x000f6480",
+      "packed_sha256": "9a7a803b6cd547a6ae328c530cd7321080867d7082d93bd7cb5eca609d80c280",
+      "patch": 10,
+      "runtime_sha256": "5d1836ee0636d4b18e1864465aad69623f56ea1fc4a264a24e31dab2d4d32479"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "YEAAAHH",
+      "packed_dump_offset": "0x000f6500",
+      "packed_sha256": "d11233563d7e877a6b9308be2b74e291f24f71b3719a394012bad54cb38416a4",
+      "patch": 11,
+      "runtime_sha256": "9c5abf35d8c039be1c8603f4fb5296f7b7d3e28503b330b5d3dd33c1b5a6dff9"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "WineGlass2",
+      "packed_dump_offset": "0x000f6580",
+      "packed_sha256": "81086c8f5775a113d5b58ee4fa8f0ace13faf49780bd39fb493c92d8a4343746",
+      "patch": 12,
+      "runtime_sha256": "1128e14bb32c790278c12f1066abe1c168819b9342e804652afbdca12de4df40"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "Piccolo.J",
+      "packed_dump_offset": "0x000f6600",
+      "packed_sha256": "4d9d5bae847ec12691b3c623b9b073fb75f8709a6c06bda5124c4b67c39c5f8f",
+      "patch": 13,
+      "runtime_sha256": "1342b641a585e492fbf8f345dbf823f247723a2cf39200a934dac9e1c51e2033"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "_ENSEMBLE",
+      "packed_dump_offset": "0x000f6680",
+      "packed_sha256": "e44ef8a50cc4815e40ca92bea861e01a3ee2eb7b9403747fb19787955bdde04f",
+      "patch": 14,
+      "runtime_sha256": "572ebe5a67331459693c9703af9f9e981308e132be8bd12a2eb748144d2045b2"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "_FLUTE   1",
+      "packed_dump_offset": "0x000f6700",
+      "packed_sha256": "563f7a3cb80f6aaca49973fab808cc8f3472180ddec0a3e6f27407ef2c38773e",
+      "patch": 15,
+      "runtime_sha256": "544a862f692ef857081f7910ecc4d000ab5bd3c0876634ba5ec15f71939a2fdc"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "ZAWINAL",
+      "packed_dump_offset": "0x000f6780",
+      "packed_sha256": "18646f1206cfa3c89e2b831ee1e17b20302ee810df434ee27523f448c83df9d0",
+      "patch": 16,
+      "runtime_sha256": "b3e7465fcd9609e33eb1d99ac7339bb452dda5981b1390967b38df2c8f504e60"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "FANTASY 2",
+      "packed_dump_offset": "0x000f6800",
+      "packed_sha256": "afc4e5bac3400fa4f0679ac07cf8da7f794d861b253a453ae4bb46fd659fe0b5",
+      "patch": 17,
+      "runtime_sha256": "e6952f1117e009d7d9a72177366b6a2b37deaeb60646bf172ede5c9404db666d"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "YUBAE",
+      "packed_dump_offset": "0x000f6880",
+      "packed_sha256": "5418b04bc21e4227277ccfd9d1d13966528244a716717e0c065adee244081da0",
+      "patch": 18,
+      "runtime_sha256": "8e5a7aad41c99d6acf74028f387ba630259301cc73f08a4a987be7f561fd032b"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "YO VOICE 1",
+      "packed_dump_offset": "0x000f6900",
+      "packed_sha256": "d832fd5ab08cb73feb37bd7693388d3b5dca9db5ca0a54fa69d2a73d949f21fe",
+      "patch": 19,
+      "runtime_sha256": "a17f23c7e0f13f02680e97a7f31b7c395e9dc25f871bdf688ad9103938e69c39"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "Yakumo-bMS",
+      "packed_dump_offset": "0x000f6980",
+      "packed_sha256": "013a8966a527ee8b881e6b0e564e8f9cf260a14ac7f62b00902c7fa926b7d40e",
+      "patch": 20,
+      "runtime_sha256": "2830cfd8f63fd78d049b45c53254f43ad4c551838669807fc22a107f073c03c3"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "SW. DREAM2",
+      "packed_dump_offset": "0x000f6a00",
+      "packed_sha256": "c63dc68050e5d2a5663806e6a80431e63bd9ca895ebb0f361e8866dbff58ad72",
+      "patch": 21,
+      "runtime_sha256": "cad6d9648854a8f557d62f476e36aa8ae302cb3fb22ba7db53385efac9e7a6f1"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "WhislrsCus",
+      "packed_dump_offset": "0x000f6a80",
+      "packed_sha256": "09898ff17d86e3aabaa85e82122e4a7461c360fef4ace12dc9d8fe78e74c199e",
+      "patch": 22,
+      "runtime_sha256": "330ea56ee5b6671a75527ffb89d0e73f61a76c67afd71bea9d53bd103b339624"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "Whistler 2",
+      "packed_dump_offset": "0x000f6b00",
+      "packed_sha256": "a612174b8a96273ad20e717559de92ced628bbb363292451128d313fb284447d",
+      "patch": 23,
+      "runtime_sha256": "b67f4f9c5b4200606e80a9744d633bb06cb60428e324eacf4c7e269e91ecaf06"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "Warm\"Bell\"",
+      "packed_dump_offset": "0x000f6b80",
+      "packed_sha256": "9145dc4dace9f42450c3540dba49aa78bb5b574e151b55a3e3d3f239d6443638",
+      "patch": 24,
+      "runtime_sha256": "efbe302aacd631f593cddbd7051d252dd4da5578665158af1b32c640ecabb1f1"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "DIRTYFLUTE",
+      "packed_dump_offset": "0x000f6c00",
+      "packed_sha256": "ce3e5d2994386c588d4a405fa733f52eb6affdc8c5e47f750aa5c7a6cbbeae6f",
+      "patch": 25,
+      "runtime_sha256": "244f3a203c31402605565e1eab7815f3dd10a66239ca475574c32f9bfac97a46"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "WINDFLUTE",
+      "packed_dump_offset": "0x000f6c80",
+      "packed_sha256": "9dc9e0ecd00934e8d753118632bb1c64c733baee51354a810abd9e13f6153c03",
+      "patch": 26,
+      "runtime_sha256": "ee9e88a15e37d2745110b7e517f642a5d0e4ff591ecea8cefe119a6d07813061"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "WINDPIPE",
+      "packed_dump_offset": "0x000f6d00",
+      "packed_sha256": "645f86334ee50b845fea886dd9579aea3a7de1f66fcb39ceac0f6d6dc4a9be64",
+      "patch": 27,
+      "runtime_sha256": "d5f285b3c3351985342882f01f152adbbffa081396fc705e5b1f61b8e2b72443"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "WHISTLES",
+      "packed_dump_offset": "0x000f6d80",
+      "packed_sha256": "18f755ca8be8784a3ac1f1771f20be803dfc9144d9b53ec970954c6315f3022a",
+      "patch": 28,
+      "runtime_sha256": "53ca47bfdf8100bac6d917b2b9b3729aa33cf979393893dbb55a87e5ab48e802"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "VOX SONGS",
+      "packed_dump_offset": "0x000f6e00",
+      "packed_sha256": "8a4c3de456dfd99aa91e910b20678a849dc32b421fd475d75b67033d296587dc",
+      "patch": 29,
+      "runtime_sha256": "818b17ccc9c39ec7e3a8784d5fec10a50afd293e64d31f8dccbf57a690435123"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "Violins",
+      "packed_dump_offset": "0x000f6e80",
+      "packed_sha256": "a396772660b86a6184a124c7ed47054c1bbaaff417cb8a0564a217d920725446",
+      "patch": 30,
+      "runtime_sha256": "a2198f18377b662fb1ae1a62d3d4c00d9e1afcf1c3646c716af4d7d8a654be2e"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "VOICE   6",
+      "packed_dump_offset": "0x000f6f00",
+      "packed_sha256": "37d85a7efee98bb19e236a4ca7fe79a52fd2a1ca49cc3c6fcddd3b9645f7e4ad",
+      "patch": 31,
+      "runtime_sha256": "b5e851d55a9a7226933cb8542199f5545e9ccda4216927bc9a532118c47e7b23"
+    },
+    {
+      "bank": 3,
+      "bank_letter": "C",
+      "name": "VIOLONCEL1",
+      "packed_dump_offset": "0x000f6f80",
+      "packed_sha256": "34966e4f9f7d7f26564e4a947baf7482fcc22b31d0f3020692e0b491ea64f333",
+      "patch": 32,
+      "runtime_sha256": "9d0d8b1b2f95a7f7efdc4780f9ea9f1efd639c90d42a9c8540b52a741edc13d2"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "BUZZ BASS",
+      "packed_dump_offset": "0x000f7000",
+      "packed_sha256": "c1c4588cb0396ba257e95d31a022e339564e337b41c65adb3ab0a1c50b863b18",
+      "patch": 1,
+      "runtime_sha256": "e2beb705a28e83940b2708f8ba0976e8c093ca12f45d0045f290b1589760d76b"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "Bang ?????",
+      "packed_dump_offset": "0x000f7080",
+      "packed_sha256": "4fac39e2397e8f1d92ddc2039e0591e7f5c790eb9a2a99759b5c7e053c01a460",
+      "patch": 2,
+      "runtime_sha256": "5dab954752769609d64dd162360182138c8bc399030b88cf8d61b76fb7208f97"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "BASSE BIEN",
+      "packed_dump_offset": "0x000f7100",
+      "packed_sha256": "ec18f9341efeb143e27dea525f591b9dc39a46da1ea4d090624fbed929b74166",
+      "patch": 3,
+      "runtime_sha256": "3e140cc8613ec555fcae2109d216c5e838d3193b305352992dc4062556af8b60"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "BASS-THING",
+      "packed_dump_offset": "0x000f7180",
+      "packed_sha256": "9c7007a232cc58293f67b6c3aac44ca568d18df205c5c572b76108201c93d665",
+      "patch": 4,
+      "runtime_sha256": "5f60dc8f39b4ec43dc4368050701550ca56581948451f0c8083ace61e9d98dc7"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "BASS SLAP",
+      "packed_dump_offset": "0x000f7200",
+      "packed_sha256": "f76a6c7d78a5352d4ef4243d745b66d9f462d068378d8c0277f91dd26514b649",
+      "patch": 5,
+      "runtime_sha256": "5da8be28b3468a534aa488b02d47522df36e6b5b02b14f992bcb869fc4bb9ecc"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "BEAMER 2",
+      "packed_dump_offset": "0x000f7280",
+      "packed_sha256": "c22df3ab18b8a375b355d7ca3041a796ac37680e343fcb9a31fa837a0827a14b",
+      "patch": 6,
+      "runtime_sha256": "d38dfdac699a0fadbf7c99c98103a5f2bf7297a6746e94525d7eca3472223d40"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "Onglon",
+      "packed_dump_offset": "0x000f7300",
+      "packed_sha256": "d8bc7cee6940ea1494e6e8b443884389f2426d0a2bd9ec4d99b4d919af321d21",
+      "patch": 7,
+      "runtime_sha256": "7727f3b7856a73b3c32bca1b6e15ed74672d6dc97e00641761ef14237b0d8a44"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "SOFTSTEEL",
+      "packed_dump_offset": "0x000f7380",
+      "packed_sha256": "ed7ed5bb4f8d19853982b2d034c10f6f51b98ed72d22faa013ca28aa141b2943",
+      "patch": 8,
+      "runtime_sha256": "8b0463a7b52857203105525af3456636b3a427e5db5f1eb75ea687bd6677bbbb"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "BASS-ROADS",
+      "packed_dump_offset": "0x000f7400",
+      "packed_sha256": "a086dec6ed80f04ef9b2c01815f0ba4a19ce678c2c5051a12b7f023525fca964",
+      "patch": 9,
+      "runtime_sha256": "1602db2d94930482f631d087bf4b645d626f12b88da1e8deee21202210b7177c"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "E.ORGAN 1",
+      "packed_dump_offset": "0x000f7480",
+      "packed_sha256": "31ea6b2e6e27a1b245d1cb135e3e9a5f0fb9edbd47d578009adac85ce1d510f8",
+      "patch": 10,
+      "runtime_sha256": "33dd55bbc6ebc2361260b9a581203f682b49388f9e4284b95de15136b630a178"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "YEAAAHH",
+      "packed_dump_offset": "0x000f7500",
+      "packed_sha256": "d11233563d7e877a6b9308be2b74e291f24f71b3719a394012bad54cb38416a4",
+      "patch": 11,
+      "runtime_sha256": "9c5abf35d8c039be1c8603f4fb5296f7b7d3e28503b330b5d3dd33c1b5a6dff9"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "HAND DRUM",
+      "packed_dump_offset": "0x000f7580",
+      "packed_sha256": "a64fc8623c877b16ecc8eb0259f14eb2b58e46e92fcd073849bbddf16b060452",
+      "patch": 12,
+      "runtime_sha256": "98bc86e7d9625c837ee6c07fa3f01cbd6079960c9d1071017cf51194aa48c1bf"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "HAND CLAP1",
+      "packed_dump_offset": "0x000f7600",
+      "packed_sha256": "949561a0add95b226e64d213a05913aa57baa0fed687a672b79760d8cb2f5dbc",
+      "patch": 13,
+      "runtime_sha256": "452efa8d41eecc7a5c57f1dfdecc072e1bc4266020cfe824edbc1b87415c2e38"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "Mooger #1",
+      "packed_dump_offset": "0x000f7680",
+      "packed_sha256": "cf44a49e6157945f70bb144e42d7add0d88ee8ef1f2658ef8ab4a657e6e6a77c",
+      "patch": 14,
+      "runtime_sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "Moog Solo2",
+      "packed_dump_offset": "0x000f7700",
+      "packed_sha256": "dad85349ef070be278b143924d54522398b1506b581532323291321f053f2aa6",
+      "patch": 15,
+      "runtime_sha256": "cfa79fc5ba72bcd50b0465a116e109da90ca5dcdcdc40bc89cdad218ee468417"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "Mooger Low",
+      "packed_dump_offset": "0x000f7780",
+      "packed_sha256": "527111c46dc5042baa740381fddac987bbac40a7b0b9ad22e68f75d4e58802ca",
+      "patch": 16,
+      "runtime_sha256": "a28849a192d5dad000622c8aa749baa6508ad73e2c1cc6659b33a0419b6a0e88"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "POLY.SYN 3",
+      "packed_dump_offset": "0x000f7800",
+      "packed_sha256": "88c5e8f12975015747afaf683b835c9c8458e1908f1d6f264533a48cd9c2fe56",
+      "patch": 17,
+      "runtime_sha256": "7573cab64080537492f3b324333d7b1813939ef9b718b3f0724bf2483cead848"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "POPCON BAS",
+      "packed_dump_offset": "0x000f7880",
+      "packed_sha256": "f1f67e0befbf4f509f60649cc2f4d5c27ef4b5205c3d9e9e1854e06687ff236c",
+      "patch": 18,
+      "runtime_sha256": "62d5e15caa91d1dd555cc1a19676efe3fc9d72291eb3cc4eeb80850e02cd899f"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "PROPH.BR.2",
+      "packed_dump_offset": "0x000f7900",
+      "packed_sha256": "79544331b8c9366ec900bba8c74316432ebb79ebccc1bfeed4b596096fb1828b",
+      "patch": 19,
+      "runtime_sha256": "a962aa4869a8f917c989310c0bc1854bc077089d63eba455bd300fc77c8afdf6"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "PROPHET 1",
+      "packed_dump_offset": "0x000f7980",
+      "packed_sha256": "66f9ff843e43b20540cad30cb3f040c37a375dd8b7a64dacfb9fe1de9d6e74fa",
+      "patch": 20,
+      "runtime_sha256": "2faff9edf09438ce519bb6219c049768e75073e9199a50160ef47b9f5dc5eaf4"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "SOFT BASS",
+      "packed_dump_offset": "0x000f7a00",
+      "packed_sha256": "18b550d2e3113f0f47b7ca7d8c42a8b719c04fe3b419f1bac60ef14f1167fb58",
+      "patch": 21,
+      "runtime_sha256": "30b54d5597a4373da60a8457970459ce41f2ff81749067811138e1cee5d69501"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "BASS    1",
+      "packed_dump_offset": "0x000f7a80",
+      "packed_sha256": "b7383911bbcebd370d0691f5fb91a8081a843c65e6644ad98af79b555095d55f",
+      "patch": 22,
+      "runtime_sha256": "73041cc7dfac33acc72c4d5bd2a335916d817f718a830a59b9fe74b1392524bf"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "BASS    7",
+      "packed_dump_offset": "0x000f7b00",
+      "packed_sha256": "03923a0114f781a6bb4688d6dc5ef45b09cf4b18fd92818628749895b402e68a",
+      "patch": 23,
+      "runtime_sha256": "4e9a51230019ef2187539463bbd8e6cc9726845599bb2c7a09283a6b26df391b"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "BASS    8",
+      "packed_dump_offset": "0x000f7b80",
+      "packed_sha256": "85bbf2c3bcf117f92aa0b1db7a6efa03df533b3ef6ded6703fbbd21d51aa9fdc",
+      "patch": 24,
+      "runtime_sha256": "f8c522c5958248c250cd929676650412f5e2230318b6f3d8e563c37564a0514f"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "BASS 1 JL",
+      "packed_dump_offset": "0x000f7c00",
+      "packed_sha256": "1345564383ccaea65da1c9922f458f05d9d33554a468a50a3ef3f1ca903fdf48",
+      "patch": 25,
+      "runtime_sha256": "1ca7784d24e90416952b77228d7553c8e227447fd01b78a35ed33f43105e0f63"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "BASS BASS",
+      "packed_dump_offset": "0x000f7c80",
+      "packed_sha256": "85ad702a5f93628d8cd37dc63a7849c87e4ef1f666bc335e29e80160b93bd183",
+      "patch": 26,
+      "runtime_sha256": "3b9eefa7d55d8027d58e1775dcd9e3cad5ebf0b50975f1912d8ee186a21fa998"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "BASS FLANG",
+      "packed_dump_offset": "0x000f7d00",
+      "packed_sha256": "3ce92e83e1e285f8027202fe36df1de16b9548d37ec5766443bdd7e67ae1f24e",
+      "patch": 27,
+      "runtime_sha256": "9ef33172f2ad752b7b4f859f8940730b531fca2023efe93f5c85fa0a74f68671"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "BASS CLARI",
+      "packed_dump_offset": "0x000f7d80",
+      "packed_sha256": "a131b3c448338ad34e76d8c538bc01ed024c1f046000c22f29b6dda70f680759",
+      "patch": 28,
+      "runtime_sha256": "86a4fde1fa64831a1af1d3b7c02729bb189be335b3b9af7be65499b4a45b8225"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "BASS FLATW",
+      "packed_dump_offset": "0x000f7e00",
+      "packed_sha256": "21a4f8fb83c18a1334b1d5e4d85c75be9d3f632d713e6a979ca0881a35a2f01e",
+      "patch": 29,
+      "runtime_sha256": "25795e178879a9b6528d9abea6ffdc0b7b52afb446ead32064319554ffd24426"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "BASSOON",
+      "packed_dump_offset": "0x000f7e80",
+      "packed_sha256": "66fd30c80736ce7f21e136ecf0d44a01c96616730539867644fc0c4190315f85",
+      "patch": 30,
+      "runtime_sha256": "b174d2f63e90a98801d430a5c29d637f94a369081ab3967f437c06d9b9847dc5"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "BASSOON 2",
+      "packed_dump_offset": "0x000f7f00",
+      "packed_sha256": "7a460fe478cbf54e8ba91da701f0cc383a78e096c52a0afa329589e7bf8c7af3",
+      "patch": 31,
+      "runtime_sha256": "919f9cad9a6fc78ea8424b6c4b160fb43de78b64838df66c231589377a8368fb"
+    },
+    {
+      "bank": 4,
+      "bank_letter": "D",
+      "name": "BASSMOOG A",
+      "packed_dump_offset": "0x000f7f80",
+      "packed_sha256": "1f8db727d407a3c4548e2b71100612e5c9693922d36a0c6d777ed4c89cdbcf09",
+      "patch": 32,
+      "runtime_sha256": "6600fbe14143cb056c189c3b1853406b006aff2bd21c87c289c4acfdb7de2d4e"
+    }
+  ]
+}
