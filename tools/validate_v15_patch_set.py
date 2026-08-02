@@ -29,13 +29,13 @@ def require(condition: bool, message: str) -> None:
         raise SystemExit(f"FAIL: {message}")
 
 
-def run_build(output: Path) -> None:
+def run_build(output: Path, config: Path = CONFIG) -> None:
     subprocess.run([
         sys.executable,
         str(BUILDER),
         "build",
         str(DUMP),
-        str(CONFIG),
+        str(config),
         str(output),
     ], check=True, cwd=ROOT)
 
@@ -79,6 +79,12 @@ def main() -> int:
     duplicate_note = json.loads(json.dumps(config))
     duplicate_note["slots"][0]["note"] = duplicate_note["slots"][1]["note"]
     expect_config_rejected(duplicate_note, "duplicate note")
+    below_note = json.loads(json.dumps(config))
+    below_note["slots"][0]["note"] = -1
+    expect_config_rejected(below_note, "note below MIDI range")
+    above_note = json.loads(json.dumps(config))
+    above_note["slots"][0]["note"] = 128
+    expect_config_rejected(above_note, "note above MIDI range")
 
     voices = {(voice["bank"], voice["patch"]): voice for voice in catalog["voices"]}
     require(voices[(4, 1)]["name"] == "BUZZ BASS", "Bank D patch 1 identity")
@@ -104,6 +110,11 @@ def main() -> int:
         require(len(manifest["slots"]) == 16, "manifest slot count")
         require([slot["slot"] for slot in manifest["slots"]] == list(range(16)), "slot indices")
         require([slot["note"] for slot in manifest["slots"]] == list(range(36, 52)), "slot notes")
+        note_map = (first / "note-map.bin").read_bytes()
+        require(len(note_map) == 128, "note map size")
+        require(note_map[36:52] == bytes(range(16)), "example note-to-slot map")
+        require(all(value == 0xFF for value in note_map[:36] + note_map[52:]),
+                "example unmapped notes")
         require((first / "runtime-slots.bin").stat().st_size == 0xA00, "runtime image size")
         require((first / "sequential-product-packets.syx").stat().st_size == 16 * 163,
                 "packet stream size")
@@ -116,6 +127,26 @@ def main() -> int:
             require(len(packet) == 163, f"slot {slot['slot']} packet length")
             require(packet[:6] == bytes.fromhex("f0430000011b") and packet[-1] == 0xF7,
                     f"slot {slot['slot']} packet framing")
+
+    arbitrary_notes = [45, 0, 127, 36, 84, 7, 120, 51, 24, 96, 12, 64, 108, 60, 72, 61]
+    arbitrary = json.loads(json.dumps(config))
+    arbitrary["set_name"] = "ARBITRARY MIDI NOTES VALIDATION"
+    for slot, note in zip(arbitrary["slots"], arbitrary_notes, strict=True):
+        slot["note"] = note
+    with tempfile.TemporaryDirectory(prefix="smk37-v15-patch-set-arbitrary-") as temp_name:
+        temp = Path(temp_name)
+        config_path = temp / "config.json"
+        output = temp / "output"
+        config_path.write_text(json.dumps(arbitrary), encoding="utf-8")
+        run_build(output, config_path)
+        manifest = json.loads((output / "manifest.json").read_text(encoding="utf-8"))
+        require([slot["note"] for slot in manifest["slots"]] == arbitrary_notes,
+                "arbitrary config/UI slot ordering")
+        note_map = (output / "note-map.bin").read_bytes()
+        for slot_index, note in enumerate(arbitrary_notes):
+            require(note_map[note] == slot_index, f"arbitrary note {note} mapping")
+        require(sum(value != 0xFF for value in note_map) == 16,
+                "arbitrary map publishes exactly 16 notes")
 
     print("v15 patch-set compiler and catalog: PASS")
     print("offline only; no firmware modification or device access")

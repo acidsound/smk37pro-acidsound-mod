@@ -5,7 +5,7 @@ The user-facing bank and patch numbers are strictly 1-based:
 
 - bank: 1..4 (A..D)
 - patch: 1..32
-- pad notes: 36..51
+- pad notes: any 16 distinct MIDI notes in 0..127
 
 This is an offline host-side compiler. It does not modify firmware or access a
 USB device. Every input full-flash dump is exact-SHA gated to the verified v15
@@ -34,8 +34,9 @@ PATCHES_PER_BANK = 32
 PACKED_VOICE_SIZE = 0x80
 RUNTIME_VOICE_SIZE = 0x9C
 SLOT_STRIDE = 0xA0
-PAD_NOTE_FIRST = 36
-PAD_NOTE_LAST = 51
+MIDI_NOTE_MIN = 0
+MIDI_NOTE_MAX = 127
+UNMAPPED_SLOT = 0xFF
 PRODUCT_PACKET_HEADER = bytes.fromhex("f0430000011b")
 PRODUCT_PACKET_SIZE = 163
 
@@ -92,7 +93,7 @@ def catalog(dump: bytes) -> dict[str, object]:
     return {
         "format": CATALOG_FORMAT,
         "source_dump_sha256": sha256(dump),
-        "numbering": "bank and patch are 1-based; runtime slot index is note-36",
+        "numbering": "bank and patch are 1-based; MIDI note is 0..127",
         "factory_table_offset": f"0x{FACTORY_TABLE_OFFSET:08x}",
         "voice_count": len(voices),
         "voices": voices,
@@ -111,26 +112,26 @@ def load_config(path: Path) -> dict[str, object]:
         note = slot.get("note")
         bank = slot.get("bank")
         patch = slot.get("patch")
-        require(isinstance(note, int) and PAD_NOTE_FIRST <= note <= PAD_NOTE_LAST,
-                f"slot {index} note must be {PAD_NOTE_FIRST}..{PAD_NOTE_LAST}")
+        require(isinstance(note, int) and MIDI_NOTE_MIN <= note <= MIDI_NOTE_MAX,
+                f"slot {index} note must be {MIDI_NOTE_MIN}..{MIDI_NOTE_MAX}")
         require(isinstance(bank, int) and 1 <= bank <= BANK_COUNT,
                 f"slot {index} bank must be 1..{BANK_COUNT}")
         require(isinstance(patch, int) and 1 <= patch <= PATCHES_PER_BANK,
                 f"slot {index} patch must be 1..{PATCHES_PER_BANK}")
         notes.append(note)
-    require(sorted(notes) == list(range(PAD_NOTE_FIRST, PAD_NOTE_LAST + 1)),
-            "slots must cover each MIDI note 36..51 exactly once")
+    require(len(set(notes)) == 16, "slots must contain 16 distinct MIDI notes")
     return value
 
 
 def compile_set(dump: bytes, config: dict[str, object], output_dir: Path) -> dict[str, object]:
     output_dir.mkdir(parents=True, exist_ok=True)
-    slots_by_note = sorted(config["slots"], key=lambda item: item["note"])
+    slots_in_config_order = config["slots"]
     runtime_image = bytearray()
+    note_map = bytearray((UNMAPPED_SLOT,)) * 128
     packet_stream = bytearray()
     manifest_slots: list[dict[str, object]] = []
 
-    for slot_index, slot in enumerate(slots_by_note):
+    for slot_index, slot in enumerate(slots_in_config_order):
         note = slot["note"]
         bank = slot["bank"]
         patch = slot["patch"]
@@ -152,6 +153,7 @@ def compile_set(dump: bytes, config: dict[str, object], output_dir: Path) -> dic
 
         runtime_image += runtime
         runtime_image += bytes((1, 1, 0, 0))  # valid, generation, lock, reserved
+        note_map[note] = slot_index
         require(len(runtime_image) == (slot_index + 1) * SLOT_STRIDE,
                 "runtime slot stride mismatch")
 
@@ -172,10 +174,15 @@ def compile_set(dump: bytes, config: dict[str, object], output_dir: Path) -> dic
         })
 
     runtime_path = output_dir / "runtime-slots.bin"
+    note_map_path = output_dir / "note-map.bin"
     stream_path = output_dir / "sequential-product-packets.syx"
     runtime_path.write_bytes(runtime_image)
+    note_map_path.write_bytes(note_map)
     stream_path.write_bytes(packet_stream)
     require(len(runtime_image) == 16 * SLOT_STRIDE, "runtime image must be 0xa00 bytes")
+    require(len(note_map) == 128, "note map must be 128 bytes")
+    require(sum(value != UNMAPPED_SLOT for value in note_map) == 16,
+            "note map must publish exactly 16 slots")
     require(len(packet_stream) == 16 * PRODUCT_PACKET_SIZE, "packet stream size mismatch")
 
     manifest = {
@@ -186,19 +193,22 @@ def compile_set(dump: bytes, config: dict[str, object], output_dir: Path) -> dic
         "numbering": {
             "bank": "1..4 (A..D)",
             "patch": "1..32",
-            "pad_note": "36..51",
-            "slot_index": "note-36, 0..15",
+            "midi_note": "0..127; exactly 16 distinct configured notes",
+            "slot_index": "config order, 0..15; use this order for the 4x4 UI grid",
         },
         "layout": {
             "slot_count": 16,
             "runtime_voice_size": RUNTIME_VOICE_SIZE,
             "slot_stride": SLOT_STRIDE,
             "runtime_image_size": len(runtime_image),
+            "note_map_size": len(note_map),
+            "unmapped_note_value": UNMAPPED_SLOT,
             "metadata_per_slot": ["valid", "generation", "lock", "reserved"],
             "product_packet_size": PRODUCT_PACKET_SIZE,
             "sequential_packet_stream_size": len(packet_stream),
         },
         "runtime_image": {"file": runtime_path.name, "sha256": sha256(runtime_image)},
+        "note_map": {"file": note_map_path.name, "sha256": sha256(note_map)},
         "sequential_packet_stream": {"file": stream_path.name, "sha256": sha256(packet_stream)},
         "slots": manifest_slots,
     }
