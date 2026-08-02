@@ -1,0 +1,75 @@
+{
+  "format": "smk37-s1c2-fixed-selector-checkpoint-v1",
+  "status": "BLOCK_FOR_FLASH_CANDIDATE_PASS_OFFLINE_DESIGN_CHECKPOINT",
+  "scope": "official v15 plus exact live-PASS H2/S1-C1 evidence only; no device, flash, OTA, reset, app candidate, or FWSC candidate",
+  "notes": {
+    "note0": 36,
+    "note1": 45,
+    "midi_channel": 10,
+    "channel_nibble": 9,
+    "physical_pad_order_assumption": false
+  },
+  "objects": [
+    {
+      "note": 36,
+      "factory_bank": 4,
+      "factory_bank_letter": "D",
+      "factory_patch": 12,
+      "factory_name": "HAND DRUM",
+      "path": "objects/note36-bankD12-HAND_DRUM.runtime156.bin",
+      "bytes": 156,
+      "sha256": "98bc86e7d9625c837ee6c07fa3f01cbd6079960c9d1071017cf51194aa48c1bf"
+    },
+    {
+      "note": 45,
+      "factory_bank": 4,
+      "factory_bank_letter": "D",
+      "factory_patch": 14,
+      "factory_name": "Mooger #1",
+      "path": "objects/note45-bankD14-Mooger_1.runtime156.bin",
+      "bytes": 156,
+      "sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275"
+    }
+  ],
+  "hooks": {
+    "note_off": {
+      "callsite": "0x0201c63e",
+      "adapter": "0x0201e13e",
+      "note_register": "r5 = msg[1]",
+      "destination": "r0 = per-voice destination",
+      "stock_source": "r1 = r8 = 0x01c34c74",
+      "count": "r2 = 0x9c",
+      "channel": "r9 = status & 0x0f"
+    },
+    "note_on": {
+      "callsite": "0x0201c67c",
+      "adapter": "0x0201e142",
+      "note_register": "r6 = msg[1]",
+      "velocity_register": "r5 = msg[2]",
+      "destination": "r0 = per-voice destination",
+      "stock_source": "r1 = r8 = 0x01c34c74",
+      "count": "r2 = 0x9c",
+      "channel": "r9 = status & 0x0f"
+    }
+  },
+  "pi32_budget": {
+    "selector_code_bytes": 58,
+    "object0_bytes": 156,
+    "object1_bytes": 156,
+    "selector_plus_objects_bytes": 370,
+    "h2_producer_preserve_bytes": 74,
+    "selector_plus_objects_plus_h2_producer_bytes": 444
+  },
+  "placement_decision": {
+    "current": "BLOCK",
+    "reason": "No positively owned executable/data placement is proven for 58 selector bytes plus 312 object bytes while preserving H2 behavior; app tail is cfg_tool.bin and JLFS-preserving append capacity is zero.",
+    "candidate_built": false
+  },
+  "required_runtime_behavior": [
+    "Ch10 note 36 Note On and Note Off select object 0",
+    "Ch10 note 45 Note On and Note Off select object 1",
+    "Ch10 all other notes fall back to stock/H2 source",
+    "Ch1 and non-Ch10 fall back unchanged",
+    "H2 accepted-product behavior is preserved only if 0x0201e1a2..0x0201e1ec remains byte-for-byte unchanged"
+  ]
+}
