@@ -21,6 +21,14 @@
 추정 기반 v15 M01~M08 실험은 폐기되었다. 공식 v15 패키지와 장치 기준선,
 원본 추출·검증 도구 및 복구 수단만 유효한 출발점으로 취급한다.
 
+현재 mod 가능 범위와 정적·빌드·실기 검증 상태는
+[`mod-capability-matrix.md`](mod-capability-matrix.md)에서 추적한다. 문서의
+주소, SHA-256, R01 manifest, 보호 영역과 체크 상태는 다음 명령으로 대조한다.
+
+```sh
+python3 tools/validate_v15_mod_capabilities.py
+```
+
 The current clean-room PI32 and USB MIDI result is documented in
 [`evidence.md`](evidence.md). Reproduction artifacts are:
 
@@ -31,5 +39,6 @@ The current clean-room PI32 and USB MIDI result is documented in
 - [`V15Pi32Xrefs.java`](V15Pi32Xrefs.java): heuristic PI32 disassembly, call
   accounting, and USB/MIDI xref probe.
 
-No receive/dispatch entry point was identified defensibly. No patch or flash
-artifact was produced.
+초기 clean-room PI32 분석만으로는 receive/dispatch entry point를 방어적으로
+식별하지 못했다. 이후 공식 SDK signature와 공식 v15 내부 데이터 흐름을 별도로
+교차검증해 R01 정적 후보를 만들었지만, R01은 아직 실제 장치에 Flash하지 않았다.
