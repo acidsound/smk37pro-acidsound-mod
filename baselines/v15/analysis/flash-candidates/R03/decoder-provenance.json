@@ -1,19 +1,20 @@
 {
   "format": "smk37-v15-r03-pi32-decode-v1",
-  "candidate_app_sha256": "1fff37674f4bb1d5b988dc1415ab29c7114bbcad9e12bfcd7cec9b687d1f6ecb",
+  "candidate_app_sha256": "3ff9c46b9686c0cea1348a11bed553ebd2d677e2d3452a0f436ce14f3ba5c788",
   "runtime_base": "0x02000000",
   "language": "pi32v2:LE:32:default",
-  "decoder": "Quarkslab PI32v2 Ghidra processor in the pinned local ghidra-quarkslab run",
-  "script": "V15DecoderAnalysis.java with an exact candidate SHA-256 gate",
-  "source_listing": "clean local Ghidra project output, reduced to the retained trace below",
+  "decoder": "Quarkslab PI32v2 Ghidra processor in a clean exact-hash run",
+  "script": "V15DecoderAnalysis.java with exact candidate SHA-256 gate",
+  "source_listing": "/Users/spectrum/jcode-r03-ghidra-3ff9c4/output/r03-exhaustive-listing.tsv",
   "retained_trace": "decoder-trace.tsv",
-  "retained_rows": 124,
-  "scope": "patched boot BSS instruction, Note On/Off callsites, replacement wrappers, atomic lock/unlock, serialized producer, accepted SysEx callsites, and disabled SAVE caller",
-  "result": "all patched branch and call targets match the builder layout; Quarkslab decodes csync/testset but omits the lock loop's 0x40e8fdff instruction, which is separately gated by the pinned SDK source and official PI32 objdump object",
+  "retained_rows": 139,
+  "scope": "boot BSS and heap bounds, Note On/Off wrappers, nonblocking producer, accepted product-packet callers, and no-write SAVE rejection",
+  "result": "all retained patched instructions, branch targets, calls, atomic success path, publication order, unlock, and SAVE exit match the builder layout",
   "known_decoder_gap": {
-    "address": "0x0201e1a2",
-    "bytes": "40e8fdff",
-    "official_objdump": "ifeq goto -6 <r03_lock+0x2>",
-    "validation": "exact source/object hashes and embedded atomic body are checked by tools/validate_v15_r03.py"
+    "address": "0x0201e1ac",
+    "bytes": "40e81b00",
+    "official_objdump": "40 e8 03 00 = ifeq goto forward failure path",
+    "candidate_target": "0x0201e1e6 producer return without unlock or spin",
+    "validation": "the same official-toolchain opcode is displacement-adjusted by the tested builder encoder and checked byte-for-byte"
   }
 }

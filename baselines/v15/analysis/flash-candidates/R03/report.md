@@ -4,124 +4,119 @@ Date: 2026-08-02
 
 ## Decision
 
-**Atomic offline integrity: PASS. Live flash: pending independent safety review.**
+**Offline artifact and concurrency validation: PASS. Live flash remains gated by
+an independent review of this exact candidate.**
 
-R03 replaces R02's transient SysEx workspace dependency with a fixed, boot-zeroed,
-allocator-excluded `0xa0`-byte RAM prefix. The design is deliberately one-shot:
-the first accepted product packet publishes a 156-byte voice and sets `valid=1`
-last. Later packets cannot replace the snapshot until reboot. This removes the
-retired active-count lifecycle and its CC120/CC123 or missing-Note-Off deadlock.
+R03 keeps R02's proven Ch1/Ch10 routing behavior but copies the first accepted
+product voice into a boot-zeroed, allocator-excluded 160-byte RAM prefix. It is
+one-shot per boot. Later product packets cannot replace the snapshot.
 
-This report does not claim live success. The device was not accessed while these
-artifacts were built or validated.
+No live-functional claim is made by this report.
 
 ## Exact artifacts
 
-- app SHA-256: `1fff37674f4bb1d5b988dc1415ab29c7114bbcad9e12bfcd7cec9b687d1f6ecb`
-- FWSC SHA-256: `0ed23e567a623db4b143fa30a6846626d746098ed126c149ac724c0fab6c1937`
-- guarded rollback ZIP SHA-256: `6396f253825d067986131d830bcca8cce16ff9ca39b21c4220369958e90344f1`
+- app SHA-256: `3ff9c46b9686c0cea1348a11bed553ebd2d677e2d3452a0f436ce14f3ba5c788`
+- FWSC SHA-256: `001582c097277d6a4a619ed407cf121d5f30097ef82f312d53a2e45c4a9a5a62`
+- exact uploader source SHA-256: `d0c2afdff619d907a68c12abed55269e38e00b17c0248f3039e7674c8a1f7eac`
+- rollback v3 ZIP SHA-256: `15dd52dbb18e9267cbc7f3ea7f1c493ba14a9501ca5c073d06f19c6f07cb8ad9`
 - changed Flash sectors: `0x04000`, `0x20000`, `0x22000`, `0x2a000`, `0x62000`
-- protected prefix `0x0000..0x3fff`: unchanged
+- protected Flash prefix `0x0000..0x3fff`: unchanged
 
-## RAM ownership construction
+## Owned RAM
 
-The official SDK `sbrk()` relocation-aware match at `0x0205e9da` recovered:
-
-- stock `HEAP_BEGIN = 0x01c46520`
-- `HEAP_END = 0x01c7fd30`
-- all 80 non-relocation bytes exact
-
-R03 applies both required patches:
+The official SDK `sbrk()` match at `0x0205e9da` recovered stock
+`HEAP_BEGIN=0x01c46520` and `HEAP_END=0x01c7fd30` with 80 exact non-relocation
+bytes. R03 changes both required bounds:
 
 1. boot BSS zero size at `0x0200001e`: `0x3cb48 -> 0x3cbec`
-2. matched `HEAP_BEGIN` immediate at `0x0205e9f8`:
-   `0x01c46520 -> 0x01c465c0`
+2. `HEAP_BEGIN` at `0x0205e9f8`: `0x01c46520 -> 0x01c465c0`
 
-This initializes and excludes `0x01c46520..0x01c465c0` from the allocator:
+This initializes and removes `0x01c46520..0x01c465c0` from allocator ownership:
 
 - voice: `0x01c46520..0x01c465bc` (`0x9c` bytes)
-- valid byte: `0x01c465bc`
-- producer lock byte: `0x01c465bd`
-- alignment/guard: `0x01c465be..0x01c465c0`
+- valid: `0x01c465bc`
+- atomic lock: `0x01c465bd`
+- alignment guard: `0x01c465be..0x01c465c0`
 
-Heap capacity decreases by 160 bytes. Allocator code and ABI are unchanged, but
-live heap-pressure testing remains mandatory before this can graduate beyond a
-controlled checkpoint.
+Heap capacity is reduced by exactly 160 bytes.
 
-## Event-path behavior
+## Event and publish paths
 
-- Note Off callsite `0x0201c63e` -> wrapper `0x0201e13e`
-- Note On callsite `0x0201c67c` -> wrapper `0x0201e16e`
-- Ch10 and `valid==1`: copy the same owned `0x9c` voice into the stock destination
-- other channels or invalid state: call stock `memcpy`
-- first one-shot/segmented accepted post-F7 caller at `0x0201e468` or
-  `0x0201e49c` -> producer `0x0201e1b4`
-- producer acquires the official PI32v2 atomic byte lock, rechecks `valid`, copies
-  the voice, stores `valid=1`, then releases the lock
-- subsequent accepted packets return without modifying the snapshot
-- stock SAVE caller `0x02026dac` remains explicitly disabled
-- the revoked R01d early post-init hook at `0x02005f9c` is unchanged
+- Note Off `0x0201c63e` calls wrapper `0x0201e13e`
+- Note On `0x0201c67c` calls wrapper `0x0201e16e`
+- Ch10 with `valid==1` uses the owned voice
+- other channels or invalid state use the stock source
+- accepted product-packet callers `0x0201e468` and `0x0201e49c` call producer
+  `0x0201e19e`
+- producer performs one atomic `testset`; lock failure returns immediately
+- success rechecks valid, copies 156 bytes, sets valid last, then unlocks
+- a second packet cannot replace the first snapshot until reboot
+- revoked R01d early hook `0x02005f9c` remains stock
 
-The retained 124-row PI32 trace confirms every patched branch and call target.
-Quarkslab decodes the embedded `csync` and `testset` instructions but omits the
-four-byte spin-loop branch at `0x0201e1a2`. That single decoder gap is covered by
-the pinned SDK `arch_spin_lock` source and exact official PI32 clang object:
-`40 e8 fd ff = ifeq goto -6`, with source/object hashes enforced by the validator.
+The earlier blocking-spin candidate is superseded. The pinned SDK requires
+`preempt_disable()` around blocking `arch_spin_lock`, so R03 deliberately uses a
+nonblocking try-lock to avoid same-core interrupt/preemption deadlock.
 
-## Rollback gate
+## SAVE behavior
 
-The R03 rollback bundle restores exactly the five changed sectors. Its guard:
+SAVE is rejected before either persistent write:
 
-- requires two fresh byte-identical 1 MiB forced-loader dumps
-- requires every current target sector to match the exact R03 sector hash
-- permits erase/write only inside the five audited 4 KiB sectors
-- uses 256-byte maximum writes with CRC16-XMODEM and readback verification
-- verifies all non-restored sectors remain byte-identical
-- implements no chip erase, full-flash write, boot-prefix write, reset, or run-app
+- `0x02026da6`: branch directly to the stock local exit `0x02026dd4`
+- `0x02026dac`: the now-unreachable later packer call is also neutralized
 
-The guard FakeTransport self-test and deterministic ZIP rebuild both pass.
+The latest PI32 trace decodes the branch as `goto 0x02026dd4`; the subsequent
+persistent-write sequence is unreachable from this SAVE path.
 
-## Remaining live gates
+## Decoder and official-toolchain evidence
 
-1. normal boot and USB identity `015` before any pad input
-2. send the exact guarded Mooger #1 product packet once after boot
-3. Ch1 stock timbre and Note Off remain correct
-4. Ch10 Mooger #1 timbre and Note Off are correct
-5. changing Ch1 patch does not alter Ch10
-6. send a second different product packet and confirm Ch10 remains the first snapshot
-7. reboot without staging and confirm Ch10 safely falls back to stock
-8. restage after reboot and repeat Note On/Off
-9. exercise UI, patch browsing, SEQ, USB reconnect, and polyphonic note stress without reset or allocation regression
-10. do not press SAVE while R03 is installed
+A clean exact-hash Quarkslab run retained 139 rows covering all modified paths.
+It decodes the try-lock `csync`, `testset`, success barrier, copy, publication,
+unlock, and return. Its sole patched-instruction gap is the failure branch at
+`0x0201e1ac` (`40e81b00`).
 
-Any boot failure, USB loss, reboot, stuck note, cross-channel timbre change, or
-heap-pressure symptom is a hard stop followed by the exact R03 rollback path.
+That opcode is independently established by the official PI32v2 clang object:
+`40 e8 03 00 = ifeq goto forward failure path`. The builder adjusts only the
+signed displacement, and the validator checks the candidate bytes and exact
+return target `0x0201e1e6`. `reproduce_trylock.sh` rebuilt the object
+byte-identically and verified the official objdump transcript.
 
-The isolated uploader `tools/smk37_v15_r03_ota.c` accepts only package SHA-256
-`0ed23e...1937`, device/package version `015`, and confirmation token
-`INSTALL-SMK37PRO-V15-R03-0ED23E56`. Its offline check accepts R03 and rejects
-the official v15 package before any device access.
+## Rollback and uploader gates
+
+Rollback v3 restores exactly the five changed sectors and requires:
+
+- two fresh byte-identical 1 MiB forced-loader dumps
+- each current changed sector to match the exact R03 target hash
+- writes only inside the five audited 4 KiB sectors
+- 256-byte maximum writes, CRC16-XMODEM, and readback verification
+- all other sectors to remain byte-identical
+
+The uploader accepts only package SHA `001582...a62`, firmware identity `015`,
+and token `INSTALL-SMK37PRO-V15-R03-001582C0`. Its offline check accepts this
+R03 package and rejects official v15.
+
+## Live validation sequence after independent PASS
+
+1. install exact R03 package
+2. verify normal boot and identity `015`, without restoring merely because the
+   macOS post-update interface claim fails
+3. send exact Mooger #1 packet SHA
+   `6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27`
+4. verify Ch1 stock timbre and Note Off
+5. verify Ch10 Mooger #1 timbre and Note Off
+6. change Ch1 patch and verify Ch10 remains unchanged
+7. send a different packet and verify the first Ch10 snapshot remains
+8. reboot without staging and verify safe stock fallback
+9. restage and repeat Note On/Off
+10. stress UI, patch browsing, SEQ, USB reconnect, and polyphony
+
+Do not use SAVE during the checkpoint. Any boot failure, USB loss, reboot, stuck
+note, cross-channel change, or allocation symptom is a hard stop followed by the
+exact rollback v3 path.
 
 ## Reproduce
 
 ```sh
-python3 tools/build_v15_r03_fixed_prefix.py \
-  build/v15-official-app.bin build/v15-R03-fixed-prefix-app.bin \
-  --manifest baselines/v15/analysis/flash-candidates/R03/app-manifest.json
-
-python3 tools/smk37_v15_app_patch.py repack-app \
-  build/SMK-37_Pro_015.fwsc build/v15-R03-fixed-prefix-app.bin \
-  build/SMK37Pro-v15-R03-fixed-prefix.fwsc \
-  --manifest baselines/v15/analysis/flash-candidates/R03/package-manifest.json
-
+baselines/v15/analysis/r03-owned-ram/atomic-publish/reproduce_trylock.sh
 python3 tools/validate_v15_r03.py
-
-cc -O2 -g -std=c11 -Wall -Wextra -Wpedantic \
-  $(pkg-config --cflags libusb-1.0) \
-  tools/smk37_v15_r03_ota.c \
-  src/device_info.c src/fwsc.c src/protocol.c src/sha256.c src/usb_probe.c \
-  -o build/smk37-v15-r03-ota $(pkg-config --libs libusb-1.0)
-
-build/smk37-v15-r03-ota check \
-  build/SMK37Pro-v15-R03-fixed-prefix.fwsc
+build/smk37-v15-r03-ota check build/SMK37Pro-v15-R03-fixed-prefix.fwsc
 ```

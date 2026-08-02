@@ -1,69 +1,69 @@
-# Official PI32v2 atomic publish primitive
+# Official PI32v2 nonblocking publish primitive
 
 Date: 2026-08-02
 
-## Result
+## Decision
 
-The R03 producer concurrency blocker is addressed with the exact PI32v2 atomic
-byte spinlock primitive documented by the pinned public AC79 SDK and reproduced
-with the official Jieli PI32v2 clang toolchain.
+**Offline concurrency gate: PASS.** R03 uses one atomic `testset` attempt and
+returns immediately if the lock is already held. It does not embed the SDK's
+blocking spin loop.
 
-The producer lock byte is `0x01c465bd`, inside the allocator-excluded R03 prefix.
-Consumers do not need the lock because `valid @ 0x01c465bc` remains zero until
-the entire 156-byte voice copy finishes. Concurrent consumers therefore fall
-back to the stock source rather than reading a partial snapshot.
+This distinction is required because the pinned SDK's public `spin_lock()` calls
+`preempt_disable()` before `arch_spin_lock()`. An isolated raw spin loop without
+that scheduler contract could deadlock on same-core interrupt or preempting
+reentry. The earlier blocking R03 implementation is superseded and must not be
+flashed.
 
-## SDK evidence
+## Exact evidence
 
-Pinned SDK commit: `e30b1ee375d1f2993fc23bf92c8b99006a6e5f9d`
+Pinned public AC79 SDK commit:
+`e30b1ee375d1f2993fc23bf92c8b99006a6e5f9d`
 
-`include_lib/driver/cpu/wl82/asm/cpu.h` defines `arch_spin_lock` as:
+Local checked evidence:
 
-```c
-csync
-1: testset b[lock]
-ifeq goto 1b
-csync
-```
+- `pinned-sdk-spinlock-contract.txt` records `cpu.h` and `spinlock.h` excerpts.
+- `r03-trylock.c` SHA-256:
+  `2e82edb679ceb2e2c4e66903ceb96310ad4eb3f18aa24dd0b802fddd1bd8b3be`
+- `r03-trylock.pi32.o` SHA-256:
+  `e12ebf05608c78c4ba81cbea8eded0230ddd26febb89a2412174c694744c22c6`
+- `official-objdump.txt` SHA-256:
+  `faaf49e7fdd8a85c6cf79246a00c48678e3a96688d452a545fbc137200c6fb04`
+- `reproduce_trylock.sh` rebuilds the object with the official PI32v2 clang and
+  compares it byte-for-byte.
 
-and unlock as a synchronized zero store. `testset b[...]` is the architecture's
-atomic byte test-and-set operation, so two producer invocations cannot both
-enter the critical section.
-
-## Official-toolchain reproduction
-
-- source: `r03-spinlock.c`
-- source SHA-256: `9a19e5b85b37c1b7c6e0efafbf86e6847791d4e38db1172fee5cb1e1be8b4b9b`
-- object: `r03-spinlock.pi32.o`
-- object SHA-256: `754ae849bed042a05294bfa9d5cab2e2b7045b107e91da1cbee1b0e80adfdd32`
-- official toolchain archive SHA-256: `f686586bcfb45e0f0bb27fd2b39c7a7f313cb4f0e88a66a14da621ffa8225958`
-- `pi32v2/bin/clang` SHA-256: `42b94f9e11140b0fcab8f807b2872ad245b8eeca03a2d792f8706c5a3a35d34c`
-
-Official objdump output:
+The official object proves:
 
 ```text
-r03_lock:
-  0: 20 00              csync
-  2: b0 00              testset b[r0]
-  4: 40 e8 fd ff        ifeq goto -6 <r03_lock+0x2>
-  8: 20 00              csync
-  a: 80 00              rts
-
-r03_unlock:
-  c: 20 00              csync
-  e: 41 20              r1 = 0
- 10: 89 40              b[r0+0] = r1
- 12: 20 00              csync
- 14: 80 00              rts
+csync
+testset b[r0]
+ifeq goto failure
+csync
+r0 = 1
+rts
+failure: r0 = 0
+rts
 ```
 
-R03 embeds these exact 12-byte and 10-byte bodies and calls them around the
-`valid` test, voice copy, and final `valid=1` publication.
+R03 embeds the same `csync; testset` opcode sequence. Its displacement-adjusted
+failure branch at `0x0201e1ac` is `40 e8 1b 00` and targets the producer return
+at `0x0201e1e6`. Therefore a failed attempt neither spins nor unlocks another
+producer's lock.
 
-## Remaining constraints
+## Publication protocol
 
-- The lock serializes producer invocations only. This is intentional.
-- A producer fault inside the critical section can leave the lock set until
-  reboot. Such a fault is already a live hard stop.
-- SAVE remains disabled and heap capacity remains reduced by 160 bytes.
-- Live heap-pressure and functional validation are still required.
+- owned voice: `0x01c46520..0x01c465bc`
+- valid byte: `0x01c465bc`
+- lock byte: `0x01c465bd`
+- successful producer: lock, recheck valid, copy 156 bytes, set valid, unlock
+- concurrent producer: immediate return
+- consumers: use owned voice only when valid is 1, otherwise use stock source
+
+`valid` stays zero for the full copy, so Note On/Off consumers cannot observe a
+partially published voice.
+
+## Remaining live gates
+
+This proves instruction and concurrency structure, not runtime scheduling or
+heap headroom. Normal boot, staging, Note On/Off, channel independence, UI,
+SEQ, reconnect, and polyphony stress remain live checks. The exact rollback v3
+bundle must remain available.

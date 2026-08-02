@@ -6,6 +6,7 @@ This validator makes no live-functional claim and performs no device access.
 from __future__ import annotations
 
 import json
+import struct
 import subprocess
 import sys
 from hashlib import sha256
@@ -13,8 +14,8 @@ from pathlib import Path
 
 from build_v15_r01_hand_drum import APP_SHA256, APP_SIZE, off
 from build_v15_r03_fixed_prefix import (
-    ATOMIC_LOCK_BODY,
-    ATOMIC_UNLOCK_BODY,
+    ATOMIC_SUCCESS_BARRIER,
+    ATOMIC_TRY_PREFIX,
     BSS_SIZE_INSN,
     BSS_SIZE_R03,
     CODE_CAVE,
@@ -26,6 +27,8 @@ from build_v15_r03_fixed_prefix import (
     PRODUCT_CALLS,
     RESERVED_END,
     SAVE_CALL,
+    SAVE_REJECT_BRANCH,
+    SAVE_REJECT_CALL,
     VALID,
     VOICE,
     VOICE_SIZE,
@@ -47,20 +50,26 @@ DECODER_TRACE = ROOT / "baselines/v15/analysis/flash-candidates/R03/decoder-trac
 DECODER_PROVENANCE = ROOT / "baselines/v15/analysis/flash-candidates/R03/decoder-provenance.json"
 HEAP_EVIDENCE = ROOT / "baselines/v15/analysis/r03-owned-ram/heap-prefix-reservation/evidence.json"
 ATOMIC_DIR = ROOT / "baselines/v15/analysis/r03-owned-ram/atomic-publish"
-ATOMIC_SOURCE = ATOMIC_DIR / "r03-spinlock.c"
-ATOMIC_OBJECT = ATOMIC_DIR / "r03-spinlock.pi32.o"
+ATOMIC_SOURCE = ATOMIC_DIR / "r03-trylock.c"
+ATOMIC_OBJECT = ATOMIC_DIR / "r03-trylock.pi32.o"
+ATOMIC_OBJDUMP = ATOMIC_DIR / "official-objdump.txt"
+ATOMIC_SDK_CONTRACT = ATOMIC_DIR / "pinned-sdk-spinlock-contract.txt"
+ATOMIC_REPRODUCER = ATOMIC_DIR / "reproduce_trylock.sh"
 UPLOADER_SOURCE = ROOT / "tools/smk37_v15_r03_ota.c"
-ROLLBACK_DIR = ROOT / "build/SMK37Pro-WL82-v15-R03-rollback-20260802-v2"
-ROLLBACK_ZIP = ROOT / "build/SMK37Pro-WL82-v15-R03-rollback-20260802-v2.zip"
+ROLLBACK_DIR = ROOT / "build/SMK37Pro-WL82-v15-R03-rollback-20260802-v3"
+ROLLBACK_ZIP = ROOT / "build/SMK37Pro-WL82-v15-R03-rollback-20260802-v3.zip"
 ROLLBACK_MANIFEST = ROLLBACK_DIR / "recovery-sectors/manifest.json"
 ROLLBACK_GUARD = ROLLBACK_DIR / "restore/smk37_wl82_guarded_restore.py"
 
-R03_APP_SHA256 = "1fff37674f4bb1d5b988dc1415ab29c7114bbcad9e12bfcd7cec9b687d1f6ecb"
-R03_PACKAGE_SHA256 = "0ed23e567a623db4b143fa30a6846626d746098ed126c149ac724c0fab6c1937"
-ROLLBACK_SHA256 = "6396f253825d067986131d830bcca8cce16ff9ca39b21c4220369958e90344f1"
-ATOMIC_SOURCE_SHA256 = "9a19e5b85b37c1b7c6e0efafbf86e6847791d4e38db1172fee5cb1e1be8b4b9b"
-ATOMIC_OBJECT_SHA256 = "754ae849bed042a05294bfa9d5cab2e2b7045b107e91da1cbee1b0e80adfdd32"
-UPLOADER_SOURCE_SHA256 = "1991e84e31c8a9488d85d3356963b00eab8c7818b7f296e4dea232d4b40370a2"
+R03_APP_SHA256 = "3ff9c46b9686c0cea1348a11bed553ebd2d677e2d3452a0f436ce14f3ba5c788"
+R03_PACKAGE_SHA256 = "001582c097277d6a4a619ed407cf121d5f30097ef82f312d53a2e45c4a9a5a62"
+ROLLBACK_SHA256 = "15dd52dbb18e9267cbc7f3ea7f1c493ba14a9501ca5c073d06f19c6f07cb8ad9"
+ATOMIC_SOURCE_SHA256 = "2e82edb679ceb2e2c4e66903ceb96310ad4eb3f18aa24dd0b802fddd1bd8b3be"
+ATOMIC_OBJECT_SHA256 = "e12ebf05608c78c4ba81cbea8eded0230ddd26febb89a2412174c694744c22c6"
+ATOMIC_OBJDUMP_SHA256 = "faaf49e7fdd8a85c6cf79246a00c48678e3a96688d452a545fbc137200c6fb04"
+ATOMIC_SDK_CONTRACT_SHA256 = "cc2d19dd8d71b015aae3ecaea222013927f269a98904165873b88e6e303a5245"
+ATOMIC_REPRODUCER_SHA256 = "c783f5a7b47dd88090c6b152444662ee115533a934d00831baaf25f6b899a91e"
+UPLOADER_SOURCE_SHA256 = "d0c2afdff619d907a68c12abed55269e38e00b17c0248f3039e7674c8a1f7eac"
 
 
 def digest(data: bytes) -> str:
@@ -106,12 +115,11 @@ def main() -> int:
         "off_stock": 0x0201E166,
         "on_entry": 0x0201E16E,
         "on_stock": 0x0201E196,
-        "lock_entry": 0x0201E19E,
-        "unlock_entry": 0x0201E1AA,
-        "producer": 0x0201E1B4,
-        "producer_unlock": 0x0201E1EA,
-        "producer_return": 0x0201E1F6,
-        "end": 0x0201E1F8,
+        "producer": 0x0201E19E,
+        "try_fail_branch": 0x0201E1AC,
+        "producer_unlock": 0x0201E1D8,
+        "producer_return": 0x0201E1E6,
+        "end": 0x0201E1E8,
     }, f"unexpected R03 layout: {layout}")
     require(r03[off(CODE_CAVE):off(CODE_CAVE) + len(cave)] == cave, "R03 cave bytes mismatch")
     require(r03[off(NOTE_OFF_CALL):off(NOTE_OFF_CALL) + 6] == call32(NOTE_OFF_CALL, layout["off_entry"]),
@@ -122,6 +130,8 @@ def main() -> int:
         require(r03[off(address):off(address) + 4] == short_call(address, layout["producer"]),
                 f"producer target mismatch at 0x{address:08x}")
     require(r03[off(SAVE_CALL):off(SAVE_CALL) + 4] == b"\0" * 4, "SAVE is not disabled")
+    require(r03[off(SAVE_REJECT_CALL):off(SAVE_REJECT_CALL) + 4] == SAVE_REJECT_BRANCH,
+            "SAVE first persistent write is not bypassed")
     require(r03[off(BSS_SIZE_INSN):off(BSS_SIZE_INSN) + 6] == BSS_SIZE_R03, "BSS size patch mismatch")
     require(r03[off(HEAP_BEGIN_INSN):off(HEAP_BEGIN_INSN) + 6] == HEAP_BEGIN_R03,
             "HEAP_BEGIN patch mismatch")
@@ -145,11 +155,12 @@ def main() -> int:
     protocol = app_manifest["protocol"]
     require(protocol["publish_order"] == "voice, valid=1", "publish order mismatch")
     require(protocol["producer_serialization"] ==
-            "PI32v2 atomic testset spinlock with csync before and after critical section",
+            "nonblocking PI32v2 atomic testset try-lock; a concurrent or interrupt reentry returns immediately instead of spinning",
             "producer serialization mismatch")
     require(protocol["reload_after_first_publish"] == "rejected until reboot", "snapshot is not immutable")
     require("active_count" not in json.dumps(app_manifest), "retired active-count protocol remains")
-    require(len(app_manifest["changes"]) == 8, "unexpected app manifest change count")
+    require("no-write rejection at 0x02026da6" in protocol["save"], "SAVE protocol is not no-write rejection")
+    require(len(app_manifest["changes"]) == 9, "unexpected app manifest change count")
 
     changed = {index for index, (before, after) in enumerate(zip(official, r03)) if before != after}
     allowed = set(range(off(CODE_CAVE), off(CODE_CAVE) + len(cave)))
@@ -158,10 +169,11 @@ def main() -> int:
     for address, _, _ in PRODUCT_CALLS:
         allowed.update(range(off(address), off(address) + 4))
     allowed.update(range(off(SAVE_CALL), off(SAVE_CALL) + 4))
+    allowed.update(range(off(SAVE_REJECT_CALL), off(SAVE_REJECT_CALL) + 4))
     allowed.update(range(off(BSS_SIZE_INSN), off(BSS_SIZE_INSN) + 6))
     allowed.update(range(off(HEAP_BEGIN_INSN), off(HEAP_BEGIN_INSN) + 6))
     require(changed <= allowed, "R03 changed bytes outside declared ranges")
-    require(len(changed) == 199, f"unexpected app changed-byte count: {len(changed)}")
+    require(len(changed) == 187, f"unexpected app changed-byte count: {len(changed)}")
 
     heap = json.loads(HEAP_EVIDENCE.read_text(encoding="utf-8"))
     require(heap["sbrk_match"]["v15_address"] == "0x0205e9da", "sbrk match address mismatch")
@@ -178,30 +190,56 @@ def main() -> int:
     atomic_object = ATOMIC_OBJECT.read_bytes()
     require(digest(atomic_object) == ATOMIC_OBJECT_SHA256,
             "official-toolchain atomic object hash mismatch")
-    require(ATOMIC_LOCK_BODY + ATOMIC_UNLOCK_BODY in atomic_object,
-            "exact lock/unlock bodies are not contiguous in official PI32 object")
-    require(r03[off(layout["lock_entry"]):off(layout["unlock_entry"])] == ATOMIC_LOCK_BODY,
-            "embedded atomic lock body mismatch")
-    require(r03[off(layout["unlock_entry"]):off(layout["producer"])] == ATOMIC_UNLOCK_BODY,
-            "embedded atomic unlock body mismatch")
-    require(ATOMIC_LOCK_BODY[4:8] == bytes.fromhex("40e8fdff"),
-            "official objdump spin-loop branch bytes mismatch")
+    official_try_body = bytes.fromhex("2000b00040e8030020004021800040208000")
+    require(official_try_body in atomic_object,
+            "exact nonblocking try-lock body is absent from official PI32 object")
+    require(digest(ATOMIC_OBJDUMP.read_bytes()) == ATOMIC_OBJDUMP_SHA256,
+            "official PI32 objdump transcript hash mismatch")
+    objdump = ATOMIC_OBJDUMP.read_text(encoding="utf-8")
+    require("testset b[r0]" in objdump and "ifeq goto 6" in objdump and
+            "r0 = 1" in objdump and "r0 = 0" in objdump,
+            "official PI32 objdump does not prove nonblocking try-lock semantics")
+    require(digest(ATOMIC_SDK_CONTRACT.read_bytes()) == ATOMIC_SDK_CONTRACT_SHA256,
+            "pinned SDK spinlock contract hash mismatch")
+    sdk_contract = ATOMIC_SDK_CONTRACT.read_text(encoding="utf-8")
+    require("e30b1ee375d1f2993fc23bf92c8b99006a6e5f9d" in sdk_contract and
+            "preempt_disable();" in sdk_contract and
+            "does not embed the blocking loop" in sdk_contract,
+            "pinned SDK evidence does not explain why blocking spin is rejected")
+    require(digest(ATOMIC_REPRODUCER.read_bytes()) == ATOMIC_REPRODUCER_SHA256,
+            "official PI32 reproduction script hash mismatch")
+    producer_bytes = r03[off(layout["producer"]):off(layout["end"])]
+    require(ATOMIC_TRY_PREFIX in producer_bytes and ATOMIC_SUCCESS_BARRIER in producer_bytes,
+            "embedded atomic try-lock prefix/barrier mismatch")
+    try_fail = r03[off(layout["try_fail_branch"]):off(layout["try_fail_branch"]) + 4]
+    require(bytes.fromhex("40e81b00") == try_fail,
+            "embedded try-lock failure branch does not return without spinning")
+    try_fail_target = layout["try_fail_branch"] + 4 + struct.unpack("<h", try_fail[2:])[0] * 2
+    require(try_fail_target == layout["producer_return"],
+            "embedded try-lock failure branch target mismatch")
     require(VOICE + VOICE_SIZE == VALID and VALID + 1 == LOCK and LOCK < RESERVED_END,
             "voice/valid/lock ownership layout mismatch")
 
     uploader_source = UPLOADER_SOURCE.read_text(encoding="utf-8")
     require(digest(UPLOADER_SOURCE.read_bytes()) == UPLOADER_SOURCE_SHA256,
             "R03 exact uploader source hash mismatch")
-    require("INSTALL-SMK37PRO-V15-R03-0ED23E56" in uploader_source,
+    require("INSTALL-SMK37PRO-V15-R03-001582C0" in uploader_source,
             "R03 exact uploader confirmation token mismatch")
-    require("0x0e, 0xd2, 0x3e, 0x56" in uploader_source and
-            "0xac, 0x72, 0x4c, 0x0f, 0xab, 0x6c, 0x19, 0x37" in uploader_source,
+    require("0x00, 0x15, 0x82, 0xc0" in uploader_source and
+            "0x53, 0xa2, 0xe4, 0x5c, 0x4a, 0x9a, 0x5a, 0x62" in uploader_source,
             "R03 exact uploader package hash bytes mismatch")
 
     trace = parse_trace(DECODER_TRACE)
     provenance = json.loads(DECODER_PROVENANCE.read_text(encoding="utf-8"))
     require(provenance["candidate_app_sha256"] == R03_APP_SHA256, "decoder provenance hash mismatch")
-    require(provenance["retained_rows"] == len(trace) == 124, "decoder trace row count mismatch")
+    require(provenance["retained_rows"] == len(trace), "decoder trace row count mismatch")
+    require(provenance["known_decoder_gap"] == {
+        "address": "0x0201e1ac",
+        "bytes": "40e81b00",
+        "official_objdump": "40 e8 03 00 = ifeq goto forward failure path",
+        "candidate_target": "0x0201e1e6 producer return without unlock or spin",
+        "validation": "the same official-toolchain opcode is displacement-adjusted by the tested builder encoder and checked byte-for-byte",
+    }, "decoder gap provenance mismatch")
     expected_decodes = {
         0x0200001E: ("c2ffeccb0300", "mov r2,#0x3cbec"),
         0x0201C63E: ("80fffa1a0000", "call 0x0201e13e"),
@@ -212,22 +250,20 @@ def main() -> int:
         0x0201E172: ("83f81012", "jne r3,#0x9,0x0201e196"),
         0x0201E180: ("80f80902", "jne r0,#0x1,0x0201e196"),
         0x0201E18E: ("80ff3aab0200", "call 0x02048cce"),
-        0x0201E19E: ("2000", "csync"),
-        0x0201E1A0: ("b000", "testset b[r0]"),
-        0x0201E1A6: ("2000", "csync"),
-        0x0201E1A8: ("8000", "rts"),
-        0x0201E1AA: ("2000", "csync"),
-        0x0201E1AE: ("8940", "sb r1,[r0 + 0x0]"),
+        0x0201E1A8: ("2000", "csync"),
+        0x0201E1AA: ("b000", "testset b[r0]"),
         0x0201E1B0: ("2000", "csync"),
-        0x0201E1B2: ("8000", "rts"),
-        0x0201E1BE: ("80ffdaffffff", "call 0x0201e19e"),
-        0x0201E1CC: ("80f80d00", "jne r0,#0x0,0x0201e1ea"),
-        0x0201E1DA: ("80ffeeaa0200", "call 0x02048cce"),
-        0x0201E1E8: ("d840", "sb r0,[r5 + 0x0]"),
-        0x0201E1F0: ("80ffb4ffffff", "call 0x0201e1aa"),
-        0x0201E1F6: ("5904", "pop {pc,r9,r8,r7,r6,r5,r4}"),
-        0x0201E468: ("bfeaa4fe", "call 0x0201e1b4"),
-        0x0201E49C: ("bfea8afe", "call 0x0201e1b4"),
+        0x0201E1BA: ("80f80d00", "jne r0,#0x0,0x0201e1d8"),
+        0x0201E1C8: ("80ff00ab0200", "call 0x02048cce"),
+        0x0201E1D6: ("d840", "sb r0,[r5 + 0x0]"),
+        0x0201E1DE: ("2000", "csync"),
+        0x0201E1E2: ("8940", "sb r1,[r0 + 0x0]"),
+        0x0201E1E4: ("2000", "csync"),
+        0x0201E1E6: ("5904", "pop {pc,r9,r8,r7,r6,r5,r4}"),
+        0x0201E468: ("bfea99fe", "call 0x0201e19e"),
+        0x0201E49C: ("bfea7ffe", "call 0x0201e19e"),
+        0x02026DA6: ("0496", "goto 0x02026dd4"),
+        0x02026DA8: ("0000", "nop"),
         0x02026DAC: ("0000", "nop"),
         0x02026DAE: ("0000", "nop"),
     }
@@ -245,8 +281,8 @@ def main() -> int:
     require(package_manifest["safety_gate"] == "PASS", "package safety gate failed")
     require(package_manifest["output"]["sha256"] == R03_PACKAGE_SHA256, "package manifest hash mismatch")
     require(package_manifest["output"]["app_sha256"] == R03_APP_SHA256, "package app hash mismatch")
-    require(package_manifest["changes"]["app_byte_count"] == 199, "package app diff count mismatch")
-    require(package_manifest["changes"]["flash_byte_count_including_crc_fields"] == 207,
+    require(package_manifest["changes"]["app_byte_count"] == 187, "package app diff count mismatch")
+    require(package_manifest["changes"]["flash_byte_count_including_crc_fields"] == 195,
             "package flash diff count mismatch")
     require(package_manifest["protected_flash_hashes_before"] == package_manifest["protected_flash_hashes_after"],
             "protected flash hashes changed")

@@ -43,6 +43,9 @@ PRODUCT_CALLS = (
     (0x0201E468, bytes.fromhex("bfea69fe"), "one-shot accepted product packet"),
     (0x0201E49C, bytes.fromhex("bfea4ffe"), "segmented accepted product packet"),
 )
+SAVE_REJECT_CALL = 0x02026DA6
+SAVE_REJECT_STOCK = bytes.fromhex("beeaacee")
+SAVE_REJECT_BRANCH = bytes.fromhex("04960000")  # goto 0x02026dd4; nop
 SAVE_CALL = 0x02026DAC
 SAVE_STOCK = bytes.fromhex("bfeac7b9")
 
@@ -60,8 +63,8 @@ LOCK = 0x01C465BD
 RESERVED_END = 0x01C465C0
 VOICE_SIZE = 0x9C
 SHORT_CALL_WINDOW_BYTES = 0x20000
-ATOMIC_LOCK_BODY = bytes.fromhex("2000b00040e8fdff20008000")
-ATOMIC_UNLOCK_BODY = bytes.fromhex("20004120894020008000")
+ATOMIC_TRY_PREFIX = bytes.fromhex("2000b000")  # csync; testset b[r0]
+ATOMIC_SUCCESS_BARRIER = bytes.fromhex("2000")
 
 
 def short_call(at: int, target: int) -> bytes:
@@ -87,6 +90,14 @@ def mov_imm8(register: int, immediate: int) -> bytes:
     if not 0 <= register <= 7 or not 0 <= immediate <= 0xFF:
         raise ValueError("small move operands out of range")
     return word(0x2040 | register | ((immediate >> 5) << 3) | ((immediate & 0x1F) << 8))
+
+
+def ifeq(at: int, target: int) -> bytes:
+    """Encode the official-toolchain PI32v2 `ifeq goto` relative branch."""
+    displacement = target - (at + 4)
+    if displacement & 1 or not -0x10000 <= displacement <= 0xFFFE:
+        raise ValueError("ifeq target out of range or unaligned")
+    return bytes.fromhex("40e8") + struct.pack("<h", displacement // 2)
 
 
 def load_byte(destination: int, base: int, offset: int = 0) -> bytes:
@@ -155,17 +166,14 @@ def build_cave() -> tuple[bytes, dict[str, int]]:
         (on_valid_branch, 0, 1, "on-stock"),
     ]
 
-    lock_entry = CODE_CAVE + len(block)
-    block += ATOMIC_LOCK_BODY
-    unlock_entry = CODE_CAVE + len(block)
-    block += ATOMIC_UNLOCK_BODY
-
     producer = CODE_CAVE + len(block)
     block += word(0x0479)
     block += mov_reg(4, 0)                # accepted staging pointer
     block += mov_imm32(0, LOCK)
-    at = CODE_CAVE + len(block)
-    block += call32(at, lock_entry)
+    block += ATOMIC_TRY_PREFIX
+    try_fail_branch = CODE_CAVE + len(block)
+    block += b"\0" * 4
+    block += ATOMIC_SUCCESS_BARRIER
     block += mov_imm32(5, VALID)
     block += load_byte(0, 5)
     producer_valid_branch = CODE_CAVE + len(block)
@@ -180,11 +188,15 @@ def build_cave() -> tuple[bytes, dict[str, int]]:
     block += store_byte(0, 5)             # publish validity last
     producer_unlock = CODE_CAVE + len(block)
     block += mov_imm32(0, LOCK)
-    at = CODE_CAVE + len(block)
-    block += call32(at, unlock_entry)
+    block += word(0x0020)                 # csync
+    block += mov_imm8(1, 0)
+    block += store_byte(1, 0)
+    block += word(0x0020)                 # csync
     producer_return = CODE_CAVE + len(block)
     block += word(0x0459)
     branches.append((producer_valid_branch, 0, 0, "producer-unlock"))
+    start = try_fail_branch - CODE_CAVE
+    block[start:start + 4] = ifeq(try_fail_branch, producer_return)
 
     targets = {
         "off-stock": off_stock,
@@ -200,9 +212,8 @@ def build_cave() -> tuple[bytes, dict[str, int]]:
         "off_stock": off_stock,
         "on_entry": on_entry,
         "on_stock": on_stock,
-        "lock_entry": lock_entry,
-        "unlock_entry": unlock_entry,
         "producer": producer,
+        "try_fail_branch": try_fail_branch,
         "producer_unlock": producer_unlock,
         "producer_return": producer_return,
         "end": CODE_CAVE + len(block),
@@ -235,8 +246,11 @@ def main() -> int:
         change["purpose"] = purpose
         changes.append(change)
     save = replace_exact(output, app, SAVE_CALL, SAVE_STOCK, b"\0" * 4)
-    save["purpose"] = "explicitly reject SAVE while controlled checkpoint is installed"
+    save["purpose"] = "neutralize unreachable stock packer call after SAVE rejection branch"
     changes.append(save)
+    reject = replace_exact(output, app, SAVE_REJECT_CALL, SAVE_REJECT_STOCK, SAVE_REJECT_BRANCH)
+    reject["purpose"] = "reject SAVE before either persistent write by branching to stock local exit"
+    changes.append(reject)
     changes.append(replace_exact(output, app, BSS_SIZE_INSN, BSS_SIZE_STOCK, BSS_SIZE_R03))
     changes.append(replace_exact(output, app, HEAP_BEGIN_INSN, HEAP_BEGIN_STOCK, HEAP_BEGIN_R03))
 
@@ -262,10 +276,10 @@ def main() -> int:
             "source": f"0x{STAGING:08x}",
             "copy_size": VOICE_SIZE,
             "publish_order": "voice, valid=1",
-            "producer_serialization": "PI32v2 atomic testset spinlock with csync before and after critical section",
+            "producer_serialization": "nonblocking PI32v2 atomic testset try-lock; a concurrent or interrupt reentry returns immediately instead of spinning",
             "reload_after_first_publish": "rejected until reboot",
             "invalid_ch10": "falls back to stock source",
-            "save": "disabled/rejected",
+            "save": "no-write rejection at 0x02026da6 branches to stock local exit 0x02026dd4; later packer call also neutralized",
             "segmented_and_one_shot_product_packets": "the first accepted post-F7 callsite publishes; later packets cannot replace the snapshot",
         },
         "layout": {key: f"0x{value:08x}" for key, value in layout.items()},

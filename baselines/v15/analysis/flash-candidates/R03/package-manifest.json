@@ -1,6 +1,6 @@
 {
   "changes": {
-    "app_byte_count": 199,
+    "app_byte_count": 187,
     "app_ranges": [
       {
         "end_exclusive": 33,
@@ -19,7 +19,7 @@
         "start": 123198
       },
       {
-        "end_exclusive": 123384,
+        "end_exclusive": 123368,
         "start": 123200
       },
       {
@@ -31,6 +31,10 @@
         "start": 124062
       },
       {
+        "end_exclusive": 159146,
+        "start": 159142
+      },
+      {
         "end_exclusive": 159152,
         "start": 159148
       },
@@ -39,7 +43,7 @@
         "start": 387578
       }
     ],
-    "flash_byte_count_including_crc_fields": 207,
+    "flash_byte_count_including_crc_fields": 195,
     "flash_ranges": [
       {
         "end_exclusive": 16388,
@@ -66,7 +70,7 @@
         "start": 139870
       },
       {
-        "end_exclusive": 140056,
+        "end_exclusive": 140040,
         "start": 139872
       },
       {
@@ -78,6 +82,10 @@
         "start": 140734
       },
       {
+        "end_exclusive": 175818,
+        "start": 175814
+      },
+      {
         "end_exclusive": 175824,
         "start": 175820
       },
@@ -86,8 +94,8 @@
         "start": 404250
       }
     ],
-    "fwsc_byte_count": 213,
-    "ota_payload_byte_count_including_wrapper_crc_fields": 213
+    "fwsc_byte_count": 201,
+    "ota_payload_byte_count_including_wrapper_crc_fields": 201
   },
   "format": "smk37-v15-application-only-patch-v1",
   "input": {
@@ -105,9 +113,9 @@
     "ufw_flash_size": 638976
   },
   "output": {
-    "app_sha256": "1fff37674f4bb1d5b988dc1415ab29c7114bbcad9e12bfcd7cec9b687d1f6ecb",
-    "payload_sha256": "365026e816677aee7469bb9ca469a59d4e2612aca6701758cd5313ad8810e208",
-    "sha256": "0ed23e567a623db4b143fa30a6846626d746098ed126c149ac724c0fab6c1937",
+    "app_sha256": "3ff9c46b9686c0cea1348a11bed553ebd2d677e2d3452a0f436ce14f3ba5c788",
+    "payload_sha256": "e13c1e756cdf13196d52b4a99b7fada3444315ddab83848995d297c736e1e45b",
+    "sha256": "001582c097277d6a4a619ed407cf121d5f30097ef82f312d53a2e45c4a9a5a62",
     "size": 701140
   },
   "protected_flash_hashes_after": {
