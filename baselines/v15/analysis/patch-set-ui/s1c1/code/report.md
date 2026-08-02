@@ -9,10 +9,10 @@ Scope: exact official v15 app and decoder rows plus the exact live-proven H2 app
 - Note On `r6 = msg[1]`: PASS
 - Hook ABI and corrected fallback design: PASS
 - PI32 encoding, placement, and branch reach: PASS
-- Cross-artifact metadata integration: BLOCK until the separate RAM layout is reconciled with the H2-compatible ingress state machine
+- Cross-artifact metadata integration: PASS
 - Firmware candidate: BLOCK
 
-The note identities are closed at the exact existing H2 hook callsites. A minimal H2-compatible two-entry selector can replace only H2's two consumer wrappers, end 8 bytes before the unchanged H2 producer, and require no executable-range expansion.
+The note identities are closed at the exact existing H2 hook callsites. A minimal H2-compatible two-entry selector can replace only H2's two consumer wrappers, end 4 bytes before the unchanged H2 producer, and require no executable-range expansion.
 
 No firmware candidate was produced. No app or FWSC image was written, no uploader was invoked, no device was accessed, no flash operation was performed, and no v12 address, artifact, ABI, or behavior was used.
 
@@ -106,33 +106,38 @@ The two callsites cannot use one identical entry instruction because their nativ
 0x0201e146  mov r4,r0             ; save exact original destination
 0x0201e148  mov r5,r9             ; temporary channel copy
 0x0201e14a  jne r5,9,copy         ; non-Ch10 fallback
-0x0201e14e  mov32 r5,0x01c465bc   ; exact H2 valid0 / slot0 metadata base
-0x0201e154  lb.z r0,[r5 + 3]      ; state at 0x01c465bf
-0x0201e156  jne r0,0,not_empty
-0x0201e15a  lb.z r0,[r5]          ; EMPTY compatibility: exact H2 valid0
-0x0201e15c  jne r0,1,copy         ; EMPTY and invalid falls back
-0x0201e160  mov32 r1,0x01c46520   ; exact H2 slot0 source
+0x0201e14e  mov32 r8,0x01c46520   ; exact H2/private slot0 source
+0x0201e154  add r5,r8,#0x9c      ; exact H2 valid0 / slot0 metadata base
+0x0201e158  lb.z r0,[r5 + 3]      ; state at 0x01c465bf
+0x0201e15a  jne r0,0,not_empty
+0x0201e15e  lb.z r0,[r5]          ; EMPTY compatibility: exact H2 valid0
+0x0201e160  jne r0,1,copy         ; EMPTY and invalid falls back
+0x0201e164  mov r1,r8             ; exact H2 slot0 source
 0x0201e166  goto copy
 0x0201e168  jne r0,2,copy         ; LOADING/invalid state falls back; ARMED == 2
 0x0201e16c  lb.z r0,[r5 + 2]      ; immutable slot-0 note at 0x01c465be
 0x0201e16e  xor r0,r3             ; compare with normalized event note
 0x0201e170  jne r0,0,note1
-0x0201e174  mov32 r1,0x01c46520   ; private slot 0 source
-0x0201e17a  goto copy
-0x0201e17c  mov32 r5,0x01c4665c   ; slot1 valid/transaction/note metadata base
+0x0201e174  lb.z r0,[r5]          ; matched slot0: explicit valid0 recheck
+0x0201e176  jne r0,1,copy
+0x0201e17a  mov r1,r8             ; private slot 0 source
+0x0201e17c  goto copy
+0x0201e17e  add r5,r5,#0xa0      ; slot1 valid/transaction/note metadata base
 0x0201e182  lb.z r0,[r5 + 2]      ; immutable slot-1 note at 0x01c4665e
 0x0201e184  xor r0,r3             ; compare with normalized event note
 0x0201e186  jne r0,0,copy         ; every other note falls back
-0x0201e18a  mov32 r1,0x01c465c0   ; private slot 1 source
-0x0201e190  mov r0,r4             ; corrected H2 destination restore
-0x0201e192  call 0x02048cce       ; original r2 remains exactly 0x9c
-0x0201e198  pop {pc,r9..r4}
+0x0201e18a  lb.z r0,[r5]          ; matched slot1: explicit valid1 recheck
+0x0201e18c  jne r0,1,copy
+0x0201e190  add r1,r8,#0xa0      ; private slot 1 source
+0x0201e194  mov r0,r4             ; corrected H2 destination restore
+0x0201e196  call 0x02048cce       ; original r2 remains exactly 0x9c
+0x0201e19c  pop {pc,r9..r4}
 ```
 
 Exact selector hex:
 
 ```text
-53160481631679040416951685f82112c5ffbc65c401584380f80700584080f81802c1ff2065c401049480f812045842381980f80400c1ff2065c401048ac5ff5c66c4015842381980f80300c1ffc065c401401680ff36ab02005904
+53160481631679040416951685f82312c8ff2065c40105e19c80584380f80500584080f818028116049680f814045842381980f80500584080f80d028116048b05e1a0505842381980f80500584080f8020201e1a080401680ff32ab02005904
 ```
 
 The two adapters are separate at the hook boundary, but share every instruction that can be identical after note normalization. The Note On adapter is placed immediately before the core and falls through, eliminating a second goto.
@@ -161,10 +166,10 @@ This is the smallest construction found under the exact instruction forms valida
 
 - Note Off native adapter: `4` bytes
 - Note On native adapter: `2` bytes
-- shared H2-compatible state/lookup/copy core: `86` bytes
-- Selector code: `92` bytes
+- shared H2-compatible state/lookup/copy core: `90` bytes
+- Selector code: `96` bytes
 
-It uses one state load, one exact-H2 `valid0` compatibility load, two note-byte loads, the official-v15 `xor r0,r3` equality idiom, two private `mov32` source literals, one common corrected copy tail, and no duplicate memcpy or pop sequence.
+It uses one state load, explicit H2/slot0/slot1 valid-byte checks, two note-byte loads, the official-v15 `xor r0,r3` equality idiom, one six-byte slot0 literal, official-v15 four-byte add-immediate source derivations, one common corrected copy tail, and no duplicate memcpy or pop sequence.
 
 This is not a claim of globally optimal PI32 machine code under unproved instruction forms. Any smaller replacement must demonstrate exact official/H2 decoder evidence and preserve every invariant in this report.
 
@@ -174,25 +179,27 @@ This is not a claim of globally optimal PI32 machine code under unproved instruc
 
 | Register | Exact callsite meaning | Selector action |
 | --- | --- | --- |
-| `r0` | destination | saved to `r4` before any RAM probe, restored at `0x0201e190` |
+| `r0` | destination | saved to `r4` before any RAM probe, restored at `0x0201e194` |
 | `r1` | stock source | untouched on all fallback paths, changed only for exact H2 EMPTY/valid0 compatibility or an ARMED allowlist match |
 | `r2` | `0x9c` count | never written by the selector |
 | `r9` | channel nibble | read only, then restored by pop |
+| `r8` | stock source at the callsite | saved by push, reused as the slot0 base only inside the wrapper, restored by pop |
 | `r5` | Note Off note or Note On velocity | native value remains until shared push, restored by pop |
 | `r6` | Note On note | native value remains unchanged, restored by pop |
 
 ### Corrected H2 fallback
 
-All fallback paths branch to the single copy tail at `0x0201e190`:
+All fallback paths branch to the single copy tail at `0x0201e194`:
 
 - channel is not 9
 - state is EMPTY and exact H2 `valid0` is not 1
 - state is LOADING or any value other than EMPTY/ARMED
 - state is ARMED and the normalized note matches neither immutable note byte at `0x01c465be` and `0x01c4665e`
+- state is ARMED, a note matches, but the selected slot's valid byte is not exactly 1
 
 Before those branches, no instruction writes `r1` or `r2`. The common tail performs `mov r0,r4` immediately before `memcpy`. Therefore fallback calls stock memcpy with the original destination, original stock source, original `0x9c` count, and unchanged channel state. This preserves the exact H2 correction that eliminated the invalid-path destination clobber.
 
-The selector preserves H2's existing load-once behavior before a private transaction: when state is EMPTY and `valid0 == 1`, all Ch10 events select exact H2 slot 0. During LOADING, every consumer uses stock. When state is ARMED (`2`), the two immutable note bytes select private slot 0 or slot 1. State publication is allowed only after both valid bytes and both note/payload pairs are complete, so ARMED subsumes per-read valid checks in the minimal hot path.
+The selector preserves H2's existing load-once behavior before a private transaction: when state is EMPTY and `valid0 == 1`, all Ch10 events select exact H2 slot 0. During LOADING, every consumer uses stock. When state is ARMED (`2`), the two immutable note bytes select private slot 0 or slot 1 only after the selected slot's valid byte is explicitly rechecked as 1.
 
 ### H2-compatible state contract
 
@@ -204,9 +211,9 @@ The code consumes the guarded-ingress metadata contract:
 - `0x01c4665c`: `valid1`
 - `0x01c4665e`: private `note1`
 
-ARMED must be written last after both complete `0x9c` payloads, both bounded distinct note bytes, and both valid bytes. After ARMED, all mutation remains rejected until reboot. If this publication order changes, the minimal omission of per-slot valid reads is no longer admitted.
+ARMED must be written last after both complete `0x9c` payloads, both bounded distinct note bytes, and both valid bytes. After ARMED, all mutation remains rejected until reboot. The consumer additionally rechecks the selected valid byte, exactly matching the ingress proof's ARMED policy.
 
-The separate RAM analysis currently assigns different meanings to `0x01c465bc` and `0x01c465bf`. That cross-artifact mismatch is an explicit integration BLOCK. The metadata contract must be reconciled before any candidate construction; the code bytes in this report follow the H2-compatible guarded-ingress contract because it alone preserves H2's existing `valid0 == 1` producer behavior.
+The separate RAM analysis was reconciled in commit `0232776` and now uses the same valid0/lock/note0/state/valid1/tx/note1 contract. Cross-artifact metadata integration is PASS. The independent additional-`0xa0` allocator-headroom gate remains BLOCKED.
 
 The two allowlisted note values are immutable metadata written before ARMED. Initial S1-C1 test values may be 36 and 45, but no note value or contiguous physical-Pad sequence is hardcoded by the selector.
 
@@ -225,18 +232,18 @@ The proposed static layout is:
 
 | Region | Range | Bytes |
 | --- | --- | ---: |
-| two adapters + shared selector core | `0x0201e13e..0x0201e19a` | 92 |
-| internal unused gap | `0x0201e19a..0x0201e1a2` | 8 |
+| two adapters + shared selector core | `0x0201e13e..0x0201e19e` | 96 |
+| internal unused gap | `0x0201e19e..0x0201e1a2` | 4 |
 | unchanged H2 producer | `0x0201e1a2..0x0201e1ec` | 74 |
 | unchanged audited tail | `0x0201e1ec..0x0201e254` | 104 |
 
 Budget:
 
-- Selector code: `92` bytes
+- Selector code: `96` bytes
 - unchanged H2 producer: `74` bytes
-- active code total: `166` bytes
+- active code total: `170` bytes
 - total audited replacement body: `278` bytes
-- Total unoccupied budget: `112` bytes
+- Total unoccupied budget: `108` bytes
 - H2 occupied-extent expansion: `0` bytes
 
 The design does not use the blocked app-area tail, does not extend `app.bin`, does not enter `cfg_tool.bin`, and does not add a boot or post-init hook.
@@ -250,15 +257,17 @@ All encodings are regenerated and decoded by `analyze.py`:
 | Note Off hook `0x0201c63e` | adapter `0x0201e13e` | `80fffa1a0000` | PASS, byte-identical to H2 |
 | Note On hook `0x0201c67c` | adapter `0x0201e142` | `80ffc01a0000` | PASS |
 | Note Off adapter goto `0x0201e140` | core `0x0201e144` | `0481` | PASS |
-| non-Ch10 `jne` `0x0201e14a` | copy `0x0201e190` | `85f82112` | PASS, 33 halfwords |
-| state-nonempty `jne` `0x0201e156` | discriminator `0x0201e168` | `80f80700` | PASS, 7 halfwords |
-| H2-invalid `jne` `0x0201e15c` | copy `0x0201e190` | `80f81802` | PASS, 24 halfwords |
-| H2-slot0 goto `0x0201e166` | copy `0x0201e190` | `0494` | PASS |
-| state-not-ARMED `jne` `0x0201e168` | copy `0x0201e190` | `80f81204` | PASS, 18 halfwords |
-| slot-0 compare `jne` `0x0201e170` | slot-1 lookup `0x0201e17c` | `80f80400` | PASS, 4 halfwords |
-| private slot-0 goto `0x0201e17a` | copy `0x0201e190` | `048a` | PASS |
-| slot-1 compare `jne` `0x0201e186` | copy `0x0201e190` | `80f80300` | PASS, 3 halfwords |
-| shared memcpy call `0x0201e192` | `0x02048cce` | `80ff36ab0200` | PASS |
+| non-Ch10 `jne` `0x0201e14a` | copy `0x0201e194` | `85f82312` | PASS, 35 halfwords |
+| state-nonempty `jne` `0x0201e15a` | discriminator `0x0201e168` | `80f80500` | PASS, 5 halfwords |
+| H2-invalid `jne` `0x0201e160` | copy `0x0201e194` | `80f81802` | PASS, 24 halfwords |
+| H2-slot0 goto `0x0201e166` | copy `0x0201e194` | `0496` | PASS |
+| state-not-ARMED `jne` `0x0201e168` | copy `0x0201e194` | `80f81404` | PASS, 20 halfwords |
+| slot-0 compare `jne` `0x0201e170` | slot-1 lookup `0x0201e17e` | `80f80500` | PASS, 5 halfwords |
+| slot-0-invalid `jne` `0x0201e176` | copy `0x0201e194` | `80f80d02` | PASS, 13 halfwords |
+| private slot-0 goto `0x0201e17c` | copy `0x0201e194` | `048b` | PASS |
+| slot-1 compare `jne` `0x0201e186` | copy `0x0201e194` | `80f80500` | PASS, 5 halfwords |
+| slot-1-invalid `jne` `0x0201e18c` | copy `0x0201e194` | `80f80202` | PASS, 2 halfwords |
+| shared memcpy call `0x0201e196` | `0x02048cce` | `80ff32ab0200` | PASS |
 
 The producer remains at exact H2 address `0x0201e1a2`, byte-for-byte identical. Therefore its internal PC-relative encodings and the two accepted-packet short calls remain unchanged:
 
@@ -272,11 +281,11 @@ The code analysis is PASS only while all of these remain true:
 1. Parent app SHA-256 is exact H2 `d71f...7f59`.
 2. Official and H2 hook windows match the bytes SHA-gated by `analyze.py`.
 3. Note Off enters with `r5 = msg[1]`; Note On enters with `r6 = msg[1]` and `r5 = msg[2]`.
-4. `r0/r1/r2/r9` retain the documented destination/source/count/channel meanings.
+4. `r0/r1/r2/r8/r9` retain the documented destination/source/count/temporary-base/channel meanings.
 5. The selector bytes and every decoded branch/call match generated evidence.
 6. H2 producer `0x0201e1a2..0x0201e1ec` remains byte-for-byte unchanged.
-7. State becomes ARMED (`2`) only after both slot payloads, both note bytes, and both valid bytes are complete and immutable.
-8. The paired BSS/HEAP boundary through `0x01c46660` is applied only after the independent allocator-headroom gate passes and the RAM metadata layout is reconciled with this state contract.
+7. State becomes ARMED (`2`) only after both slot payloads, both note bytes, and both valid bytes are complete and immutable; the selected valid byte is also rechecked by the consumer.
+8. The paired BSS/HEAP boundary through `0x01c46660` is applied only after the independent allocator-headroom gate passes.
 9. SAVE remains blocked because the stock packer body is still replaced.
 10. The two note bytes are explicit S1-C1 host allowlist values and are never inferred from a contiguous physical-Pad sequence.
 
@@ -285,9 +294,9 @@ The code analysis is PASS only while all of these remain true:
 Firmware construction or installation remains BLOCKED if any of these occurs:
 
 1. Parent hash or any hook/cave byte differs.
-2. A wrapper overwrites native `r5/r6` before saving or fails to restore them before post-call metadata stores.
+2. A wrapper overwrites native `r5/r6/r8` before saving or fails to restore them before post-call metadata stores.
 3. Any fallback path writes `r1` or `r2`, or reaches memcpy without `r0` restored from the saved destination.
-4. The static RAM placement or paired BSS/HEAP arithmetic through `0x01c46660` changes, the additional-`0xa0` allocator-headroom gate remains unresolved, or the separate RAM metadata assignment is not reconciled with valid0/state/note1 addresses in this report.
+4. The static RAM placement or paired BSS/HEAP arithmetic through `0x01c46660` changes, or the additional-`0xa0` allocator-headroom gate remains unresolved.
 5. The ingress proof does not guarantee state=ARMED last after both immutable payloads, both distinct bounded note bytes, and both valid bytes, or does not reject every later mutation until reboot.
 6. The H2 producer must move, accepted-packet short calls change, or executable code grows beyond the exact H2 occupied extent without a new independent audit.
 7. SAVE or an original `0x0201e13e` packer caller can reach overwritten selector bytes.

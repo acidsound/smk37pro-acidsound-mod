@@ -122,6 +122,13 @@ def xor_r0(register: int) -> bytes:
     return word(0x1908 | (register << 4))
 
 
+def add_imm12(destination: int, source: int, immediate: int) -> bytes:
+    """Encode official-v15 four-byte add destination,source,#imm12."""
+    require(0 <= destination <= 15 and 0 <= source <= 15, "add register")
+    require(0 <= immediate <= 0xFFF, "add immediate")
+    return bytes((destination, 0xE1, immediate & 0xFF, (source << 4) | (immediate >> 8)))
+
+
 def decode_call32(at: int, encoded: bytes) -> int:
     require(len(encoded) == 6 and encoded[:2] == b"\x80\xff", "call32 opcode")
     displacement = int.from_bytes(encoded[2:], "little", signed=True)
@@ -149,7 +156,7 @@ def build_selector() -> tuple[bytes, dict[str, int], list[dict[str, Any]]]:
     Note Off normalizes r5 to caller-scratch r3, Note On normalizes r6 to r3.
     The second adapter falls through into the shared core, so only the first
     adapter needs a two-byte compact goto. Native r5/r6 are not modified before
-    the shared push. The core restores them with pop after any temporary r5 use.
+    the shared push. The core restores them with pop after temporary r5/r8 use.
     """
     block = bytearray()
     insns: list[dict[str, Any]] = []
@@ -177,26 +184,31 @@ def build_selector() -> tuple[bytes, dict[str, int], list[dict[str, Any]]]:
     emit("save_destination", mov_reg(4, 0), "r4 = original memcpy destination")
     emit("normalize_channel", mov_reg(5, 9), "temporary r5 = exact dispatcher channel nibble r9")
     channel_branch = emit("non_ch10_branch", b"\0" * 4, "r5 != 9 -> common stock copy")
-    emit("slot0_metadata_pointer", mov_imm32(5, VALID0), "r5 = H2 valid0 / slot0 metadata base")
+    emit("slot0_source_pointer", mov_imm32(8, SLOT0), "temporary r8 = exact H2/private slot0 source")
+    emit("slot0_metadata_pointer", add_imm12(5, 8, 0x9C), "r5 = r8 + 0x9c = H2 valid0 / slot0 metadata base")
     emit("state_load", load_byte(0, 5, STATE - VALID0), "r0 = EMPTY/LOADING/ARMED state")
     state_nonempty_branch = emit("state_nonempty_branch", b"\0" * 4, "state != EMPTY -> LOADING/ARMED discriminator")
     emit("h2_valid0_load", load_byte(0, 5), "EMPTY compatibility: r0 = exact H2 valid0")
     h2_invalid_branch = emit("h2_invalid_branch", b"\0" * 4, "EMPTY and valid0 != 1 -> stock copy")
-    emit("h2_slot0_source", mov_imm32(1, SLOT0), "EMPTY and valid0 == 1 preserves exact H2 slot0 source")
+    emit("h2_slot0_source", mov_reg(1, 8), "EMPTY and valid0 == 1 preserves exact H2 slot0 source")
     h2_slot0_goto = emit("h2_slot0_to_copy", b"\0" * 2, "skip private ARMED lookup and use common copy")
     state_nonempty = CODE_CAVE + len(block)
     state_armed_branch = emit("state_armed_branch", b"\0" * 4, "state != ARMED -> stock copy; LOADING never exposes owned RAM")
     emit("note0_load", load_byte(0, 5, NOTE0_ADDRESS - VALID0), "r0 = immutable slot0 note byte")
     emit("note0_compare", xor_r0(3), "r0 = slot0 note XOR normalized event note")
     note0_branch = emit("note0_branch", b"\0" * 4, "slot0 note != event note -> note1 test")
-    emit("slot0_source", mov_imm32(1, SLOT0), "selected r1 = immutable slot0 voice")
+    emit("slot0_valid_load", load_byte(0, 5), "matched slot0: r0 = valid0")
+    slot0_invalid_branch = emit("slot0_invalid_branch", b"\0" * 4, "matched slot0 but valid0 != 1 -> stock copy")
+    emit("slot0_source", mov_reg(1, 8), "selected r1 = immutable slot0 voice")
     slot0_goto = emit("slot0_to_copy", b"\0" * 2, "skip note1 test/source and use common copy")
     note1_test = CODE_CAVE + len(block)
-    emit("slot1_metadata_pointer", mov_imm32(5, VALID1), "r5 = slot1 valid/transaction/note metadata base")
+    emit("slot1_metadata_pointer", add_imm12(5, 5, 0xA0), "r5 += 0xa0 = slot1 valid/transaction/note metadata base")
     emit("note1_load", load_byte(0, 5, NOTE1_ADDRESS - VALID1), "r0 = immutable slot1 note byte")
     emit("note1_compare", xor_r0(3), "r0 = slot1 note XOR normalized event note")
     note1_branch = emit("note1_branch", b"\0" * 4, "slot1 note != event note -> common stock copy")
-    emit("slot1_source", mov_imm32(1, SLOT1), "selected r1 = immutable slot1 voice")
+    emit("slot1_valid_load", load_byte(0, 5), "matched slot1: r0 = valid1")
+    slot1_invalid_branch = emit("slot1_invalid_branch", b"\0" * 4, "matched slot1 but valid1 != 1 -> stock copy")
+    emit("slot1_source", add_imm12(1, 8, 0xA0), "selected r1 = r8 + 0xa0 = immutable slot1 voice")
     copy = CODE_CAVE + len(block)
     emit("restore_destination", mov_reg(0, 4), "restore original r0 immediately before memcpy")
     memcpy_call = CODE_CAVE + len(block)
@@ -211,7 +223,9 @@ def build_selector() -> tuple[bytes, dict[str, int], list[dict[str, Any]]]:
         (h2_invalid_branch, 0, 1, copy),
         (state_armed_branch, 0, ARMED_VALUE, copy),
         (note0_branch, 0, 0, note1_test),
+        (slot0_invalid_branch, 0, 1, copy),
         (note1_branch, 0, 0, copy),
+        (slot1_invalid_branch, 0, 1, copy),
     )
     for address, register, immediate, target in branch_specs:
         block[address - CODE_CAVE:address - CODE_CAVE + 4] = jne_imm7(
@@ -238,9 +252,11 @@ def build_selector() -> tuple[bytes, dict[str, int], list[dict[str, Any]]]:
         "state_nonempty": state_nonempty,
         "state_armed_branch": state_armed_branch,
         "note0_branch": note0_branch,
+        "slot0_invalid_branch": slot0_invalid_branch,
         "slot0_goto": slot0_goto,
         "note1_test": note1_test,
         "note1_branch": note1_branch,
+        "slot1_invalid_branch": slot1_invalid_branch,
         "copy": copy,
         "memcpy_call": memcpy_call,
         "end": end,
@@ -272,6 +288,8 @@ def validate() -> tuple[dict[str, Any], str]:
     check("h2-app-size", len(h2) == APP_SIZE, str(len(h2)))
 
     expected_official = {
+        0x020002AC: "08e14412",  # add r8,r1,#0x244
+        0x02001426: "05e18883",  # add r5,r8,#0x388
         0x0201C5FE: "79e1f030",  # r9 = channel nibble
         0x0201C62E: "1d41",      # r5 = msg[1]
         0x0201C636: "00e1a260",  # r0 = destination
@@ -316,6 +334,8 @@ def validate() -> tuple[dict[str, Any], str]:
     check("quarkslab-row-coverage", set(qrows) == listing_addresses, str(len(qrows)))
     check("kagaimiq-note-row-coverage", len(krows) == 13, str(len(krows)))
     row_needles = {
+        0x020002AC: "r8,r1,#0x244",
+        0x02001426: "r5,r8,#0x388",
         0x0201C5FE: "and r9,r3,#0xffffff0f",
         0x0201C62E: "r5,[r1 + 0x1]",
         0x0201C636: "r0,r6,#0xa2",
@@ -350,6 +370,9 @@ def validate() -> tuple[dict[str, Any], str]:
     check("official-forward-goto-encoder", forward_goto(0x0201C650, 0x0201C690) == bytes.fromhex("049f"), "049f")
     check("official-forward-goto-decoder", decode_forward_goto(0x0201C650, bytes.fromhex("049f")) == 0x0201C690)
     check("official-xor-r0-r3-encoder", xor_r0(3) == bytes.fromhex("3819"), "3819")
+    check("official-add-imm12-encoder-r0-r6-a2", add_imm12(0, 6, 0xA2) == bytes.fromhex("00e1a260"), "00e1a260")
+    check("official-add-imm12-encoder-r8-r1-244", add_imm12(8, 1, 0x244) == bytes.fromhex("08e14412"), "08e14412")
+    check("official-add-imm12-encoder-r5-r8-388", add_imm12(5, 8, 0x388) == bytes.fromhex("05e18883"), "05e18883")
 
     manifest = json.loads(H2_MANIFEST.read_text(encoding="utf-8"))
     h2_layout = {key: int(value, 16) for key, value in manifest["layout"].items()}
@@ -373,30 +396,32 @@ def validate() -> tuple[dict[str, Any], str]:
         "on_entry": 0x0201E142,
         "core": 0x0201E144,
         "channel_branch": 0x0201E14A,
-        "state_nonempty_branch": 0x0201E156,
-        "h2_invalid_branch": 0x0201E15C,
+        "state_nonempty_branch": 0x0201E15A,
+        "h2_invalid_branch": 0x0201E160,
         "h2_slot0_goto": 0x0201E166,
         "state_nonempty": 0x0201E168,
         "state_armed_branch": 0x0201E168,
         "note0_branch": 0x0201E170,
-        "slot0_goto": 0x0201E17A,
-        "note1_test": 0x0201E17C,
+        "slot0_invalid_branch": 0x0201E176,
+        "slot0_goto": 0x0201E17C,
+        "note1_test": 0x0201E17E,
         "note1_branch": 0x0201E186,
-        "copy": 0x0201E190,
-        "memcpy_call": 0x0201E192,
-        "end": 0x0201E19A,
+        "slot1_invalid_branch": 0x0201E18C,
+        "copy": 0x0201E194,
+        "memcpy_call": 0x0201E196,
+        "end": 0x0201E19E,
     }
     check("selector-layout-exact", layout == expected_layout)
-    check("selector-size-92", len(selector) == 92 == layout["end"] - CODE_CAVE, selector.hex())
+    check("selector-size-96", len(selector) == 96 == layout["end"] - CODE_CAVE, selector.hex())
     check("selector-before-h2-producer", layout["end"] <= H2_PRODUCER, f"gap={H2_PRODUCER-layout['end']}")
     producer, producer_layout = build_producer(H2_PRODUCER)
     h2_producer = app_bytes(h2, H2_PRODUCER, H2_END - H2_PRODUCER)
     check("h2-producer-byte-for-byte-preserved", producer == h2_producer, hashlib.sha256(producer).hexdigest())
     check("h2-producer-size-74", len(producer) == 74 and producer_layout["end"] == H2_END)
-    check("selector-plus-producer-active-bytes", len(selector) + len(producer) == 166)
+    check("selector-plus-producer-active-bytes", len(selector) + len(producer) == 170)
     check("audited-body-byte-budget", CODE_CAVE_END - CODE_CAVE == 278)
-    check("total-unoccupied-byte-budget", (CODE_CAVE_END - CODE_CAVE) - 166 == 112)
-    check("internal-gap-before-producer", H2_PRODUCER - layout["end"] == 8)
+    check("total-unoccupied-byte-budget", (CODE_CAVE_END - CODE_CAVE) - 170 == 108)
+    check("internal-gap-before-producer", H2_PRODUCER - layout["end"] == 4)
     check("unchanged-tail-after-producer", CODE_CAVE_END - H2_END == 104)
 
     # Proposed hook reach. Note Off remains byte-identical to H2; Note On gets
@@ -414,7 +439,9 @@ def validate() -> tuple[dict[str, Any], str]:
         layout["h2_invalid_branch"]: layout["copy"],
         layout["state_armed_branch"]: layout["copy"],
         layout["note0_branch"]: layout["note1_test"],
+        layout["slot0_invalid_branch"]: layout["copy"],
         layout["note1_branch"]: layout["copy"],
+        layout["slot1_invalid_branch"]: layout["copy"],
     }
     for address, target in branch_targets.items():
         encoded = selector[address - CODE_CAVE:address - CODE_CAVE + 4]
@@ -440,12 +467,24 @@ def validate() -> tuple[dict[str, Any], str]:
     check("slot1-source-range", SLOT1 + 0x9C == 0x01C4665C)
     check("slot1-metadata-addresses", VALID1 == SLOT1 + 0x9C and NOTE1_ADDRESS == VALID1 + 2)
     instruction_names = [insn["name"] for insn in insns]
+    check("exact-pointer-derivations",
+          selector.count(mov_imm32(8, SLOT0)) == 1
+          and selector.count(add_imm12(5, 8, 0x9C)) == 1
+          and selector.count(add_imm12(5, 5, 0xA0)) == 1
+          and selector.count(add_imm12(1, 8, 0xA0)) == 1,
+          "slot0 literal; +0x9c metadata; +0xa0 slot1 metadata/source")
+    check("explicit-selected-slot-valid-checks",
+          instruction_names.count("slot0_valid_load") == 1
+          and instruction_names.count("slot1_valid_load") == 1
+          and instruction_names.count("slot0_invalid_branch") == 1
+          and instruction_names.count("slot1_invalid_branch") == 1,
+          "ARMED selection rechecks valid0/valid1 before r1 write")
     check("exact-three-r1-writers-two-source-values",
           instruction_names.count("h2_slot0_source") == 1
           and instruction_names.count("slot0_source") == 1
           and instruction_names.count("slot1_source") == 1
-          and selector.count(mov_imm32(1, SLOT0)) == 2
-          and selector.count(mov_imm32(1, SLOT1)) == 1,
+          and selector.count(mov_reg(1, 8)) == 2
+          and selector.count(add_imm12(1, 8, 0xA0)) == 1,
           "H2-compatible slot0, private slot0, private slot1")
     check("no-r2-write-in-selector", word(0x3C62) not in selector,
           "callsite r2=0x9c is consumed unchanged")
@@ -453,21 +492,23 @@ def validate() -> tuple[dict[str, Any], str]:
           branch_targets[layout["channel_branch"]] == layout["copy"]
           and branch_targets[layout["h2_invalid_branch"]] == layout["copy"]
           and branch_targets[layout["state_armed_branch"]] == layout["copy"]
+          and branch_targets[layout["slot0_invalid_branch"]] == layout["copy"]
           and branch_targets[layout["note1_branch"]] == layout["copy"]
+          and branch_targets[layout["slot1_invalid_branch"]] == layout["copy"]
           and branch_targets[layout["note0_branch"]] == layout["note1_test"],
-          "non-Ch10, invalid/LOADING state, and unmapped ARMED notes reach copy without slot source writes")
+          "non-Ch10, invalid/LOADING state, invalid selected slots, and unmapped ARMED notes reach copy without slot source writes")
     check("destination-restored-immediately-before-memcpy", layout["copy"] + 2 == layout["memcpy_call"])
     check("channel-r9-preserved", True, "r9 only read then restored by pop")
     check("native-note-registers-restored", True,
-          "r5/r6 saved by shared push; r5 temporary use is after Note Off normalization; pop restores both")
+          "r5/r6/r8 saved by shared push; temporary use is after note normalization; pop restores all")
 
     report_text = REPORT.read_text(encoding="utf-8")
     for marker in (
         "Note Off `r5 = msg[1]`: PASS",
         "Note On `r6 = msg[1]`: PASS",
-        "Selector code: `92` bytes",
-        "Total unoccupied budget: `112` bytes",
-        "Cross-artifact metadata integration: BLOCK",
+        "Selector code: `96` bytes",
+        "Total unoccupied budget: `108` bytes",
+        "Cross-artifact metadata integration: PASS",
         "Firmware candidate: BLOCK",
         "No firmware candidate was produced",
     ):
@@ -518,8 +559,9 @@ def validate() -> tuple[dict[str, Any], str]:
             "valid1": f"0x{VALID1:08x}",
             "empty_value": EMPTY_VALUE,
             "armed_value": ARMED_VALUE,
-            "fallback": "non-Ch10, LOADING/invalid state, or note matching neither immutable note byte reaches common copy with original r1/r2 and restored r0",
+            "fallback": "non-Ch10, LOADING/invalid state, invalid selected slot, or note matching neither immutable note byte reaches common copy with original r1/r2 and restored r0",
             "h2_compatibility": "EMPTY and valid0 == 1 selects slot0 for all Ch10, preserving exact H2 product-packet behavior",
+            "metadata_integration": "PASS: reconciled RAM, ingress, and consumer contract",
             "publication_gate": "external BLOCK: state may become ARMED only after both immutable 0x9c slots, both bounded distinct notes, and both valid bytes are complete",
         },
         "wrapper": {
@@ -531,12 +573,12 @@ def validate() -> tuple[dict[str, Any], str]:
         },
         "byte_budget": {
             "audited_replacement_body": 278,
-            "selector": 92,
+            "selector": 96,
             "unchanged_h2_producer": 74,
-            "active_code_total": 166,
-            "internal_gap_before_producer": 8,
+            "active_code_total": 170,
+            "internal_gap_before_producer": 4,
             "unchanged_tail_after_producer": 104,
-            "total_unoccupied": 112,
+            "total_unoccupied": 108,
             "h2_extent_expansion": 0,
         },
         "decisions": {
@@ -544,7 +586,7 @@ def validate() -> tuple[dict[str, Any], str]:
             "abi_preservation_by_construction": "PASS",
             "pi32_encoding_and_reach": "PASS",
             "executable_placement_within_live_h2_extent": "PASS",
-            "cross_artifact_metadata_integration": "BLOCK",
+            "cross_artifact_metadata_integration": "PASS",
             "firmware_candidate": "BLOCK",
         },
         "checks": checks,

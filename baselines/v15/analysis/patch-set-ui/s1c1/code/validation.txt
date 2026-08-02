@@ -6,6 +6,8 @@ PASS	input-hash-h2_manifest	dc6fba4ddb887424d6bd76b6d1477f66f97096e2d6656f203eec
 PASS	input-hash-h2_live	b2aca5903390cffe573f42c89aa6407a52c28f967124a07b407887959d1c8fd7
 PASS	official-app-size	617012
 PASS	h2-app-size	617012
+PASS	official-bytes-0x020002ac	08e14412
+PASS	official-bytes-0x02001426	05e18883
 PASS	official-bytes-0x0201c5fe	79e1f030
 PASS	official-bytes-0x0201c62e	1d41
 PASS	official-bytes-0x0201c636	00e1a260
@@ -27,8 +29,10 @@ PASS	h2-note-off-window-only-call-redirected	1d41e1e1a0200e1c00e1a260623c811680f
 PASS	h2-note-off-call-target	0x0201e13e
 PASS	h2-note-on-window-only-call-redirected	1d42e1f1a0201e410f1c00e1a270623c811680ffee1a000000e13e718e4052ee01908d42
 PASS	h2-note-on-call-target	0x0201e170
-PASS	quarkslab-row-coverage	17
+PASS	quarkslab-row-coverage	19
 PASS	kagaimiq-note-row-coverage	13
+PASS	quarkslab-decode-0x020002ac	r8,r1,#0x244
+PASS	quarkslab-decode-0x02001426	r5,r8,#0x388
 PASS	quarkslab-decode-0x0201c5fe	and r9,r3,#0xffffff0f
 PASS	quarkslab-decode-0x0201c62e	r5,[r1 + 0x1]
 PASS	quarkslab-decode-0x0201c636	r0,r6,#0xa2
@@ -54,6 +58,9 @@ PASS	kagaimiq-decode-0x0201c68c	r5,[r0 + 0x2]
 PASS	official-forward-goto-encoder	049f
 PASS	official-forward-goto-decoder
 PASS	official-xor-r0-r3-encoder	3819
+PASS	official-add-imm12-encoder-r0-r6-a2	00e1a260
+PASS	official-add-imm12-encoder-r8-r1-244	08e14412
+PASS	official-add-imm12-encoder-r5-r8-388	05e18883
 PASS	h2-layout-off-entry
 PASS	h2-layout-on-entry
 PASS	h2-layout-producer
@@ -68,8 +75,8 @@ PASS	h2-live-marker-verdict: **H2 LIVE PASS**
 PASS	h2-live-marker-Ch10 Note Off: **normal**
 PASS	h2-live-marker-first-Pad reboot: **none**
 PASS	selector-layout-exact
-PASS	selector-size-92	53160481631679040416951685f82112c5ffbc65c401584380f80700584080f81802c1ff2065c401049480f812045842381980f80400c1ff2065c401048ac5ff5c66c4015842381980f80300c1ffc065c401401680ff36ab02005904
-PASS	selector-before-h2-producer	gap=8
+PASS	selector-size-96	53160481631679040416951685f82312c8ff2065c40105e19c80584380f80500584080f818028116049680f814045842381980f80500584080f80d028116048b05e1a0505842381980f80500584080f8020201e1a080401680ff32ab02005904
+PASS	selector-before-h2-producer	gap=4
 PASS	h2-producer-byte-for-byte-preserved	83e94729938f37eaa4c57286cfb2a2ad8de070d8110371883b929feb444357e8
 PASS	h2-producer-size-74
 PASS	selector-plus-producer-active-bytes
@@ -79,33 +86,37 @@ PASS	internal-gap-before-producer
 PASS	unchanged-tail-after-producer
 PASS	proposed-off-hook-equals-h2	80fffa1a0000
 PASS	proposed-on-hook-target	80ffc01a0000
-PASS	local-branch-reach-0x0201e14a	halfwords=33 bytes=85f82112
-PASS	local-branch-reach-0x0201e156	halfwords=7 bytes=80f80700
-PASS	local-branch-reach-0x0201e15c	halfwords=24 bytes=80f81802
-PASS	local-branch-reach-0x0201e168	halfwords=18 bytes=80f81204
-PASS	local-branch-reach-0x0201e170	halfwords=4 bytes=80f80400
-PASS	local-branch-reach-0x0201e186	halfwords=3 bytes=80f80300
+PASS	local-branch-reach-0x0201e14a	halfwords=35 bytes=85f82312
+PASS	local-branch-reach-0x0201e15a	halfwords=5 bytes=80f80500
+PASS	local-branch-reach-0x0201e160	halfwords=24 bytes=80f81802
+PASS	local-branch-reach-0x0201e168	halfwords=20 bytes=80f81404
+PASS	local-branch-reach-0x0201e170	halfwords=5 bytes=80f80500
+PASS	local-branch-reach-0x0201e176	halfwords=13 bytes=80f80d02
+PASS	local-branch-reach-0x0201e186	halfwords=5 bytes=80f80500
+PASS	local-branch-reach-0x0201e18c	halfwords=2 bytes=80f80202
 PASS	forward-goto-reach-0x0201e140	0481
-PASS	forward-goto-reach-0x0201e166	0494
-PASS	forward-goto-reach-0x0201e17a	048a
-PASS	shared-memcpy-call-reach	80ff36ab0200
+PASS	forward-goto-reach-0x0201e166	0496
+PASS	forward-goto-reach-0x0201e17c	048b
+PASS	shared-memcpy-call-reach	80ff32ab0200
 PASS	h2-product-short-call-preserved-0x0201e468	bfea9bfe
 PASS	h2-product-short-call-preserved-0x0201e49c	bfea81fe
 PASS	slot0-source-range
 PASS	slot0-metadata-addresses
 PASS	slot1-source-range
 PASS	slot1-metadata-addresses
+PASS	exact-pointer-derivations	slot0 literal; +0x9c metadata; +0xa0 slot1 metadata/source
+PASS	explicit-selected-slot-valid-checks	ARMED selection rechecks valid0/valid1 before r1 write
 PASS	exact-three-r1-writers-two-source-values	H2-compatible slot0, private slot0, private slot1
 PASS	no-r2-write-in-selector	callsite r2=0x9c is consumed unchanged
-PASS	fallback-branches-bypass-r1-writers	non-Ch10, invalid/LOADING state, and unmapped ARMED notes reach copy without slot source writes
+PASS	fallback-branches-bypass-r1-writers	non-Ch10, invalid/LOADING state, invalid selected slots, and unmapped ARMED notes reach copy without slot source writes
 PASS	destination-restored-immediately-before-memcpy
 PASS	channel-r9-preserved	r9 only read then restored by pop
-PASS	native-note-registers-restored	r5/r6 saved by shared push; r5 temporary use is after Note Off normalization; pop restores both
+PASS	native-note-registers-restored	r5/r6/r8 saved by shared push; temporary use is after note normalization; pop restores all
 PASS	report-marker-Note Off `r5 = msg[1]`: PASS
 PASS	report-marker-Note On `r6 = msg[1]`: PASS
-PASS	report-marker-Selector code: `92` bytes
-PASS	report-marker-Total unoccupied budget: `112` bytes
-PASS	report-marker-Cross-artifact metadata integration: BLOCK
+PASS	report-marker-Selector code: `96` bytes
+PASS	report-marker-Total unoccupied budget: `108` bytes
+PASS	report-marker-Cross-artifact metadata integration: PASS
 PASS	report-marker-Firmware candidate: BLOCK
 PASS	report-marker-No firmware candidate was produced
-PASS	all-checks	count=110
+PASS	all-checks	count=121
