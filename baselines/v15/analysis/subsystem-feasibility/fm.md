@@ -9,9 +9,25 @@ This note analyzes the official v15 application/full-flash/R01 evidence, the
 Jieli AC79 SDK evidence, and public DX7/SynprezFM source references for FM
 subsystem feasibility.
 
-No patch, OTA, flash, reset, or device write operation was performed for this
-analysis. Validation was limited to local file reads, hash checks, pack/unpack
-self-tests, and documentation review.
+No patch, OTA, flash, reset, or device write operation was performed for the
+original analysis pass. Validation was limited to local file reads, hash checks,
+pack/unpack self-tests, and documentation review.
+
+## 2026-08-02 R02 live update
+
+A later controlled R02 checkpoint resolved the named-timbre uncertainty for a
+transient RAM source. The exact 156-byte Bank D display 14 Mooger #1 runtime
+voice was sent through the official product SysEx framing into `0x01c37fd0`.
+Pad Ch10 matched the keyboard reference, Note Off worked without a stuck note,
+and changing the Ch1 UI patch did not change Ch10. See
+[`../flash-candidates/R02/live-validation-20260802.md`](../flash-candidates/R02/live-validation-20260802.md).
+
+This proves the runtime representation and independent Channel-10 source path,
+but not a production storage design. The successful address is shared transient
+SysEx RAM. Durable Ch10 ownership, per-note patch sets, reboot/SAVE lifecycle,
+and concurrent SysEx protection remain open. The R01b/R01c app/text snapshot
+failures below remain valid negative evidence for that specific source-location
+design.
 
 Evidence classes used below:
 
@@ -36,9 +52,9 @@ Probability grades:
 
 | Topic | Current v15 feasibility | Probability | Short reason |
 |---|---|---:|---|
-| FM engine exists and consumes DX7-like voices | **Likely, not live-proven on v15** | High, ~0.75 | Public SMK docs claim a Yamaha-DX7-compatible FM source, v15 full flash contains DX7-style 128-byte banks, and R01 builds a valid 156-byte runtime snapshot. The v15 downstream oscillator/allocator entry is still unnamed and R01 has not been flashed. |
+| FM engine exists and consumes DX7-like voices | **Live-proven on v15, internal renderer still unnamed** | Very high, ~0.95 | Physical Pad and raw MIDI tests produced stock and modified FM sounds. R01 live-proved the `0x0201c5ec` Note path, while later comparisons disproved intentional named-voice selection from an app-resident snapshot. |
 | DX7-style packed voice format | **Established for factory banks** | Very high, ~0.95 | Four 4096-byte full-flash banks at `0x000f4000..0x000f7fff` contain 32 x 128-byte voice records with DX7 name fields; R01 extracts `HAND DRUM ` at `0x000f7580`. |
-| 156-byte runtime voice | **Established as the event snapshot shape used by R01** | High, ~0.85 | R01 copies a 156-byte snapshot at Note On source replacement `0x0201c67c`, with runtime snapshot hash fixed in manifest. Live sound and allocator behavior remain unverified for R01. |
+| 156-byte runtime voice | **Established as the per-note copy shape, not sufficient proof of a valid source location** | Very high, ~0.95 for size; low for app-resident injection | Official Note On/Off both copy `0x9c` bytes from RAM `0x01c34c74`. R01b/R01c showed that app/text-resident bytes with the same calculated content do not reproduce named factory voices. |
 | Operator/envelope mapping | **Packed-to-runtime byte map is known; audible semantics are not fully verified** | Medium-high, ~0.70 | The byte split is deterministic and round-trips through `tools/dx7_vmem.py`; individual runtime byte meanings/ranges still need parameter-sweep audio tests. |
 | Polyphony and voice allocation | **Open for v15** | Medium, ~0.45 | Public docs claim 12 notes and v12 M05/M06/M08 proved stock allocator can sound multiple FM timbres in modified builds, but v15 R01 has no live stress result and no allocator function identity. |
 | Real-time parameter editing | **Possible for future notes; currently-sounding voice editing is unproven** | Medium-low, ~0.35 | Note-time snapshot replacement is feasible statically. Safe live mutation of current voices, UI/CC binding, per-part state, and persistence are not established. |
@@ -61,7 +77,7 @@ Probability grades:
 | R01 package SHA-256 | `292809383e89ba7032619ae338dfb5bd195409600f417de5e8edb98149f66462` |
 | R01 manifests | `baselines/v15/analysis/flash-candidates/R01/app-manifest.json`, `package-manifest.json` |
 | R01 validation command run | `python3 tools/validate_v15_mod_capabilities.py` returned PASS |
-| R01 live/device validation | Not done. Device validation remains unchecked. |
+| R01 live/device validation | Done 2026-08-02. Channel branch passed; original R01 Note Off failed; R01b/R01c Note Off passed; HAND DRUM/BUZZ BASS/Mooger #1 intended identity failed; official v15 restored. |
 
 Relevant R01 addresses:
 
@@ -132,7 +148,7 @@ claim because the bytes are in the clean v15 full-flash dump.
 **Limit:** this alone does not name the live oscillator engine function or prove
 that every packed field has the same audible semantics as a Yamaha DX7.
 
-### 2. R01 expands one packed factory voice into a 156-byte runtime snapshot
+### 2. R01 expansion bytes are reproducible, but app-resident source injection was live-disproven
 
 Direct validation performed for this note:
 
@@ -154,11 +170,20 @@ and replaces the Note On memcpy call at `0x0201c67c` with a wrapper that copies
 that snapshot for human MIDI channel 10 (`r9 == 9`). Non-Ch10 follows the stock
 memcpy path. Note Off memcpy at `0x0201c63e` is intentionally unchanged.
 
-**Direct conclusion:** for v15/R01 static-build purposes, a 156-byte runtime
-voice snapshot is a valid object to supply at the Note On timbre-copy point.
+The later official-v15 loader reanalysis proved that `0x02005660` creates the
+live source at RAM `0x01c34c74`, and that clean Mooger #1 produces the same first
+`0x9c` calculated bytes as the static converter. Nevertheless, R01b/R01c did
+not sound like the selected factory voices. Therefore content equality alone
+does not prove that an address in the app text region is a valid runtime voice
+source.
 
-**Limit:** R01 has not been installed or heard. The conclusion is static/build
-validated only.
+**Direct conclusion:** `0x9c` is the correct per-note copy size and the expansion
+map is reproducible. The specific design that embeds those bytes at
+`0x0201e162` and uses that program address as the memcpy source is revoked.
+
+**Next proof:** have the official loader materialize the target voice, clone its
+first `0x9c` bytes into a provenance-checked RAM buffer, and use the same RAM
+source for Ch10 Note On and Note Off.
 
 ### 3. The R01 change set is small and app-only
 
@@ -317,9 +342,7 @@ v15 and appears sample/wavetable-oriented.
 
 **Needed experiments:**
 
-1. Live R01 or equivalent read-only-safe device test after a recovery path exists:
-   Ch10 Note On should audibly use `HAND DRUM ` while Ch1 remains current UI
-   patch.
+1. Test a loader-produced RAM clone checkpoint against the same stock UI Patch.
 2. Static search for references to the copied 156-byte snapshot destination and
    downstream allocator/render structures using a more complete pi32v2 decoder.
 3. Compare v15 factory-bank edits or SysEx loads against live patch changes if a
@@ -359,8 +382,9 @@ SysEx wrapper/checksum bytes.
 - `tools/build_v15_r01_hand_drum.py` expands a 128-byte packed voice into 156
   bytes with `out[155] = 0x3f`.
 - R01 copies `0x9c` bytes at the special branch. `0x9c == 156`.
-- `tools/validate_v15_mod_capabilities.py` passed and confirms `VOICE-01` through
-  `VOICE-03` static/build capabilities.
+- `tools/validate_v15_mod_capabilities.py` now records channel/source-path
+  separation as live-proven and `VOICE-03` app-resident factory-voice injection
+  as live-disproven.
 
 **Inference:** v15 Note On has a per-event or per-voice timbre snapshot point
 whose expected size is 156 bytes.
@@ -369,7 +393,7 @@ whose expected size is 156 bytes.
 
 **Needed experiments:**
 
-1. Live R01 audio and stuck-note tests.
+1. Replace the disproven app/text-resident source with an official-loader-produced RAM clone.
 2. Determine whether the destination at `r0` is a voice object, a transient event
    object, or a staging buffer copied again by the allocator.
 3. Confirm whether bytes `156..162` mentioned in older v12 records are truly
@@ -406,12 +430,12 @@ whose expected size is 156 bytes.
 
 **Direct evidence for v15:**
 
-- R01 keeps Note Off memcpy unchanged at `0x0201c63e` and only changes the Note On
-  timbre source at `0x0201c67c`.
+- Original R01 changed only Note On and produced a Ch10 stuck note. R01b/R01c
+  changed both Note On `0x0201c67c` and Note Off `0x0201c63e` to the same source,
+  which restored Note Off.
 - Product docs claim 12-note polyphony.
-- Runtime trace for official v15 did not execute because no exact v15 USB device
-  enumerated during the observation window. Therefore no v15 live polyphony data
-  exists here.
+- Live v15 channel routing and release observations now exist, but full
+  overlapping polyphony/voice-stealing stress is still incomplete.
 
 **Derived evidence:**
 
@@ -440,15 +464,17 @@ v15 today; higher for ordinary stock polyphony existing.
 
 **Direct evidence:**
 
-- R01 can statically select one runtime snapshot for future Ch10 Note On events.
+- R01 can statically select a different source path for future Ch10 events, but
+  app/text-resident snapshot identity was live-disproven.
 - The v15 capability matrix marks `FM-01` as only partially confirmed: internal
   FM parameter semantic editing is not fully verified.
 - R01 deliberately replaces the code cave that formerly contained Yamaha
   single-voice SysEx pack/save-related bytes, so that feature is not preserved in
   R01.
 
-**Inference:** editing the 156-byte snapshot before a future Note On is feasible
-in principle. Editing a currently sounding voice in real time is not established.
+**Inference:** editing a loader-produced RAM snapshot before a future Note On is
+feasible in principle. Treating arbitrary app/text bytes as the snapshot is not.
+Editing a currently sounding voice in real time is not established.
 The UI, CC, SysEx, save/load, and per-part mutable-state paths are still separate
 reverse-engineering tasks.
 

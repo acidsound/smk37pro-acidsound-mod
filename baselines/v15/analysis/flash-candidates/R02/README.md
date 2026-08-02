@@ -5,6 +5,12 @@ It removes the R01d boot-time preload hook and reuses the live-booted R01b/R01c
 channel wrapper shape. Ch10 Note On and Note Off both copy `0x9c` bytes from the
 official bulk-SysEx staging address `0x01c37fd0`.
 
+**Live status: PASS on 2026-08-02.** Bank D display 14 Mooger #1 matched on
+Pad Ch10, Note Off worked, and Ch10 retained the voice after changing the Ch1 UI
+patch. Exact official v15 was then restored and its managed flash range matched
+the verified baseline byte-for-byte. See
+[`live-validation-20260802.md`](live-validation-20260802.md).
+
 ## Why this checkpoint exists
 
 Official v15 statically proves that a complete message with header

@@ -15,6 +15,7 @@ FILES = {
     "fm": DIR / "fm.md",
     "pcm": DIR / "pcm-realtime-synth.md",
     "lineage": DIR / "smk-docs-lineage.md",
+    "r02_live": ROOT / "baselines/v15/analysis/flash-candidates/R02/live-validation-20260802.md",
 }
 PINS = {
     "smk_docs": "8f1bf1115cc8fe874bbac326d4f1f1513d743844",
@@ -53,7 +54,11 @@ def main() -> int:
     for word in REQUIRED_MATRIX_WORDS:
         require(word in matrix, f"matrix is missing evidence/status marker: {word}")
 
-    require("R01 실기 검증은 아직 없다" in matrix, "R01 live status is not explicit")
+    require("Mooger #1" in matrix, "R02 named-timbre success is not explicit")
+    require("transient" in matrix, "R02 transient-RAM limitation is not explicit")
+    require("Ch10 전용 RAM" in matrix, "next owned-RAM checkpoint is missing")
+    require("PASS as a controlled checkpoint" in texts["r02_live"], "R02 live result is missing")
+    require("byte-identical" in texts["r02_live"], "R02 post-test official restore proof is missing")
     require("v15 addresses" in texts["pcm"], "PCM document does not preserve product-address uncertainty")
     require("57" in texts["pcm"] and "match" in texts["pcm"].lower(), "PCM document omits negative SDK match evidence")
     require("0x0201c5ec" in texts["midi"], "MIDI dispatcher evidence missing")
@@ -76,7 +81,8 @@ def main() -> int:
     print("pinned smk docs: " + PINS["smk_docs"])
     print("pinned AC79 SDK: " + PINS["ac79_sdk"])
     print(f"matrix subsystem rows: {len(subsystem_rows)}")
-    print("R01 and new PCM/realtime synthesis remain live-unverified")
+    print("R02 Ch10 Mooger #1 routing/Note Off: live-verified under transient-RAM constraints")
+    print("PCM and new software synthesis remain live-unverified")
     return 0
 
 
