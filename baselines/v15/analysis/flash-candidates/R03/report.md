@@ -4,7 +4,7 @@ Date: 2026-08-02
 
 ## Decision
 
-**Offline integrity: PASS. Live flash: pending independent safety review.**
+**Atomic offline integrity: PASS. Live flash: pending independent safety review.**
 
 R03 replaces R02's transient SysEx workspace dependency with a fixed, boot-zeroed,
 allocator-excluded `0xa0`-byte RAM prefix. The design is deliberately one-shot:
@@ -17,9 +17,9 @@ artifacts were built or validated.
 
 ## Exact artifacts
 
-- app SHA-256: `b0696dee5e772a18b96e63505c22258eb535042cac1ea52988295dec21de6944`
-- FWSC SHA-256: `57e96faf63fee9b292d0dc782d4b06e3cb3b31c14c827ce41672b0d034e4ed39`
-- guarded rollback ZIP SHA-256: `060db20c67ff505b8d31e2eff7716c19daff2d3207cc2ffd7a94f246f214508a`
+- app SHA-256: `1fff37674f4bb1d5b988dc1415ab29c7114bbcad9e12bfcd7cec9b687d1f6ecb`
+- FWSC SHA-256: `0ed23e567a623db4b143fa30a6846626d746098ed126c149ac724c0fab6c1937`
+- guarded rollback ZIP SHA-256: `6396f253825d067986131d830bcca8cce16ff9ca39b21c4220369958e90344f1`
 - changed Flash sectors: `0x04000`, `0x20000`, `0x22000`, `0x2a000`, `0x62000`
 - protected prefix `0x0000..0x3fff`: unchanged
 
@@ -41,7 +41,8 @@ This initializes and excludes `0x01c46520..0x01c465c0` from the allocator:
 
 - voice: `0x01c46520..0x01c465bc` (`0x9c` bytes)
 - valid byte: `0x01c465bc`
-- alignment/guard: `0x01c465bd..0x01c465c0`
+- producer lock byte: `0x01c465bd`
+- alignment/guard: `0x01c465be..0x01c465c0`
 
 Heap capacity decreases by 160 bytes. Allocator code and ABI are unchanged, but
 live heap-pressure testing remains mandatory before this can graduate beyond a
@@ -54,13 +55,18 @@ controlled checkpoint.
 - Ch10 and `valid==1`: copy the same owned `0x9c` voice into the stock destination
 - other channels or invalid state: call stock `memcpy`
 - first one-shot/segmented accepted post-F7 caller at `0x0201e468` or
-  `0x0201e49c` -> producer `0x0201e19e`
-- producer copies voice first, then stores `valid=1`
+  `0x0201e49c` -> producer `0x0201e1b4`
+- producer acquires the official PI32v2 atomic byte lock, rechecks `valid`, copies
+  the voice, stores `valid=1`, then releases the lock
 - subsequent accepted packets return without modifying the snapshot
 - stock SAVE caller `0x02026dac` remains explicitly disabled
 - the revoked R01d early post-init hook at `0x02005f9c` is unchanged
 
-The retained 111-row PI32 trace confirms every patched branch and call target.
+The retained 124-row PI32 trace confirms every patched branch and call target.
+Quarkslab decodes the embedded `csync` and `testset` instructions but omits the
+four-byte spin-loop branch at `0x0201e1a2`. That single decoder gap is covered by
+the pinned SDK `arch_spin_lock` source and exact official PI32 clang object:
+`40 e8 fd ff = ifeq goto -6`, with source/object hashes enforced by the validator.
 
 ## Rollback gate
 
@@ -91,6 +97,11 @@ The guard FakeTransport self-test and deterministic ZIP rebuild both pass.
 Any boot failure, USB loss, reboot, stuck note, cross-channel timbre change, or
 heap-pressure symptom is a hard stop followed by the exact R03 rollback path.
 
+The isolated uploader `tools/smk37_v15_r03_ota.c` accepts only package SHA-256
+`0ed23e...1937`, device/package version `015`, and confirmation token
+`INSTALL-SMK37PRO-V15-R03-0ED23E56`. Its offline check accepts R03 and rejects
+the official v15 package before any device access.
+
 ## Reproduce
 
 ```sh
@@ -104,4 +115,13 @@ python3 tools/smk37_v15_app_patch.py repack-app \
   --manifest baselines/v15/analysis/flash-candidates/R03/package-manifest.json
 
 python3 tools/validate_v15_r03.py
+
+cc -O2 -g -std=c11 -Wall -Wextra -Wpedantic \
+  $(pkg-config --cflags libusb-1.0) \
+  tools/smk37_v15_r03_ota.c \
+  src/device_info.c src/fwsc.c src/protocol.c src/sha256.c src/usb_probe.c \
+  -o build/smk37-v15-r03-ota $(pkg-config --libs libusb-1.0)
+
+build/smk37-v15-r03-ota check \
+  build/SMK37Pro-v15-R03-fixed-prefix.fwsc
 ```

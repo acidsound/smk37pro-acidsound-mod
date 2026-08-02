@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the offline-only v15 R03 fixed-heap-prefix controlled checkpoint.
 
-R03 reserves a zeroed 0xc0-byte prefix immediately before the shifted heap,
+R03 reserves a zeroed 0xa0-byte prefix immediately before the shifted heap,
 copies an accepted product voice from the stock staging buffer into that owned
 region, and routes Channel 10 Note On and Note Off through the same voice.
 
@@ -56,9 +56,12 @@ HEAP_BEGIN_R03 = bytes.fromhex("c5ffc065c401")
 STAGING = 0x01C37FD0
 VOICE = 0x01C46520
 VALID = 0x01C465BC
+LOCK = 0x01C465BD
 RESERVED_END = 0x01C465C0
 VOICE_SIZE = 0x9C
 SHORT_CALL_WINDOW_BYTES = 0x20000
+ATOMIC_LOCK_BODY = bytes.fromhex("2000b00040e8fdff20008000")
+ATOMIC_UNLOCK_BODY = bytes.fromhex("20004120894020008000")
 
 
 def short_call(at: int, target: int) -> bytes:
@@ -152,9 +155,17 @@ def build_cave() -> tuple[bytes, dict[str, int]]:
         (on_valid_branch, 0, 1, "on-stock"),
     ]
 
+    lock_entry = CODE_CAVE + len(block)
+    block += ATOMIC_LOCK_BODY
+    unlock_entry = CODE_CAVE + len(block)
+    block += ATOMIC_UNLOCK_BODY
+
     producer = CODE_CAVE + len(block)
     block += word(0x0479)
     block += mov_reg(4, 0)                # accepted staging pointer
+    block += mov_imm32(0, LOCK)
+    at = CODE_CAVE + len(block)
+    block += call32(at, lock_entry)
     block += mov_imm32(5, VALID)
     block += load_byte(0, 5)
     producer_valid_branch = CODE_CAVE + len(block)
@@ -167,14 +178,18 @@ def build_cave() -> tuple[bytes, dict[str, int]]:
     block += mov_imm32(5, VALID)
     block += mov_imm8(0, 1)
     block += store_byte(0, 5)             # publish validity last
+    producer_unlock = CODE_CAVE + len(block)
+    block += mov_imm32(0, LOCK)
+    at = CODE_CAVE + len(block)
+    block += call32(at, unlock_entry)
     producer_return = CODE_CAVE + len(block)
     block += word(0x0459)
-    branches.append((producer_valid_branch, 0, 0, "producer-return"))
+    branches.append((producer_valid_branch, 0, 0, "producer-unlock"))
 
     targets = {
         "off-stock": off_stock,
         "on-stock": on_stock,
-        "producer-return": producer_return,
+        "producer-unlock": producer_unlock,
     }
     for address, register, immediate, target_name in branches:
         start = address - CODE_CAVE
@@ -185,7 +200,10 @@ def build_cave() -> tuple[bytes, dict[str, int]]:
         "off_stock": off_stock,
         "on_entry": on_entry,
         "on_stock": on_stock,
+        "lock_entry": lock_entry,
+        "unlock_entry": unlock_entry,
         "producer": producer,
+        "producer_unlock": producer_unlock,
         "producer_return": producer_return,
         "end": CODE_CAVE + len(block),
     }
@@ -236,6 +254,7 @@ def main() -> int:
             "size": RESERVED_END - VOICE,
             "voice": f"0x{VOICE:08x}..0x{VOICE + VOICE_SIZE:08x}",
             "valid": f"0x{VALID:08x}",
+            "lock": f"0x{LOCK:08x}",
             "initialization": "boot BSS zero extension, ending exactly at shifted HEAP_BEGIN",
             "heap_capacity_reduction": RESERVED_END - VOICE,
         },
@@ -243,6 +262,7 @@ def main() -> int:
             "source": f"0x{STAGING:08x}",
             "copy_size": VOICE_SIZE,
             "publish_order": "voice, valid=1",
+            "producer_serialization": "PI32v2 atomic testset spinlock with csync before and after critical section",
             "reload_after_first_publish": "rejected until reboot",
             "invalid_ch10": "falls back to stock source",
             "save": "disabled/rejected",

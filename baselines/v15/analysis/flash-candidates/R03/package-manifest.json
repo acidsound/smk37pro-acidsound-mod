@@ -1,6 +1,6 @@
 {
   "changes": {
-    "app_byte_count": 153,
+    "app_byte_count": 199,
     "app_ranges": [
       {
         "end_exclusive": 33,
@@ -19,7 +19,7 @@
         "start": 123198
       },
       {
-        "end_exclusive": 123338,
+        "end_exclusive": 123384,
         "start": 123200
       },
       {
@@ -39,7 +39,7 @@
         "start": 387578
       }
     ],
-    "flash_byte_count_including_crc_fields": 161,
+    "flash_byte_count_including_crc_fields": 207,
     "flash_ranges": [
       {
         "end_exclusive": 16388,
@@ -66,7 +66,7 @@
         "start": 139870
       },
       {
-        "end_exclusive": 140010,
+        "end_exclusive": 140056,
         "start": 139872
       },
       {
@@ -86,8 +86,8 @@
         "start": 404250
       }
     ],
-    "fwsc_byte_count": 167,
-    "ota_payload_byte_count_including_wrapper_crc_fields": 167
+    "fwsc_byte_count": 213,
+    "ota_payload_byte_count_including_wrapper_crc_fields": 213
   },
   "format": "smk37-v15-application-only-patch-v1",
   "input": {
@@ -105,9 +105,9 @@
     "ufw_flash_size": 638976
   },
   "output": {
-    "app_sha256": "b0696dee5e772a18b96e63505c22258eb535042cac1ea52988295dec21de6944",
-    "payload_sha256": "a87f032fc291bf397554bb6e557f5c04ab659b5f4ec5f63f276f294a199244cd",
-    "sha256": "57e96faf63fee9b292d0dc782d4b06e3cb3b31c14c827ce41672b0d034e4ed39",
+    "app_sha256": "1fff37674f4bb1d5b988dc1415ab29c7114bbcad9e12bfcd7cec9b687d1f6ecb",
+    "payload_sha256": "365026e816677aee7469bb9ca469a59d4e2612aca6701758cd5313ad8810e208",
+    "sha256": "0ed23e567a623db4b143fa30a6846626d746098ed126c149ac724c0fab6c1937",
     "size": 701140
   },
   "protected_flash_hashes_after": {

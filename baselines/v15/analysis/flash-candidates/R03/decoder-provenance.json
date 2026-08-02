@@ -1,13 +1,19 @@
 {
   "format": "smk37-v15-r03-pi32-decode-v1",
-  "candidate_app_sha256": "b0696dee5e772a18b96e63505c22258eb535042cac1ea52988295dec21de6944",
+  "candidate_app_sha256": "1fff37674f4bb1d5b988dc1415ab29c7114bbcad9e12bfcd7cec9b687d1f6ecb",
   "runtime_base": "0x02000000",
   "language": "pi32v2:LE:32:default",
   "decoder": "Quarkslab PI32v2 Ghidra processor in the pinned local ghidra-quarkslab run",
   "script": "V15DecoderAnalysis.java with an exact candidate SHA-256 gate",
   "source_listing": "clean local Ghidra project output, reduced to the retained trace below",
   "retained_trace": "decoder-trace.tsv",
-  "retained_rows": 111,
-  "scope": "patched boot BSS instruction, Note On/Off callsites, replacement wrapper and producer, accepted SysEx callsites, and disabled SAVE caller",
-  "result": "all retained instructions decoded; all patched branch and call targets match the builder layout"
+  "retained_rows": 124,
+  "scope": "patched boot BSS instruction, Note On/Off callsites, replacement wrappers, atomic lock/unlock, serialized producer, accepted SysEx callsites, and disabled SAVE caller",
+  "result": "all patched branch and call targets match the builder layout; Quarkslab decodes csync/testset but omits the lock loop's 0x40e8fdff instruction, which is separately gated by the pinned SDK source and official PI32 objdump object",
+  "known_decoder_gap": {
+    "address": "0x0201e1a2",
+    "bytes": "40e8fdff",
+    "official_objdump": "ifeq goto -6 <r03_lock+0x2>",
+    "validation": "exact source/object hashes and embedded atomic body are checked by tools/validate_v15_r03.py"
+  }
 }
