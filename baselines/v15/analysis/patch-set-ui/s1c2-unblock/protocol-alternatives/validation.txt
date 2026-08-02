@@ -1,0 +1,3 @@
+S1-C2 protocol alternatives validation: PASS
+report 5fd0e202eafdbd45d2e263793d4921c11092712c29cb7bd529986c2bb9e36da4
+evidence 45a779e85f4cb3854d041d476aa3a91053df2a6a95e211d476178f76cd1cd6d1
