@@ -1,0 +1,131 @@
+R02 review validation transcript
+Date: 2026-08-02
+Device access: none
+Firmware/flash writes: none
+
+1. Offline artifact validator
+
+$ python3 tools/validate_v15_r02.py
+v15 R02 artifact integrity and rollback readiness: PASS
+not a live functional claim; no device access performed
+app eebc5190b2e19dedbba68becb27851e9a26cf35f8356319f75bd9f6c20714948
+package 93bdf1a7212738b06be8b78919324902729befce8ea07626b0b7aaf7c91e640b
+runtime packet 6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27
+rollback 7035ab4815322f7461c27d4e5f438eb8726c0d5a525d0b2c32a4a999db22383d
+
+2. Runtime packet framing
+
+$ python3 - <<'PY'
+from hashlib import sha256
+from pathlib import Path
+p=Path('build/v15-R02-mooger1-runtime.syx')
+b=p.read_bytes()
+print(len(b), sha256(b).hexdigest(), b[:6].hex(), b[-1:].hex())
+PY
+163 6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27 f0430000011b f7
+
+3. Independent USB-MIDI packetization check
+
+$ python3 - <<'PY'
+from pathlib import Path
+sysex=Path('build/v15-R02-mooger1-runtime.syx').read_bytes()
+out=[]
+i=0
+while i < len(sysex):
+    remaining=len(sysex)-i
+    count=min(remaining,3)
+    cin=0x04 if remaining>3 else {1:0x05,2:0x06,3:0x07}[remaining]
+    out += [cin, sysex[i], sysex[i+1] if count>1 else 0, sysex[i+2] if count>2 else 0]
+    i += count
+print('sysex',len(sysex),'usb_midi',len(out),'last_event',bytes(out[-4:]).hex(),'cin_counts',{x:out[0::4].count(x) for x in sorted(set(out[0::4]))})
+assert len(out)==220 and bytes(out[-4:])==bytes([0x05,0xf7,0,0])
+PY
+sysex 163 usb_midi 220 last_event 05f70000 cin_counts {4: 54, 5: 1}
+
+4. R01c/R02 wrapper equivalence
+
+$ python3 - <<'PY'
+import sys
+sys.path.insert(0,'tools')
+from pathlib import Path
+from build_v15_r01_hand_drum import off, CODE_CAVE
+from build_v15_r02_sysex_staging import build_wrapper
+r01c=Path('build/v15-R01c-mooger1-app.bin').read_bytes()
+w,layout=build_wrapper()
+r01cw=r01c[off(CODE_CAVE):off(CODE_CAVE)+len(w)]
+print('layout', {k:hex(v) for k,v in layout.items()}, 'length', len(w))
+print('diff_offsets', [i for i,(a,b) in enumerate(zip(r01cw,w)) if a!=b])
+print('r01c_source_imm', r01cw[12:16].hex(), 'r02_source_imm', w[12:16].hex())
+print('prefix_equal_except_imm', all(i in (12,13,14,15) or a==b for i,(a,b) in enumerate(zip(r01cw,w))))
+PY
+layout {'entry': '0x201e13e', 'special': '0x201e146', 'stock': '0x201e15a', 'end': '0x201e162'} length 36
+diff_offsets [12, 13, 14, 15]
+r01c_source_imm 62e10102 r02_source_imm d07fc301
+prefix_equal_except_imm True
+
+5. C sender compile attempt
+
+$ cc -std=c11 -Wall -Wextra -I/usr/local/include -I/opt/homebrew/include -Isrc tools/smk37_v15_r02_sysex_send.c src/sha256.c -L/usr/local/lib -L/opt/homebrew/lib -lusb-1.0 -o "$JCODE_SCRATCH_DIR/smk37_v15_r02_sysex_send" && "$JCODE_SCRATCH_DIR/smk37_v15_r02_sysex_send" dry-run build/v15-R02-mooger1-runtime.syx
+tools/smk37_v15_r02_sysex_send.c:1:10: fatal error: 'libusb.h' file not found
+    1 | #include <libusb.h>
+      |          ^~~~~~~~~~
+1 error generated.
+
+Interpretation: sender compile could not be validated on this host due to missing local libusb development headers. No send mode was run and no device was accessed. Packetization was independently verified offline.
+
+6. Rollback zip
+
+$ python3 - <<'PY'
+from pathlib import Path
+from hashlib import sha256
+import zipfile
+p=Path('build/SMK37Pro-WL82-v15-R02-rollback-20260802-v1.zip')
+print(p.exists(), p.stat().st_size if p.exists() else 'missing', sha256(p.read_bytes()).hexdigest() if p.exists() else '')
+with zipfile.ZipFile(p) as z:
+    for name in z.namelist():
+        print(name)
+PY
+True 68595 7035ab4815322f7461c27d4e5f438eb8726c0d5a525d0b2c32a4a999db22383d
+SMK37Pro-WL82-v15-R02-rollback-20260802-v1/
+SMK37Pro-WL82-v15-R02-rollback-20260802-v1/tools/
+SMK37Pro-WL82-v15-R02-rollback-20260802-v1/tools/windows_scsi_transport.py
+SMK37Pro-WL82-v15-R02-rollback-20260802-v1/THIRD-PARTY-NOTICES.md
+SMK37Pro-WL82-v15-R02-rollback-20260802-v1/README.md
+SMK37Pro-WL82-v15-R02-rollback-20260802-v1/recovery-sectors/
+SMK37Pro-WL82-v15-R02-rollback-20260802-v1/recovery-sectors/stock-sector-20000.bin
+SMK37Pro-WL82-v15-R02-rollback-20260802-v1/recovery-sectors/stock-sector-04000.bin
+SMK37Pro-WL82-v15-R02-rollback-20260802-v1/recovery-sectors/stock-sector-22000.bin
+SMK37Pro-WL82-v15-R02-rollback-20260802-v1/recovery-sectors/manifest.json
+SMK37Pro-WL82-v15-R02-rollback-20260802-v1/recovery-sectors/stock-sector-2a000.bin
+SMK37Pro-WL82-v15-R02-rollback-20260802-v1/assets/
+SMK37Pro-WL82-v15-R02-rollback-20260802-v1/assets/wl82loader.bin
+SMK37Pro-WL82-v15-R02-rollback-20260802-v1/restore/
+SMK37Pro-WL82-v15-R02-rollback-20260802-v1/restore/run-restore-elevated.ps1
+SMK37Pro-WL82-v15-R02-rollback-20260802-v1/restore/smk37_wl82_guarded_restore.py
+SMK37Pro-WL82-v15-R02-rollback-20260802-v1/SHA256SUMS.txt
+
+7. Changed sectors
+
+$ python3 - <<'PY'
+import sys
+sys.path.insert(0,'tools')
+from pathlib import Path
+from hashlib import sha256
+from smk37_v15_app_patch import FWSC_BLOCK_SIZE, FWSC_DATA_SIZE, FWSC_SLOTS, Ufw
+
+def flash_from_package(path):
+    raw=Path(path).read_bytes(); payload=bytearray()
+    for i in range(FWSC_SLOTS):
+        payload.extend(raw[i*FWSC_BLOCK_SIZE:i*FWSC_BLOCK_SIZE+FWSC_DATA_SIZE])
+    payload.extend(raw[FWSC_SLOTS*FWSC_BLOCK_SIZE:])
+    return bytes(Ufw.parse(payload).flash())
+stock=flash_from_package('build/SMK-37_Pro_015.fwsc')
+r02=flash_from_package('build/SMK37Pro-v15-R02-sysex-staging.fwsc')
+sectors=[]
+for addr in range(0,len(stock),0x1000):
+    diffs=sum(a!=b for a,b in zip(stock[addr:addr+0x1000], r02[addr:addr+0x1000]))
+    if diffs:
+        sectors.append((hex(addr),diffs,sha256(r02[addr:addr+0x1000]).hexdigest()))
+print(sectors)
+PY
+[('0x4000', 8, '4651e4b8c95efbf90473146aaba2147227997b6db33ee43e796a75f3cc286473'), ('0x20000', 6, 'ded10e50863409002326d4114766db9b2cdaa16165991633dfb1b5afc6ce725d'), ('0x22000', 43, '466a456f7461b3e07a95efeb7fa509ec55ac3e940f4bb427073535567646a9c9'), ('0x2a000', 4, 'b0b8af257fd5b6d39a66adea8371fb809c183c503954d9b92f3707a2d866866d')]

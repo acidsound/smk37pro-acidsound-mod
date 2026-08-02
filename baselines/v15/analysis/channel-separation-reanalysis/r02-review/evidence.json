@@ -1,0 +1,87 @@
+{
+  "format": "smk37-v15-r02-controlled-checkpoint-review-v1",
+  "date": "2026-08-02",
+  "device_access_performed": false,
+  "firmware_modified_or_flashed": false,
+  "decision": "PASS_CONDITIONAL_CONTROLLED_CHECKPOINT",
+  "condition": "No other SysEx or bulk/preset traffic after staging and before every relevant Pad Ch10 Note On/Off pair; exact R02 runtime packet sent after each boot before pads.",
+  "artifact_blockers_under_condition": [],
+  "hard_stop_conditions": [
+    "Any intervening SysEx/bulk/preset traffic that can overwrite 0x01c37fd0",
+    "Pad use before exact R02 packet is sent and accepted",
+    "Reboot without restaging",
+    "SAVE while R02 is installed",
+    "Treating R02 as production/final design",
+    "Using sender send mode on a host without libusb dependencies and explicit confirmation",
+    "Continuing on-device probing after ambiguous or failed audible staging result"
+  ],
+  "artifacts": {
+    "r02_app_sha256": "eebc5190b2e19dedbba68becb27851e9a26cf35f8356319f75bd9f6c20714948",
+    "r02_package_sha256": "93bdf1a7212738b06be8b78919324902729befce8ea07626b0b7aaf7c91e640b",
+    "runtime_packet_sha256": "6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27",
+    "rollback_zip_sha256": "7035ab4815322f7461c27d4e5f438eb8726c0d5a525d0b2c32a4a999db22383d"
+  },
+  "wrapper": {
+    "status": "PASS",
+    "entry": "0x0201e13e",
+    "end": "0x0201e162",
+    "length": 36,
+    "r01c_diff_offsets": [12, 13, 14, 15],
+    "r01c_source_immediate_le": "62e10102",
+    "r02_source_immediate_le": "d07fc301",
+    "r02_source": "0x01c37fd0"
+  },
+  "handler_message": {
+    "status": "PASS",
+    "header_hex": "f0430000011b",
+    "payload_length": 156,
+    "terminator_hex": "f7",
+    "total_length": 163,
+    "prior_report_basis": "sysex-staging/report.md complete single-voice bulk path copies message+6 to 0x01c37fd0 and gates final F7"
+  },
+  "callers_0x0201e13e": {
+    "status": "PASS",
+    "official_direct_callers": ["0x0201e468", "0x0201e49c", "0x02026dac"],
+    "r02_action": "all three call instructions zeroed"
+  },
+  "note_off_consistency": {
+    "status": "PASS_CONDITIONAL",
+    "note_off_callsite": "0x0201c63e",
+    "note_on_callsite": "0x0201c67c",
+    "shared_source": "0x01c37fd0",
+    "copy_length": 156,
+    "condition": "staging must not be overwritten between Note On and Note Off"
+  },
+  "usb_midi_packetization": {
+    "status": "PASS_OFFLINE",
+    "sysex_bytes": 163,
+    "usb_midi_bytes": 220,
+    "cin_counts": {"0x04": 54, "0x05": 1},
+    "final_event_hex": "05f70000",
+    "compile_attempt": "BLOCKED_LOCAL_DEPENDENCY_libusb_h_missing"
+  },
+  "changed_sectors": {
+    "status": "PASS",
+    "sectors": [
+      {"address": "0x04000", "changed_byte_count": 8, "r02_sha256": "4651e4b8c95efbf90473146aaba2147227997b6db33ee43e796a75f3cc286473"},
+      {"address": "0x20000", "changed_byte_count": 6, "r02_sha256": "ded10e50863409002326d4114766db9b2cdaa16165991633dfb1b5afc6ce725d"},
+      {"address": "0x22000", "changed_byte_count": 43, "r02_sha256": "466a456f7461b3e07a95efeb7fa509ec55ac3e940f4bb427073535567646a9c9"},
+      {"address": "0x2a000", "changed_byte_count": 4, "r02_sha256": "b0b8af257fd5b6d39a66adea8371fb809c183c503954d9b92f3707a2d866866d"}
+    ],
+    "r01d_high_risk_sector_0x0a000_present": false
+  },
+  "rollback_gate": {
+    "status": "PASS",
+    "zip_size": 68595,
+    "requires_two_identical_fresh_1mib_dumps": true,
+    "requires_exact_r02_target_sector_hashes": true,
+    "write_scope": "four audited 4 KiB application sectors only",
+    "forbids": ["chip erase", "full-flash write", "key burn", "boot-prefix write", "reset", "run-app"]
+  },
+  "boot_risk_vs_r01d": {
+    "status": "PASS_REDUCED_RISK",
+    "r02_patches_0x02005f9c": false,
+    "r02_early_pre_usb_loader_or_preload": false,
+    "basis": "R02 reuses live-booted event-path Note On/Off redirection and removes R01d early post-init preload assumption"
+  }
+}
