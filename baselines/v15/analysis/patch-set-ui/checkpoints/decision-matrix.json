@@ -1,0 +1,735 @@
+{
+  "schema": "smk37-v15-per-note-patch-set-ui-checkpoints-v1",
+  "generated_utc": "2026-08-02T22:15:48Z",
+  "scope": {
+    "planning_only": true,
+    "firmware_patched": false,
+    "package_built": false,
+    "device_accessed": false,
+    "flashed_or_ota": false,
+    "persistent_write_performed": false,
+    "authorization_granted": false
+  },
+  "repository_revision_observed": "6d9430e7b91feed2bebb5140fbb056865e3bf347",
+  "baseline": {
+    "name": "H2 owned-source corrected-fallback live PASS",
+    "app_sha256": "d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59",
+    "package_sha256": "c1752a69ed8f905af58db0de7c3def29c416b71e832e2834e664cd5d17b85011",
+    "rollback_zip_sha256": "c7e0f92852c78d5864a2d60d2bee86215babe7b810e0e62d3c9f2c7d5e69739c",
+    "official_v15_changed_sectors": [
+      "0x04000",
+      "0x20000",
+      "0x22000",
+      "0x2a000",
+      "0x62000"
+    ],
+    "proven": [
+      "owned source 0x01c46520 is safely consumed after accepted packet publication",
+      "Ch10 Note On and Note Off both work with intended Mooger #1 voice",
+      "Ch1 and Ch10 voice separation",
+      "physical Pad Ch10 input without reboot",
+      "corrected stock memcpy fallback destination semantics"
+    ],
+    "not_proven": [
+      "per-note selector",
+      "16-slot capacity",
+      "slot replacement while notes are active",
+      "polyphonic and release stress",
+      "physical UI event ABI",
+      "renderer callback and dirty ABI",
+      "persistence",
+      "long-duration stability"
+    ]
+  },
+  "integration_entry": {
+    "per_note_audio": "S1-C1 after note-register, owned-arena, heap, and parser audits",
+    "ui_event_trace": "S2-C1 read-only",
+    "ui_event_code": "S2-C2 after S2-C1 PASS",
+    "renderer_trace": "S3-C1 read-only",
+    "renderer_code": "S3-C2 after S3-C1 PASS",
+    "persistence_core": "S4-C1 after Stage 3 PASS and storage-sector proof",
+    "ui_save_saved": "S4-C4 after S4-C1 through S4-C3 PASS",
+    "custom_lcd_graphics": "not in this sequence"
+  },
+  "design_decisions": [
+    {
+      "topic": "active slot replacement",
+      "selected": "reject update while target slot active_count is nonzero",
+      "reason": "keeps the source immutable through matching Note Off without immediately doubling the 16-slot voice arena",
+      "rejected_for_initial_sequence": [
+        "in-place active replacement",
+        "unreviewed double buffering",
+        "Note On-only generation selection"
+      ]
+    },
+    {
+      "topic": "slot publication",
+      "selected": "nonblocking lock, validate first, valid clear, exact 156-byte copy, verify, generation increment, valid publish last",
+      "reason": "extends the H2 publication discipline and prevents partial consumer reads"
+    },
+    {
+      "topic": "UI implementation",
+      "selected": "reuse existing grid/widget/string-setter paths after runtime ABI trace",
+      "reason": "final LCD write and custom graphics ABI are unresolved"
+    },
+    {
+      "topic": "persistence",
+      "selected": "separate versioned A/B or journaled Drum Set record",
+      "reason": "the stock 163-byte Patch record must not be expanded and interrupted writes require an older committed fallback"
+    }
+  ],
+  "rollback_policy": {
+    "sector_size": 4096,
+    "stages_1_to_3": {
+      "code": "compute every child-versus-exact-parent changed managed-Flash sector; include parent/candidate bytes and SHA-256",
+      "official": "also provide inherited-plus-new exact official-v15 rollback",
+      "data_sectors": "zero writes allowed",
+      "unlisted_sectors": "must equal parent byte-for-byte"
+    },
+    "stage_4": {
+      "code": "same exact parent sector-diff rule",
+      "data": "identify every touched erase sector, capture and hash whole sectors before first write, restore only to the same unit",
+      "separation": "code rollback and data restore are distinct artifacts"
+    },
+    "stop_if": [
+      "sector inventory is predicted instead of computed",
+      "any unlisted managed sector changes",
+      "parent identity or rollback hashes do not match",
+      "Stage 4 data erase sectors or neighboring records are unresolved"
+    ]
+  },
+  "stages": [
+    {
+      "number": 1,
+      "name": "host-loaded per-note set",
+      "entry": [
+        "exact H2 parent and rollback verified",
+        "Note On and Note Off note/register ABI audited",
+        "owned arena and HEAP_BEGIN effect independently reviewed",
+        "guarded host parser acceptance/rejection reviewed"
+      ],
+      "integrations": {
+        "ui_event": false,
+        "renderer": false,
+        "persistence": false
+      },
+      "exit": "host-loaded 16-note volatile set passes atomic replacement and deterministic stress",
+      "checkpoints": [
+        {
+          "id": "S1-C1",
+          "title": "two-note selector proof",
+          "kind": "candidate-live",
+          "parent": "H2",
+          "single_uncertainty": "stable note identity can select between two immutable owned Ch10 sources at both Note On and Note Off",
+          "build_boundary": [
+            "two reviewed owned slots plus metadata",
+            "exactly two allowlisted host Ch10 notes",
+            "all other notes use defined H2/stock fallback",
+            "two unmistakably different named voices"
+          ],
+          "discriminator": {
+            "question": "Do the two allowlisted notes produce their two assigned voices with matching normal Note Offs under identical conditions?",
+            "pass": "both note-to-voice assignments are exact and unambiguous",
+            "fail": "alias, unstable extraction, wrong Note Off source, ambiguous voice, or reboot"
+          },
+          "live_observations": [
+            "boot identity",
+            "loader accept/reject",
+            "exact note numbers",
+            "audible identity and Note Off",
+            "Ch1 before/after",
+            "packet-time and note-time reboot status"
+          ],
+          "stop_conditions": [
+            "either note aliases the other",
+            "Note On and Note Off use different selection",
+            "Ch1 changes",
+            "ambiguous audio",
+            "reboot or hang"
+          ],
+          "rollback": "computed child-to-H2 code sectors plus independent official-v15 rollback; no data sectors"
+        },
+        {
+          "id": "S1-C2",
+          "title": "16-note capacity proof",
+          "kind": "candidate-live",
+          "parent": "S1-C1",
+          "single_uncertainty": "the proven selector remains safe when capacity and bounds expand from two to 16 slots",
+          "build_boundary": [
+            "same selector semantics as S1-C1",
+            "16 voices totaling 2496 payload bytes plus reviewed metadata",
+            "explicit unknown-note fallback",
+            "reject slot index 16 and malformed lengths"
+          ],
+          "discriminator": {
+            "question": "Does each of the 16 allowlisted host notes produce exactly its assigned voice and no other slot's voice?",
+            "pass": "the 16-entry expected/observed map matches exactly",
+            "fail": "duplicate, shift, stale slot, missing slot, bounds escape, or ambiguity"
+          },
+          "live_observations": [
+            "ascending 16-note table",
+            "Note Off per note",
+            "guard notes below and above table",
+            "Ch1 before/mid/after",
+            "heap and reconnect smoke",
+            "malformed loader rejection"
+          ],
+          "stop_conditions": [
+            "map mismatch",
+            "bounds escape",
+            "heap symptom",
+            "stuck note",
+            "cross-channel change",
+            "reboot or hang"
+          ],
+          "rollback": "computed child-to-S1-C1 sector delta; no data sectors"
+        },
+        {
+          "id": "S1-C3",
+          "title": "atomic per-slot replacement proof",
+          "kind": "candidate-live",
+          "parent": "S1-C2",
+          "single_uncertainty": "one slot can be replaced without exposing a partial or wrong generation to an active note",
+          "build_boundary": [
+            "per-slot active_count and generation",
+            "BUSY rejection while active_count is nonzero",
+            "valid published last",
+            "no double buffering in this checkpoint"
+          ],
+          "discriminator": {
+            "question": "Is an active-slot replacement a true no-op until release, then accepted once with the next note using only the new voice?",
+            "pass": "BUSY preserves old generation and post-release retry commits exactly once",
+            "fail": "held mutation, partial source, wrong old release, or generation advance on rejection"
+          },
+          "live_observations": [
+            "old voice and generation",
+            "held-note BUSY response",
+            "old Note Off",
+            "post-release accepted retry",
+            "new voice and generation",
+            "neighbor slot and Ch1 controls"
+          ],
+          "stop_conditions": [
+            "any state changes on BUSY",
+            "old release sticks or changes",
+            "partial audio",
+            "neighbor slot changes",
+            "generation advances on rejection"
+          ],
+          "rollback": "computed child-to-S1-C2 sector delta; no data sectors"
+        },
+        {
+          "id": "S1-C4",
+          "title": "volatile set stress gate",
+          "kind": "validation-only",
+          "parent": "S1-C3",
+          "single_uncertainty": "the completed volatile set remains correct under deterministic overlap and release stress",
+          "build_boundary": [
+            "no code change",
+            "no data-format change"
+          ],
+          "discriminator": {
+            "question": "Does the fixed overlap, repeated-strike, reversed-release, CC64, CC120, and CC123 matrix finish with zero stuck notes and zero source substitutions?",
+            "pass": "matrix has no deviation and all active counts return to zero",
+            "fail": "stuck note, residual count, cross-channel or cross-slot substitution, crash, or irreproducibility"
+          },
+          "live_observations": [
+            "exact MIDI sequence and timing",
+            "active counts",
+            "audible identity",
+            "release order",
+            "all-notes-off response",
+            "reconnect and final smoke"
+          ],
+          "stop_conditions": [
+            "residual active count",
+            "stuck voice",
+            "source identity changes",
+            "crash",
+            "non-reproducible result"
+          ],
+          "rollback": "unchanged from S1-C3; no binary change"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "name": "physical control without display",
+      "entry": [
+        "Stage 1 exit PASS",
+        "renderer untouched",
+        "persistence blocked"
+      ],
+      "integrations": {
+        "ui_event": true,
+        "renderer": false,
+        "persistence": false
+      },
+      "exit": "proven physical events support select, assign, audition, and cancel with audio/state evidence only",
+      "checkpoints": [
+        {
+          "id": "S2-C1",
+          "title": "physical event producer and ID trace",
+          "kind": "read-only-runtime-trace",
+          "parent": "Stage 1 exit",
+          "single_uncertainty": "one intended non-recovery control has a stable producer, event form, and consumer transition",
+          "build_boundary": [
+            "no candidate binary",
+            "watch 0x01c33569..0x01c3356f pending fields and matching live fields",
+            "do not promote 0x02058248 alone"
+          ],
+          "discriminator": {
+            "question": "Does repeated press/release of one chosen control produce one stable distinguishable event signature and consumer path?",
+            "pass": "repeatable signature, distinguishable from a separate control, with context sufficient for hook review",
+            "fail": "unstable/shared signature, unknown context, or guessed ID"
+          },
+          "live_observations": [
+            "pending/live field and width",
+            "press/release/repeat values",
+            "producer and consumer PCs",
+            "callback context",
+            "recovery and boot control separation"
+          ],
+          "stop_conditions": [
+            "unstable signature",
+            "shared signature",
+            "recovery or boot overlap",
+            "unknown callback context",
+            "need to guess an ID"
+          ],
+          "rollback": "none; read-only trace"
+        },
+        {
+          "id": "S2-C2",
+          "title": "physical slot selection without display",
+          "kind": "candidate-live",
+          "parent": "S1-C3 binary after S2-C1 trace PASS",
+          "single_uncertainty": "the proven event can alter only a dedicated volatile selected-slot field without renderer involvement",
+          "build_boundary": [
+            "one proven event consumer",
+            "selected slot constrained to 0..15",
+            "audio-only audition feedback",
+            "no unresolved stock field reinterpretation"
+          ],
+          "discriminator": {
+            "question": "Does one physical selection action move audition target from slot n to exactly n+1 without changing slot contents?",
+            "pass": "one step and only selection state changes",
+            "fail": "double/skip, slot mutation, event leakage, or recovery conflict"
+          },
+          "live_observations": [
+            "selected slot before/after",
+            "event count",
+            "auditioned voice",
+            "boundary behavior",
+            "stock page and Ch1 controls"
+          ],
+          "stop_conditions": [
+            "skipped or doubled step",
+            "event leakage into stock pages",
+            "slot mutation",
+            "renderer artifact",
+            "recovery control conflict"
+          ],
+          "rollback": "computed child-to-Stage-1 code-sector delta; no data sectors"
+        },
+        {
+          "id": "S2-C3",
+          "title": "physical volatile assignment and audition",
+          "kind": "candidate-live",
+          "parent": "S2-C2",
+          "single_uncertainty": "proven controls can stage and commit one bank/preset assignment to only the selected volatile slot",
+          "build_boundary": [
+            "bank range 0..3",
+            "preset range 0..31",
+            "separately audited materialization path",
+            "retain active-slot BUSY rejection"
+          ],
+          "discriminator": {
+            "question": "Does one physical bank/preset assignment change only the selected slot to the intended named voice?",
+            "pass": "selected slot alone changes and audition is exact",
+            "fail": "wrong voice, neighbor change, stock Patch corruption, Ch1 change, or busy mutation"
+          },
+          "live_observations": [
+            "selected slot",
+            "bank/preset input",
+            "candidate and commit state",
+            "audible identity",
+            "all neighbor slots",
+            "Ch1 and BUSY guards"
+          ],
+          "stop_conditions": [
+            "wrong materialization",
+            "adjacent slot changes",
+            "stock Patch changes",
+            "Ch1 changes",
+            "busy slot mutates",
+            "ambiguous sound"
+          ],
+          "rollback": "computed child-to-S2-C2 sector delta; no data sectors"
+        },
+        {
+          "id": "S2-C4",
+          "title": "physical cancel proof",
+          "kind": "candidate-live",
+          "parent": "S2-C3",
+          "single_uncertainty": "an uncommitted physical edit can be discarded without changing the active volatile set",
+          "build_boundary": [
+            "cancel staged edit state only",
+            "no display",
+            "no persistence"
+          ],
+          "discriminator": {
+            "question": "After changing staged bank/preset then canceling, is the committed voice and generation unchanged?",
+            "pass": "staged state discarded and committed state byte-identical",
+            "fail": "generation/content change, stock save/load call, or ambiguous state"
+          },
+          "live_observations": [
+            "committed generation and voice",
+            "staged selection",
+            "cancel event",
+            "post-cancel generation and voice",
+            "neighbor and Ch1 controls"
+          ],
+          "stop_conditions": [
+            "generation changes",
+            "slot content changes",
+            "stock save/load is invoked",
+            "state cannot be distinguished"
+          ],
+          "rollback": "computed child-to-S2-C3 sector delta; no data sectors"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "name": "display",
+      "entry": [
+        "Stage 2 exit PASS",
+        "persistence absent",
+        "SAVE/SAVED not presented as functional"
+      ],
+      "integrations": {
+        "ui_event": true,
+        "renderer": true,
+        "persistence": false
+      },
+      "exit": "existing-widget display accurately represents volatile selection and edit state",
+      "checkpoints": [
+        {
+          "id": "S3-C1",
+          "title": "renderer and dirty transition trace",
+          "kind": "read-only-runtime-trace",
+          "parent": "Stage 2 exit",
+          "single_uncertainty": "a known stock text update has a stable reusable setter-to-callback-to-dirty/redraw chain",
+          "build_boundary": [
+            "no candidate binary",
+            "trace known 0x02020376 to 0x0201a67c path",
+            "capture computed target and callback context",
+            "no direct LCD access"
+          ],
+          "discriminator": {
+            "question": "Does one known stock text-field change repeat one stable setter-to-callback-to-dirty/redraw ABI?",
+            "pass": "full object-level chain observed twice with identical ABI",
+            "fail": "unexplained target variation, unattributed dirty state, unknown ownership, or direct-pixel dependency"
+          },
+          "live_observations": [
+            "object and text pointers",
+            "setter arguments",
+            "computed target and context",
+            "clobbers and stack",
+            "dirty state and redraw consumer",
+            "reentrancy"
+          ],
+          "stop_conditions": [
+            "callback target unexplained",
+            "dirty state unattributed",
+            "buffer ownership unknown",
+            "only direct LCD manipulation appears usable"
+          ],
+          "rollback": "none; read-only trace"
+        },
+        {
+          "id": "S3-C2",
+          "title": "read-only Drum Set status view",
+          "kind": "candidate-live",
+          "parent": "S2-C4 binary after S3-C1 trace PASS",
+          "single_uncertainty": "existing grid/widget/text paths can render the proven selected-slot state without changing behavior",
+          "build_boundary": [
+            "existing 16-slot grid",
+            "existing setter/resource conventions",
+            "read Stage 2 state only",
+            "no stock Patch or storage writes"
+          ],
+          "discriminator": {
+            "question": "Does the displayed highlight follow the hidden selected-slot state exactly across all 16 positions?",
+            "pass": "16-entry state/display table matches with no regression",
+            "fail": "stale/wrong highlight, render mutation, bounds issue, loop, corruption, or stock-page regression"
+          },
+          "live_observations": [
+            "state and highlight for all slots",
+            "redraw count",
+            "page entry and exit",
+            "text bounds",
+            "visual integrity",
+            "audio identity"
+          ],
+          "stop_conditions": [
+            "display mismatch",
+            "out-of-bounds text",
+            "redraw loop",
+            "visual corruption",
+            "render code mutates state",
+            "stock-page regression"
+          ],
+          "rollback": "computed child-to-S2-C4 sector delta; no data sectors"
+        },
+        {
+          "id": "S3-C3",
+          "title": "volatile edit feedback view",
+          "kind": "candidate-live",
+          "parent": "S3-C2",
+          "single_uncertainty": "display feedback can distinguish staged from committed volatile assignment state accurately",
+          "build_boundary": [
+            "selected slot and staged/committed bank/preset",
+            "explicit nonpersistent marker",
+            "Stage 2 behavior unchanged",
+            "SAVE/SAVED disabled"
+          ],
+          "discriminator": {
+            "question": "Do stage, commit, and cancel transitions always show the same staged/committed state as underlying data and audio?",
+            "pass": "display, state, and audio agree at every transition with zero storage calls",
+            "fail": "false committed state, disagreement, SAVE/SAVED leakage, storage call, or changed edit semantics"
+          },
+          "live_observations": [
+            "display and backing fields",
+            "audition and cancel result",
+            "page navigation",
+            "redraw latency",
+            "storage call count"
+          ],
+          "stop_conditions": [
+            "false committed indication",
+            "display and audio disagree",
+            "SAVE/SAVED appears",
+            "storage is called",
+            "Stage 2 edit behavior changes"
+          ],
+          "rollback": "computed child-to-S3-C2 sector delta; no data sectors"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "name": "persistence",
+      "entry": [
+        "Stage 3 exit PASS",
+        "separate record key/address and all erase sectors proven",
+        "unit-specific whole-sector captures ready",
+        "read/write/default/failure paths reviewed",
+        "A/B or journal format independently reviewed"
+      ],
+      "integrations": {
+        "ui_event": true,
+        "renderer": true,
+        "persistence": true
+      },
+      "record_contract": {
+        "separate_from_stock_patch": true,
+        "required_fields": [
+          "magic",
+          "format_version",
+          "total_length",
+          "slot_count",
+          "sequence",
+          "16 note values",
+          "16 bank/preset references or justified checked payload",
+          "CRC",
+          "commit marker written last"
+        ],
+        "boot_selection": "newest fully committed valid A/B record, else older valid record or safe volatile default",
+        "automatic_rewrite_on_invalid": false
+      },
+      "exit": "separate persistence is recoverable and UI SAVE/SAVED truthfully represents verified transactions",
+      "checkpoints": [
+        {
+          "id": "S4-C1",
+          "title": "normal save reboot load proof",
+          "kind": "candidate-live-storage",
+          "parent": "Stage 3 exit",
+          "single_uncertainty": "a separate fully written record survives reboot and restores the exact 16-slot set",
+          "build_boundary": [
+            "reviewed A/B writer and boot/default reader",
+            "controlled host trigger, not UI SAVE",
+            "0x02004b02 success only when return equals requested length",
+            "readback CRC before commit"
+          ],
+          "discriminator": {
+            "question": "After save and reboot, do the exact table and all 16 audible assignments match the pre-save set?",
+            "pass": "logical, byte, and audio state match with stock Patch intact",
+            "fail": "short success, wrong record, mismatch, boot fault, stock Patch change, or out-of-inventory write"
+          },
+          "live_observations": [
+            "data slot and sequence",
+            "requested and returned counts",
+            "readback CRC",
+            "reboot and chosen record",
+            "16-entry table and audio",
+            "stock Patch state"
+          ],
+          "stop_conditions": [
+            "partial count treated as success",
+            "wrong record selected",
+            "boot fault",
+            "any set mismatch",
+            "stock Patch changes",
+            "write outside inventoried data sectors"
+          ],
+          "rollback": "computed code-sector delta plus same-unit captured whole data-sector restore"
+        },
+        {
+          "id": "S4-C2",
+          "title": "invalid record fallback proof",
+          "kind": "candidate-live-storage",
+          "parent": "S4-C1",
+          "single_uncertainty": "a corrupt or unsupported newest record is ignored safely",
+          "build_boundary": [
+            "controlled offline invalid record or injected read result",
+            "no arbitrary storage fuzzing",
+            "no automatic rewrite"
+          ],
+          "discriminator": {
+            "question": "When the newest record fails one declared check, does boot select the older valid record or safe default without writing?",
+            "pass": "deterministic fallback, no boot loop, and zero write calls",
+            "fail": "invalid acceptance, variable fallback, boot loop, automatic rewrite, or stock-store touch"
+          },
+          "live_observations": [
+            "invalidity reason",
+            "candidate and selected sequence",
+            "write call count",
+            "fallback set",
+            "stock Patch state"
+          ],
+          "stop_conditions": [
+            "invalid record accepted",
+            "boot loops",
+            "fallback varies",
+            "automatic rewrite occurs",
+            "stock store is touched"
+          ],
+          "rollback": "same code/data rollback discipline as S4-C1"
+        },
+        {
+          "id": "S4-C3",
+          "title": "short-write and interruption recovery proof",
+          "kind": "candidate-live-storage",
+          "parent": "S4-C2",
+          "single_uncertainty": "an incomplete new transaction leaves the previous committed record recoverable",
+          "build_boundary": [
+            "deterministic fault injection before commit marker",
+            "no new user feature",
+            "no real power interruption before injected path PASS and separate approval"
+          ],
+          "discriminator": {
+            "question": "After an injected incomplete transaction and reboot, is the previous committed record selected and the incomplete record ignored?",
+            "pass": "old set returns exactly and partial data is non-authoritative",
+            "fail": "partial selected, old damaged, boot loop, repair write, or neighbor-sector change"
+          },
+          "live_observations": [
+            "injected cutoff and returned count",
+            "commit marker",
+            "reboot and selected sequence",
+            "old set identity",
+            "repair write count",
+            "neighboring sector hashes"
+          ],
+          "stop_conditions": [
+            "partial record selected",
+            "old record damaged",
+            "boot loops",
+            "automatic repair write",
+            "neighboring sector hash changes"
+          ],
+          "rollback": "computed code-sector delta plus same-unit captured data-sector restore"
+        },
+        {
+          "id": "S4-C4",
+          "title": "UI SAVE SAVED integration",
+          "kind": "candidate-live-storage-ui",
+          "parent": "S4-C3",
+          "single_uncertainty": "the UI invokes the proven transaction and reports success or failure truthfully",
+          "build_boundary": [
+            "bind SAVE to proven S4-C1 transaction",
+            "show SAVED only after full count, commit, readback, and CRC",
+            "failure leaves dirty state and prior committed record"
+          ],
+          "discriminator": {
+            "question": "Does SAVED appear if and only if the verified transaction succeeds, while an injected failure never shows SAVED and preserves the prior record?",
+            "pass": "UI truth table, storage state, and reboot state agree for success and failure",
+            "fail": "premature SAVED, silent failure, false dirty clear, stock SAVE collision, or prior record loss"
+          },
+          "live_observations": [
+            "UI event",
+            "storage request and return",
+            "commit readback and CRC",
+            "rendered state",
+            "injected failure state",
+            "reboot result for both branches"
+          ],
+          "stop_conditions": [
+            "premature SAVED",
+            "silent failure",
+            "false dirty clear",
+            "stock SAVE path collision",
+            "prior record loss",
+            "unbounded retry"
+          ],
+          "rollback": "computed child-to-S4-C3 code-sector delta plus same-unit captured data-sector restore"
+        }
+      ]
+    }
+  ],
+  "global_stop_conditions": [
+    "unexpected reboot, watchdog, hang, boot delay, or identity mismatch",
+    "ambiguous audio",
+    "Note On and Note Off selection rules differ",
+    "stuck note, active-count leak, cross-channel change, or allocator symptom",
+    "malformed traffic changes state",
+    "unreviewed managed sector changes",
+    "persistent write before Stage 4",
+    "guessed event ID or renderer target",
+    "direct LCD, framebuffer, custom graphics, or custom font use",
+    "stock 0xa3 Patch record expansion or collision",
+    "short or zero storage return treated as success",
+    "rollback or data backup cannot be verified"
+  ],
+  "sources": [
+    {
+      "path": "baselines/v15/analysis/channel-separation-reanalysis/post-r02-roadmap.md",
+      "sha256": "2dd1879a6020096804bb21fe538dabb81bf3c1b71cd1a225c69b9cbf34facb12"
+    },
+    {
+      "path": "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/live-validation-20260802.md",
+      "sha256": "b2aca5903390cffe573f42c89aa6407a52c28f967124a07b407887959d1c8fd7"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/README.md",
+      "sha256": "1f6209fbd5fb41f2ec60b25c2e28daa3a8487d11d9275f27368acbb98c15ad7f"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/final-pass/events/report.md",
+      "sha256": "1db782f6cc39b85b109af39999915bb8a4d7cf7233cb0bff77227d8f41b0537d"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/final-pass/renderer/report.md",
+      "sha256": "c1e9c67b0fa426fbaae9632620415ac2f65aead94d31de77ea9cd6635819138d"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/followup/persistence-direction.md",
+      "sha256": "c7ef98a1e9305105c173d0ce5f820b438c6ffcda416ad7adb839c2785d64bf42"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/review/requirements.md",
+      "sha256": "1ef9a8d2e9ddf55df7a89bedbc6850c976c19f3fa3eb7b8c7ca0f118e002e79b"
+    }
+  ]
+}
