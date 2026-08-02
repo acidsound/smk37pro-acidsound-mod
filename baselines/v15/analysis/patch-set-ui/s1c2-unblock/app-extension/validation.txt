@@ -1,0 +1,11 @@
+PASS	official-fwsc-sha	f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff
+PASS	official-app-sha	36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS	app-file-equals-jlfs-app-bytes	617012 bytes
+PASS	app-size-is-0x96a34	0x96a34
+PASS	cfg-tool-starts-at-app-end	0x9ab54 == 0x9ab54
+PASS	cfg-tool-consumes-naive-app-tail	0x9ab54..0x9acd3
+PASS	flash-bin-has-no-gap-before-next-ufw-entry	flash.bin aligned end 0x9c400; USR starts 0x9c400
+PASS	checkable-jlfs-data-crcs-valid	app.bin/cfg_tool.bin checkable in flash.bin; out-of-flash JLFS data entries have 0xffff CRC placeholders
+PASS	app-area-entry-point	0x02000120
+PASS	app-area-size	0x96cd3
+OVERALL	PASS	BLOCK maximum_safe_extension_bytes=0
