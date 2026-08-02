@@ -1,0 +1,15 @@
+$ python3 baselines/v15/analysis/patch-set-ui/ui-integration/validate.py
+status: PASS
+schema: smk37-v15-patch-set-ui-integration-evidence-v1
+official_app_sha256: 36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+h2_app_sha256: d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59
+sources_verified: 16
+findings_verified: 23
+proven_facts: 14
+blockers: 7
+app_addresses_formula_checked: 40
+led_product_addresses_promoted: 0
+first_live_checkpoint: U0 read-only runtime mapping
+first_mutating_checkpoint: U1 visual-only volatile selector
+firmware_patch_flash_device_access: none
+sha256sums_checked: no (run --check-sums after generation)
