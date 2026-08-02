@@ -18,7 +18,7 @@ No live-functional claim is made by this report.
 - app SHA-256: `3ff9c46b9686c0cea1348a11bed553ebd2d677e2d3452a0f436ce14f3ba5c788`
 - FWSC SHA-256: `001582c097277d6a4a619ed407cf121d5f30097ef82f312d53a2e45c4a9a5a62`
 - exact uploader source SHA-256: `d0c2afdff619d907a68c12abed55269e38e00b17c0248f3039e7674c8a1f7eac`
-- rollback v3 ZIP SHA-256: `15dd52dbb18e9267cbc7f3ea7f1c493ba14a9501ca5c073d06f19c6f07cb8ad9`
+- rollback v4 ZIP SHA-256: `ee8af217f78576a69ac1406ad839eb69721f031b8e2996825ef540d07a38c751`
 - changed Flash sectors: `0x04000`, `0x20000`, `0x22000`, `0x2a000`, `0x62000`
 - protected Flash prefix `0x0000..0x3fff`: unchanged
 
@@ -80,15 +80,18 @@ signed displacement, and the validator checks the candidate bytes and exact
 return target `0x0201e1e6`. `reproduce_trylock.sh` rebuilt the object
 byte-identically and verified the official objdump transcript.
 
-## Rollback and uploader gates
+## Rollback v4 and uploader gates
 
-Rollback v3 restores exactly the five changed sectors and requires:
+Rollback v4 restores exactly the five changed sectors and requires:
 
 - two fresh byte-identical 1 MiB forced-loader dumps
 - each current changed sector to match the exact R03 target hash
 - writes only inside the five audited 4 KiB sectors
 - 256-byte maximum writes, CRC16-XMODEM, and readback verification
 - all other sectors to remain byte-identical
+
+The Windows elevated wrapper and ZIP are additionally checked to contain the exact R03
+confirmation tokens and no stale R02 confirmation strings.
 
 The uploader accepts only package SHA `001582...a62`, firmware identity `015`,
 and token `INSTALL-SMK37PRO-V15-R03-001582C0`. Its offline check accepts this
@@ -111,7 +114,7 @@ R03 package and rejects official v15.
 
 Do not use SAVE during the checkpoint. Any boot failure, USB loss, reboot, stuck
 note, cross-channel change, or allocation symptom is a hard stop followed by the
-exact rollback v3 path.
+exact rollback v4 path.
 
 ## Reproduce
 

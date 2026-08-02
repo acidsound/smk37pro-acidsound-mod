@@ -9,6 +9,7 @@ import json
 import struct
 import subprocess
 import sys
+import zipfile
 from hashlib import sha256
 from pathlib import Path
 
@@ -56,14 +57,15 @@ ATOMIC_OBJDUMP = ATOMIC_DIR / "official-objdump.txt"
 ATOMIC_SDK_CONTRACT = ATOMIC_DIR / "pinned-sdk-spinlock-contract.txt"
 ATOMIC_REPRODUCER = ATOMIC_DIR / "reproduce_trylock.sh"
 UPLOADER_SOURCE = ROOT / "tools/smk37_v15_r03_ota.c"
-ROLLBACK_DIR = ROOT / "build/SMK37Pro-WL82-v15-R03-rollback-20260802-v3"
-ROLLBACK_ZIP = ROOT / "build/SMK37Pro-WL82-v15-R03-rollback-20260802-v3.zip"
+ROLLBACK_DIR = ROOT / "build/SMK37Pro-WL82-v15-R03-rollback-20260802-v4"
+ROLLBACK_ZIP = ROOT / "build/SMK37Pro-WL82-v15-R03-rollback-20260802-v4.zip"
 ROLLBACK_MANIFEST = ROLLBACK_DIR / "recovery-sectors/manifest.json"
 ROLLBACK_GUARD = ROLLBACK_DIR / "restore/smk37_wl82_guarded_restore.py"
+ROLLBACK_WRAPPER = ROLLBACK_DIR / "restore/run-restore-elevated.ps1"
 
 R03_APP_SHA256 = "3ff9c46b9686c0cea1348a11bed553ebd2d677e2d3452a0f436ce14f3ba5c788"
 R03_PACKAGE_SHA256 = "001582c097277d6a4a619ed407cf121d5f30097ef82f312d53a2e45c4a9a5a62"
-ROLLBACK_SHA256 = "15dd52dbb18e9267cbc7f3ea7f1c493ba14a9501ca5c073d06f19c6f07cb8ad9"
+ROLLBACK_SHA256 = "ee8af217f78576a69ac1406ad839eb69721f031b8e2996825ef540d07a38c751"
 ATOMIC_SOURCE_SHA256 = "2e82edb679ceb2e2c4e66903ceb96310ad4eb3f18aa24dd0b802fddd1bd8b3be"
 ATOMIC_OBJECT_SHA256 = "e12ebf05608c78c4ba81cbea8eded0230ddd26febb89a2412174c694744c22c6"
 ATOMIC_OBJDUMP_SHA256 = "faaf49e7fdd8a85c6cf79246a00c48678e3a96688d452a545fbc137200c6fb04"
@@ -297,6 +299,26 @@ def main() -> int:
     require(stock_flash[:0x4000] == r03_flash[:0x4000], "protected prefix changed")
 
     require(digest(ROLLBACK_ZIP.read_bytes()) == ROLLBACK_SHA256, "rollback ZIP hash mismatch")
+    confirmations = (
+        "I_UNDERSTAND_THIS_ERASES_EXACTLY_FIVE_R03_SECTORS",
+        "I_HAVE_TWO_IDENTICAL_1MIB_DUMPS_AND_R03_TARGET_HASHES",
+        "RESTORE_OFFICIAL_V15_SECTORS_NOW",
+    )
+    wrapper = ROLLBACK_WRAPPER.read_text(encoding="utf-8")
+    require("FOUR_R02" not in wrapper and "R02_TARGET_HASHES" not in wrapper,
+            "rollback elevated wrapper contains stale R02 confirmations")
+    for confirmation in confirmations:
+        require(wrapper.count(f"--confirm {confirmation}") == 1,
+                f"rollback elevated wrapper confirmation mismatch: {confirmation}")
+    with zipfile.ZipFile(ROLLBACK_ZIP) as archive:
+        zip_wrapper_name = f"{ROLLBACK_DIR.name}/restore/run-restore-elevated.ps1"
+        zip_wrapper = archive.read(zip_wrapper_name).decode("utf-8")
+        require(zip_wrapper == wrapper, "rollback ZIP elevated wrapper differs from directory")
+        for confirmation in confirmations:
+            require(zip_wrapper.count(f"--confirm {confirmation}") == 1,
+                    f"rollback ZIP confirmation mismatch: {confirmation}")
+        require("FOUR_R02" not in zip_wrapper and "R02_TARGET_HASHES" not in zip_wrapper,
+                "rollback ZIP contains stale R02 confirmations")
     rollback = json.loads(ROLLBACK_MANIFEST.read_text(encoding="utf-8"))
     require(rollback["format"] == "smk37-v15-r03-forced-recovery-plan-v1", "rollback format mismatch")
     require(tuple(int(item["address"], 0) for item in rollback["sectors"]) == EXPECTED_SECTORS,

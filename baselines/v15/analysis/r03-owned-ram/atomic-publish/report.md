@@ -65,5 +65,5 @@ partially published voice.
 
 This proves instruction and concurrency structure, not runtime scheduling or
 heap headroom. Normal boot, staging, Note On/Off, channel independence, UI,
-SEQ, reconnect, and polyphony stress remain live checks. The exact rollback v3
+SEQ, reconnect, and polyphony stress remain live checks. The exact rollback v4
 bundle must remain available.

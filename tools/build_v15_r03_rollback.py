@@ -24,7 +24,7 @@ OFFICIAL_PACKAGE_SHA256 = "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965
 R03_PACKAGE_SHA256 = "001582c097277d6a4a619ed407cf121d5f30097ef82f312d53a2e45c4a9a5a62"
 EXPECTED_SECTORS = (0x04000, 0x20000, 0x22000, 0x2A000, 0x62000)
 SECTOR_SIZE = 0x1000
-BUNDLE_NAME = "SMK37Pro-WL82-v15-R03-rollback-20260802-v3"
+BUNDLE_NAME = "SMK37Pro-WL82-v15-R03-rollback-20260802-v4"
 TEMPLATE_NAME = "SMK37Pro-WL82-v15-R02-rollback-20260802-v1"
 
 
@@ -70,6 +70,29 @@ def patched_guard(template: str) -> str:
         result = result.replace(old, new)
     require("R02" not in result and "r02" not in result, "stale R02 token in R03 guard")
     require("0x62000" in result, "R03 guard lacks heap-sector allow-list")
+    return result
+
+
+def patched_wrapper(template: str) -> str:
+    replacements = (
+        ("I_UNDERSTAND_THIS_ERASES_EXACTLY_FOUR_R02_SECTORS",
+         "I_UNDERSTAND_THIS_ERASES_EXACTLY_FIVE_R03_SECTORS"),
+        ("I_HAVE_TWO_IDENTICAL_1MIB_DUMPS_AND_R02_TARGET_HASHES",
+         "I_HAVE_TWO_IDENTICAL_1MIB_DUMPS_AND_R03_TARGET_HASHES"),
+    )
+    result = template
+    for old, new in replacements:
+        require(old in result, f"wrapper template token missing: {old}")
+        result = result.replace(old, new)
+    require("R02" not in result and "r02" not in result,
+            "stale R02 token in R03 elevated wrapper")
+    for confirmation in (
+        "I_UNDERSTAND_THIS_ERASES_EXACTLY_FIVE_R03_SECTORS",
+        "I_HAVE_TWO_IDENTICAL_1MIB_DUMPS_AND_R03_TARGET_HASHES",
+        "RESTORE_OFFICIAL_V15_SECTORS_NOW",
+    ):
+        require(result.count(f"--confirm {confirmation}") == 1,
+                f"R03 elevated wrapper confirmation mismatch: {confirmation}")
     return result
 
 
@@ -126,12 +149,16 @@ def main() -> int:
         "tools/windows_scsi_transport.py",
         "THIRD-PARTY-NOTICES.md",
         "assets/wl82loader.bin",
-        "restore/run-restore-elevated.ps1",
     ):
         source = args.template / relative
         destination = args.output_dir / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, destination)
+
+    wrapper_source = (args.template / "restore/run-restore-elevated.ps1").read_text(encoding="utf-8")
+    wrapper_path = args.output_dir / "restore/run-restore-elevated.ps1"
+    wrapper_path.parent.mkdir(parents=True, exist_ok=True)
+    wrapper_path.write_text(patched_wrapper(wrapper_source), encoding="utf-8")
 
     guard_source = (args.template / "restore/smk37_wl82_guarded_restore.py").read_text(encoding="utf-8")
     guard_path = args.output_dir / "restore/smk37_wl82_guarded_restore.py"
@@ -181,6 +208,11 @@ def main() -> int:
         encoding="utf-8",
     )
     write_hashes(args.output_dir)
+
+    for path in (p for p in args.output_dir.rglob("*") if p.is_file()):
+        data = path.read_bytes()
+        require(b"FOUR_R02" not in data and b"R02_TARGET_HASHES" not in data,
+                f"stale R02 confirmation token in bundle: {path.relative_to(args.output_dir)}")
 
     completed = subprocess.run([sys.executable, str(guard_path), "self-test"], check=False)
     require(completed.returncode == 0, "R03 guarded restore self-test failed")
