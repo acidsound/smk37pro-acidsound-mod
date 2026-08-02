@@ -1,0 +1,74 @@
+{
+  "decision": "PASS",
+  "reviewer": "Jcode",
+  "reviewed_commit": "2618f516e7ba5aa93db172449a4f78bce7c9fc67",
+  "parent_commit": "bf903ec54fcfaef4e9f28d233d213a15bf55355b",
+  "scope": "H0 release gates, source-built exact uploader, deterministic baseline and rollback artifacts",
+  "device_or_flash_action": false,
+  "validator": {
+    "command": "python3 tools/validate_v15_h0_release.py",
+    "status": "PASS",
+    "ota_checker_identity": "SMK-37 Pro_015",
+    "ota_checker_token": "INSTALL-SMK37PRO-V15-H0-114D814B",
+    "ota_source_sha256": "058c92721694b2979254f5f0c8e675be39a4957453cb867d8d8fa573d765b2e9",
+    "rollback_zip_sha256": "05e22531e82b9b3a15338e09d1fde274e18f4697a17c60e00fcba063c7ea60ed"
+  },
+  "h0_exact_uploader": {
+    "source": "tools/smk37_v15_h0_ota.c",
+    "source_sha256": "058c92721694b2979254f5f0c8e675be39a4957453cb867d8d8fa573d765b2e9",
+    "h0_package_sha256": "114d814b5def641c979a5f0fbd2e5dc06d982c807662d5221dc2e0e936e5e566",
+    "token": "INSTALL-SMK37PRO-V15-H0-114D814B",
+    "identity_gate": "SMK-37 Pro version 15",
+    "scratch_binary_sha256": "f0145b3cc9e6fb38c3b2c3fd30a882df0ae443f2ed65c06dd7d0fc826efd7a38",
+    "release_binary_sha256": "20bd2efc224a7f9c42ba7332507f283919cc75d111380d4e528a3d9a95f85391",
+    "offline_check_results": {
+      "h0_package": "accepted: exact v15 H0 package: PASS (701120-byte OTA payload)",
+      "official_v15": "rejected: offline check rejected: not exact v15 H0 package",
+      "r03": "rejected: offline check rejected: not exact v15 H0 package"
+    }
+  },
+  "baseline_h0": {
+    "deterministic_rebuild_byte_identical": true,
+    "official_v15_fwsc_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "r03_fwsc_sha256": "001582c097277d6a4a619ed407cf121d5f30097ef82f312d53a2e45c4a9a5a62",
+    "h0_fwsc_sha256": "114d814b5def641c979a5f0fbd2e5dc06d982c807662d5221dc2e0e936e5e566",
+    "h0_app_sha256": "ab2d4d210605f20e35b96a8471c9f2e1102c24e18f3b062d6eabd4970f9794ce",
+    "app_diffs": ["0x20", "0x5e9fa"],
+    "bss_size_insn": {"address": "0x0200001e", "stock": "c2ff48cb0300", "h0": "c2ffeccb0300"},
+    "heap_begin_insn": {"address": "0x0205e9f8", "stock": "c5ff2065c401", "h0": "c5ffc065c401"},
+    "stock_paths_unchanged": {
+      "code_cave_prefix": "0x0201e13e 7604e2808980c13042201492831c34e1f01f3516108a5607c60758ee3b4074f1fc403d41",
+      "note_off_memcpy_call": "0x0201c63e 80ff8ac60200",
+      "note_on_memcpy_call": "0x0201c67c 80ff4cc60200",
+      "product_direct_packer_call": "0x0201e468 bfea69fe",
+      "product_segmented_packer_call": "0x0201e49c bfea4ffe",
+      "save_first_persistent_write": "0x02026da6 beeaacee",
+      "save_packer_call": "0x02026dac bfeac7b9"
+    },
+    "flash_diffs": ["0x04000", "0x04001", "0x04002", "0x04003", "0x04020", "0x04021", "0x04022", "0x04023", "0x04140", "0x62b1a"],
+    "app_flash_offsets": ["0x04140", "0x62b1a"],
+    "repacker_metadata_offsets": ["0x04000", "0x04001", "0x04002", "0x04003", "0x04020", "0x04021", "0x04022", "0x04023"],
+    "changed_4k_sectors": ["0x04000", "0x62000"],
+    "protected_prefix_equal": true,
+    "protected_prefix_sha256": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67"
+  },
+  "guarded_rollback": {
+    "deterministic_zip_rebuild_byte_identical": true,
+    "zip_sha256": "05e22531e82b9b3a15338e09d1fde274e18f4697a17c60e00fcba063c7ea60ed",
+    "sectors": ["0x04000", "0x62000"],
+    "sector_size": 4096,
+    "confirmations": [
+      "I_UNDERSTAND_THIS_ERASES_EXACTLY_TWO_H0_SECTORS",
+      "I_HAVE_TWO_IDENTICAL_1MIB_DUMPS_AND_H0_TARGET_HASHES",
+      "RESTORE_OFFICIAL_V15_SECTORS_NOW"
+    ],
+    "zip_stale_r02_text_entries": 0,
+    "guarded_rollback_restores_stock": true,
+    "guard_self_test": "passed"
+  },
+  "makefile_dependency_assessment": {
+    "head_makefile_h0_refs": 0,
+    "working_tree_makefile_diff_h0_refs": 0,
+    "assessment": "not a blocker; validator and independent review source-build the H0 uploader directly with cc and pkg-config, so reviewed H0 release gate does not depend on uncommitted Makefile changes"
+  }
+}
