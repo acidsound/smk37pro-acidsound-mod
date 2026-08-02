@@ -1,0 +1,89 @@
+{
+  "artifact_scope": "offline artifact integrity only; not a live functional claim",
+  "changes": [
+    {
+      "address": "0x0201e13e",
+      "file_offset": 123198,
+      "new_hex": "7904931683f80a120416c1ffd07fc3014016623c80ff76ab0200590480ff6eab02005904",
+      "old_hex": "7604e2808980c13042201492831c34e1f01f3516108a5607c60758ee3b4074f1fc403d41"
+    },
+    {
+      "address": "0x0201c67c",
+      "file_offset": 116348,
+      "new_hex": "80ffbc1a0000",
+      "old_hex": "80ff4cc60200"
+    },
+    {
+      "address": "0x0201c63e",
+      "file_offset": 116286,
+      "new_hex": "80fffa1a0000",
+      "old_hex": "80ff8ac60200"
+    },
+    {
+      "address": "0x0201e468",
+      "file_offset": 124008,
+      "new_hex": "00000000",
+      "old_hex": "bfea69fe",
+      "purpose": "one-shot product packet"
+    },
+    {
+      "address": "0x0201e49c",
+      "file_offset": 124060,
+      "new_hex": "00000000",
+      "old_hex": "bfea4ffe",
+      "purpose": "fragmented product packet"
+    },
+    {
+      "address": "0x02026dac",
+      "file_offset": 159148,
+      "new_hex": "00000000",
+      "old_hex": "bfeac7b9",
+      "purpose": "UI SAVE path"
+    }
+  ],
+  "design": {
+    "boot_time_hook": null,
+    "channel_10_nibble": 9,
+    "channel_register": "r9",
+    "disabled_packer_callers": [
+      "0x0201e468",
+      "0x0201e49c",
+      "0x02026dac"
+    ],
+    "embedded_voice": false,
+    "note_off_memcpy": "0x0201c63e",
+    "note_on_memcpy": "0x0201c67c",
+    "one_shot_handler_copy": "message+6 to 0x01c37030+0xfa0",
+    "runtime_source": "0x01c37fd0",
+    "save_behavior": "disabled while R02 is installed",
+    "source_length": 156
+  },
+  "format": "smk37-v15-r02-channel10-sysex-staging-v1",
+  "input_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+  "layout": {
+    "end": "0x0201e162",
+    "entry": "0x0201e13e",
+    "special": "0x0201e146",
+    "stock": "0x0201e15a"
+  },
+  "live_test_order": [
+    "boot and verify firmware 015 before touching pads",
+    "send the exact generated runtime product packet once",
+    "compare Bank D display 14 keyboard sound with Pad Ch10",
+    "change Ch1 UI patch and confirm Ch10 remains Mooger #1",
+    "verify repeated Ch10 Note On/Off with no stuck voice",
+    "do not press SAVE or send another preset SysEx during this checkpoint"
+  ],
+  "output_app_sha256": "eebc5190b2e19dedbba68becb27851e9a26cf35f8356319f75bd9f6c20714948",
+  "runtime_base": "0x02000000",
+  "source_dump_sha256": "1c202201a81ed6d956ec5398adff75ffcd805594a27370a56caafaf18223383b",
+  "voice_packet": {
+    "header_hex": "f0430000011b",
+    "name": "Mooger #1 ",
+    "packed_flash_offset": "0x000f7680",
+    "runtime_sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275",
+    "sha256": "6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27",
+    "size": 163,
+    "terminator": "f7"
+  }
+}
