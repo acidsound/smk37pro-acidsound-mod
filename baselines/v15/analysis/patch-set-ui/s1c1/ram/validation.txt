@@ -1,0 +1,80 @@
+PASS	scope	official-v15/H2 only; no build/device/flash/v12
+PASS	input-exists	build/v15-official-app.bin
+PASS	input-sha256	36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055  build/v15-official-app.bin
+PASS	input-exists	build/SMK37Pro-v15-H2-owned-source-corrected-fallback/app.bin
+PASS	input-sha256	d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59  build/SMK37Pro-v15-H2-owned-source-corrected-fallback/app.bin
+PASS	input-exists	baselines/v15/analysis/flash-candidates/H0-memory-boundary-only/app-manifest.json
+PASS	input-sha256	660432ef55af030ff7c6ce02cd144acbd9e6e1e12acb389d039220d2775922ef  baselines/v15/analysis/flash-candidates/H0-memory-boundary-only/app-manifest.json
+PASS	input-exists	baselines/v15/analysis/flash-candidates/H0-memory-boundary-only/live-validation-20260802.md
+PASS	input-sha256	f12727956c962dd31f07c9a3126ce40841483bd9572c7363d5063bd669a88cab  baselines/v15/analysis/flash-candidates/H0-memory-boundary-only/live-validation-20260802.md
+PASS	input-exists	baselines/v15/analysis/flash-candidates/H1-producer-unconsumed/live-validation-20260802.md
+PASS	input-sha256	852cdc5287ae631a0d97d3e8a930696f3f9a34ad26b6cea4de0e4ff7f6c0e2dc  baselines/v15/analysis/flash-candidates/H1-producer-unconsumed/live-validation-20260802.md
+PASS	input-exists	baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/app-manifest.json
+PASS	input-sha256	dc6fba4ddb887424d6bd76b6d1477f66f97096e2d6656f203eec423680572cf3  baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/app-manifest.json
+PASS	input-exists	baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/live-validation-20260802.md
+PASS	input-sha256	b2aca5903390cffe573f42c89aa6407a52c28f967124a07b407887959d1c8fd7  baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/live-validation-20260802.md
+PASS	input-exists	baselines/v15/analysis/r03-owned-ram/heap-prefix-reservation/evidence.json
+PASS	input-sha256	905e19e6089cdd680a95eced428d7ac6249b816e0ad2db2003e371ab881faf3c  baselines/v15/analysis/r03-owned-ram/heap-prefix-reservation/evidence.json
+PASS	input-exists	baselines/v15/analysis/r03-owned-ram/independent-ram-review/report.md
+PASS	input-sha256	3bd9b87eb02acc8d2521efc3995d9c73845df48dbf226661f9fd5256594f9239  baselines/v15/analysis/r03-owned-ram/independent-ram-review/report.md
+PASS	input-exists	baselines/v15/analysis/patch-set-ui/architecture.md
+PASS	input-sha256	049732dc4eccc0b1e99fb7f1a6390a1e1bd774f560f461fd08cb4ccd3cd00993  baselines/v15/analysis/patch-set-ui/architecture.md
+PASS	input-exists	baselines/v15/analysis/patch-set-ui/checkpoints/report.md
+PASS	input-sha256	0d948334dc67fc76d0ad1fa65d3674dc5e5e06d355cc27ce309ea0aefe9a4cc5  baselines/v15/analysis/patch-set-ui/checkpoints/report.md
+PASS	official-bss-instruction	c2ff48cb0300
+PASS	h2-bss-instruction	c2ffeccb0300
+PASS	official-heap-begin-instruction	c5ff2065c401
+PASS	h2-heap-begin-instruction	c5ffc065c401
+PASS	official-heap-end-instruction	caff30fdc701
+PASS	h2-heap-end-unchanged	caff30fdc701
+PASS	new-bss-size	0x0003cc8c
+PASS	proposed-bss-encoding	c2ff8ccc0300
+PASS	proposed-heap-begin-encoding	c5ff6066c401
+PASS	layout-base	0x01c46520
+PASS	layout-end	0x01c46660
+PASS	two-slot-size	2 * 0xa0 = 0x140
+PASS	minimum-metadata-size	state + lock + note0 + note1 = 4
+PASS	metadata-embedded	no bytes beyond two 0xa0 strides
+PASS	h2-slot0-voice	0x01c46520..0x01c465bc
+PASS	h2-slot0-state	0x01c465bc
+PASS	h2-global-lock	0x01c465bd
+PASS	slot0-voice-range	0x01c46520..0x01c465bc
+PASS	h2-metadata-addresses	state=0x01c465bc lock=0x01c465bd
+PASS	two-note-map-addresses	note0=0x01c465be note1=0x01c465bf
+PASS	slot1-voice-range	0x01c465c0..0x01c4665c
+PASS	slot1-tail-range	0x01c4665c..0x01c46660
+PASS	official-bss-arithmetic	0x01c099d4 + 0x3cb48 = 0x01c4651c
+PASS	official-linker-padding	4 bytes
+PASS	h2-reservation	0xa0
+PASS	h2-bss-growth	0xa4 including 4-byte linker padding
+PASS	official-to-s1c1-bss-growth	0x144
+PASS	h2-to-s1c1-bss-growth	0xa0
+PASS	official-to-s1c1-heap-loss	0x140
+PASS	h2-to-s1c1-heap-loss	0xa0
+PASS	official-heap-span	0x39810
+PASS	h2-heap-span	0x39770
+PASS	s1c1-heap-span	0x396d0
+PASS	evidence-proposed-bss	c2ff8ccc0300
+PASS	evidence-proposed-heap	c5ff6066c401
+PASS	evidence-heap-end	0x01c7fd30
+PASS	manifest-h2-slot0	0x01c46520..0x01c465bc
+PASS	manifest-h2-metadata	valid=0x01c465bc lock=0x01c465bd
+PASS	manifest-h2-copy-size	0x9c
+PASS	h0-live-scope	narrow immediate first-Pad boundary PASS only
+PASS	h1-live-scope	producer at same H2 boundary
+PASS	h2-live-scope	slot0 consumed at same H2 boundary
+PASS	boundary-discriminator	DEFENSIBLE_ONLY_FOR_H2_0xA0_IMMEDIATE_SMOKE
+PASS	s1c1-headroom-verdict	BLOCK
+PASS	headroom-delta	0xa0
+PASS	strict-headroom-inequality	Bmax + 0xa0 < HEAP_END; equality blocked
+PASS	offline-headroom-status	BLOCK_NO_HIGH_WATER_OR_COMPLETE_MODEL
+PASS	paired-live-gate-status	REQUIRED_BEFORE_S1C1_SELECTOR
+PASS	gate-set	{'exact-static-placement': 'PASS', 'h2-slot0-address-compatibility': 'PASS', 'minimum-map-state-metadata': 'PASS', 'existing-live-boundary-discriminator': 'PASS_NARROW', 'additional-0xa0-headroom': 'BLOCK', 's1c1-firmware-build-or-live-selector': 'BLOCK'}
+PASS	report-marker	`0x01c46520..0x01c46660`
+PASS	report-marker	0x0003cc8c
+PASS	report-marker	`c2ff8ccc0300`
+PASS	report-marker	`c5ff6066c401`
+PASS	report-marker	Bmax + 0x000000a0 < 0x01c7fd30
+PASS	report-marker	A no-reboot observation is not a heap high-water measurement.
+PASS	report-marker	**Additional S1-C1 heap headroom: BLOCK.**
+PASS	report-marker	built no firmware, accessed no device, flashed nothing, and used no v12 evidence
