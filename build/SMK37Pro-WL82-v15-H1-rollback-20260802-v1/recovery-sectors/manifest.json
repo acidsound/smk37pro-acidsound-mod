@@ -1,0 +1,62 @@
+{
+  "format": "smk37-v15-h1-forced-recovery-plan-v1",
+  "hash_representation": "FWSC-unpacked flash.bin bytes; same representation previously validated against WL82 forced-loader dumps",
+  "safety_policy": {
+    "device_access": "none; offline artifact preparation only",
+    "required_before_write": "two identical fresh 1 MiB forced-loader dumps and exact H1 target-sector hashes",
+    "write_scope": "five audited 4 KiB application sectors only",
+    "forbidden": "chip erase, full-flash write, key burn, boot-prefix write, reset, or run-app"
+  },
+  "stock_package_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+  "h1_package_sha256": "139ab42b3746477b8bf49e592ba94efd9f6c18b4a360e0e62807bc12e545dacf",
+  "stock_flash_sha256": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+  "h1_flash_sha256": "d83f7968d49203d04c4d1d602ba4ee7f71d588e120685808ea63bd0d89450330",
+  "flash_length": 638976,
+  "confirmations": [
+    "I_UNDERSTAND_THIS_ERASES_EXACTLY_FIVE_H1_SECTORS",
+    "I_HAVE_TWO_IDENTICAL_1MIB_DUMPS_AND_H1_TARGET_HASHES",
+    "RESTORE_OFFICIAL_V15_SECTORS_NOW"
+  ],
+  "sectors": [
+    {
+      "address": "0x04000",
+      "length": 4096,
+      "stock_file": "stock-sector-04000.bin",
+      "stock_sha256": "f0dbdd1756fdb0fbf31def403c74c4f4c69ec30bfc6a405f88d9bd540a9cf8e9",
+      "expected_target_sha256": "30fe4b8a820ce78127cfbef655ea9417f2bad2e0796833db592b64ebe6fe6164",
+      "changed_byte_count": 9
+    },
+    {
+      "address": "0x20000",
+      "length": 4096,
+      "stock_file": "stock-sector-20000.bin",
+      "stock_sha256": "1dc90a318976cead8c55bb071b4096b242c354329eaf0cba74204866c0011f64",
+      "expected_target_sha256": "ded10e50863409002326d4114766db9b2cdaa16165991633dfb1b5afc6ce725d",
+      "changed_byte_count": 6
+    },
+    {
+      "address": "0x22000",
+      "length": 4096,
+      "stock_file": "stock-sector-22000.bin",
+      "stock_sha256": "dd533edf9d53f120d66c54b0e40769b5a8774b4de9e114c1f1865f7d470f1dcc",
+      "expected_target_sha256": "a434b7c4f3cebd635a10f7a093e29c2ed89b111dd78f10dcf88b10f67a14c7a2",
+      "changed_byte_count": 111
+    },
+    {
+      "address": "0x2a000",
+      "length": 4096,
+      "stock_file": "stock-sector-2a000.bin",
+      "stock_sha256": "630e50034f661f0a2d1d94e56f25b056ae99c8d1d379d6e7b082bd868d619409",
+      "expected_target_sha256": "a58c41f00acf8dab7c326c49ae7d24c97f900b0efabc7a25905886f702b56fc2",
+      "changed_byte_count": 8
+    },
+    {
+      "address": "0x62000",
+      "length": 4096,
+      "stock_file": "stock-sector-62000.bin",
+      "stock_sha256": "7fbd04123b6ffecd937f5b9896e385c62a12a1ef16a316888dd071fa43649f6d",
+      "expected_target_sha256": "bc70da294bd64036f9e3ea33fa62d026bae7694ef51729c949396303aaf7a6c2",
+      "changed_byte_count": 1
+    }
+  ]
+}

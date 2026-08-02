@@ -1,0 +1,141 @@
+{
+  "app_size": 617012,
+  "artifact_scope": "offline H1 discriminator only; not a live functional success claim",
+  "changed_app_byte_count": 127,
+  "changed_app_ranges": [
+    {
+      "end_exclusive": 33,
+      "start": 32
+    },
+    {
+      "end_exclusive": 116291,
+      "start": 116288
+    },
+    {
+      "end_exclusive": 116353,
+      "start": 116350
+    },
+    {
+      "end_exclusive": 123199,
+      "start": 123198
+    },
+    {
+      "end_exclusive": 123308,
+      "start": 123200
+    },
+    {
+      "end_exclusive": 124011,
+      "start": 124010
+    },
+    {
+      "end_exclusive": 124063,
+      "start": 124062
+    },
+    {
+      "end_exclusive": 159146,
+      "start": 159142
+    },
+    {
+      "end_exclusive": 159152,
+      "start": 159148
+    },
+    {
+      "end_exclusive": 387579,
+      "start": 387578
+    }
+  ],
+  "changes": [
+    {
+      "address": "0x0201e13e",
+      "file_offset": 123198,
+      "new_hex": "7904931683f80a120416c1ffd07fc3014016623c80ff76ab0200590480ff6eab0200590479040416c0ffbd65c4012000b00040e81b002000c5ffbc65c401584080f80d00c0ff2065c4014116623c80ff3cab0200c5ffbc65c4014021d840c0ffbd65c40120004120894020005904",
+      "old_hex": "7604e2808980c13042201492831c34e1f01f3516108a5607c60758ee3b4074f1fc403d4155a265e10c5054199c5b3c4274f1f8403d4955a365e1785054199c5c3c4374f1fc403d4455a265e11c5054199c5d3c459c5e3c4674f1fe403d4755a165e13e5054199c5f3b48d2ee1131",
+      "purpose": "R02 staging consumer wrapper plus R03-derived producer; no consumer loads owned source"
+    },
+    {
+      "address": "0x0201c63e",
+      "file_offset": 116286,
+      "new_hex": "80fffa1a0000",
+      "old_hex": "80ff8ac60200",
+      "purpose": "Note Off uses R02 live-proven Ch10 staging consumer"
+    },
+    {
+      "address": "0x0201c67c",
+      "file_offset": 116348,
+      "new_hex": "80ffbc1a0000",
+      "old_hex": "80ff4cc60200",
+      "purpose": "Note On uses R02 live-proven Ch10 staging consumer"
+    },
+    {
+      "address": "0x0201e468",
+      "file_offset": 124008,
+      "new_hex": "bfea7bfe",
+      "old_hex": "bfea69fe",
+      "purpose": "accepted one-shot accepted product packet calls H1 producer after official final-F7 gates"
+    },
+    {
+      "address": "0x0201e49c",
+      "file_offset": 124060,
+      "new_hex": "bfea61fe",
+      "old_hex": "bfea4ffe",
+      "purpose": "accepted segmented accepted product packet calls H1 producer after official final-F7 gates"
+    },
+    {
+      "address": "0x02026da6",
+      "file_offset": 159142,
+      "new_hex": "04960000",
+      "old_hex": "beeaacee",
+      "purpose": "no-write SAVE block before first persistent write because stock packer body is replaced"
+    },
+    {
+      "address": "0x02026dac",
+      "file_offset": 159148,
+      "new_hex": "00000000",
+      "old_hex": "bfeac7b9",
+      "purpose": "neutralize now-unreachable SAVE packer call into replaced code cave"
+    },
+    {
+      "address": "0x0200001e",
+      "file_offset": 30,
+      "new_hex": "c2ffeccb0300",
+      "old_hex": "c2ff48cb0300",
+      "purpose": "H0 BSS zero extension through 0x01c465c0"
+    },
+    {
+      "address": "0x0205e9f8",
+      "file_offset": 387576,
+      "new_hex": "c5ffc065c401",
+      "old_hex": "c5ff2065c401",
+      "purpose": "H0 HEAP_BEGIN shift to 0x01c465c0"
+    }
+  ],
+  "discriminator_outcomes": {
+    "PASS": "producer write/publish and R02 staging consumers coexist; R03 first-pad reboot is isolated to owned-source consumption or R03 invalid/fallback consumer behavior",
+    "first_pad_reboot": "R02 staging consumer with H0 boundary and producer side effect still faults; investigate event path interaction independent of owned source consumption",
+    "packet_time_reboot": "producer/owned-RAM write or post-product reload path is sufficient to fault before any Ch10 consumer runs"
+  },
+  "format": "smk37-v15-h1-producer-unconsumed-v1",
+  "h1_policy": {
+    "consumer_source": "0x01c37fd0",
+    "copy_size": 156,
+    "lock": "0x01c465bd",
+    "no_consumer_owned_ram": true,
+    "owned_voice_written_by_producer": "0x01c46520..0x01c465bc",
+    "product_reload_calls_preserved": true,
+    "save_policy": "blocked before first persistent write; later packer call neutralized",
+    "valid": "0x01c465bc"
+  },
+  "input_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+  "layout": {
+    "end": "0x0201e1ac",
+    "producer": "0x0201e162",
+    "producer_return": "0x0201e1aa",
+    "producer_unlock": "0x0201e19c",
+    "r02_entry": "0x0201e13e",
+    "r02_special": "0x0201e146",
+    "r02_stock": "0x0201e15a",
+    "try_fail_branch": "0x0201e170"
+  },
+  "output_app_sha256": "b082e8058cfacdb6e9d548dbe7033f31c0848fcf7d865859bc7c8fd969eac463",
+  "runtime_base": "0x02000000"
+}
