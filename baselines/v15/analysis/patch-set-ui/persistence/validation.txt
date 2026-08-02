@@ -1,0 +1,39 @@
+SMK37 Pro official v15 H2 patch-set persistence analysis validation
+
+PASS official_app SHA-256 matches 36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS official_fwsc SHA-256 matches f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff
+PASS h2_app SHA-256 matches d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59
+PASS listing SHA-256 matches f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347
+PASS official JLFS directory has the expected eight named entries
+PASS JLFS app.bin offset and size match official v15
+PASS JLFS cfg_tool.bin offset and size match official v15
+PASS JLFS VM offset and size match official v15
+PASS JLFS PRCT offset and size match official v15
+PASS JLFS BTIF offset and size match official v15
+PASS JLFS USRTRIM offset and size match official v15
+PASS JLFS USRFLASH offset and size match official v15
+PASS JLFS USR offset and size match official v15
+PASS UFW flash.bin is 0x9c000 bytes at payload offset 0x400
+PASS UFW flash.bin ends before the VM region
+PASS UFW flash.bin ends before the USRFLASH region
+PASS cfg_tool.bin begins exactly at app.bin end
+PASS cfg_tool.bin consumes the full app-area tail
+PASS official 0x02026da6 is call 0x02004b02
+PASS H2 0x02026da6 branches to the local exit before writes
+PASS official 0x02026dac calls the stock packer
+PASS H2 0x02026dac neutralizes the later packer call
+PASS v15 write-wrapper direction is RAM to storage
+PASS write wrapper has count-style full-success return
+PASS stock SAVE ignores wrapper failure
+PASS H2 owned source copy size is 0x9c
+PASS H2 manifest declares no-write SAVE policy
+PASS 128 stock 0xa3 records end exactly at flag table 0x9180
+PASS 0x80 flag table ends exactly at selection block 0x9200
+PASS known stock patch store extent is 0x9209 bytes
+PASS official VM and USRFLASH capacities match JLFS
+PASS 16-slot 0x9c payload plus 0x40 header fits one 4 KiB domain
+PASS 128-slot 0x9c payload does not fit one 4 KiB domain
+
+PASS wrote baselines/v15/analysis/patch-set-ui/persistence/evidence.json
+PASS total checks: 33
+RESULT PASS
