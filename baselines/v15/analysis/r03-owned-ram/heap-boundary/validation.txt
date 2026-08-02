@@ -1,0 +1,12 @@
+PASS	official-v15-app-sha256	36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS	manifest-app-binding	36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS	bss-end-arithmetic	0x01c4651c
+PASS	data-copy-end-arithmetic	0x01c099d4
+PASS	boot-stack-pointers-inside-zeroed-bss	[{'address': '0x02000004', 'register': 'sp', 'value': '0x01c3a2d4', 'inside_zeroed_bss': True}, {'address': '0x0200000a', 'register': 'ssp', 'value': '0x01c3b2d4', 'inside_zeroed_bss': True}, {'address': '0x02000098', 'register': 'usp', 'value': '0x01c3b5d4', 'inside_zeroed_bss': True}, {'address': '0x0200009e', 'register': 'sp', 'value': '0x01c3c5d4', 'inside_zeroed_bss': True}]
+PASS	single-heap-init-candidate-call	{'target': '0x02060e2c', 'count_in_decoded_listing': 1, 'first_20_callsite_addresses': ['0x02000084'], 'functions_first_20': ['-']}
+PASS	malloc-like-calls-present	57
+PASS	freertos-sdk-exact-anchors-present	4
+PASS	fixed-region-size	0x000000a4
+PASS	voice-plus-metadata-budget	voice=0x0000009c total=0x000000a4
+BLOCK	heap-bounds-proven	No v15-internal exact arena start/end and no no-alias proof were recovered
+PASS	decision-is-block	BLOCK
