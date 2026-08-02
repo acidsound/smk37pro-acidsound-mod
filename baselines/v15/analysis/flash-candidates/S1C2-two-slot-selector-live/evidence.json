@@ -1,0 +1,101 @@
+{
+  "blocking_gate": {
+    "first_mutation_boundary": "existing H2/S1-C1 producer first owned mutation is testset b[0x01c465bd]; any gate must precede it",
+    "reason": "The exact live producer ABI evidence proves LR/rets identity is the necessary discriminator, but the currently admitted PI32 instruction evidence used by this project has no exact validated encoding to read or compare the special rets register before testset. Building a candidate without the LR part would violate the critical invariant.",
+    "requirement": "Producer must accept private publication only on exact direct route LR/rets == 0x0201e46c AND r9 == 0xa3 before any lock/state/slot mutation; segmented and every other caller must reject without mutation.",
+    "status": "BLOCK"
+  },
+  "candidate_built": false,
+  "date_utc": "2026-08-02",
+  "decision": "BLOCK",
+  "forbidden_outputs": [
+    "app.bin",
+    "*.fwsc",
+    "*.ufw",
+    "*.zip",
+    "rollback bundle",
+    "uploader that can send live traffic"
+  ],
+  "format": "smk37-v15-s1c2-two-slot-selector-live-block-v1",
+  "host_sender_dry_run": {
+    "confirmation_token": "BLOCKED-S1C2-LR-GATE-NOT-PROVEN",
+    "direct_packet_header_hex": "f0430000011b",
+    "direct_packet_terminator_hex": "f7",
+    "packets_in_order": [
+      {
+        "factory_bank_1_based": 4,
+        "factory_bank_letter": "D",
+        "factory_name": "Mooger #1",
+        "factory_patch_1_based": 14,
+        "fixed_note": 36,
+        "packet_length": 163,
+        "packet_prefix_hex": "f0430000011b4b326341630000000000",
+        "packet_sha256": "6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27",
+        "packet_suffix_hex": "010003184d6f6f676572202331203ff7",
+        "runtime_object_bytes": 156,
+        "runtime_object_path": "baselines/v15/analysis/patch-set-ui/s1c2-unblock/fixed-selector/objects/note45-bankD14-Mooger_1.runtime156.bin",
+        "runtime_object_sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275",
+        "slot": 0
+      },
+      {
+        "factory_bank_1_based": 4,
+        "factory_bank_letter": "D",
+        "factory_name": "HAND DRUM",
+        "factory_patch_1_based": 12,
+        "fixed_note": 45,
+        "packet_length": 163,
+        "packet_prefix_hex": "f0430000011b63312d55524139000000",
+        "packet_sha256": "c4e8458edeb04d8106ca60a35243525e6b5f3f5de272091492409a440e3a9a8d",
+        "packet_suffix_hex": "0100031848414e44204452554d203ff7",
+        "runtime_object_bytes": 156,
+        "runtime_object_path": "baselines/v15/analysis/patch-set-ui/s1c2-unblock/fixed-selector/objects/note36-bankD12-HAND_DRUM.runtime156.bin",
+        "runtime_object_sha256": "98bc86e7d9625c837ee6c07fa3f01cbd6079960c9d1071017cf51194aa48c1bf",
+        "slot": 1
+      }
+    ],
+    "send_policy": "No live send path is enabled in this BLOCK. Packet hashes are reproducible only for review.",
+    "status": "DRY_RUN_ONLY_BLOCKED"
+  },
+  "lineage": {
+    "extended_producer_commit": "66d301d",
+    "official_app": {
+      "path": "build/v15-official-app.bin",
+      "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055"
+    },
+    "producer_abi_commit": "d9a97d9",
+    "s1c1_parent_app": {
+      "path": "build/SMK37Pro-v15-S1C1-boundary-only/app.bin",
+      "sha256": "16023c9006f2d4d6467ef2d72d6165c14ffeb6cb758d074f7d8163a68146fb2e"
+    }
+  },
+  "producer_state_machine_required": {
+    "ARMED": 2,
+    "EMPTY": 0,
+    "LOADING": 1,
+    "first_exact_direct": "state EMPTY -> LOADING, copy slot0, note0=36, valid0=1",
+    "later_exact_direct": "reject without mutation once ARMED or valid1 present",
+    "second_exact_direct": "state LOADING and valid0=1 and valid1=0 -> copy slot1, note1=45, valid1=1, ARMED last",
+    "segmented_or_other": "reject without lock/state/slot mutation before testset"
+  },
+  "requested_layout": {
+    "existing_extended_producer_bytes": 134,
+    "existing_extended_producer_end": "0x0201e228",
+    "existing_extended_producer_sha256": "d989d7e852102126ae8dc2e4025b2717808e4f808bc2bf7885cb9c77ddeb05f7",
+    "official_handler_preserved_at": "0x0201e254",
+    "producer_owned_bytes": 178,
+    "producer_owned_range": "0x0201e1a2..0x0201e254",
+    "selector_bytes": 96,
+    "selector_range": "0x0201e13e..0x0201e19e",
+    "total_selector_plus_max_producer_budget": 278
+  },
+  "scope": "official-v15-only offline BLOCK; no device access, no flash, no OTA, no reset, no live MIDI traffic",
+  "selector_design": {
+    "fixed_notes_for_candidate_if_unblocked": [
+      36,
+      45
+    ],
+    "sha256": "adb8774971811f6dbdce8b7338f2265f18b8bb22544ccab746e74610366d4e35",
+    "source": "baselines/v15/analysis/patch-set-ui/s1c1/code/wrapper-bytes.hex",
+    "state_model": "EMPTY compatibility, LOADING fallback, ARMED two-slot selector with explicit selected-valid rechecks"
+  }
+}
