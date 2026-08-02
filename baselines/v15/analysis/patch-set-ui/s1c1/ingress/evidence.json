@@ -1,0 +1,255 @@
+{
+  "format": "smk37-v15-h2-s1c1-guarded-ingress-audit-v1",
+  "date_utc": "2026-08-02",
+  "repository_commit_at_analysis_start": "76dba1f3458938f2196cd45b83e0143989698640",
+  "scope": {
+    "official_v15_only": true,
+    "h2_only": true,
+    "v12_used": false,
+    "firmware_built": false,
+    "device_accessed": false,
+    "flash_performed": false,
+    "guessed_handler_addresses": false
+  },
+  "decision": {
+    "protocol_and_publication_design": "PASS",
+    "firmware_implementation": "BLOCK",
+    "blockers": [
+      "exact executable placement and instruction budget",
+      "heap high-water proof for the additional 0xa0 bytes beyond H2",
+      "release-grade Note Off r5 and Note On r6 wrapper ABI proof",
+      "host-visible ACK/NAK path if required",
+      "exact official-v15 pack/SAVE semantics if preservation is meant beyond unchanged H2 behavior"
+    ]
+  },
+  "inputs": [
+    {
+      "id": "official_app",
+      "path": "build/v15-official-app.bin",
+      "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055"
+    },
+    {
+      "id": "official_fwsc",
+      "path": "build/SMK-37_Pro_015.fwsc",
+      "sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff"
+    },
+    {
+      "id": "h2_app",
+      "path": "build/SMK37Pro-v15-H2-owned-source-corrected-fallback/app.bin",
+      "sha256": "d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59"
+    },
+    {
+      "id": "h2_manifest",
+      "path": "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/app-manifest.json",
+      "sha256": "dc6fba4ddb887424d6bd76b6d1477f66f97096e2d6656f203eec423680572cf3"
+    },
+    {
+      "id": "live_packet",
+      "path": "build/v15-R02-mooger1-runtime.syx",
+      "sha256": "6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27"
+    },
+    {
+      "id": "quarkslab_listing",
+      "path": "baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz",
+      "sha256": "f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347"
+    },
+    {
+      "id": "kagaimiq_listing",
+      "path": "baselines/v15/analysis/quarkslab/results/kagaimiq-patched-exhaustive-listing.tsv.gz",
+      "sha256": "814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013"
+    }
+  ],
+  "accepted_packet": {
+    "header_hex": "f0430000011b",
+    "payload_length": 156,
+    "total_length": 163,
+    "terminator": "f7",
+    "payload_is_expanded_runtime_object": true,
+    "payload_all_seven_bit": true,
+    "payload_final_byte": 63,
+    "payload_sum_mod_128": 8,
+    "guessed_yamaha_sum_to_zero_passes": false,
+    "direct_handler_exact_length_gate_proven": false,
+    "direct_handler_checksum_gate_proven": false,
+    "live_h2_result": "intended Mooger #1, normal Note Off, no reboot"
+  },
+  "parser_path": {
+    "completed_message_callsite": "0x0202d202",
+    "completed_message_call_bytes": "bfea2788",
+    "short_direct_callsite_not_hooked": "0x0202d1fa",
+    "official_handler": "0x0201e254",
+    "handler_abi": {
+      "message_pointer": "r0 copied to r4 at 0x0201e256",
+      "message_length": "r1 copied to r9 at 0x0201e258"
+    },
+    "assembly_threshold": 254,
+    "assembly_threshold_address": "0x0202d182",
+    "direct_voice_path": {
+      "state_gate": "obj+0x206 != 0 and obj+0x104 == 0",
+      "header_check_range": "0x0201e410..0x0201e444",
+      "stage_expression": "0x01c37030 + 0x0fa0",
+      "stage": "0x01c37fd0",
+      "copy_length_expression": "r9 - 6",
+      "copy_call": "0x0201e456",
+      "final_f7_gate": "0x0201e462",
+      "accepted_callsite_official": "0x0201e468",
+      "accepted_callsite_h2_action": "H2 producer",
+      "reload_call": "0x0201e46c"
+    },
+    "segmented_final_path": {
+      "range": "0x0201e472..0x0201e4a0",
+      "final_f7_gate": "0x0201e480",
+      "accumulated_length_gate": 158,
+      "accumulated_length_gate_hex": "0x9e",
+      "accepted_callsite_official": "0x0201e49c",
+      "accepted_callsite_h2_action": "H2 producer",
+      "reload_call": "0x0201e4a0"
+    },
+    "staging_range": "0x01c37fd0..0x01c38fd0",
+    "staging_size": 4096,
+    "staging_durable_owner": false
+  },
+  "ingress": {
+    "hook": "future wrapper at exact H2-preserved 0x0202d202 completed-message call",
+    "private_prefix_hex": "f07d534d4b0f01",
+    "private_manufacturer_id": "0x7d non-commercial/development",
+    "yamaha_manufacturer_id": "0x43",
+    "non_private_action": "tail-call unchanged H2 0x0201e254 with original r0/r1",
+    "stock_preservation_scope": "unchanged H2 behavior; exact official persistent pack/SAVE semantics are not restored",
+    "uses_stock_staging": false,
+    "host_ack_nak": false
+  },
+  "protocol": {
+    "fixed_overhead_excluding_body": 16,
+    "common_envelope": "F0 7D 53 4D 4B 0F 01 CMD TX FLAGS LEN_LO7 LEN_HI7 BODY CRC0 CRC1 CRC2 F7",
+    "transaction_id_range": [1, 127],
+    "flags": 0,
+    "length_encoding": "14-bit little-endian seven-bit pair",
+    "crc": {
+      "name": "CRC-16/CCITT-FALSE",
+      "init": "0xffff",
+      "polynomial": "0x1021",
+      "reflected": false,
+      "xorout": "0x0000",
+      "packet_range": "offset 2 byte 0x53 through final body byte",
+      "wire_encoding": "three little-endian seven-bit chunks; third chunk <= 3"
+    },
+    "commands": [
+      {
+        "id": 17,
+        "name": "LOAD0",
+        "body": "NOTE0 || VOICE0[156]",
+        "body_length": 157,
+        "total_length": 173,
+        "allowed_state": "EMPTY"
+      },
+      {
+        "id": 18,
+        "name": "LOAD1_COMMIT",
+        "body": "NOTE1 || VOICE1[156] || SETCRC[3]",
+        "body_length": 160,
+        "total_length": 176,
+        "allowed_state": "LOADING"
+      }
+    ],
+    "canonical_set_crc_input": "01 || TX || NOTE0 || VOICE0[156] || NOTE1 || VOICE1[156]",
+    "single_message_floor": 333,
+    "single_message_crosses_assembly_threshold": true,
+    "minimum_complete_message_count": 2
+  },
+  "state_machine": {
+    "states": {
+      "EMPTY": 0,
+      "LOADING": 1,
+      "ARMED": 2
+    },
+    "transitions": [
+      "BSS zero -> EMPTY",
+      "valid LOAD0 -> LOADING",
+      "valid LOAD1_COMMIT -> ARMED",
+      "reboot/BSS zero -> EMPTY"
+    ],
+    "mutation_after_armed": "reject",
+    "abort": false,
+    "replacement": false,
+    "remap": false,
+    "consumer_during_loading": "stock fallback",
+    "publication_order": "state=LOADING then csync before slot0 copy/valid0; valid0 last within LOAD0; valid1 then ARMED last within LOAD1_COMMIT"
+  },
+  "ram": {
+    "base": "0x01c46520",
+    "end_exclusive": "0x01c46660",
+    "total_size": 320,
+    "total_size_hex": "0x0140",
+    "additional_beyond_h2": 160,
+    "additional_beyond_h2_hex": "0x00a0",
+    "layout": [
+      {"range": "0x01c46520..0x01c465bc", "size": 156, "purpose": "slot0 voice, exact H2"},
+      {"address": "0x01c465bc", "size": 1, "purpose": "valid0, exact H2"},
+      {"address": "0x01c465bd", "size": 1, "purpose": "global nonblocking lock, exact H2"},
+      {"address": "0x01c465be", "size": 1, "purpose": "note0"},
+      {"address": "0x01c465bf", "size": 1, "purpose": "state"},
+      {"range": "0x01c465c0..0x01c4665c", "size": 156, "purpose": "slot1 voice"},
+      {"address": "0x01c4665c", "size": 1, "purpose": "valid1"},
+      {"address": "0x01c4665d", "size": 1, "purpose": "transaction id"},
+      {"address": "0x01c4665e", "size": 1, "purpose": "note1"},
+      {"address": "0x01c4665f", "size": 1, "purpose": "reserved zero"}
+    ],
+    "official_heap_begin": "0x01c46520",
+    "h2_heap_begin": "0x01c465c0",
+    "proposed_heap_begin": "0x01c46660",
+    "heap_end": "0x01c7fd30",
+    "official_heap_size": 235536,
+    "h2_remaining_heap": 235376,
+    "proposed_remaining_heap": 235216,
+    "heap_headroom_proven": false
+  },
+  "consumer": {
+    "channel_nibble": 9,
+    "copy_size": 156,
+    "note_off": {
+      "note_load": "0x0201c62e r5=msg[1]",
+      "copy_call": "0x0201c63e"
+    },
+    "note_on": {
+      "note_load": "0x0201c670 r6=msg[1]",
+      "copy_call": "0x0201c67c"
+    },
+    "armed_selection": "note0->slot0, note1->slot1, every other note stock fallback",
+    "legacy_h2_selection": "EMPTY and valid0==1 selects slot0 for Ch10",
+    "loading_selection": "stock fallback",
+    "fallback": "restore original r0 immediately before stock memcpy and preserve r1/r2"
+  },
+  "code": {
+    "h2_replacement_start": "0x0201e13e",
+    "h2_replacement_end_exclusive": "0x0201e254",
+    "h2_replacement_capacity": 278,
+    "h2_used_end_exclusive": "0x0201e1ec",
+    "h2_used_bytes": 174,
+    "remaining_audited_bytes": 104,
+    "remaining_audited_bytes_hex": "0x0068",
+    "verified_crc16_helper": false,
+    "second_owned_executable_region": false,
+    "exact_s1c1_machine_code_size": null,
+    "placement_gate": "BLOCK"
+  },
+  "gates": [
+    {"id": "provenance", "status": "PASS"},
+    {"id": "accepted-packet-shape", "status": "PASS"},
+    {"id": "inherited-direct-exact-length", "status": "BLOCK"},
+    {"id": "guessed-yamaha-runtime-checksum", "status": "BLOCK"},
+    {"id": "completed-message-ingress-abi", "status": "PASS_STATIC"},
+    {"id": "private-yamaha-separation", "status": "PASS_DESIGN"},
+    {"id": "two-message-minimum", "status": "PASS_DESIGN"},
+    {"id": "rejection-model", "status": "PASS_MODEL"},
+    {"id": "publication-race", "status": "PASS_DESIGN"},
+    {"id": "h2-legacy-behavior", "status": "PASS_DESIGN"},
+    {"id": "official-stock-pack-save", "status": "BLOCK_ON_H2"},
+    {"id": "ram-arithmetic", "status": "PASS_STATIC"},
+    {"id": "heap-headroom", "status": "BLOCK"},
+    {"id": "note-register-abi", "status": "BLOCK_FOR_FIRMWARE"},
+    {"id": "executable-placement", "status": "BLOCK"},
+    {"id": "host-ack-nak", "status": "BLOCK"},
+    {"id": "firmware-build-flash", "status": "BLOCK"}
+  ]
+}
