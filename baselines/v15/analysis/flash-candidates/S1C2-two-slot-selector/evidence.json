@@ -1,0 +1,127 @@
+{
+  "admitted_transaction_if_future_executable_placement_passes": {
+    "mapping": "exactly NOTE0 -> slot0 and NOTE1 -> slot1; all other Ch10 notes and all non-Ch10 use H2/stock fallback",
+    "message_0": {
+      "allowed_state": "EMPTY",
+      "body": "NOTE0 || VOICE0[156]",
+      "cmd": "0x11 LOAD0",
+      "exact_length_bytes": 173
+    },
+    "message_1": {
+      "allowed_state": "LOADING",
+      "body": "NOTE1 || VOICE1[156] || SETCRC[3]",
+      "cmd": "0x12 LOAD1_COMMIT",
+      "exact_length_bytes": 176
+    },
+    "namespace_prefix_hex": "f0 7d 53 4d 4b 0f 01",
+    "publication": "state=LOADING before copies; valid0 last for slot0; valid1 then state=ARMED last for slot1; all mutation rejected after ARMED"
+  },
+  "blockers": [
+    "No owned executable region is proven for the completed-message ingress multiplexer, exact parser, CRC-16 packet/set checks, nonblocking state machine, rejection branches, and unchanged H2 tail delegation.",
+    "No firmware bytes can be produced without either guessing a second cave or deleting required parser guards, both of which would violate all-or-none safety.",
+    "The only admitted consumer selector is static; it cannot prove two distinct runtime objects without a safe producer/parser that populates both slots atomically."
+  ],
+  "candidate_created": false,
+  "candidate_delta": {
+    "app_bytes_changed": 0,
+    "changed_flash_sectors": [],
+    "fwsc_bytes_changed": 0,
+    "reason": "No flash candidate was created because executable placement for an atomic private host transaction remains unproved."
+  },
+  "date_utc": "2026-08-02",
+  "decision": "BLOCK",
+  "device_actions_performed": false,
+  "format": "smk37-v15-s1c2-two-slot-selector-block-v1",
+  "gate_results": [
+    {
+      "evidence": "S1-C1 boundary-only manifest and live report retain exact official-v15/H2 lineage.",
+      "gate": "official_v15_only_parent",
+      "status": "PASS"
+    },
+    {
+      "evidence": "Live S1-C1 boundary report records no reboot and preserved H2 Ch10 owned-source behavior after the additional 0xa0 reservation.",
+      "gate": "S1-C1_memory_boundary",
+      "status": "PASS"
+    },
+    {
+      "evidence": "S1-C1 reserves exactly 0x01c46520..0x01c46660; second slot boundary passed live but slot1 content has not been consumed.",
+      "gate": "two_slot_RAM_layout",
+      "status": "PASS static/live-boundary"
+    },
+    {
+      "evidence": "S1-C1 code report proves Note Off r5=msg[1] and Note On r6=msg[1] at the H2 hook callsites.",
+      "gate": "note_register_ABI",
+      "status": "PASS static"
+    },
+    {
+      "evidence": "Current S1-C1 code report places the 96-byte two-adapter/shared selector at 0x0201e13e..0x0201e19e, leaving a 4-byte gap before the unchanged H2 producer, with explicit valid0/valid1 rechecks and decoded branches/calls.",
+      "gate": "selector_consumer_code_placement",
+      "status": "PASS static"
+    },
+    {
+      "evidence": "Two private messages with exact lengths, CRCs, nonblocking lock, LOADING hiding, valid-last, and ARMED-last publication are specified.",
+      "gate": "atomic_host_transaction_model",
+      "status": "PASS design only"
+    },
+    {
+      "evidence": "Ingress report states no verified executable placement/code-size budget for ingress mux, exact parser, CRC helper, state machine, and H2 delegation.",
+      "gate": "atomic_host_transaction_executable_placement",
+      "status": "BLOCK"
+    },
+    {
+      "evidence": "Sequential official product packets do not prove all-or-none publication for two slots and are explicitly rejected for this checkpoint.",
+      "gate": "sequential_official_product_packets",
+      "status": "BLOCK as implementation route"
+    },
+    {
+      "evidence": "No official-v15 response path is audited; live protocol would require external state verification or later ACK proof.",
+      "gate": "host_ACK_NAK",
+      "status": "BLOCK noncritical for candidate build but unresolved"
+    }
+  ],
+  "next_required_evidence": [
+    "Identify and independently audit an executable placement for private ingress/parser/CRC code, or prove a callable official CRC/check helper and exact branch budget inside an owned region.",
+    "Assemble/decode candidate parser and selector bytes, including every branch/call reach and every overwritten parent byte.",
+    "Only after that, build deterministic child app/FWSC, exact parent rollback, sender dry-run protocol, and live authorization package."
+  ],
+  "obsolete_selector_draft": "The earlier 92-byte selector draft is explicitly not an implementation basis. Current S1-C1 code audit uses the 96-byte selector ending at 0x0201e19e with explicit valid0/valid1 rechecks.",
+  "parent_boundary": "exact live-PASS S1-C1 boundary-only",
+  "parent_hashes": {
+    "h2_app_sha256": "d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59",
+    "h2_fwsc_sha256": "c1752a69ed8f905af58db0de7c3def29c416b71e832e2834e664cd5d17b85011",
+    "s1c1_app_sha256": "16023c9006f2d4d6467ef2d72d6165c14ffeb6cb758d074f7d8163a68146fb2e",
+    "s1c1_fwsc_sha256": "ae8c44a493e83d0b41ee422f21bdc115c4e1ff232376fd8a8abf609c96a3765d"
+  },
+  "requested_checkpoint": {
+    "explicit_known_notes": [
+      36,
+      45
+    ],
+    "name": "S1-C2 two resident-slot deterministic Ch10 selector",
+    "persistence": false,
+    "ram_boundary": "0x01c46520..0x01c46660",
+    "runtime_voice_bytes_per_slot": 156,
+    "slot_stride_bytes": 160,
+    "slots": 2,
+    "ui": false
+  },
+  "source_hashes": {
+    "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/app-manifest.json": "dc6fba4ddb887424d6bd76b6d1477f66f97096e2d6656f203eec423680572cf3",
+    "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/live-validation-20260802.md": "b2aca5903390cffe573f42c89aa6407a52c28f967124a07b407887959d1c8fd7",
+    "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/package-manifest.json": "622db850616b65bd6eeb6ff08c152f6921382bf96413a06dcb8d6aaa6ef2d100",
+    "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/report.md": "0f3bcde9c1fe64065213a62bd9eef49eda9dd57f8c487789631c9c90c2bb0ac0",
+    "baselines/v15/analysis/flash-candidates/S1C1-boundary-only/app-manifest.json": "51f20f38d5c73eef34f2b45834dd428819725249395f5317786443fd9290b40b",
+    "baselines/v15/analysis/flash-candidates/S1C1-boundary-only/live-validation-20260802.md": "ac87dc589012b8b39f2bae5eec89b204d837d44ecdbd063953ae20caa39ffde1",
+    "baselines/v15/analysis/flash-candidates/S1C1-boundary-only/package-manifest.json": "ddc9e2bead54cbc2de89967b9bf6dec715070f923de50ee0cc382ee40657b508",
+    "baselines/v15/analysis/flash-candidates/S1C1-boundary-only/report.md": "7529b8a71e15eb570c8fa37878810057fb2cb7c0faf7ceab714e86aae37d46d4",
+    "baselines/v15/analysis/patch-set-ui/architecture.md": "049732dc4eccc0b1e99fb7f1a6390a1e1bd774f560f461fd08cb4ccd3cd00993",
+    "baselines/v15/analysis/patch-set-ui/data-model/report.md": "cb56e93fdaa355a21ab2c3e59ba778ec13a45647eaac98a654b19df82288df24",
+    "baselines/v15/analysis/patch-set-ui/s1c1/code/report.md": "a326c3ec72273530239b7c87963141f89ddde2879fba9eddeca4689c63786aa3",
+    "baselines/v15/analysis/patch-set-ui/s1c1/ingress/report.md": "c6b5e86fc1a0e66912c54aa361f8309ba6e918914ac5ed254b094935ed64b76c",
+    "baselines/v15/analysis/patch-set-ui/s1c1/ram/report.md": "52a71a8b84f8d497586cf21668a3e44d391337fb6758e34f9c615d35505e0943",
+    "tools/build_v15_h2_owned_source_corrected_fallback.py": "e993baeb9d32e38dfc602b8b13e1832ea15290a223b1db4da7caa3900a18b3a6",
+    "tools/build_v15_s1c1_boundary_only.py": "bbbc443b56f90528d24f3d972680170d0f9236e6511ddc991cc04e6412f35ab7",
+    "tools/validate_v15_s1c1_boundary_only.py": "ac6388e27d026e4a9db6c8f3ac2f0625f1485e0ae409b3458996d27d5d74a8df"
+  },
+  "source_hashes_note": "Hashes of source evidence as observed for this BLOCK package. The validator checks stable parent hashes plus required evidence predicates because this repository may have concurrent analysis edits."
+}

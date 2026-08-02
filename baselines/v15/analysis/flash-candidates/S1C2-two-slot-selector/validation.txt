@@ -1,0 +1,5 @@
+S1-C2 two-slot selector checkpoint: BLOCK PASS
+parent app 16023c9006f2d4d6467ef2d72d6165c14ffeb6cb758d074f7d8163a68146fb2e
+parent package ae8c44a493e83d0b41ee422f21bdc115c4e1ff232376fd8a8abf609c96a3765d
+S1-C2 changed bytes: 0; changed sectors: none; no app/FWSC/rollback generated
+hard blocker: no proven executable placement for atomic private host transaction
