@@ -9,22 +9,22 @@ Flash는 수행하지 않았다. 분석 입력은 app SHA-256
 `36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055`, runtime
 base `0x02000000`로 고정한다.
 
-현재 결론은 **UI 구조의 핵심 상태와 Patch 데이터 흐름은 상당 부분 확보했지만,
-안전한 UI patch를 작성할 정도로 renderer/LCD/button/persistence ABI가 모두 닫히지는
-않았다**는 것이다.
+현재 결론은 **UI 구조의 핵심 상태와 Patch 데이터 흐름, 저장 방향과 bounds/return
+규약은 상당 부분 확보했지만, 안전한 UI patch를 작성할 정도로 renderer/LCD/button
+ABI가 모두 닫히지는 않았다**는 것이다.
 
 ## 요구사항 상태
 
 | Requirement | 상태 | 현재 근거 | 남은 차단점 |
 |---|---|---|---|
 | REQ-01 주소 provenance | 완료 | 모든 분석 script가 official app SHA와 runtime base를 확인 | 없음 |
-| REQ-02 renderer entry | 부분 | `0x0201a67c` object string setter, `0x0200ea9a` text parser, `0x0200f74c` render traversal 후보 | known UI string에서 최종 renderer까지 직접 caller chain 미확보 |
+| REQ-02 renderer entry | 부분 | `0x02020376 -> 0x0201a67c`에서 `Keys Channel-` descriptor `0x02058314` 전달을 직접 확인. `0x0200ea9a` text parser, `0x0200f74c` render traversal 후보 | setter에서 traversal/redraw까지 직접 caller/data-flow chain 미확보 |
 | REQ-03 same-length text/color | 정적 완료, 과거 실기 있음 | 문자열/색상 위치와 v15 M01/M02 표시 관찰 | 재사용 가능한 exact-SHA UI builder 미작성 |
 | REQ-04 menu state | 부분-강함 | RAM base `0x01c33260`, screen/submode와 grid state field 확인 | 각 state value와 실제 화면 이름의 대응 미확정 |
-| REQ-05 button/input ABI | 부분 | callback vector 후보 `0x02058248`, encoder 후보 `0x0202439e`, pending event bytes | vector caller와 실제 물리 button ID 미확정 |
+| REQ-05 button/input ABI | 부분 | 11-entry vector `0x02058248`, encoder enclosing entry/caller, pending event consumer 확인 | exhaustive listing에도 vector base/index dispatcher와 pending producer가 없어 실제 물리 button ID 미확정 |
 | REQ-06 LCD/update | 미완료 | ST7789-like bytes는 존재 | overlapping halfword-table 사용이 있어 LCD table로 확정 불가, write/framebuffer 경로 없음 |
 | REQ-07 RAM ownership | 미완료 | 주 UI object base와 여러 field access 확인 | free RAM, callback context, reentrancy, scratch ownership 미확정 |
-| REQ-08 persistence | 부분-강함 | save writer `0x02026d6c`, transfer wrapper `0x02004b02`, record/flag 흐름 후보 | low-level primitive direction과 failure/default path 미확정 |
+| REQ-08 persistence | 정적 완료 | `0x02004b02` ABI와 모든 decoded caller에서 RAM→storage 방향, bounds, count-style return, 별도 read wrapper를 확인 | `0x02063260` 내부 command 이름과 실제 전원차단/매체 오류 동작은 runtime 검증 필요 |
 | REQ-09 callable ABI | 부분 | 여러 후보의 argument/register/field access 정리 | semantic name과 clobber/reentrancy를 모두 확정하지 못함 |
 | REQ-10 listing provenance | 완료 | raw byte, recursive, exhaustive 근거를 분리 | 없음 |
 
@@ -57,12 +57,12 @@ Base: `0x01c33260`
 | `0x02029528` | `+0x302` 기반 grid/submode dispatch | 강한 후보 |
 | `0x0201e06c` | dirty/redraw/event trigger | 후보 |
 | `0x0202439e` | centered `0x3f` delta를 처리하는 encoder handler | 강한 후보 |
-| `0x02058248` | 11-entry internal callback vector | table 존재 확정, button/encoder 역할과 caller는 후보 |
-| `0x0201a67c` | object field `+0x24` C-string setter | 기능 형태 확정, UI renderer 소속은 후보 |
+| `0x02058248` | 11-entry internal callback vector | table 존재 확정. 정적 listing에서 dispatcher/caller 미발견, physical event ID로 승격 금지 |
+| `0x0201a67c` | object field `+0x24` C-string setter | 기능 형태 확정. `0x02020376`에서 `Keys Channel-` descriptor 전달 직접 확인 |
 | `0x0200ea9a` | text extent/markup parser | 후보 |
 | `0x0200f74c` | object render traversal/computed callback dispatch | 후보 |
 | `0x02026d6c` | current Patch record save writer | 강한 후보 |
-| `0x02004b02` | bounded storage transfer wrapper | 강한 후보, read/write 방향 미확정 |
+| `0x02004b02` | bounded RAM→storage write wrapper | ABI, 방향, bounds, count-style success return 정적 확정 |
 | `0x0202553c` | bank-level load/commit preparation | 후보 |
 
 ## Drum Set UI C-level design, current safe interpretation
@@ -119,11 +119,15 @@ struct DrumSet {
 
 ## 반드시 추가로 해결할 항목
 
-1. `0x02058248` vector를 읽는 computed dispatcher와 실제 physical event ID.
-2. `Pad Bank-` pointer table에서 `0x0201a67c` 또는 render traversal까지의 직접 경로.
+1. `0x02058248` vector를 읽는 computed dispatcher와 실제 physical event ID. exhaustive
+   listing과 raw-byte search에서 base/index access가 나오지 않아 runtime trace 또는 더 완전한
+   PI32 decoder가 필요하다.
+2. descriptor pointer에서 setter까지는 `Keys Channel-` 경로로 확인했다. setter 이후
+   `0x0200f74c` traversal 또는 `0x0201e06c` redraw까지의 직접 경로가 더 필요하다.
 3. `0x0201e06c`의 정확한 redraw/event 의미와 argument ID `0x14`, `0x19`의 의미.
-4. `0x02004b02 -> 0x02004a7a -> 0x02063260`의 read/write 방향, error return과 bounds.
-5. boot/default load path와 save failure 후 UI 상태.
+4. `0x02063260` 내부 command 이름과 실제 storage failure/power-loss 동작. 상위 wrapper의
+   RAM→storage 방향, bounds, short/failure→0 반환은 정적으로 확정했다.
+5. boot/default load path의 실기 결과와 save failure 후 UI 상태.
 6. renderer callback context, stack/clobber, RAM scratch ownership.
 7. LCD write/framebuffer path. 기존 grid/widget를 그대로 재사용한다면 R06 초기 버전에
    필수는 아닐 수 있지만 custom graphics에는 필수다.
@@ -134,6 +138,9 @@ struct DrumSet {
 python3 baselines/v15/analysis/ui-preflash/renderer/analyze_renderer.py
 python3 baselines/v15/analysis/ui-preflash/events/analyze_ui_events.py
 python3 baselines/v15/analysis/ui-preflash/state-persistence/analyze_state_persistence.py
+python3 baselines/v15/analysis/ui-preflash/followup/analyze_renderer_xref.py
+python3 baselines/v15/analysis/ui-preflash/followup/analyze_event_dispatcher.py
+python3 baselines/v15/analysis/ui-preflash/followup/analyze_persistence_direction.py
 python3 tools/validate_v15_ui_preflash.py
 ```
 
@@ -142,4 +149,7 @@ python3 tools/validate_v15_ui_preflash.py
 - [`renderer/evidence-report.md`](renderer/evidence-report.md)
 - [`events/report.md`](events/report.md)
 - [`state-persistence/report.md`](state-persistence/report.md)
+- [`followup/renderer-xref.md`](followup/renderer-xref.md)
+- [`followup/event-dispatcher.md`](followup/event-dispatcher.md)
+- [`followup/persistence-direction.md`](followup/persistence-direction.md)
 - [`review/requirements.md`](review/requirements.md)

@@ -16,17 +16,26 @@ SCRIPTS = [
     BASE / "renderer/analyze_renderer.py",
     BASE / "events/analyze_ui_events.py",
     BASE / "state-persistence/analyze_state_persistence.py",
+    BASE / "followup/analyze_renderer_xref.py",
+    BASE / "followup/analyze_event_dispatcher.py",
+    BASE / "followup/analyze_persistence_direction.py",
 ]
 JSON_FILES = [
     BASE / "renderer/evidence.json",
     BASE / "events/ui_events.json",
     BASE / "state-persistence/state_persistence_evidence.json",
+    BASE / "followup/renderer-xref.json",
+    BASE / "followup/event-dispatcher.json",
+    BASE / "followup/persistence-direction.json",
 ]
 REPORTS = [
     BASE / "README.md",
     BASE / "renderer/evidence-report.md",
     BASE / "events/report.md",
     BASE / "state-persistence/report.md",
+    BASE / "followup/renderer-xref.md",
+    BASE / "followup/event-dispatcher.md",
+    BASE / "followup/persistence-direction.md",
     BASE / "review/requirements.md",
 ]
 REQUIRED = {
@@ -68,17 +77,20 @@ def main() -> int:
     for address in REQUIRED:
         require(address in combined, f"required address absent from reports: {address}")
 
-    require("renderer/LCD/button/persistence ABI" in (BASE / "README.md").read_text(), "checkpoint limitation missing")
+    require("renderer/LCD/button" in (BASE / "README.md").read_text(), "checkpoint limitation missing")
     require("미확정" in (BASE / "renderer/evidence-report.md").read_text(), "renderer unresolved state missing")
     require("caller remains unresolved" in (BASE / "events/report.md").read_text(), "event-vector limitation missing")
     require("exact-storage-primitive-direction" in (BASE / "state-persistence/report.md").read_text(), "storage direction limitation missing")
+    require("Direct chain found:** no" in (BASE / "followup/renderer-xref.md").read_text(), "renderer follow-up limitation missing")
+    require("physical event IDs 승격: **불가**" in (BASE / "followup/event-dispatcher.md").read_text(), "event promotion guard missing")
+    require("RAM -> storage" in (BASE / "followup/persistence-direction.md").read_text(), "storage write direction missing")
     require("REQ-10" in (BASE / "review/requirements.md").read_text(), "evidence requirements incomplete")
 
     print("v15 UI preflash evidence: PASS")
     print(f"official app: {APP_SHA}")
-    print("reproduced: renderer, events, state-persistence")
+    print("reproduced: renderer, events, state-persistence, and three targeted follow-ups")
     print("confirmed Patch selection fields: bank +0x3a4, preset +0x3a0+bank")
-    print("UI patch remains blocked on renderer, event caller, storage direction, and RAM ownership")
+    print("UI patch remains blocked on renderer-to-redraw chain, physical event dispatcher, and RAM ownership")
     return 0
 
 
