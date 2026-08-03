@@ -1,0 +1,50 @@
+address	size	bytes	name	asm	meaning	target
+0x0201e1a2	2	7904	push_saved	push {rets,r9..r4}	save exact S1-C2 producer frame	
+0x0201e1a4	2	0416	save_stage	mov r4,r0	r4 = accepted product staging pointer	
+0x0201e1a6	2	9016	length_gate_source	mov r0,r9	copy r9 to low register for exact length gate	
+0x0201e1a8	2	e020	length_gate_sub_0x80	add r0,#-0x80	r0 = r9 - 0x80	
+0x0201e1aa	2	f03d	length_gate_sub_0x23	add r0,#-0x23	r0 = r9 - 0xa3	
+0x0201e1ac	4	80f83700	length_reject_branch	jne r0,#0,return	r9 != 0xa3 returns before testset/state/count/slot mutation	0x0201e21e
+0x0201e1b0	6	c0ffbd65c401	lock_pointer	mov r0,#0x1c465bd	r0 = global lock byte 0x01c465bd	
+0x0201e1b6	4	2000b000	trylock	csync; testset b[r0]	nonblocking testset on lock	
+0x0201e1ba	4	40e83000	trylock_failed_return_branch	ifeq return	failed testset returns without clearing another owner	0x0201e21e
+0x0201e1be	2	2000	acquired_csync	csync	order after acquired lock	
+0x0201e1c0	2	0516	metadata_pointer	mov r5,r0	r5 = lock/control base; count is +1, state is +2	
+0x0201e1c2	2	5842	state_load	lb.z r0,[r5+2]	r0 = state at 0x01c465bf	
+0x0201e1c4	4	80f80700	state_not_empty_branch	jne r0,#0,not_empty	state != EMPTY goes to LOADING/invalid validation	0x0201e1d6
+0x0201e1c8	2	5b41	empty_count_load	lb.z r3,[r5+1]	EMPTY path: r3 = loaded_count	
+0x0201e1ca	4	83f82400	empty_count_reject_branch	jne r3,#0,unlock	state EMPTY with loaded_count != 0 rejects	0x0201e216
+0x0201e1ce	2	4021	state_loading_value	mov r0,#1	r0 = LOADING	
+0x0201e1d0	2	d842	state_loading_store	sb [r5+2],r0	state = LOADING before first slot0 copy	
+0x0201e1d2	2	2000	loading_csync	csync	order LOADING before slot0 payload work	
+0x0201e1d4	2	0483	empty_done_goto	goto after_state	join with r3 = loaded_count	0x0201e1dc
+0x0201e1d6	4	80f81e02	state_not_loading_branch	jne r0,#1,unlock	state not LOADING rejects, including ARMED	0x0201e216
+0x0201e1da	2	5b41	loading_count_load	lb.z r3,[r5+1]	LOADING path: r3 = loaded_count	
+0x0201e1dc	4	03fd1b20	count_full_branch	jge r3,#16,unlock	loaded_count >= 16 rejects later packets	0x0201e216
+0x0201e1e0	2	3616	copy_count	mov r6,r3	r6 = slot index	
+0x0201e1e2	4	e6e1a060	slot_offset	mul r6,r6,#0xa0	r6 = slot index * 0xa0	
+0x0201e1e6	6	c7ff2065c401	slot_base_seed	mov r7,#0x1c46520	r7 = slot0 base	
+0x0201e1ec	2	6718	slot_base_add	add r7,r6	r7 = selected slot base	
+0x0201e1ee	4	06e19c70	valid_pointer	add r6,r7,#0x9c	r6 = selected slot valid byte, slot_base + 0x9c	
+0x0201e1f2	2	4020	valid_clear_value	mov r0,#0	r0 = 0	
+0x0201e1f4	2	e840	valid_clear_store	sb [r6],r0	clear valid before copying selected slot	
+0x0201e1f6	2	7016	copy_destination	mov r0,r7	r0 = selected slot destination	
+0x0201e1f8	2	4116	copy_source	mov r1,r4	r1 = accepted staging pointer	
+0x0201e1fa	2	623c	copy_size	mov r2,#0x9c	r2 = exact 156-byte runtime payload	
+0x0201e1fc	6	80ffccaa0200	memcpy_call	call 0x2048cce	memcpy(slot, staging, 0x9c)	
+0x0201e202	2	2000	copy_csync	csync	order payload copy before valid publication	
+0x0201e204	2	4021	valid_value	mov r0,#1	r0 = 1	
+0x0201e206	2	e840	valid_store	sb [r6],r0	valid[i] = 1 after full copy	
+0x0201e208	2	c321	count_increment	add r3,#1	r3 = loaded_count + 1	
+0x0201e20a	2	db41	count_store	sb [r5+1],r3	loaded_count = i + 1 after valid[i]	
+0x0201e20c	4	83f80320	not_last_branch	jne r3,#16,unlock	only slot15 falls through to ARMED publication	0x0201e216
+0x0201e210	2	2000	armed_csync	csync	order valid15 and count16 before ARMED	
+0x0201e212	2	4022	armed_value	mov r0,#2	r0 = ARMED	
+0x0201e214	2	d842	armed_store	sb [r5+2],r0	state = ARMED last	
+0x0201e216	2	2000	unlock_csync_before	csync	order metadata before unlock	
+0x0201e218	2	4020	unlock_zero	mov r0,#0	r0 = 0	
+0x0201e21a	2	d840	unlock_store	sb [r5],r0	lock = 0	
+0x0201e21c	2	2000	unlock_csync_after	csync	order unlock	
+0x0201e21e	2	5904	return_restore	pop {pc,r9..r4}	return to caller reload path	
+0x0201e220	2	7904	segmented_stub_push	push {rets,r9..r4}	segmented route no-mutation entry	
+0x0201e222	2	5904	segmented_stub_return	pop {pc,r9..r4}	segmented route immediately returns	

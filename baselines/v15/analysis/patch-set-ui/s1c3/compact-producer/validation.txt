@@ -1,0 +1,25 @@
+S1-C3 compact sequential producer validation: PASS
+PASS	input-hash	s1c3_producer_report	1c11e8b40ed7954c7650ae7d09aa4615a92cd30f4d8ea152e6b6c6f93f47642a
+PASS	input-hash	s1c3_producer_evidence	1e98e2de80fc2a857eba7bb0843dd7a0e256e3a81d12e36e8e1e738a34ef8028
+PASS	input-hash	s1c3_boundary_report	0029544b7da3502fcf3b750ab3df6fc32dfa4e6d244570bca9284e19f85733d7
+PASS	input-hash	s1c3_boundary_live_validation	6183d6ecc54544bfcd7574c4c7ff5522d0461cc7461baa9f804d88f24fde9fca
+PASS	input-hash	s1c2_live_v2_producer	a05e79c0b46e1e12b1244af3f49866c911fcc41937bc14196825d3080d780784
+PASS	input-hash	s1c2_live_v2_app	4afd13d7301c2ae209c11d3fe932d019faa770b551f2d8a38cf4c018c7aafa8a
+PASS	input-hash	s1c3_contiguous_selector	ea2c76595a93cf2cf6a39236e09b749781e2721e3575d0c1b40194855cd4e915
+PASS	range-fit	0x0201e1a2..0x0201e224 <= 0x0201e254 spare=48
+PASS	producer-sha256	4e738a54dda52abd2ab816201ece7d1851215cba90268c14c535503b4ceb2460
+PASS	decode	49 instructions cover 130 bytes
+PASS	branch-reach	0x0201e1ac->0x0201e21e	jne_imm7
+PASS	branch-reach	0x0201e1ba->0x0201e21e	ifeq
+PASS	branch-reach	0x0201e1c4->0x0201e1d6	jne_imm7
+PASS	branch-reach	0x0201e1ca->0x0201e216	jne_imm7
+PASS	branch-reach	0x0201e1d4->0x0201e1dc	goto
+PASS	branch-reach	0x0201e1d6->0x0201e216	jne_imm7
+PASS	branch-reach	0x0201e1dc->0x0201e216	jge_imm7
+PASS	call-reach	0x0201e1fc->0x02048cce
+PASS	branch-reach	0x0201e20c->0x0201e216	jne_imm7
+PASS	direct-callsite	0x0201e468 bfea9bfe -> 0x0201e1a2
+PASS	segmented-callsite	0x0201e49c bfeac0fe -> 0x0201e220
+PASS	reload-callsites	0x0201e46c bfeaf838; 0x0201e4a0 bfeade38 unchanged
+PASS	mutation-order	r9 gate before lock; trylock fail returns; valid-last; loaded_count after valid; ARMED-last
+PASS	state-machine	16 note-ordered packets arm slots0..15; packet17 rejects no-mutation
