@@ -61,14 +61,31 @@ A Channel 1 keyboard Note 81 pair was unrelated.
 
 No MIDI events were received. This is not evidence about Pad mapping.
 
+### Capture D, 90 seconds, authoritative Pad 1..16 order
+
+With MidiSuite closed so interface 4 could be claimed, the user pressed the official UI Pad numbers in order: top row `1..8`, then bottom row `9..16`. After cable de-duplication, the exact 16-note sequence was captured three times identically:
+
+```text
+40,41,42,43,48,49,50,51,36,37,38,39,44,45,46,47
+```
+
+This establishes the current configured mapping:
+
+- Pad 1..8 -> notes `40,41,42,43,48,49,50,51`
+- Pad 9..16 -> notes `36,37,38,39,44,45,46,47`
+- Pad 9 -> Note 36, independently heard as S1-C2 `Mooger #1`
+- Pad 14 -> Note 45, independently heard as S1-C2 `HAND DRUM`
+
+Raw evidence: `../pad-map-2x8-confirm-20260803.log` and `../pad-map-live-20260803.md`.
+
 ## Confirmed live facts
 
 - Physical Pad input can emit Channel 10 Note On and Note Off.
 - Live-observed notes include 36, 38, 39, and 45.
 - Note On velocity varies per strike.
 - Note Off velocity was `0x40` in these captures.
-- A complete 16-Pad ordinal mapping was not captured.
-- Such a mapping is mutable user configuration, so it must not be compiled into firmware as a fixed table.
+- A complete current-profile 16-Pad ordinal mapping was captured three times identically.
+- The mapping is mutable user configuration, so the captured 2x8 table is authoritative for this device/profile but must not be treated as an immutable hardware-wide table.
 
 ## Implementation consequence
 
@@ -83,6 +100,6 @@ It emits `note-map.bin`, 128 bytes total:
 
 - each configured note contains its runtime slot index 0..15;
 - every unconfigured note contains `0xff`.
-- runtime slot indices preserve config order, allowing the same order to represent the 4x4 on-device UI grid even when MIDI note values are noncontiguous or unsorted.
+- runtime slot indices preserve config order, allowing the same order to represent the official 2x8 Pad 1..16 UI while MIDI note values remain independently configurable.
 
 The runtime consumer can therefore perform bounded O(1) lookup for arbitrary MIDI Suite Pad assignments without assuming notes 36..51.

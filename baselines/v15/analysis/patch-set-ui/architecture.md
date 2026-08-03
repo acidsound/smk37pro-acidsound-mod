@@ -27,7 +27,7 @@ No future candidate may regress those properties.
 
 A physical Pad ordinal is not a stable firmware key.
 
-The pinned official manual states that Pad MIDI messages are customizable in MIDI Suite and that the Pad Bank gesture exposes Pads 17–32. Live captures observed Ch10 notes 36, 38, 39, and 45, but did not establish a permanent 16-Pad sequence.
+The pinned official manual states that Pad MIDI messages are customizable in MIDI Suite and that the Pad Bank gesture exposes Pads 17–32. A 2026-08-03 live capture established the current profile's complete official 2×8 Pad 1..16 sequence three times identically: `40,41,42,43,48,49,50,51,36,37,38,39,44,45,46,47`. This is authoritative for the current configuration, but configurability means it is not a permanent hardware-wide sequence.
 
 Therefore the model is:
 
@@ -39,7 +39,7 @@ PatchSlot slot[16];         // config/UI order, not numeric-note order
 Rules:
 
 1. A set config contains exactly 16 distinct MIDI notes in `0..127`.
-2. Slot order is the config order and becomes the 4x4 UI grid order.
+2. Slot order is the config order and becomes the official 2×8 Pad 1..16 UI order.
 3. `note_to_slot[note]` maps arbitrary, noncontiguous, unsorted notes to those slots.
 4. Unconfigured notes use the H2-correct stock fallback.
 5. Bank is user-facing `1..4`; patch is user-facing `1..32`.
@@ -111,14 +111,14 @@ The UI has three separate identities:
 
 ```c
 struct PatchSetUiEntry {
-    uint8_t ui_slot;       // 0..15, fixed 4x4 position
+    uint8_t ui_slot;       // 0..15, fixed 2x8 Pad 1..16 position
     uint8_t midi_note;     // 0..127, user-configurable
     uint8_t bank;          // 1..4 for display
     uint8_t patch;         // 1..32 for display
 };
 ```
 
-They must not be collapsed into `note - 36` or a physical Pad number.
+They must not be collapsed into `note - 36`. The current profile needs an explicit permutation between physical Pad 1..16 order and note-ordered slots; future MIDI Suite configurations may require a different map.
 
 ### Reusable official UI evidence
 

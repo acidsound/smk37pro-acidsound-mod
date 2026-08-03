@@ -20,12 +20,12 @@ Both transfers were 163 SysEx bytes packetized as 220 USB-MIDI bytes.
 
 ## Live observations
 
-- Physical Pad/Ch10 Note 36 selected `Mooger #1`.
+- Physical Pad/Ch10 Note 36 selected `Mooger #1`. The confirmed physical location is **Pad 9**, bottom row column 1.
 - The initial report that every other Pad used the Ch1 sound was not a slot failure. The physical location corresponding to MIDI Note 45 was not known during that test.
 - A direct raw Ch10 discriminator transmitted Note 36, Note 45, and fallback Note 40 in order.
 - User confirmed the direct discriminator was fully normal:
   - Note 36 selected `Mooger #1`.
-  - Note 45 selected `HAND DRUM`.
+  - Note 45 selected `HAND DRUM`; the confirmed physical location is **Pad 14**, bottom row column 6.
   - Note 40 followed the expected fallback behavior.
 - No reboot or stuck-note failure was reported in this validation.
 
