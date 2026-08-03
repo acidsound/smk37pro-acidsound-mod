@@ -1,6 +1,6 @@
 {
   "changes": {
-    "app_byte_count": 266,
+    "app_byte_count": 288,
     "app_ranges": [
       {
         "end_exclusive": 34,
@@ -23,8 +23,16 @@
         "start": 123320
       },
       {
-        "end_exclusive": 123446,
+        "end_exclusive": 123452,
         "start": 123382
+      },
+      {
+        "end_exclusive": 123460,
+        "start": 123453
+      },
+      {
+        "end_exclusive": 123470,
+        "start": 123461
       },
       {
         "end_exclusive": 124011,
@@ -47,7 +55,7 @@
         "start": 387578
       }
     ],
-    "flash_byte_count_including_crc_fields": 274,
+    "flash_byte_count_including_crc_fields": 296,
     "flash_ranges": [
       {
         "end_exclusive": 16388,
@@ -78,8 +86,16 @@
         "start": 139992
       },
       {
-        "end_exclusive": 140118,
+        "end_exclusive": 140124,
         "start": 140054
+      },
+      {
+        "end_exclusive": 140132,
+        "start": 140125
+      },
+      {
+        "end_exclusive": 140142,
+        "start": 140133
       },
       {
         "end_exclusive": 140683,
@@ -102,8 +118,8 @@
         "start": 404250
       }
     ],
-    "fwsc_byte_count": 280,
-    "ota_payload_byte_count_including_wrapper_crc_fields": 280
+    "fwsc_byte_count": 302,
+    "ota_payload_byte_count_including_wrapper_crc_fields": 302
   },
   "format": "smk37-v15-application-only-patch-v1",
   "input": {
@@ -121,9 +137,9 @@
     "ufw_flash_size": 638976
   },
   "output": {
-    "app_sha256": "679c39612b8b16d8da5ec6500b10ff6ed638b492e585c815f0a0883781118ee7",
-    "payload_sha256": "9541abb3c8904ea432ef47cc38ee1d1477b59facfc52ddb3cb35b2b2aa07939c",
-    "sha256": "ff56a56dc464390394a2a3a5b4b15f50f9f765a67a6cd08c95281270df7d37c4",
+    "app_sha256": "a6f99cf6672ae3bd5b00312876a77ce1ed0e8a909ef56df7af0db34a2f726e05",
+    "payload_sha256": "201f5668551aad30ded2e4d2d0a4b4f6fef31b4710ec59d3d24491770b28ce12",
+    "sha256": "974c1675426e5d43f6b48e7ac7a1142f40062fca945dc6ba1b3ace8b0d144496",
     "size": 701140
   },
   "protected_flash_hashes_after": {

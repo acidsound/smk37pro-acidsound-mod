@@ -1,6 +1,6 @@
 {
   "basis_app_sha256": "c18ed6f4e8ba2c16b99c41e6264cc36804fb38d8800d03ec518ab6bd838a8d14",
-  "boundary_relative_changed_byte_count": 170,
+  "boundary_relative_changed_byte_count": 211,
   "boundary_relative_changed_ranges": [
     {
       "end_exclusive": 123213,
@@ -43,8 +43,20 @@
       "start": 123417
     },
     {
-      "end_exclusive": 123428,
+      "end_exclusive": 123452,
       "start": 123422
+    },
+    {
+      "end_exclusive": 123460,
+      "start": 123453
+    },
+    {
+      "end_exclusive": 123470,
+      "start": 123461
+    },
+    {
+      "end_exclusive": 124011,
+      "start": 124010
     },
     {
       "end_exclusive": 124063,
@@ -54,8 +66,8 @@
   "callsite_contract": {
     "direct_product_callsite": {
       "address": "0x0201e468",
-      "bytes": "bfea9bfe",
-      "target": "0x0201e1a2"
+      "bytes": "bfeadcfe",
+      "target": "0x0201e224"
     },
     "direct_reload_callsite": {
       "address": "0x0201e46c",
@@ -106,18 +118,18 @@
     },
     {
       "device_accessed": false,
-      "direct_callsite_bytes": "bfea9bfe",
-      "end_exclusive": "0x0201e224",
+      "direct_callsite_bytes": "bfeadcfe",
+      "end_exclusive": "0x0201e24e",
       "entry": "0x0201e1a2",
-      "manifest_hash": "4e738a54dda52abd2ab816201ece7d1851215cba90268c14c535503b4ceb2460",
+      "manifest_hash": "5c0ec6675c29b8f20d055938425ceb12c356513c29b79b761f1a469eaa068a75",
       "name": "compact-16-slot-producer",
       "owned_end_exclusive": "0x0201e254",
       "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional/inputs/producer/producer.bin",
-      "producer_hash": "4e738a54dda52abd2ab816201ece7d1851215cba90268c14c535503b4ceb2460",
-      "producer_size": 130,
+      "producer_hash": "5c0ec6675c29b8f20d055938425ceb12c356513c29b79b761f1a469eaa068a75",
+      "producer_size": 172,
       "segmented_callsite_bytes": "bfeac0fe",
-      "source_commit": "9f9b7d75358b8efcabfef25b1ed07af6cfec15ac",
-      "source_evidence_sha256": "e6cbd92c7b1937f7c030a0c225ae35a07f5948cdbb993bac3ae188ab7459e76f",
+      "source_commit": "3507a5634cf1379f63dc40fa65c55456d4bb9091",
+      "source_evidence_sha256": "0bed1fd8ba8dba7e42c371eec8d5cb71e8296ced3b95d688407e9732eeb8a288",
       "source_exact_pi32_producer_bytes": "PASS",
       "status": "PASS"
     },
@@ -485,7 +497,7 @@
       "status": "PASS"
     }
   ],
-  "output_app_sha256": "679c39612b8b16d8da5ec6500b10ff6ed638b492e585c815f0a0883781118ee7",
+  "output_app_sha256": "a6f99cf6672ae3bd5b00312876a77ce1ed0e8a909ef56df7af0db34a2f726e05",
   "patches": [
     {
       "address": "0x0201e13e",
@@ -500,13 +512,13 @@
     },
     {
       "address": "0x0201e1a2",
-      "byte_count": 130,
-      "end_exclusive": "0x0201e224",
+      "byte_count": 172,
+      "end_exclusive": "0x0201e24e",
       "file_offset": 123298,
-      "new_hex": "790404169016e020f03d80f83700c0ffbd65c4012000b00040e8300020000516584280f807005b4183f824004021d8422000048380f81e025b4103fd1b203616e6e1a060c7ff2065c401671806e19c704020e84070164116623c80ffccaa020020004021e840c321db4183f8032020004022d84220004020d8402000590479045904",
-      "new_sha256": "4e738a54dda52abd2ab816201ece7d1851215cba90268c14c535503b4ceb2460",
-      "old_hex": "790404169016e020f03d80f84000c0ffbd65c4012000b00040e839002000c5ffbc65c401584380f811004021d84320004824d842c0ff2065c4014116623c80ffe8aa020020004021d840049a80f81802584080f8150206e1a050684080f81000482de842c0ffc065c4014116623c80ffb8aa020020004021e84020004022d843c0ff",
-      "old_sha256": "a323308cacbb28a4c32444e483313960ea2adb99b29e483a0a5fa4619ffd0068",
+      "new_hex": "790404169016e020f03d80f83700c0ffbd65c4012000b00040e8300020000516584280f807005b4183f824004021d8422000048380f81e025b4103fd1b203616e6e1a060c7ff2065c401671806e19c704020e84070164116623c80ffccaa020020004021e840c321db4183f8032020004022d84220004020d840200059047904590479040416494081f80bc4494181f808c6c5ffbd65c4014020d840d841d8422000401680ff56ffffff5904",
+      "new_sha256": "5c0ec6675c29b8f20d055938425ceb12c356513c29b79b761f1a469eaa068a75",
+      "old_hex": "790404169016e020f03d80f84000c0ffbd65c4012000b00040e839002000c5ffbc65c401584380f811004021d84320004824d842c0ff2065c4014116623c80ffe8aa020020004021d840049a80f81802584080f8150206e1a050684080f81000482de842c0ffc065c4014116623c80ffb8aa020020004021e84020004022d843c0ffbd65c4012000412089402000590479045904bfea64345844d8ee001500a51018401841e09c124220d8ee",
+      "old_sha256": "af9f6c88e70bf5902d79557c4a43d8ee073c79e22bb3143e689ee4bacb632ad0",
       "purpose": "install compact reviewed S1-C3 16-slot producer"
     },
     {
@@ -514,8 +526,8 @@
       "byte_count": 4,
       "end_exclusive": "0x0201e46c",
       "file_offset": 124008,
-      "new_hex": "bfea9bfe",
-      "new_sha256": "5f641fcce5143caa69e15f6dc01c27d9b8a3373f5b9e0e66adabff9187ce86a4",
+      "new_hex": "bfeadcfe",
+      "new_sha256": "8a7d2606aa8e571b9e7640e81ad4eeca3f959b9a054592c4cc1ea38f1ee50d03",
       "old_hex": "bfea9bfe",
       "old_sha256": "5f641fcce5143caa69e15f6dc01c27d9b8a3373f5b9e0e66adabff9187ce86a4",
       "purpose": "pin direct product callsite to compact producer entry"

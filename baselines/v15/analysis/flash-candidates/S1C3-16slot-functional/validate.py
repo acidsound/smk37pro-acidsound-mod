@@ -36,7 +36,8 @@ BASE = 0x02000000
 SELECTOR_START = 0x0201E13E
 SELECTOR_END = 0x0201E19E
 PRODUCER_START = 0x0201E1A2
-PRODUCER_END = 0x0201E224
+PRODUCER_END = 0x0201E24E
+PRODUCER_DIRECT_ENTRY = 0x0201E224
 SEGMENTED_STUB = 0x0201E220
 DIRECT_PRODUCT_CALL = 0x0201E468
 DIRECT_RELOAD_CALL = 0x0201E46C
@@ -53,15 +54,15 @@ EXPECTED = {
     "boundary_fwsc": "2345102aadded732b13e22d1410d3f7b05f104ffc408bd1d6eba03ea2afc058c",
     "selector": "ea2c76595a93cf2cf6a39236e09b749781e2721e3575d0c1b40194855cd4e915",
     "selector_live_code": "894f61ee4eedb942b6653bd36dc72934d3719b54a9a413f6c94f29d0084f8ffc",
-    "producer": "4e738a54dda52abd2ab816201ece7d1851215cba90268c14c535503b4ceb2460",
-    "producer_source_evidence": "e6cbd92c7b1937f7c030a0c225ae35a07f5948cdbb993bac3ae188ab7459e76f",
+    "producer": "5c0ec6675c29b8f20d055938425ceb12c356513c29b79b761f1a469eaa068a75",
+    "producer_source_evidence": "0bed1fd8ba8dba7e42c371eec8d5cb71e8296ced3b95d688407e9732eeb8a288",
     "packet_source_manifest": "98b3258ad107f5421d4a3e23db7baca3f15fd7f15690d4df979a191093d949e9",
-    "app": "679c39612b8b16d8da5ec6500b10ff6ed638b492e585c815f0a0883781118ee7",
-    "package": "ff56a56dc464390394a2a3a5b4b15f50f9f765a67a6cd08c95281270df7d37c4",
-    "ota_token": "INSTALL-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-FF56A56D",
+    "app": "a6f99cf6672ae3bd5b00312876a77ce1ed0e8a909ef56df7af0db34a2f726e05",
+    "package": "974c1675426e5d43f6b48e7ac7a1142f40062fca945dc6ba1b3ace8b0d144496",
+    "ota_token": "INSTALL-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-974C1675",
     "sender_token": "SEND-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-1C923962-AFA89570-8A87A409-A5C086A7",
     "commits": {
-        "compact_producer": "9f9b7d75358b8efcabfef25b1ed07af6cfec15ac",
+        "compact_producer": "3507a5634cf1379f63dc40fa65c55456d4bb9091",
         "bank_d_packet_set": "fe3350063c56a0cff7ab855735b0c7e8a04c957e",
         "selector": "3e99ac3e8b40a1c0733cf6a2a6e6fd5aabbbfa90",
         "boundary": "779356aa3565c43de8141ca289c269e5c1e57796",
@@ -206,12 +207,12 @@ def validate_images_and_rollback(evidence: dict[str, Any], app_manifest: dict[st
     producer = candidate_app[off(PRODUCER_START):off(PRODUCER_END)]
     req(len(selector) == 96 and sha(selector) == EXPECTED["selector"], "candidate selector slice")
     req(selector == (HERE.parents[1] / "patch-set-ui/s1c3/selector/selector.bin").read_bytes(), "selector slice equals source")
-    req(len(producer) == 130 and sha(producer) == EXPECTED["producer"], "candidate producer slice")
+    req(len(producer) == 172 and sha(producer) == EXPECTED["producer"], "candidate producer slice")
     req(producer == (HERE / "inputs/producer/producer.bin").read_bytes(), "producer slice equals input")
     req(candidate_app[off(SEGMENTED_STUB):off(SEGMENTED_STUB) + 4] == bytes.fromhex("79045904"), "segmented stub immediate return bytes")
 
-    req(short_call_target(DIRECT_PRODUCT_CALL, candidate_app[off(DIRECT_PRODUCT_CALL):off(DIRECT_PRODUCT_CALL) + 4]) == PRODUCER_START, "direct product call target")
-    req(candidate_app[off(DIRECT_PRODUCT_CALL):off(DIRECT_PRODUCT_CALL) + 4].hex() == "bfea9bfe", "direct product call bytes")
+    req(short_call_target(DIRECT_PRODUCT_CALL, candidate_app[off(DIRECT_PRODUCT_CALL):off(DIRECT_PRODUCT_CALL) + 4]) == PRODUCER_DIRECT_ENTRY, "direct product reset-wrapper target")
+    req(candidate_app[off(DIRECT_PRODUCT_CALL):off(DIRECT_PRODUCT_CALL) + 4].hex() == "bfeadcfe", "direct product reset-wrapper bytes")
     req(short_call_target(SEGMENTED_PRODUCT_CALL, candidate_app[off(SEGMENTED_PRODUCT_CALL):off(SEGMENTED_PRODUCT_CALL) + 4]) == SEGMENTED_STUB, "segmented product call target")
     req(candidate_app[off(SEGMENTED_PRODUCT_CALL):off(SEGMENTED_PRODUCT_CALL) + 4].hex() == "bfeac0fe", "segmented product call bytes")
     req(candidate_app[off(DIRECT_RELOAD_CALL):off(DIRECT_RELOAD_CALL) + 4].hex() == "bfeaf838", "direct reload preserved")

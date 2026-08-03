@@ -4,9 +4,9 @@ Status: **PASS, candidate built offline**
 
 ## Exact artifacts
 
-- App: `app.bin`, SHA-256 `679c39612b8b16d8da5ec6500b10ff6ed638b492e585c815f0a0883781118ee7`.
-- FWSC: `SMK37Pro-v15-S1C3-16slot-functional.fwsc`, SHA-256 `ff56a56dc464390394a2a3a5b4b15f50f9f765a67a6cd08c95281270df7d37c4`.
-- Exact OTA wrapper: `exact_ota.c`, token `INSTALL-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-FF56A56D`.
+- App: `app.bin`, SHA-256 `a6f99cf6672ae3bd5b00312876a77ce1ed0e8a909ef56df7af0db34a2f726e05`.
+- FWSC: `SMK37Pro-v15-S1C3-16slot-functional.fwsc`, SHA-256 `974c1675426e5d43f6b48e7ac7a1142f40062fca945dc6ba1b3ace8b0d144496`.
+- Exact OTA wrapper: `exact_ota.c`, token `INSTALL-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-974C1675`.
 - Guarded 16-packet C sender: `exact_16_packet_sender.c`, token `SEND-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-1C923962-AFA89570-8A87A409-A5C086A7`.
 - Dry-run validator: `dry_run_validate.py`.
 - Rollback: `rollback/official-v15-recovery-sectors/manifest.json`; restores official v15 flash SHA-256 `f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a`.

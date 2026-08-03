@@ -6,9 +6,9 @@ This directory is self-contained for the S1-C3 16-slot functional release candid
 
 ## Exact release hashes
 
-- App: `app.bin`, SHA-256 `679c39612b8b16d8da5ec6500b10ff6ed638b492e585c815f0a0883781118ee7`.
-- FWSC: `SMK37Pro-v15-S1C3-16slot-functional.fwsc`, SHA-256 `ff56a56dc464390394a2a3a5b4b15f50f9f765a67a6cd08c95281270df7d37c4`.
-- OTA confirmation token: `INSTALL-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-FF56A56D`.
+- App: `app.bin`, SHA-256 `a6f99cf6672ae3bd5b00312876a77ce1ed0e8a909ef56df7af0db34a2f726e05`.
+- FWSC: `SMK37Pro-v15-S1C3-16slot-functional.fwsc`, SHA-256 `974c1675426e5d43f6b48e7ac7a1142f40062fca945dc6ba1b3ace8b0d144496`.
+- OTA confirmation token: `INSTALL-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-974C1675`.
 - Sender confirmation token: `SEND-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-1C923962-AFA89570-8A87A409-A5C086A7`.
 
 ## Scope

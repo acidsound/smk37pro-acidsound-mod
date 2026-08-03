@@ -1,5 +1,5 @@
 {
-  "candidate_flash_sha256": "80c5fdb20b6d21330fecc53e0847325f75ef0030f4efea12b5dadda900bd3429",
+  "candidate_flash_sha256": "2ce48c756fe408e1456a7644c5430fe56ac81634296284e3d5a7bcdf01aba6ad",
   "changed_sectors": [
     {
       "file": "rollback/official-v15-recovery-sectors/official-v15-sector-04000.bin",

@@ -2,8 +2,8 @@
   "call_routes": {
     "direct_product_callsite": {
       "address": "0x0201e468",
-      "bytes": "bfea9bfe",
-      "target": "0x0201e1a2"
+      "bytes": "bfeadcfe",
+      "target": "0x0201e224"
     },
     "direct_reload_intact": {
       "address": "0x0201e46c",
@@ -23,22 +23,24 @@
     "note_order": "host packet order maps slots 0..15 to notes 36..51",
     "pre_mutation_gate": "length_reject_branch at 0x0201e1ac targets return 0x0201e21e before lock/testset/state/count/slot mutation unless r9 == 0xa3",
     "publication_order": "clear valid, copy 0x9c, csync, valid=1, loaded_count=i+1; for slot15, csync and state=ARMED last",
+    "reset_contract": "slot0 signature 62 63 clears lock/count/state before calling original producer at 0x0201e1a2",
     "segmented_no_mutation": "segmented entry 0x0201e220 is push; pop only and has no store/testset/call",
     "slot_formula": "slot_base = 0x01c46520 + loaded_count * 0xa0; valid = slot_base + 0x9c"
   },
   "device_accessed": false,
   "flash_performed": false,
-  "format": "smk37-v15-s1c3-functional-compact-producer-input-v1",
+  "format": "smk37-v15-s1c3-functional-compact-producer-input-v2-reset-aware",
   "midi_transport_opened": false,
   "note_order": "producer consumes direct product packets sequentially into slots 0..15; selector maps notes 36..51 to slots 0..15",
   "producer": {
-    "end_exclusive": "0x0201e224",
+    "direct_entry": "0x0201e224",
+    "end_exclusive": "0x0201e24e",
     "entry": "0x0201e1a2",
     "file": "producer.bin",
     "owned_end_exclusive": "0x0201e254",
-    "sha256": "4e738a54dda52abd2ab816201ece7d1851215cba90268c14c535503b4ceb2460",
-    "size": 130,
-    "spare_bytes": 48
+    "sha256": "5c0ec6675c29b8f20d055938425ceb12c356513c29b79b761f1a469eaa068a75",
+    "size": 172,
+    "spare_bytes": 6
   },
   "ram_layout": {
     "base": "0x01c46520",
@@ -153,15 +155,15 @@
     "voice_size": "0x0000009c"
   },
   "source": {
-    "commit": "9f9b7d75358b8efcabfef25b1ed07af6cfec15ac",
-    "evidence_sha256": "e6cbd92c7b1937f7c030a0c225ae35a07f5948cdbb993bac3ae188ab7459e76f",
+    "commit": "3507a5634cf1379f63dc40fa65c55456d4bb9091",
+    "evidence_sha256": "0bed1fd8ba8dba7e42c371eec8d5cb71e8296ced3b95d688407e9732eeb8a288",
     "path": "baselines/v15/analysis/patch-set-ui/s1c3/compact-producer",
-    "producer_sha256": "4e738a54dda52abd2ab816201ece7d1851215cba90268c14c535503b4ceb2460"
+    "producer_sha256": "5c0ec6675c29b8f20d055938425ceb12c356513c29b79b761f1a469eaa068a75"
   },
   "source_verdict": {
     "exact_pi32_producer_bytes": "PASS",
     "firmware_package_or_live_send": "BLOCK",
-    "summary": "Exact 130-byte compact PI32 producer plus segmented no-mutation entry fits 0x0201e1a2..0x0201e254 with 48 bytes spare. This artifact remains offline and does not authorize a firmware package or live send."
+    "summary": "Exact 172-byte reset-aware producer fits the owned window with 6 bytes spare and removes the unproven boot-zero assumption."
   },
   "status": "PASS"
 }
