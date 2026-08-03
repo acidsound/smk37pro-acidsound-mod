@@ -620,6 +620,7 @@ def render_guarded_sender_c(packet_gate: dict[str, Any]) -> str:
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #ifdef S1C3_ENABLE_LIVE_USB
 #include <libusb.h>
 #endif
@@ -630,6 +631,7 @@ def render_guarded_sender_c(packet_gate: dict[str, Any]) -> str:
 #define USB_MIDI_PACKET_SIZE 4u
 #define S1C3_USB_MIDI_BYTES 220u
 #define S1C3_MAX_PATH 4096u
+#define S1C3_INTER_PACKET_DELAY_NS 100000000L
 
 static const uint8_t EXPECTED_HEADER[6] = {{0xf0, 0x43, 0x00, 0x00, 0x01, 0x1b}};
 static const char CONFIRM_TOKEN[] = "{token}";
@@ -760,6 +762,14 @@ static int send_verified(uint8_t events[S1C3_PACKET_COUNT][S1C3_USB_MIDI_BYTES])
             break;
         }}
         printf("sent exact S1-C3 order %u slot %u note %u: %u USB-MIDI bytes\n", PACKETS[i].order, PACKETS[i].slot, PACKETS[i].note, (unsigned)S1C3_USB_MIDI_BYTES);
+        if (i + 1u < S1C3_PACKET_COUNT) {{
+            const struct timespec delay = {{0, S1C3_INTER_PACKET_DELAY_NS}};
+            if (nanosleep(&delay, NULL) != 0) {{
+                perror("nanosleep between S1-C3 packets");
+                status = 5;
+                break;
+            }}
+        }}
     }}
     if (status == 1) status = 0;
     libusb_release_interface(handle, SMK37_MIDI_INTERFACE);
@@ -1014,6 +1024,8 @@ def build_candidate() -> int:
             "send_command": f"./exact_16_packet_sender send inputs/packets --confirm {sender_token}",
             "confirmation_token": sender_token,
             "default_compile_live_usb_enabled": False,
+            "inter_packet_delay_ms": 100,
+            "delay_rationale": "The nonblocking producer may reject a packet while its lock is held; pacing prevents silent partial publication before ARMED.",
             "offline_build_scope": "dry-run only; live send is fail-closed unless compiled with S1C3_ENABLE_LIVE_USB after explicit authorization",
         },
         "dry_run_validator": {

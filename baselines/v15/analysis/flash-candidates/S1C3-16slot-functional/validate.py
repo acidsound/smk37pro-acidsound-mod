@@ -160,6 +160,7 @@ def validate_release_manifests() -> tuple[dict[str, Any], dict[str, Any], dict[s
     req(evidence["flash"]["confirmation_token"] == EXPECTED["ota_token"], "OTA token")
     req(evidence["sender"]["confirmation_token"] == EXPECTED["sender_token"], "sender token")
     req(evidence["sender"]["default_compile_live_usb_enabled"] is False, "sender live USB default disabled")
+    req(evidence["sender"]["inter_packet_delay_ms"] == 100, "sender producer pacing")
     req(evidence["pad_mapping"]["scope"] == "UI_ONLY", "pad mapping UI-only")
     req(evidence["pad_mapping"]["producer_selector_packet_order"] == "note_order_36_51", "pad mapping cannot change note order")
     req(evidence["pad_mapping"]["physical_pad_to_note_order_slot"] == EXPECTED_PAD_TO_SLOT, "pad permutation sequence")

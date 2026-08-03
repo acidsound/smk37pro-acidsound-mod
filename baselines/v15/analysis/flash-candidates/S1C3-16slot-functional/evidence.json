@@ -1128,7 +1128,9 @@
   "sender": {
     "confirmation_token": "SEND-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-1C923962-AFA89570-8A87A409-A5C086A7",
     "default_compile_live_usb_enabled": false,
+    "delay_rationale": "The nonblocking producer may reject a packet while its lock is held; pacing prevents silent partial publication before ARMED.",
     "dry_run_command": "cc -O2 -g -std=c11 -Wall -Wextra -Wpedantic exact_16_packet_sender.c ../../../../../src/sha256.c -o exact_16_packet_sender && ./exact_16_packet_sender dry-run inputs/packets",
+    "inter_packet_delay_ms": 100,
     "offline_build_scope": "dry-run only; live send is fail-closed unless compiled with S1C3_ENABLE_LIVE_USB after explicit authorization",
     "send_command": "./exact_16_packet_sender send inputs/packets --confirm SEND-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-1C923962-AFA89570-8A87A409-A5C086A7"
   },

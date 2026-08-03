@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #ifdef S1C3_ENABLE_LIVE_USB
 #include <libusb.h>
 #endif
@@ -17,6 +18,7 @@
 #define USB_MIDI_PACKET_SIZE 4u
 #define S1C3_USB_MIDI_BYTES 220u
 #define S1C3_MAX_PATH 4096u
+#define S1C3_INTER_PACKET_DELAY_NS 100000000L
 
 static const uint8_t EXPECTED_HEADER[6] = {0xf0, 0x43, 0x00, 0x00, 0x01, 0x1b};
 static const char CONFIRM_TOKEN[] = "SEND-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-1C923962-AFA89570-8A87A409-A5C086A7";
@@ -162,6 +164,14 @@ static int send_verified(uint8_t events[S1C3_PACKET_COUNT][S1C3_USB_MIDI_BYTES])
             break;
         }
         printf("sent exact S1-C3 order %u slot %u note %u: %u USB-MIDI bytes\n", PACKETS[i].order, PACKETS[i].slot, PACKETS[i].note, (unsigned)S1C3_USB_MIDI_BYTES);
+        if (i + 1u < S1C3_PACKET_COUNT) {
+            const struct timespec delay = {0, S1C3_INTER_PACKET_DELAY_NS};
+            if (nanosleep(&delay, NULL) != 0) {
+                perror("nanosleep between S1-C3 packets");
+                status = 5;
+                break;
+            }
+        }
     }
     if (status == 1) status = 0;
     libusb_release_interface(handle, SMK37_MIDI_INTERFACE);
