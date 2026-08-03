@@ -1,3 +1,5 @@
-S1-C2 two-slot selector live BLOCK validation: PASS
-Validated exact S1-C1 parent, 96-byte selector, 134-byte producer evidence, dry-run packet hashes, and required state-machine tests.
-Candidate remains BLOCKED because exact PI32 LR/rets gate is not implemented/proven before producer mutation.
+S1-C2 two-slot selector live validation: PASS
+app 4afd13d7301c2ae209c11d3fe932d019faa770b551f2d8a38cf4c018c7aafa8a
+fwsc 63e3cfa39473df08bd225df2c8ae81dbfe7aafbd31da6cc6dcf64ca03453681e
+route identity by call target; direct r9==0xa3 gate before testset; segmented stub and wrong-length direct mutate no lock/state/slot
+deterministic package, official-v15 sector rollback, guarded sender, and exact uploader validated offline

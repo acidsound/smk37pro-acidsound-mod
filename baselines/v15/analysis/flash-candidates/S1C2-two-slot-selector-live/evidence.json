@@ -1,101 +1,790 @@
 {
-  "blocking_gate": {
-    "first_mutation_boundary": "existing H2/S1-C1 producer first owned mutation is testset b[0x01c465bd]; any gate must precede it",
-    "reason": "The exact live producer ABI evidence proves LR/rets identity is the necessary discriminator, but the currently admitted PI32 instruction evidence used by this project has no exact validated encoding to read or compare the special rets register before testset. Building a candidate without the LR part would violate the critical invariant.",
-    "requirement": "Producer must accept private publication only on exact direct route LR/rets == 0x0201e46c AND r9 == 0xa3 before any lock/state/slot mutation; segmented and every other caller must reject without mutation.",
-    "status": "BLOCK"
+  "app": {
+    "app_size": 617012,
+    "call_routes": {
+      "direct_callsite": {
+        "address": "0x0201e468",
+        "bytes": "bfea9bfe",
+        "target": "0x0201e1a2"
+      },
+      "direct_reload_intact": {
+        "address": "0x0201e46c",
+        "bytes": "bfeaf838"
+      },
+      "segmented_callsite": {
+        "address": "0x0201e49c",
+        "bytes": "bfeac9fe",
+        "target": "0x0201e232"
+      },
+      "segmented_reload_intact": {
+        "address": "0x0201e4a0",
+        "bytes": "bfeade38"
+      }
+    },
+    "changes": [
+      {
+        "address": "0x0201e13e",
+        "file_offset": 123198,
+        "new_hex": "53160481631679040416951685f82312c8ff2065c40105e19c80584380f80500584080f818028116049680f814045842381980f80500584080f80d028116048b05e1a0505842381980f80500584080f8020201e1a080401680ff32ab02005904",
+        "old_hex": "79040516931683f80f12c4ffbc65c401484080f809025016c1ff2065c401623c80ff6aab02005904501680ff60ab0200590479040516931683f80f12c4ffbc65c401484080f809025016c1ff2065c401623c80ff38ab02005904501680ff2eab",
+        "purpose": "install exact 96-byte ARMED two-slot selector"
+      },
+      {
+        "address": "0x0201c63e",
+        "file_offset": 116286,
+        "new_hex": "80fffa1a0000",
+        "old_hex": "80fffa1a0000",
+        "purpose": "pin Note Off Ch10 hook to selector note-off adapter"
+      },
+      {
+        "address": "0x0201c67c",
+        "file_offset": 116348,
+        "new_hex": "80ffc01a0000",
+        "old_hex": "80ffee1a0000",
+        "purpose": "pin Note On Ch10 hook to selector note-on adapter"
+      },
+      {
+        "address": "0x0201e1a2",
+        "file_offset": 123298,
+        "new_hex": "790404169016e020f03d80f84000c0ffbd65c4012000b00040e839002000c5ffbc65c401584380f811004021d84320004824d842c0ff2065c4014116623c80ffe8aa020020004021d840049a80f81802584080f8150206e1a050684080f81000482de842c0ffc065c4014116623c80ffb8aa020020004021e84020004022d843c0ffbd65c4012000412089402000590479045904",
+        "old_hex": "79040416c0ffbd65c4012000b00040e81b002000c5ffbc65c401584080f80d00c0ff2065c4014116623c80fffcaa0200c5ffbc65c4014021d840c0ffbd65c40120004120894020005904fe200d4144a164e10e40421954a464e170404219dee974200842dee9750000e17630c133108912078207c4ff6032c30105e1a0435844d1ec4016d8ee002500ac101821a7011862203016",
+        "purpose": "install saved-LR and r9-gated two-slot producer"
+      },
+      {
+        "address": "0x0201e468",
+        "file_offset": 124008,
+        "new_hex": "bfea9bfe",
+        "old_hex": "bfea9bfe",
+        "purpose": "direct accepted product call targets main producer entry"
+      },
+      {
+        "address": "0x0201e49c",
+        "file_offset": 124060,
+        "new_hex": "bfeac9fe",
+        "old_hex": "bfea81fe",
+        "purpose": "segmented accepted product call also targets main producer and is rejected by saved-LR gate before mutation"
+      }
+    ],
+    "format": "smk37-v15-s1c2-two-slot-selector-live-v1.app-manifest-v1",
+    "gate": "main producer copies r9 to r0 and checks r0 == 0xa3 before lock/testset/state/slot mutation; route identity is call target, not LR/rets",
+    "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "output_app_sha256": "4afd13d7301c2ae209c11d3fe932d019faa770b551f2d8a38cf4c018c7aafa8a",
+    "producer": {
+      "bytes_in_owned_range": 148,
+      "end_exclusive": "0x0201e236",
+      "entry": "0x0201e1a2",
+      "owned_limit": "0x0201e254",
+      "segmented_stub": "0x0201e232",
+      "sha256": "a05e79c0b46e1e12b1244af3f49866c911fcc41937bc14196825d3080d780784"
+    },
+    "runtime_base": "0x02000000",
+    "s1c1_parent_app_sha256": "16023c9006f2d4d6467ef2d72d6165c14ffeb6cb758d074f7d8163a68146fb2e",
+    "s1c1_relative_changed_byte_count": 234,
+    "s1c1_relative_changed_ranges": [
+      {
+        "end_exclusive": 116351,
+        "start": 116350
+      },
+      {
+        "end_exclusive": 123203,
+        "start": 123198
+      },
+      {
+        "end_exclusive": 123240,
+        "start": 123204
+      },
+      {
+        "end_exclusive": 123250,
+        "start": 123241
+      },
+      {
+        "end_exclusive": 123255,
+        "start": 123251
+      },
+      {
+        "end_exclusive": 123294,
+        "start": 123256
+      },
+      {
+        "end_exclusive": 123311,
+        "start": 123302
+      },
+      {
+        "end_exclusive": 123345,
+        "start": 123312
+      },
+      {
+        "end_exclusive": 123389,
+        "start": 123346
+      },
+      {
+        "end_exclusive": 123397,
+        "start": 123390
+      },
+      {
+        "end_exclusive": 123446,
+        "start": 123398
+      },
+      {
+        "end_exclusive": 124063,
+        "start": 124062
+      }
+    ],
+    "selector": {
+      "address": "0x0201e13e",
+      "bytes": 96,
+      "end_exclusive": "0x0201e19e",
+      "sha256": "adb8774971811f6dbdce8b7338f2265f18b8bb22544ccab746e74610366d4e35"
+    },
+    "selector_hooks": {
+      "note_off": {
+        "bytes": "80fffa1a0000",
+        "callsite": "0x0201c63e",
+        "entry": "0x0201e13e",
+        "fixed_notes": [
+          36,
+          45
+        ]
+      },
+      "note_on": {
+        "bytes": "80ffc01a0000",
+        "callsite": "0x0201c67c",
+        "entry": "0x0201e142",
+        "fixed_notes": [
+          36,
+          45
+        ]
+      }
+    }
   },
-  "candidate_built": false,
-  "date_utc": "2026-08-02",
-  "decision": "BLOCK",
-  "forbidden_outputs": [
-    "app.bin",
-    "*.fwsc",
-    "*.ufw",
-    "*.zip",
-    "rollback bundle",
-    "uploader that can send live traffic"
-  ],
-  "format": "smk37-v15-s1c2-two-slot-selector-live-block-v1",
-  "host_sender_dry_run": {
-    "confirmation_token": "BLOCKED-S1C2-LR-GATE-NOT-PROVEN",
+  "candidate_built": true,
+  "decision": "PASS",
+  "format": "smk37-v15-s1c2-two-slot-selector-live-v1",
+  "host_packets": {
     "direct_packet_header_hex": "f0430000011b",
     "direct_packet_terminator_hex": "f7",
     "packets_in_order": [
       {
-        "factory_bank_1_based": 4,
         "factory_bank_letter": "D",
         "factory_name": "Mooger #1",
         "factory_patch_1_based": 14,
         "fixed_note": 36,
+        "order": 1,
+        "packet_file": "host/packets/slot0-note36-direct-product-163.bin",
         "packet_length": 163,
-        "packet_prefix_hex": "f0430000011b4b326341630000000000",
+        "packet_prefix_hex": "f0430000011b4b3263416300000000000000",
         "packet_sha256": "6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27",
-        "packet_suffix_hex": "010003184d6f6f676572202331203ff7",
+        "packet_suffix_hex": "0000010003184d6f6f676572202331203ff7",
         "runtime_object_bytes": 156,
         "runtime_object_path": "baselines/v15/analysis/patch-set-ui/s1c2-unblock/fixed-selector/objects/note45-bankD14-Mooger_1.runtime156.bin",
         "runtime_object_sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275",
         "slot": 0
       },
       {
-        "factory_bank_1_based": 4,
         "factory_bank_letter": "D",
         "factory_name": "HAND DRUM",
         "factory_patch_1_based": 12,
         "fixed_note": 45,
+        "order": 2,
+        "packet_file": "host/packets/slot1-note45-direct-product-163.bin",
         "packet_length": 163,
-        "packet_prefix_hex": "f0430000011b63312d55524139000000",
+        "packet_prefix_hex": "f0430000011b63312d555241390000000000",
         "packet_sha256": "c4e8458edeb04d8106ca60a35243525e6b5f3f5de272091492409a440e3a9a8d",
-        "packet_suffix_hex": "0100031848414e44204452554d203ff7",
+        "packet_suffix_hex": "08000100031848414e44204452554d203ff7",
         "runtime_object_bytes": 156,
         "runtime_object_path": "baselines/v15/analysis/patch-set-ui/s1c2-unblock/fixed-selector/objects/note36-bankD12-HAND_DRUM.runtime156.bin",
         "runtime_object_sha256": "98bc86e7d9625c837ee6c07fa3f01cbd6079960c9d1071017cf51194aa48c1bf",
         "slot": 1
       }
-    ],
-    "send_policy": "No live send path is enabled in this BLOCK. Packet hashes are reproducible only for review.",
-    "status": "DRY_RUN_ONLY_BLOCKED"
+    ]
   },
-  "lineage": {
-    "extended_producer_commit": "66d301d",
-    "official_app": {
-      "path": "build/v15-official-app.bin",
-      "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055"
+  "instruction_ledger": [
+    {
+      "address": "0x0201e1a2",
+      "bytes": "7904",
+      "meaning": "save rets,r9..r4 like H2 producer",
+      "name": "push_saved"
     },
-    "producer_abi_commit": "d9a97d9",
-    "s1c1_parent_app": {
-      "path": "build/SMK37Pro-v15-S1C1-boundary-only/app.bin",
-      "sha256": "16023c9006f2d4d6467ef2d72d6165c14ffeb6cb758d074f7d8163a68146fb2e"
+    {
+      "address": "0x0201e1a4",
+      "bytes": "0416",
+      "meaning": "r4 = accepted product staging pointer",
+      "name": "save_stage"
+    },
+    {
+      "address": "0x0201e1a6",
+      "bytes": "9016",
+      "meaning": "r0 = r9 so low-register arithmetic can gate exact direct length",
+      "name": "length_gate_source"
+    },
+    {
+      "address": "0x0201e1a8",
+      "bytes": "e020",
+      "meaning": "r0 = r9 - 0x80",
+      "name": "length_gate_sub_0x80"
+    },
+    {
+      "address": "0x0201e1aa",
+      "bytes": "f03d",
+      "meaning": "r0 = r9 - 0xa3",
+      "name": "length_gate_sub_0x23"
+    },
+    {
+      "address": "0x0201e1ac",
+      "bytes": "80f84000",
+      "meaning": "r9 != 0xa3 -> return before testset/lock/state/slot mutation",
+      "name": "length_reject_branch"
+    },
+    {
+      "address": "0x0201e1b0",
+      "bytes": "c0ffbd65c401",
+      "meaning": "r0 = lock byte 0x01c465bd",
+      "name": "lock_pointer"
+    },
+    {
+      "address": "0x0201e1b6",
+      "bytes": "2000b000",
+      "meaning": "csync; testset b[r0]",
+      "name": "trylock"
+    },
+    {
+      "address": "0x0201e1ba",
+      "bytes": "40e83900",
+      "meaning": "ifeq -> return without clearing somebody else's lock",
+      "name": "trylock_failed_return_branch"
+    },
+    {
+      "address": "0x0201e1be",
+      "bytes": "2000",
+      "meaning": "csync after acquired lock",
+      "name": "acquired_csync"
+    },
+    {
+      "address": "0x0201e1c0",
+      "bytes": "c5ffbc65c401",
+      "meaning": "r5 = slot0 metadata base",
+      "name": "metadata_base"
+    },
+    {
+      "address": "0x0201e1c6",
+      "bytes": "5843",
+      "meaning": "r0 = state",
+      "name": "state_load"
+    },
+    {
+      "address": "0x0201e1c8",
+      "bytes": "80f81100",
+      "meaning": "state != EMPTY -> loading/armed path",
+      "name": "state_not_empty_branch"
+    },
+    {
+      "address": "0x0201e1cc",
+      "bytes": "4021",
+      "meaning": "r0 = LOADING",
+      "name": "state_loading_value"
+    },
+    {
+      "address": "0x0201e1ce",
+      "bytes": "d843",
+      "meaning": "state = LOADING before slot0 copy",
+      "name": "state_loading_store"
+    },
+    {
+      "address": "0x0201e1d0",
+      "bytes": "2000",
+      "meaning": "order LOADING before slot0 data publication",
+      "name": "loading_csync"
+    },
+    {
+      "address": "0x0201e1d2",
+      "bytes": "4824",
+      "meaning": "r0 = fixed note 36",
+      "name": "note0_value"
+    },
+    {
+      "address": "0x0201e1d4",
+      "bytes": "d842",
+      "meaning": "note0 = 36",
+      "name": "note0_store"
+    },
+    {
+      "address": "0x0201e1d6",
+      "bytes": "c0ff2065c401",
+      "meaning": "r0 = slot0 destination",
+      "name": "slot0_destination"
+    },
+    {
+      "address": "0x0201e1dc",
+      "bytes": "4116",
+      "meaning": "r1 = accepted staging pointer",
+      "name": "slot0_source"
+    },
+    {
+      "address": "0x0201e1de",
+      "bytes": "623c",
+      "meaning": "r2 = 0x9c",
+      "name": "copy_size"
+    },
+    {
+      "address": "0x0201e1e0",
+      "bytes": "80ffe8aa0200",
+      "meaning": "memcpy(slot0, staging, 0x9c)",
+      "name": "slot0_memcpy"
+    },
+    {
+      "address": "0x0201e1e6",
+      "bytes": "2000",
+      "meaning": "order slot0 copy before valid0",
+      "name": "slot0_csync"
+    },
+    {
+      "address": "0x0201e1e8",
+      "bytes": "4021",
+      "meaning": "r0 = 1",
+      "name": "valid0_value"
+    },
+    {
+      "address": "0x0201e1ea",
+      "bytes": "d840",
+      "meaning": "valid0 = 1 last for first product",
+      "name": "valid0_store"
+    },
+    {
+      "address": "0x0201e1ec",
+      "bytes": "049a",
+      "meaning": "skip loading path and unlock",
+      "name": "empty_done_unlock_goto"
+    },
+    {
+      "address": "0x0201e1ee",
+      "bytes": "80f81802",
+      "meaning": "state != LOADING -> unlock/no mutation",
+      "name": "state_not_loading_branch"
+    },
+    {
+      "address": "0x0201e1f2",
+      "bytes": "5840",
+      "meaning": "r0 = valid0",
+      "name": "valid0_load"
+    },
+    {
+      "address": "0x0201e1f4",
+      "bytes": "80f81502",
+      "meaning": "valid0 != 1 -> unlock/no mutation",
+      "name": "valid0_missing_branch"
+    },
+    {
+      "address": "0x0201e1f8",
+      "bytes": "06e1a050",
+      "meaning": "r6 = slot1 metadata base",
+      "name": "slot1_metadata_base"
+    },
+    {
+      "address": "0x0201e1fc",
+      "bytes": "6840",
+      "meaning": "r0 = valid1",
+      "name": "valid1_load"
+    },
+    {
+      "address": "0x0201e1fe",
+      "bytes": "80f81000",
+      "meaning": "valid1 != 0 -> unlock/no mutation",
+      "name": "valid1_present_branch"
+    },
+    {
+      "address": "0x0201e202",
+      "bytes": "482d",
+      "meaning": "r0 = fixed note 45",
+      "name": "note1_value"
+    },
+    {
+      "address": "0x0201e204",
+      "bytes": "e842",
+      "meaning": "note1 = 45",
+      "name": "note1_store"
+    },
+    {
+      "address": "0x0201e206",
+      "bytes": "c0ffc065c401",
+      "meaning": "r0 = slot1 destination",
+      "name": "slot1_destination"
+    },
+    {
+      "address": "0x0201e20c",
+      "bytes": "4116",
+      "meaning": "r1 = accepted staging pointer",
+      "name": "slot1_source"
+    },
+    {
+      "address": "0x0201e20e",
+      "bytes": "623c",
+      "meaning": "r2 = 0x9c",
+      "name": "slot1_copy_size"
+    },
+    {
+      "address": "0x0201e210",
+      "bytes": "80ffb8aa0200",
+      "meaning": "memcpy(slot1, staging, 0x9c)",
+      "name": "slot1_memcpy"
+    },
+    {
+      "address": "0x0201e216",
+      "bytes": "2000",
+      "meaning": "order slot1 copy before valid1",
+      "name": "slot1_csync"
+    },
+    {
+      "address": "0x0201e218",
+      "bytes": "4021",
+      "meaning": "r0 = 1",
+      "name": "valid1_value"
+    },
+    {
+      "address": "0x0201e21a",
+      "bytes": "e840",
+      "meaning": "valid1 = 1 before ARMED",
+      "name": "valid1_store"
+    },
+    {
+      "address": "0x0201e21c",
+      "bytes": "2000",
+      "meaning": "order valid1 before ARMED",
+      "name": "armed_csync"
+    },
+    {
+      "address": "0x0201e21e",
+      "bytes": "4022",
+      "meaning": "r0 = ARMED",
+      "name": "armed_value"
+    },
+    {
+      "address": "0x0201e220",
+      "bytes": "d843",
+      "meaning": "state = ARMED last",
+      "name": "armed_store"
+    },
+    {
+      "address": "0x0201e222",
+      "bytes": "c0ffbd65c401",
+      "meaning": "r0 = lock byte",
+      "name": "unlock_pointer"
+    },
+    {
+      "address": "0x0201e228",
+      "bytes": "2000",
+      "meaning": "csync before unlock store",
+      "name": "unlock_csync_before"
+    },
+    {
+      "address": "0x0201e22a",
+      "bytes": "4120",
+      "meaning": "r1 = 0",
+      "name": "unlock_zero"
+    },
+    {
+      "address": "0x0201e22c",
+      "bytes": "8940",
+      "meaning": "lock = 0",
+      "name": "unlock_store"
+    },
+    {
+      "address": "0x0201e22e",
+      "bytes": "2000",
+      "meaning": "csync after unlock store",
+      "name": "unlock_csync_after"
+    },
+    {
+      "address": "0x0201e230",
+      "bytes": "5904",
+      "meaning": "pop pc,r9..r4; caller reload/return ABI preserved",
+      "name": "return_restore"
+    },
+    {
+      "address": "0x0201e232",
+      "bytes": "7904",
+      "meaning": "segmented no-slot-mutation stub saves call return/register frame",
+      "name": "segmented_stub_push"
+    },
+    {
+      "address": "0x0201e234",
+      "bytes": "5904",
+      "meaning": "segmented no-slot-mutation stub immediately returns",
+      "name": "segmented_stub_return"
     }
-  },
-  "producer_state_machine_required": {
-    "ARMED": 2,
-    "EMPTY": 0,
-    "LOADING": 1,
-    "first_exact_direct": "state EMPTY -> LOADING, copy slot0, note0=36, valid0=1",
-    "later_exact_direct": "reject without mutation once ARMED or valid1 present",
-    "second_exact_direct": "state LOADING and valid0=1 and valid1=0 -> copy slot1, note1=45, valid1=1, ARMED last",
-    "segmented_or_other": "reject without lock/state/slot mutation before testset"
-  },
-  "requested_layout": {
-    "existing_extended_producer_bytes": 134,
-    "existing_extended_producer_end": "0x0201e228",
-    "existing_extended_producer_sha256": "d989d7e852102126ae8dc2e4025b2717808e4f808bc2bf7885cb9c77ddeb05f7",
-    "official_handler_preserved_at": "0x0201e254",
-    "producer_owned_bytes": 178,
-    "producer_owned_range": "0x0201e1a2..0x0201e254",
-    "selector_bytes": 96,
-    "selector_range": "0x0201e13e..0x0201e19e",
-    "total_selector_plus_max_producer_budget": 278
-  },
-  "scope": "official-v15-only offline BLOCK; no device access, no flash, no OTA, no reset, no live MIDI traffic",
-  "selector_design": {
-    "fixed_notes_for_candidate_if_unblocked": [
-      36,
-      45
+  ],
+  "official_handler_preserved_at": "0x0201e254",
+  "package": {
+    "app_sha256": "4afd13d7301c2ae209c11d3fe932d019faa770b551f2d8a38cf4c018c7aafa8a",
+    "candidate_flash_sha256": "2592990c071fcd7654f3ea913d70f341553d19f79801e693f74801fe160021ad",
+    "changed_app_byte_count_vs_official": 262,
+    "changed_app_ranges_vs_official": [
+      {
+        "end_exclusive": 34,
+        "start": 32
+      },
+      {
+        "end_exclusive": 116291,
+        "start": 116288
+      },
+      {
+        "end_exclusive": 116353,
+        "start": 116350
+      },
+      {
+        "end_exclusive": 123224,
+        "start": 123198
+      },
+      {
+        "end_exclusive": 123231,
+        "start": 123225
+      },
+      {
+        "end_exclusive": 123245,
+        "start": 123232
+      },
+      {
+        "end_exclusive": 123319,
+        "start": 123246
+      },
+      {
+        "end_exclusive": 123389,
+        "start": 123320
+      },
+      {
+        "end_exclusive": 123397,
+        "start": 123390
+      },
+      {
+        "end_exclusive": 123446,
+        "start": 123398
+      },
+      {
+        "end_exclusive": 124011,
+        "start": 124010
+      },
+      {
+        "end_exclusive": 124063,
+        "start": 124062
+      },
+      {
+        "end_exclusive": 159146,
+        "start": 159142
+      },
+      {
+        "end_exclusive": 159152,
+        "start": 159148
+      },
+      {
+        "end_exclusive": 387580,
+        "start": 387578
+      }
     ],
-    "sha256": "adb8774971811f6dbdce8b7338f2265f18b8bb22544ccab746e74610366d4e35",
-    "source": "baselines/v15/analysis/patch-set-ui/s1c1/code/wrapper-bytes.hex",
-    "state_model": "EMPTY compatibility, LOADING fallback, ARMED two-slot selector with explicit selected-valid rechecks"
-  }
+    "changed_flash_byte_count_vs_official": 270,
+    "changed_flash_ranges_vs_official": [
+      {
+        "end_exclusive": 16388,
+        "start": 16384
+      },
+      {
+        "end_exclusive": 16420,
+        "start": 16416
+      },
+      {
+        "end_exclusive": 16706,
+        "start": 16704
+      },
+      {
+        "end_exclusive": 132963,
+        "start": 132960
+      },
+      {
+        "end_exclusive": 133025,
+        "start": 133022
+      },
+      {
+        "end_exclusive": 139896,
+        "start": 139870
+      },
+      {
+        "end_exclusive": 139903,
+        "start": 139897
+      },
+      {
+        "end_exclusive": 139917,
+        "start": 139904
+      },
+      {
+        "end_exclusive": 139991,
+        "start": 139918
+      },
+      {
+        "end_exclusive": 140061,
+        "start": 139992
+      },
+      {
+        "end_exclusive": 140069,
+        "start": 140062
+      },
+      {
+        "end_exclusive": 140118,
+        "start": 140070
+      },
+      {
+        "end_exclusive": 140683,
+        "start": 140682
+      },
+      {
+        "end_exclusive": 140735,
+        "start": 140734
+      },
+      {
+        "end_exclusive": 175818,
+        "start": 175814
+      },
+      {
+        "end_exclusive": 175824,
+        "start": 175820
+      },
+      {
+        "end_exclusive": 404252,
+        "start": 404250
+      }
+    ],
+    "changed_flash_sectors": [
+      "0x04000",
+      "0x20000",
+      "0x22000",
+      "0x2a000",
+      "0x62000"
+    ],
+    "changed_package_byte_count_vs_official": 276,
+    "changed_package_ranges_vs_official": [
+      {
+        "end_exclusive": 4,
+        "start": 0
+      },
+      {
+        "end_exclusive": 71,
+        "start": 69
+      },
+      {
+        "end_exclusive": 17432,
+        "start": 17428
+      },
+      {
+        "end_exclusive": 17464,
+        "start": 17460
+      },
+      {
+        "end_exclusive": 17750,
+        "start": 17748
+      },
+      {
+        "end_exclusive": 134007,
+        "start": 134004
+      },
+      {
+        "end_exclusive": 134069,
+        "start": 134066
+      },
+      {
+        "end_exclusive": 140940,
+        "start": 140914
+      },
+      {
+        "end_exclusive": 140947,
+        "start": 140941
+      },
+      {
+        "end_exclusive": 140961,
+        "start": 140948
+      },
+      {
+        "end_exclusive": 141035,
+        "start": 140962
+      },
+      {
+        "end_exclusive": 141105,
+        "start": 141036
+      },
+      {
+        "end_exclusive": 141113,
+        "start": 141106
+      },
+      {
+        "end_exclusive": 141162,
+        "start": 141114
+      },
+      {
+        "end_exclusive": 141727,
+        "start": 141726
+      },
+      {
+        "end_exclusive": 141779,
+        "start": 141778
+      },
+      {
+        "end_exclusive": 176862,
+        "start": 176858
+      },
+      {
+        "end_exclusive": 176868,
+        "start": 176864
+      },
+      {
+        "end_exclusive": 405296,
+        "start": 405294
+      }
+    ],
+    "expected_app_flash_offsets_match": true,
+    "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "official_flash_sha256": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+    "official_package_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "package_sha256": "63e3cfa39473df08bd225df2c8ae81dbfe7aafbd31da6cc6dcf64ca03453681e",
+    "package_size": 701140,
+    "protected_hashes_candidate": {
+      "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+      "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+      "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+      "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+    },
+    "protected_hashes_official": {
+      "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+      "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+      "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+      "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+    },
+    "protected_prefix_0x0000_0x3fff_unchanged": true,
+    "repacker_metadata_flash_offsets": [
+      "0x04000",
+      "0x04001",
+      "0x04002",
+      "0x04003",
+      "0x04020",
+      "0x04021",
+      "0x04022",
+      "0x04023"
+    ],
+    "rollback_manifest": "rollback/official-v15-recovery-sectors/manifest.json",
+    "rollback_restores_official_flash": true,
+    "validation_gate": "PASS"
+  },
+  "producer_layout": {
+    "empty_done_goto": "0x0201e1ec",
+    "empty_path": "0x0201e1cc",
+    "end": "0x0201e236",
+    "entry": "0x0201e1a2",
+    "length_reject_branch": "0x0201e1ac",
+    "not_empty_path": "0x0201e1ee",
+    "return": "0x0201e230",
+    "segmented_stub": "0x0201e232",
+    "state_not_empty_branch": "0x0201e1c8",
+    "state_not_loading_branch": "0x0201e1ee",
+    "try_fail_branch": "0x0201e1ba",
+    "unlock": "0x0201e222",
+    "valid0_missing_branch": "0x0201e1f4",
+    "valid1_present_branch": "0x0201e1fe"
+  },
+  "route_identity": "encoded by direct and segmented product call targets, not LR/rets",
+  "scope": "offline only; no device, OTA, flash, reset, or live MIDI traffic performed"
 }

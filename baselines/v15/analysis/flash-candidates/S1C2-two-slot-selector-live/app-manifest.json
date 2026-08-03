@@ -1,0 +1,158 @@
+{
+  "app_size": 617012,
+  "call_routes": {
+    "direct_callsite": {
+      "address": "0x0201e468",
+      "bytes": "bfea9bfe",
+      "target": "0x0201e1a2"
+    },
+    "direct_reload_intact": {
+      "address": "0x0201e46c",
+      "bytes": "bfeaf838"
+    },
+    "segmented_callsite": {
+      "address": "0x0201e49c",
+      "bytes": "bfeac9fe",
+      "target": "0x0201e232"
+    },
+    "segmented_reload_intact": {
+      "address": "0x0201e4a0",
+      "bytes": "bfeade38"
+    }
+  },
+  "changes": [
+    {
+      "address": "0x0201e13e",
+      "file_offset": 123198,
+      "new_hex": "53160481631679040416951685f82312c8ff2065c40105e19c80584380f80500584080f818028116049680f814045842381980f80500584080f80d028116048b05e1a0505842381980f80500584080f8020201e1a080401680ff32ab02005904",
+      "old_hex": "79040516931683f80f12c4ffbc65c401484080f809025016c1ff2065c401623c80ff6aab02005904501680ff60ab0200590479040516931683f80f12c4ffbc65c401484080f809025016c1ff2065c401623c80ff38ab02005904501680ff2eab",
+      "purpose": "install exact 96-byte ARMED two-slot selector"
+    },
+    {
+      "address": "0x0201c63e",
+      "file_offset": 116286,
+      "new_hex": "80fffa1a0000",
+      "old_hex": "80fffa1a0000",
+      "purpose": "pin Note Off Ch10 hook to selector note-off adapter"
+    },
+    {
+      "address": "0x0201c67c",
+      "file_offset": 116348,
+      "new_hex": "80ffc01a0000",
+      "old_hex": "80ffee1a0000",
+      "purpose": "pin Note On Ch10 hook to selector note-on adapter"
+    },
+    {
+      "address": "0x0201e1a2",
+      "file_offset": 123298,
+      "new_hex": "790404169016e020f03d80f84000c0ffbd65c4012000b00040e839002000c5ffbc65c401584380f811004021d84320004824d842c0ff2065c4014116623c80ffe8aa020020004021d840049a80f81802584080f8150206e1a050684080f81000482de842c0ffc065c4014116623c80ffb8aa020020004021e84020004022d843c0ffbd65c4012000412089402000590479045904",
+      "old_hex": "79040416c0ffbd65c4012000b00040e81b002000c5ffbc65c401584080f80d00c0ff2065c4014116623c80fffcaa0200c5ffbc65c4014021d840c0ffbd65c40120004120894020005904fe200d4144a164e10e40421954a464e170404219dee974200842dee9750000e17630c133108912078207c4ff6032c30105e1a0435844d1ec4016d8ee002500ac101821a7011862203016",
+      "purpose": "install saved-LR and r9-gated two-slot producer"
+    },
+    {
+      "address": "0x0201e468",
+      "file_offset": 124008,
+      "new_hex": "bfea9bfe",
+      "old_hex": "bfea9bfe",
+      "purpose": "direct accepted product call targets main producer entry"
+    },
+    {
+      "address": "0x0201e49c",
+      "file_offset": 124060,
+      "new_hex": "bfeac9fe",
+      "old_hex": "bfea81fe",
+      "purpose": "segmented accepted product call also targets main producer and is rejected by saved-LR gate before mutation"
+    }
+  ],
+  "format": "smk37-v15-s1c2-two-slot-selector-live-v1.app-manifest-v1",
+  "gate": "main producer copies r9 to r0 and checks r0 == 0xa3 before lock/testset/state/slot mutation; route identity is call target, not LR/rets",
+  "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+  "output_app_sha256": "4afd13d7301c2ae209c11d3fe932d019faa770b551f2d8a38cf4c018c7aafa8a",
+  "producer": {
+    "bytes_in_owned_range": 148,
+    "end_exclusive": "0x0201e236",
+    "entry": "0x0201e1a2",
+    "owned_limit": "0x0201e254",
+    "segmented_stub": "0x0201e232",
+    "sha256": "a05e79c0b46e1e12b1244af3f49866c911fcc41937bc14196825d3080d780784"
+  },
+  "runtime_base": "0x02000000",
+  "s1c1_parent_app_sha256": "16023c9006f2d4d6467ef2d72d6165c14ffeb6cb758d074f7d8163a68146fb2e",
+  "s1c1_relative_changed_byte_count": 234,
+  "s1c1_relative_changed_ranges": [
+    {
+      "end_exclusive": 116351,
+      "start": 116350
+    },
+    {
+      "end_exclusive": 123203,
+      "start": 123198
+    },
+    {
+      "end_exclusive": 123240,
+      "start": 123204
+    },
+    {
+      "end_exclusive": 123250,
+      "start": 123241
+    },
+    {
+      "end_exclusive": 123255,
+      "start": 123251
+    },
+    {
+      "end_exclusive": 123294,
+      "start": 123256
+    },
+    {
+      "end_exclusive": 123311,
+      "start": 123302
+    },
+    {
+      "end_exclusive": 123345,
+      "start": 123312
+    },
+    {
+      "end_exclusive": 123389,
+      "start": 123346
+    },
+    {
+      "end_exclusive": 123397,
+      "start": 123390
+    },
+    {
+      "end_exclusive": 123446,
+      "start": 123398
+    },
+    {
+      "end_exclusive": 124063,
+      "start": 124062
+    }
+  ],
+  "selector": {
+    "address": "0x0201e13e",
+    "bytes": 96,
+    "end_exclusive": "0x0201e19e",
+    "sha256": "adb8774971811f6dbdce8b7338f2265f18b8bb22544ccab746e74610366d4e35"
+  },
+  "selector_hooks": {
+    "note_off": {
+      "bytes": "80fffa1a0000",
+      "callsite": "0x0201c63e",
+      "entry": "0x0201e13e",
+      "fixed_notes": [
+        36,
+        45
+      ]
+    },
+    "note_on": {
+      "bytes": "80ffc01a0000",
+      "callsite": "0x0201c67c",
+      "entry": "0x0201e142",
+      "fixed_notes": [
+        36,
+        45
+      ]
+    }
+  }
+}

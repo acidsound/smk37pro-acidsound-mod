@@ -1,0 +1,53 @@
+address	bytes	name	meaning
+0x0201e1a2	7904	push_saved	save rets,r9..r4 like H2 producer
+0x0201e1a4	0416	save_stage	r4 = accepted product staging pointer
+0x0201e1a6	9016	length_gate_source	r0 = r9 so low-register arithmetic can gate exact direct length
+0x0201e1a8	e020	length_gate_sub_0x80	r0 = r9 - 0x80
+0x0201e1aa	f03d	length_gate_sub_0x23	r0 = r9 - 0xa3
+0x0201e1ac	80f84000	length_reject_branch	r9 != 0xa3 -> return before testset/lock/state/slot mutation
+0x0201e1b0	c0ffbd65c401	lock_pointer	r0 = lock byte 0x01c465bd
+0x0201e1b6	2000b000	trylock	csync; testset b[r0]
+0x0201e1ba	40e83900	trylock_failed_return_branch	ifeq -> return without clearing somebody else's lock
+0x0201e1be	2000	acquired_csync	csync after acquired lock
+0x0201e1c0	c5ffbc65c401	metadata_base	r5 = slot0 metadata base
+0x0201e1c6	5843	state_load	r0 = state
+0x0201e1c8	80f81100	state_not_empty_branch	state != EMPTY -> loading/armed path
+0x0201e1cc	4021	state_loading_value	r0 = LOADING
+0x0201e1ce	d843	state_loading_store	state = LOADING before slot0 copy
+0x0201e1d0	2000	loading_csync	order LOADING before slot0 data publication
+0x0201e1d2	4824	note0_value	r0 = fixed note 36
+0x0201e1d4	d842	note0_store	note0 = 36
+0x0201e1d6	c0ff2065c401	slot0_destination	r0 = slot0 destination
+0x0201e1dc	4116	slot0_source	r1 = accepted staging pointer
+0x0201e1de	623c	copy_size	r2 = 0x9c
+0x0201e1e0	80ffe8aa0200	slot0_memcpy	memcpy(slot0, staging, 0x9c)
+0x0201e1e6	2000	slot0_csync	order slot0 copy before valid0
+0x0201e1e8	4021	valid0_value	r0 = 1
+0x0201e1ea	d840	valid0_store	valid0 = 1 last for first product
+0x0201e1ec	049a	empty_done_unlock_goto	skip loading path and unlock
+0x0201e1ee	80f81802	state_not_loading_branch	state != LOADING -> unlock/no mutation
+0x0201e1f2	5840	valid0_load	r0 = valid0
+0x0201e1f4	80f81502	valid0_missing_branch	valid0 != 1 -> unlock/no mutation
+0x0201e1f8	06e1a050	slot1_metadata_base	r6 = slot1 metadata base
+0x0201e1fc	6840	valid1_load	r0 = valid1
+0x0201e1fe	80f81000	valid1_present_branch	valid1 != 0 -> unlock/no mutation
+0x0201e202	482d	note1_value	r0 = fixed note 45
+0x0201e204	e842	note1_store	note1 = 45
+0x0201e206	c0ffc065c401	slot1_destination	r0 = slot1 destination
+0x0201e20c	4116	slot1_source	r1 = accepted staging pointer
+0x0201e20e	623c	slot1_copy_size	r2 = 0x9c
+0x0201e210	80ffb8aa0200	slot1_memcpy	memcpy(slot1, staging, 0x9c)
+0x0201e216	2000	slot1_csync	order slot1 copy before valid1
+0x0201e218	4021	valid1_value	r0 = 1
+0x0201e21a	e840	valid1_store	valid1 = 1 before ARMED
+0x0201e21c	2000	armed_csync	order valid1 before ARMED
+0x0201e21e	4022	armed_value	r0 = ARMED
+0x0201e220	d843	armed_store	state = ARMED last
+0x0201e222	c0ffbd65c401	unlock_pointer	r0 = lock byte
+0x0201e228	2000	unlock_csync_before	csync before unlock store
+0x0201e22a	4120	unlock_zero	r1 = 0
+0x0201e22c	8940	unlock_store	lock = 0
+0x0201e22e	2000	unlock_csync_after	csync after unlock store
+0x0201e230	5904	return_restore	pop pc,r9..r4; caller reload/return ABI preserved
+0x0201e232	7904	segmented_stub_push	segmented no-slot-mutation stub saves call return/register frame
+0x0201e234	5904	segmented_stub_return	segmented no-slot-mutation stub immediately returns
