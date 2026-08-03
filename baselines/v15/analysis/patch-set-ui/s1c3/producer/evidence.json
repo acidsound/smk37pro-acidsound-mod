@@ -1,0 +1,170 @@
+{
+  "format": "smk37-v15-s1c3-sequential-16-producer-design-v1",
+  "date_utc": "2026-08-03",
+  "scope": {
+    "offline_only": true,
+    "firmware_built": false,
+    "fwsc_built": false,
+    "device_accessed": false,
+    "midi_transport_opened": false,
+    "flash_performed": false,
+    "reset_performed": false
+  },
+  "verdict": {
+    "offline_design": "PASS",
+    "firmware_candidate_or_live_send": "BLOCK",
+    "summary": "The sequential 16-packet direct-product loader contract is safe as an offline design, but no S1-C3 firmware/live candidate is authorized because exact assembled PI32 bytes, executable placement, and enlarged heap-prefix headroom are not all proven."
+  },
+  "s1c2_live_pass_basis": {
+    "report": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C2-two-slot-selector-live-v2/report.md",
+      "sha256": "d5702f534ee8ab6e07f76f33bf57bd0800c75cb12f1f7bbaf8cbe263872c1a03"
+    },
+    "evidence": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C2-two-slot-selector-live-v2/evidence.json",
+      "sha256": "97c1cc6ff3bdb3e469fbedf0c577fcee33036a5ea0d685beb5bd71bb177ca81c"
+    },
+    "app_manifest": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C2-two-slot-selector-live-v2/app-manifest.json",
+      "sha256": "15e9626b16820d2ba4b14a5bbb6310d1924af0bd7fe9c09ab77aca705d2c7a43"
+    },
+    "producer": {
+      "entry": "0x0201e1a2",
+      "segmented_stub": "0x0201e232",
+      "end_exclusive": "0x0201e236",
+      "bytes": 148,
+      "owned_limit": "0x0201e254",
+      "owned_range_bytes": 178,
+      "remaining_margin_bytes": 30,
+      "sha256": "a05e79c0b46e1e12b1244af3f49866c911fcc41937bc14196825d3080d780784"
+    },
+    "call_routes": {
+      "direct_callsite": "0x0201e468",
+      "direct_call_bytes": "bfea9bfe",
+      "direct_return_lr": "0x0201e46c",
+      "segmented_callsite": "0x0201e49c",
+      "segmented_call_bytes": "bfeac9fe",
+      "segmented_return_lr": "0x0201e4a0",
+      "direct_reload_bytes": "bfeaf838",
+      "segmented_reload_bytes": "bfeade38"
+    },
+    "sender": {
+      "host_dry_run_path": "baselines/v15/analysis/flash-candidates/S1C2-two-slot-selector-live-v2/host_sender_dry_run.py",
+      "host_dry_run_sha256": "1ddabc4390810d3d94c7152fad963fb8ed8a970fce0e8d9a71c91f8c9757a75f",
+      "guarded_c_tool_path": "tools/smk37_v15_s1c2_send.c",
+      "guarded_c_tool_sha256": "b0cbdda2428518d0363364268b15cdfa98367c2af98d0d660e60a272e8939e0d",
+      "slot0_packet_sha256": "6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27",
+      "slot1_packet_sha256": "c4e8458edeb04d8106ca60a35243525e6b5f3f5de272091492409a440e3a9a8d"
+    }
+  },
+  "wire_contract": {
+    "accepted_route": "direct_product_only",
+    "rejected_route": "segmented_product_callsite_routes_to_no_mutation_stub",
+    "sys_ex_header_hex": "f0430000011b",
+    "terminator_hex": "f7",
+    "direct_total_length_bytes": 163,
+    "voice_payload_bytes": 156,
+    "completed_message_r9_required": "0x000000a3",
+    "usb_midi_bytes_per_packet": 220,
+    "usb_midi_event_count_per_packet": 55,
+    "final_usb_midi_cin": "0x05",
+    "host_order": [
+      {"order": 1, "slot": 0, "note": 36},
+      {"order": 2, "slot": 1, "note": 37},
+      {"order": 3, "slot": 2, "note": 38},
+      {"order": 4, "slot": 3, "note": 39},
+      {"order": 5, "slot": 4, "note": 40},
+      {"order": 6, "slot": 5, "note": 41},
+      {"order": 7, "slot": 6, "note": 42},
+      {"order": 8, "slot": 7, "note": 43},
+      {"order": 9, "slot": 8, "note": 44},
+      {"order": 10, "slot": 9, "note": 45},
+      {"order": 11, "slot": 10, "note": 46},
+      {"order": 12, "slot": 11, "note": 47},
+      {"order": 13, "slot": 12, "note": 48},
+      {"order": 14, "slot": 13, "note": 49},
+      {"order": 15, "slot": 14, "note": 50},
+      {"order": 16, "slot": 15, "note": 51}
+    ],
+    "host_sender_rule": "Future sender must verify all 16 exact packet files, fixed names, fixed hashes, 163-byte framing, and order before opening USB. Dry-run must remain offline. Live send remains BLOCK here."
+  },
+  "ram_layout": {
+    "base": "0x01c46520",
+    "slot_count": 16,
+    "slot_stride": "0x000000a0",
+    "voice_size": "0x0000009c",
+    "end_exclusive": "0x01c46f20",
+    "total_bytes": 2560,
+    "publication_bytes": {
+      "slot_valid_offset": "slot_base + 0x9c",
+      "global_lock": "0x01c465bd",
+      "loaded_count": "0x01c465be",
+      "state": "0x01c465bf"
+    },
+    "states": {"EMPTY": 0, "LOADING": 1, "ARMED": 2},
+    "slot_ranges": [
+      {"slot": 0, "note": 36, "voice": "0x01c46520..0x01c465bc", "valid": "0x01c465bc"},
+      {"slot": 1, "note": 37, "voice": "0x01c465c0..0x01c4665c", "valid": "0x01c4665c"},
+      {"slot": 2, "note": 38, "voice": "0x01c46660..0x01c466fc", "valid": "0x01c466fc"},
+      {"slot": 3, "note": 39, "voice": "0x01c46700..0x01c4679c", "valid": "0x01c4679c"},
+      {"slot": 4, "note": 40, "voice": "0x01c467a0..0x01c4683c", "valid": "0x01c4683c"},
+      {"slot": 5, "note": 41, "voice": "0x01c46840..0x01c468dc", "valid": "0x01c468dc"},
+      {"slot": 6, "note": 42, "voice": "0x01c468e0..0x01c4697c", "valid": "0x01c4697c"},
+      {"slot": 7, "note": 43, "voice": "0x01c46980..0x01c46a1c", "valid": "0x01c46a1c"},
+      {"slot": 8, "note": 44, "voice": "0x01c46a20..0x01c46abc", "valid": "0x01c46abc"},
+      {"slot": 9, "note": 45, "voice": "0x01c46ac0..0x01c46b5c", "valid": "0x01c46b5c"},
+      {"slot": 10, "note": 46, "voice": "0x01c46b60..0x01c46bfc", "valid": "0x01c46bfc"},
+      {"slot": 11, "note": 47, "voice": "0x01c46c00..0x01c46c9c", "valid": "0x01c46c9c"},
+      {"slot": 12, "note": 48, "voice": "0x01c46ca0..0x01c46d3c", "valid": "0x01c46d3c"},
+      {"slot": 13, "note": 49, "voice": "0x01c46d40..0x01c46ddc", "valid": "0x01c46ddc"},
+      {"slot": 14, "note": 50, "voice": "0x01c46de0..0x01c46e7c", "valid": "0x01c46e7c"},
+      {"slot": 15, "note": 51, "voice": "0x01c46e80..0x01c46f1c", "valid": "0x01c46f1c"}
+    ],
+    "placement_status": "BLOCK_UNTIL_HEAP_HEADROOM_PROVEN"
+  },
+  "producer_state_machine": {
+    "pre_mutation_rejects": [
+      "entry is segmented route",
+      "r9 total length is not exactly 0xa3"
+    ],
+    "locked_rejects": [
+      "trylock fails, returns without unlock store",
+      "state is ARMED",
+      "loaded_count is 16",
+      "state is neither EMPTY nor LOADING",
+      "state is EMPTY but loaded_count is not 0"
+    ],
+    "publication_order": [
+      "On slot0 only, write state=LOADING before the slot0 copy while consumers still reject because state is not ARMED.",
+      "For each slot i, clear valid[i], copy exactly 0x9c bytes from staging to slot[i], csync, then write valid[i]=1 as the slot publication byte.",
+      "After valid[i], set loaded_count=i+1. For i<15, keep state=LOADING.",
+      "For slot15, after valid15 and loaded_count=16, csync and write state=ARMED last. Later packets reject because state is ARMED and/or loaded_count is 16."
+    ]
+  },
+  "pi32_abi_and_budget": {
+    "abi_pass_facts": [
+      "S1-C2 v2 proves direct accepted product entry receives r0=0x01c37fd0 staging and r9=0xa3 for exact 163-byte direct packets.",
+      "The route discriminator is the producer call target. S1-C3 keeps direct callsite 0x0201e468 on the main producer and segmented callsite 0x0201e49c on a no-mutation return stub.",
+      "The producer must keep the H2/S1-C2 saved-register shape push {rets,r9,r8,r7,r6,r5,r4} and pop {pc,r9,r8,r7,r6,r5,r4}."
+    ],
+    "must_fit_range": "0x0201e1a2..0x0201e254",
+    "must_fit_bytes": 178,
+    "s1c2_current_bytes": 148,
+    "s1c2_current_margin_bytes": 30,
+    "s1c3_minimum_new_capabilities": [
+      "loaded_count load/check/increment",
+      "EMPTY vs LOADING vs ARMED state validation",
+      "slot pointer computation or 16-entry pointer table for base + loaded_count*0xa0",
+      "valid pointer computation for slot_base+0x9c",
+      "slot15-specific ARMED-last branch",
+      "reject-later-packets branch"
+    ],
+    "code_budget_status": "BLOCK_UNTIL_EXACT_ASSEMBLED_PI32_BYTES_FIT_178_BYTES",
+    "reason": "The current exact PASS producer already consumes 148 of the 178 owned bytes. The S1-C3 design needs slot-indexed addressing and a 16-slot completion rule not present in S1-C2. No exact assembled PI32 byte string is produced in this offline checkpoint, so firmware candidacy remains blocked rather than inferred from pseudocode."
+  },
+  "related_input_hashes": {
+    "data_model_report": "cb56e93fdaa355a21ab2c3e59ba778ec13a45647eaac98a654b19df82288df24",
+    "s1c2_executable_placement_report": "9420aac5108549d10fb0a39dc8ce894eedb233e0cb96113e2756621f433050d0",
+    "s1c2_extended_producer_report": "bc25c10cfbbd2fa7e5f41d64b3b255d6c5e5caacdd978a410f39dc1a450ab44f"
+  }
+}
