@@ -1,0 +1,3 @@
+S1-C3 16-slot functional skeleton input gate: BLOCK (expected until producer and packet PASS inputs exist)
+BLOCK_COMPACT_PRODUCER_PASS_INPUT_UNAVAILABLE=compact assembled producer PASS input is unavailable; current producer checkpoint is design-only and not firmware/live-authorizing
+BLOCK_16_PACKET_SET_PASS_INPUT_UNAVAILABLE=reviewed exact 16-packet PASS set is unavailable

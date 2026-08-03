@@ -1,0 +1,86 @@
+{
+  "artifact_policy": "app/FWSC/rollback/exact OTA/guarded sender are emitted only after all input gates PASS",
+  "blockers": [
+    {
+      "code": "BLOCK_COMPACT_PRODUCER_PASS_INPUT_UNAVAILABLE",
+      "gate": "compact-16-slot-producer",
+      "message": "compact assembled producer PASS input is unavailable; current producer checkpoint is design-only and not firmware/live-authorizing"
+    },
+    {
+      "code": "BLOCK_16_PACKET_SET_PASS_INPUT_UNAVAILABLE",
+      "gate": "exact-16-packet-set",
+      "message": "reviewed exact 16-packet PASS set is unavailable"
+    }
+  ],
+  "candidate_built": false,
+  "decision": "BLOCK",
+  "device_accessed": false,
+  "flash_performed": false,
+  "format": "smk37-v15-s1c3-16slot-functional-offline-skeleton-v1",
+  "input_gates": [
+    {
+      "app_hash": "c18ed6f4e8ba2c16b99c41e6264cc36804fb38d8800d03ec518ab6bd838a8d14",
+      "candidate_built": true,
+      "evidence_decision": "PASS",
+      "fwsc_hash": "2345102aadded732b13e22d1410d3f7b05f104ffc408bd1d6eba03ea2afc058c",
+      "live_pass_text_present": true,
+      "name": "exact-live-pass-s1c3-boundary-app",
+      "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-boundary-only/app.bin",
+      "status": "PASS"
+    },
+    {
+      "end_exclusive": "0x0201e19e",
+      "firmware_candidate": "BLOCK",
+      "live_code_hash": "894f61ee4eedb942b6653bd36dc72934d3719b54a9a413f6c94f29d0084f8ffc",
+      "name": "reviewed-96-byte-16-note-selector",
+      "path": "baselines/v15/analysis/patch-set-ui/s1c3/selector/selector.bin",
+      "raw_selector_design": "PASS",
+      "selector_hash": "ea2c76595a93cf2cf6a39236e09b749781e2721e3575d0c1b40194855cd4e915",
+      "selector_size": 96,
+      "start": "0x0201e13e",
+      "status": "PASS",
+      "validation_pass_text_present": true
+    },
+    {
+      "blocker_code": "BLOCK_COMPACT_PRODUCER_PASS_INPUT_UNAVAILABLE",
+      "current_design_verdict": {
+        "firmware_candidate_or_live_send": "BLOCK",
+        "offline_design": "PASS",
+        "summary": "The sequential 16-packet direct-product loader contract is safe as an offline design, but no S1-C3 firmware/live candidate is authorized because exact assembled PI32 bytes, executable placement, and enlarged heap-prefix headroom are not all proven."
+      },
+      "message": "compact assembled producer PASS input is unavailable; current producer checkpoint is design-only and not firmware/live-authorizing",
+      "name": "compact-16-slot-producer",
+      "required_files": [
+        "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional/inputs/producer/evidence.json",
+        "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional/inputs/producer/producer.bin"
+      ],
+      "status": "BLOCK"
+    },
+    {
+      "blocker_code": "BLOCK_16_PACKET_SET_PASS_INPUT_UNAVAILABLE",
+      "message": "reviewed exact 16-packet PASS set is unavailable",
+      "name": "exact-16-packet-set",
+      "required_files": [
+        "inputs/packets/slot00-note36-direct-product-163.bin",
+        "inputs/packets/slot01-note37-direct-product-163.bin",
+        "inputs/packets/slot02-note38-direct-product-163.bin",
+        "inputs/packets/slot03-note39-direct-product-163.bin",
+        "inputs/packets/slot04-note40-direct-product-163.bin",
+        "inputs/packets/slot05-note41-direct-product-163.bin",
+        "inputs/packets/slot06-note42-direct-product-163.bin",
+        "inputs/packets/slot07-note43-direct-product-163.bin",
+        "inputs/packets/slot08-note44-direct-product-163.bin",
+        "inputs/packets/slot09-note45-direct-product-163.bin",
+        "inputs/packets/slot10-note46-direct-product-163.bin",
+        "inputs/packets/slot11-note47-direct-product-163.bin",
+        "inputs/packets/slot12-note48-direct-product-163.bin",
+        "inputs/packets/slot13-note49-direct-product-163.bin",
+        "inputs/packets/slot14-note50-direct-product-163.bin",
+        "inputs/packets/slot15-note51-direct-product-163.bin"
+      ],
+      "required_manifest": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional/inputs/packets/packet-manifest.json",
+      "status": "BLOCK"
+    }
+  ],
+  "midi_transport_opened": false
+}
