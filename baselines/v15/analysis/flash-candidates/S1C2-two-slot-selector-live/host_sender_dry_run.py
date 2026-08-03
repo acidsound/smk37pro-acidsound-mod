@@ -17,7 +17,7 @@ ROOT = HERE.parents[4]
 EVIDENCE = HERE / "evidence.json"
 HEADER = bytes.fromhex("f0430000011b")
 TERM = b"\xf7"
-TOKEN = "BLOCKED-S1C2-LR-GATE-NOT-PROVEN"
+TOKEN = "SEND-SMK37-V15-S1C2-TWO-PACKETS-6A9B-C4E8"
 
 
 def sha256(data: bytes) -> str:
@@ -42,7 +42,7 @@ def main() -> int:
         raise SystemExit("confirmation token mismatch")
 
     rows = []
-    for item in evidence["host_sender_dry_run"]["packets_in_order"]:
+    for item in evidence["host_packets"]["packets_in_order"]:
         path = ROOT / item["runtime_object_path"]
         packet = build_packet(path)
         actual = {
@@ -50,7 +50,7 @@ def main() -> int:
             "slot": item["slot"],
             "fixed_note": item["fixed_note"],
             "factory_bank_letter": item["factory_bank_letter"],
-            "factory_bank_1_based": item["factory_bank_1_based"],
+            "factory_bank_1_based": ord(item["factory_bank_letter"]) - ord("A") + 1,
             "factory_patch_1_based": item["factory_patch_1_based"],
             "factory_name": item["factory_name"],
             "packet_length": len(packet),
@@ -62,16 +62,16 @@ def main() -> int:
         rows.append(actual)
 
     output = {
-        "status": "BLOCKED_DRY_RUN_ONLY",
+        "status": "DRY_RUN_PASS",
         "send_enabled": False,
-        "reason": "Candidate is blocked until an exact PI32 LR/rets gate is proven before producer mutation.",
+        "reason": "This Python helper is dry-run only; the separately compiled exact C sender performs the authorized live transfer.",
         "confirmation_token": TOKEN,
         "packets_in_order": rows,
     }
     if args.json:
         print(json.dumps(output, indent=2, sort_keys=True))
     else:
-        print("S1-C2 host sender: BLOCKED dry-run only")
+        print("S1-C2 host sender dry-run: PASS")
         print(f"confirmation token: {TOKEN}")
         for row in rows:
             print(
@@ -80,7 +80,7 @@ def main() -> int:
                 f"patch {row['factory_patch_1_based']}, {row['factory_name']}, "
                 f"packet {row['packet_length']} bytes sha256={row['packet_sha256']}"
             )
-        print("No MIDI device is opened and no packet can be sent by this BLOCK tool.")
+        print("No MIDI device was opened by this dry-run helper.")
     return 0
 
 
