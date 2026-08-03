@@ -1,0 +1,12 @@
+S1-C3 16-slot functional candidate build validation PASS
+S1-C3 16-slot functional release validation PASS
+app_sha256=7c672938023beee74d599f43ccd5c7642396b89819e929501274239aed5e5d4b
+package_sha256=0f1c4bf42329a0ca184ac38bb228195b239ed07820fcc0d39be352c2f15982b9
+ota_confirmation_token=INSTALL-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-0F1C4BF4
+sender_confirmation_token=SEND-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-1C923962-AFA89570-8A87A409-A5C086A7
+PASS gates=boundary_live_pass,selector_note_order_36_51,compact_producer_exact_bytes,bank_d_16_packet_set,rollback_reconstructs_official,exact_ota_check,exact_sender_dry_run
+PASS pad_permutation_scope=UI_ONLY; producer_selector_packet_order=note_order_36_51
+BLOCK device_access,flash_upload,reset,midi_transport,live_send_during_validation
+device_accessed=false
+midi_transport_opened=false
+flash_performed=false

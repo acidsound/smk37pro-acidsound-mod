@@ -1,0 +1,212 @@
+{
+  "blocked_from": [
+    "producer_order",
+    "selector_order",
+    "packet_send_order",
+    "runtime_slot_order"
+  ],
+  "format": "smk37-v15-s1c3-functional-physical-pad-permutation-ui-only-v1",
+  "note_order_invariant": "producer/selector/sender/packet manifest use slot = note - 36 for notes 36..51",
+  "pad_1_to_16_note_sequence": [
+    40,
+    41,
+    42,
+    43,
+    48,
+    49,
+    50,
+    51,
+    36,
+    37,
+    38,
+    39,
+    44,
+    45,
+    46,
+    47
+  ],
+  "pad_1_to_16_to_note_order_slot": [
+    4,
+    5,
+    6,
+    7,
+    12,
+    13,
+    14,
+    15,
+    0,
+    1,
+    2,
+    3,
+    8,
+    9,
+    10,
+    11
+  ],
+  "rows": [
+    {
+      "bank_letter": "D",
+      "midi_note": 40,
+      "midi_note_hex": "0x28",
+      "note_ordered_slot": 4,
+      "patch_1_based": 5,
+      "physical_pad_1_based": 1,
+      "slot_patch_name": "BASS SLAP"
+    },
+    {
+      "bank_letter": "D",
+      "midi_note": 41,
+      "midi_note_hex": "0x29",
+      "note_ordered_slot": 5,
+      "patch_1_based": 6,
+      "physical_pad_1_based": 2,
+      "slot_patch_name": "BEAMER 2"
+    },
+    {
+      "bank_letter": "D",
+      "midi_note": 42,
+      "midi_note_hex": "0x2a",
+      "note_ordered_slot": 6,
+      "patch_1_based": 7,
+      "physical_pad_1_based": 3,
+      "slot_patch_name": "Onglon"
+    },
+    {
+      "bank_letter": "D",
+      "midi_note": 43,
+      "midi_note_hex": "0x2b",
+      "note_ordered_slot": 7,
+      "patch_1_based": 8,
+      "physical_pad_1_based": 4,
+      "slot_patch_name": "SOFTSTEEL"
+    },
+    {
+      "bank_letter": "D",
+      "midi_note": 48,
+      "midi_note_hex": "0x30",
+      "note_ordered_slot": 12,
+      "patch_1_based": 13,
+      "physical_pad_1_based": 5,
+      "slot_patch_name": "HAND CLAP1"
+    },
+    {
+      "bank_letter": "D",
+      "midi_note": 49,
+      "midi_note_hex": "0x31",
+      "note_ordered_slot": 13,
+      "patch_1_based": 14,
+      "physical_pad_1_based": 6,
+      "slot_patch_name": "Mooger #1"
+    },
+    {
+      "bank_letter": "D",
+      "midi_note": 50,
+      "midi_note_hex": "0x32",
+      "note_ordered_slot": 14,
+      "patch_1_based": 15,
+      "physical_pad_1_based": 7,
+      "slot_patch_name": "Moog Solo2"
+    },
+    {
+      "bank_letter": "D",
+      "midi_note": 51,
+      "midi_note_hex": "0x33",
+      "note_ordered_slot": 15,
+      "patch_1_based": 16,
+      "physical_pad_1_based": 8,
+      "slot_patch_name": "Mooger Low"
+    },
+    {
+      "bank_letter": "D",
+      "midi_note": 36,
+      "midi_note_hex": "0x24",
+      "note_ordered_slot": 0,
+      "patch_1_based": 1,
+      "physical_pad_1_based": 9,
+      "slot_patch_name": "BUZZ BASS"
+    },
+    {
+      "bank_letter": "D",
+      "midi_note": 37,
+      "midi_note_hex": "0x25",
+      "note_ordered_slot": 1,
+      "patch_1_based": 2,
+      "physical_pad_1_based": 10,
+      "slot_patch_name": "Bang ?????"
+    },
+    {
+      "bank_letter": "D",
+      "midi_note": 38,
+      "midi_note_hex": "0x26",
+      "note_ordered_slot": 2,
+      "patch_1_based": 3,
+      "physical_pad_1_based": 11,
+      "slot_patch_name": "BASSE BIEN"
+    },
+    {
+      "bank_letter": "D",
+      "midi_note": 39,
+      "midi_note_hex": "0x27",
+      "note_ordered_slot": 3,
+      "patch_1_based": 4,
+      "physical_pad_1_based": 12,
+      "slot_patch_name": "BASS-THING"
+    },
+    {
+      "bank_letter": "D",
+      "midi_note": 44,
+      "midi_note_hex": "0x2c",
+      "note_ordered_slot": 8,
+      "patch_1_based": 9,
+      "physical_pad_1_based": 13,
+      "slot_patch_name": "BASS-ROADS"
+    },
+    {
+      "bank_letter": "D",
+      "midi_note": 45,
+      "midi_note_hex": "0x2d",
+      "note_ordered_slot": 9,
+      "patch_1_based": 10,
+      "physical_pad_1_based": 14,
+      "slot_patch_name": "E.ORGAN 1"
+    },
+    {
+      "bank_letter": "D",
+      "midi_note": 46,
+      "midi_note_hex": "0x2e",
+      "note_ordered_slot": 10,
+      "patch_1_based": 11,
+      "physical_pad_1_based": 15,
+      "slot_patch_name": "YEAAAHH"
+    },
+    {
+      "bank_letter": "D",
+      "midi_note": 47,
+      "midi_note_hex": "0x2f",
+      "note_ordered_slot": 11,
+      "patch_1_based": 12,
+      "physical_pad_1_based": 16,
+      "slot_patch_name": "HAND DRUM"
+    }
+  ],
+  "slot_0_to_15_physical_pad_sequence": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3,
+    4,
+    13,
+    14,
+    15,
+    16,
+    5,
+    6,
+    7,
+    8
+  ],
+  "source_commit": "2a23cf5017eff520f775e511f8d3d80e15163e7d",
+  "ui_only": true
+}
