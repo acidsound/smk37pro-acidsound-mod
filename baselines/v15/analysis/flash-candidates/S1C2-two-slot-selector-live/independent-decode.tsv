@@ -6,24 +6,24 @@ address	size	bytes	op	target	extra
 0x0201e1aa	2	f03d	add_imm8		{'address': 33677738, 'size': 2, 'bytes': 'f03d', 'op': 'add_imm8', 'dst': 0, 'imm_signed': -35}
 0x0201e1ac	4	80f84000	jne_imm7	33677872	{'address': 33677740, 'size': 4, 'bytes': '80f84000', 'op': 'jne_imm7', 'reg': 0, 'imm': 0, 'target': 33677872}
 0x0201e1b0	6	c0ffbd65c401	mov_imm32		{'address': 33677744, 'size': 6, 'bytes': 'c0ffbd65c401', 'op': 'mov_imm32', 'dst': 0, 'imm': 29648317}
-0x0201e1b6	4	2000b000	trylock		{'address': 33677750, 'size': 4, 'bytes': '2000b000', 'op': 'trylock', 'mutates': ['lock']}
+0x0201e1b6	4	2000b000	trylock		{'address': 33677750, 'size': 4, 'bytes': '2000b000', 'op': 'trylock', 'mutates': True}
 0x0201e1ba	4	40e83900	ifeq	33677872	{'address': 33677754, 'size': 4, 'bytes': '40e83900', 'op': 'ifeq', 'target': 33677872}
 0x0201e1be	2	2000	csync		{'address': 33677758, 'size': 2, 'bytes': '2000', 'op': 'csync'}
 0x0201e1c0	6	c5ffbc65c401	mov_imm32		{'address': 33677760, 'size': 6, 'bytes': 'c5ffbc65c401', 'op': 'mov_imm32', 'dst': 5, 'imm': 29648316}
 0x0201e1c6	2	5843	load_byte		{'address': 33677766, 'size': 2, 'bytes': '5843', 'op': 'load_byte', 'dst': 0, 'base': 5, 'offset': 3}
 0x0201e1c8	4	80f81100	jne_imm7	33677806	{'address': 33677768, 'size': 4, 'bytes': '80f81100', 'op': 'jne_imm7', 'reg': 0, 'imm': 0, 'target': 33677806}
 0x0201e1cc	2	4021	mov_imm8		{'address': 33677772, 'size': 2, 'bytes': '4021', 'op': 'mov_imm8', 'dst': 0, 'imm': 1}
-0x0201e1ce	2	d843	store_byte		{'address': 33677774, 'size': 2, 'bytes': 'd843', 'op': 'store_byte', 'src': 0, 'base': 5, 'offset': 3, 'mutates': ['state/slot/lock']}
+0x0201e1ce	2	d843	store_byte		{'address': 33677774, 'size': 2, 'bytes': 'd843', 'op': 'store_byte', 'src': 0, 'base': 5, 'offset': 3, 'mutates': True}
 0x0201e1d0	2	2000	csync		{'address': 33677776, 'size': 2, 'bytes': '2000', 'op': 'csync'}
 0x0201e1d2	2	4824	mov_imm8		{'address': 33677778, 'size': 2, 'bytes': '4824', 'op': 'mov_imm8', 'dst': 0, 'imm': 36}
-0x0201e1d4	2	d842	store_byte		{'address': 33677780, 'size': 2, 'bytes': 'd842', 'op': 'store_byte', 'src': 0, 'base': 5, 'offset': 2, 'mutates': ['state/slot/lock']}
+0x0201e1d4	2	d842	store_byte		{'address': 33677780, 'size': 2, 'bytes': 'd842', 'op': 'store_byte', 'src': 0, 'base': 5, 'offset': 2, 'mutates': True}
 0x0201e1d6	6	c0ff2065c401	mov_imm32		{'address': 33677782, 'size': 6, 'bytes': 'c0ff2065c401', 'op': 'mov_imm32', 'dst': 0, 'imm': 29648160}
 0x0201e1dc	2	4116	mov_reg		{'address': 33677788, 'size': 2, 'bytes': '4116', 'op': 'mov_reg', 'dst': 1, 'src': 4}
 0x0201e1de	2	623c	mov_imm8		{'address': 33677790, 'size': 2, 'bytes': '623c', 'op': 'mov_imm8', 'dst': 2, 'imm': 156}
-0x0201e1e0	6	80ffe8aa0200	call32	33852622	{'address': 33677792, 'size': 6, 'bytes': '80ffe8aa0200', 'op': 'call32', 'target': 33852622}
+0x0201e1e0	6	80ffe8aa0200	call32	33852622	{'address': 33677792, 'size': 6, 'bytes': '80ffe8aa0200', 'op': 'call32', 'target': 33852622, 'mutates': True}
 0x0201e1e6	2	2000	csync		{'address': 33677798, 'size': 2, 'bytes': '2000', 'op': 'csync'}
 0x0201e1e8	2	4021	mov_imm8		{'address': 33677800, 'size': 2, 'bytes': '4021', 'op': 'mov_imm8', 'dst': 0, 'imm': 1}
-0x0201e1ea	2	d840	store_byte		{'address': 33677802, 'size': 2, 'bytes': 'd840', 'op': 'store_byte', 'src': 0, 'base': 5, 'offset': 0, 'mutates': ['state/slot/lock']}
+0x0201e1ea	2	d840	store_byte		{'address': 33677802, 'size': 2, 'bytes': 'd840', 'op': 'store_byte', 'src': 0, 'base': 5, 'offset': 0, 'mutates': True}
 0x0201e1ec	2	049a	goto	33677858	{'address': 33677804, 'size': 2, 'bytes': '049a', 'op': 'goto', 'target': 33677858}
 0x0201e1ee	4	80f81802	jne_imm7	33677858	{'address': 33677806, 'size': 4, 'bytes': '80f81802', 'op': 'jne_imm7', 'reg': 0, 'imm': 1, 'target': 33677858}
 0x0201e1f2	2	5840	load_byte		{'address': 33677810, 'size': 2, 'bytes': '5840', 'op': 'load_byte', 'dst': 0, 'base': 5, 'offset': 0}
@@ -32,55 +32,22 @@ address	size	bytes	op	target	extra
 0x0201e1fc	2	6840	load_byte		{'address': 33677820, 'size': 2, 'bytes': '6840', 'op': 'load_byte', 'dst': 0, 'base': 6, 'offset': 0}
 0x0201e1fe	4	80f81000	jne_imm7	33677858	{'address': 33677822, 'size': 4, 'bytes': '80f81000', 'op': 'jne_imm7', 'reg': 0, 'imm': 0, 'target': 33677858}
 0x0201e202	2	482d	mov_imm8		{'address': 33677826, 'size': 2, 'bytes': '482d', 'op': 'mov_imm8', 'dst': 0, 'imm': 45}
-0x0201e204	2	e842	store_byte		{'address': 33677828, 'size': 2, 'bytes': 'e842', 'op': 'store_byte', 'src': 0, 'base': 6, 'offset': 2, 'mutates': ['state/slot/lock']}
+0x0201e204	2	e842	store_byte		{'address': 33677828, 'size': 2, 'bytes': 'e842', 'op': 'store_byte', 'src': 0, 'base': 6, 'offset': 2, 'mutates': True}
 0x0201e206	6	c0ffc065c401	mov_imm32		{'address': 33677830, 'size': 6, 'bytes': 'c0ffc065c401', 'op': 'mov_imm32', 'dst': 0, 'imm': 29648320}
 0x0201e20c	2	4116	mov_reg		{'address': 33677836, 'size': 2, 'bytes': '4116', 'op': 'mov_reg', 'dst': 1, 'src': 4}
 0x0201e20e	2	623c	mov_imm8		{'address': 33677838, 'size': 2, 'bytes': '623c', 'op': 'mov_imm8', 'dst': 2, 'imm': 156}
-0x0201e210	6	80ffb8aa0200	call32	33852622	{'address': 33677840, 'size': 6, 'bytes': '80ffb8aa0200', 'op': 'call32', 'target': 33852622}
+0x0201e210	6	80ffb8aa0200	call32	33852622	{'address': 33677840, 'size': 6, 'bytes': '80ffb8aa0200', 'op': 'call32', 'target': 33852622, 'mutates': True}
 0x0201e216	2	2000	csync		{'address': 33677846, 'size': 2, 'bytes': '2000', 'op': 'csync'}
 0x0201e218	2	4021	mov_imm8		{'address': 33677848, 'size': 2, 'bytes': '4021', 'op': 'mov_imm8', 'dst': 0, 'imm': 1}
-0x0201e21a	2	e840	store_byte		{'address': 33677850, 'size': 2, 'bytes': 'e840', 'op': 'store_byte', 'src': 0, 'base': 6, 'offset': 0, 'mutates': ['state/slot/lock']}
+0x0201e21a	2	e840	store_byte		{'address': 33677850, 'size': 2, 'bytes': 'e840', 'op': 'store_byte', 'src': 0, 'base': 6, 'offset': 0, 'mutates': True}
 0x0201e21c	2	2000	csync		{'address': 33677852, 'size': 2, 'bytes': '2000', 'op': 'csync'}
 0x0201e21e	2	4022	mov_imm8		{'address': 33677854, 'size': 2, 'bytes': '4022', 'op': 'mov_imm8', 'dst': 0, 'imm': 2}
-0x0201e220	2	d843	store_byte		{'address': 33677856, 'size': 2, 'bytes': 'd843', 'op': 'store_byte', 'src': 0, 'base': 5, 'offset': 3, 'mutates': ['state/slot/lock']}
+0x0201e220	2	d843	store_byte		{'address': 33677856, 'size': 2, 'bytes': 'd843', 'op': 'store_byte', 'src': 0, 'base': 5, 'offset': 3, 'mutates': True}
 0x0201e222	6	c0ffbd65c401	mov_imm32		{'address': 33677858, 'size': 6, 'bytes': 'c0ffbd65c401', 'op': 'mov_imm32', 'dst': 0, 'imm': 29648317}
 0x0201e228	2	2000	csync		{'address': 33677864, 'size': 2, 'bytes': '2000', 'op': 'csync'}
 0x0201e22a	2	4120	mov_imm8		{'address': 33677866, 'size': 2, 'bytes': '4120', 'op': 'mov_imm8', 'dst': 1, 'imm': 0}
-0x0201e22c	2	8940	store_byte		{'address': 33677868, 'size': 2, 'bytes': '8940', 'op': 'store_byte', 'src': 1, 'base': 0, 'offset': 0, 'mutates': ['state/slot/lock']}
+0x0201e22c	2	8940	store_byte		{'address': 33677868, 'size': 2, 'bytes': '8940', 'op': 'store_byte', 'src': 1, 'base': 0, 'offset': 0, 'mutates': True}
 0x0201e22e	2	2000	csync		{'address': 33677870, 'size': 2, 'bytes': '2000', 'op': 'csync'}
 0x0201e230	2	5904	pop_pc		{'address': 33677872, 'size': 2, 'bytes': '5904', 'op': 'pop_pc'}
 0x0201e232	2	7904	push		{'address': 33677874, 'size': 2, 'bytes': '7904', 'op': 'push'}
 0x0201e234	2	5904	pop_pc		{'address': 33677876, 'size': 2, 'bytes': '5904', 'op': 'pop_pc'}
-0x0201e13e	2	5316	mov_reg		{'address': 33677630, 'size': 2, 'bytes': '5316', 'op': 'mov_reg', 'dst': 3, 'src': 5}
-0x0201e140	2	0481	goto	33677636	{'address': 33677632, 'size': 2, 'bytes': '0481', 'op': 'goto', 'target': 33677636}
-0x0201e142	2	6316	mov_reg		{'address': 33677634, 'size': 2, 'bytes': '6316', 'op': 'mov_reg', 'dst': 3, 'src': 6}
-0x0201e144	2	7904	push		{'address': 33677636, 'size': 2, 'bytes': '7904', 'op': 'push'}
-0x0201e146	2	0416	mov_reg		{'address': 33677638, 'size': 2, 'bytes': '0416', 'op': 'mov_reg', 'dst': 4, 'src': 0}
-0x0201e148	2	9516	mov_reg		{'address': 33677640, 'size': 2, 'bytes': '9516', 'op': 'mov_reg', 'dst': 5, 'src': 9}
-0x0201e14a	4	85f82312	jne_imm7	33677716	{'address': 33677642, 'size': 4, 'bytes': '85f82312', 'op': 'jne_imm7', 'reg': 5, 'imm': 9, 'target': 33677716}
-0x0201e14e	6	c8ff2065c401	mov_imm32		{'address': 33677646, 'size': 6, 'bytes': 'c8ff2065c401', 'op': 'mov_imm32', 'dst': 8, 'imm': 29648160}
-0x0201e154	4	05e19c80	add_imm12		{'address': 33677652, 'size': 4, 'bytes': '05e19c80', 'op': 'add_imm12', 'dst': 5, 'src': 8, 'imm': 156}
-0x0201e158	2	5843	load_byte		{'address': 33677656, 'size': 2, 'bytes': '5843', 'op': 'load_byte', 'dst': 0, 'base': 5, 'offset': 3}
-0x0201e15a	4	80f80500	jne_imm7	33677672	{'address': 33677658, 'size': 4, 'bytes': '80f80500', 'op': 'jne_imm7', 'reg': 0, 'imm': 0, 'target': 33677672}
-0x0201e15e	2	5840	load_byte		{'address': 33677662, 'size': 2, 'bytes': '5840', 'op': 'load_byte', 'dst': 0, 'base': 5, 'offset': 0}
-0x0201e160	4	80f81802	jne_imm7	33677716	{'address': 33677664, 'size': 4, 'bytes': '80f81802', 'op': 'jne_imm7', 'reg': 0, 'imm': 1, 'target': 33677716}
-0x0201e164	2	8116	mov_reg		{'address': 33677668, 'size': 2, 'bytes': '8116', 'op': 'mov_reg', 'dst': 1, 'src': 8}
-0x0201e166	2	0496	goto	33677716	{'address': 33677670, 'size': 2, 'bytes': '0496', 'op': 'goto', 'target': 33677716}
-0x0201e168	4	80f81404	jne_imm7	33677716	{'address': 33677672, 'size': 4, 'bytes': '80f81404', 'op': 'jne_imm7', 'reg': 0, 'imm': 2, 'target': 33677716}
-0x0201e16c	2	5842	load_byte		{'address': 33677676, 'size': 2, 'bytes': '5842', 'op': 'load_byte', 'dst': 0, 'base': 5, 'offset': 2}
-0x0201e16e	2	3819	xor_r0		{'address': 33677678, 'size': 2, 'bytes': '3819', 'op': 'xor_r0', 'src': 3}
-0x0201e170	4	80f80500	jne_imm7	33677694	{'address': 33677680, 'size': 4, 'bytes': '80f80500', 'op': 'jne_imm7', 'reg': 0, 'imm': 0, 'target': 33677694}
-0x0201e174	2	5840	load_byte		{'address': 33677684, 'size': 2, 'bytes': '5840', 'op': 'load_byte', 'dst': 0, 'base': 5, 'offset': 0}
-0x0201e176	4	80f80d02	jne_imm7	33677716	{'address': 33677686, 'size': 4, 'bytes': '80f80d02', 'op': 'jne_imm7', 'reg': 0, 'imm': 1, 'target': 33677716}
-0x0201e17a	2	8116	mov_reg		{'address': 33677690, 'size': 2, 'bytes': '8116', 'op': 'mov_reg', 'dst': 1, 'src': 8}
-0x0201e17c	2	048b	goto	33677716	{'address': 33677692, 'size': 2, 'bytes': '048b', 'op': 'goto', 'target': 33677716}
-0x0201e17e	4	05e1a050	add_imm12		{'address': 33677694, 'size': 4, 'bytes': '05e1a050', 'op': 'add_imm12', 'dst': 5, 'src': 5, 'imm': 160}
-0x0201e182	2	5842	load_byte		{'address': 33677698, 'size': 2, 'bytes': '5842', 'op': 'load_byte', 'dst': 0, 'base': 5, 'offset': 2}
-0x0201e184	2	3819	xor_r0		{'address': 33677700, 'size': 2, 'bytes': '3819', 'op': 'xor_r0', 'src': 3}
-0x0201e186	4	80f80500	jne_imm7	33677716	{'address': 33677702, 'size': 4, 'bytes': '80f80500', 'op': 'jne_imm7', 'reg': 0, 'imm': 0, 'target': 33677716}
-0x0201e18a	2	5840	load_byte		{'address': 33677706, 'size': 2, 'bytes': '5840', 'op': 'load_byte', 'dst': 0, 'base': 5, 'offset': 0}
-0x0201e18c	4	80f80202	jne_imm7	33677716	{'address': 33677708, 'size': 4, 'bytes': '80f80202', 'op': 'jne_imm7', 'reg': 0, 'imm': 1, 'target': 33677716}
-0x0201e190	4	01e1a080	add_imm12		{'address': 33677712, 'size': 4, 'bytes': '01e1a080', 'op': 'add_imm12', 'dst': 1, 'src': 8, 'imm': 160}
-0x0201e194	2	4016	mov_reg		{'address': 33677716, 'size': 2, 'bytes': '4016', 'op': 'mov_reg', 'dst': 0, 'src': 4}
-0x0201e196	6	80ff32ab0200	call32	33852622	{'address': 33677718, 'size': 6, 'bytes': '80ff32ab0200', 'op': 'call32', 'target': 33852622}
-0x0201e19c	2	5904	pop_pc		{'address': 33677724, 'size': 2, 'bytes': '5904', 'op': 'pop_pc'}
