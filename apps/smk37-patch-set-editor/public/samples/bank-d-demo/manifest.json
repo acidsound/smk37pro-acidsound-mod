@@ -1,0 +1,118 @@
+{
+  "format": "smk37-v15-s1c3-web-sample-v1",
+  "title": "Bank D Demo",
+  "patches": [
+    {
+      "pad": 1,
+      "note": 40,
+      "name": "BASS SLAP",
+      "file": "pad01-note40-BASS_SLAP.syx",
+      "sha256": "41a76b356655afdb6cf908bb79e0852d5a5fca89dc2b8dff54e373873a221923"
+    },
+    {
+      "pad": 2,
+      "note": 41,
+      "name": "BEAMER 2",
+      "file": "pad02-note41-BEAMER_2.syx",
+      "sha256": "5848452d350417f97579be2d47ee599c32ebc625a8671a74e9cc4dda22535913"
+    },
+    {
+      "pad": 3,
+      "note": 42,
+      "name": "Onglon",
+      "file": "pad03-note42-Onglon.syx",
+      "sha256": "9d4fd8fc729b9c9c5914831feb88f832d46d91fdc10e91d8b44dfa7be49d0edf"
+    },
+    {
+      "pad": 4,
+      "note": 43,
+      "name": "SOFTSTEEL",
+      "file": "pad04-note43-SOFTSTEEL.syx",
+      "sha256": "126ec3edb97046bf0e9b53ad1fec0821e5fa00d95c9ae4465ec0a9e9fa9b8263"
+    },
+    {
+      "pad": 5,
+      "note": 48,
+      "name": "HAND CLAP1",
+      "file": "pad05-note48-HAND_CLAP1.syx",
+      "sha256": "b17ad799c88815af40438bcebcb446bb461863ccab4b0b7021efead3391b898e"
+    },
+    {
+      "pad": 6,
+      "note": 49,
+      "name": "Mooger #1",
+      "file": "pad06-note49-Mooger_1.syx",
+      "sha256": "854d7a9842f32b52b08a06c8433ed29f1908c4f36c1f330baa76688cd7df7448"
+    },
+    {
+      "pad": 7,
+      "note": 50,
+      "name": "Moog Solo2",
+      "file": "pad07-note50-Moog_Solo2.syx",
+      "sha256": "270ae3e713bd903582301a8de7fe09a3b4665b545864fd7b40c5091c1b71c12e"
+    },
+    {
+      "pad": 8,
+      "note": 51,
+      "name": "Mooger Low",
+      "file": "pad08-note51-Mooger_Low.syx",
+      "sha256": "69f62a092edff732cab1d89672daf3fee74dd9d7f5f6e0b60b3fda954f24e13a"
+    },
+    {
+      "pad": 9,
+      "note": 36,
+      "name": "BUZZ BASS",
+      "file": "pad09-note36-BUZZ_BASS.syx",
+      "sha256": "c288c109485721f7f41557c895569cbee519c05563d135b66f0e8011f0335f76"
+    },
+    {
+      "pad": 10,
+      "note": 37,
+      "name": "Bang ?????",
+      "file": "pad10-note37-Bang.syx",
+      "sha256": "97b697cbb341f98285dc78fab93ffa8f233c2fd1c3ec759f1dc1fd03daaadc78"
+    },
+    {
+      "pad": 11,
+      "note": 38,
+      "name": "BASSE BIEN",
+      "file": "pad11-note38-BASSE_BIEN.syx",
+      "sha256": "896b6c4268cb57defbe0102cf16f5fde6d439e766abc5456249e39c9c8ddc92f"
+    },
+    {
+      "pad": 12,
+      "note": 39,
+      "name": "BASS-THING",
+      "file": "pad12-note39-BASS-THING.syx",
+      "sha256": "efab2e0db1e444d4ab8e96cd7125825fdbd0445e3e05b8436ae7bbd2ae830364"
+    },
+    {
+      "pad": 13,
+      "note": 44,
+      "name": "BASS-ROADS",
+      "file": "pad13-note44-BASS-ROADS.syx",
+      "sha256": "3a26296424f7008978f152624237627b862cd3a3a07b55d5cb112867a7eee3bc"
+    },
+    {
+      "pad": 14,
+      "note": 45,
+      "name": "E.ORGAN 1",
+      "file": "pad14-note45-E.ORGAN_1.syx",
+      "sha256": "a1cc6a630ca9ba82d878042af2662e78e4db4935ff6e9bd9a4f9ff91493e47c1"
+    },
+    {
+      "pad": 15,
+      "note": 46,
+      "name": "YEAAAHH",
+      "file": "pad15-note46-YEAAAHH.syx",
+      "sha256": "3d2a225f55a2a6e31491135caa77a5d40862a2cbaea3f9be674becb68b415d4e"
+    },
+    {
+      "pad": 16,
+      "note": 47,
+      "name": "HAND DRUM",
+      "file": "pad16-note47-HAND_DRUM.syx",
+      "sha256": "6866b911f64f0efa8ec0672a3cc05e5a3921883824388641135c80feb0e4d7ce"
+    }
+  ]
+}
