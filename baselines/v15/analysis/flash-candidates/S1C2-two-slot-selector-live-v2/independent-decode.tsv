@@ -1,0 +1,13 @@
+address	size	bytes	op	detail
+0x0201e1a2	2	7904	push	save call return frame
+0x0201e1a4	2	0416	mov	r4 = staging pointer
+0x0201e1a6	2	9016	mov	r0 = r9
+0x0201e1a8	2	e020	add	r0 -= 0x80
+0x0201e1aa	2	f03d	add	r0 -= 0x23, so r0 == r9 - 0xa3
+0x0201e1ac	4	80f84000	jne_imm7	if r9 != 0xa3 branch to return before mutation
+0x0201e1b0	6	c0ffbd65c401	mov_imm32	r0 = lock byte 0x01c465bd
+0x0201e1b6	4	2000b000	trylock	first mutating/testset operation
+0x0201e1ba	4	40e83900	ifeq	failed trylock returns without clearing another lock
+0x0201e230	2	5904	pop_pc	main producer return
+0x0201e232	2	7904	push	segmented immediate-return stub
+0x0201e234	2	5904	pop_pc	segmented stub returns without mutation

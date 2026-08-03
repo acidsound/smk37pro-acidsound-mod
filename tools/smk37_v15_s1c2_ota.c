@@ -15,6 +15,7 @@ static const uint8_t PACKAGE_SHA256[SMK37_SHA256_LENGTH] = {
 static const char CONFIRM[] = "INSTALL-SMK37PRO-V15-S1C2-LIVE-V2-63E3CFA3";
 static const char DESCRIPTION[] =
     "SMK37ProMod v15 S1-C2 split-entry two-slot selector live v2";
+/* `check` is offline-only; `upload` is the only transport path and requires CONFIRM. */
 
 static int check_exact(const char *path) {
     struct smk37_fwsc firmware;
@@ -50,8 +51,7 @@ int main(int argc, char **argv) {
     if (argc == 6 && strcmp(argv[1], "upload") == 0 &&
         strcmp(argv[4], "--confirm") == 0) {
         return ota_upload_exact(
-            argv[2], argv[3], argv[5], 15, PACKAGE_SHA256, DESCRIPTION,
-            CONFIRM,
+            argv[2], argv[3], argv[5], PACKAGE_SHA256, DESCRIPTION, CONFIRM,
             "v15 S1-C2 live v2 installed; split-entry two-slot selector armed");
     }
     usage(argv[0]);
