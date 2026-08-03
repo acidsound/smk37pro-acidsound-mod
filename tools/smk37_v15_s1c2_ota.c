@@ -51,7 +51,7 @@ int main(int argc, char **argv) {
     if (argc == 6 && strcmp(argv[1], "upload") == 0 &&
         strcmp(argv[4], "--confirm") == 0) {
         return ota_upload_exact(
-            argv[2], argv[3], argv[5], PACKAGE_SHA256, DESCRIPTION, CONFIRM,
+            argv[2], argv[3], argv[5], 15, PACKAGE_SHA256, DESCRIPTION, CONFIRM,
             "v15 S1-C2 live v2 installed; split-entry two-slot selector armed");
     }
     usage(argv[0]);
