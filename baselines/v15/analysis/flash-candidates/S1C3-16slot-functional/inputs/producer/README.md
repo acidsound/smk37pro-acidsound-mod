@@ -1,8 +1,11 @@
-# Future S1-C3 producer input
+# S1-C3 compact producer PASS input
 
-Place only reviewed PASS compact producer inputs here:
+Status: **PASS** for offline functional integration.
 
-- `producer.bin`: exact assembled PI32 producer bytes for `0x0201e1a2..0x0201e254`.
-- `evidence.json`: PASS manifest with `producer.sha256`, `producer.entry`, and `producer.owned_end_exclusive`.
+- Source commit: `9f9b7d75358b8efcabfef25b1ed07af6cfec15ac` (`9f9b7d7`).
+- Source directory: `baselines/v15/analysis/patch-set-ui/s1c3/compact-producer`.
+- `producer.bin` SHA-256: `4e738a54dda52abd2ab816201ece7d1851215cba90268c14c535503b4ceb2460`.
+- Entry/range: `0x0201e1a2..0x0201e224`, inside owned window ending at `0x0201e254`.
+- Direct product callsite bytes: `bfea9bfe`; segmented product callsite bytes: `bfeac0fe`.
 
-Current repository producer evidence is design-only and remains BLOCK for firmware/live integration.
+No device, USB/MIDI transport, flash, reset, or live send was performed by this integration input.

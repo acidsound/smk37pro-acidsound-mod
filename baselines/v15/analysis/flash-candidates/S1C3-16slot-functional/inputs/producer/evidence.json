@@ -1,0 +1,167 @@
+{
+  "call_routes": {
+    "direct_product_callsite": {
+      "address": "0x0201e468",
+      "bytes": "bfea9bfe",
+      "target": "0x0201e1a2"
+    },
+    "direct_reload_intact": {
+      "address": "0x0201e46c",
+      "bytes": "bfeaf838"
+    },
+    "segmented_product_callsite": {
+      "address": "0x0201e49c",
+      "bytes": "bfeac0fe",
+      "target": "0x0201e220"
+    },
+    "segmented_reload_intact": {
+      "address": "0x0201e4a0",
+      "bytes": "bfeade38"
+    }
+  },
+  "contract_proof": {
+    "note_order": "host packet order maps slots 0..15 to notes 36..51",
+    "pre_mutation_gate": "length_reject_branch at 0x0201e1ac targets return 0x0201e21e before lock/testset/state/count/slot mutation unless r9 == 0xa3",
+    "publication_order": "clear valid, copy 0x9c, csync, valid=1, loaded_count=i+1; for slot15, csync and state=ARMED last",
+    "segmented_no_mutation": "segmented entry 0x0201e220 is push; pop only and has no store/testset/call",
+    "slot_formula": "slot_base = 0x01c46520 + loaded_count * 0xa0; valid = slot_base + 0x9c"
+  },
+  "device_accessed": false,
+  "flash_performed": false,
+  "format": "smk37-v15-s1c3-functional-compact-producer-input-v1",
+  "midi_transport_opened": false,
+  "note_order": "producer consumes direct product packets sequentially into slots 0..15; selector maps notes 36..51 to slots 0..15",
+  "producer": {
+    "end_exclusive": "0x0201e224",
+    "entry": "0x0201e1a2",
+    "file": "producer.bin",
+    "owned_end_exclusive": "0x0201e254",
+    "sha256": "4e738a54dda52abd2ab816201ece7d1851215cba90268c14c535503b4ceb2460",
+    "size": 130,
+    "spare_bytes": 48
+  },
+  "ram_layout": {
+    "base": "0x01c46520",
+    "loaded_count": "0x01c465be",
+    "lock": "0x01c465bd",
+    "slot_count": 16,
+    "slot_stride": "0x000000a0",
+    "slots": [
+      {
+        "note": 36,
+        "slot": 0,
+        "valid": "0x01c465bc",
+        "voice": "0x01c46520..0x01c465bc"
+      },
+      {
+        "note": 37,
+        "slot": 1,
+        "valid": "0x01c4665c",
+        "voice": "0x01c465c0..0x01c4665c"
+      },
+      {
+        "note": 38,
+        "slot": 2,
+        "valid": "0x01c466fc",
+        "voice": "0x01c46660..0x01c466fc"
+      },
+      {
+        "note": 39,
+        "slot": 3,
+        "valid": "0x01c4679c",
+        "voice": "0x01c46700..0x01c4679c"
+      },
+      {
+        "note": 40,
+        "slot": 4,
+        "valid": "0x01c4683c",
+        "voice": "0x01c467a0..0x01c4683c"
+      },
+      {
+        "note": 41,
+        "slot": 5,
+        "valid": "0x01c468dc",
+        "voice": "0x01c46840..0x01c468dc"
+      },
+      {
+        "note": 42,
+        "slot": 6,
+        "valid": "0x01c4697c",
+        "voice": "0x01c468e0..0x01c4697c"
+      },
+      {
+        "note": 43,
+        "slot": 7,
+        "valid": "0x01c46a1c",
+        "voice": "0x01c46980..0x01c46a1c"
+      },
+      {
+        "note": 44,
+        "slot": 8,
+        "valid": "0x01c46abc",
+        "voice": "0x01c46a20..0x01c46abc"
+      },
+      {
+        "note": 45,
+        "slot": 9,
+        "valid": "0x01c46b5c",
+        "voice": "0x01c46ac0..0x01c46b5c"
+      },
+      {
+        "note": 46,
+        "slot": 10,
+        "valid": "0x01c46bfc",
+        "voice": "0x01c46b60..0x01c46bfc"
+      },
+      {
+        "note": 47,
+        "slot": 11,
+        "valid": "0x01c46c9c",
+        "voice": "0x01c46c00..0x01c46c9c"
+      },
+      {
+        "note": 48,
+        "slot": 12,
+        "valid": "0x01c46d3c",
+        "voice": "0x01c46ca0..0x01c46d3c"
+      },
+      {
+        "note": 49,
+        "slot": 13,
+        "valid": "0x01c46ddc",
+        "voice": "0x01c46d40..0x01c46ddc"
+      },
+      {
+        "note": 50,
+        "slot": 14,
+        "valid": "0x01c46e7c",
+        "voice": "0x01c46de0..0x01c46e7c"
+      },
+      {
+        "note": 51,
+        "slot": 15,
+        "valid": "0x01c46f1c",
+        "voice": "0x01c46e80..0x01c46f1c"
+      }
+    ],
+    "state": "0x01c465bf",
+    "states": {
+      "ARMED": 2,
+      "EMPTY": 0,
+      "LOADING": 1
+    },
+    "voice_size": "0x0000009c"
+  },
+  "source": {
+    "commit": "9f9b7d75358b8efcabfef25b1ed07af6cfec15ac",
+    "evidence_sha256": "e6cbd92c7b1937f7c030a0c225ae35a07f5948cdbb993bac3ae188ab7459e76f",
+    "path": "baselines/v15/analysis/patch-set-ui/s1c3/compact-producer",
+    "producer_sha256": "4e738a54dda52abd2ab816201ece7d1851215cba90268c14c535503b4ceb2460"
+  },
+  "source_verdict": {
+    "exact_pi32_producer_bytes": "PASS",
+    "firmware_package_or_live_send": "BLOCK",
+    "summary": "Exact 130-byte compact PI32 producer plus segmented no-mutation entry fits 0x0201e1a2..0x0201e254 with 48 bytes spare. This artifact remains offline and does not authorize a firmware package or live send."
+  },
+  "status": "PASS"
+}

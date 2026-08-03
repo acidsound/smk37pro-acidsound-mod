@@ -1,3 +1,12 @@
-S1-C3 16-slot functional skeleton input gate: BLOCK (expected until producer and packet PASS inputs exist)
-BLOCK_COMPACT_PRODUCER_PASS_INPUT_UNAVAILABLE=compact assembled producer PASS input is unavailable; current producer checkpoint is design-only and not firmware/live-authorizing
-BLOCK_16_PACKET_SET_PASS_INPUT_UNAVAILABLE=reviewed exact 16-packet PASS set is unavailable
+S1-C3 16-slot functional candidate build validation PASS
+S1-C3 16-slot functional release validation PASS
+app_sha256=679c39612b8b16d8da5ec6500b10ff6ed638b492e585c815f0a0883781118ee7
+package_sha256=ff56a56dc464390394a2a3a5b4b15f50f9f765a67a6cd08c95281270df7d37c4
+ota_confirmation_token=INSTALL-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-FF56A56D
+sender_confirmation_token=SEND-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-1C923962-AFA89570-8A87A409-A5C086A7
+PASS gates=boundary_live_pass,selector_note_order_36_51,compact_producer_exact_bytes,bank_d_16_packet_set,rollback_reconstructs_official,exact_ota_check,exact_sender_dry_run
+PASS pad_permutation_scope=UI_ONLY; producer_selector_packet_order=note_order_36_51
+BLOCK device_access,flash_upload,reset,midi_transport,live_send_during_validation
+device_accessed=false
+midi_transport_opened=false
+flash_performed=false
