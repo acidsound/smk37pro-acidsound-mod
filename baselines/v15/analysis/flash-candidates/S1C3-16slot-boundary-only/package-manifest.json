@@ -1,0 +1,174 @@
+{
+  "changes": {
+    "app_byte_count": 262,
+    "app_ranges": [
+      {
+        "end_exclusive": 34,
+        "start": 32
+      },
+      {
+        "end_exclusive": 116291,
+        "start": 116288
+      },
+      {
+        "end_exclusive": 116353,
+        "start": 116350
+      },
+      {
+        "end_exclusive": 123224,
+        "start": 123198
+      },
+      {
+        "end_exclusive": 123231,
+        "start": 123225
+      },
+      {
+        "end_exclusive": 123245,
+        "start": 123232
+      },
+      {
+        "end_exclusive": 123319,
+        "start": 123246
+      },
+      {
+        "end_exclusive": 123389,
+        "start": 123320
+      },
+      {
+        "end_exclusive": 123397,
+        "start": 123390
+      },
+      {
+        "end_exclusive": 123446,
+        "start": 123398
+      },
+      {
+        "end_exclusive": 124011,
+        "start": 124010
+      },
+      {
+        "end_exclusive": 124063,
+        "start": 124062
+      },
+      {
+        "end_exclusive": 159146,
+        "start": 159142
+      },
+      {
+        "end_exclusive": 159152,
+        "start": 159148
+      },
+      {
+        "end_exclusive": 387580,
+        "start": 387578
+      }
+    ],
+    "flash_byte_count_including_crc_fields": 270,
+    "flash_ranges": [
+      {
+        "end_exclusive": 16388,
+        "start": 16384
+      },
+      {
+        "end_exclusive": 16420,
+        "start": 16416
+      },
+      {
+        "end_exclusive": 16706,
+        "start": 16704
+      },
+      {
+        "end_exclusive": 132963,
+        "start": 132960
+      },
+      {
+        "end_exclusive": 133025,
+        "start": 133022
+      },
+      {
+        "end_exclusive": 139896,
+        "start": 139870
+      },
+      {
+        "end_exclusive": 139903,
+        "start": 139897
+      },
+      {
+        "end_exclusive": 139917,
+        "start": 139904
+      },
+      {
+        "end_exclusive": 139991,
+        "start": 139918
+      },
+      {
+        "end_exclusive": 140061,
+        "start": 139992
+      },
+      {
+        "end_exclusive": 140069,
+        "start": 140062
+      },
+      {
+        "end_exclusive": 140118,
+        "start": 140070
+      },
+      {
+        "end_exclusive": 140683,
+        "start": 140682
+      },
+      {
+        "end_exclusive": 140735,
+        "start": 140734
+      },
+      {
+        "end_exclusive": 175818,
+        "start": 175814
+      },
+      {
+        "end_exclusive": 175824,
+        "start": 175820
+      },
+      {
+        "end_exclusive": 404252,
+        "start": 404250
+      }
+    ],
+    "fwsc_byte_count": 276,
+    "ota_payload_byte_count_including_wrapper_crc_fields": 276
+  },
+  "format": "smk37-v15-application-only-patch-v1",
+  "input": {
+    "app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "payload_sha256": "141f8b1780b18c0cddc4bdcfbe13690029804a5b0021f92869ec756c2f2d3ad9",
+    "sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "size": 701140
+  },
+  "layout": {
+    "app_area_end_exclusive": 634067,
+    "app_area_start": 16384,
+    "app_data_size": 617012,
+    "app_data_start": 16672,
+    "ufw_flash_offset": 1024,
+    "ufw_flash_size": 638976
+  },
+  "output": {
+    "app_sha256": "c18ed6f4e8ba2c16b99c41e6264cc36804fb38d8800d03ec518ab6bd838a8d14",
+    "payload_sha256": "2105f75a91feed4c22918551752dd8e8cc76709b208be24a06269e6a98ccc078",
+    "sha256": "2345102aadded732b13e22d1410d3f7b05f104ffc408bd1d6eba03ea2afc058c",
+    "size": 701140
+  },
+  "protected_flash_hashes_after": {
+    "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+    "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+    "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+    "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+  },
+  "protected_flash_hashes_before": {
+    "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+    "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+    "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+    "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+  },
+  "safety_gate": "PASS"
+}
