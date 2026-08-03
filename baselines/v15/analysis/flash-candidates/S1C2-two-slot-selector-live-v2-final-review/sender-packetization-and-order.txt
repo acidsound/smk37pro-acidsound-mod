@@ -1,0 +1,9 @@
+slot0_usb_midi_sha256=2a355aebde158078d6a406920efa8c28ea9a02d43dbefe2f459111332c653ba8
+slot1_usb_midi_sha256=78fb13023a945758856bff84afe55cbef0f9449c90648894751e1ac9d5153828
+events_per_packet=55
+continuation_events=54
+final_event=05f70000
+sent exact S1-C2 slot0 note36 packet: 220 USB-MIDI bytes
+sent exact S1-C2 slot1 note45 packet: 220 USB-MIDI bytes
+stubbed_bulk_transfer_order=slot0,slot1
+bulk_transfer_calls=2

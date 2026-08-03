@@ -1,0 +1,43 @@
+S1-C2 live v2 uploader live-path verification
+Reviewed commit: 0f2c1f4acd76504b31b6fb624ec619110d0d611d
+Result: BLOCK
+
+Exact source conflict
+
+1. tools/smk37_v15_s1c2_ota.c:27-28 accepts the candidate offline only when:
+   firmware.name == "SMK-37 Pro" and firmware.version == 15 and SHA-256 is exact.
+
+2. tools/smk37_v15_s1c2_ota.c:51-55 routes upload mode to ota_upload_exact(...).
+
+3. src/ota.c:642-644 calls validate_exact_same_version(...).
+
+4. src/ota.c:513-520 rejects unless firmware.version == 12:
+
+   if (strcmp(firmware->name, "SMK-37 Pro") != 0 ||
+       firmware->version != 12 ||
+       memcmp(firmware->file_sha256, expected_sha256,
+              SMK37_SHA256_LENGTH) != 0) {
+       fprintf(stderr, "package is not the exact %s image\n",
+               package_description);
+       return 1;
+   }
+
+5. The device-read call is later at src/ota.c:521. Therefore the version-12 rejection is provably before any device access.
+
+Safe offline confirmation
+
+Command:
+
+  build/smk37-v15-s1c2-ota upload \
+    SMK37Pro-v15-S1C2-two-slot-selector-live-v2.fwsc \
+    should-not-exist-upload.txt \
+    --confirm INSTALL-SMK37PRO-V15-S1C2-LIVE-V2-63E3CFA3
+
+Output:
+
+  package is not the exact SMK37ProMod v15 S1-C2 split-entry two-slot selector live v2 image
+  exit=1
+  transcript_created=no
+  device_access_reached=no
+
+The exact candidate passes `check`, but the exact candidate cannot pass the live uploader's preflight. The tool is therefore not a working v15 uploader at this commit.

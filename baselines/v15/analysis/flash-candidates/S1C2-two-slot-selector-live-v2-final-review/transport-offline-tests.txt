@@ -1,0 +1,80 @@
+
+== uploader accepts exact candidate offline ==
+exact v15 S1-C2 live v2 package: PASS (701120-byte OTA payload)
+exit=0 expected=0
+
+== uploader rejects official v15 noncandidate hash ==
+offline check rejected: not exact S1-C2 live v2 package
+exit=1 expected=1
+
+== uploader rejects one-byte-mutated candidate ==
+offline check rejected: not exact S1-C2 live v2 package
+exit=1 expected=1
+
+== uploader rejects truncated candidate ==
+offline check rejected: not exact S1-C2 live v2 package
+exit=1 expected=1
+
+== uploader rejects unsupported mode without transport ==
+usage:
+  /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/bin/smk37-v15-s1c2-ota check <fwsc>
+  /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/bin/smk37-v15-s1c2-ota upload <fwsc> <transcript> --confirm INSTALL-SMK37PRO-V15-S1C2-LIVE-V2-63E3CFA3
+exit=2 expected=2
+
+== sender accepts exact slot0 then slot1 dry-run ==
+S1-C2 live v2 sender dry-run PASS: slot0 note36 then slot1 note45, each 163 SysEx bytes -> 220 USB-MIDI bytes
+exit=0 expected=0
+
+== sender rejects reversed packet order ==
+S1-C2 slot0 note36 packet SHA-256 mismatch
+usage:
+  /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/bin/smk37-v15-s1c2-send dry-run <slot0-note36-163.bin> <slot1-note45-163.bin>
+  /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/bin/smk37-v15-s1c2-send send <slot0-note36-163.bin> <slot1-note45-163.bin> --confirm SEND-SMK37PRO-V15-S1C2-LIVE-V2-6A9B4097-C4E8458E
+exit=2 expected=2
+
+== sender rejects short slot0 ==
+S1-C2 packet must be exactly 163 bytes: /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/fixtures/slot0-note36-direct-product-163.bin.short
+usage:
+  /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/bin/smk37-v15-s1c2-send dry-run <slot0-note36-163.bin> <slot1-note45-163.bin>
+  /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/bin/smk37-v15-s1c2-send send <slot0-note36-163.bin> <slot1-note45-163.bin> --confirm SEND-SMK37PRO-V15-S1C2-LIVE-V2-6A9B4097-C4E8458E
+exit=2 expected=2
+
+== sender rejects long slot0 ==
+S1-C2 packet has trailing bytes: /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/fixtures/slot0-note36-direct-product-163.bin.long
+usage:
+  /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/bin/smk37-v15-s1c2-send dry-run <slot0-note36-163.bin> <slot1-note45-163.bin>
+  /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/bin/smk37-v15-s1c2-send send <slot0-note36-163.bin> <slot1-note45-163.bin> --confirm SEND-SMK37PRO-V15-S1C2-LIVE-V2-6A9B4097-C4E8458E
+exit=2 expected=2
+
+== sender rejects mutated slot0 ==
+S1-C2 slot0 note36 packet SHA-256 mismatch
+usage:
+  /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/bin/smk37-v15-s1c2-send dry-run <slot0-note36-163.bin> <slot1-note45-163.bin>
+  /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/bin/smk37-v15-s1c2-send send <slot0-note36-163.bin> <slot1-note45-163.bin> --confirm SEND-SMK37PRO-V15-S1C2-LIVE-V2-6A9B4097-C4E8458E
+exit=2 expected=2
+
+== sender rejects bad-header slot0 ==
+S1-C2 slot0 note36 packet framing mismatch
+usage:
+  /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/bin/smk37-v15-s1c2-send dry-run <slot0-note36-163.bin> <slot1-note45-163.bin>
+  /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/bin/smk37-v15-s1c2-send send <slot0-note36-163.bin> <slot1-note45-163.bin> --confirm SEND-SMK37PRO-V15-S1C2-LIVE-V2-6A9B4097-C4E8458E
+exit=2 expected=2
+
+== sender rejects bad-terminator slot0 ==
+S1-C2 slot0 note36 packet framing mismatch
+usage:
+  /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/bin/smk37-v15-s1c2-send dry-run <slot0-note36-163.bin> <slot1-note45-163.bin>
+  /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/bin/smk37-v15-s1c2-send send <slot0-note36-163.bin> <slot1-note45-163.bin> --confirm SEND-SMK37PRO-V15-S1C2-LIVE-V2-6A9B4097-C4E8458E
+exit=2 expected=2
+
+== sender send mode rejects missing confirmation before device access ==
+usage:
+  /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/bin/smk37-v15-s1c2-send dry-run <slot0-note36-163.bin> <slot1-note45-163.bin>
+  /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/bin/smk37-v15-s1c2-send send <slot0-note36-163.bin> <slot1-note45-163.bin> --confirm SEND-SMK37PRO-V15-S1C2-LIVE-V2-6A9B4097-C4E8458E
+exit=2 expected=2
+
+== sender send mode rejects wrong confirmation before device access ==
+usage:
+  /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/bin/smk37-v15-s1c2-send dry-run <slot0-note36-163.bin> <slot1-note45-163.bin>
+  /Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj/.final-review-results/bin/smk37-v15-s1c2-send send <slot0-note36-163.bin> <slot1-note45-163.bin> --confirm SEND-SMK37PRO-V15-S1C2-LIVE-V2-6A9B4097-C4E8458E
+exit=2 expected=2

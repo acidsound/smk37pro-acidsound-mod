@@ -1,0 +1,41 @@
+{
+  "status": "BLOCK",
+  "reviewed_commit": "0f2c1f4acd76504b31b6fb624ec619110d0d611d",
+  "scope": "isolated git archive; offline only; no device, USB, MIDI, OTA, flash, or reset action",
+  "blockers": [
+    {
+      "id": "uploader-version-gate",
+      "summary": "The exact v15 package passes offline check but the live upload path rejects it because validate_exact_same_version hardcodes firmware version 12.",
+      "evidence": [
+        "tools/smk37_v15_s1c2_ota.c:27-28 requires version 15 for check",
+        "tools/smk37_v15_s1c2_ota.c:51-55 calls ota_upload_exact for upload",
+        "src/ota.c:513-520 rejects firmware.version != 12",
+        "src/ota.c:521 device identity call is not reached",
+        "safe exact upload invocation exited 1 and created no transcript"
+      ]
+    }
+  ],
+  "passing_checks": {
+    "candidate_sha256_ledger": "31 of 31 entries match",
+    "deterministic_rebuild": "PASS; two rebuilds matched and regenerated artifacts were byte-identical to commit",
+    "candidate_app_sha256": "4afd13d7301c2ae209c11d3fe932d019faa770b551f2d8a38cf4c018c7aafa8a",
+    "candidate_fwsc_sha256": "63e3cfa39473df08bd225df2c8ae81dbfe7aafbd31da6cc6dcf64ca03453681e",
+    "selector": "96 bytes, 33 fully decoded instructions, SHA-256 adb8774971811f6dbdce8b7338f2265f18b8bb22544ccab746e74610366d4e35",
+    "producer": "148 bytes, 52 fully decoded instructions, SHA-256 a05e79c0b46e1e12b1244af3f49866c911fcc41937bc14196825d3080d780784",
+    "route_gates": {
+      "note_off": "0x0201c63e -> 0x0201e13e",
+      "note_on": "0x0201c67c -> 0x0201e142",
+      "direct_product": "0x0201e468 -> 0x0201e1a2",
+      "segmented_product": "0x0201e49c -> 0x0201e232 immediate return",
+      "direct_length_gate": "r9 - 0xa3 branch at 0x0201e1ac returns before first mutation at 0x0201e1b6"
+    },
+    "changed_flash_bytes": 270,
+    "changed_sectors": ["0x04000", "0x20000", "0x22000", "0x2a000", "0x62000"],
+    "protected_prefix": "0x0000..0x3fff byte-identical to official v15",
+    "rollback": "five exact official sectors reconstruct official flash f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a and official app 36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "uploader_offline_check": "exact candidate accepted; official v15, mutated, truncated, and unsupported mode rejected",
+    "sender_offline_accept_reject": "exact ordered pair accepted; reversed, short, long, mutated, bad header, bad terminator, missing confirmation, and wrong confirmation rejected",
+    "sender_packetization": "each 163-byte SysEx becomes 55 USB-MIDI events / 220 bytes: 54 CIN 0x04 events then 05f70000",
+    "sender_order": "stubbed libusb observed exactly slot0 then slot1"
+  }
+}

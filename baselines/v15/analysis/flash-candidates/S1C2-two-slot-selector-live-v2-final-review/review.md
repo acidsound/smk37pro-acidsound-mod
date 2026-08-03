@@ -1,165 +1,158 @@
-# Independent final review: S1-C2 two-slot selector live v2 at `3d749c2`
+# Independent final review of exact `0f2c1f4` S1-C2 live v2
 
 Date: 2026-08-03 UTC
 
-Reviewed commit: `3d749c277011a58f7cd275ad4a42c0e124d09a5f`
+Reviewed commit: `0f2c1f4acd76504b31b6fb624ec619110d0d611d`
 
-Scope: `baselines/v15/analysis/flash-candidates/S1C2-two-slot-selector-live-v2/`, committed exact transport tools under `tools/`, and their committed support sources. The working tree was dirty and later advanced to another commit while I was working, so I validated an isolated `git archive 3d749c277011a58f7cd275ad4a42c0e124d09a5f` materialization under scratch. I did not access a device, flash, reset, OTA transport, live MIDI transport, or the network.
+Decision: **BLOCK**
 
-## Decision
+## Scope and isolation
+
+I reviewed a `git archive 0f2c1f4` materialization at `/Users/spectrum/.jcode/scratch/s1c2-v2-final-review-0f2c1f4.bVQLcj`, not the concurrently modified working tree. All executed paths were offline. I did not open a device, USB interface, MIDI interface, OTA session, flash path, or reset path.
+
+Only review artifacts under this directory are included in the review commit.
+
+## Blocking defect
+
+The v2 candidate package and sender pass their offline and byte-level checks, but the committed live uploader cannot accept the exact v15 candidate in `upload` mode.
+
+- `tools/smk37_v15_s1c2_ota.c:27-28` correctly accepts version `15` in `check_exact` when the package SHA-256 is exact.
+- `tools/smk37_v15_s1c2_ota.c:51-55` sends live `upload` mode to `ota_upload_exact`.
+- `src/ota.c:642-644` calls `validate_exact_same_version`.
+- `src/ota.c:513-520` rejects every firmware whose version is not `12`.
+- The device identity read is later at `src/ota.c:521`, so the exact v15 rejection happens before device access.
+
+A safe invocation with the exact package and exact confirmation token produced:
+
+```text
+package is not the exact SMK37ProMod v15 S1-C2 split-entry two-slot selector live v2 image
+exit=1
+transcript_created=no
+device_access_reached=no
+```
+
+Therefore the claimed v15 live uploader is not live-usable at this commit. This is an explicit BLOCK for the requested uploader exact accept/reject requirement.
+
+Full evidence: [`uploader-live-path-block.txt`](uploader-live-path-block.txt).
+
+## Passing firmware and package checks
+
+### Deterministic rebuild and SHA ledgers
+
+- All `31` committed `SHA256SUMS` entries pass.
+- The committed `validate.py` passes from the isolated archive.
+- `build_s1c2_two_slot_selector_live.py --determinism-check` completes successfully.
+- Its two internal rebuilds are identical.
+- Every generated app, FWSC, manifest, decode, packet, report, and rollback-sector artifact compared was byte-identical to the committed candidate.
+- The regenerated output ledger passes.
+
+Pinned outputs:
+
+- App SHA-256: `4afd13d7301c2ae209c11d3fe932d019faa770b551f2d8a38cf4c018c7aafa8a`
+- FWSC SHA-256: `63e3cfa39473df08bd225df2c8ae81dbfe7aafbd31da6cc6dcf64ca03453681e`
+- Selector SHA-256: `adb8774971811f6dbdce8b7338f2265f18b8bb22544ccab746e74610366d4e35`
+- Producer SHA-256: `a05e79c0b46e1e12b1244af3f49866c911fcc41937bc14196825d3080d780784`
+
+Full evidence: [`deterministic-rebuild-and-ledgers.txt`](deterministic-rebuild-and-ledgers.txt).
+
+### Independent PI32 selector decode
+
+The independent decoder consumed the complete `96`-byte selector as `33` instructions with no undecoded bytes.
+
+Verified route and policy behavior:
+
+- Note Off adapter at `0x0201e13e` normalizes `r5` into `r3`.
+- Note On adapter at `0x0201e142` normalizes `r6` into `r3`.
+- Non-Ch10, invalid/LOADING state, invalid selected slots, and unmatched notes branch to common fallback copy at `0x0201e194`.
+- ARMED slot0 miss advances to the slot1 test.
+- Slot0 and slot1 accepted paths reach the common copy.
+- The shared call at `0x0201e196` targets `memcpy` at `0x02048cce`.
+- The selector returns at `0x0201e19c`.
+
+Exact hook targets:
+
+- Note Off `0x0201c63e -> 0x0201e13e`
+- Note On `0x0201c67c -> 0x0201e142`
+
+Full decode: [`pi32-selector-decode.tsv`](pi32-selector-decode.tsv).
+
+### Independent PI32 producer decode and route gates
+
+The independent decoder consumed the complete `148`-byte producer/stub as `52` instructions with no undecoded bytes.
+
+Verified gates and publication order:
+
+- `r9` is copied to `r0` at `0x0201e1a6`.
+- Subtractions `-0x80` and `-0x23` compute `r9 - 0xa3`.
+- The branch at `0x0201e1ac` returns at `0x0201e230` when the length is wrong.
+- The first memory-mutating operation is the try-lock at `0x0201e1b6`, after the length gate.
+- Failed try-lock returns without clearing another lock.
+- First publication stores LOADING before slot0 copy and `valid0` after the copy/barrier.
+- Second publication stores `valid1` before the final ARMED state.
+- Nonloading, missing-valid0, already-valid1, and post-armed paths reach unlock without another slot publication.
+- Both copy calls target `memcpy` at `0x02048cce`.
+- The segmented stub at `0x0201e232` is exactly push then pop-return with no mutation.
+
+Product routes:
+
+- Direct `0x0201e468 -> 0x0201e1a2`
+- Segmented `0x0201e49c -> 0x0201e232`
+- Direct reload `0x0201e46c` remains `bfeaf838`.
+- Segmented reload `0x0201e4a0` remains `bfeade38`.
+- Official handler bytes at `0x0201e254..0x0201e273` remain parent-exact.
+
+Full decode: [`pi32-producer-decode.tsv`](pi32-producer-decode.tsv).
+
+### Changed sectors, protected prefix, and rollback
+
+Independent FWSC extraction found exactly `270` changed flash bytes in exactly these five 8 KiB sectors:
+
+- `0x04000`
+- `0x20000`
+- `0x22000`
+- `0x2a000`
+- `0x62000`
+
+The protected flash prefix `0x0000..0x3fff` is byte-identical to official v15.
+
+Each rollback sector is exactly the corresponding official-v15 sector. Applying all five to the candidate reconstructs:
+
+- Official flash SHA-256: `f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a`
+- Official app SHA-256: `36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055`
+
+The reconstructed flash and app are byte-for-byte exact official v15.
+
+Structured evidence: [`independent-verification.json`](independent-verification.json).
+
+## Passing sender checks
+
+The exact C sender compiled with strict warnings enabled.
+
+Offline accept/reject matrix:
+
+- Accepts only slot0 packet then slot1 packet in `dry-run` mode.
+- Rejects reversed order.
+- Rejects short, long, content-mutated, bad-header, and bad-terminator packet fixtures.
+- Rejects `send` with missing or wrong confirmation before `send_pair` can be called.
+
+A separate harness replaced every libusb function with local stubs. It verified the exact packet buffers and observed no hardware:
+
+- Each `163`-byte SysEx becomes `55` USB-MIDI events and `220` bytes.
+- Events `0..53` use CIN `0x04` with three source bytes each.
+- Final event is exactly `05f70000`.
+- Reconstructing the SysEx from events returns the exact original packet.
+- Stubbed bulk transfer order is exactly slot0, then slot1.
+- Slot0 USB-MIDI SHA-256: `2a355aebde158078d6a406920efa8c28ea9a02d43dbefe2f459111332c653ba8`
+- Slot1 USB-MIDI SHA-256: `78fb13023a945758856bff84afe55cbef0f9449c90648894751e1ac9d5153828`
+
+Evidence:
+
+- [`transport-offline-tests.txt`](transport-offline-tests.txt)
+- [`sender-packetization-and-order.txt`](sender-packetization-and-order.txt)
+- [`sender_packetization_harness.c`](sender_packetization_harness.c)
+
+## Overall decision
 
 **BLOCK**
 
-The candidate app/package artifacts and Python validators are reproducible and internally consistent, but the requested exact OTA live transport tool is not buildable from commit `3d749c2`. That blocks a self-contained live v2 candidate with exact transport tools.
-
-## Blocking finding
-
-### Exact OTA transport tool does not compile from committed sources
-
-Command run inside an archived copy of `3d749c277011a58f7cd275ad4a42c0e124d09a5f`:
-
-```sh
-cc -O2 -g -std=c11 -Wall -Wextra -Wpedantic -Isrc \
-  tools/smk37_v15_s1c2_ota.c \
-  src/device_info.c src/fwsc.c src/protocol.c src/sha256.c src/usb_probe.c \
-  -o "$SCRATCH/bin/smk37-v15-s1c2-ota" \
-  $(pkg-config --cflags --libs libusb-1.0)
-```
-
-Compiler result:
-
-```text
-tools/smk37_v15_s1c2_ota.c:55:13: error: too many arguments to function call, expected 7, have 8
-   53 |         return ota_upload_exact(
-      |                ~~~~~~~~~~~~~~~~
-   54 |             argv[2], argv[3], argv[5], 15, PACKAGE_SHA256, DESCRIPTION, CONFIRM,
-   55 |             "v15 S1-C2 live v2 installed; split-entry two-slot selector armed");
-      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-tools/../src/ota.c:623:12: note: 'ota_upload_exact' declared here
-```
-
-Static source mismatch in the same archived commit:
-
-```text
-src/ota.c:
-623 static int ota_upload_exact(
-624     const char *firmware_path, const char *transcript_path,
-625     const char *confirmation,
-626     const uint8_t expected_sha256[SMK37_SHA256_LENGTH],
-627     const char *package_description, const char *expected_confirmation,
-628     const char *completion_message)
-
-tools/smk37_v15_s1c2_ota.c:
-return ota_upload_exact(
-    argv[2], argv[3], argv[5], 15, PACKAGE_SHA256, DESCRIPTION, CONFIRM,
-    "v15 S1-C2 live v2 installed; split-entry two-slot selector armed");
-```
-
-Because the exact OTA tool cannot compile, I could not execute its offline `check` accept/reject path at the reviewed commit. This fails the requested exact OTA accept/reject and exact transport-tool criteria.
-
-## Positive checks completed before the block
-
-These checks reduce ambiguity but do not clear the OTA transport blocker.
-
-### Self-contained archive and checksum ledger
-
-- `git archive 3d749c277011a58f7cd275ad4a42c0e124d09a5f` materialized successfully.
-- `shasum -a 256 -c SHA256SUMS` passed for all 31 listed S1-C2 live v2 files before validation.
-- `python3 validate.py` passed and regenerated the same `validation.txt` / `independent-decode.tsv` content.
-- `shasum -a 256 -c SHA256SUMS` passed again after validation.
-
-Key hashes confirmed:
-
-- FWSC: `63e3cfa39473df08bd225df2c8ae81dbfe7aafbd31da6cc6dcf64ca03453681e`
-- App: `4afd13d7301c2ae209c11d3fe932d019faa770b551f2d8a38cf4c018c7aafa8a`
-- Selector: `adb8774971811f6dbdce8b7338f2265f18b8bb22544ccab746e74610366d4e35`, 96 bytes
-- Producer/stub: `a05e79c0b46e1e12b1244af3f49866c911fcc41937bc14196825d3080d780784`, 148 bytes
-
-### Deterministic rebuild
-
-Command:
-
-```sh
-python3 baselines/v15/analysis/flash-candidates/S1C2-two-slot-selector-live-v2/build_s1c2_two_slot_selector_live.py \
-  --output-dir "$SCRATCH/rebuild" \
-  --determinism-check
-```
-
-Result:
-
-```json
-{
-  "app_sha256": "4afd13d7301c2ae209c11d3fe932d019faa770b551f2d8a38cf4c018c7aafa8a",
-  "package_sha256": "63e3cfa39473df08bd225df2c8ae81dbfe7aafbd31da6cc6dcf64ca03453681e",
-  "producer_bytes": 148,
-  "segmented_stub": "0x0201e232"
-}
-```
-
-I compared 20 generated rebuild outputs against the committed candidate artifacts, excluding `SHA256SUMS` because the builder's scratch output ledger covers only generated files while the committed ledger also covers committed inputs and validator files. Generated app, FWSC, manifests, report, decode, sender dry-run script, host packets, and rollback sector artifacts all matched byte-for-byte.
-
-### Selector and producer route gates
-
-The committed validator and byte checks verified:
-
-- Note Off hook `0x0201c63e` targets selector entry `0x0201e13e`.
-- Note On hook `0x0201c67c` targets selector entry `0x0201e142`.
-- Direct product callsite `0x0201e468` encodes `bfea9bfe` and targets `0x0201e1a2`.
-- Segmented product callsite `0x0201e49c` encodes `bfeac9fe` and targets immediate-return stub `0x0201e232`.
-- Stub bytes at `0x0201e232` are `79045904`.
-- Reload callsites remain intact: `0x0201e46c = bfeaf838`, `0x0201e4a0 = bfeade38`.
-- Producer prefix enforces `r9 == 0xa3` before the first `testset` / lock / state / slot mutation.
-
-### Protected prefix, changed sectors, and rollback reconstruction
-
-The committed validator confirmed:
-
-- Protected flash prefix `0x0000..0x3fff` unchanged.
-- App/FWSC package embeds exactly the candidate app.
-- Official rollback sector manifest applies five exact official sectors:
-  - `0x04000`
-  - `0x20000`
-  - `0x22000`
-  - `0x2a000`
-  - `0x62000`
-- Applying those sectors to candidate flash reconstructs official v15 flash SHA-256 `f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a`.
-- Rollback reconstruction also restores official app SHA-256 `36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055`.
-
-### Sender order, hash, and packetization
-
-The exact sender tool compiled from `3d749c2` and the offline dry-run path behaved correctly:
-
-```sh
-cc -O2 -g -std=c11 -Wall -Wextra -Wpedantic -Isrc \
-  tools/smk37_v15_s1c2_send.c src/sha256.c \
-  -o "$SCRATCH/bin/smk37-v15-s1c2-send" \
-  $(pkg-config --cflags --libs libusb-1.0)
-```
-
-Positive dry-run:
-
-```text
-S1-C2 live v2 sender dry-run PASS: slot0 note36 then slot1 note45, each 163 SysEx bytes -> 220 USB-MIDI bytes
-```
-
-Reject checks:
-
-- Swapped packet order rejected with slot0 SHA mismatch.
-- Mutated packet rejected with slot0 SHA mismatch.
-- `send ... --confirm WRONG` rejected before libusb transport.
-
-Pinned send order and packet hashes:
-
-1. `host/packets/slot0-note36-direct-product-163.bin`, SHA-256 `6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27`, 163 SysEx bytes to 220 USB-MIDI bytes.
-2. `host/packets/slot1-note45-direct-product-163.bin`, SHA-256 `c4e8458edeb04d8106ca60a35243525e6b5f3f5de272091492409a440e3a9a8d`, 163 SysEx bytes to 220 USB-MIDI bytes.
-
-`python3 host_sender_dry_run.py --json` also passed offline.
-
-## Required remediation
-
-Commit a self-consistent OTA transport implementation. Either:
-
-1. update committed `src/ota.c` / `src/ota.h` so `ota_upload_exact` accepts the expected version parameter used by `tools/smk37_v15_s1c2_ota.c`, or
-2. update `tools/smk37_v15_s1c2_ota.c` to match the committed `ota_upload_exact` signature while preserving the exact v15 package gate.
-
-After that, rerun the offline compile and `check` accept/reject tests from a clean archive of the exact commit.
+The firmware candidate, rollback data, PI32 route gates, sender order, and sender packetization pass independent offline review. The live uploader does not: its exact version-15 package is rejected by an inherited hardcoded version-12 gate before device access. Fix that version gate, then repeat the full uploader accept/reject matrix and this final review before any live action.
