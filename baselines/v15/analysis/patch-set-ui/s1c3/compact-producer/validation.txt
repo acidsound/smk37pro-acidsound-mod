@@ -6,9 +6,9 @@ PASS	input-hash	s1c3_boundary_live_validation	6183d6ecc54544bfcd7574c4c7ff5522d0
 PASS	input-hash	s1c2_live_v2_producer	a05e79c0b46e1e12b1244af3f49866c911fcc41937bc14196825d3080d780784
 PASS	input-hash	s1c2_live_v2_app	4afd13d7301c2ae209c11d3fe932d019faa770b551f2d8a38cf4c018c7aafa8a
 PASS	input-hash	s1c3_contiguous_selector	ea2c76595a93cf2cf6a39236e09b749781e2721e3575d0c1b40194855cd4e915
-PASS	range-fit	0x0201e1a2..0x0201e224 <= 0x0201e254 spare=48
-PASS	producer-sha256	4e738a54dda52abd2ab816201ece7d1851215cba90268c14c535503b4ceb2460
-PASS	decode	49 instructions cover 130 bytes
+PASS	range-fit	0x0201e1a2..0x0201e24e <= 0x0201e254 spare=6
+PASS	producer-sha256	5c0ec6675c29b8f20d055938425ceb12c356513c29b79b761f1a469eaa068a75
+PASS	decode	64 instructions cover 172 bytes
 PASS	branch-reach	0x0201e1ac->0x0201e21e	jne_imm7
 PASS	branch-reach	0x0201e1ba->0x0201e21e	ifeq
 PASS	branch-reach	0x0201e1c4->0x0201e1d6	jne_imm7
@@ -18,7 +18,10 @@ PASS	branch-reach	0x0201e1d6->0x0201e216	jne_imm7
 PASS	branch-reach	0x0201e1dc->0x0201e216	jge_imm7
 PASS	call-reach	0x0201e1fc->0x02048cce
 PASS	branch-reach	0x0201e20c->0x0201e216	jne_imm7
-PASS	direct-callsite	0x0201e468 bfea9bfe -> 0x0201e1a2
+PASS	branch-reach	0x0201e22a->0x0201e244	jne_imm7
+PASS	branch-reach	0x0201e230->0x0201e244	jne_imm7
+PASS	call-reach	0x0201e246->0x0201e1a2
+PASS	direct-callsite	0x0201e468 bfeadcfe -> 0x0201e224
 PASS	segmented-callsite	0x0201e49c bfeac0fe -> 0x0201e220
 PASS	reload-callsites	0x0201e46c bfeaf838; 0x0201e4a0 bfeade38 unchanged
 PASS	mutation-order	r9 gate before lock; trylock fail returns; valid-last; loaded_count after valid; ARMED-last

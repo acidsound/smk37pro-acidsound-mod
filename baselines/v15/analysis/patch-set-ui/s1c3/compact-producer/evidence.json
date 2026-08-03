@@ -62,13 +62,34 @@
       "op": "jne_imm7",
       "reach": "PASS",
       "target": "0x0201e216"
+    },
+    {
+      "address": "0x0201e22a",
+      "bytes": "81f80bc4",
+      "op": "jne_imm7",
+      "reach": "PASS",
+      "target": "0x0201e244"
+    },
+    {
+      "address": "0x0201e230",
+      "bytes": "81f808c6",
+      "op": "jne_imm7",
+      "reach": "PASS",
+      "target": "0x0201e244"
+    },
+    {
+      "address": "0x0201e246",
+      "bytes": "80ff56ffffff",
+      "op": "call32",
+      "reach": "PASS",
+      "target": "0x0201e1a2"
     }
   ],
   "call_routes": {
     "direct_product_callsite": {
       "address": "0x0201e468",
-      "bytes": "bfea9bfe",
-      "target": "0x0201e1a2"
+      "bytes": "bfeadcfe",
+      "target": "0x0201e224"
     },
     "direct_reload_intact": {
       "address": "0x0201e46c",
@@ -85,25 +106,27 @@
     }
   },
   "code_window": {
-    "bytes_used": 130,
-    "end_exclusive": "0x0201e224",
+    "bytes_used": 172,
+    "end_exclusive": "0x0201e24e",
     "limit_exclusive": "0x0201e254",
     "overrun_bytes": 0,
     "owned_window_bytes": 178,
+    "reset_entry": "0x0201e224",
     "return": "0x0201e21e",
     "segmented_stub": "0x0201e220",
-    "spare_bytes": 48,
+    "spare_bytes": 6,
     "start": "0x0201e1a2"
   },
   "contract_proof": {
     "note_order": "host packet order maps slots 0..15 to notes 36..51",
     "pre_mutation_gate": "length_reject_branch at 0x0201e1ac targets return 0x0201e21e before lock/testset/state/count/slot mutation unless r9 == 0xa3",
     "publication_order": "clear valid, copy 0x9c, csync, valid=1, loaded_count=i+1; for slot15, csync and state=ARMED last",
+    "reset_contract": "direct call enters 0x0201e224; exact slot0 signature 62 63 clears lock/count/state before calling the original producer at 0x0201e1a2",
     "segmented_no_mutation": "segmented entry 0x0201e220 is push; pop only and has no store/testset/call",
     "slot_formula": "slot_base = 0x01c46520 + loaded_count * 0xa0; valid = slot_base + 0x9c"
   },
   "date_utc": "2026-08-03",
-  "format": "smk37-v15-s1c3-compact-sequential-producer-v1",
+  "format": "smk37-v15-s1c3-compact-sequential-producer-v2-reset-aware",
   "input_basis": {
     "s1c2_live_v2_app": {
       "path": "baselines/v15/analysis/flash-candidates/S1C2-two-slot-selector-live-v2/app.bin",
@@ -136,10 +159,10 @@
   },
   "producer": {
     "decode_tsv": "decode.tsv",
-    "hex": "790404169016e020f03d80f83700c0ffbd65c4012000b00040e8300020000516584280f807005b4183f824004021d8422000048380f81e025b4103fd1b203616e6e1a060c7ff2065c401671806e19c704020e84070164116623c80ffccaa020020004021e840c321db4183f8032020004022d84220004020d8402000590479045904",
+    "hex": "790404169016e020f03d80f83700c0ffbd65c4012000b00040e8300020000516584280f807005b4183f824004021d8422000048380f81e025b4103fd1b203616e6e1a060c7ff2065c401671806e19c704020e84070164116623c80ffccaa020020004021e840c321db4183f8032020004022d84220004020d840200059047904590479040416494081f80bc4494181f808c6c5ffbd65c4014020d840d841d8422000401680ff56ffffff5904",
     "independent_decode_tsv": "independent-decode.tsv",
-    "instruction_count": 49,
-    "sha256": "4e738a54dda52abd2ab816201ece7d1851215cba90268c14c535503b4ceb2460"
+    "instruction_count": 64,
+    "sha256": "5c0ec6675c29b8f20d055938425ceb12c356513c29b79b761f1a469eaa068a75"
   },
   "ram_layout": {
     "base": "0x01c46520",
@@ -270,9 +293,9 @@
     "PASS\tinput-hash\ts1c2_live_v2_producer\ta05e79c0b46e1e12b1244af3f49866c911fcc41937bc14196825d3080d780784",
     "PASS\tinput-hash\ts1c2_live_v2_app\t4afd13d7301c2ae209c11d3fe932d019faa770b551f2d8a38cf4c018c7aafa8a",
     "PASS\tinput-hash\ts1c3_contiguous_selector\tea2c76595a93cf2cf6a39236e09b749781e2721e3575d0c1b40194855cd4e915",
-    "PASS\trange-fit\t0x0201e1a2..0x0201e224 <= 0x0201e254 spare=48",
-    "PASS\tproducer-sha256\t4e738a54dda52abd2ab816201ece7d1851215cba90268c14c535503b4ceb2460",
-    "PASS\tdecode\t49 instructions cover 130 bytes",
+    "PASS\trange-fit\t0x0201e1a2..0x0201e24e <= 0x0201e254 spare=6",
+    "PASS\tproducer-sha256\t5c0ec6675c29b8f20d055938425ceb12c356513c29b79b761f1a469eaa068a75",
+    "PASS\tdecode\t64 instructions cover 172 bytes",
     "PASS\tbranch-reach\t0x0201e1ac->0x0201e21e\tjne_imm7",
     "PASS\tbranch-reach\t0x0201e1ba->0x0201e21e\tifeq",
     "PASS\tbranch-reach\t0x0201e1c4->0x0201e1d6\tjne_imm7",
@@ -282,7 +305,10 @@
     "PASS\tbranch-reach\t0x0201e1dc->0x0201e216\tjge_imm7",
     "PASS\tcall-reach\t0x0201e1fc->0x02048cce",
     "PASS\tbranch-reach\t0x0201e20c->0x0201e216\tjne_imm7",
-    "PASS\tdirect-callsite\t0x0201e468 bfea9bfe -> 0x0201e1a2",
+    "PASS\tbranch-reach\t0x0201e22a->0x0201e244\tjne_imm7",
+    "PASS\tbranch-reach\t0x0201e230->0x0201e244\tjne_imm7",
+    "PASS\tcall-reach\t0x0201e246->0x0201e1a2",
+    "PASS\tdirect-callsite\t0x0201e468 bfeadcfe -> 0x0201e224",
     "PASS\tsegmented-callsite\t0x0201e49c bfeac0fe -> 0x0201e220",
     "PASS\treload-callsites\t0x0201e46c bfeaf838; 0x0201e4a0 bfeade38 unchanged",
     "PASS\tmutation-order\tr9 gate before lock; trylock fail returns; valid-last; loaded_count after valid; ARMED-last",
@@ -291,6 +317,6 @@
   "verdict": {
     "exact_pi32_producer_bytes": "PASS",
     "firmware_package_or_live_send": "BLOCK",
-    "summary": "Exact 130-byte compact PI32 producer plus segmented no-mutation entry fits 0x0201e1a2..0x0201e254 with 48 bytes spare. This artifact remains offline and does not authorize a firmware package or live send."
+    "summary": "Exact 172-byte PI32 producer adds a two-byte slot0 reset wrapper so boot-time heap metadata is not assumed zero; it fits 0x0201e1a2..0x0201e254 with 6 bytes spare."
   }
 }

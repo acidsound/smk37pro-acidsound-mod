@@ -48,3 +48,18 @@ address	size	bytes	op	operands
 0x0201e21e	2	5904	pop_pc	{}
 0x0201e220	2	7904	push	{}
 0x0201e222	2	5904	pop_pc	{}
+0x0201e224	2	7904	push	{}
+0x0201e226	2	0416	mov_reg	{"dst": 4, "src": 0}
+0x0201e228	2	4940	load_byte	{"base": 4, "dst": 1, "offset": 0}
+0x0201e22a	4	81f80bc4	jne_imm7	{"imm": 98, "reg": 1, "target": 33677892}
+0x0201e22e	2	4941	load_byte	{"base": 4, "dst": 1, "offset": 1}
+0x0201e230	4	81f808c6	jne_imm7	{"imm": 99, "reg": 1, "target": 33677892}
+0x0201e234	6	c5ffbd65c401	mov_imm32	{"dst": 5, "imm": 29648317}
+0x0201e23a	2	4020	mov_imm8	{"dst": 0, "imm": 0}
+0x0201e23c	2	d840	store_byte	{"base": 5, "offset": 0, "src": 0}
+0x0201e23e	2	d841	store_byte	{"base": 5, "offset": 1, "src": 0}
+0x0201e240	2	d842	store_byte	{"base": 5, "offset": 2, "src": 0}
+0x0201e242	2	2000	csync	{}
+0x0201e244	2	4016	mov_reg	{"dst": 0, "src": 4}
+0x0201e246	6	80ff56ffffff	call32	{"target": 33677730}
+0x0201e24c	2	5904	pop_pc	{}

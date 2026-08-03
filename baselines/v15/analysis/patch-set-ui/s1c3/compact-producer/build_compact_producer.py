@@ -20,6 +20,7 @@ ROOT = HERE.parents[5]
 
 PRODUCER_START = 0x0201E1A2
 PRODUCER_LIMIT = 0x0201E254
+RESET_ENTRY = 0x0201E224
 DIRECT_PRODUCT_CALL = 0x0201E468
 DIRECT_RELOAD_CALL = 0x0201E46C
 SEGMENTED_PRODUCT_CALL = 0x0201E49C
@@ -37,6 +38,7 @@ LOADING = 1
 ARMED = 2
 NOTE_FIRST = 36
 SLOT_COUNT = 16
+RESET_SIGNATURE = (0x62, 0x63)
 
 INPUTS = {
     "s1c3_producer_report": (
@@ -333,6 +335,24 @@ def build_producer() -> tuple[bytes, list[dict[str, Any]], dict[str, int]]:
     r.emit("segmented_stub_push", "push {rets,r9..r4}", word(0x0479), "segmented route no-mutation entry")
     r.emit("segmented_stub_return", "pop {pc,r9..r4}", word(0x0459), "segmented route immediately returns")
 
+    r.label("reset_entry")
+    r.emit("reset_push_saved", "push {rets,r9..r4}", word(0x0479), "preserve caller frame before reset signature inspection")
+    r.emit("reset_save_stage", "mov r4,r0", mov_reg(4, 0), "r4 = accepted product staging pointer")
+    r.emit("reset_sig0_load", "lb.z r1,[r4]", load_byte(1, 4, 0), "load BUZZ BASS reset signature byte 0")
+    r.branch("reset_sig0_mismatch", "jne r1,#0x62,reset_skip", 4, "reset_skip", lambda a, t: jne_imm7(a, 1, RESET_SIGNATURE[0], t), "non-reset packet preserves current producer state")
+    r.emit("reset_sig1_load", "lb.z r1,[r4+1]", load_byte(1, 4, 1), "load BUZZ BASS reset signature byte 1")
+    r.branch("reset_sig1_mismatch", "jne r1,#0x63,reset_skip", 4, "reset_skip", lambda a, t: jne_imm7(a, 1, RESET_SIGNATURE[1], t), "two-byte signature required before reset")
+    r.emit("reset_metadata_pointer", f"mov r5,#{LOCK:#x}", mov_imm32(5, LOCK), "r5 = lock/count/state control base")
+    r.emit("reset_zero", "mov r0,#0", mov_imm8(0, 0), "r0 = EMPTY/zero")
+    r.emit("reset_lock_store", "sb [r5],r0", store_byte(0, 5, 0), "first exact packet clears stale boot lock")
+    r.emit("reset_count_store", "sb [r5+1],r0", store_byte(0, 5, LOADED_COUNT - LOCK), "first exact packet sets loaded_count = 0")
+    r.emit("reset_state_store", "sb [r5+2],r0", store_byte(0, 5, STATE - LOCK), "first exact packet sets state = EMPTY")
+    r.emit("reset_csync", "csync", word(0x0020), "publish reset before invoking sequential producer")
+    r.label("reset_skip")
+    r.emit("reset_restore_stage", "mov r0,r4", mov_reg(0, 4), "restore accepted staging pointer")
+    r.emit("reset_call_producer", f"call {PRODUCER_START:#x}", call32(r.pc, PRODUCER_START), "invoke original sequential producer after optional reset")
+    r.emit("reset_return_restore", "pop {pc,r9..r4}", word(0x0459), "restore caller frame")
+
     producer = r.finish()
     labels = dict(r.labels)
     labels["end"] = PRODUCER_START + len(producer)
@@ -465,11 +485,12 @@ def verify(producer: bytes, intended: list[dict[str, Any]], labels: dict[str, in
         require(digest == expected, f"input hash {name}")
         lines.append(f"PASS\tinput-hash\t{name}\t{digest}")
 
-    require(len(producer) == 130, "compact producer size")
-    require(labels["end"] == PRODUCER_START + len(producer) == 0x0201E224, "end address")
+    require(len(producer) == 172, "reset-aware compact producer size")
+    require(labels["end"] == PRODUCER_START + len(producer) == 0x0201E24E, "end address")
     require(labels["end"] <= PRODUCER_LIMIT, "producer/stub fits owned window")
-    require(PRODUCER_LIMIT - labels["end"] == 48, "48-byte spare")
+    require(PRODUCER_LIMIT - labels["end"] == 6, "6-byte spare")
     require(labels["segmented_stub"] == 0x0201E220, "segmented stub address")
+    require(labels["reset_entry"] == RESET_ENTRY, "reset wrapper address")
     require(labels["return"] == 0x0201E21E, "return address")
     lines.append(f"PASS\trange-fit\t{hx(PRODUCER_START)}..{hx(labels['end'])} <= {hx(PRODUCER_LIMIT)} spare={PRODUCER_LIMIT - labels['end']}")
     lines.append(f"PASS\tproducer-sha256\t{sha256_bytes(producer)}")
@@ -480,25 +501,26 @@ def verify(producer: bytes, intended: list[dict[str, Any]], labels: dict[str, in
     lines.append(f"PASS\tdecode\t{len(decoded)} instructions cover {len(producer)} bytes")
 
     target_allow = {
-        labels["return"], labels["not_empty"], labels["unlock"], labels["after_state"], MEMCPY,
+        labels["return"], labels["not_empty"], labels["unlock"], labels["after_state"],
+        labels["reset_skip"], MEMCPY, PRODUCER_START,
     }
     for row in branch_rows(decoded):
         target = row["target"]
         require(target in target_allow, f"branch/call target allowed at {hx(row['address'])} -> {hx(target)}")
         if row["op"] == "call32":
-            require(target == MEMCPY, "only call32 target is memcpy")
+            require(target in {MEMCPY, PRODUCER_START}, "call32 target is memcpy or original producer")
             lines.append(f"PASS\tcall-reach\t{hx(row['address'])}->{hx(target)}")
         else:
             require(PRODUCER_START <= target < labels["end"], f"internal branch target in blob at {hx(row['address'])}")
             lines.append(f"PASS\tbranch-reach\t{hx(row['address'])}->{hx(target)}\t{row['op']}")
 
-    direct = short_call(DIRECT_PRODUCT_CALL, PRODUCER_START)
+    direct = short_call(DIRECT_PRODUCT_CALL, labels["reset_entry"])
     segmented = short_call(SEGMENTED_PRODUCT_CALL, labels["segmented_stub"])
-    require(direct.hex() == "bfea9bfe", "direct callsite exact bytes")
+    require(direct.hex() == "bfeadcfe", "direct reset-wrapper callsite exact bytes")
     require(segmented.hex() == "bfeac0fe", "segmented callsite exact bytes")
-    require(short_call_target(DIRECT_PRODUCT_CALL, direct) == PRODUCER_START, "direct call target")
+    require(short_call_target(DIRECT_PRODUCT_CALL, direct) == labels["reset_entry"], "direct call target")
     require(short_call_target(SEGMENTED_PRODUCT_CALL, segmented) == labels["segmented_stub"], "segmented call target")
-    lines.append(f"PASS\tdirect-callsite\t{hx(DIRECT_PRODUCT_CALL)} {direct.hex()} -> {hx(PRODUCER_START)}")
+    lines.append(f"PASS\tdirect-callsite\t{hx(DIRECT_PRODUCT_CALL)} {direct.hex()} -> {hx(labels['reset_entry'])}")
     lines.append(f"PASS\tsegmented-callsite\t{hx(SEGMENTED_PRODUCT_CALL)} {segmented.hex()} -> {hx(labels['segmented_stub'])}")
     lines.append(f"PASS\treload-callsites\t{hx(DIRECT_RELOAD_CALL)} bfeaf838; {hx(SEGMENTED_RELOAD_CALL)} bfeade38 unchanged")
 
@@ -506,7 +528,8 @@ def verify(producer: bytes, intended: list[dict[str, Any]], labels: dict[str, in
     require(by_name["length_reject_branch"] < by_name["lock_pointer"] < by_name["trylock"] < by_name["state_loading_store"], "r9 gate before testset/state mutation")
     require(by_name["trylock_failed_return_branch"] < by_name["state_loading_store"], "trylock fail branch before stores")
     require(by_name["valid_clear_store"] < by_name["memcpy_call"] < by_name["copy_csync"] < by_name["valid_store"] < by_name["count_store"] < by_name["armed_store"], "valid-last and ARMED-last order")
-    require(labels["segmented_stub"] + 4 == labels["end"], "segmented stub is only push/pop")
+    require(labels["segmented_stub"] + 4 == labels["reset_entry"], "segmented stub is only push/pop")
+    require(by_name["reset_lock_store"] < by_name["reset_count_store"] < by_name["reset_state_store"] < by_name["reset_call_producer"], "reset publication before producer call")
     lines.append("PASS\tmutation-order\tr9 gate before lock; trylock fail returns; valid-last; loaded_count after valid; ARMED-last")
 
     sim16 = simulate_state_machine(16)
@@ -520,10 +543,10 @@ def verify(producer: bytes, intended: list[dict[str, Any]], labels: dict[str, in
 
 
 def render_evidence(producer: bytes, intended: list[dict[str, Any]], labels: dict[str, int], decoded: list[dict[str, Any]], validation_lines: list[str]) -> dict[str, Any]:
-    direct = short_call(DIRECT_PRODUCT_CALL, PRODUCER_START)
+    direct = short_call(DIRECT_PRODUCT_CALL, labels["reset_entry"])
     segmented = short_call(SEGMENTED_PRODUCT_CALL, labels["segmented_stub"])
     return {
-        "format": "smk37-v15-s1c3-compact-sequential-producer-v1",
+        "format": "smk37-v15-s1c3-compact-sequential-producer-v2-reset-aware",
         "date_utc": "2026-08-03",
         "scope": {
             "offline_only": True,
@@ -537,7 +560,7 @@ def render_evidence(producer: bytes, intended: list[dict[str, Any]], labels: dic
         "verdict": {
             "exact_pi32_producer_bytes": "PASS",
             "firmware_package_or_live_send": "BLOCK",
-            "summary": "Exact 130-byte compact PI32 producer plus segmented no-mutation entry fits 0x0201e1a2..0x0201e254 with 48 bytes spare. This artifact remains offline and does not authorize a firmware package or live send.",
+            "summary": "Exact 172-byte PI32 producer adds a two-byte slot0 reset wrapper so boot-time heap metadata is not assumed zero; it fits 0x0201e1a2..0x0201e254 with 6 bytes spare.",
         },
         "input_basis": {
             key: {"path": str(path.relative_to(ROOT)), "sha256": expected}
@@ -552,6 +575,7 @@ def render_evidence(producer: bytes, intended: list[dict[str, Any]], labels: dic
             "spare_bytes": PRODUCER_LIMIT - labels["end"],
             "overrun_bytes": 0,
             "segmented_stub": hx(labels["segmented_stub"]),
+            "reset_entry": hx(labels["reset_entry"]),
             "return": hx(labels["return"]),
         },
         "producer": {
@@ -602,6 +626,7 @@ def render_evidence(producer: bytes, intended: list[dict[str, Any]], labels: dic
             "slot_formula": "slot_base = 0x01c46520 + loaded_count * 0xa0; valid = slot_base + 0x9c",
             "publication_order": "clear valid, copy 0x9c, csync, valid=1, loaded_count=i+1; for slot15, csync and state=ARMED last",
             "note_order": "host packet order maps slots 0..15 to notes 36..51",
+            "reset_contract": "direct call enters 0x0201e224; exact slot0 signature 62 63 clears lock/count/state before calling the original producer at 0x0201e1a2",
         },
         "validation": validation_lines,
     }
@@ -653,6 +678,7 @@ def render_report(evidence: dict[str, Any]) -> str:
         "- Slot pointer is `0x01c46520 + loaded_count * 0xa0`; valid byte is `slot + 0x9c`.",
         "- For slots `0..15`, host order is note `36..51`; publication is valid-last, count-after-valid, and ARMED-last for slot 15.",
         "- Segmented entry `0x0201e220` is only `push; pop`, so it has no mutation path.",
+        "- Direct entry now targets reset wrapper `0x0201e224`; slot0 payload signature `62 63` clears stale lock/count/state before the original producer runs.",
         "",
         "## Branch/call proof",
         "",
@@ -663,7 +689,7 @@ def render_report(evidence: dict[str, Any]) -> str:
         lines.append(f"| `{row['address']}` | `{row['bytes']}` | `{row['op']}` | `{row['target']}` | **{row['reach']}** |")
     lines.extend([
         "",
-        "All branch targets are inside the producer/stub blob except the single `call32`, which reaches stock `memcpy` at `0x02048cce`.",
+        "All branches stay inside the owned blob. The two `call32` targets are stock `memcpy` at `0x02048cce` and the original sequential producer at `0x0201e1a2`.",
         "",
         "## Artifacts",
         "",
@@ -695,7 +721,7 @@ def run(write: bool = False, check_files: bool = False) -> list[str]:
     intended_text = "\n".join(["address\tsize\tbytes\tname\tasm\tmeaning\ttarget"] + [
         "\t".join([
             row["address"], str(row["size"]), row["bytes"], row["name"], row["asm"], row["meaning"], row.get("target", ""),
-        ])
+        ]).rstrip()
         for row in intended_rows
     ]) + "\n"
     independent_text = independent_decode_text(decoded)
