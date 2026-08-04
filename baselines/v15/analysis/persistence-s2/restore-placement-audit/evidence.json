@@ -1,0 +1,758 @@
+{
+  "architecture_decision": {
+    "candidate_built": false,
+    "decision": "BLOCK",
+    "defensible_architecture": null,
+    "next_discriminator": "A minimal standalone PI32 manifest validator/materializer must be assembled and byte-counted against two explicit budgets: 84-byte quarantined SAVE leaf and a separately proved >=300-byte executable region. It must use 0x02004870 length checks, implement or call a proven CRC/compare routine, validate manifest first, publish RAM valid-last/ARMED-last, and leave exact S1C5 selector/producer bytes unchanged. Without that byte-level body and a safe lifecycle hook, no FWSC should be emitted.",
+    "rejected_split_call_architectures": [
+      {
+        "blocker": "no exact call insertion point remains without altering selector/producer or note hook ABI; 84-byte leaf cannot validate manifest CRCs and publish 16 slots",
+        "name": "exact selector/producer plus SAVE-cave restore leaf"
+      },
+      {
+        "blocker": "0x02005fa4 has no live post-USB safety proof and still needs a wrapper preserving stock 0x020057e0 plus body placement beyond 84 bytes",
+        "name": "post-storage boot wrapper plus SAVE-cave body"
+      },
+      {
+        "blocker": "not autonomous or not side-effect-free; repurposing changes UI/default behavior and still lacks CRC/materializer placement",
+        "name": "relocated cold UI reload/default-load path"
+      },
+      {
+        "blocker": "explicitly rejected; S1C7 trusted full-length unseeded reads and gave invalid persistent fallback priority over exact S1C5 behavior",
+        "name": "S1C7 not-ARMED helper reuse"
+      }
+    ]
+  },
+  "basis": {
+    "app_tail_report": {
+      "path": "baselines/v15/analysis/r03-owned-ram/app-tail-placement/report.md",
+      "sha256": "036eca79c6258a9ffff9f493874058a1876cbbe92f2cd76c27d06efe2f2c105c",
+      "status": "PASS"
+    },
+    "official_listing": {
+      "path": "baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz",
+      "sha256": "f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347",
+      "status": "PASS"
+    },
+    "s1c5_app": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/app.bin",
+      "sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+      "status": "PASS"
+    },
+    "s1c5_fwsc": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/SMK37Pro-v15-S1C5-playback-register-return.fwsc",
+      "sha256": "0a6ac1ae7d4bd34e252eb8f23a4d2c5f39d7454376ade1a3b75ff7d03155ea91",
+      "status": "PASS"
+    },
+    "s1c5_live_validation": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/live-validation-20260804.md",
+      "sha256": "94fc5083ff1ce1061c474eba18a30ad3f10a277f85c84f6cee5a117c2593f152",
+      "status": "PASS"
+    },
+    "s1c7_failure_report": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C7-live-failure-root-cause-20260804/report.md",
+      "sha256": "48ab1fd30abea5b81772a36cc13313241ec55c257f2c032545fedc3588811963",
+      "status": "PASS"
+    },
+    "s1c8_manifest_report": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C8-manifest-gated-persistence-block/report.md",
+      "sha256": "77bfec1101546429560bf3c925392bf84acf15edb0e699b1bbc7628656cce94e",
+      "status": "PASS"
+    },
+    "s2_default_report": {
+      "path": "baselines/v15/analysis/flash-candidates/S2-persistent-default/report.md",
+      "sha256": "451150aadbde8ce9967ec53b165b145023b1d04870db1d92925a86f2948e4dba",
+      "status": "PASS"
+    },
+    "s2_restore_report": {
+      "path": "baselines/v15/analysis/persistence-s2/restore/report.md",
+      "sha256": "c9ce9d4da638790c7e2803a1e85133cedfb8a069204d81ddbdb1bc5eba32b7c1",
+      "status": "PASS"
+    },
+    "save_cave_report": {
+      "path": "baselines/v15/analysis/persistence-s2/save-cave-helper/report.md",
+      "sha256": "88f60a4abde79e3be6747a560cc22f6a037015ef62c081c110c8186788d649e5",
+      "status": "PASS"
+    },
+    "ui_save_seed_report": {
+      "path": "baselines/v15/analysis/persistence-s2/official-ui-save-prefix-seed/report.md",
+      "sha256": "004cd11a3d4f9e0f2d798427e77942253943cc9825df7d49e1fd7fe3fae04d8a",
+      "status": "PASS"
+    }
+  },
+  "cross_cave_and_cold_paths": {
+    "branch_reach": [
+      {
+        "displacement_bytes": 35824,
+        "known_encoding_from_prior_save_cave_audit": "80ffea8b0000",
+        "local_jcc_2_or_4_byte_range_fits": false,
+        "pi32_call32_6_byte_fits": true,
+        "short_call_4_byte_same_0x20000_window": false,
+        "source": "0x0201e190",
+        "target": "0x02026d80"
+      },
+      {
+        "displacement_bytes": 35672,
+        "known_encoding_from_prior_save_cave_audit": "80ff528b0000",
+        "local_jcc_2_or_4_byte_range_fits": false,
+        "pi32_call32_6_byte_fits": true,
+        "short_call_4_byte_same_0x20000_window": false,
+        "source": "0x0201e228",
+        "target": "0x02026d80"
+      },
+      {
+        "displacement_bytes": 134620,
+        "local_jcc_2_or_4_byte_range_fits": false,
+        "pi32_call32_6_byte_fits": true,
+        "short_call_4_byte_same_0x20000_window": false,
+        "source": "0x02005fa4",
+        "target": "0x02026d80"
+      },
+      {
+        "displacement_bytes": 11090,
+        "local_jcc_2_or_4_byte_range_fits": false,
+        "pi32_call32_6_byte_fits": true,
+        "short_call_4_byte_same_0x20000_window": true,
+        "source": "0x0202422e",
+        "target": "0x02026d80"
+      },
+      {
+        "displacement_bytes": 6106,
+        "local_jcc_2_or_4_byte_range_fits": false,
+        "pi32_call32_6_byte_fits": true,
+        "short_call_4_byte_same_0x20000_window": true,
+        "source": "0x020255a6",
+        "target": "0x02026d80"
+      },
+      {
+        "displacement_bytes": 592528,
+        "local_jcc_2_or_4_byte_range_fits": false,
+        "pi32_call32_6_byte_fits": true,
+        "short_call_4_byte_same_0x20000_window": false,
+        "source": "0x02005fa4",
+        "target": "0x02096a34"
+      }
+    ],
+    "cold_ui_paths": [
+      {
+        "decision": "REJECT; disproven/revoked S1C7/R01d-style early boot behavior must not be reused",
+        "listing": {
+          "address": "02005f9c",
+          "bytes": "bfea60fb",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "-",
+          "length": "4",
+          "mnemonic": "call",
+          "text": "call 0x02005660"
+        },
+        "site": "0x02005f9c"
+      },
+      {
+        "decision": "BLOCK; syntactically after stock reads/loader, but pre-USB/live safety and wrapper placement are unproven and it must preserve 0x020057e0",
+        "listing": {
+          "address": "02005fa4",
+          "bytes": "bfea1cfc",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "-",
+          "length": "4",
+          "mnemonic": "call",
+          "text": "call 0x020057e0"
+        },
+        "site": "0x02005fa4"
+      },
+      {
+        "decision": "BLOCK; user-action UI bank/preset reload, not autonomous restore, and repurposing would break stock UI behavior",
+        "listing": {
+          "address": "0202422e",
+          "bytes": "bfea170a",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "FUN_020241e0@020241e0",
+          "length": "4",
+          "mnemonic": "call",
+          "text": "call 0x02005660"
+        },
+        "site": "0x0202422e"
+      },
+      {
+        "decision": "BLOCK; conditional default-load/bank-block path with storage side effects, not an every-boot or side-effect-free restore hook",
+        "listing": {
+          "address": "020255a6",
+          "bytes": "bfea5b00",
+          "flow_type": "UNCONDITIONAL_CALL",
+          "function": "-",
+          "length": "4",
+          "mnemonic": "call",
+          "text": "call 0x02005660"
+        },
+        "site": "0x020255a6"
+      },
+      {
+        "decision": "PARTIAL; can be quarantined as an 84-byte leaf only after disabling the current UI SAVE body, but no caller/space for full manifest CRC restore exists",
+        "site": "0x02026d80"
+      }
+    ],
+    "summary": "Branch reach is not the blocker for 6-byte call32. The blockers are exact S1C5 call insertion, insufficient quarantined bytes, missing CRC/compare ABI, and no approved lifecycle hook."
+  },
+  "dead_region_audit": {
+    "audited_regions": [
+      {
+        "bytes": 44,
+        "decision": "BLOCK for manifest/magic/CRC restore; 44 bytes cannot hold checked manifest read, CRC, 16-payload validation, RAM publication, and ABI repair",
+        "evidence": "exact S1C5 has 0x02026da6 bytes 0496, a goto to 0x02026dd4; 0x02026dac packer call is neutralized to 00000000",
+        "name": "current S1C5 SAVE tail dead after 0x02026da6 goto",
+        "range": [
+          "0x02026da8",
+          "0x02026dd4"
+        ]
+      },
+      {
+        "bytes": 84,
+        "decision": "PARTIAL only; 84 bytes can host a tiny leaf, but prior lower bounds still exclude positive CRC-gated restore/write semantics",
+        "name": "SAVE handler quarantined leaf after UI branch patch",
+        "range": [
+          "0x02026d80",
+          "0x02026dd4"
+        ],
+        "required_patch": {
+          "address": "0x02026d7a",
+          "new_hex": "80f82b020016",
+          "old_hex": "60ffff602a00"
+        }
+      },
+      {
+        "bytes": 10,
+        "decision": "NOT A CAVE; must remain stock exit if SAVE handler is quarantined",
+        "name": "stock local SAVE exit retained",
+        "range": [
+          "0x02026dd4",
+          "0x02026dde"
+        ]
+      },
+      {
+        "bytes": 383,
+        "decision": "BLOCK; named JLFS cfg_tool.bin occupies the whole 383-byte apparent tail, preserving JLFS leaves 0 bytes",
+        "name": "app-area tail / cfg_tool.bin",
+        "range": [
+          "0x02096a34",
+          "0x02096bb3"
+        ]
+      }
+    ],
+    "listing_gap_scan": {
+      "coverage_end": "0x02057000",
+      "decision": "NOT PROMOTED; exhaustive-listing holes/gaps are not exact dead-code ownership proof and may be data, alignment, indirect targets, or resources",
+      "gap_count": 5735,
+      "largest_gaps": [
+        {
+          "bytes": 602,
+          "end_exclusive": "0x02016ce2",
+          "start": "0x02016a88"
+        },
+        {
+          "bytes": 580,
+          "end_exclusive": "0x02039e2a",
+          "start": "0x02039be6"
+        },
+        {
+          "bytes": 504,
+          "end_exclusive": "0x0202be5a",
+          "start": "0x0202bc62"
+        },
+        {
+          "bytes": 328,
+          "end_exclusive": "0x02007390",
+          "start": "0x02007248"
+        },
+        {
+          "bytes": 278,
+          "end_exclusive": "0x0201190c",
+          "start": "0x020117f6"
+        },
+        {
+          "bytes": 274,
+          "end_exclusive": "0x0201ec66",
+          "start": "0x0201eb54"
+        },
+        {
+          "bytes": 232,
+          "end_exclusive": "0x02037afa",
+          "start": "0x02037a12"
+        },
+        {
+          "bytes": 202,
+          "end_exclusive": "0x02039fb2",
+          "start": "0x02039ee8"
+        },
+        {
+          "bytes": 196,
+          "end_exclusive": "0x0200474a",
+          "start": "0x02004686"
+        },
+        {
+          "bytes": 192,
+          "end_exclusive": "0x02037798",
+          "start": "0x020376d8"
+        }
+      ],
+      "total_gap_bytes": 31342
+    },
+    "summary": "No exact audited dead region provides a sufficient executable body for manifest/magic/CRC-gated restore while keeping S1C5 selector/producer exact."
+  },
+  "format": "smk37-v15-s2-restore-placement-audit-v1",
+  "helper_audit": {
+    "callable_helpers": [
+      {
+        "abi": "r0=dest, r1=storage_rel, r2=len; returns len only on complete success else 0",
+        "bytes": 20,
+        "decision": "CALLABLE but not a validity gate",
+        "entry": "0x02004870",
+        "exact_hex": "7404241612164116518f90e80004442040165404",
+        "name": "read wrapper",
+        "xref_count_official_listing": 30
+      },
+      {
+        "abi": "r0=src, r1=storage_rel, r2=len; returns len only on complete success else 0",
+        "bytes": 20,
+        "decision": "CALLABLE only with readback/compare/commit-last wrapper",
+        "entry": "0x02004b02",
+        "exact_hex": "7404241612164116519790e80004442040165404",
+        "name": "write wrapper",
+        "xref_count_official_listing": 32
+      },
+      {
+        "abi": "stock memcpy; preserves only r6/r5/r4 in prior reviews",
+        "decision": "CALLABLE for copies, not a compare or CRC helper",
+        "entry": "0x02048cce",
+        "name": "memcpy",
+        "xref_count_official_listing": 149
+      }
+    ],
+    "missing_helpers": {
+      "crc32_or_crc16_runtime_abi": "BLOCK; no exact callable firmware CRC ABI was identified by the exhaustive-listing labels/text, and no compact in-place PI32 CRC implementation is proven",
+      "listing_text_search_counts": {
+        "compare": 0,
+        "crc": 0,
+        "memcmp": 0,
+        "strcmp": 0,
+        "strncmp": 0
+      },
+      "memcmp_runtime_abi": "BLOCK; no exact callable memcmp/compare ABI was identified; magic compare would need hand-coded byte loads/branches and CRC still remains"
+    },
+    "xrefs": {
+      "memcpy_count": 149,
+      "read_wrapper": [
+        {
+          "address": "0x02004f96",
+          "bytes": "bfea6bfc",
+          "function": "FUN_02004f06@02004f06",
+          "length": 4
+        },
+        {
+          "address": "0x02004fb8",
+          "bytes": "bfea5afc",
+          "function": "FUN_02004f06@02004f06",
+          "length": 4
+        },
+        {
+          "address": "0x02005f0e",
+          "bytes": "bfeaaff4",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x02005f20",
+          "bytes": "bfeaa6f4",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x0200615e",
+          "bytes": "bfea87f3",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x0200656c",
+          "bytes": "bfea80f1",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x0200657a",
+          "bytes": "bfea79f1",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x0200658e",
+          "bytes": "bfea6ff1",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x020065a2",
+          "bytes": "bfea65f1",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x020065b6",
+          "bytes": "bfea5bf1",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x020065ca",
+          "bytes": "bfea51f1",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x020065de",
+          "bytes": "bfea47f1",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x020065f2",
+          "bytes": "bfea3df1",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x02006612",
+          "bytes": "bfea2df1",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x0202b848",
+          "bytes": "beea12c8",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x0202c688",
+          "bytes": "beeaf2c0",
+          "function": "FUN_0202c674@0202c674",
+          "length": 4
+        },
+        {
+          "address": "0x0202c742",
+          "bytes": "beea95c0",
+          "function": "FUN_0202c6ac@0202c6ac",
+          "length": 4
+        },
+        {
+          "address": "0x0202cc76",
+          "bytes": "beeafbbd",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x0202cd30",
+          "bytes": "beea9ebd",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x0202cdbc",
+          "bytes": "beea58bd",
+          "function": "FUN_0202cd88@0202cd88",
+          "length": 4
+        },
+        {
+          "address": "0x0202ce34",
+          "bytes": "beea1cbd",
+          "function": "FUN_0202cdf2@0202cdf2",
+          "length": 4
+        },
+        {
+          "address": "0x0202ce68",
+          "bytes": "beea02bd",
+          "function": "FUN_0202cdf2@0202cdf2",
+          "length": 4
+        },
+        {
+          "address": "0x0202ce86",
+          "bytes": "beeaf3bc",
+          "function": "FUN_0202cdf2@0202cdf2",
+          "length": 4
+        },
+        {
+          "address": "0x0202cf12",
+          "bytes": "beeaadbc",
+          "function": "FUN_0202cdf2@0202cdf2",
+          "length": 4
+        },
+        {
+          "address": "0x020376b2",
+          "bytes": "beeadd68",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x020376bc",
+          "bytes": "beead868",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x020377e2",
+          "bytes": "beea4568",
+          "function": "FUN_0202c238@0202c238",
+          "length": 4
+        },
+        {
+          "address": "0x02037812",
+          "bytes": "beea2d68",
+          "function": "FUN_0202c238@0202c238",
+          "length": 4
+        },
+        {
+          "address": "0x0203795c",
+          "bytes": "beea8867",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x02037992",
+          "bytes": "beea6d67",
+          "function": "-",
+          "length": 4
+        }
+      ],
+      "write_wrapper": [
+        {
+          "address": "0x02005042",
+          "bytes": "bfea5efd",
+          "function": "FUN_02004f06@02004f06",
+          "length": 4
+        },
+        {
+          "address": "0x02005050",
+          "bytes": "bfea57fd",
+          "function": "FUN_02004f06@02004f06",
+          "length": 4
+        },
+        {
+          "address": "0x0200514a",
+          "bytes": "bfeadafc",
+          "function": "FUN_0200506a@0200506a",
+          "length": 4
+        },
+        {
+          "address": "0x02005528",
+          "bytes": "bfeaebfa",
+          "function": "FUN_02005512@02005512",
+          "length": 4
+        },
+        {
+          "address": "0x020064ba",
+          "bytes": "bfea22f3",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x020064c8",
+          "bytes": "bfea1bf3",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x020064dc",
+          "bytes": "bfea11f3",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x020064f0",
+          "bytes": "bfea07f3",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x02006504",
+          "bytes": "bfeafdf2",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x02006518",
+          "bytes": "bfeaf3f2",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x0200652c",
+          "bytes": "bfeae9f2",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x02006540",
+          "bytes": "bfeadff2",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x02006552",
+          "bytes": "bfead6f2",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x0201dfe8",
+          "bytes": "bfea8b35",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x0201dff8",
+          "bytes": "bfea8335",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x0201e236",
+          "bytes": "bfea6434",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x02023338",
+          "bytes": "bfeae30b",
+          "function": "FUN_0202330c@0202330c",
+          "length": 4
+        },
+        {
+          "address": "0x02024e5c",
+          "bytes": "beea51fe",
+          "function": "FUN_02024e02@02024e02",
+          "length": 4
+        },
+        {
+          "address": "0x02024e84",
+          "bytes": "beea3dfe",
+          "function": "FUN_02024e02@02024e02",
+          "length": 4
+        },
+        {
+          "address": "0x0202556e",
+          "bytes": "beeac8fa",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x0202558e",
+          "bytes": "beeab8fa",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x02026da6",
+          "bytes": "beeaacee",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x02026dd0",
+          "bytes": "beea97ee",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x0202b850",
+          "bytes": "beea57c9",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x0202c64c",
+          "bytes": "beea59c2",
+          "function": "FUN_0202c616@0202c616",
+          "length": 4
+        },
+        {
+          "address": "0x0202c692",
+          "bytes": "beea36c2",
+          "function": "FUN_0202c674@0202c674",
+          "length": 4
+        },
+        {
+          "address": "0x0202c6fc",
+          "bytes": "beea01c2",
+          "function": "FUN_0202c6ac@0202c6ac",
+          "length": 4
+        },
+        {
+          "address": "0x0202c7e6",
+          "bytes": "beea8cc1",
+          "function": "FUN_0202c6ac@0202c6ac",
+          "length": 4
+        },
+        {
+          "address": "0x0202c81e",
+          "bytes": "beea70c1",
+          "function": "FUN_0202c6ac@0202c6ac",
+          "length": 4
+        },
+        {
+          "address": "0x0202cc82",
+          "bytes": "beea3ebf",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x0202cd1e",
+          "bytes": "beeaf0be",
+          "function": "-",
+          "length": 4
+        },
+        {
+          "address": "0x0202cf30",
+          "bytes": "beeae7bd",
+          "function": "FUN_0202cdf2@0202cdf2",
+          "length": 4
+        }
+      ]
+    }
+  },
+  "s1c5_identity": {
+    "decision": "BLOCK as an executable restore placement; only two tail bytes remain when the exact live S1C5 selector and producer are preserved",
+    "owned_window": {
+      "bytes": 278,
+      "end_exclusive": "0x0201e254",
+      "free_bytes_preserving_exact_selector_and_producer": 2,
+      "start": "0x0201e13e"
+    },
+    "producer": {
+      "bytes": 188,
+      "end_exclusive": "0x0201e252",
+      "must_preserve_exact": true,
+      "sha256": "a7627984549f62592384189a707ef04512921ad693b18409eb483dcccb53c438",
+      "start": "0x0201e196"
+    },
+    "selector": {
+      "bytes": 88,
+      "end_exclusive": "0x0201e196",
+      "must_preserve_exact": true,
+      "sha256": "900e8f05c8157737e89a22338b9a4575aa3ff124bd70ff132de0226654fce29f",
+      "start": "0x0201e13e"
+    },
+    "tail": {
+      "bytes": 2,
+      "end_exclusive": "0x0201e254",
+      "start": "0x0201e252",
+      "useful_for_restore": false
+    }
+  },
+  "scope": {
+    "device_accessed": false,
+    "flash_performed": false,
+    "fwsc_emitted": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "ota_performed": false
+  }
+}
