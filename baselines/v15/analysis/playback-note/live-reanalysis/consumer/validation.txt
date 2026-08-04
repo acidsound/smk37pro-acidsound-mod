@@ -1,0 +1,61 @@
+playback-note live consumer reanalysis validation PASS
+PASS	sha256	build/v15-official-app.bin	36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS	sha256	baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/app.bin	7c672938023beee74d599f43ccd5c7642396b89819e929501274239aed5e5d4b
+PASS	sha256	baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin	c6e4cf567b2f22d7e39d3b4e0f6cae8c7fd140661e31763567b15a9fcf1e3a3d
+PASS	bytes	official	0x0201c62e	1d41
+PASS	bytes	official	0x0201c63e	80ff8ac60200
+PASS	bytes	official	0x0201c644	00e13e61
+PASS	bytes	official	0x0201c648	8d40
+PASS	bytes	official	0x0201c66a	1d42
+PASS	bytes	official	0x0201c66c	e1f1a020
+PASS	bytes	official	0x0201c670	1e41
+PASS	bytes	official	0x0201c672	0f1c
+PASS	bytes	official	0x0201c674	00e1a270
+PASS	bytes	official	0x0201c67c	80ff4cc60200
+PASS	bytes	official	0x0201c682	00e13e71
+PASS	bytes	official	0x0201c686	8e40
+PASS	bytes	official	0x0201c68c	8d42
+PASS	bytes	s1c3	0x0201c63e	80fffa1a0000
+PASS	bytes	s1c3	0x0201c644	00e13e61
+PASS	bytes	s1c3	0x0201c648	8d40
+PASS	bytes	s1c3	0x0201c67c	80ffc01a0000
+PASS	bytes	s1c3	0x0201c682	00e13e71
+PASS	bytes	s1c3	0x0201c686	8e40
+PASS	bytes	s1c3	0x0201c68c	8d42
+PASS	bytes	s1c3	0x0201e142	6316
+PASS	bytes	s1c3	0x0201e14a	85f81712
+PASS	bytes	s1c3	0x0201e156	f33c
+PASS	bytes	s1c3	0x0201e158	c8ff2065c401
+PASS	bytes	s1c3	0x0201e17e	80ff4aab0200
+PASS	bytes	s1c3	0x0201e184	5904
+PASS	bytes	s1c4	0x0201c63e	80fffa1a0000
+PASS	bytes	s1c4	0x0201c644	001600160016
+PASS	bytes	s1c4	0x0201c67c	80ffc01a0000
+PASS	bytes	s1c4	0x0201c682	001600160016
+PASS	bytes	s1c4	0x0201c68c	8d42
+PASS	bytes	s1c4	0x0201e142	6316
+PASS	bytes	s1c4	0x0201e158	f33c
+PASS	bytes	s1c4	0x0201e17c	07e1008a
+PASS	bytes	s1c4	0x0201e182	7d40
+PASS	bytes	s1c4	0x0201e184	6116
+PASS	bytes	s1c4	0x0201e188	80ff40ab0200
+PASS	bytes	s1c4	0x0201e18e	00e19c40
+PASS	bytes	s1c4	0x0201e192	8d40
+PASS	bytes	s1c4	0x0201e1e8	01e19b40
+PASS	bytes	s1c4	0x0201e1ec	1a40
+PASS	bytes	s1c4	0x0201e1ee	8a40
+PASS	bytes	s1c4	0x0201e1f0	4a3f
+PASS	s1c3-evidence	slot_formula	slot = note - 36
+PASS	s1c4-evidence	segmented_final_supported	true
+PASS	s1c4-evidence	wire_playback_note_offset	161
+PASS	s1c3-selector-decode	0x0201e142	6316
+PASS	s1c3-selector-decode	0x0201e156	f33c
+PASS	s1c3-selector-decode	0x0201e17a	5116
+PASS	s1c3-selector-decode	0x0201e17e	80ff4aab0200
+PASS	s1c3-selector-decode	0x0201e184	5904
+PASS	s1c4-decode	0x0201e17c	selector.map_base
+PASS	s1c4-decode	0x0201e182	selector.load_playback_note
+PASS	s1c4-decode	0x0201e184	selector.select_source
+PASS	s1c4-decode	0x0201e192	selector.metadata_note_store
+PASS	s1c4-decode	0x0201e1ec	producer.playback_load
+PASS	s1c4-decode	0x0201e1f0	producer.restore_value
