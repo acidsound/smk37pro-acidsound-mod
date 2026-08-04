@@ -384,7 +384,7 @@ async function loadDemo() {
 }
 
 async function loadDrumKit() {
-  return loadManifest("samples/fm-drum-kit/manifest.json", "FM Drum Preset 16개를 불러왔습니다. Trigger Note는 고정이고 Playback Note만 drum map으로 설정되었습니다.");
+  return loadManifest("samples/fm-drum-kit/manifest.json", "FM Drum Preset 16개를 불러왔습니다. 현재 S1C5에서는 packet identity 보호를 위해 Playback Note를 Original로 유지합니다.");
 }
 
 function exportSet() {

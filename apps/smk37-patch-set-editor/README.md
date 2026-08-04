@@ -6,7 +6,7 @@ Windows/macOS Desktop Chrome용 무의존성 Web MIDI patch-set 편집기입니�
 
 - Node.js 20 이상
 - Desktop Chrome 또는 Chromium 계열 브라우저
-- Playback Note 지원 펌웨어가 설치된 SMK-37 Pro
+- S1C5 Playback Note 펌웨어가 설치된 SMK-37 Pro
 - 브라우저의 Web MIDI SysEx 권한 허용
 
 `localhost`는 Web MIDI가 허용되는 secure context로 취급됩니다.
@@ -66,3 +66,4 @@ npm test
 ## 저장 공간
 
 앱 전체가 정적 HTML/CSS/JavaScript와 약 2.6KB의 SysEx sample로 구성됩니다. 외부 런타임 또는 프레임워크를 복사하지 않습니다.
+� HTML/CSS/JavaScript와 약 2.6KB의 SysEx sample로 구성됩니다. 외부 런타임 또는 프레임워크를 복사하지 않습니다.

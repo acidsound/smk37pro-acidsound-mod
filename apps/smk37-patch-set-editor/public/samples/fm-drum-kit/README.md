@@ -26,8 +26,11 @@ source banks, direct URLs, SHA-256 values, fixed Trigger Notes, and explicit Pla
 | 15 | 46 | 50 / D2 | Cowbell | COW BELL |
 | 16 | 47 | 51 / D#2 | Shaker | Shaker |
 
-Trigger Notes are the SMK physical Pad identity and remain unchanged. Playback Notes are
-sent in the S1-C4/S1-C5 packet sideband and can be edited per Pad in the editor.
+Trigger Notes are the SMK physical Pad identity and remain unchanged. The prior drum-map
+Playback Notes were not safe on the flashed S1C5: packet byte 161 is still coupled to the
+16-slot transaction identity. This preset therefore uses identity-safe Original Playback
+Notes so all 16 FM voices load without collapsing the slot transaction. A separate firmware
+change is required before arbitrary drum-map Playback Notes can be used safely.
 
 ## Use
 
