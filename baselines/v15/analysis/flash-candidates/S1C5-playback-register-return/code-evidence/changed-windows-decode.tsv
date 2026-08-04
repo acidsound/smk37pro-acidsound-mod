@@ -1,0 +1,7 @@
+window	address	size	bytes	op	asm
+note_off	0x0201c644	2	0d40	load_byte_zero_extend	lb.z r5,[r0]
+note_off	0x0201c646	2	0016	mov_reg	mov r0,r0
+note_off	0x0201c648	2	0016	mov_reg	mov r0,r0
+note_on	0x0201c682	2	0e40	load_byte_zero_extend	lb.z r6,[r0]
+note_on	0x0201c684	2	0016	mov_reg	mov r0,r0
+note_on	0x0201c686	2	0016	mov_reg	mov r0,r0

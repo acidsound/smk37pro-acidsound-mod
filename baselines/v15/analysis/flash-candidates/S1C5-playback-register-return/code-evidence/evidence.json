@@ -1,0 +1,88 @@
+{
+  "abi_contract": {
+    "duplicates": "0..127 metadata bytes allowed, including all sixteen playback notes set to C4 (60)",
+    "note_off_caller": "post-hook window reloads [r0] into r5 before native Note Off consumer continues",
+    "note_on_caller": "post-hook window reloads [r0] into r6; velocity remains native r5 and 0x0201c68c is preserved",
+    "selector_r0_return": "S1-C4 v3 selector stores mapped Playback Note at [dest+0x9c] and returns with r0 == dest+0x9c",
+    "trigger_source": "producer and selector source bytes unchanged, so source slot remains trigger_note-36"
+  },
+  "basis": {
+    "parent_app_sha256": "c6e4cf567b2f22d7e39d3b4e0f6cae8c7fd140661e31763567b15a9fcf1e3a3d",
+    "parent_candidate": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final",
+    "parent_package_sha256": "376d931e9f5fbdfb5737347b6984fad493f35f023134f8309d4792286c1c7aec"
+  },
+  "changed_instructions": [
+    {
+      "address": "0x0201c644",
+      "asm": "lb.z r5,[r0]",
+      "bytes": "0d40",
+      "op": "load_byte_zero_extend",
+      "size": 2,
+      "window": "note_off"
+    },
+    {
+      "address": "0x0201c646",
+      "asm": "mov r0,r0",
+      "bytes": "0016",
+      "op": "mov_reg",
+      "size": 2,
+      "window": "note_off"
+    },
+    {
+      "address": "0x0201c648",
+      "asm": "mov r0,r0",
+      "bytes": "0016",
+      "op": "mov_reg",
+      "size": 2,
+      "window": "note_off"
+    },
+    {
+      "address": "0x0201c682",
+      "asm": "lb.z r6,[r0]",
+      "bytes": "0e40",
+      "op": "load_byte_zero_extend",
+      "size": 2,
+      "window": "note_on"
+    },
+    {
+      "address": "0x0201c684",
+      "asm": "mov r0,r0",
+      "bytes": "0016",
+      "op": "mov_reg",
+      "size": 2,
+      "window": "note_on"
+    },
+    {
+      "address": "0x0201c686",
+      "asm": "mov r0,r0",
+      "bytes": "0016",
+      "op": "mov_reg",
+      "size": 2,
+      "window": "note_on"
+    }
+  ],
+  "decision": "PASS",
+  "format": "smk37-v15-s1c5-playback-register-return.code-evidence-v1",
+  "preserved_code": {
+    "combined_sha256": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+    "end_exclusive": "0x0201e254",
+    "producer_sha256": "a7627984549f62592384189a707ef04512921ad693b18409eb483dcccb53c438",
+    "selector_sha256": "900e8f05c8157737e89a22338b9a4575aa3ff124bd70ff132de0226654fce29f",
+    "start": "0x0201e13e",
+    "status": "preserved byte-for-byte from exact S1-C4 v3"
+  },
+  "scope": {
+    "device_accessed": false,
+    "flash_performed": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "reset_performed": false
+  },
+  "validation": [
+    "PASS\tnote_off\t0x0201c644\t001600160016->0d4000160016\tlb.z r5,[r0]; mov r0,r0; mov r0,r0",
+    "PASS\tnote_on\t0x0201c682\t001600160016->0e4000160016\tlb.z r6,[r0]; mov r0,r0; mov r0,r0",
+    "PASS\tpreserved\tproducer/selector combined bytes unchanged",
+    "PASS\tpreserved\tNote On velocity store 0x0201c68c remains stock",
+    "PASS\tduplicates\tPlayback Note values 0..127 accepted by metadata byte policy, including all sixteen slots mapped to C4 (60)"
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "basis_app": "S1C4-playback-note-v3-segmented-final/app.bin",
+  "basis_app_sha256": "c6e4cf567b2f22d7e39d3b4e0f6cae8c7fd140661e31763567b15a9fcf1e3a3d",
+  "callsite_contract": {
+    "direct_product_callsite": {
+      "address": "0x0201e468",
+      "bytes": "bfeadefe",
+      "status": "preserved",
+      "target": "0x0201e228"
+    },
+    "note_off_hook": {
+      "address": "0x0201c63e",
+      "bytes": "80fffa1a0000",
+      "status": "unchanged",
+      "target": "0x0201e13e"
+    },
+    "note_off_register_reload": {
+      "address": "0x0201c644",
+      "bytes": "0d4000160016",
+      "decode": "lb.z r5,[r0]; mov r0,r0; mov r0,r0",
+      "purpose": "stock Note Off post-hook store now consumes selector-returned metadata byte"
+    },
+    "note_on_hook": {
+      "address": "0x0201c67c",
+      "bytes": "80ffc01a0000",
+      "status": "unchanged",
+      "target": "0x0201e142"
+    },
+    "note_on_register_reload": {
+      "address": "0x0201c682",
+      "bytes": "0e4000160016",
+      "decode": "lb.z r6,[r0]; mov r0,r0; mov r0,r0",
+      "purpose": "stock Note On post-hook store now consumes selector-returned metadata byte"
+    },
+    "note_on_velocity_store": {
+      "address": "0x0201c68c",
+      "bytes": "8d42",
+      "status": "preserved"
+    },
+    "producer_selector_window": {
+      "address": "0x0201e13e",
+      "end_exclusive": "0x0201e254",
+      "sha256": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+      "status": "preserved byte-for-byte from S1-C4 v3"
+    },
+    "segmented_product_callsite": {
+      "address": "0x0201e49c",
+      "bytes": "bfeac4fe",
+      "segmented_final_supported": true,
+      "status": "preserved",
+      "target": "0x0201e228"
+    }
+  },
+  "format": "smk37-v15-s1c5-playback-register-return.app-manifest-v1",
+  "input_gates": [
+    {
+      "name": "official-v15-basis",
+      "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "official_fwsc_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+      "status": "PASS"
+    },
+    {
+      "name": "exact-s1c4-v3-app-package-basis",
+      "parent_app_sha256": "c6e4cf567b2f22d7e39d3b4e0f6cae8c7fd140661e31763567b15a9fcf1e3a3d",
+      "parent_candidate": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final",
+      "parent_fwsc_sha256": "376d931e9f5fbdfb5737347b6984fad493f35f023134f8309d4792286c1c7aec",
+      "status": "PASS"
+    },
+    {
+      "combined_sha256": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+      "name": "selector-r0-return-and-playback-map-abi",
+      "producer_playback_store": "wire byte 161 -> 0x01c46f20+slot",
+      "producer_sha256": "a7627984549f62592384189a707ef04512921ad693b18409eb483dcccb53c438",
+      "r0_return": "selector stores mapped byte to [dest+0x9c] and returns with r0 == dest+0x9c",
+      "selector_sha256": "900e8f05c8157737e89a22338b9a4575aa3ff124bd70ff132de0226654fce29f",
+      "source_invariant": "source slot remains trigger_note-36",
+      "status": "PASS"
+    },
+    {
+      "name": "exact-caller-post-hook-windows",
+      "note_off_parent_neutral": "001600160016",
+      "note_off_stock_post_store": "00e13e618d40",
+      "note_on_parent_neutral": "001600160016",
+      "note_on_stock_post_store": "00e13e718e40",
+      "note_on_velocity_store": "8d42",
+      "status": "PASS"
+    },
+    {
+      "device_accessed": false,
+      "flash_performed": false,
+      "midi_transport_opened": false,
+      "name": "offline-scope",
+      "reset_performed": false,
+      "status": "PASS"
+    }
+  ],
+  "output_app_sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+  "parent_relative_changed_byte_count": 4,
+  "parent_relative_changed_ranges": [
+    {
+      "end_exclusive": 116294,
+      "start": 116292
+    },
+    {
+      "end_exclusive": 116356,
+      "start": 116354
+    }
+  ],
+  "patches": [
+    {
+      "address": "0x0201c644",
+      "byte_count": 6,
+      "end_exclusive": "0x0201c64a",
+      "new_hex": "0d4000160016",
+      "new_sha256": "6679c6f463da31c111ffde8becc9f03d7c0b2d59f8cb7df5a2e592e27f2e231d",
+      "old_hex": "001600160016",
+      "old_sha256": "1bbb9b600c24d72b153d3edd59cbbbcad74f7b1e96aac3a4af83286bebcf2097",
+      "purpose": "Note Off reload mapped playback note from selector-returned [r0] into r5; preserve r0 and remove duplicate stock store"
+    },
+    {
+      "address": "0x0201c682",
+      "byte_count": 6,
+      "end_exclusive": "0x0201c688",
+      "new_hex": "0e4000160016",
+      "new_sha256": "a2a10f684fd18c943317bc21e4ec21499422e481d8ea867399e55a790ad46821",
+      "old_hex": "001600160016",
+      "old_sha256": "1bbb9b600c24d72b153d3edd59cbbbcad74f7b1e96aac3a4af83286bebcf2097",
+      "purpose": "Note On reload mapped playback note from selector-returned [r0] into r6; preserve velocity r5 and remove duplicate stock store"
+    }
+  ],
+  "runtime_base": "0x02000000"
+}
