@@ -1,0 +1,10 @@
+S1-C4 Playback Note build validation: PASS
+PASS	range	selector 0x0201e13e..0x0201e196; producer 0x0201e196..0x0201e252; owned_end 0x0201e254
+PASS	selector-sha256	2670e3d2e9a9c47e8a48170ed13a2539b5ccd6229876f3b1689b69a73c8df7a7
+PASS	producer-sha256	a7627984549f62592384189a707ef04512921ad693b18409eb483dcccb53c438
+PASS	combined-sha256	f877aa68476b88644e81df1fe2c7670591c3883f9a443b2d303007d677a48364
+PASS	direct-callsite	bfeadefe -> 0x0201e228
+PASS	segmented-callsite	bfeac2fe -> 0x0201e224
+PASS	selector-contract	source slot remains trigger_note-36; ARMED gate precedes Playback Note map load; r0 returns metadata pointer
+PASS	producer-contract	wire byte 161 stored to 0x01c46f20+slot; staging and slot[0x9b] restored to 0x3f; ARMED last
+PASS	playback-range	0..127 allowed including duplicates; repeated-note risk documented
