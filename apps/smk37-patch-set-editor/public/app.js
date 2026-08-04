@@ -1,12 +1,14 @@
 import {
   PAD_TO_NOTE,
   createPatchSetDocument,
+  midiNoteName,
   parsePatchSetDocument,
   transmissionOrder,
   validateEditorSysEx,
 } from "./sysex.mjs";
 
 const slots = Array(16).fill(null);
+const playbackNotes = Array(16).fill(null);
 let midiAccess = null;
 let sending = false;
 const padElements = [];
@@ -57,6 +59,7 @@ function renderPad(index, error = "") {
   card.classList.toggle("error", Boolean(error));
   card.querySelector(".patch-name").textContent = error || slot?.name || "Empty";
   card.querySelector(".patch-file").textContent = slot?.fileName || "Drop a 163-byte .syx";
+  card.querySelector(".playback-note").value = playbackNotes[index] === null ? "" : String(playbackNotes[index]);
   card.querySelector(".download-patch").disabled = !slot;
   card.querySelector(".clear-patch").disabled = !slot;
   updateHealth();
@@ -104,6 +107,16 @@ function buildPads() {
     card.dataset.pad = String(pad);
     card.querySelector(".pad-number").textContent = `PAD ${pad}`;
     card.querySelector(".pad-note").textContent = `CH10 · NOTE ${PAD_TO_NOTE[index]}`;
+    const playbackSelect = card.querySelector(".playback-note");
+    playbackSelect.add(new Option(`Original · ${midiNoteName(PAD_TO_NOTE[index])} (${PAD_TO_NOTE[index]})`, ""));
+    for (let note = 0; note <= 127; note += 1) {
+      playbackSelect.add(new Option(`${midiNoteName(note)} · ${note}`, String(note)));
+    }
+    playbackSelect.addEventListener("change", () => {
+      playbackNotes[index] = playbackSelect.value === "" ? null : Number(playbackSelect.value);
+      const effective = playbackNotes[index] ?? PAD_TO_NOTE[index];
+      log(`Pad ${String(pad).padStart(2, "0")} Playback Note → ${midiNoteName(effective)} (${effective})${playbackNotes[index] === null ? " · Original" : ""}`);
+    });
     const input = card.querySelector(".pad-file-input");
     card.querySelector(".choose-patch").addEventListener("click", () => input.click());
     input.addEventListener("change", () => input.files?.[0] && loadFileIntoPad(input.files[0], pad));
@@ -173,7 +186,10 @@ async function sendAll() {
   const output = selectedOutput();
   if (!output) { log("MIDI Output을 선택하세요.", "ERROR"); return; }
   try {
-    const queue = transmissionOrder(slots);
+    const queue = transmissionOrder(slots, playbackNotes);
+    if (playbackNotes.some((note) => note !== null)) {
+      log("Playback Note 설정은 Set에 저장되었습니다. 대응 펌웨어 protocol이 설치되기 전에는 patch data만 전송됩니다.", "WARN");
+    }
     sending = true;
     elements.progress.value = 0;
     updateHealth();
@@ -181,7 +197,7 @@ async function sendAll() {
     for (const item of queue) {
       output.send(item.bytes);
       elements.progress.value = item.order;
-      log(`Sent ${item.order}/16 · Pad ${String(item.pad).padStart(2, "0")} · note ${item.note} · ${item.name}`);
+      log(`Sent ${item.order}/16 · Pad ${String(item.pad).padStart(2, "0")} · trigger ${item.triggerNote} · playback ${item.playbackNote} · ${item.name}`);
       await new Promise((resolve) => setTimeout(resolve, 100));
     }
     log("16개 patch 전송 완료. Pad 1–16을 확인하세요.", "PASS");
@@ -199,6 +215,7 @@ async function loadDemo() {
       if (!response.ok) throw new Error(`sample manifest HTTP ${response.status}`);
       return response.json();
     });
+    playbackNotes.fill(null);
     for (const patch of manifest.patches) {
       const response = await fetch(`samples/bank-d-demo/${patch.file}`);
       if (!response.ok) throw new Error(`${patch.file}: HTTP ${response.status}`);
@@ -215,7 +232,7 @@ async function loadDemo() {
 
 function exportSet() {
   try {
-    const document = createPatchSetDocument(slots, elements.title.value.trim() || "Untitled Patch Set");
+    const document = createPatchSetDocument(slots, elements.title.value.trim() || "Untitled Patch Set", playbackNotes);
     const data = new TextEncoder().encode(`${JSON.stringify(document, null, 2)}\n`);
     const safe = document.title.replace(/[^A-Za-z0-9._-]+/g, "-").replace(/^-|-$/g, "") || "patch-set";
     download(`${safe}.smkpatchset.json`, data, "application/json");
@@ -227,6 +244,7 @@ async function importSet(file) {
   try {
     const parsed = parsePatchSetDocument(JSON.parse(await file.text()));
     slots.splice(0, slots.length, ...parsed.slots);
+    playbackNotes.splice(0, playbackNotes.length, ...parsed.playbackNotes);
     elements.title.value = parsed.title;
     slots.forEach((_, index) => renderPad(index));
     log(`${file.name}: patch set 가져오기 완료`, "PASS");
@@ -243,8 +261,19 @@ elements.filePicker.addEventListener("change", () => loadMany([...elements.fileP
 document.querySelector("#import-set").addEventListener("click", () => elements.setPicker.click());
 elements.setPicker.addEventListener("change", () => elements.setPicker.files?.[0] && importSet(elements.setPicker.files[0]));
 document.querySelector("#export-set").addEventListener("click", exportSet);
+document.querySelector("#all-original").addEventListener("click", () => {
+  playbackNotes.fill(null);
+  playbackNotes.forEach((_, index) => renderPad(index));
+  log("모든 Pad의 Playback Note를 Original로 설정했습니다.");
+});
+document.querySelector("#all-c4").addEventListener("click", () => {
+  playbackNotes.fill(60);
+  playbackNotes.forEach((_, index) => renderPad(index));
+  log("모든 Pad의 Playback Note를 C4 (60)로 설정했습니다.");
+});
 document.querySelector("#clear-set").addEventListener("click", () => {
   slots.fill(null);
+  playbackNotes.fill(null);
   slots.forEach((_, index) => renderPad(index));
   elements.progress.value = 0;
   log("모든 Pad를 비웠습니다.");

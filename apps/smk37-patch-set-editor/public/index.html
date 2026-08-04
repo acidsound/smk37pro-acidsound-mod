@@ -32,6 +32,8 @@
         <button id="load-files">16개 .syx 선택</button>
         <button id="import-set">Set 가져오기</button>
         <button id="export-set">Set 내보내기</button>
+        <button id="all-original">Playback 전체 Original</button>
+        <button id="all-c4">Playback 전체 C4</button>
         <button id="clear-set" class="danger-quiet">전체 비우기</button>
       </div>
       <input id="file-picker" type="file" accept=".syx" multiple hidden>
@@ -76,6 +78,10 @@
       <div class="pad-note"></div>
       <strong class="patch-name">Empty</strong>
       <span class="patch-file">Drop a 163-byte .syx</span>
+      <label class="playback-control">
+        <span>Playback Note</span>
+        <select class="playback-note"></select>
+      </label>
       <div class="pad-actions">
         <button class="choose-patch">Choose</button>
         <button class="download-patch" disabled>Save</button>

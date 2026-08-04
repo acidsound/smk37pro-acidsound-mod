@@ -19,6 +19,29 @@ export function patchName(bytes) {
   return new TextDecoder("ascii").decode(bytes.slice(151, 161)).replace(/[\u0000-\u001f\u007f]/g, " ").trimEnd();
 }
 
+export function midiNoteName(note) {
+  if (!Number.isInteger(note) || note < 0 || note > 127) throw new SysExError(`MIDI note must be 0..127, received ${note}`);
+  const names = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"];
+  return `${names[note % 12]}${Math.floor(note / 12) - 1}`;
+}
+
+export function validatePlaybackNotes(input = Array(16).fill(null)) {
+  if (!Array.isArray(input) || input.length !== 16) throw new SysExError("16 Playback Note values are required");
+  return input.map((note, index) => {
+    if (note === null || note === undefined || note === "original") return null;
+    const parsed = Number(note);
+    if (!Number.isInteger(parsed) || parsed < 0 || parsed > 127) {
+      throw new SysExError(`Pad ${index + 1} Playback Note must be Original or 0..127`);
+    }
+    return parsed;
+  });
+}
+
+export function effectivePlaybackNote(playbackNotes, pad) {
+  const validated = validatePlaybackNotes(playbackNotes);
+  return validated[pad - 1] ?? PAD_TO_NOTE[pad - 1];
+}
+
 export function validateEditorSysEx(input) {
   const bytes = input instanceof Uint8Array ? input : new Uint8Array(input);
   if (bytes.length !== PACKET_SIZE) throw new SysExError(`163 bytes required, received ${bytes.length}`);
@@ -59,16 +82,19 @@ export function base64ToBytes(value) {
   return Uint8Array.from(binary, (character) => character.charCodeAt(0));
 }
 
-export function createPatchSetDocument(slots, title = "Untitled Patch Set") {
+export function createPatchSetDocument(slots, title = "Untitled Patch Set", playbackNotes = Array(16).fill(null)) {
   if (slots.length !== 16 || slots.some((slot) => !slot)) throw new SysExError("all 16 Pads must contain a valid patch");
+  const validatedPlaybackNotes = validatePlaybackNotes(playbackNotes);
   return {
-    format: "smk37-v15-s1c3-web-patch-set-v1",
+    format: "smk37-v15-s1c3-web-patch-set-v2",
     title,
     createdAt: new Date().toISOString(),
     physicalPadNoteSequence: PAD_TO_NOTE,
+    playbackNotes: validatedPlaybackNotes,
     patches: slots.map((slot, index) => ({
       pad: index + 1,
       note: PAD_TO_NOTE[index],
+      playbackNote: validatedPlaybackNotes[index],
       name: slot.name,
       sourceFile: slot.fileName,
       syxBase64: bytesToBase64(slot.bytes),
@@ -77,9 +103,12 @@ export function createPatchSetDocument(slots, title = "Untitled Patch Set") {
 }
 
 export function parsePatchSetDocument(document) {
-  if (document?.format !== "smk37-v15-s1c3-web-patch-set-v1" || !Array.isArray(document.patches) || document.patches.length !== 16) {
+  const supported = document?.format === "smk37-v15-s1c3-web-patch-set-v1" || document?.format === "smk37-v15-s1c3-web-patch-set-v2";
+  if (!supported || !Array.isArray(document.patches) || document.patches.length !== 16) {
     throw new SysExError("unsupported or incomplete patch-set document");
   }
+  const embeddedPlaybackNotes = document.patches.map((item) => item.playbackNote ?? null);
+  const playbackNotes = validatePlaybackNotes(document.playbackNotes ?? embeddedPlaybackNotes);
   const slots = Array(16).fill(null);
   for (const item of document.patches) {
     if (!Number.isInteger(item.pad) || item.pad < 1 || item.pad > 16 || item.note !== PAD_TO_NOTE[item.pad - 1]) {
@@ -89,15 +118,25 @@ export function parsePatchSetDocument(document) {
     slots[item.pad - 1] = { ...parsed, fileName: item.sourceFile || `pad${String(item.pad).padStart(2, "0")}.syx` };
   }
   if (slots.some((slot) => !slot)) throw new SysExError("patch-set has duplicate or missing Pads");
-  return { title: String(document.title || "Imported Patch Set"), slots };
+  return { title: String(document.title || "Imported Patch Set"), slots, playbackNotes };
 }
 
-export function transmissionOrder(slots) {
+export function transmissionOrder(slots, playbackNotes = Array(16).fill(null)) {
   if (slots.length !== 16 || slots.some((slot) => !slot)) throw new SysExError("all 16 Pads are required before transmission");
+  const validatedPlaybackNotes = validatePlaybackNotes(playbackNotes);
   return Array.from({ length: 16 }, (_, slot) => {
     const note = slot + 36;
     const pad = NOTE_TO_PAD.get(note);
     const patch = slots[pad - 1];
-    return { order: slot + 1, slot, note, pad, name: patch.name, bytes: toSmkRuntimePacket(patch.bytes) };
+    return {
+      order: slot + 1,
+      slot,
+      note,
+      triggerNote: note,
+      playbackNote: validatedPlaybackNotes[pad - 1] ?? note,
+      pad,
+      name: patch.name,
+      bytes: toSmkRuntimePacket(patch.bytes),
+    };
   });
 }

@@ -7,6 +7,8 @@ import {
   PAD_TO_NOTE,
   SMK_RUNTIME_FLAG,
   createPatchSetDocument,
+  effectivePlaybackNote,
+  midiNoteName,
   parsePatchSetDocument,
   patchName,
   toSmkRuntimePacket,
@@ -54,13 +56,37 @@ test("transmission order is note 36..51 and maps to physical Pads", async () => 
 
 test("patch-set JSON round-trips all slots", async () => {
   const slots = await loadSlots();
-  const document = createPatchSetDocument(slots, "Round Trip");
+  const playbackNotes = Array(16).fill(60);
+  playbackNotes[0] = null;
+  playbackNotes[15] = 36;
+  const document = createPatchSetDocument(slots, "Round Trip", playbackNotes);
   const restored = parsePatchSetDocument(JSON.parse(JSON.stringify(document)));
   assert.equal(restored.title, "Round Trip");
+  assert.deepEqual(restored.playbackNotes, playbackNotes);
   for (let index = 0; index < 16; index += 1) {
     assert.equal(restored.slots[index].name, slots[index].name);
     assert.deepEqual(restored.slots[index].bytes, slots[index].bytes);
   }
+});
+
+test("Playback Note changes never alter Trigger Note mapping", async () => {
+  const slots = await loadSlots();
+  const playbackNotes = Array(16).fill(60);
+  const queue = transmissionOrder(slots, playbackNotes);
+  assert.deepEqual(queue.map((item) => item.triggerNote), Array.from({ length: 16 }, (_, index) => index + 36));
+  assert.deepEqual(queue.map((item) => item.playbackNote), Array(16).fill(60));
+  assert.equal(effectivePlaybackNote(Array(16).fill(null), 1), 40);
+  assert.equal(effectivePlaybackNote(playbackNotes, 1), 60);
+  assert.equal(midiNoteName(60), "C4");
+});
+
+test("v1 patch-set imports with Original Playback Notes", async () => {
+  const slots = await loadSlots();
+  const legacy = createPatchSetDocument(slots, "Legacy");
+  legacy.format = "smk37-v15-s1c3-web-patch-set-v1";
+  delete legacy.playbackNotes;
+  for (const patch of legacy.patches) delete patch.playbackNote;
+  assert.deepEqual(parsePatchSetDocument(legacy).playbackNotes, Array(16).fill(null));
 });
 
 test("checksum corruption is rejected", async () => {

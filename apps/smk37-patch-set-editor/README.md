@@ -30,6 +30,8 @@ http://127.0.0.1:3737
 
 - 실제 2×8 Physical Pad 1–16 배치
 - Pad별 `.syx` 파일 선택 및 drag/drop
+- Pad별 내부 신스 `Playback Note` 선택 (`Original` 또는 MIDI Note `0..127`)
+- 전체 Playback Note를 `Original` 또는 `C4 (60)`로 일괄 설정
 - Yamaha DX7 163-byte single-voice header/checksum 검증
 - 검증된 Bank D demo 16개 내장
 - Pad별 `.syx` 다시 저장
@@ -48,13 +50,15 @@ http://127.0.0.1:3737
 
 현재 S1-C3는 16개를 하나의 RAM transaction으로 적재합니다. 한 Pad만 교체하더라도 전체 16개를 전송하며, 장치 재부팅 후 다시 전송해야 합니다.
 
+`Trigger Note`는 Physical Pad 식별과 MIDI OUT을 위해 변경하지 않습니다. `Playback Note`는 Patch Set JSON에 별도 저장되며 내부 Ch10 신스의 발음 음높이만 바꾸기 위한 값입니다. Playback Note SysEx를 소비하는 대응 펌웨어가 설치되기 전에는 앱이 설정을 저장하되 장치에는 patch data만 전송합니다.
+
 ## 테스트
 
 ```bash
 npm test
 ```
 
-테스트는 내장 16개 파일의 checksum, editor→SMK 변환, Physical Pad↔note 순서, patch-set JSON 왕복, 손상 파일 거부를 확인합니다.
+테스트는 내장 16개 파일의 checksum, editor→SMK 변환, Physical Pad↔Trigger Note 불변, Playback Note 저장·복원, v1 Set 호환성, patch-set JSON 왕복, 손상 파일 거부를 확인합니다.
 
 ## 저장 공간
 
