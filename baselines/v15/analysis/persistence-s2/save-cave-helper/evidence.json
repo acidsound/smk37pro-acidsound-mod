@@ -1,0 +1,659 @@
+{
+  "bottom_line": "0x02026d80..0x02026dd4 is safe as a code cave only after patching UI SAVE at 0x02026d7a. The 84-byte cave can hold a tiny callable leaf, but not the requested safe standalone persistence/fallback helper with segmented/reset plus manifest/readback.",
+  "branch_and_call_reach": {
+    "call32_reach": {
+      "producer_entry_example": {
+        "bytes": "80ff528b0000",
+        "callsite": "0x0201e228",
+        "size": 6,
+        "target": "0x02026d80"
+      },
+      "result": "6-byte long call32 reaches from selector/producer-owned code to the SAVE cave.",
+      "selector_example": {
+        "bytes": "80ffea8b0000",
+        "callsite": "0x0201e190",
+        "size": 6,
+        "target": "0x02026d80"
+      }
+    },
+    "existing_product_callsite_reach": {
+      "direct_4_byte_callsite": {
+        "actual_decoded_target": "0x02016d80",
+        "address": "0x0201e468",
+        "current_target": "0x0201e228",
+        "fits_existing_4_bytes": false,
+        "hypothetical_short_bytes_for_cave": "bfea8a44"
+      },
+      "result": "The existing 4-byte short product callsites cannot be retargeted directly to 0x02026d80. A 6-byte long call would be needed, which does not fit those exact callsite windows without a larger rewrite.",
+      "segmented_4_byte_callsite": {
+        "actual_decoded_target": "0x02016d80",
+        "address": "0x0201e49c",
+        "current_target": "0x0201e228",
+        "fits_existing_4_bytes": false,
+        "hypothetical_short_bytes_for_cave": "bfea7044"
+      }
+    },
+    "ui_save_branch_patch_required": {
+      "address": "0x02026d7a",
+      "decode": "jne r0,#1,0x02026dd4; mov r0,r0",
+      "new_hex": "80f82b020016",
+      "old_hex": "60ffff602a00",
+      "safety_argument": "At this point r0==0 because 0x02026d74 would already have left the SAVE path when g[0x1ec] != 0. The replacement always branches to the stock local SAVE exit before 0x02026d80."
+    }
+  },
+  "control_flow_reachability": {
+    "explicit_text_references": {
+      "0x02026d80": [],
+      "0x02026dd4": [
+        "02026d7a\t60ffff602a00\t6\tjmz\tjmz r6,#0xff,0x02026dd4\tCONDITIONAL_JUMP\t-",
+        "020273b8\t868d\t2\tgoto\tgoto 0x02026dd4\tUNCONDITIONAL_JUMP\t-"
+      ]
+    },
+    "header": "address\tbytes\tlength\tmnemonic\ttext\tflow_type\tfunction",
+    "interpretation": "No official exhaustive-listing instruction text names 0x02026d80 as a branch/call target. 0x02026dd4 is explicitly targeted by the SAVE r6==0xff conditional. This does not prove absence of computed indirect control flow, but it gates direct/static references in this listing.",
+    "listing_sha256": "f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347",
+    "rows_in_save_window": [
+      "02026d80\t05e1a083\t4\tadd\tadd r5,r8,#0x3a0\tFALL_THROUGH\t-",
+      "02026d84\t5844\t2\tlb.z\tlb.z r0,[r5 + 0x4]\tFALL_THROUGH\t-",
+      "02026d86\td8ee0015\t4\tlb.z\tlb.z r1,[r0 + r5]\tFALL_THROUGH\t-",
+      "02026d8a\t00a5\t2\tlsl\tlsl r0,r0,0x5\tFALL_THROUGH\t-",
+      "02026d8c\td1ec8026\t4\tldw\tldw r2,r8,#0x160\tFALL_THROUGH\t-",
+      "02026d90\t1018\t2\tadd\tadd r0,r1\tFALL_THROUGH\t-",
+      "02026d92\t0017\t2\tuxtb\tuxtb r0,r0\tFALL_THROUGH\t-",
+      "02026d94\te0e1a300\t4\tmul\tmul r0,r0,#0xa3\tFALL_THROUGH\t-",
+      "02026d98\t2018\t2\tadd\tadd r0,r2\tFALL_THROUGH\t-",
+      "02026d9a\te1e0800c\t4\tadd\tadd r1,r0,0x4000\tFALL_THROUGH\t-",
+      "02026d9e\t14e1148a\t4\tadd\tadd r4,r8,0x1a14\tFALL_THROUGH\t-",
+      "02026da2\t6a23\t2\tmov\tmov r2,#0xa3\tFALL_THROUGH\t-",
+      "02026da4\t4016\t2\tmov\tmov r0,r4\tFALL_THROUGH\t-",
+      "02026da6\tbeeaacee\t4\tcall\tcall 0x02004b02\tUNCONDITIONAL_CALL\t-",
+      "02026daa\t4016\t2\tmov\tmov r0,r4\tFALL_THROUGH\t-",
+      "02026dac\tbfeac7b9\t4\tcall\tcall 0x0201e13e\tUNCONDITIONAL_CALL\t-",
+      "02026db0\t5844\t2\tlb.z\tlb.z r0,[r5 + 0x4]\tFALL_THROUGH\t-",
+      "02026db2\td8ee0015\t4\tlb.z\tlb.z r1,[r0 + r5]\tFALL_THROUGH\t-",
+      "02026db6\t00a5\t2\tlsl\tlsl r0,r0,0x5\tFALL_THROUGH\t-",
+      "02026db8\t0118\t2\tadd\tadd r1,r0\tFALL_THROUGH\t-",
+      "02026dba\t10e19c82\t4\tadd\tadd r0,r8,0x129c\tFALL_THROUGH\t-",
+      "02026dbe\td8ee11f0\t4\tsb\tsb r15,[r1 + r0]\tFALL_THROUGH\t-",
+      "02026dc2\td1ec8016\t4\tldw\tldw r1,r8,#0x160\tFALL_THROUGH\t-",
+      "02026dc6\tc2ff80910000\t6\tmov\tmov r2,#0x9180\tFALL_THROUGH\t-",
+      "02026dcc\t2118\t2\tadd\tadd r1,r2\tFALL_THROUGH\t-",
+      "02026dce\t6220\t2\tmov\tmov r2,#0x80\tFALL_THROUGH\t-",
+      "02026dd0\tbeea97ee\t4\tcall\tcall 0x02004b02\tUNCONDITIONAL_CALL\t-",
+      "02026dd4\t40e0ec01\t4\tmovz\tmovz r0,#0x1ec\tFALL_THROUGH\t-",
+      "02026dd8\td8ee81f0\t4\tsb\tsb r15,[r8 + r0]\tFALL_THROUGH\t-",
+      "02026ddc\tb584\t2\tgoto\tgoto 0x020274a6\tUNCONDITIONAL_JUMP\t-"
+    ]
+  },
+  "decision": "BLOCK_FULL_HELPER_PARTIAL_CAVE_LEAF_ONLY",
+  "exact_s1c5_bytes": {
+    "cave_start_stock_arithmetic": {
+      "address": "0x02026d80",
+      "hex": "05e1a0835844d8ee001500a5d1ec802610180017e0e1a3002018e1e0800c14e1148a6a234016",
+      "size": 38
+    },
+    "current_ui_branch": {
+      "address": "0x02026d7a",
+      "hex": "60ffff602a00",
+      "size": 6
+    },
+    "direct_product_callsite": {
+      "address": "0x0201e468",
+      "decoded_short_target": "0x0201e228",
+      "hex": "bfeadefe",
+      "size": 4
+    },
+    "post_neutral_flag_sequence_until_exit": {
+      "address": "0x02026db0",
+      "hex": "5844d8ee001500a5011810e19c82d8ee11f0d1ec8016c2ff8091000021186220beea97ee",
+      "size": 36
+    },
+    "s1c5_packer_neutral": {
+      "address": "0x02026dac",
+      "hex": "00000000",
+      "size": 4
+    },
+    "s1c5_raw_write_reject": {
+      "address": "0x02026da6",
+      "hex": "04960000",
+      "size": 4
+    },
+    "save_gate_load_and_exit_test": {
+      "address": "0x02026d74",
+      "hex": "01ff00009603",
+      "size": 6
+    },
+    "segmented_product_callsite": {
+      "address": "0x0201e49c",
+      "decoded_short_target": "0x0201e228",
+      "hex": "bfeac4fe",
+      "size": 4
+    },
+    "stock_local_save_exit": {
+      "address": "0x02026dd4",
+      "hex": "40e0ec01d8ee81f0b584",
+      "size": 10
+    }
+  },
+  "fit_lower_bounds": {
+    "defensible_writer_required_extras": {
+      "manifest_write_floor_before_crc_construction": 42,
+      "producer_call_insertion_floor": 6,
+      "readback_verify_floor_per_write": 20,
+      "requires_commit_last_order": true,
+      "requires_full_length_return_checks": true,
+      "requires_payload_crc_or_equivalent": true
+    },
+    "exact_budget": {
+      "cave_bytes": 84,
+      "cave_end_exclusive": "0x02026dd4",
+      "cave_start": "0x02026d80",
+      "owned_selector_producer_window": {
+        "bytes": 278,
+        "current_producer": 188,
+        "current_selector": 88,
+        "current_tail": 2,
+        "end_exclusive": "0x0201e254",
+        "free_without_rewrite": 0,
+        "start": "0x0201e13e"
+      },
+      "ui_branch_patch_bytes_outside_cave": 6
+    },
+    "manifest_note_fallback_lower_bound": {
+      "base": {
+        "bytes": 54,
+        "parts": [
+          {
+            "bytes": 6,
+            "name": "mov32_g",
+            "reason": "load 0x01c33260, cannot assume UI r8"
+          },
+          {
+            "bytes": 4,
+            "name": "ldw_direct_view",
+            "reason": "load *(g+0x164)"
+          },
+          {
+            "bytes": 6,
+            "name": "mov32_reserved_offset",
+            "reason": "0x4000 + record_base*0xa3"
+          },
+          {
+            "bytes": 4,
+            "name": "slot_stride",
+            "reason": "slot*0xa3"
+          },
+          {
+            "bytes": 2,
+            "name": "add_reserved_offset",
+            "reason": "base + reserved offset"
+          },
+          {
+            "bytes": 2,
+            "name": "add_slot_offset",
+            "reason": "source prefix"
+          },
+          {
+            "bytes": 2,
+            "name": "copy_dest",
+            "reason": "r0=dest"
+          },
+          {
+            "bytes": 2,
+            "name": "copy_source",
+            "reason": "r1=source"
+          },
+          {
+            "bytes": 2,
+            "name": "copy_len",
+            "reason": "r2=0x9c"
+          },
+          {
+            "bytes": 6,
+            "name": "memcpy_call",
+            "reason": "copy prefix"
+          },
+          {
+            "bytes": 4,
+            "name": "metadata_pointer_9b",
+            "reason": "point at copied note byte"
+          },
+          {
+            "bytes": 2,
+            "name": "load_note",
+            "reason": "load Playback Note"
+          },
+          {
+            "bytes": 2,
+            "name": "restore_3f",
+            "reason": "voice[0x9b]=0x3f"
+          },
+          {
+            "bytes": 2,
+            "name": "store_3f",
+            "reason": "store 0x3f"
+          },
+          {
+            "bytes": 4,
+            "name": "metadata_pointer_9c",
+            "reason": "return metadata pointer"
+          },
+          {
+            "bytes": 2,
+            "name": "store_metadata",
+            "reason": "store note metadata"
+          },
+          {
+            "bytes": 2,
+            "name": "return",
+            "reason": "normal return lower bound"
+          }
+        ]
+      },
+      "bytes": 66,
+      "extra": {
+        "bytes": 12,
+        "parts": [
+          {
+            "bytes": 6,
+            "name": "mov32_manifest_offset",
+            "reason": "load manifest raw-record offset"
+          },
+          {
+            "bytes": 2,
+            "name": "add_manifest_base",
+            "reason": "direct base + manifest offset"
+          },
+          {
+            "bytes": 2,
+            "name": "manifest_slot",
+            "reason": "manifest note byte + slot"
+          },
+          {
+            "bytes": 2,
+            "name": "load_manifest_note",
+            "reason": "load note from manifest"
+          }
+        ]
+      },
+      "fits_cave": true,
+      "spare_if_alone": 18
+    },
+    "raw_payload_fallback_lower_bound": {
+      "bytes": 54,
+      "fits_cave": true,
+      "parts": [
+        {
+          "bytes": 6,
+          "name": "mov32_g",
+          "reason": "load 0x01c33260, cannot assume UI r8"
+        },
+        {
+          "bytes": 4,
+          "name": "ldw_direct_view",
+          "reason": "load *(g+0x164)"
+        },
+        {
+          "bytes": 6,
+          "name": "mov32_reserved_offset",
+          "reason": "0x4000 + record_base*0xa3"
+        },
+        {
+          "bytes": 4,
+          "name": "slot_stride",
+          "reason": "slot*0xa3"
+        },
+        {
+          "bytes": 2,
+          "name": "add_reserved_offset",
+          "reason": "base + reserved offset"
+        },
+        {
+          "bytes": 2,
+          "name": "add_slot_offset",
+          "reason": "source prefix"
+        },
+        {
+          "bytes": 2,
+          "name": "copy_dest",
+          "reason": "r0=dest"
+        },
+        {
+          "bytes": 2,
+          "name": "copy_source",
+          "reason": "r1=source"
+        },
+        {
+          "bytes": 2,
+          "name": "copy_len",
+          "reason": "r2=0x9c"
+        },
+        {
+          "bytes": 6,
+          "name": "memcpy_call",
+          "reason": "copy prefix"
+        },
+        {
+          "bytes": 4,
+          "name": "metadata_pointer_9b",
+          "reason": "point at copied note byte"
+        },
+        {
+          "bytes": 2,
+          "name": "load_note",
+          "reason": "load Playback Note"
+        },
+        {
+          "bytes": 2,
+          "name": "restore_3f",
+          "reason": "voice[0x9b]=0x3f"
+        },
+        {
+          "bytes": 2,
+          "name": "store_3f",
+          "reason": "store 0x3f"
+        },
+        {
+          "bytes": 4,
+          "name": "metadata_pointer_9c",
+          "reason": "return metadata pointer"
+        },
+        {
+          "bytes": 2,
+          "name": "store_metadata",
+          "reason": "store note metadata"
+        },
+        {
+          "bytes": 2,
+          "name": "return",
+          "reason": "normal return lower bound"
+        }
+      ],
+      "spare_if_alone": 30
+    },
+    "segmented_reset_manifest_readback_fit": {
+      "cave_cannot_absorb_full_requirement": "The cave can hold one small leaf routine after the UI branch patch, but a full safe persistence design also needs selector/producer rewrite space, a 16-record writer, full-length checks, readback/compare, manifest/CRC construction, and commit-last sequencing. The exact current selector/producer window has no free bytes, and the existing product callsites cannot directly retarget to the cave.",
+      "compact_direct_only_no_reset_no_manifest_no_readback_bytes": 276,
+      "decision": "DOES_NOT_FIT_EXACT_PROVEN_BUDGET",
+      "direct_only_spare": 2,
+      "overrun_with_readback_floor": 18,
+      "overrun_with_segmented_final_stub": 2,
+      "overrun_with_slot0_reset_floor": 28,
+      "owned_window_bytes": 278
+    },
+    "selector_tailcall_lower_bound": {
+      "bytes": 50,
+      "parts": [
+        {
+          "bytes": 2,
+          "name": "note_off_adapter",
+          "reason": "normalize Note Off trigger"
+        },
+        {
+          "bytes": 2,
+          "name": "local_goto",
+          "reason": "skip Note On adapter"
+        },
+        {
+          "bytes": 2,
+          "name": "note_on_adapter",
+          "reason": "normalize Note On trigger"
+        },
+        {
+          "bytes": 2,
+          "name": "push_saved",
+          "reason": "preserve selector frame"
+        },
+        {
+          "bytes": 2,
+          "name": "save_dest",
+          "reason": "save original destination"
+        },
+        {
+          "bytes": 2,
+          "name": "default_note",
+          "reason": "default metadata"
+        },
+        {
+          "bytes": 2,
+          "name": "channel_tmp",
+          "reason": "temporary"
+        },
+        {
+          "bytes": 4,
+          "name": "gate_channel",
+          "reason": "Ch10 gate"
+        },
+        {
+          "bytes": 4,
+          "name": "gate_low",
+          "reason": "note lower bound"
+        },
+        {
+          "bytes": 4,
+          "name": "gate_high",
+          "reason": "note upper bound"
+        },
+        {
+          "bytes": 2,
+          "name": "slot_index",
+          "reason": "slot=note-36"
+        },
+        {
+          "bytes": 6,
+          "name": "call_save_cave_helper",
+          "reason": "long call32 to 0x02026d80"
+        },
+        {
+          "bytes": 2,
+          "name": "stock_restore_dest",
+          "reason": "fallback copy destination"
+        },
+        {
+          "bytes": 6,
+          "name": "stock_memcpy",
+          "reason": "stock fallback memcpy"
+        },
+        {
+          "bytes": 4,
+          "name": "stock_metadata_pointer",
+          "reason": "return metadata pointer"
+        },
+        {
+          "bytes": 2,
+          "name": "stock_metadata_store",
+          "reason": "store fallback note"
+        },
+        {
+          "bytes": 2,
+          "name": "pop_return",
+          "reason": "return"
+        }
+      ]
+    },
+    "single_payload_write_lower_bound_no_readback_no_manifest": {
+      "bytes": 42,
+      "fits_cave": true,
+      "insufficient_reason": "No readback compare, no manifest construction, no 16-record loop, no commit-last sequencing, no failure reporting.",
+      "parts": [
+        {
+          "bytes": 6,
+          "name": "mov32_g",
+          "reason": "load global base"
+        },
+        {
+          "bytes": 4,
+          "name": "ldw_write_view",
+          "reason": "load *(g+0x160)"
+        },
+        {
+          "bytes": 6,
+          "name": "mov32_reserved_offset",
+          "reason": "payload record offset"
+        },
+        {
+          "bytes": 4,
+          "name": "slot_stride",
+          "reason": "slot*0xa3"
+        },
+        {
+          "bytes": 2,
+          "name": "add_reserved_offset",
+          "reason": "write base + reserved offset"
+        },
+        {
+          "bytes": 2,
+          "name": "add_slot_offset",
+          "reason": "write address"
+        },
+        {
+          "bytes": 2,
+          "name": "source",
+          "reason": "r0=source"
+        },
+        {
+          "bytes": 2,
+          "name": "address",
+          "reason": "r1=storage address"
+        },
+        {
+          "bytes": 2,
+          "name": "length",
+          "reason": "r2=0x9c"
+        },
+        {
+          "bytes": 6,
+          "name": "write_call",
+          "reason": "call 0x02004b02"
+        },
+        {
+          "bytes": 4,
+          "name": "success_check_floor",
+          "reason": "minimum return==length branch/check"
+        },
+        {
+          "bytes": 2,
+          "name": "return",
+          "reason": "return"
+        }
+      ],
+      "spare_if_alone": 42
+    }
+  },
+  "format": "smk37-v15-s1c5-save-cave-helper-proof-v1",
+  "input_gates": {
+    "listing": {
+      "path": "baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz",
+      "sha256": "f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347"
+    },
+    "restore_report": {
+      "path": "baselines/v15/analysis/persistence-s2/restore/report.md",
+      "sha256": "c9ce9d4da638790c7e2803a1e85133cedfb8a069204d81ddbdb1bc5eba32b7c1"
+    },
+    "s1c5_app": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/app.bin",
+      "sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189"
+    },
+    "s1c5_evidence": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/evidence.json",
+      "sha256": "02213aff815fe951d6b74f349c82cb0af65110be3e65d96f90343fa775d134e5"
+    },
+    "s1c5_report": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/report.md",
+      "sha256": "5cee31d28017dfa3d2e6057930fea0e5d5ee28428c38895cbbaf6ebacad79c8a"
+    },
+    "storage_report": {
+      "path": "baselines/v15/analysis/persistence-s2/storage/report.md",
+      "sha256": "7867925da16e1c85a7c809dffa8127c371e863987b1570fdc1488460f921dbc7"
+    }
+  },
+  "layout_assessment": {
+    "partial_leaf_layout_that_fits_but_is_not_full_persistence": [
+      {
+        "bytes": 54,
+        "range": "0x02026d80..0x02026db6",
+        "role": "raw-prefix fallback copy leaf, no manifest validation",
+        "spare_after": 30
+      },
+      {
+        "bytes": 66,
+        "range": "0x02026d80..0x02026dc2",
+        "role": "raw-prefix fallback with manifest-note load only, not manifest/CRC validation",
+        "spare_after": 18
+      }
+    ],
+    "rejected_full_layout": {
+      "decision": "NO_SAFE_STANDALONE_PERSISTENCE_HELPER_IN_84_BYTES",
+      "reason": "A defensible helper must not be just callable. It must preserve/define ABI, handle both direct and segmented producer routes, reset/fail closed, write 16 payload prefixes plus a manifest, check 0x02004b02 returns, verify via 0x02004870 readback, compare bytes, and commit last. Exact lower bounds show the cave can host only one small leaf. The required caller rewrites have no proven slack and the existing 4-byte product callsites cannot reach the cave directly."
+    },
+    "safe_quarantine_patch": {
+      "address": "0x02026d7a",
+      "bytes": "80f82b020016",
+      "purpose": "make 0x02026d80..0x02026dd4 unreachable from UI SAVE before using it as code"
+    }
+  },
+  "register_frame_assumptions": {
+    "producer_call_contract_if_rewritten": {
+      "required_checks": [
+        "write return == 0x9c",
+        "read return == 0x9c",
+        "byte compare",
+        "manifest/CRC commit last",
+        "failure must not publish SAVED"
+      ],
+      "risk": "Current S1C5 producer/selector owned window has zero free bytes without a rewrite, and direct/segmented product call identity currently depends on short call targets to 0x0201e228.",
+      "suggested_inputs": {
+        "r3": "slot/count",
+        "r4": "staging or resident source"
+      }
+    },
+    "selector_call_contract_if_rewritten": {
+      "register_rule": "Use the helper only from a tail portion of a rewritten selector, or preserve callee-saved state explicitly. The helper must establish g itself, because UI r8 is not a standalone ABI.",
+      "required_outputs": {
+        "[r0]": "metadata Playback Note or fallback note",
+        "r0": "destination+0x9c"
+      },
+      "suggested_inputs": {
+        "r3": "slot 0..15",
+        "r4": "original destination",
+        "r5": "default metadata note"
+      }
+    },
+    "ui_save_path": {
+      "after_required_patch": "UI SAVE branches from 0x02026d7a to 0x02026dd4 before the cave. A helper placed at 0x02026d80 must not depend on being entered by UI SAVE.",
+      "live_registers_before_patch": {
+        "r15": "constant 1",
+        "r6": "handler state, stock branch skips writes only when 0xff",
+        "r8": "g=0x01c33260"
+      }
+    }
+  },
+  "scope": {
+    "device_accessed": false,
+    "firmware_image_emitted": false,
+    "flash_performed": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "reset_performed": false
+  },
+  "wrapper_abi": {
+    "read_0x02004870": {
+      "prototype": "uint32_t read_02004870(void *ram_destination /*r0*/, uint32_t storage /*r1*/, uint32_t length /*r2*/)",
+      "return_contract": "requested length on exact complete success, zero on short or failed inner result",
+      "safety_rule": "custom verification must require return == requested_length and compare readback bytes"
+    },
+    "storage_views": {
+      "direct_loader_base": "*(0x01c33260+0x164)",
+      "manifest_prefix": "record 112 first 0x9c bytes",
+      "raw_prefix_payload": "record 96..111 first 0x9c bytes",
+      "tails": "raw bytes 0x9c..0xa2 preserved",
+      "write_read_wrapper_base": "*(0x01c33260+0x160)"
+    },
+    "write_0x02004b02": {
+      "inner_call": "0x02004a7a receives r0=source, r1=length, r2=storage",
+      "prototype": "uint32_t write_02004b02(const void *ram_source /*r0*/, uint32_t storage /*r1*/, uint32_t length /*r2*/)",
+      "return_contract": "requested length on exact complete success, zero on short or failed inner result",
+      "safety_rule": "custom persistence must require return == requested_length; stock SAVE ignores this return"
+    }
+  }
+}
