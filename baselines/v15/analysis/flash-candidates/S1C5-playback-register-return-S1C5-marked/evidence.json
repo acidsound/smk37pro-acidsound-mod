@@ -1,0 +1,741 @@
+{
+  "app": {
+    "basis_app": "S1C4-playback-note-v3-segmented-final/app.bin",
+    "basis_app_sha256": "c6e4cf567b2f22d7e39d3b4e0f6cae8c7fd140661e31763567b15a9fcf1e3a3d",
+    "callsite_contract": {
+      "direct_product_callsite": {
+        "address": "0x0201e468",
+        "bytes": "bfeadefe",
+        "status": "preserved",
+        "target": "0x0201e228"
+      },
+      "note_off_hook": {
+        "address": "0x0201c63e",
+        "bytes": "80fffa1a0000",
+        "status": "unchanged",
+        "target": "0x0201e13e"
+      },
+      "note_off_register_reload": {
+        "address": "0x0201c644",
+        "bytes": "0d4000160016",
+        "decode": "lb.z r5,[r0]; mov r0,r0; mov r0,r0",
+        "purpose": "stock Note Off post-hook store now consumes selector-returned metadata byte"
+      },
+      "note_on_hook": {
+        "address": "0x0201c67c",
+        "bytes": "80ffc01a0000",
+        "status": "unchanged",
+        "target": "0x0201e142"
+      },
+      "note_on_register_reload": {
+        "address": "0x0201c682",
+        "bytes": "0e4000160016",
+        "decode": "lb.z r6,[r0]; mov r0,r0; mov r0,r0",
+        "purpose": "stock Note On post-hook store now consumes selector-returned metadata byte"
+      },
+      "note_on_velocity_store": {
+        "address": "0x0201c68c",
+        "bytes": "8d42",
+        "status": "preserved"
+      },
+      "producer_selector_window": {
+        "address": "0x0201e13e",
+        "end_exclusive": "0x0201e254",
+        "sha256": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+        "status": "preserved byte-for-byte from S1-C4 v3"
+      },
+      "segmented_product_callsite": {
+        "address": "0x0201e49c",
+        "bytes": "bfeac4fe",
+        "segmented_final_supported": true,
+        "status": "preserved",
+        "target": "0x0201e228"
+      }
+    },
+    "display_version": {
+      "address": "0x020572a2",
+      "value": "S1C5"
+    },
+    "format": "smk37-v15-s1c5-playback-register-return-marked.app-manifest-v1",
+    "input_gates": [
+      {
+        "name": "official-v15-basis",
+        "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+        "official_fwsc_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+        "status": "PASS"
+      },
+      {
+        "name": "exact-s1c4-v3-app-package-basis",
+        "parent_app_sha256": "c6e4cf567b2f22d7e39d3b4e0f6cae8c7fd140661e31763567b15a9fcf1e3a3d",
+        "parent_candidate": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final",
+        "parent_fwsc_sha256": "376d931e9f5fbdfb5737347b6984fad493f35f023134f8309d4792286c1c7aec",
+        "status": "PASS"
+      },
+      {
+        "combined_sha256": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+        "name": "selector-r0-return-and-playback-map-abi",
+        "producer_playback_store": "wire byte 161 -> 0x01c46f20+slot",
+        "producer_sha256": "a7627984549f62592384189a707ef04512921ad693b18409eb483dcccb53c438",
+        "r0_return": "selector stores mapped byte to [dest+0x9c] and returns with r0 == dest+0x9c",
+        "selector_sha256": "900e8f05c8157737e89a22338b9a4575aa3ff124bd70ff132de0226654fce29f",
+        "source_invariant": "source slot remains trigger_note-36",
+        "status": "PASS"
+      },
+      {
+        "name": "exact-caller-post-hook-windows",
+        "note_off_parent_neutral": "001600160016",
+        "note_off_stock_post_store": "00e13e618d40",
+        "note_on_parent_neutral": "001600160016",
+        "note_on_stock_post_store": "00e13e718e40",
+        "note_on_velocity_store": "8d42",
+        "status": "PASS"
+      },
+      {
+        "device_accessed": false,
+        "flash_performed": false,
+        "midi_transport_opened": false,
+        "name": "offline-scope",
+        "reset_performed": false,
+        "status": "PASS"
+      }
+    ],
+    "output_app_sha256": "c8dd9e9e19369a65fd46fb48aabc69a2af7977a456f4152e77cd90a742f7cfe5",
+    "parent_relative_changed_byte_count": 8,
+    "parent_relative_changed_ranges": [
+      {
+        "end_exclusive": 116294,
+        "start": 116292
+      },
+      {
+        "end_exclusive": 116356,
+        "start": 116354
+      },
+      {
+        "end_exclusive": 357030,
+        "start": 357026
+      }
+    ],
+    "patches": [
+      {
+        "address": "0x0201c644",
+        "byte_count": 6,
+        "end_exclusive": "0x0201c64a",
+        "new_hex": "0d4000160016",
+        "new_sha256": "6679c6f463da31c111ffde8becc9f03d7c0b2d59f8cb7df5a2e592e27f2e231d",
+        "old_hex": "001600160016",
+        "old_sha256": "1bbb9b600c24d72b153d3edd59cbbbcad74f7b1e96aac3a4af83286bebcf2097",
+        "purpose": "Note Off reload mapped playback note from selector-returned [r0] into r5; preserve r0 and remove duplicate stock store"
+      },
+      {
+        "address": "0x0201c682",
+        "byte_count": 6,
+        "end_exclusive": "0x0201c688",
+        "new_hex": "0e4000160016",
+        "new_sha256": "a2a10f684fd18c943317bc21e4ec21499422e481d8ea867399e55a790ad46821",
+        "old_hex": "001600160016",
+        "old_sha256": "1bbb9b600c24d72b153d3edd59cbbbcad74f7b1e96aac3a4af83286bebcf2097",
+        "purpose": "Note On reload mapped playback note from selector-returned [r0] into r6; preserve velocity r5 and remove duplicate stock store"
+      },
+      {
+        "address": "0x020572a2",
+        "byte_count": 5,
+        "end_exclusive": "0x020572a7",
+        "new_hex": "5331433500",
+        "new_sha256": "353ab82228c569633a22af3072b3e7c10f747c429cd34330c7120a0da9c2b22c",
+        "old_hex": "312e313000",
+        "old_sha256": "daf3a34d5acca893c1c91237b1937888b376aa2d4bfe9029ab6c686d338474ce",
+        "purpose": "Visible custom firmware marker for the live-validated S1-C5 Playback Note implementation"
+      }
+    ],
+    "runtime_base": "0x02000000"
+  },
+  "basis": {
+    "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "official_fwsc_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "parent_s1c4_v3_app_sha256": "c6e4cf567b2f22d7e39d3b4e0f6cae8c7fd140661e31763567b15a9fcf1e3a3d",
+    "parent_s1c4_v3_package_sha256": "376d931e9f5fbdfb5737347b6984fad493f35f023134f8309d4792286c1c7aec"
+  },
+  "candidate_built": true,
+  "code": {
+    "candidate_dir": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return-S1C5-marked/code-evidence",
+    "changed_windows_decode": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return-S1C5-marked/code-evidence/changed-windows-decode.tsv",
+    "code_evidence_sha256": "bd3d4910fbff0f89f9eeed81fe0df40537c7e7657bd80d412b9e6eae48e9731f",
+    "parent_combined_sha256": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+    "producer_sha256": "a7627984549f62592384189a707ef04512921ad693b18409eb483dcccb53c438",
+    "selector_sha256": "900e8f05c8157737e89a22338b9a4575aa3ff124bd70ff132de0226654fce29f"
+  },
+  "decision": "PASS",
+  "flash": {
+    "artifact": "SMK37Pro-v15-S1C5-playback-register-return-S1C5-marked.fwsc",
+    "confirmation_token": "INSTALL-SMK37PRO-V15-S1C5-MARKED-PLAYBACK-CFAFA327",
+    "default_check_offline_only": true
+  },
+  "format": "smk37-v15-s1c5-playback-register-return-marked.release-evidence-v1",
+  "input_gates": [
+    {
+      "name": "official-v15-basis",
+      "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "official_fwsc_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+      "status": "PASS"
+    },
+    {
+      "name": "exact-s1c4-v3-app-package-basis",
+      "parent_app_sha256": "c6e4cf567b2f22d7e39d3b4e0f6cae8c7fd140661e31763567b15a9fcf1e3a3d",
+      "parent_candidate": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final",
+      "parent_fwsc_sha256": "376d931e9f5fbdfb5737347b6984fad493f35f023134f8309d4792286c1c7aec",
+      "status": "PASS"
+    },
+    {
+      "combined_sha256": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+      "name": "selector-r0-return-and-playback-map-abi",
+      "producer_playback_store": "wire byte 161 -> 0x01c46f20+slot",
+      "producer_sha256": "a7627984549f62592384189a707ef04512921ad693b18409eb483dcccb53c438",
+      "r0_return": "selector stores mapped byte to [dest+0x9c] and returns with r0 == dest+0x9c",
+      "selector_sha256": "900e8f05c8157737e89a22338b9a4575aa3ff124bd70ff132de0226654fce29f",
+      "source_invariant": "source slot remains trigger_note-36",
+      "status": "PASS"
+    },
+    {
+      "name": "exact-caller-post-hook-windows",
+      "note_off_parent_neutral": "001600160016",
+      "note_off_stock_post_store": "00e13e618d40",
+      "note_on_parent_neutral": "001600160016",
+      "note_on_stock_post_store": "00e13e718e40",
+      "note_on_velocity_store": "8d42",
+      "status": "PASS"
+    },
+    {
+      "device_accessed": false,
+      "flash_performed": false,
+      "midi_transport_opened": false,
+      "name": "offline-scope",
+      "reset_performed": false,
+      "status": "PASS"
+    }
+  ],
+  "invariants": {
+    "all_c4_duplicate_packets": true,
+    "no_source_slot_from_playback_note": true,
+    "playback_note_range": "0..127 including duplicates",
+    "playback_register_return": "Note Off reloads [r0] to r5; Note On reloads [r0] to r6",
+    "trigger_source": "slot = trigger_note - 36; producer/selector bytes preserved from exact S1-C4 v3",
+    "velocity_preserved": true
+  },
+  "package": {
+    "candidate_flash_sha256": "c20a5ab13fcb93b9a884cd561a2e00b5c21f9189775eff79adf944319a0a0541",
+    "changed_app_byte_count_vs_official": 309,
+    "changed_app_byte_count_vs_parent": 8,
+    "changed_app_ranges_vs_official": [
+      {
+        "end_exclusive": 34,
+        "start": 32
+      },
+      {
+        "end_exclusive": 116291,
+        "start": 116288
+      },
+      {
+        "end_exclusive": 116298,
+        "start": 116292
+      },
+      {
+        "end_exclusive": 116353,
+        "start": 116350
+      },
+      {
+        "end_exclusive": 116360,
+        "start": 116354
+      },
+      {
+        "end_exclusive": 123267,
+        "start": 123198
+      },
+      {
+        "end_exclusive": 123311,
+        "start": 123268
+      },
+      {
+        "end_exclusive": 123319,
+        "start": 123312
+      },
+      {
+        "end_exclusive": 123337,
+        "start": 123320
+      },
+      {
+        "end_exclusive": 123353,
+        "start": 123338
+      },
+      {
+        "end_exclusive": 123476,
+        "start": 123354
+      },
+      {
+        "end_exclusive": 124011,
+        "start": 124010
+      },
+      {
+        "end_exclusive": 124063,
+        "start": 124062
+      },
+      {
+        "end_exclusive": 159146,
+        "start": 159142
+      },
+      {
+        "end_exclusive": 159152,
+        "start": 159148
+      },
+      {
+        "end_exclusive": 357030,
+        "start": 357026
+      },
+      {
+        "end_exclusive": 387580,
+        "start": 387578
+      }
+    ],
+    "changed_app_ranges_vs_parent": [
+      {
+        "end_exclusive": 116294,
+        "start": 116292
+      },
+      {
+        "end_exclusive": 116356,
+        "start": 116354
+      },
+      {
+        "end_exclusive": 357030,
+        "start": 357026
+      }
+    ],
+    "changed_flash_sectors_vs_official": [
+      "0x04000",
+      "0x20000",
+      "0x22000",
+      "0x2a000",
+      "0x5a000",
+      "0x62000"
+    ],
+    "changed_package_byte_count_vs_official": 323,
+    "changed_package_ranges_vs_official": [
+      {
+        "end_exclusive": 4,
+        "start": 0
+      },
+      {
+        "end_exclusive": 71,
+        "start": 69
+      },
+      {
+        "end_exclusive": 17432,
+        "start": 17428
+      },
+      {
+        "end_exclusive": 17464,
+        "start": 17460
+      },
+      {
+        "end_exclusive": 17750,
+        "start": 17748
+      },
+      {
+        "end_exclusive": 134007,
+        "start": 134004
+      },
+      {
+        "end_exclusive": 134014,
+        "start": 134008
+      },
+      {
+        "end_exclusive": 134069,
+        "start": 134066
+      },
+      {
+        "end_exclusive": 134076,
+        "start": 134070
+      },
+      {
+        "end_exclusive": 140983,
+        "start": 140914
+      },
+      {
+        "end_exclusive": 141027,
+        "start": 140984
+      },
+      {
+        "end_exclusive": 141035,
+        "start": 141028
+      },
+      {
+        "end_exclusive": 141053,
+        "start": 141036
+      },
+      {
+        "end_exclusive": 141069,
+        "start": 141054
+      },
+      {
+        "end_exclusive": 141192,
+        "start": 141070
+      },
+      {
+        "end_exclusive": 141727,
+        "start": 141726
+      },
+      {
+        "end_exclusive": 141779,
+        "start": 141778
+      },
+      {
+        "end_exclusive": 176862,
+        "start": 176858
+      },
+      {
+        "end_exclusive": 176868,
+        "start": 176864
+      },
+      {
+        "end_exclusive": 374746,
+        "start": 374742
+      },
+      {
+        "end_exclusive": 405296,
+        "start": 405294
+      }
+    ],
+    "official_flash_sha256": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+    "package_sha256": "cfafa3273ca0ba741616e5f3aa87f262a45ecd84445bdefd969900dad256b480",
+    "package_size": 701140,
+    "parent_flash_sha256": "8e5d33006798d9e1b852abb5b49aaba4e4b886effa94faef4f18f387bb05c1ec",
+    "payload_sha256": "3b8d8497647537a0f194dfd3fe271b129d89b417dd9ff7a5b8ba9eb6d0868469",
+    "protected_hashes_candidate": {
+      "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+      "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+      "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+      "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+    },
+    "protected_hashes_official": {
+      "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+      "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+      "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+      "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+    },
+    "rollback_manifest": "rollback/official-v15-recovery-sectors/manifest.json",
+    "rollback_restores_official_flash": true
+  },
+  "scope": {
+    "device_accessed": false,
+    "flash_performed": false,
+    "live_send_performed": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "ota_performed": false,
+    "reset_performed": false
+  },
+  "sender": {
+    "artifact": "exact_16_packet_sender.c",
+    "confirmation_token": "SEND-SMK37PRO-V15-S1C5-ALL-C4-7C7A8AC8-523CCBC8-14D65142-EFAB2E0D",
+    "default_compile_live_usb_enabled": false,
+    "duplicate_test": "all 16 playback notes C4 (60)",
+    "packets": "inputs/packets",
+    "wire_playback_note_offset": 161
+  },
+  "transport": {
+    "device_accessed": false,
+    "duplicate_playback_note_test": {
+      "label": "C4",
+      "slots": 16,
+      "status": "PASS",
+      "value": 60
+    },
+    "format": "smk37-v15-s1c5-playback-register-return-marked.playback-transport-packets-v1",
+    "midi_transport_opened": false,
+    "order_basis": "resident_slot_order_trigger_note_36_51",
+    "packet_bytes": 163,
+    "packet_count": 16,
+    "packets": [
+      {
+        "duplicate_group": "all-c4",
+        "file": "slot00-trigger36-playback60-all-c4-direct-product-163.bin",
+        "name": "BUZZ BASS",
+        "only_changed_wire_offsets_vs_template": [
+          161
+        ],
+        "order": 1,
+        "playback_note": 60,
+        "sha256": "7c7a8ac8d57bd78b8d531fa8997e7d9c18ce4e0d8a267cc22549ba71d5e3e9c4",
+        "slot": 0,
+        "template_byte_at_wire_offset": 36,
+        "template_file": "slot00-trigger36-playback36-direct-product-163.bin",
+        "template_sha256": "ebb0a98d0a15c01d3f3035f114f852de703920d712d607cc2342637ec3421b88",
+        "transport_byte_at_wire_offset": 60,
+        "trigger_note": 36
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "slot01-trigger37-playback60-all-c4-direct-product-163.bin",
+        "name": "Bang ?????",
+        "only_changed_wire_offsets_vs_template": [
+          161
+        ],
+        "order": 2,
+        "playback_note": 60,
+        "sha256": "523ccbc81eef766fc73bda72a78d3a28ba3f1fcabc1146db78252673f8d5ed7a",
+        "slot": 1,
+        "template_byte_at_wire_offset": 37,
+        "template_file": "slot01-trigger37-playback37-direct-product-163.bin",
+        "template_sha256": "182e4a54ef667974c364471675854de526b1b773eeaf35e9edef9629af620cc2",
+        "transport_byte_at_wire_offset": 60,
+        "trigger_note": 37
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "slot02-trigger38-playback60-all-c4-direct-product-163.bin",
+        "name": "BASSE BIEN",
+        "only_changed_wire_offsets_vs_template": [
+          161
+        ],
+        "order": 3,
+        "playback_note": 60,
+        "sha256": "14d65142c52fbd4775ab071639886c203cc03d860deb62e6de25c048cb9a712b",
+        "slot": 2,
+        "template_byte_at_wire_offset": 38,
+        "template_file": "slot02-trigger38-playback38-direct-product-163.bin",
+        "template_sha256": "964715e7c31f7512a9690736fcaa61c1500f55814d807ed8f677d6e9810a21ec",
+        "transport_byte_at_wire_offset": 60,
+        "trigger_note": 38
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "slot03-trigger39-playback60-all-c4-direct-product-163.bin",
+        "name": "BASS-THING",
+        "only_changed_wire_offsets_vs_template": [
+          161
+        ],
+        "order": 4,
+        "playback_note": 60,
+        "sha256": "efab2e0db1e444d4ab8e96cd7125825fdbd0445e3e05b8436ae7bbd2ae830364",
+        "slot": 3,
+        "template_byte_at_wire_offset": 39,
+        "template_file": "slot03-trigger39-playback39-direct-product-163.bin",
+        "template_sha256": "a16c453b38e7d76791abd90198728db96cda06be454683643e3ba1327e2e6bc9",
+        "transport_byte_at_wire_offset": 60,
+        "trigger_note": 39
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "slot04-trigger40-playback60-all-c4-direct-product-163.bin",
+        "name": "BASS SLAP",
+        "only_changed_wire_offsets_vs_template": [
+          161
+        ],
+        "order": 5,
+        "playback_note": 60,
+        "sha256": "981e0772ac58174cb94a1794bbdac10da9c2679a0f69112b14a114d75d70481b",
+        "slot": 4,
+        "template_byte_at_wire_offset": 40,
+        "template_file": "slot04-trigger40-playback40-direct-product-163.bin",
+        "template_sha256": "3014185c51b494570b792220203155131a5ecaf6a234be2b18b90ea1dfc14df2",
+        "transport_byte_at_wire_offset": 60,
+        "trigger_note": 40
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "slot05-trigger41-playback60-all-c4-direct-product-163.bin",
+        "name": "BEAMER 2",
+        "only_changed_wire_offsets_vs_template": [
+          161
+        ],
+        "order": 6,
+        "playback_note": 60,
+        "sha256": "d73e236482ecd7d9b791ea6119b13d63b09eae5565f682b8f2dc0b4678277579",
+        "slot": 5,
+        "template_byte_at_wire_offset": 41,
+        "template_file": "slot05-trigger41-playback41-direct-product-163.bin",
+        "template_sha256": "2de0d665aaaeb67a755d2a978dacdb55bacc0cc8a26863df81d4533f65944d3c",
+        "transport_byte_at_wire_offset": 60,
+        "trigger_note": 41
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "slot06-trigger42-playback60-all-c4-direct-product-163.bin",
+        "name": "Onglon",
+        "only_changed_wire_offsets_vs_template": [
+          161
+        ],
+        "order": 7,
+        "playback_note": 60,
+        "sha256": "85625d999b3c23b578362fde17e9022db16ef9ecde5926e198f3206977cdba17",
+        "slot": 6,
+        "template_byte_at_wire_offset": 42,
+        "template_file": "slot06-trigger42-playback42-direct-product-163.bin",
+        "template_sha256": "6ae4c27b605c3e40572953cb9146e83471bbdc2463df2871b2cef5e2e1dd16b2",
+        "transport_byte_at_wire_offset": 60,
+        "trigger_note": 42
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "slot07-trigger43-playback60-all-c4-direct-product-163.bin",
+        "name": "SOFTSTEEL",
+        "only_changed_wire_offsets_vs_template": [
+          161
+        ],
+        "order": 8,
+        "playback_note": 60,
+        "sha256": "3e06351976cdd90b3e888b32ccca8716de991c95ff44eb73e9c26a3b912150dd",
+        "slot": 7,
+        "template_byte_at_wire_offset": 43,
+        "template_file": "slot07-trigger43-playback43-direct-product-163.bin",
+        "template_sha256": "68b1162755692c41cee6290b2626cfdf0eb1cefeaa106d7dfb71cc64ddbc6cbf",
+        "transport_byte_at_wire_offset": 60,
+        "trigger_note": 43
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "slot08-trigger44-playback60-all-c4-direct-product-163.bin",
+        "name": "BASS-ROADS",
+        "only_changed_wire_offsets_vs_template": [
+          161
+        ],
+        "order": 9,
+        "playback_note": 60,
+        "sha256": "ef96628a3f2cb2a2b6028687e1dc9fa89f147edf7b4c4eb229b7d27250704805",
+        "slot": 8,
+        "template_byte_at_wire_offset": 44,
+        "template_file": "slot08-trigger44-playback44-direct-product-163.bin",
+        "template_sha256": "d5c460400f82f8b3fe450157021829adbdf83dbb5791fb2eba8e0159884b1fe2",
+        "transport_byte_at_wire_offset": 60,
+        "trigger_note": 44
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "slot09-trigger45-playback60-all-c4-direct-product-163.bin",
+        "name": "E.ORGAN 1",
+        "only_changed_wire_offsets_vs_template": [
+          161
+        ],
+        "order": 10,
+        "playback_note": 60,
+        "sha256": "c6483dabc9e1a863f2682b5c11ea8a91e3ef38212926930d8de24afa3db6f9de",
+        "slot": 9,
+        "template_byte_at_wire_offset": 45,
+        "template_file": "slot09-trigger45-playback45-direct-product-163.bin",
+        "template_sha256": "3294900a53fc9320f22bfcb1137d7c7421760dfeba4b4f7d725ea046f2d28a23",
+        "transport_byte_at_wire_offset": 60,
+        "trigger_note": 45
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "slot10-trigger46-playback60-all-c4-direct-product-163.bin",
+        "name": "YEAAAHH",
+        "only_changed_wire_offsets_vs_template": [
+          161
+        ],
+        "order": 11,
+        "playback_note": 60,
+        "sha256": "11c7dfae80eb8ddaf88ec971ff1b3ce8b4d76894f4550ec3a0b5113c7e58bdde",
+        "slot": 10,
+        "template_byte_at_wire_offset": 46,
+        "template_file": "slot10-trigger46-playback46-direct-product-163.bin",
+        "template_sha256": "1f1e9530ce97cfe957ff5995330dbd2bf3abb1893fa1dd05aa8222a90db8845d",
+        "transport_byte_at_wire_offset": 60,
+        "trigger_note": 46
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "slot11-trigger47-playback60-all-c4-direct-product-163.bin",
+        "name": "HAND DRUM",
+        "only_changed_wire_offsets_vs_template": [
+          161
+        ],
+        "order": 12,
+        "playback_note": 60,
+        "sha256": "a97d43e1351177f4b7e4770b2170d07ae7d7dbd33bd6bb6439a441cb66f74a68",
+        "slot": 11,
+        "template_byte_at_wire_offset": 47,
+        "template_file": "slot11-trigger47-playback47-direct-product-163.bin",
+        "template_sha256": "a62621ba5927c8a7dfadae2ef8898d499d4484ba336fd8b182bfe9ce5578d286",
+        "transport_byte_at_wire_offset": 60,
+        "trigger_note": 47
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "slot12-trigger48-playback60-all-c4-direct-product-163.bin",
+        "name": "HAND CLAP1",
+        "only_changed_wire_offsets_vs_template": [
+          161
+        ],
+        "order": 13,
+        "playback_note": 60,
+        "sha256": "3680c3abf14c6a13096fe56953789bc2572fe2fd0d82248f8e4e893482a3be19",
+        "slot": 12,
+        "template_byte_at_wire_offset": 48,
+        "template_file": "slot12-trigger48-playback48-direct-product-163.bin",
+        "template_sha256": "7abc2a3009ae6c68a1ad8d6d2f7c6bf9e33d18fd213ec6fc47165673a8837830",
+        "transport_byte_at_wire_offset": 60,
+        "trigger_note": 48
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "slot13-trigger49-playback60-all-c4-direct-product-163.bin",
+        "name": "Mooger #1",
+        "only_changed_wire_offsets_vs_template": [
+          161
+        ],
+        "order": 14,
+        "playback_note": 60,
+        "sha256": "6611e75bfb8b11206f6303a63fdf6d50ee9beb8a72be2e69f9233a8f87e93f3a",
+        "slot": 13,
+        "template_byte_at_wire_offset": 49,
+        "template_file": "slot13-trigger49-playback49-direct-product-163.bin",
+        "template_sha256": "88ca1d1555bc67f99290b6c802192dfef2b4f22e867030cccd1bb692714c1873",
+        "transport_byte_at_wire_offset": 60,
+        "trigger_note": 49
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "slot14-trigger50-playback60-all-c4-direct-product-163.bin",
+        "name": "Moog Solo2",
+        "only_changed_wire_offsets_vs_template": [
+          161
+        ],
+        "order": 15,
+        "playback_note": 60,
+        "sha256": "8b3bbbccf103bd41ea93430b694be1b8ab17d9a29ed0bee3d6fc0570e7d95721",
+        "slot": 14,
+        "template_byte_at_wire_offset": 50,
+        "template_file": "slot14-trigger50-playback50-direct-product-163.bin",
+        "template_sha256": "898918184fc8f89879ffb07aff2fbbbd2fbeabc590a133139a86f3394f6b8287",
+        "transport_byte_at_wire_offset": 60,
+        "trigger_note": 50
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "slot15-trigger51-playback60-all-c4-direct-product-163.bin",
+        "name": "Mooger Low",
+        "only_changed_wire_offsets_vs_template": [
+          161
+        ],
+        "order": 16,
+        "playback_note": 60,
+        "sha256": "b06e83fdf0972a652ca4561eb08c6312b51be24c54c2619a1d6c2d67cc2bf30c",
+        "slot": 15,
+        "template_byte_at_wire_offset": 51,
+        "template_file": "slot15-trigger51-playback51-direct-product-163.bin",
+        "template_sha256": "fdcd31bb040918ac398dfb1a508841d0698a3292670b0a484e435c0f1257c890",
+        "transport_byte_at_wire_offset": 60,
+        "trigger_note": 51
+      }
+    ],
+    "payload_playback_note_offset": 155,
+    "policy": "all included packets deliberately map every trigger 36..51 to Playback Note C4 (60); firmware accepts any 0..127 metadata byte including duplicates while source slot remains trigger-selected",
+    "send_enabled": false,
+    "status": "PASS",
+    "supported_ingress_modes": [
+      "direct_163_byte_sysex",
+      "segmented_final_sysex_after_final_f7_total_0x9e"
+    ],
+    "wire_playback_note_offset": 161
+  }
+}
