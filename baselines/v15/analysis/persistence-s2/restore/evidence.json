@@ -1,0 +1,566 @@
+{
+  "bank_d_materialization": {
+    "destination_formula": "0x01c46520 + slot*0xa0; publish valid at +0x9c last",
+    "device_materializer": "BLOCK",
+    "embedded_runtime_payload_bytes_required": 0,
+    "packed_runtime_formula": "*(0x01c33260+0x164) + 0x3000 + slot*0x80 for slot 0..15",
+    "raw163_direct_copy_usable": false,
+    "records": [
+      {
+        "bank_zero_based": 3,
+        "flag": 0,
+        "flag_dump_offset": "0x0fd1e0",
+        "name": "BUZZ BASS",
+        "packed_dump_offset": "0x0f7000",
+        "packed_sha256": "c1c4588cb0396ba257e95d31a022e339564e337b41c65adb3ab0a1c50b863b18",
+        "preset_zero_based": 0,
+        "raw_dump_offset": "0x0fbd20",
+        "raw_prefix_diff_bytes": 91,
+        "raw_prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 96,
+        "runtime_sha256": "e2beb705a28e83940b2708f8ba0976e8c093ca12f45d0045f290b1589760d76b",
+        "slot": 0,
+        "trigger_note": 36
+      },
+      {
+        "bank_zero_based": 3,
+        "flag": 0,
+        "flag_dump_offset": "0x0fd1e1",
+        "name": "Bang ?????",
+        "packed_dump_offset": "0x0f7080",
+        "packed_sha256": "4fac39e2397e8f1d92ddc2039e0591e7f5c790eb9a2a99759b5c7e053c01a460",
+        "preset_zero_based": 1,
+        "raw_dump_offset": "0x0fbdc3",
+        "raw_prefix_diff_bytes": 95,
+        "raw_prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 97,
+        "runtime_sha256": "5dab954752769609d64dd162360182138c8bc399030b88cf8d61b76fb7208f97",
+        "slot": 1,
+        "trigger_note": 37
+      },
+      {
+        "bank_zero_based": 3,
+        "flag": 0,
+        "flag_dump_offset": "0x0fd1e2",
+        "name": "BASSE BIEN",
+        "packed_dump_offset": "0x0f7100",
+        "packed_sha256": "ec18f9341efeb143e27dea525f591b9dc39a46da1ea4d090624fbed929b74166",
+        "preset_zero_based": 2,
+        "raw_dump_offset": "0x0fbe66",
+        "raw_prefix_diff_bytes": 89,
+        "raw_prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 98,
+        "runtime_sha256": "3e140cc8613ec555fcae2109d216c5e838d3193b305352992dc4062556af8b60",
+        "slot": 2,
+        "trigger_note": 38
+      },
+      {
+        "bank_zero_based": 3,
+        "flag": 0,
+        "flag_dump_offset": "0x0fd1e3",
+        "name": "BASS-THING",
+        "packed_dump_offset": "0x0f7180",
+        "packed_sha256": "9c7007a232cc58293f67b6c3aac44ca568d18df205c5c572b76108201c93d665",
+        "preset_zero_based": 3,
+        "raw_dump_offset": "0x0fbf09",
+        "raw_prefix_diff_bytes": 98,
+        "raw_prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 99,
+        "runtime_sha256": "5f60dc8f39b4ec43dc4368050701550ca56581948451f0c8083ace61e9d98dc7",
+        "slot": 3,
+        "trigger_note": 39
+      },
+      {
+        "bank_zero_based": 3,
+        "flag": 0,
+        "flag_dump_offset": "0x0fd1e4",
+        "name": "BASS SLAP",
+        "packed_dump_offset": "0x0f7200",
+        "packed_sha256": "f76a6c7d78a5352d4ef4243d745b66d9f462d068378d8c0277f91dd26514b649",
+        "preset_zero_based": 4,
+        "raw_dump_offset": "0x0fbfac",
+        "raw_prefix_diff_bytes": 90,
+        "raw_prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 100,
+        "runtime_sha256": "5da8be28b3468a534aa488b02d47522df36e6b5b02b14f992bcb869fc4bb9ecc",
+        "slot": 4,
+        "trigger_note": 40
+      },
+      {
+        "bank_zero_based": 3,
+        "flag": 0,
+        "flag_dump_offset": "0x0fd1e5",
+        "name": "BEAMER 2",
+        "packed_dump_offset": "0x0f7280",
+        "packed_sha256": "c22df3ab18b8a375b355d7ca3041a796ac37680e343fcb9a31fa837a0827a14b",
+        "preset_zero_based": 5,
+        "raw_dump_offset": "0x0fc04f",
+        "raw_prefix_diff_bytes": 87,
+        "raw_prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 101,
+        "runtime_sha256": "d38dfdac699a0fadbf7c99c98103a5f2bf7297a6746e94525d7eca3472223d40",
+        "slot": 5,
+        "trigger_note": 41
+      },
+      {
+        "bank_zero_based": 3,
+        "flag": 0,
+        "flag_dump_offset": "0x0fd1e6",
+        "name": "Onglon",
+        "packed_dump_offset": "0x0f7300",
+        "packed_sha256": "d8bc7cee6940ea1494e6e8b443884389f2426d0a2bd9ec4d99b4d919af321d21",
+        "preset_zero_based": 6,
+        "raw_dump_offset": "0x0fc0f2",
+        "raw_prefix_diff_bytes": 82,
+        "raw_prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 102,
+        "runtime_sha256": "7727f3b7856a73b3c32bca1b6e15ed74672d6dc97e00641761ef14237b0d8a44",
+        "slot": 6,
+        "trigger_note": 42
+      },
+      {
+        "bank_zero_based": 3,
+        "flag": 0,
+        "flag_dump_offset": "0x0fd1e7",
+        "name": "SOFTSTEEL",
+        "packed_dump_offset": "0x0f7380",
+        "packed_sha256": "ed7ed5bb4f8d19853982b2d034c10f6f51b98ed72d22faa013ca28aa141b2943",
+        "preset_zero_based": 7,
+        "raw_dump_offset": "0x0fc195",
+        "raw_prefix_diff_bytes": 88,
+        "raw_prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 103,
+        "runtime_sha256": "8b0463a7b52857203105525af3456636b3a427e5db5f1eb75ea687bd6677bbbb",
+        "slot": 7,
+        "trigger_note": 43
+      },
+      {
+        "bank_zero_based": 3,
+        "flag": 0,
+        "flag_dump_offset": "0x0fd1e8",
+        "name": "BASS-ROADS",
+        "packed_dump_offset": "0x0f7400",
+        "packed_sha256": "a086dec6ed80f04ef9b2c01815f0ba4a19ce678c2c5051a12b7f023525fca964",
+        "preset_zero_based": 8,
+        "raw_dump_offset": "0x0fc238",
+        "raw_prefix_diff_bytes": 97,
+        "raw_prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 104,
+        "runtime_sha256": "1602db2d94930482f631d087bf4b645d626f12b88da1e8deee21202210b7177c",
+        "slot": 8,
+        "trigger_note": 44
+      },
+      {
+        "bank_zero_based": 3,
+        "flag": 0,
+        "flag_dump_offset": "0x0fd1e9",
+        "name": "E.ORGAN 1",
+        "packed_dump_offset": "0x0f7480",
+        "packed_sha256": "31ea6b2e6e27a1b245d1cb135e3e9a5f0fb9edbd47d578009adac85ce1d510f8",
+        "preset_zero_based": 9,
+        "raw_dump_offset": "0x0fc2db",
+        "raw_prefix_diff_bytes": 83,
+        "raw_prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 105,
+        "runtime_sha256": "33dd55bbc6ebc2361260b9a581203f682b49388f9e4284b95de15136b630a178",
+        "slot": 9,
+        "trigger_note": 45
+      },
+      {
+        "bank_zero_based": 3,
+        "flag": 0,
+        "flag_dump_offset": "0x0fd1ea",
+        "name": "YEAAAHH",
+        "packed_dump_offset": "0x0f7500",
+        "packed_sha256": "d11233563d7e877a6b9308be2b74e291f24f71b3719a394012bad54cb38416a4",
+        "preset_zero_based": 10,
+        "raw_dump_offset": "0x0fc37e",
+        "raw_prefix_diff_bytes": 101,
+        "raw_prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 106,
+        "runtime_sha256": "9c5abf35d8c039be1c8603f4fb5296f7b7d3e28503b330b5d3dd33c1b5a6dff9",
+        "slot": 10,
+        "trigger_note": 46
+      },
+      {
+        "bank_zero_based": 3,
+        "flag": 0,
+        "flag_dump_offset": "0x0fd1eb",
+        "name": "HAND DRUM",
+        "packed_dump_offset": "0x0f7580",
+        "packed_sha256": "a64fc8623c877b16ecc8eb0259f14eb2b58e46e92fcd073849bbddf16b060452",
+        "preset_zero_based": 11,
+        "raw_dump_offset": "0x0fc421",
+        "raw_prefix_diff_bytes": 90,
+        "raw_prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 107,
+        "runtime_sha256": "98bc86e7d9625c837ee6c07fa3f01cbd6079960c9d1071017cf51194aa48c1bf",
+        "slot": 11,
+        "trigger_note": 47
+      },
+      {
+        "bank_zero_based": 3,
+        "flag": 0,
+        "flag_dump_offset": "0x0fd1ec",
+        "name": "HAND CLAP1",
+        "packed_dump_offset": "0x0f7600",
+        "packed_sha256": "949561a0add95b226e64d213a05913aa57baa0fed687a672b79760d8cb2f5dbc",
+        "preset_zero_based": 12,
+        "raw_dump_offset": "0x0fc4c4",
+        "raw_prefix_diff_bytes": 98,
+        "raw_prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 108,
+        "runtime_sha256": "452efa8d41eecc7a5c57f1dfdecc072e1bc4266020cfe824edbc1b87415c2e38",
+        "slot": 12,
+        "trigger_note": 48
+      },
+      {
+        "bank_zero_based": 3,
+        "flag": 0,
+        "flag_dump_offset": "0x0fd1ed",
+        "name": "Mooger #1",
+        "packed_dump_offset": "0x0f7680",
+        "packed_sha256": "cf44a49e6157945f70bb144e42d7add0d88ee8ef1f2658ef8ab4a657e6e6a77c",
+        "preset_zero_based": 13,
+        "raw_dump_offset": "0x0fc567",
+        "raw_prefix_diff_bytes": 90,
+        "raw_prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 109,
+        "runtime_sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275",
+        "slot": 13,
+        "trigger_note": 49
+      },
+      {
+        "bank_zero_based": 3,
+        "flag": 0,
+        "flag_dump_offset": "0x0fd1ee",
+        "name": "Moog Solo2",
+        "packed_dump_offset": "0x0f7700",
+        "packed_sha256": "dad85349ef070be278b143924d54522398b1506b581532323291321f053f2aa6",
+        "preset_zero_based": 14,
+        "raw_dump_offset": "0x0fc60a",
+        "raw_prefix_diff_bytes": 85,
+        "raw_prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 110,
+        "runtime_sha256": "cfa79fc5ba72bcd50b0465a116e109da90ca5dcdcdc40bc89cdad218ee468417",
+        "slot": 14,
+        "trigger_note": 50
+      },
+      {
+        "bank_zero_based": 3,
+        "flag": 0,
+        "flag_dump_offset": "0x0fd1ef",
+        "name": "Mooger Low",
+        "packed_dump_offset": "0x0f7780",
+        "packed_sha256": "527111c46dc5042baa740381fddac987bbac40a7b0b9ad22e68f75d4e58802ca",
+        "preset_zero_based": 15,
+        "raw_dump_offset": "0x0fc6ad",
+        "raw_prefix_diff_bytes": 95,
+        "raw_prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 111,
+        "runtime_sha256": "a28849a192d5dad000622c8aa749baa6508ad73e2c1cc6659b33a0419b6a0e88",
+        "slot": 15,
+        "trigger_note": 51
+      }
+    ],
+    "reference_table_bytes_required_for_exact_contiguous_D1_D16": 0,
+    "source_data": "PASS"
+  },
+  "blocked_candidates": [
+    {
+      "candidate": "0x02005f9c early wrapper",
+      "reason": "R01d revoked; likely pre-USB boot-failure cause"
+    },
+    {
+      "candidate": "0x02005fa4 post-loader wrapper",
+      "reason": "storage is loaded, but still pre-return boot initializer; no post-USB/live proof and no code placement"
+    },
+    {
+      "candidate": "first Ch10 Note loader loop",
+      "reason": "17 global loader calls for full set, helper/UI/global selection side effects, no latency or race proof"
+    },
+    {
+      "candidate": "first-use per-slot loader",
+      "reason": "same prohibited global mutation in active Note path, repeated across notes"
+    },
+    {
+      "candidate": "side-effect-free direct unpack",
+      "reason": "correct architecture but exact routine/address absent; known body 206 bytes exceeds 190 bytes even after deleting producer"
+    },
+    {
+      "candidate": "embed 2496 runtime bytes",
+      "reason": "no owned data placement; current window 278 bytes total and safe app extension 0"
+    }
+  ],
+  "byte_budget": {
+    "deficit_after_deleting_producer_before_any_outer_logic": 16,
+    "if_entire_producer_and_tail_deleted": 190,
+    "known_stock_unpack_body": {
+      "bytes": 206,
+      "destination_abi": "global 0x01c34c74 only",
+      "end_exclusive": "0x0200576e",
+      "start": "0x020056a0"
+    },
+    "preserve_s1c5_free_bytes": 2,
+    "safe_app_extension_bytes": 0,
+    "safe_custom_storage_bytes": 0
+  },
+  "decision": "BLOCK",
+  "decision_summary": "No exact safe additive S1C5 restore address exists. Fixed Bank D source data is available without 2496 embedded bytes, but safe destination-parameter materialization and executable placement are unproved.",
+  "format": "smk37-v15-s1c5-power-cycle-restore-analysis-v1",
+  "input_sha256": {
+    "app_extension": "79632aa79b54e6065e122c9aa312872766c0e5a351f7e680355bd7e676647856",
+    "bank_d_manifest": "b2a5bce72249d64c05bd00a9afa935f1e540c9cf10f2928230fe01a16f24ecc7",
+    "clean_dump": "1c202201a81ed6d956ec5398adff75ffcd805594a27370a56caafaf18223383b",
+    "dx7_vmem": "c833bbd39dc4cd5df2c90c0e444beef2e36edd78ab88aaf1129656c3253392bf",
+    "factory_loader": "efdda52181e3736221354acfe36633a1fd55cc3f7b83918a03e073bab3ebcd09",
+    "listing": "f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347",
+    "official_app": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "official_fwsc": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "persistence": "d6ebfbc356afa97dc4e389754394a9792cc0601b528cad90a5f86c8535e93eea",
+    "placement": "195bc15381e95e276912a7f0ac7b3cc197959b98bdb688eceb85c56dcc34f20f",
+    "r01d": "e264cceb8837f290bfdd48a73e53b8270638b56193c2a87e155794d5c522d179",
+    "s1c5_app": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+    "s1c5_combined": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+    "s1c5_evidence": "02213aff815fe951d6b74f349c82cb0af65110be3e65d96f90343fa775d134e5"
+  },
+  "loader_census": [
+    {
+      "address": "0x02005f9c",
+      "asm": "call 0x02005660",
+      "bytes": "bfea60fb",
+      "classification": "revoked pre-USB init callsite",
+      "flow": "UNCONDITIONAL_CALL",
+      "function": "-",
+      "mnemonic": "call",
+      "return_consumer": "loads *(r6+0x15c), then calls 0x020057e0",
+      "size": 4
+    },
+    {
+      "address": "0x0201e46c",
+      "asm": "call 0x02005660",
+      "bytes": "bfeaf838",
+      "classification": "post-product direct SysEx reload",
+      "flow": "UNCONDITIONAL_CALL",
+      "function": "FUN_0201e254@0201e254",
+      "mnemonic": "call",
+      "return_consumer": "immediate pop; return ignored",
+      "size": 4
+    },
+    {
+      "address": "0x0201e4a0",
+      "asm": "call 0x02005660",
+      "bytes": "bfeade38",
+      "classification": "post-product segmented-final SysEx reload",
+      "flow": "UNCONDITIONAL_CALL",
+      "function": "FUN_0201e254@0201e254",
+      "mnemonic": "call",
+      "return_consumer": "goto common continuation; return ignored",
+      "size": 4
+    },
+    {
+      "address": "0x0202422e",
+      "asm": "call 0x02005660",
+      "bytes": "bfea170a",
+      "classification": "UI bank/preset change reload",
+      "flow": "UNCONDITIONAL_CALL",
+      "function": "FUN_020241e0@020241e0",
+      "mnemonic": "call",
+      "return_consumer": "loads *(g+0x15c), then calls 0x020057e0",
+      "size": 4
+    },
+    {
+      "address": "0x020255a6",
+      "asm": "call 0x02005660",
+      "bytes": "bfea5b00",
+      "classification": "conditional default-load/bank-block reload",
+      "flow": "UNCONDITIONAL_CALL",
+      "function": "-",
+      "mnemonic": "call",
+      "return_consumer": "falls through; return ignored",
+      "size": 4
+    }
+  ],
+  "note_hook_abi": {
+    "channel": "r9 low nibble, Ch10 == 9",
+    "common_dispatcher": "0x0201c5ec",
+    "common_entry": "r0 event destination, r1 stock source, r2 0x9c",
+    "lazy_integration_point": "logical reassembly at 0x0201e164..0x0201e16a state load/gate; no address approved for added code",
+    "note_off": "r5 trigger note; adapter r3=r5",
+    "note_on": "r6 trigger note, r5 velocity; adapter r3=r6",
+    "preserved_by_selector": "rets and r4..r9",
+    "return": "r0 = original destination + 0x9c; caller reloads Playback Note from [r0]"
+  },
+  "playback_note_options": [
+    {
+      "decision": "PASS only for fixed Original policy",
+      "option": "derive Original as 36+slot",
+      "persistent_data_bytes": 0
+    },
+    {
+      "decision": "BLOCK placement while preserving S1C5",
+      "option": "compile fixed custom map",
+      "persistent_data_bytes": 16
+    },
+    {
+      "decision": "VOLATILE; lost on power cycle",
+      "option": "existing wire byte 161 to RAM map",
+      "persistent_data_bytes": 16
+    },
+    {
+      "decision": "BLOCK storage ownership and commit semantics",
+      "option": "separate custom A/B persistent record",
+      "persistent_data_bytes": 16
+    },
+    {
+      "decision": "BLOCK stock schema and rollback coupling",
+      "option": "reuse stock records/flags/selection",
+      "persistent_data_bytes": "nominally small"
+    }
+  ],
+  "required_next_gates": [
+    "prove executable placement for an exact destination-parameter unpacker plus loop while preserving S1C5 behavior",
+    "independently decode and hash-match all 16 runtime outputs",
+    "keep first-note initialization RAM-only with no loader/storage/UI selection mutation",
+    "prove lock/state/failure/active-note behavior for both Note adapters and concurrent producer ingress",
+    "prove 16-byte playback literal placement or a separate persistent allocation for custom Playback Notes"
+  ],
+  "s1c5_layout": {
+    "control": {
+      "armed": 2,
+      "count": "0x01c465be",
+      "empty": 0,
+      "loading": 1,
+      "lock": "0x01c465bd",
+      "state": "0x01c465bf"
+    },
+    "free_tail": {
+      "bytes": 2,
+      "end_exclusive": "0x0201e254",
+      "start": "0x0201e252"
+    },
+    "note_off_hook": {
+      "address": "0x0201c63e",
+      "bytes": "80fffa1a0000",
+      "target": "0x0201e13e"
+    },
+    "note_off_reload": {
+      "abi": "load [r0] into r5",
+      "address": "0x0201c644",
+      "bytes": "0d4000160016"
+    },
+    "note_on_hook": {
+      "address": "0x0201c67c",
+      "bytes": "80ffc01a0000",
+      "target": "0x0201e142"
+    },
+    "note_on_reload": {
+      "abi": "load [r0] into r6; preserve velocity r5",
+      "address": "0x0201c682",
+      "bytes": "0e4000160016"
+    },
+    "owned_window": {
+      "bytes": 278,
+      "end_exclusive": "0x0201e254",
+      "start": "0x0201e13e"
+    },
+    "playback_map": {
+      "bytes": 16,
+      "end_exclusive": "0x01c46f30",
+      "start": "0x01c46f20",
+      "volatile": true
+    },
+    "producer": {
+      "bytes": 188,
+      "end_exclusive": "0x0201e252",
+      "start": "0x0201e196"
+    },
+    "resident_ram": {
+      "bytes": 2560,
+      "end_exclusive": "0x01c46f20",
+      "slot_stride": 160,
+      "start": "0x01c46520",
+      "voice_bytes": 156
+    },
+    "selector": {
+      "bytes": 88,
+      "end_exclusive": "0x0201e196",
+      "start": "0x0201e13e"
+    }
+  },
+  "scope": {
+    "device_accessed": false,
+    "findings_only": true,
+    "firmware_built_or_modified": false,
+    "flash_or_ota_performed": false,
+    "midi_opened_or_sent": false,
+    "reset_performed": false,
+    "v15_only": true
+  },
+  "storage_init_trace": [
+    {
+      "address": "0x02005eee",
+      "asm": "sw r0,[r6 + 0x160]",
+      "bytes": "d1ec6106",
+      "flow": "FALL_THROUGH",
+      "function": "-",
+      "mnemonic": "sw",
+      "size": 4
+    },
+    {
+      "address": "0x02005ef2",
+      "asm": "sw r5,[r6 + 0x164]",
+      "bytes": "d1ec6556",
+      "flow": "FALL_THROUGH",
+      "function": "-",
+      "mnemonic": "sw",
+      "size": 4
+    },
+    {
+      "address": "0x02005f0e",
+      "asm": "call 0x02004870",
+      "bytes": "bfeaaff4",
+      "flow": "UNCONDITIONAL_CALL",
+      "function": "-",
+      "mnemonic": "call",
+      "size": 4
+    },
+    {
+      "address": "0x02005f20",
+      "asm": "call 0x02004870",
+      "bytes": "bfeaa6f4",
+      "flow": "UNCONDITIONAL_CALL",
+      "function": "-",
+      "mnemonic": "call",
+      "size": 4
+    },
+    {
+      "address": "0x02005f9c",
+      "asm": "call 0x02005660",
+      "bytes": "bfea60fb",
+      "flow": "UNCONDITIONAL_CALL",
+      "function": "-",
+      "mnemonic": "call",
+      "size": 4
+    },
+    {
+      "address": "0x02005fa4",
+      "asm": "call 0x020057e0",
+      "bytes": "bfea1cfc",
+      "flow": "UNCONDITIONAL_CALL",
+      "function": "-",
+      "mnemonic": "call",
+      "size": 4
+    },
+    {
+      "address": "0x02005faa",
+      "asm": "pop {pc,r15,r14,r13,r12,r11,r10,r9,r8,r7,r6,r5,r4}",
+      "bytes": "5f04",
+      "flow": "TERMINATOR",
+      "function": "-",
+      "mnemonic": "pop",
+      "size": 2
+    }
+  ],
+  "validation_check_count": 115
+}

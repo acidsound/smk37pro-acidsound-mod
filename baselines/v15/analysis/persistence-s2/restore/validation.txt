@@ -1,0 +1,117 @@
+S1C5 restore evidence validation: PASS
+PASS	official_app SHA-256 36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS	official_fwsc SHA-256 f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff
+PASS	listing SHA-256 f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347
+PASS	s1c5_app SHA-256 8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189
+PASS	s1c5_evidence SHA-256 02213aff815fe951d6b74f349c82cb0af65110be3e65d96f90343fa775d134e5
+PASS	s1c5_combined SHA-256 4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1
+PASS	clean_dump SHA-256 1c202201a81ed6d956ec5398adff75ffcd805594a27370a56caafaf18223383b
+PASS	bank_d_manifest SHA-256 b2a5bce72249d64c05bd00a9afa935f1e540c9cf10f2928230fe01a16f24ecc7
+PASS	dx7_vmem SHA-256 c833bbd39dc4cd5df2c90c0e444beef2e36edd78ab88aaf1129656c3253392bf
+PASS	r01d SHA-256 e264cceb8837f290bfdd48a73e53b8270638b56193c2a87e155794d5c522d179
+PASS	factory_loader SHA-256 efdda52181e3736221354acfe36633a1fd55cc3f7b83918a03e073bab3ebcd09
+PASS	persistence SHA-256 d6ebfbc356afa97dc4e389754394a9792cc0601b528cad90a5f86c8535e93eea
+PASS	app_extension SHA-256 79632aa79b54e6065e122c9aa312872766c0e5a351f7e680355bd7e676647856
+PASS	placement SHA-256 195bc15381e95e276912a7f0ac7b3cc197959b98bdb688eceb85c56dcc34f20f
+PASS	official and S1C5 app sizes are 617012
+PASS	S1C5 note_off_hook bytes at 0x0201c63e
+PASS	S1C5 note_off_reload bytes at 0x0201c644
+PASS	S1C5 note_on_hook bytes at 0x0201c67c
+PASS	S1C5 note_on_reload bytes at 0x0201c682
+PASS	S1C5 note_on_velocity bytes at 0x0201c68c
+PASS	S1C5 direct_product bytes at 0x0201e468
+PASS	S1C5 direct_loader bytes at 0x0201e46c
+PASS	S1C5 segmented_product bytes at 0x0201e49c
+PASS	S1C5 segmented_loader bytes at 0x0201e4a0
+PASS	S1C5 audited 278-byte selector/producer window equals pinned combined blob
+PASS	S1C5 decode spans exact owned window
+PASS	selector is 88 bytes at 0x0201e13e..0x0201e196
+PASS	producer is 188 bytes at 0x0201e196..0x0201e252
+PASS	official v15 has exactly five decoded direct calls to 0x02005660
+PASS	listing anchor 0x02005eee sw r0,[r6 + 0x160]
+PASS	listing anchor 0x02005ef2 sw r5,[r6 + 0x164]
+PASS	listing anchor 0x02005f0e call 0x02004870
+PASS	listing anchor 0x02005f20 call 0x02004870
+PASS	listing anchor 0x02005f9c call 0x02005660
+PASS	listing anchor 0x02005fa4 call 0x020057e0
+PASS	listing anchor 0x02005faa pop {pc,r15,r14,r13,r12,r11,r10,r9,r8,r7,r6,r5,r4}
+PASS	listing anchor 0x02005660 push {rets,r8,r7,r6,r5,r4}
+PASS	listing anchor 0x020056a0 lsl r1,r5,0xc
+PASS	listing anchor 0x0200576c _sb r0,[r3 + 0xf]
+PASS	listing anchor 0x0200576e lb.z r0,[r6 + 0x0]
+PASS	R01d evidence revokes 0x02005f9c early hook
+PASS	factory loader is global void ABI
+PASS	S1C5 owned window capacity 278, free tail 2
+PASS	known stock packed-to-runtime body 0x020056a0..0x0200576e is 206 bytes
+PASS	deleting producer and tail still leaves a 16-byte deficit before loop/publication
+PASS	app tail is owned by cfg_tool.bin
+PASS	all exact app extension options remain BLOCK
+PASS	safe app append budget is zero
+PASS	custom storage after stock +0x9209 remains BLOCK
+PASS	Bank D slot 0 exact record lengths
+PASS	Bank D slot 0 packed128 expands to pinned runtime156
+PASS	Bank D slot 0 clean saved flag is zero
+PASS	Bank D slot 0 raw163 prefix cannot substitute for runtime156
+PASS	Bank D slot 1 exact record lengths
+PASS	Bank D slot 1 packed128 expands to pinned runtime156
+PASS	Bank D slot 1 clean saved flag is zero
+PASS	Bank D slot 1 raw163 prefix cannot substitute for runtime156
+PASS	Bank D slot 2 exact record lengths
+PASS	Bank D slot 2 packed128 expands to pinned runtime156
+PASS	Bank D slot 2 clean saved flag is zero
+PASS	Bank D slot 2 raw163 prefix cannot substitute for runtime156
+PASS	Bank D slot 3 exact record lengths
+PASS	Bank D slot 3 packed128 expands to pinned runtime156
+PASS	Bank D slot 3 clean saved flag is zero
+PASS	Bank D slot 3 raw163 prefix cannot substitute for runtime156
+PASS	Bank D slot 4 exact record lengths
+PASS	Bank D slot 4 packed128 expands to pinned runtime156
+PASS	Bank D slot 4 clean saved flag is zero
+PASS	Bank D slot 4 raw163 prefix cannot substitute for runtime156
+PASS	Bank D slot 5 exact record lengths
+PASS	Bank D slot 5 packed128 expands to pinned runtime156
+PASS	Bank D slot 5 clean saved flag is zero
+PASS	Bank D slot 5 raw163 prefix cannot substitute for runtime156
+PASS	Bank D slot 6 exact record lengths
+PASS	Bank D slot 6 packed128 expands to pinned runtime156
+PASS	Bank D slot 6 clean saved flag is zero
+PASS	Bank D slot 6 raw163 prefix cannot substitute for runtime156
+PASS	Bank D slot 7 exact record lengths
+PASS	Bank D slot 7 packed128 expands to pinned runtime156
+PASS	Bank D slot 7 clean saved flag is zero
+PASS	Bank D slot 7 raw163 prefix cannot substitute for runtime156
+PASS	Bank D slot 8 exact record lengths
+PASS	Bank D slot 8 packed128 expands to pinned runtime156
+PASS	Bank D slot 8 clean saved flag is zero
+PASS	Bank D slot 8 raw163 prefix cannot substitute for runtime156
+PASS	Bank D slot 9 exact record lengths
+PASS	Bank D slot 9 packed128 expands to pinned runtime156
+PASS	Bank D slot 9 clean saved flag is zero
+PASS	Bank D slot 9 raw163 prefix cannot substitute for runtime156
+PASS	Bank D slot 10 exact record lengths
+PASS	Bank D slot 10 packed128 expands to pinned runtime156
+PASS	Bank D slot 10 clean saved flag is zero
+PASS	Bank D slot 10 raw163 prefix cannot substitute for runtime156
+PASS	Bank D slot 11 exact record lengths
+PASS	Bank D slot 11 packed128 expands to pinned runtime156
+PASS	Bank D slot 11 clean saved flag is zero
+PASS	Bank D slot 11 raw163 prefix cannot substitute for runtime156
+PASS	Bank D slot 12 exact record lengths
+PASS	Bank D slot 12 packed128 expands to pinned runtime156
+PASS	Bank D slot 12 clean saved flag is zero
+PASS	Bank D slot 12 raw163 prefix cannot substitute for runtime156
+PASS	Bank D slot 13 exact record lengths
+PASS	Bank D slot 13 packed128 expands to pinned runtime156
+PASS	Bank D slot 13 clean saved flag is zero
+PASS	Bank D slot 13 raw163 prefix cannot substitute for runtime156
+PASS	Bank D slot 14 exact record lengths
+PASS	Bank D slot 14 packed128 expands to pinned runtime156
+PASS	Bank D slot 14 clean saved flag is zero
+PASS	Bank D slot 14 raw163 prefix cannot substitute for runtime156
+PASS	Bank D slot 15 exact record lengths
+PASS	Bank D slot 15 packed128 expands to pinned runtime156
+PASS	Bank D slot 15 clean saved flag is zero
+PASS	Bank D slot 15 raw163 prefix cannot substitute for runtime156
+PASS	Bank D 1..16 packed records are contiguous at dump 0x0f7000..0x0f7800
+PASS	all clean Bank D 1..16 raw163 prefixes are the same placeholder
+RESULT	BLOCK
