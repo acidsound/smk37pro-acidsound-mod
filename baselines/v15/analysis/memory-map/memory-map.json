@@ -1,0 +1,607 @@
+{
+  "format": "smk37-v15-s1c5-memory-map-v1",
+  "scope": "authoritative v15/S1C5 consolidation from existing exact evidence only; no v12 evidence; no device access",
+  "generated_utc": "2026-08-04T17:00:00Z",
+  "rows": [
+    {
+      "id": "mm-001",
+      "section": "live_validated",
+      "start": "0x0201c644",
+      "end_exclusive": "0x0201c64a",
+      "size": 6,
+      "size_hex": "0x6",
+      "type_owner": "S1C5 app patch: Note Off register reload",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "PATCHED: S1C5-owned change. Preserve in current baseline.",
+      "source_artifacts": [
+        "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/app-manifest.json",
+        "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/live-validation-20260804.md"
+      ],
+      "notes": "lb.z r5,[r0] with padding. Live user result perfect."
+    },
+    {
+      "id": "mm-002",
+      "section": "live_validated",
+      "start": "0x0201c682",
+      "end_exclusive": "0x0201c688",
+      "size": 6,
+      "size_hex": "0x6",
+      "type_owner": "S1C5 app patch: Note On register reload",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "PATCHED: S1C5-owned change. Preserve in current baseline.",
+      "source_artifacts": [
+        "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/app-manifest.json",
+        "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/live-validation-20260804.md"
+      ],
+      "notes": "lb.z r6,[r0] with padding. Velocity store preserved."
+    },
+    {
+      "id": "mm-003",
+      "section": "live_validated",
+      "start": "0x01c46e80",
+      "end_exclusive": "0x01c46f20",
+      "size": 160,
+      "size_hex": "0xa0",
+      "type_owner": "owned S1C5 16-slot RAM envelope",
+      "evidence_confidence": "OBSERVED",
+      "mutability_patch_policy": "S1C5 VOLATILE OWNED while installed. Rebuild only with selector ABI proof.",
+      "source_artifacts": [
+        "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/code-evidence/report.md",
+        "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/app-manifest.json"
+      ],
+      "notes": "Resident 16-slot selector/metadata envelope from S1C lineage."
+    },
+    {
+      "id": "mm-004",
+      "section": "live_validated",
+      "start": "0x01c46f20",
+      "end_exclusive": "0x01c46f30",
+      "size": 16,
+      "size_hex": "0x10",
+      "type_owner": "S1C5 16-slot Playback Note RAM map",
+      "evidence_confidence": "OBSERVED",
+      "mutability_patch_policy": "S1C5 VOLATILE OWNED. Re-send after reboot until persistence milestone.",
+      "source_artifacts": [
+        "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/app-manifest.json",
+        "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/live-validation-20260804.md"
+      ],
+      "notes": "Producer stores wire byte 161 to 0x01c46f20+slot."
+    },
+    {
+      "id": "mm-005",
+      "section": "static_proven",
+      "start": "0x00000000",
+      "end_exclusive": "0x00004000",
+      "size": 16384,
+      "size_hex": "0x4000",
+      "type_owner": "physical Flash/package/JLFS/user tail protected boot and layout prefix",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "DO NOT PATCH. Protected hash unchanged.",
+      "source_artifacts": [
+        "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/package-manifest.json"
+      ],
+      "notes": "Includes boot/layout and uboot/config subranges evidenced by package protected hashes."
+    },
+    {
+      "id": "mm-006",
+      "section": "static_proven",
+      "start": "0x00004000",
+      "end_exclusive": "0x0009ad33",
+      "size": 617779,
+      "size_hex": "0x96d33",
+      "type_owner": "physical Flash app area",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "PATCH ONLY via validated app-only candidate, CRC fields, rollback manifest.",
+      "source_artifacts": [
+        "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/package-manifest.json"
+      ],
+      "notes": "app_area_start=0x4000, app_area_end_exclusive=0x9ad33."
+    },
+    {
+      "id": "mm-007",
+      "section": "static_proven",
+      "start": "0x00004120",
+      "end_exclusive": "0x0009ad0c",
+      "size": 617452,
+      "size_hex": "0x96bec",
+      "type_owner": "physical Flash app data payload",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "PATCH ONLY by runtime VA=file offset+0x02000000 mapping.",
+      "source_artifacts": [
+        "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/package-manifest.json"
+      ],
+      "notes": "app_data_start=0x4120, app_data_size=0x96bec."
+    },
+    {
+      "id": "mm-008",
+      "section": "static_proven",
+      "start": "0x0009ad33",
+      "end_exclusive": "0x000ab2d4",
+      "size": 66977,
+      "size_hex": "0x105a1",
+      "type_owner": "physical Flash/package/JLFS/user tail post-app resources/reserved",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "DO NOT PATCH unless separately proven.",
+      "source_artifacts": [
+        "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/package-manifest.json"
+      ],
+      "notes": "Package size 701140; post_app_resources_and_reserved hash unchanged."
+    },
+    {
+      "id": "mm-009",
+      "section": "static_proven",
+      "start": "0x02000000",
+      "end_exclusive": "0x02096934",
+      "size": 616756,
+      "size_hex": "0x96934",
+      "type_owner": "app runtime 0x02000000 mapping",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Static address model. Patch only within validated app windows.",
+      "source_artifacts": [
+        "baselines/v15/analysis/evidence.md",
+        "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/app-manifest.json"
+      ],
+      "notes": "Runtime base proven by pointer/string evidence. S1C5 app size 0x96934."
+    },
+    {
+      "id": "mm-010",
+      "section": "static_proven",
+      "start": "0x02000000",
+      "end_exclusive": "0x020000a4",
+      "size": 164,
+      "size_hex": "0xa4",
+      "type_owner": "boot/reset/data-copy/BSS-zero code",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "DO NOT PATCH. Boot memory and stacks.",
+      "source_artifacts": [
+        "baselines/v15/analysis/r03-owned-ram/heap-boundary/report.md"
+      ],
+      "notes": "Copies data to 0x01c00000..0x01c099d4 and zeros BSS."
+    },
+    {
+      "id": "mm-011",
+      "section": "static_proven",
+      "start": "0x02004870",
+      "end_exclusive": "0x02004b14",
+      "size": 676,
+      "size_hex": "0x2a4",
+      "type_owner": "storage raw read/write wrappers",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Callable only with return==requested_length checks.",
+      "source_artifacts": [
+        "baselines/v15/analysis/persistence-s2/storage/report.md"
+      ],
+      "notes": "read_02004870 and write_02004b02 wrapper ABIs."
+    },
+    {
+      "id": "mm-012",
+      "section": "static_proven",
+      "start": "0x02005660",
+      "end_exclusive": "0x02005780",
+      "size": 288,
+      "size_hex": "0x120",
+      "type_owner": "stock selected-record loader and current snapshot producer",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Do not bypass without preserving stock lifecycle.",
+      "source_artifacts": [
+        "baselines/v15/analysis/channel-separation-reanalysis/runtime-source/report.md",
+        "baselines/v15/analysis/persistence-s2/storage/report.md"
+      ],
+      "notes": "Copies raw 0xa3 then expands packed fields."
+    },
+    {
+      "id": "mm-013",
+      "section": "static_proven",
+      "start": "0x0201c5ec",
+      "end_exclusive": "0x0201c6a0",
+      "size": 180,
+      "size_hex": "0xb4",
+      "type_owner": "Note On/Off dispatcher current snapshot consumer",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Patch only at S1C5 validated post-hook bytes.",
+      "source_artifacts": [
+        "baselines/v15/analysis/channel-separation-reanalysis/runtime-source/report.md",
+        "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/evidence.json"
+      ],
+      "notes": "Copies 0x9c from current snapshot to per-voice slot."
+    },
+    {
+      "id": "mm-014",
+      "section": "static_proven",
+      "start": "0x0201e13e",
+      "end_exclusive": "0x0201e254",
+      "size": 278,
+      "size_hex": "0x116",
+      "type_owner": "S1C5 producer/selector/code cave region",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "S1C lineage owned. Preserve SHA unless rebuilding slot ABI.",
+      "source_artifacts": [
+        "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/app-manifest.json"
+      ],
+      "notes": "Selector returns r0=dest+0x9c; producer stores playback map byte."
+    },
+    {
+      "id": "mm-015",
+      "section": "static_proven",
+      "start": "0x0201e254",
+      "end_exclusive": "0x0201e6a0",
+      "size": 1100,
+      "size_hex": "0x44c",
+      "type_owner": "SysEx staging/current ingress handler",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Do not use as durable storage. Supported traffic mutates staging/current.",
+      "source_artifacts": [
+        "baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md",
+        "baselines/v15/analysis/channel-separation-reanalysis/runtime-source/report.md"
+      ],
+      "notes": "Bulk and single-parameter SysEx paths."
+    },
+    {
+      "id": "mm-016",
+      "section": "static_proven",
+      "start": "0x02048cce",
+      "end_exclusive": "0x02048d00",
+      "size": 50,
+      "size_hex": "0x32",
+      "type_owner": "memcpy-like routine",
+      "evidence_confidence": "OBSERVED",
+      "mutability_patch_policy": "Call only under established ABI.",
+      "source_artifacts": [
+        "baselines/v15/analysis/r03-owned-ram/heap-boundary/report.md"
+      ],
+      "notes": "146 decoded callsites observed."
+    },
+    {
+      "id": "mm-017",
+      "section": "static_proven",
+      "start": "0x02060e2c",
+      "end_exclusive": "0x02060f20",
+      "size": 244,
+      "size_hex": "0xf4",
+      "type_owner": "allocator/heap init and malloc-like region",
+      "evidence_confidence": "OBSERVED",
+      "mutability_patch_policy": "Do not claim heap ownership. Arena bounds blocked.",
+      "source_artifacts": [
+        "baselines/v15/analysis/r03-owned-ram/heap-boundary/report.md"
+      ],
+      "notes": "heap_init, malloc_like, and free_like observed but no arena proof."
+    },
+    {
+      "id": "mm-018",
+      "section": "static_proven",
+      "start": "0x01c00000",
+      "end_exclusive": "0x01c099d4",
+      "size": 39380,
+      "size_hex": "0x99d4",
+      "type_owner": "initialized data RAM",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Stock RAM. Not free unless owner proven.",
+      "source_artifacts": [
+        "baselines/v15/analysis/r03-owned-ram/heap-boundary/report.md"
+      ],
+      "notes": "Data copy destination."
+    },
+    {
+      "id": "mm-019",
+      "section": "static_proven",
+      "start": "0x01c099d4",
+      "end_exclusive": "0x01c4651c",
+      "size": 248648,
+      "size_hex": "0x3cb48",
+      "type_owner": "BSS/heap boundaries zero span",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Not free by zeroing. Stack/globals/heap/task aliases must be excluded.",
+      "source_artifacts": [
+        "baselines/v15/analysis/r03-owned-ram/heap-boundary/report.md",
+        "baselines/v15/analysis/r03-owned-ram/ram-ownership/report.md"
+      ],
+      "notes": "BSS zero size 0x3cb48."
+    },
+    {
+      "id": "mm-020",
+      "section": "static_proven",
+      "start": "0x01c33260",
+      "end_exclusive": "0x01c33264",
+      "size": 4,
+      "size_hex": "0x4",
+      "type_owner": "global RAM 0x01c33260 object base",
+      "evidence_confidence": "OBSERVED",
+      "mutability_patch_policy": "Stock global. Patch only by proven field offsets.",
+      "source_artifacts": [
+        "baselines/v15/analysis/channel-separation-reanalysis/runtime-source/report.md",
+        "baselines/v15/analysis/persistence-s2/storage/report.md"
+      ],
+      "notes": "492 base refs observed."
+    },
+    {
+      "id": "mm-021",
+      "section": "static_proven",
+      "start": "0x01c333c0",
+      "end_exclusive": "0x01c333c4",
+      "size": 4,
+      "size_hex": "0x4",
+      "type_owner": "global RAM 0x01c33260 object offset +0x160 storage address/offset view",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Read stock field. Do not repurpose.",
+      "source_artifacts": [
+        "baselines/v15/analysis/persistence-s2/storage/report.md"
+      ],
+      "notes": "Boot stores translated write address."
+    },
+    {
+      "id": "mm-022",
+      "section": "static_proven",
+      "start": "0x01c333c4",
+      "end_exclusive": "0x01c333c8",
+      "size": 4,
+      "size_hex": "0x4",
+      "type_owner": "global RAM 0x01c33260 object offset +0x164 direct mapped read pointer",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Read stock field. Do not repurpose.",
+      "source_artifacts": [
+        "baselines/v15/analysis/persistence-s2/storage/report.md"
+      ],
+      "notes": "Stock loader source pointer."
+    },
+    {
+      "id": "mm-023",
+      "section": "static_proven",
+      "start": "0x01c33600",
+      "end_exclusive": "0x01c33609",
+      "size": 9,
+      "size_hex": "0x9",
+      "type_owner": "global RAM 0x01c33260 object offset +0x3a0 selection mirror",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Stock selection. Do not encode custom state.",
+      "source_artifacts": [
+        "baselines/v15/analysis/persistence-s2/storage/report.md"
+      ],
+      "notes": "Boot reads 9 selection bytes."
+    },
+    {
+      "id": "mm-024",
+      "section": "static_proven",
+      "start": "0x01c344fc",
+      "end_exclusive": "0x01c3457c",
+      "size": 128,
+      "size_hex": "0x80",
+      "type_owner": "global RAM 0x01c33260 object offset +0x129c flag mirror",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Stock flags. Do not encode custom state.",
+      "source_artifacts": [
+        "baselines/v15/analysis/persistence-s2/storage/report.md"
+      ],
+      "notes": "Boot reads 0x80 flags."
+    },
+    {
+      "id": "mm-025",
+      "section": "static_proven",
+      "start": "0x01c34c74",
+      "end_exclusive": "0x01c34d17",
+      "size": 163,
+      "size_hex": "0xa3",
+      "type_owner": "current snapshot raw/current record",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Mutable stock current. Never owned S1C RAM.",
+      "source_artifacts": [
+        "baselines/v15/analysis/channel-separation-reanalysis/runtime-source/report.md",
+        "baselines/v15/analysis/r03-owned-ram/ram-ownership/report.md"
+      ],
+      "notes": "g+0x1a14; 0xa3 raw/current record."
+    },
+    {
+      "id": "mm-026",
+      "section": "static_proven",
+      "start": "0x01c34c74",
+      "end_exclusive": "0x01c34d10",
+      "size": 156,
+      "size_hex": "0x9c",
+      "type_owner": "current snapshot dispatch prefix",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Mutable. Safe source only at copy instant.",
+      "source_artifacts": [
+        "baselines/v15/analysis/channel-separation-reanalysis/runtime-source/report.md"
+      ],
+      "notes": "0x9c copied by dispatcher."
+    },
+    {
+      "id": "mm-027",
+      "section": "static_proven",
+      "start": "0x01c34d10",
+      "end_exclusive": "0x01c34d17",
+      "size": 7,
+      "size_hex": "0x7",
+      "type_owner": "current snapshot stock tail",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Stock tail. Not metadata/free. Preserve.",
+      "source_artifacts": [
+        "baselines/v15/analysis/persistence-s2/storage/report.md"
+      ],
+      "notes": "Tail +0x9c..+0xa2 has stock consumers."
+    },
+    {
+      "id": "mm-028",
+      "section": "static_proven",
+      "start": "0x01c37030",
+      "end_exclusive": "0x01c37034",
+      "size": 4,
+      "size_hex": "0x4",
+      "type_owner": "SysEx staging base",
+      "evidence_confidence": "OBSERVED",
+      "mutability_patch_policy": "Transient. No durable ownership.",
+      "source_artifacts": [
+        "baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md"
+      ],
+      "notes": "Stage uses +0xfa0."
+    },
+    {
+      "id": "mm-029",
+      "section": "static_proven",
+      "start": "0x01c37fd0",
+      "end_exclusive": "0x01c3806d",
+      "size": 157,
+      "size_hex": "0x9d",
+      "type_owner": "SysEx staging complete-message window",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Transient. Never reread for Note Off.",
+      "source_artifacts": [
+        "baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md",
+        "baselines/v15/analysis/r03-owned-ram/ram-ownership/report.md"
+      ],
+      "notes": "0x9c payload plus F7 at +0x9c."
+    },
+    {
+      "id": "mm-030",
+      "section": "static_proven",
+      "start": "0x01c3a2d4",
+      "end_exclusive": "0x01c3c5d4",
+      "size": 8960,
+      "size_hex": "0x2300",
+      "type_owner": "boot stack initializer value range",
+      "evidence_confidence": "OBSERVED",
+      "mutability_patch_policy": "No patch. Not a complete allocation map.",
+      "source_artifacts": [
+        "baselines/v15/analysis/r03-owned-ram/heap-boundary/report.md"
+      ],
+      "notes": "sp/ssp/usp values inside BSS."
+    },
+    {
+      "id": "mm-031",
+      "section": "static_proven",
+      "start": "STORAGE+0x0000",
+      "end_exclusive": "STORAGE+0x4000",
+      "size": null,
+      "size_hex": null,
+      "type_owner": "storage packed banks",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Stock storage. Use stock packer only.",
+      "source_artifacts": [
+        "baselines/v15/analysis/persistence-s2/storage/report.md"
+      ],
+      "notes": "4*32*0x80."
+    },
+    {
+      "id": "mm-032",
+      "section": "static_proven",
+      "start": "STORAGE+0x4000",
+      "end_exclusive": "STORAGE+0x9180",
+      "size": null,
+      "size_hex": null,
+      "type_owner": "storage raw records",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Stock library records. Policy reservation only, not free.",
+      "source_artifacts": [
+        "baselines/v15/analysis/persistence-s2/storage/report.md"
+      ],
+      "notes": "128*0xa3 raw records."
+    },
+    {
+      "id": "mm-033",
+      "section": "inferred",
+      "start": "STORAGE+0x7d20",
+      "end_exclusive": "STORAGE+0x8740",
+      "size": null,
+      "size_hex": null,
+      "type_owner": "persistent seed records D1..D16 raw-prefix area",
+      "evidence_confidence": "INFERRED",
+      "mutability_patch_policy": "Policy reservation if Bank D records 96..111 are accepted as occupied.",
+      "source_artifacts": [
+        "baselines/v15/analysis/persistence-s2/storage/report.md",
+        "baselines/v15/analysis/persistence-s2/official-ui-save-prefix-seed/report.md"
+      ],
+      "notes": "16 records. Prefix 0x00..0x9b encodes S1C5 voice/playback note; tail preserved."
+    },
+    {
+      "id": "mm-034",
+      "section": "static_proven",
+      "start": "STORAGE+0x9180",
+      "end_exclusive": "STORAGE+0x9200",
+      "size": null,
+      "size_hex": null,
+      "type_owner": "storage flags",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Stock flags. Do not encode custom state.",
+      "source_artifacts": [
+        "baselines/v15/analysis/persistence-s2/storage/report.md"
+      ],
+      "notes": "0x80 flag table."
+    },
+    {
+      "id": "mm-035",
+      "section": "static_proven",
+      "start": "STORAGE+0x9200",
+      "end_exclusive": "STORAGE+0x9209",
+      "size": null,
+      "size_hex": null,
+      "type_owner": "storage selection",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Stock selection. Do not encode custom state.",
+      "source_artifacts": [
+        "baselines/v15/analysis/persistence-s2/storage/report.md"
+      ],
+      "notes": "9-byte selected-bank/preset state."
+    },
+    {
+      "id": "mm-036",
+      "section": "refuted",
+      "start": "0x01c099d4",
+      "end_exclusive": "0x01c4651c",
+      "size": 248648,
+      "size_hex": "0x3cb48",
+      "type_owner": "generic zeroed BSS gap as owned RAM",
+      "evidence_confidence": "BLOCKED",
+      "mutability_patch_policy": "Refuted. Zero-on-boot is not ownership.",
+      "source_artifacts": [
+        "baselines/v15/analysis/r03-owned-ram/ram-ownership/report.md",
+        "baselines/v15/analysis/r03-owned-ram/heap-boundary/report.md"
+      ],
+      "notes": "Blocked without owner/lifetime/no-alias proof."
+    },
+    {
+      "id": "mm-037",
+      "section": "refuted",
+      "start": "0x01c34c74",
+      "end_exclusive": "0x01c34d17",
+      "size": 163,
+      "size_hex": "0xa3",
+      "type_owner": "current snapshot as immutable S1C RAM",
+      "evidence_confidence": "BLOCKED",
+      "mutability_patch_policy": "Refuted. Mutable UI/SysEx/loader target.",
+      "source_artifacts": [
+        "baselines/v15/analysis/r03-owned-ram/ram-ownership/report.md"
+      ],
+      "notes": "Would repeat shared-current behavior."
+    },
+    {
+      "id": "mm-038",
+      "section": "refuted",
+      "start": "0x01c37fd0",
+      "end_exclusive": "0x01c3806c",
+      "size": 156,
+      "size_hex": "0x9c",
+      "type_owner": "SysEx staging as permanent voice storage",
+      "evidence_confidence": "BLOCKED",
+      "mutability_patch_policy": "Refuted. Transient assembly workspace.",
+      "source_artifacts": [
+        "baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md",
+        "baselines/v15/analysis/r03-owned-ram/ram-ownership/report.md"
+      ],
+      "notes": "Unsafe especially for Note Off."
+    },
+    {
+      "id": "mm-039",
+      "section": "unknown",
+      "start": "MMIO/IOREGIONS",
+      "end_exclusive": "MMIO/IOREGIONS",
+      "size": null,
+      "size_hex": null,
+      "type_owner": "MMIO/unknown regions",
+      "evidence_confidence": "BLOCKED",
+      "mutability_patch_policy": "Unknown. No row admitted without exact v15 evidence.",
+      "source_artifacts": [
+        "baselines/v15/analysis/r03-owned-ram/heap-boundary/report.md"
+      ],
+      "notes": "No evidenced MMIO range consolidated."
+    }
+  ]
+}
