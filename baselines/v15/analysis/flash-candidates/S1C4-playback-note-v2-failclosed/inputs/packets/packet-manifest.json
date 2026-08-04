@@ -1,0 +1,271 @@
+{
+  "device_accessed": false,
+  "format": "smk37-v15-s1c4-playback-note-v2-failclosed.playback-transport-packets-v1",
+  "midi_transport_opened": false,
+  "order_basis": "resident_slot_order_trigger_note_36_51",
+  "packet_bytes": 163,
+  "packet_count": 16,
+  "packets": [
+    {
+      "file": "slot00-trigger36-playback36-direct-product-163.bin",
+      "name": "BUZZ BASS",
+      "only_changed_wire_offsets_vs_template": [
+        161
+      ],
+      "order": 1,
+      "playback_note": 36,
+      "sha256": "ebb0a98d0a15c01d3f3035f114f852de703920d712d607cc2342637ec3421b88",
+      "slot": 0,
+      "template_byte_at_wire_offset": 63,
+      "template_file": "slot00-note36-direct-product-163.bin",
+      "template_sha256": "1c9239621563722eaac0a85db411571963f9ebbd0dbbb00b21044b76b1581427",
+      "transport_byte_at_wire_offset": 36,
+      "trigger_note": 36
+    },
+    {
+      "file": "slot01-trigger37-playback37-direct-product-163.bin",
+      "name": "Bang ?????",
+      "only_changed_wire_offsets_vs_template": [
+        161
+      ],
+      "order": 2,
+      "playback_note": 37,
+      "sha256": "182e4a54ef667974c364471675854de526b1b773eeaf35e9edef9629af620cc2",
+      "slot": 1,
+      "template_byte_at_wire_offset": 63,
+      "template_file": "slot01-note37-direct-product-163.bin",
+      "template_sha256": "afa8957005341e6144962ce3120bb1d829475714077617ea8da2c3fee4a0aa21",
+      "transport_byte_at_wire_offset": 37,
+      "trigger_note": 37
+    },
+    {
+      "file": "slot02-trigger38-playback38-direct-product-163.bin",
+      "name": "BASSE BIEN",
+      "only_changed_wire_offsets_vs_template": [
+        161
+      ],
+      "order": 3,
+      "playback_note": 38,
+      "sha256": "964715e7c31f7512a9690736fcaa61c1500f55814d807ed8f677d6e9810a21ec",
+      "slot": 2,
+      "template_byte_at_wire_offset": 63,
+      "template_file": "slot02-note38-direct-product-163.bin",
+      "template_sha256": "8a87a409056457e61944d01bf4bbc0266414b8385c3a848125700da9e8417de3",
+      "transport_byte_at_wire_offset": 38,
+      "trigger_note": 38
+    },
+    {
+      "file": "slot03-trigger39-playback39-direct-product-163.bin",
+      "name": "BASS-THING",
+      "only_changed_wire_offsets_vs_template": [
+        161
+      ],
+      "order": 4,
+      "playback_note": 39,
+      "sha256": "a16c453b38e7d76791abd90198728db96cda06be454683643e3ba1327e2e6bc9",
+      "slot": 3,
+      "template_byte_at_wire_offset": 63,
+      "template_file": "slot03-note39-direct-product-163.bin",
+      "template_sha256": "a5c086a77b4de1ce9546e747b72f79d8f6ad7b0dbd7c3b6e1665ef7edf83ff58",
+      "transport_byte_at_wire_offset": 39,
+      "trigger_note": 39
+    },
+    {
+      "file": "slot04-trigger40-playback40-direct-product-163.bin",
+      "name": "BASS SLAP",
+      "only_changed_wire_offsets_vs_template": [
+        161
+      ],
+      "order": 5,
+      "playback_note": 40,
+      "sha256": "3014185c51b494570b792220203155131a5ecaf6a234be2b18b90ea1dfc14df2",
+      "slot": 4,
+      "template_byte_at_wire_offset": 63,
+      "template_file": "slot04-note40-direct-product-163.bin",
+      "template_sha256": "ffd1bcc6c7a7c5d8a1bb35f5bf7e39bf63058e62ac574e1e308ba53edc6670ff",
+      "transport_byte_at_wire_offset": 40,
+      "trigger_note": 40
+    },
+    {
+      "file": "slot05-trigger41-playback41-direct-product-163.bin",
+      "name": "BEAMER 2",
+      "only_changed_wire_offsets_vs_template": [
+        161
+      ],
+      "order": 6,
+      "playback_note": 41,
+      "sha256": "2de0d665aaaeb67a755d2a978dacdb55bacc0cc8a26863df81d4533f65944d3c",
+      "slot": 5,
+      "template_byte_at_wire_offset": 63,
+      "template_file": "slot05-note41-direct-product-163.bin",
+      "template_sha256": "57136706fa633b5b47008ed2616471f72ae629d69e601e33c66daad991df94e9",
+      "transport_byte_at_wire_offset": 41,
+      "trigger_note": 41
+    },
+    {
+      "file": "slot06-trigger42-playback42-direct-product-163.bin",
+      "name": "Onglon",
+      "only_changed_wire_offsets_vs_template": [
+        161
+      ],
+      "order": 7,
+      "playback_note": 42,
+      "sha256": "6ae4c27b605c3e40572953cb9146e83471bbdc2463df2871b2cef5e2e1dd16b2",
+      "slot": 6,
+      "template_byte_at_wire_offset": 63,
+      "template_file": "slot06-note42-direct-product-163.bin",
+      "template_sha256": "0f202d88578152ca024b3822f56a7c74c485c42996695033a4c239449d30f366",
+      "transport_byte_at_wire_offset": 42,
+      "trigger_note": 42
+    },
+    {
+      "file": "slot07-trigger43-playback43-direct-product-163.bin",
+      "name": "SOFTSTEEL",
+      "only_changed_wire_offsets_vs_template": [
+        161
+      ],
+      "order": 8,
+      "playback_note": 43,
+      "sha256": "68b1162755692c41cee6290b2626cfdf0eb1cefeaa106d7dfb71cc64ddbc6cbf",
+      "slot": 7,
+      "template_byte_at_wire_offset": 63,
+      "template_file": "slot07-note43-direct-product-163.bin",
+      "template_sha256": "d4ee6f2ccfce2d0c548917bb58ead4988dc3038c2b84edaaa37f047d2e006ea2",
+      "transport_byte_at_wire_offset": 43,
+      "trigger_note": 43
+    },
+    {
+      "file": "slot08-trigger44-playback44-direct-product-163.bin",
+      "name": "BASS-ROADS",
+      "only_changed_wire_offsets_vs_template": [
+        161
+      ],
+      "order": 9,
+      "playback_note": 44,
+      "sha256": "d5c460400f82f8b3fe450157021829adbdf83dbb5791fb2eba8e0159884b1fe2",
+      "slot": 8,
+      "template_byte_at_wire_offset": 63,
+      "template_file": "slot08-note44-direct-product-163.bin",
+      "template_sha256": "c8c489b72b195dfe5f373b6a860b32f0d07a29a83a9f2c070299df5af88a9cb3",
+      "transport_byte_at_wire_offset": 44,
+      "trigger_note": 44
+    },
+    {
+      "file": "slot09-trigger45-playback45-direct-product-163.bin",
+      "name": "E.ORGAN 1",
+      "only_changed_wire_offsets_vs_template": [
+        161
+      ],
+      "order": 10,
+      "playback_note": 45,
+      "sha256": "3294900a53fc9320f22bfcb1137d7c7421760dfeba4b4f7d725ea046f2d28a23",
+      "slot": 9,
+      "template_byte_at_wire_offset": 63,
+      "template_file": "slot09-note45-direct-product-163.bin",
+      "template_sha256": "9c895d925a6cb79c4dff9f9f27727cce02f6dd0ed86467c994d7f459f1036258",
+      "transport_byte_at_wire_offset": 45,
+      "trigger_note": 45
+    },
+    {
+      "file": "slot10-trigger46-playback46-direct-product-163.bin",
+      "name": "YEAAAHH",
+      "only_changed_wire_offsets_vs_template": [
+        161
+      ],
+      "order": 11,
+      "playback_note": 46,
+      "sha256": "1f1e9530ce97cfe957ff5995330dbd2bf3abb1893fa1dd05aa8222a90db8845d",
+      "slot": 10,
+      "template_byte_at_wire_offset": 63,
+      "template_file": "slot10-note46-direct-product-163.bin",
+      "template_sha256": "802944d0e1a8f4e85f1a3a694e2a0dbbfe9bb55972814f11ed4c7be7575b6704",
+      "transport_byte_at_wire_offset": 46,
+      "trigger_note": 46
+    },
+    {
+      "file": "slot11-trigger47-playback47-direct-product-163.bin",
+      "name": "HAND DRUM",
+      "only_changed_wire_offsets_vs_template": [
+        161
+      ],
+      "order": 12,
+      "playback_note": 47,
+      "sha256": "a62621ba5927c8a7dfadae2ef8898d499d4484ba336fd8b182bfe9ce5578d286",
+      "slot": 11,
+      "template_byte_at_wire_offset": 63,
+      "template_file": "slot11-note47-direct-product-163.bin",
+      "template_sha256": "c4e8458edeb04d8106ca60a35243525e6b5f3f5de272091492409a440e3a9a8d",
+      "transport_byte_at_wire_offset": 47,
+      "trigger_note": 47
+    },
+    {
+      "file": "slot12-trigger48-playback48-direct-product-163.bin",
+      "name": "HAND CLAP1",
+      "only_changed_wire_offsets_vs_template": [
+        161
+      ],
+      "order": 13,
+      "playback_note": 48,
+      "sha256": "7abc2a3009ae6c68a1ad8d6d2f7c6bf9e33d18fd213ec6fc47165673a8837830",
+      "slot": 12,
+      "template_byte_at_wire_offset": 63,
+      "template_file": "slot12-note48-direct-product-163.bin",
+      "template_sha256": "622a06870f189b6e4582f0093255f450403d4112836f09563c0b4623c1b287cd",
+      "transport_byte_at_wire_offset": 48,
+      "trigger_note": 48
+    },
+    {
+      "file": "slot13-trigger49-playback49-direct-product-163.bin",
+      "name": "Mooger #1",
+      "only_changed_wire_offsets_vs_template": [
+        161
+      ],
+      "order": 14,
+      "playback_note": 49,
+      "sha256": "88ca1d1555bc67f99290b6c802192dfef2b4f22e867030cccd1bb692714c1873",
+      "slot": 13,
+      "template_byte_at_wire_offset": 63,
+      "template_file": "slot13-note49-direct-product-163.bin",
+      "template_sha256": "6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27",
+      "transport_byte_at_wire_offset": 49,
+      "trigger_note": 49
+    },
+    {
+      "file": "slot14-trigger50-playback50-direct-product-163.bin",
+      "name": "Moog Solo2",
+      "only_changed_wire_offsets_vs_template": [
+        161
+      ],
+      "order": 15,
+      "playback_note": 50,
+      "sha256": "898918184fc8f89879ffb07aff2fbbbd2fbeabc590a133139a86f3394f6b8287",
+      "slot": 14,
+      "template_byte_at_wire_offset": 63,
+      "template_file": "slot14-note50-direct-product-163.bin",
+      "template_sha256": "b159db617616621759bb9990991a8214c585d1f7ecd1be0f36d53a0b71b160c8",
+      "transport_byte_at_wire_offset": 50,
+      "trigger_note": 50
+    },
+    {
+      "file": "slot15-trigger51-playback51-direct-product-163.bin",
+      "name": "Mooger Low",
+      "only_changed_wire_offsets_vs_template": [
+        161
+      ],
+      "order": 16,
+      "playback_note": 51,
+      "sha256": "fdcd31bb040918ac398dfb1a508841d0698a3292670b0a484e435c0f1257c890",
+      "slot": 15,
+      "template_byte_at_wire_offset": 63,
+      "template_file": "slot15-note51-direct-product-163.bin",
+      "template_sha256": "39a3e4eca1c740f719b3495f2a88c63e3b5d575a16a98c7b05fbc211fbfa4775",
+      "transport_byte_at_wire_offset": 51,
+      "trigger_note": 51
+    }
+  ],
+  "payload_playback_note_offset": 155,
+  "policy": "default Original transport uses playback_note = trigger_note; custom 0..127 including duplicates changes only wire byte 161",
+  "send_enabled": false,
+  "status": "PASS",
+  "wire_playback_note_offset": 161
+}
