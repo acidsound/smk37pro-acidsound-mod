@@ -1,0 +1,219 @@
+{
+  "abis": {
+    "loader_0x02005660": {
+      "arguments": "none; global selection",
+      "destination": "g+0x1a14",
+      "raw_source": "*(g+0x164)+0x4000+(bank*32+preset)*0xa3",
+      "return": "ignored"
+    },
+    "official_save_0x02026d6c": {
+      "context": "large UI handler; uses g in r8, state in r6, constant 1 in r15",
+      "write_return_use": "ignored"
+    },
+    "read_0x02004870": {
+      "r0": "RAM destination",
+      "r1": "storage address/offset",
+      "r2": "length",
+      "return": "length on full success, else 0"
+    },
+    "write_0x02004b02": {
+      "r0": "RAM source",
+      "r1": "storage address/offset",
+      "r2": "length",
+      "return": "length on full success, else 0"
+    }
+  },
+  "boot": {
+    "flags_read": "0x02005f0e: read 0x80 from *(g+0x160)+0x9180 to g+0x129c",
+    "loader_call": "0x02005f9c -> 0x02005660",
+    "mapped_pointer_store": "0x02005ef2 -> g+0x164",
+    "post_loader_continuation": "0x02005fa0",
+    "selection_default_writer": "0x02005f7c -> 0x02005512 when g[0x3a8] != 8",
+    "selection_read": "0x02005f20: read 9 from *(g+0x160)+0x9200 to g+0x3a0",
+    "store_address_store": "0x02005eee -> g+0x160"
+  },
+  "checks": [
+    "PASS\tsha256 official_app 36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "PASS\tsha256 s1c5_app 8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+    "PASS\tsha256 listing f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347",
+    "PASS\tsha256 s1c5_decode 3cb4c44c5ea2c3c99db25db4dcacdf6f2999f8dd90a42b3179f0e0f89b5f6826",
+    "PASS\tsha256 s1c5_code_evidence c2c057912c8ed2ecaed37a8158a836b81985207b8f34586820b376f28c167eec",
+    "PASS\tlisting 0x02004b02 contains push {rets,r4}",
+    "PASS\tlisting 0x02004b04 contains mov r4,r2",
+    "PASS\tlisting 0x02004b06 contains mov r2,r1",
+    "PASS\tlisting 0x02004b08 contains mov r1,r4",
+    "PASS\tlisting 0x02004b0a contains call 0x02004a7a",
+    "PASS\tlisting 0x02004b0c contains if (r0 != r4)",
+    "PASS\tlisting 0x02004870 contains push {rets,r4}",
+    "PASS\tlisting 0x02004872 contains mov r4,r2",
+    "PASS\tlisting 0x02004874 contains mov r2,r1",
+    "PASS\tlisting 0x02004876 contains mov r1,r4",
+    "PASS\tlisting 0x02004878 contains call 0x020047d8",
+    "PASS\tlisting 0x0200487a contains if (r0 != r4)",
+    "PASS\tlisting 0x0200464e contains movz r1,#0x18b",
+    "PASS\tlisting 0x02005eea contains call 0x0200464e",
+    "PASS\tlisting 0x02005eee contains sw r0,[r6 + 0x160]",
+    "PASS\tlisting 0x02005ef2 contains sw r5,[r6 + 0x164]",
+    "PASS\tlisting 0x02005f0e contains call 0x02004870",
+    "PASS\tlisting 0x02005f20 contains call 0x02004870",
+    "PASS\tlisting 0x02005f7c contains call 0x02005512",
+    "PASS\tlisting 0x02005f9c contains call 0x02005660",
+    "PASS\tlisting 0x02005fa0 contains ldw r0,r6,#0x15c",
+    "PASS\tlisting 0x02005528 contains call 0x02004b02",
+    "PASS\tlisting 0x02005682 contains ldw r7,r4,#0x164",
+    "PASS\tlisting 0x0200568a contains mul r0,r0,#0xa3",
+    "PASS\tlisting 0x02005690 contains add r1,r0,0x4000",
+    "PASS\tlisting 0x02005694 contains add r0,r4,0x1a14",
+    "PASS\tlisting 0x02005698 contains mov r2,#0xa3",
+    "PASS\tlisting 0x0200569a contains call 0x02048cce",
+    "PASS\tlisting 0x02005766 contains mov r0,#0x3f",
+    "PASS\tlisting 0x0200576c contains sb r0,[r3 + 0xf]",
+    "PASS\tlisting 0x02005768 contains add r6,r4,0x1ab0",
+    "PASS\tlisting 0x02005770 contains call 0x0200552e",
+    "PASS\tlisting 0x02005776 contains call 0x0200558e",
+    "PASS\tlisting 0x0200577c contains call 0x020055f8",
+    "PASS\tlisting 0x02005782 contains call 0x0200562c",
+    "PASS\tlisting 0x0200578a contains lb.z r0,[r6 + 0x6]",
+    "PASS\tlisting 0x02026d6c contains movz r0,#0x1ec",
+    "PASS\tlisting 0x02026d74 contains jne r0,#0x0,0x020274a6",
+    "PASS\tlisting 0x02026d7a contains jmz r6,#0xff,0x02026dd4",
+    "PASS\tlisting 0x02026d8c contains ldw r2,r8,#0x160",
+    "PASS\tlisting 0x02026d94 contains mul r0,r0,#0xa3",
+    "PASS\tlisting 0x02026d9a contains add r1,r0,0x4000",
+    "PASS\tlisting 0x02026d9e contains add r4,r8,0x1a14",
+    "PASS\tlisting 0x02026da2 contains mov r2,#0xa3",
+    "PASS\tlisting 0x02026da6 contains call 0x02004b02",
+    "PASS\tlisting 0x02026dac contains call 0x0201e13e",
+    "PASS\tlisting 0x02026dbe contains sb r15,[r1 + r0]",
+    "PASS\tlisting 0x02026dd0 contains call 0x02004b02",
+    "PASS\tofficial 0x02026da6 calls write wrapper",
+    "PASS\tS1C5 0x02026da6 branches to SAVE cleanup",
+    "PASS\tofficial 0x02026dac calls stock packer",
+    "PASS\tS1C5 0x02026dac stock packer call is neutralized",
+    "PASS\tofficial/S1C5 unchanged 0x0200463a..0x02004884",
+    "PASS\tofficial/S1C5 unchanged 0x02004a7a..0x02004b16",
+    "PASS\tofficial/S1C5 unchanged 0x02005512..0x0200552e",
+    "PASS\tofficial/S1C5 unchanged 0x02005660..0x020057e0",
+    "PASS\tofficial/S1C5 unchanged 0x02005edc..0x02005fac",
+    "PASS\tS1C5 decode selector.patch_base",
+    "PASS\tS1C5 decode selector.state_load",
+    "PASS\tS1C5 decode selector.map_base",
+    "PASS\tS1C5 decode producer.staging_last_pointer",
+    "PASS\tS1C5 decode producer.playback_load",
+    "PASS\tS1C5 decode producer.playback_store",
+    "PASS\tS1C5 decode producer.restore_value",
+    "PASS\tS1C5 decode producer.restore_slot_last",
+    "PASS\tS1C5 decode producer.valid_store",
+    "PASS\tS1C5 decode producer.armed_store",
+    "PASS\tstock 128*0xa3 raw extent ends at +0x9180",
+    "PASS\tstock 0x80 flag table ends at +0x9200",
+    "PASS\tstock 9-byte selection ends at +0x9209",
+    "PASS\tS1C5 persistent voice prefix is 0x9b bytes",
+    "PASS\tone S1C5 voice plus playback note fits raw prefix 0x9c",
+    "PASS\t16 payload prefixes total 0x9c0 bytes across 16 records",
+    "PASS\tpacked expansion overwrites every raw prefix byte 0x00..0x9b",
+    "PASS\tall seven raw tail bytes have proven stock use"
+  ],
+  "decision": {
+    "custom_persistent_allocation_required": false,
+    "lossless_free_records_proven": false,
+    "minimum_fail_closed_single_copy": "16 payload records plus 1 manifest record prefix (17 records)",
+    "minimum_previous_generation_preserving_ab": "two independent 17-record groups (34 records)",
+    "payload_fits_16_existing_raw_records": true,
+    "record_reservation_policy_required": true,
+    "unused_stock_tail_or_flag_or_selection_field_proven": false
+  },
+  "exact_s1c5_save_diff": {
+    "0x02026da6": {
+      "official": "beeaacee",
+      "s1c5": "04960000"
+    },
+    "0x02026dac": {
+      "official": "bfeac7b9",
+      "s1c5": "00000000"
+    }
+  },
+  "format": "smk37-v15-s1c5-persistence-s2-storage-evidence-v1",
+  "inputs": {
+    "listing": {
+      "path": "baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz",
+      "sha256": "f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347"
+    },
+    "official_app": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C2-two-slot-selector-live-v2/inputs/v15-official-app.bin",
+      "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055"
+    },
+    "s1c5_app": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/app.bin",
+      "sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189"
+    },
+    "s1c5_code_evidence": {
+      "path": "baselines/v15/analysis/playback-note/candidate-v3-segmented-final/evidence.json",
+      "sha256": "c2c057912c8ed2ecaed37a8158a836b81985207b8f34586820b376f28c167eec"
+    },
+    "s1c5_decode": {
+      "path": "baselines/v15/analysis/playback-note/candidate-v3-segmented-final/decode.tsv",
+      "sha256": "3cb4c44c5ea2c3c99db25db4dcacdf6f2999f8dd90a42b3179f0e0f89b5f6826"
+    }
+  },
+  "raw_tail_usage": {
+    "0x9c": "0x02005770 -> 0x0200552e",
+    "0x9d": "0x02005776 -> 0x0200558e",
+    "0x9e": "0x0200577c -> 0x020055f8",
+    "0x9f": "0x02005782 -> 0x0200562c",
+    "0xa0": "flag-dependent mirror of current[0x86]",
+    "0xa1": "flag-dependent mirror of current[0x87]",
+    "0xa2": "0x0200578e loads it for *(g+0x15c)+0x16"
+  },
+  "s1c5": {
+    "armed_value": 2,
+    "loaded_count": "0x01c465be",
+    "lock": "0x01c465bd",
+    "persistent_record_encoding": {
+      "byte_0x9b": "playback_note (0..127)",
+      "bytes_0x00_0x9a": "voice[0x00..0x9a] (155 bytes)",
+      "restore": "map[i]=record[0x9b]; voice[0x9b]=0x3f before valid=1",
+      "stock_tail_0x9c_0xa2": "unchanged"
+    },
+    "playback_map": "0x01c46f20..0x01c46f2f",
+    "slot_base": "0x01c46520",
+    "slot_stride": "0xa0",
+    "state": "0x01c465bf",
+    "valid_offset": "0x9c",
+    "voice_bytes": "0x9c"
+  },
+  "scope": {
+    "device_accessed": false,
+    "firmware_patched": false,
+    "flash_performed": false,
+    "offline_only": true
+  },
+  "stock_store": {
+    "flags": {
+      "bytes": 128,
+      "end_exclusive": "0x9200",
+      "start": "0x9180"
+    },
+    "global": "0x01c33260",
+    "known_extent": "0x9209",
+    "mapped_read_pointer": "*(g+0x164)",
+    "packed": {
+      "bytes": 16384,
+      "end_exclusive": "0x4000",
+      "start": "0x0000"
+    },
+    "raw": {
+      "bytes": 20864,
+      "end_exclusive": "0x9180",
+      "records": 128,
+      "start": "0x4000",
+      "stride": "0xa3"
+    },
+    "selection": {
+      "bytes": 9,
+      "end_exclusive": "0x9209",
+      "start": "0x9200"
+    },
+    "storage_address_pointer": "*(g+0x160)"
+  }
+}

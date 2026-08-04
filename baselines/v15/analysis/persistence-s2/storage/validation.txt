@@ -1,0 +1,81 @@
+PASS	sha256 official_app 36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS	sha256 s1c5_app 8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189
+PASS	sha256 listing f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347
+PASS	sha256 s1c5_decode 3cb4c44c5ea2c3c99db25db4dcacdf6f2999f8dd90a42b3179f0e0f89b5f6826
+PASS	sha256 s1c5_code_evidence c2c057912c8ed2ecaed37a8158a836b81985207b8f34586820b376f28c167eec
+PASS	listing 0x02004b02 contains push {rets,r4}
+PASS	listing 0x02004b04 contains mov r4,r2
+PASS	listing 0x02004b06 contains mov r2,r1
+PASS	listing 0x02004b08 contains mov r1,r4
+PASS	listing 0x02004b0a contains call 0x02004a7a
+PASS	listing 0x02004b0c contains if (r0 != r4)
+PASS	listing 0x02004870 contains push {rets,r4}
+PASS	listing 0x02004872 contains mov r4,r2
+PASS	listing 0x02004874 contains mov r2,r1
+PASS	listing 0x02004876 contains mov r1,r4
+PASS	listing 0x02004878 contains call 0x020047d8
+PASS	listing 0x0200487a contains if (r0 != r4)
+PASS	listing 0x0200464e contains movz r1,#0x18b
+PASS	listing 0x02005eea contains call 0x0200464e
+PASS	listing 0x02005eee contains sw r0,[r6 + 0x160]
+PASS	listing 0x02005ef2 contains sw r5,[r6 + 0x164]
+PASS	listing 0x02005f0e contains call 0x02004870
+PASS	listing 0x02005f20 contains call 0x02004870
+PASS	listing 0x02005f7c contains call 0x02005512
+PASS	listing 0x02005f9c contains call 0x02005660
+PASS	listing 0x02005fa0 contains ldw r0,r6,#0x15c
+PASS	listing 0x02005528 contains call 0x02004b02
+PASS	listing 0x02005682 contains ldw r7,r4,#0x164
+PASS	listing 0x0200568a contains mul r0,r0,#0xa3
+PASS	listing 0x02005690 contains add r1,r0,0x4000
+PASS	listing 0x02005694 contains add r0,r4,0x1a14
+PASS	listing 0x02005698 contains mov r2,#0xa3
+PASS	listing 0x0200569a contains call 0x02048cce
+PASS	listing 0x02005766 contains mov r0,#0x3f
+PASS	listing 0x0200576c contains sb r0,[r3 + 0xf]
+PASS	listing 0x02005768 contains add r6,r4,0x1ab0
+PASS	listing 0x02005770 contains call 0x0200552e
+PASS	listing 0x02005776 contains call 0x0200558e
+PASS	listing 0x0200577c contains call 0x020055f8
+PASS	listing 0x02005782 contains call 0x0200562c
+PASS	listing 0x0200578a contains lb.z r0,[r6 + 0x6]
+PASS	listing 0x02026d6c contains movz r0,#0x1ec
+PASS	listing 0x02026d74 contains jne r0,#0x0,0x020274a6
+PASS	listing 0x02026d7a contains jmz r6,#0xff,0x02026dd4
+PASS	listing 0x02026d8c contains ldw r2,r8,#0x160
+PASS	listing 0x02026d94 contains mul r0,r0,#0xa3
+PASS	listing 0x02026d9a contains add r1,r0,0x4000
+PASS	listing 0x02026d9e contains add r4,r8,0x1a14
+PASS	listing 0x02026da2 contains mov r2,#0xa3
+PASS	listing 0x02026da6 contains call 0x02004b02
+PASS	listing 0x02026dac contains call 0x0201e13e
+PASS	listing 0x02026dbe contains sb r15,[r1 + r0]
+PASS	listing 0x02026dd0 contains call 0x02004b02
+PASS	official 0x02026da6 calls write wrapper
+PASS	S1C5 0x02026da6 branches to SAVE cleanup
+PASS	official 0x02026dac calls stock packer
+PASS	S1C5 0x02026dac stock packer call is neutralized
+PASS	official/S1C5 unchanged 0x0200463a..0x02004884
+PASS	official/S1C5 unchanged 0x02004a7a..0x02004b16
+PASS	official/S1C5 unchanged 0x02005512..0x0200552e
+PASS	official/S1C5 unchanged 0x02005660..0x020057e0
+PASS	official/S1C5 unchanged 0x02005edc..0x02005fac
+PASS	S1C5 decode selector.patch_base
+PASS	S1C5 decode selector.state_load
+PASS	S1C5 decode selector.map_base
+PASS	S1C5 decode producer.staging_last_pointer
+PASS	S1C5 decode producer.playback_load
+PASS	S1C5 decode producer.playback_store
+PASS	S1C5 decode producer.restore_value
+PASS	S1C5 decode producer.restore_slot_last
+PASS	S1C5 decode producer.valid_store
+PASS	S1C5 decode producer.armed_store
+PASS	stock 128*0xa3 raw extent ends at +0x9180
+PASS	stock 0x80 flag table ends at +0x9200
+PASS	stock 9-byte selection ends at +0x9209
+PASS	S1C5 persistent voice prefix is 0x9b bytes
+PASS	one S1C5 voice plus playback note fits raw prefix 0x9c
+PASS	16 payload prefixes total 0x9c0 bytes across 16 records
+PASS	packed expansion overwrites every raw prefix byte 0x00..0x9b
+PASS	all seven raw tail bytes have proven stock use
+RESULT	PASS	80 checks
