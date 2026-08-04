@@ -1,0 +1,6 @@
+SMK37 playback-note live reanalysis validation PASS
+PASS	artifact-hashes	S1-C3 and S1-C4 producer/selector/combined hashes match recorded evidence
+PASS	c4-code-identity	C4 v1/v2/v3 producers identical; v2/v3 combined and selector identical
+PASS	byte161-exact	producer load/store and selector consume addresses verified from decode.tsv
+PASS	live-condition	Original map has 16 unique metadata notes; repeated60 map collapses to one metadata note
+PASS	scope	offline-only analysis; no firmware/flash artifacts written

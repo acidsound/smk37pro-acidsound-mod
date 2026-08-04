@@ -1,0 +1,340 @@
+{
+  "artifacts": {
+    "s1c3_producer": {
+      "bytes": 174,
+      "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/inputs/producer/producer.bin",
+      "sha256": "48abedfe48368aed6528900725404a4c8f41c0957f25196cc91b246a9b7a8607"
+    },
+    "s1c3_producer_builder": {
+      "bytes": null,
+      "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/inputs/producer/build_compact_producer.py",
+      "sha256": "9b836fb38bc99d5ce2d425aa53edb210717e11f874f5c1f37981b0a2957d4712"
+    },
+    "s1c3_producer_decode": {
+      "bytes": null,
+      "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/inputs/producer/decode.tsv",
+      "sha256": "12c5100ed40652578bb10d9cdd8896e7c0819732a55bfbb6b200274ed18d9272"
+    },
+    "s1c3_selector": {
+      "bytes": 96,
+      "path": "baselines/v15/analysis/patch-set-ui/s1c3/selector/selector.bin",
+      "sha256": "ea2c76595a93cf2cf6a39236e09b749781e2721e3575d0c1b40194855cd4e915"
+    },
+    "s1c3_selector_builder": {
+      "bytes": null,
+      "path": "baselines/v15/analysis/patch-set-ui/s1c3/selector/build_selector.py",
+      "sha256": "16c83221fe57633c6ba9ab37a35a69106e7b6527fdb297b3d160f3224df63eab"
+    },
+    "s1c3_selector_decode": {
+      "bytes": null,
+      "path": "baselines/v15/analysis/patch-set-ui/s1c3/selector/pi32-selector-decode.tsv",
+      "sha256": "f7b7a329bef237ebf1c2a71a97621dbc38b2d6961bd960d6c08406b6db232ea1"
+    },
+    "s1c4_v1_builder": {
+      "bytes": null,
+      "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v1/build_s1c4_playback_note.py",
+      "sha256": "6d27557fbd7411c3677f6cda7521793b73c4482c3d1d217a13d11152985b5234"
+    },
+    "s1c4_v1_combined": {
+      "bytes": 278,
+      "path": "baselines/v15/analysis/playback-note/candidate/combined.bin",
+      "sha256": "f877aa68476b88644e81df1fe2c7670591c3883f9a443b2d303007d677a48364"
+    },
+    "s1c4_v1_decode": {
+      "bytes": null,
+      "path": "baselines/v15/analysis/playback-note/candidate/decode.tsv",
+      "sha256": "cccb352e96280d5fc81836ee5a6bdee5706ca73a9339dc321f12cdddf8630917"
+    },
+    "s1c4_v1_producer": {
+      "bytes": 188,
+      "path": "baselines/v15/analysis/playback-note/candidate/producer.bin",
+      "sha256": "a7627984549f62592384189a707ef04512921ad693b18409eb483dcccb53c438"
+    },
+    "s1c4_v1_selector": {
+      "bytes": 88,
+      "path": "baselines/v15/analysis/playback-note/candidate/selector.bin",
+      "sha256": "2670e3d2e9a9c47e8a48170ed13a2539b5ccd6229876f3b1689b69a73c8df7a7"
+    },
+    "s1c4_v2_builder": {
+      "bytes": null,
+      "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v2-failclosed/build_s1c4_playback_note_v2.py",
+      "sha256": "a06685bdd89aaa244002720dd0f7ae5f7bc92f61d3890ec71acbc90d911505c7"
+    },
+    "s1c4_v2_combined": {
+      "bytes": 278,
+      "path": "baselines/v15/analysis/playback-note/candidate-v2-failclosed/combined.bin",
+      "sha256": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1"
+    },
+    "s1c4_v2_decode": {
+      "bytes": null,
+      "path": "baselines/v15/analysis/playback-note/candidate-v2-failclosed/decode.tsv",
+      "sha256": "3cb4c44c5ea2c3c99db25db4dcacdf6f2999f8dd90a42b3179f0e0f89b5f6826"
+    },
+    "s1c4_v2_producer": {
+      "bytes": 188,
+      "path": "baselines/v15/analysis/playback-note/candidate-v2-failclosed/producer.bin",
+      "sha256": "a7627984549f62592384189a707ef04512921ad693b18409eb483dcccb53c438"
+    },
+    "s1c4_v2_selector": {
+      "bytes": 88,
+      "path": "baselines/v15/analysis/playback-note/candidate-v2-failclosed/selector.bin",
+      "sha256": "900e8f05c8157737e89a22338b9a4575aa3ff124bd70ff132de0226654fce29f"
+    },
+    "s1c4_v3_builder": {
+      "bytes": null,
+      "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/build_s1c4_playback_note_v3_segmented_final.py",
+      "sha256": "26fa5ca376cd89de9b403f933e011db56e48b298d45e3ef43be923397501e271"
+    },
+    "s1c4_v3_combined": {
+      "bytes": 278,
+      "path": "baselines/v15/analysis/playback-note/candidate-v3-segmented-final/combined.bin",
+      "sha256": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1"
+    },
+    "s1c4_v3_decode": {
+      "bytes": null,
+      "path": "baselines/v15/analysis/playback-note/candidate-v3-segmented-final/decode.tsv",
+      "sha256": "3cb4c44c5ea2c3c99db25db4dcacdf6f2999f8dd90a42b3179f0e0f89b5f6826"
+    },
+    "s1c4_v3_producer": {
+      "bytes": 188,
+      "path": "baselines/v15/analysis/playback-note/candidate-v3-segmented-final/producer.bin",
+      "sha256": "a7627984549f62592384189a707ef04512921ad693b18409eb483dcccb53c438"
+    },
+    "s1c4_v3_selector": {
+      "bytes": 88,
+      "path": "baselines/v15/analysis/playback-note/candidate-v3-segmented-final/selector.bin",
+      "sha256": "900e8f05c8157737e89a22338b9a4575aa3ff124bd70ff132de0226654fce29f"
+    }
+  },
+  "byte161_uses": [
+    {
+      "address": "0x0201e1c4/0x0201e1c6/0x0201e1ca",
+      "area": "slot/order",
+      "conclusion": "slot is the accepted packet count, not byte161",
+      "instructions": "lb.z r3,[r5+1]; jge r3,#16; mov r6,r3"
+    },
+    {
+      "address": "0x0201e1e0/0x0201e1e6/0x0201e1ee",
+      "area": "slot/order",
+      "conclusion": "byte161 is written to playback_note[count]",
+      "instructions": "mov r0,#0x1c46f20; add r0,r3; sb [r0],r2"
+    },
+    {
+      "address": "0x0201e1ec..0x0201e1ee",
+      "area": "uniqueness",
+      "conclusion": "no compare, scan, or duplicate reject exists",
+      "instructions": "lb.z r2,[r1]; sb [r0],r2"
+    },
+    {
+      "address": "0x0201e204..0x0201e218",
+      "area": "publication",
+      "conclusion": "map is published only by ARMED last after the 16th valid slot",
+      "instructions": "csync; valid=1; count++; if count==16 csync; state=2"
+    },
+    {
+      "address": "0x0201e164..0x0201e182/0x0201e192",
+      "area": "selector consumption",
+      "conclusion": "playback note becomes the local synth metadata note",
+      "instructions": "state==2; selected valid==1; lb.z r5,[map+trigger_slot]; sb [dest+0x9c],r5"
+    }
+  ],
+  "diffs": [
+    {
+      "a": "s1c3_selector",
+      "a_len": 96,
+      "b": "s1c4_v1_selector",
+      "b_len": 88,
+      "diff_block_count": 4,
+      "diff_blocks": [
+        {
+          "a_hex": "95",
+          "b_hex": "35",
+          "offset_end": 11,
+          "offset_start": 10
+        },
+        {
+          "a_hex": "85f8171283fd154803fd1368f33cc8ff2065c40105e19c80584380f80a04e3e1a030851635",
+          "b_hex": "961686f81b1283fd194803fd1768f33cc8ff2065c40106e19c80684380f80e0407e1008a37",
+          "offset_end": 49,
+          "offset_start": 12
+        },
+        {
+          "a_hex": "06e19c50684080f801025116401680ff4aab020059045904590459045904590459045904",
+          "b_hex": "7d40e3e1a0308616361807e19c60784080f801026116401680ff40ab020000e19c408d40",
+          "offset_end": 86,
+          "offset_start": 50
+        },
+        {
+          "a_hex": "5904590459045904",
+          "b_hex": "",
+          "offset_end": 96,
+          "offset_start": 88
+        }
+      ]
+    },
+    {
+      "a": "s1c3_selector",
+      "a_len": 96,
+      "b": "s1c4_v2_selector",
+      "b_len": 88,
+      "diff_block_count": 3,
+      "diff_blocks": [
+        {
+          "a_hex": "95",
+          "b_hex": "35",
+          "offset_end": 11,
+          "offset_start": 10
+        },
+        {
+          "a_hex": "85f8171283fd154803fd1368f33cc8ff2065c40105e19c80584380f80a04e3e1a0308516351806e19c50684080f801025116401680ff4aab020059045904590459045904590459045904",
+          "b_hex": "961686f81b1283fd194803fd1768f33cc8ff2065c40106e19c80684380f80e043616e6e1a060861807e19c60784080f8050207e1008a37187d406116401680ff40ab020000e19c408d40",
+          "offset_end": 86,
+          "offset_start": 12
+        },
+        {
+          "a_hex": "5904590459045904",
+          "b_hex": "",
+          "offset_end": 96,
+          "offset_start": 88
+        }
+      ]
+    },
+    {
+      "a": "s1c4_v1_selector",
+      "a_len": 88,
+      "b": "s1c4_v2_selector",
+      "b_len": 88,
+      "diff_block_count": 2,
+      "diff_blocks": [
+        {
+          "a_hex": "07e1008a37187d40e3",
+          "b_hex": "3616e6e1a060861807",
+          "offset_end": 53,
+          "offset_start": 44
+        },
+        {
+          "a_hex": "a0308616361807e19c60784080f80102",
+          "b_hex": "9c60784080f8050207e1008a37187d40",
+          "offset_end": 70,
+          "offset_start": 54
+        }
+      ]
+    },
+    {
+      "a": "s1c3_producer",
+      "a_len": 174,
+      "b": "s1c4_v1_producer",
+      "b_len": 188,
+      "diff_block_count": 4,
+      "diff_blocks": [
+        {
+          "a_hex": "9016e020f03d80f838",
+          "b_hex": "c0ffbd65c4012000b0",
+          "offset_end": 13,
+          "offset_start": 4
+        },
+        {
+          "a_hex": "c0ffbd65c4012000b00040e831",
+          "b_hex": "40e83d0020000516584280f807",
+          "offset_end": 27,
+          "offset_start": 14
+        },
+        {
+          "a_hex": "20000516584280f807005b4183f825004021d8422000048380f81f025b4103fd1c203616e6e1a060c7ff2065c401671806e19c704020e84070164116623c80ffccaa020020004021e8405b41c321db4183f8032020004022d84220004020d84020005904790459047904041649",
+          "b_hex": "5b4183f831004021d8422000048380f82b025b4103fd28203616e6e1a060c7ff2065c401671806e19c704020e840c0ff206fc401301801e19b401a408a404a3f9a4070164116623c80ffceaa0200483fe85f20004021e8405b41c321db4183f8032020004022d84220004020d8",
+          "offset_end": 137,
+          "offset_start": 28
+        },
+        {
+          "a_hex": "81f80bc4494181f808c6c5ffbd65c4014020d840d841d8422000401680ff54ffffff5904",
+          "b_hex": "200059047904590479040416494081f80bc4494181f808c6c5ffbd65c4014020d840d841d8422000401680ff46ffffff5904",
+          "offset_end": 188,
+          "offset_start": 138
+        }
+      ]
+    },
+    {
+      "a": "s1c4_v1_producer",
+      "a_len": 188,
+      "b": "s1c4_v2_producer",
+      "b_len": 188,
+      "diff_block_count": 0,
+      "diff_blocks": []
+    },
+    {
+      "a": "s1c4_v2_combined",
+      "a_len": 278,
+      "b": "s1c4_v3_combined",
+      "b_len": 278,
+      "diff_block_count": 0,
+      "diff_blocks": []
+    }
+  ],
+  "format": "smk37-v15-playback-note-live-reanalysis-producer-v1",
+  "live_condition": {
+    "necessary_condition_for_current_C4_pass": "effective playback metadata notes must remain one-to-one across simultaneously used trigger slots because current C4 has no separate trigger identity consumer",
+    "observed_explanation": "Original passes because byte161 follows trigger notes 36..51 and preserves 16 distinct synth identities. all-C4 repeated60 fails because byte161 collapses every slot to metadata note 60, while source selection still uses trigger slot and no uniqueness/active-trigger metadata is stored.",
+    "original_bytes_161": [
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+    ],
+    "original_ram_playback_note_map_hex": "2425262728292a2b2c2d2e2f30313233",
+    "repeated60_bytes_161": [
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60
+    ],
+    "repeated60_ram_playback_note_map_hex": "3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c"
+  },
+  "metadata_layout_proposal": {
+    "candidate_bytes": {
+      "0x01c46f20..0x01c46f2f": "playback_note_by_slot[16], existing current C4 use",
+      "0x01c46f30..0x01c46f3f": "trigger_note_by_slot[16], 36..51 default, source/Note Off identity anchor",
+      "0x01c46f40..0x01c46f4f": "identity_note_by_slot[16], distinct stock-note identity if a future consumer can split identity from pitch",
+      "0x01c46f50..0x01c46f5f": "slot_flags[16], bit0 Original, bit1 custom playback present, bit2 duplicate playback group",
+      "0x01c46f60..0x01c46f6f": "active_playback_by_trigger_slot[16], last Note On playback note for matched Note Off",
+      "0x01c46f70..0x01c46f7f": "active_cookie_by_trigger_slot[16], generation or voice token if a future voice allocator hook exposes one",
+      "0x01c46f80..0x01c46f8f": "duplicate_group_or_refcount[16], optional many-to-one release guard",
+      "0x01c46f90..0x01c46faf": "header: magic/version/layout_state/original_mask/crc/reserved"
+    },
+    "control_kept": {
+      "0x01c465bd": "producer_lock",
+      "0x01c465be": "loaded_count",
+      "0x01c465bf": "publication_state"
+    },
+    "owned_header_space": "0x01c46f20..0x01c46fb0 (0x90 bytes)",
+    "patch_readiness": "layout is byte-addressable within existing owned 0x90 bytes, but not sufficient alone. A future selector/voice hook must prove which consumer reads identity and which reads pitch. Current C4 writes only dest+0x9c."
+  },
+  "scope": {
+    "firmware_or_flash_changed": false,
+    "offline_only": true,
+    "output_dir": "baselines/v15/analysis/playback-note/live-reanalysis/producer"
+  }
+}
