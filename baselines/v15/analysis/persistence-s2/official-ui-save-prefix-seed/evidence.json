@@ -1,0 +1,359 @@
+{
+  "blockers": [
+    "No exact v15 host command or SysEx path is proven to set or read back g+0x3a4/g+0x3a0 selected Bank D slot; selection is stock UI state.",
+    "No exact v15 host command is proven to invoke stock SAVE or confirm its storage writes; SAVE is a UI handler path.",
+    "Stock SAVE ignores both 0x02004b02 returns, so the normal UI/SAVED path is not a guarded write/readback protocol.",
+    "No normal-firmware readback path is proven for raw prefixes 96..111 after SAVE; existing readback validators require external dump artifacts.",
+    "Therefore a deterministic unattended host sender would risk writing the wrong selected slot or reporting success after a failed/partial SAVE."
+  ],
+  "checks": [
+    "PASS\tofficial app exists",
+    "PASS\tofficial fwsc exists",
+    "PASS\tstorage report exists",
+    "PASS\tsysex report exists",
+    "PASS\tofficial v15 app SHA-256",
+    "PASS\tofficial v15 FWSC SHA-256",
+    "PASS\texact official bytes 0x0201e468 bfea69fe complete product SysEx calls 0x0201e13e packer",
+    "PASS\texact official bytes 0x0201e46c bfeaf838 complete product SysEx reloads selected record through 0x02005660",
+    "PASS\texact official bytes 0x0201e49c bfea4ffe segmented-final product SysEx calls 0x0201e13e packer",
+    "PASS\texact official bytes 0x0201e4a0 bfeade38 segmented-final product SysEx reloads selected record through 0x02005660",
+    "PASS\texact official bytes 0x0201e606 89f8180e single-parameter path requires exact 7-byte message",
+    "PASS\texact official bytes 0x0201e622 42f0141a single-parameter writer targets current snapshot base +0x1a14",
+    "PASS\texact official bytes 0x0201e630 0017 single-parameter index is truncated to 8 bits",
+    "PASS\texact official bytes 0x0201e634 d8ee0112 single-parameter writer stores msg[5] to current snapshot index",
+    "PASS\texact official bytes 0x0201e236 bfea6434 stock packer writes selected packed 0x80 record through 0x02004b02",
+    "PASS\texact official bytes 0x02026da6 beeaacee stock SAVE writes selected raw 0xa3 record through 0x02004b02",
+    "PASS\texact official bytes 0x02026dac bfeac7b9 stock SAVE calls stock packer after raw write",
+    "PASS\texact official bytes 0x02026dd0 beea97ee stock SAVE flushes flag table through 0x02004b02",
+    "PASS\treport snippet present in baselines/v15/analysis/persistence-s2/storage/report.md: 0x02026da6`: write `g+0x1a14`, length `0xa3`, to `*(g+0x160)+0x4000+inde",
+    "PASS\treport snippet present in baselines/v15/analysis/persistence-s2/storage/report.md: Both `0x02004b02` returns are ignored.",
+    "PASS\treport snippet present in baselines/v15/analysis/persistence-s2/storage/report.md: bank   = g[0x3a4]",
+    "PASS\treport snippet present in baselines/v15/analysis/persistence-s2/storage/report.md: preset = g[0x3a0 + bank]",
+    "PASS\treport snippet present in baselines/v15/analysis/persistence-s2/storage/report.md: It returns early for `bank > 3` or `preset > 31`.",
+    "PASS\treport snippet present in baselines/v15/analysis/persistence-s2/storage/report.md: Raw record `index` is:",
+    "PASS\treport snippet present in baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md: F0 43 00 00 01 1B` + `0x9c` bytes + `F7`",
+    "PASS\treport snippet present in baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md: `0x0201e468` and `0x0201e49c` are the two official v15 calls from the Sy",
+    "PASS\treport snippet present in baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md: `0x0201e13e` consumes the expanded single-voice source pointer in `r0`, ",
+    "PASS\treport snippet present in baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md: Single-parameter writer",
+    "PASS\treport snippet present in baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md: `0201e634\td8ee0112\tsb\tsb r1,[r0 + r2]",
+    "PASS\tstorage exact-rows.tsv contains 02005662",
+    "PASS\tstorage exact-rows.tsv contains 02026da6",
+    "PASS\tstorage exact-rows.tsv contains 02026dac",
+    "PASS\tstorage exact-rows.tsv contains 02026dd0",
+    "PASS\tBank D slots 1..16 map to records 96..111",
+    "PASS\trecord 96 raw storage offset 0x7d20",
+    "PASS\trecord 111 physical start 0x0fc6ad"
+  ],
+  "date": "2026-08-04",
+  "decision": "BLOCK_DETERMINISTIC_SAFE_HOST_SENDER",
+  "exact_bytes": [
+    {
+      "bytes": "bfea69fe",
+      "meaning": "complete product SysEx calls 0x0201e13e packer",
+      "va": "0x0201e468"
+    },
+    {
+      "bytes": "bfeaf838",
+      "meaning": "complete product SysEx reloads selected record through 0x02005660",
+      "va": "0x0201e46c"
+    },
+    {
+      "bytes": "bfea4ffe",
+      "meaning": "segmented-final product SysEx calls 0x0201e13e packer",
+      "va": "0x0201e49c"
+    },
+    {
+      "bytes": "bfeade38",
+      "meaning": "segmented-final product SysEx reloads selected record through 0x02005660",
+      "va": "0x0201e4a0"
+    },
+    {
+      "bytes": "89f8180e",
+      "meaning": "single-parameter path requires exact 7-byte message",
+      "va": "0x0201e606"
+    },
+    {
+      "bytes": "42f0141a",
+      "meaning": "single-parameter writer targets current snapshot base +0x1a14",
+      "va": "0x0201e622"
+    },
+    {
+      "bytes": "0017",
+      "meaning": "single-parameter index is truncated to 8 bits",
+      "va": "0x0201e630"
+    },
+    {
+      "bytes": "d8ee0112",
+      "meaning": "single-parameter writer stores msg[5] to current snapshot index",
+      "va": "0x0201e634"
+    },
+    {
+      "bytes": "bfea6434",
+      "meaning": "stock packer writes selected packed 0x80 record through 0x02004b02",
+      "va": "0x0201e236"
+    },
+    {
+      "bytes": "beeaacee",
+      "meaning": "stock SAVE writes selected raw 0xa3 record through 0x02004b02",
+      "va": "0x02026da6"
+    },
+    {
+      "bytes": "bfeac7b9",
+      "meaning": "stock SAVE calls stock packer after raw write",
+      "va": "0x02026dac"
+    },
+    {
+      "bytes": "beea97ee",
+      "meaning": "stock SAVE flushes flag table through 0x02004b02",
+      "va": "0x02026dd0"
+    }
+  ],
+  "format": "smk37-v15-official-ui-save-prefix-seed-investigation-v1",
+  "non_sender_reason": "The only normal-firmware raw writer is stock UI SAVE, which is not host-addressed or readback-guarded in the exact v15 evidence.",
+  "normal_firmware_capability": {
+    "combined_manual_sequence": "Bank D slot selected on UI -> product SysEx -> optional single-parameter 0x9b playback-note byte -> press stock SAVE before changing selection should seed the raw prefix through normal firmware",
+    "product_sysex_alone": "does not write raw 0xa3 records; it stages 0x9c bytes, calls 0x0201e13e, writes selected packed 0x80 record, then reloads selected current snapshot",
+    "single_parameter_sysex": "can write one byte in current snapshot, including index 0x9b via F0 43 10 01 1B dd F7, but it is volatile until SAVE",
+    "stock_ui_save": "can write the selected raw 0xa3 record and therefore can write record indices 96..111 when Bank D presets 1..16 are selected"
+  },
+  "records_96_111": [
+    {
+      "bank": "D",
+      "bank_zero_based": 3,
+      "packed_storage_rel": "0x3000",
+      "preset_display": 1,
+      "preset_zero_based": 0,
+      "raw_physical_offset": "0x0fbd20",
+      "raw_prefix_range": "0x0fbd20..0x0fbdbb",
+      "raw_storage_rel": "0x7d20",
+      "raw_tail_range": "0x0fbdbc..0x0fbdc2",
+      "record_index": 96,
+      "slot": 0
+    },
+    {
+      "bank": "D",
+      "bank_zero_based": 3,
+      "packed_storage_rel": "0x3080",
+      "preset_display": 2,
+      "preset_zero_based": 1,
+      "raw_physical_offset": "0x0fbdc3",
+      "raw_prefix_range": "0x0fbdc3..0x0fbe5e",
+      "raw_storage_rel": "0x7dc3",
+      "raw_tail_range": "0x0fbe5f..0x0fbe65",
+      "record_index": 97,
+      "slot": 1
+    },
+    {
+      "bank": "D",
+      "bank_zero_based": 3,
+      "packed_storage_rel": "0x3100",
+      "preset_display": 3,
+      "preset_zero_based": 2,
+      "raw_physical_offset": "0x0fbe66",
+      "raw_prefix_range": "0x0fbe66..0x0fbf01",
+      "raw_storage_rel": "0x7e66",
+      "raw_tail_range": "0x0fbf02..0x0fbf08",
+      "record_index": 98,
+      "slot": 2
+    },
+    {
+      "bank": "D",
+      "bank_zero_based": 3,
+      "packed_storage_rel": "0x3180",
+      "preset_display": 4,
+      "preset_zero_based": 3,
+      "raw_physical_offset": "0x0fbf09",
+      "raw_prefix_range": "0x0fbf09..0x0fbfa4",
+      "raw_storage_rel": "0x7f09",
+      "raw_tail_range": "0x0fbfa5..0x0fbfab",
+      "record_index": 99,
+      "slot": 3
+    },
+    {
+      "bank": "D",
+      "bank_zero_based": 3,
+      "packed_storage_rel": "0x3200",
+      "preset_display": 5,
+      "preset_zero_based": 4,
+      "raw_physical_offset": "0x0fbfac",
+      "raw_prefix_range": "0x0fbfac..0x0fc047",
+      "raw_storage_rel": "0x7fac",
+      "raw_tail_range": "0x0fc048..0x0fc04e",
+      "record_index": 100,
+      "slot": 4
+    },
+    {
+      "bank": "D",
+      "bank_zero_based": 3,
+      "packed_storage_rel": "0x3280",
+      "preset_display": 6,
+      "preset_zero_based": 5,
+      "raw_physical_offset": "0x0fc04f",
+      "raw_prefix_range": "0x0fc04f..0x0fc0ea",
+      "raw_storage_rel": "0x804f",
+      "raw_tail_range": "0x0fc0eb..0x0fc0f1",
+      "record_index": 101,
+      "slot": 5
+    },
+    {
+      "bank": "D",
+      "bank_zero_based": 3,
+      "packed_storage_rel": "0x3300",
+      "preset_display": 7,
+      "preset_zero_based": 6,
+      "raw_physical_offset": "0x0fc0f2",
+      "raw_prefix_range": "0x0fc0f2..0x0fc18d",
+      "raw_storage_rel": "0x80f2",
+      "raw_tail_range": "0x0fc18e..0x0fc194",
+      "record_index": 102,
+      "slot": 6
+    },
+    {
+      "bank": "D",
+      "bank_zero_based": 3,
+      "packed_storage_rel": "0x3380",
+      "preset_display": 8,
+      "preset_zero_based": 7,
+      "raw_physical_offset": "0x0fc195",
+      "raw_prefix_range": "0x0fc195..0x0fc230",
+      "raw_storage_rel": "0x8195",
+      "raw_tail_range": "0x0fc231..0x0fc237",
+      "record_index": 103,
+      "slot": 7
+    },
+    {
+      "bank": "D",
+      "bank_zero_based": 3,
+      "packed_storage_rel": "0x3400",
+      "preset_display": 9,
+      "preset_zero_based": 8,
+      "raw_physical_offset": "0x0fc238",
+      "raw_prefix_range": "0x0fc238..0x0fc2d3",
+      "raw_storage_rel": "0x8238",
+      "raw_tail_range": "0x0fc2d4..0x0fc2da",
+      "record_index": 104,
+      "slot": 8
+    },
+    {
+      "bank": "D",
+      "bank_zero_based": 3,
+      "packed_storage_rel": "0x3480",
+      "preset_display": 10,
+      "preset_zero_based": 9,
+      "raw_physical_offset": "0x0fc2db",
+      "raw_prefix_range": "0x0fc2db..0x0fc376",
+      "raw_storage_rel": "0x82db",
+      "raw_tail_range": "0x0fc377..0x0fc37d",
+      "record_index": 105,
+      "slot": 9
+    },
+    {
+      "bank": "D",
+      "bank_zero_based": 3,
+      "packed_storage_rel": "0x3500",
+      "preset_display": 11,
+      "preset_zero_based": 10,
+      "raw_physical_offset": "0x0fc37e",
+      "raw_prefix_range": "0x0fc37e..0x0fc419",
+      "raw_storage_rel": "0x837e",
+      "raw_tail_range": "0x0fc41a..0x0fc420",
+      "record_index": 106,
+      "slot": 10
+    },
+    {
+      "bank": "D",
+      "bank_zero_based": 3,
+      "packed_storage_rel": "0x3580",
+      "preset_display": 12,
+      "preset_zero_based": 11,
+      "raw_physical_offset": "0x0fc421",
+      "raw_prefix_range": "0x0fc421..0x0fc4bc",
+      "raw_storage_rel": "0x8421",
+      "raw_tail_range": "0x0fc4bd..0x0fc4c3",
+      "record_index": 107,
+      "slot": 11
+    },
+    {
+      "bank": "D",
+      "bank_zero_based": 3,
+      "packed_storage_rel": "0x3600",
+      "preset_display": 13,
+      "preset_zero_based": 12,
+      "raw_physical_offset": "0x0fc4c4",
+      "raw_prefix_range": "0x0fc4c4..0x0fc55f",
+      "raw_storage_rel": "0x84c4",
+      "raw_tail_range": "0x0fc560..0x0fc566",
+      "record_index": 108,
+      "slot": 12
+    },
+    {
+      "bank": "D",
+      "bank_zero_based": 3,
+      "packed_storage_rel": "0x3680",
+      "preset_display": 14,
+      "preset_zero_based": 13,
+      "raw_physical_offset": "0x0fc567",
+      "raw_prefix_range": "0x0fc567..0x0fc602",
+      "raw_storage_rel": "0x8567",
+      "raw_tail_range": "0x0fc603..0x0fc609",
+      "record_index": 109,
+      "slot": 13
+    },
+    {
+      "bank": "D",
+      "bank_zero_based": 3,
+      "packed_storage_rel": "0x3700",
+      "preset_display": 15,
+      "preset_zero_based": 14,
+      "raw_physical_offset": "0x0fc60a",
+      "raw_prefix_range": "0x0fc60a..0x0fc6a5",
+      "raw_storage_rel": "0x860a",
+      "raw_tail_range": "0x0fc6a6..0x0fc6ac",
+      "record_index": 110,
+      "slot": 14
+    },
+    {
+      "bank": "D",
+      "bank_zero_based": 3,
+      "packed_storage_rel": "0x3780",
+      "preset_display": 16,
+      "preset_zero_based": 15,
+      "raw_physical_offset": "0x0fc6ad",
+      "raw_prefix_range": "0x0fc6ad..0x0fc748",
+      "raw_storage_rel": "0x86ad",
+      "raw_tail_range": "0x0fc749..0x0fc74f",
+      "record_index": 111,
+      "slot": 15
+    }
+  ],
+  "report_references": {
+    "baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md": {
+      "sha256": "cfabba55680bbee2f699316547ef28ec496434d886a3b2edf4d7e3a421c8d6f8",
+      "snippets": [
+        "F0 43 00 00 01 1B` + `0x9c` bytes + `F7`",
+        "`0x0201e468` and `0x0201e49c` are the two official v15 calls from the SysEx handler to `0x0201e13e`.",
+        "`0x0201e13e` consumes the expanded single-voice source pointer in `r0`, packs it into a stack `0x80` buffer",
+        "Single-parameter writer",
+        "`0201e634\td8ee0112\tsb\tsb r1,[r0 + r2]"
+      ]
+    },
+    "baselines/v15/analysis/persistence-s2/storage/report.md": {
+      "sha256": "7867925da16e1c85a7c809dffa8127c371e863987b1570fdc1488460f921dbc7",
+      "snippets": [
+        "0x02026da6`: write `g+0x1a14`, length `0xa3`, to `*(g+0x160)+0x4000+index*0xa3`",
+        "Both `0x02004b02` returns are ignored.",
+        "bank   = g[0x3a4]",
+        "preset = g[0x3a0 + bank]",
+        "It returns early for `bank > 3` or `preset > 31`.",
+        "Raw record `index` is:"
+      ]
+    }
+  },
+  "s1c7_reference": {
+    "path": "baselines/v15/analysis/flash-candidates/S1C7-current-set-helper-checkpoint/evidence.json",
+    "prefix_count_hint": 0,
+    "sha256": "24b3c0c9cb5fc5546c02b16f6e28bd9005d189c8401d3ccb32b71b1f10f90529"
+  },
+  "safe_sender_emitted": false,
+  "scope": "official v15 product SysEx and stock UI/SAVE only; no v12 assumptions; no live device access"
+}
