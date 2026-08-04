@@ -35,6 +35,7 @@ http://127.0.0.1:3737
 - 전체 Playback Note를 `Original` 또는 `C4 (60)`로 일괄 설정
 - Yamaha DX7 163-byte single-voice header/checksum 검증
 - 검증된 Bank D demo 16개 내장
+- patches.fm 기반 FM Drum Preset 16개 내장
 - Pad별 `.syx` 다시 저장
 - 전체 세트를 `.smkpatchset.json`으로 저장하고 복원
 - SMK 런타임 플래그 `0x3F` 자동 변환
@@ -43,7 +44,7 @@ http://127.0.0.1:3737
 
 ## 사용 순서
 
-1. `검증 세트 불러오기` 또는 Pad별 `.syx` 선택
+1. `검증 세트 불러오기`, `FM Drum Preset 불러오기` 또는 Pad별 `.syx` 선택
 2. `Web MIDI 연결`을 누르고 SysEx 권한 허용
 3. 단일 `SMK MIDI Device` 선택
 4. Playback Note를 바꿀 Pad 또는 드롭다운을 클릭하고 건반에서 원하는 Note 입력

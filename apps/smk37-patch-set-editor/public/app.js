@@ -16,6 +16,27 @@ let sending = false;
 let focusedPadIndex = null;
 const padElements = [];
 
+function portDetails(port) {
+  if (!port) return null;
+  return {
+    id: port.id,
+    name: port.name,
+    manufacturer: port.manufacturer,
+    type: port.type,
+    state: port.state,
+    connection: port.connection,
+  };
+}
+
+function diagnose(event, detail = {}) {
+  fetch("/__diagnostics", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ at: new Date().toISOString(), event, detail }),
+    keepalive: true,
+  }).catch(() => {});
+}
+
 const elements = {
   grid: document.querySelector("#pad-grid"),
   template: document.querySelector("#pad-template"),
@@ -207,6 +228,13 @@ function refreshMidiPorts() {
     }
   }
   bindSelectedDevice();
+  diagnose("midi-ports", {
+    selectedKey: elements.device.value,
+    selectedInput: portDetails(selectedInput()),
+    selectedOutput: portDetails(selectedOutput()),
+    inputs: inputs.map(portDetails),
+    outputs: outputs.map(portDetails),
+  });
   const connected = midiDevices.size > 0;
   elements.midiState.textContent = connected ? `${midiDevices.size}개 MIDI 장치 사용 가능` : "MIDI 장치 없음";
   elements.midiState.classList.toggle("connected", connected);
@@ -246,6 +274,7 @@ async function reopenSelectedDevice() {
   if (output.state === "disconnected") throw new Error("SMK MIDI 장치가 연결 해제 상태입니다");
   await output.open();
   if (output.connection !== "open") throw new Error("SMK MIDI Output을 열 수 없습니다");
+  diagnose("midi-output-open", { output: portDetails(output) });
 
   const input = selectedInput();
   if (input && input.state !== "disconnected") {
@@ -260,13 +289,23 @@ async function connectMidi() {
     log("이 브라우저는 Web MIDI를 지원하지 않습니다. Desktop Chrome을 사용하세요.", "ERROR");
     return;
   }
+  elements.connect.disabled = true;
+  elements.connect.textContent = "연결 중…";
+  elements.midiState.textContent = "MIDI 권한 확인 중";
   try {
     midiAccess = await navigator.requestMIDIAccess({ sysex: true });
     midiAccess.onstatechange = refreshMidiPorts;
     refreshMidiPorts();
     log("Web MIDI SysEx 권한이 허용되었습니다.");
+    diagnose("midi-connected");
   } catch (error) {
+    elements.midiState.textContent = "MIDI 연결 실패";
+    elements.midiState.classList.remove("connected");
     log(`Web MIDI 연결 실패: ${error.message}`, "ERROR");
+    diagnose("midi-connect-error", { name: error.name, message: error.message });
+  } finally {
+    elements.connect.disabled = false;
+    elements.connect.textContent = midiAccess ? "Web MIDI 재연결" : "Web MIDI 연결";
   }
 }
 
@@ -275,6 +314,19 @@ async function sendAll() {
   try {
     const output = await reopenSelectedDevice();
     const queue = transmissionOrder(slots, playbackNotes, { encodePlayback: true });
+    diagnose("send-start", {
+      output: portDetails(output),
+      packets: queue.map((item) => ({
+        order: item.order,
+        pad: item.pad,
+        triggerNote: item.triggerNote,
+        playbackNote: item.playbackNote,
+        length: item.bytes.length,
+        header: [...item.bytes.slice(0, 6)],
+        transportByte: item.bytes[161],
+        terminator: item.bytes[162],
+      })),
+    });
     log("재부팅/펌웨어 업데이트 후 지워진 휘발성 Patch Set을 다시 전송합니다.");
     log("각 patch packet에 Playback Note를 함께 전송합니다.");
     sending = true;
@@ -283,38 +335,56 @@ async function sendAll() {
     log(`${output.name}: 16개 patch 전송 시작`);
     for (const item of queue) {
       output.send(item.bytes);
+      diagnose("packet-sent", {
+        output: portDetails(output),
+        order: item.order,
+        pad: item.pad,
+        triggerNote: item.triggerNote,
+        playbackNote: item.playbackNote,
+      });
       elements.progress.value = item.order;
       log(`Sent ${item.order}/16 · Pad ${String(item.pad).padStart(2, "0")} · trigger ${item.triggerNote} · playback ${item.playbackNote} · ${item.name}`);
       await new Promise((resolve) => setTimeout(resolve, 100));
     }
     log("16개 patch 전송 완료. Pad 1–16을 확인하세요.", "PASS");
+    diagnose("send-complete", { output: portDetails(output) });
   } catch (error) {
     log(`전송 중단: ${error.message}`, "ERROR");
+    diagnose("send-error", { name: error.name, message: error.message, stack: error.stack });
   } finally {
     sending = false;
     updateHealth();
   }
 }
 
-async function loadDemo() {
+async function loadManifest(path, successMessage) {
   try {
-    const manifest = await fetch("samples/bank-d-demo/manifest.json").then((response) => {
+    const manifest = await fetch(path).then((response) => {
       if (!response.ok) throw new Error(`sample manifest HTTP ${response.status}`);
       return response.json();
     });
     playbackNotes.fill(null);
     for (const patch of manifest.patches) {
-      const response = await fetch(`samples/bank-d-demo/${patch.file}`);
+      const response = await fetch(`${path.slice(0, path.lastIndexOf("/") + 1)}${patch.file}`);
       if (!response.ok) throw new Error(`${patch.file}: HTTP ${response.status}`);
       const parsed = validateEditorSysEx(new Uint8Array(await response.arrayBuffer()));
       slots[patch.pad - 1] = { ...parsed, fileName: patch.file };
+      playbackNotes[patch.pad - 1] = patch.playbackNote === undefined ? null : patch.playbackNote;
       renderPad(patch.pad - 1);
     }
     elements.title.value = manifest.title;
-    log("검증된 Bank D demo 세트를 불러왔습니다.", "PASS");
+    log(successMessage, "PASS");
   } catch (error) {
-    log(`Demo 로드 실패: ${error.message}`, "ERROR");
+    log(`Preset 로드 실패: ${error.message}`, "ERROR");
   }
+}
+
+async function loadDemo() {
+  return loadManifest("samples/bank-d-demo/manifest.json", "검증된 Bank D demo 세트를 불러왔습니다.");
+}
+
+async function loadDrumKit() {
+  return loadManifest("samples/fm-drum-kit/manifest.json", "FM Drum Preset 16개를 불러왔습니다. Trigger Note는 고정이고 Playback Note만 drum map으로 설정되었습니다.");
 }
 
 function exportSet() {
@@ -349,6 +419,7 @@ document.addEventListener("pointerdown", (event) => {
 }, true);
 elements.send.addEventListener("click", sendAll);
 document.querySelector("#load-demo").addEventListener("click", loadDemo);
+document.querySelector("#load-drum-kit").addEventListener("click", loadDrumKit);
 document.querySelector("#load-files").addEventListener("click", () => elements.filePicker.click());
 elements.filePicker.addEventListener("change", () => loadMany([...elements.filePicker.files]));
 document.querySelector("#import-set").addEventListener("click", () => elements.setPicker.click());
@@ -373,3 +444,5 @@ document.querySelector("#clear-set").addEventListener("click", () => {
 });
 document.querySelector("#clear-log").addEventListener("click", () => { elements.log.textContent = ""; });
 updateHealth();
+window.addEventListener("error", (event) => diagnose("window-error", { message: event.message, stack: event.error?.stack }));
+window.addEventListener("unhandledrejection", (event) => diagnose("unhandled-rejection", { message: String(event.reason), stack: event.reason?.stack }));
