@@ -1,0 +1,246 @@
+{
+  "abi_evidence": {
+    "direct_length_register": "r9 == 0x000000a3",
+    "direct_lr": "0x0201e46c",
+    "producer_abi_report": "baselines/v15/analysis/patch-set-ui/s1c2-unblock/producer-abi/report.md",
+    "producer_abi_report_sha256": "f108346a1dd81747be1627e1f6e297fb20df354727ad9f17e94fa6628b6350bf",
+    "segmented_final_total_register": "r5 == 0x0000009e",
+    "segmented_lr": "0x0201e4a0",
+    "stage_pointer": "0x01c37fd0"
+  },
+  "abi_report_hashes_match": {
+    "copy_path_report": true,
+    "producer_abi_report": true
+  },
+  "basis_actual": {
+    "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "official_fwsc_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "parent_app_sha256": "7c672938023beee74d599f43ccd5c7642396b89819e929501274239aed5e5d4b",
+    "parent_fwsc_sha256": "0f1c4bf42329a0ca184ac38bb228195b239ed07820fcc0d39be352c2f15982b9"
+  },
+  "basis_expected": {
+    "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "official_fwsc_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "parent_s1c3_app_sha256": "7c672938023beee74d599f43ccd5c7642396b89819e929501274239aed5e5d4b",
+    "parent_s1c3_package_sha256": "0f1c4bf42329a0ca184ac38bb228195b239ed07820fcc0d39be352c2f15982b9"
+  },
+  "blockers": [
+    {
+      "evidence": "In clean worktree at commit 1b3fc11, python3 validate.py fails because exact_ota.c cannot compile: ota_upload_exact is called with 8 arguments but src/ota.c declares 7. Exact OTA accept/reject cannot be verified from the candidate, and validation.txt is stale/misleading because it reports PASS while validate.py fails.",
+      "id": "exact_ota_compile_failure"
+    }
+  ],
+  "bytes_checks": {
+    "combined_slice_sha256": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+    "direct_reload_0x0201e46c": "bfeaf838",
+    "note_off_hook_0x0201c63e": "80fffa1a0000",
+    "note_off_neutral_0x0201c644": "001600160016",
+    "note_on_hook_0x0201c67c": "80ffc01a0000",
+    "note_on_neutral_0x0201c682": "001600160016",
+    "note_on_velocity_store_0x0201c68c": "8d42",
+    "segmented_reload_0x0201e4a0": "bfeade38"
+  },
+  "callsites": {
+    "0x0201e468": {
+      "bytes": "bfeadefe",
+      "target": "0x0201e228"
+    },
+    "0x0201e49c": {
+      "bytes": "bfeac4fe",
+      "target": "0x0201e228"
+    }
+  },
+  "commit": {
+    "final_dirs_diff_vs_commit": [],
+    "head": "1b3fc113939b6fabb5c0a7646f9858a1bcdb671e",
+    "head_short": "1b3fc11",
+    "requested": "1b3fc11",
+    "resolved": "1b3fc113939b6fabb5c0a7646f9858a1bcdb671e",
+    "status_after_clean_worktree_rebuild": []
+  },
+  "hashes": {
+    "app": "c6e4cf567b2f22d7e39d3b4e0f6cae8c7fd140661e31763567b15a9fcf1e3a3d",
+    "combined": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+    "copy_path_report": "5296c466c2819995fa215e527b36380ae23fcf39f940ab172488435f6d14e4b2",
+    "package": "376d931e9f5fbdfb5737347b6984fad493f35f023134f8309d4792286c1c7aec",
+    "producer": "a7627984549f62592384189a707ef04512921ad693b18409eb483dcccb53c438",
+    "producer_abi_report": "f108346a1dd81747be1627e1f6e297fb20df354727ad9f17e94fa6628b6350bf",
+    "selector": "900e8f05c8157737e89a22338b9a4575aa3ff124bd70ff132de0226654fce29f",
+    "v2_app": "66ac465cc058682ee015e0f1b980da6593b09ac345f4f7d5abd6396077b46b25",
+    "v2_package": "f10683dc3ae5a15a7a0dfd3675297d07527af4bab5be6d72d932af15364238c7"
+  },
+  "offline_commands": {
+    "build_check": {
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "S1-C4 Playback Note v3 segmented-final build gate: PASS\napp_sha256=c6e4cf567b2f22d7e39d3b4e0f6cae8c7fd140661e31763567b15a9fcf1e3a3d\npackage_sha256=376d931e9f5fbdfb5737347b6984fad493f35f023134f8309d4792286c1c7aec\nota_confirmation_token=INSTALL-SMK37PRO-V15-S1C4-PLAYBACK-NOTE-V3SEG-376D931E\nsender_confirmation_token=SEND-SMK37PRO-V15-S1C4-PLAYBACK-NOTE-V3SEG-EBB0A98D-182E4A54-964715E7-A16C453B\n"
+    },
+    "clean_worktree_deterministic_rebuild": "PASS, reran full build at scratch clean worktree for commit 1b3fc11 and final dirs remained clean",
+    "dry_run_json": {
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"device_accessed\": false, \"midi_transport_opened\": false, \"package_sha256\": \"376d931e9f5fbdfb5737347b6984fad493f35f023134f8309d4792286c1c7aec\", \"packet_count\": 16, \"send_enabled\": false, \"status\": \"DRY_RUN_PASS\", \"wire_playback_note_offset\": 161}\n"
+    },
+    "exact_ota_compile": {
+      "cmd": "cc -O2 -g -std=c11 -Wall -Wextra -Wpedantic exact_ota.c ../../../../../src/device_info.c ../../../../../src/fwsc.c ../../../../../src/protocol.c ../../../../../src/sha256.c ../../../../../src/usb_probe.c -o /Users/spectrum/Documents/SMK37ProMod/baselines/v15/analysis/playback-note/v3-segmented-review/exact_ota_review_bin -I/opt/homebrew/Cellar/libusb/1.0.30/include/libusb-1.0 -L/opt/homebrew/Cellar/libusb/1.0.30/lib -lusb-1.0",
+      "returncode": 1,
+      "stderr": "exact_ota.c:10:268: error: too many arguments to function call, expected 7, have 8\n   10 | int main(int argc,char **argv) { if(argc==3 && strcmp(argv[1],\"check\")==0) return check_exact(argv[2]); if(argc==6 && strcmp(argv[1],\"upload\")==0 && strcmp(argv[4],\"--confirm\")==0) return ota_upload_exact(argv[2],argv[3],argv[5],15,PACKAGE_SHA256,DESCRIPTION,CONFIRM,\"v15 S1-C4 Playback Note v3 segmented-final candidate installed\"); fprintf(stderr,\"usage:\\n  %s check <fwsc>\\n  %s upload <fwsc> <transcript> --confirm %s\\n\",argv[0],argv[0],CONFIRM); return 2; }\n      |                                                                                                                                                                                             ~~~~~~~~~~~~~~~~                                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n./../../../../../src/ota.c:623:12: note: 'ota_upload_exact' declared here\n  623 | static int ota_upload_exact(\n      |            ^\n  624 |     const char *firmware_path, const char *transcript_path,\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n  625 |     const char *confirmation,\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~\n  626 |     const uint8_t expected_sha256[SMK37_SHA256_LENGTH],\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n  627 |     const char *package_description, const char *expected_confirmation,\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n  628 |     const char *completion_message) {\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n1 error generated.\n",
+      "stdout": ""
+    },
+    "validate_py": {
+      "returncode": 1,
+      "stderr": "FAIL: command returned 1 expected 0: cc -O2 -g -std=c11 -Wall -Wextra -Wpedantic exact_ota.c ../../../../../src/device_info.c ../../../../../src/fwsc.c ../../../../../src/protocol.c ../../../../../src/sha256.c ../../../../../src/usb_probe.c -o /Users/spectrum/.jcode/scratch/s1c4-playback-validate-zl9x4kdv/exact_ota -I/opt/homebrew/Cellar/libusb/1.0.30/include/libusb-1.0 -L/opt/homebrew/Cellar/libusb/1.0.30/lib -lusb-1.0\nstdout:\n\nstderr:\nexact_ota.c:10:268: error: too many arguments to function call, expected 7, have 8\n   10 | int main(int argc,char **argv) { if(argc==3 && strcmp(argv[1],\"check\")==0) return check_exact(argv[2]); if(argc==6 && strcmp(argv[1],\"upload\")==0 && strcmp(argv[4],\"--confirm\")==0) return ota_upload_exact(argv[2],argv[3],argv[5],15,PACKAGE_SHA256,DESCRIPTION,CONFIRM,\"v15 S1-C4 Playback Note v3 segmented-final candidate installed\"); fprintf(stderr,\"usage:\\n  %s check <fwsc>\\n  %s upload <fwsc> <transcript> --confirm %s\\n\",argv[0],argv[0],CONFIRM); return 2; }\n      |                                                                                                                                                                                             ~~~~~~~~~~~~~~~~                                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n./../../../../../src/ota.c:623:12: note: 'ota_upload_exact' declared here\n  623 | static int ota_upload_exact(\n      |            ^\n  624 |     const char *firmware_path, const char *transcript_path,\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n  625 |     const char *confirmation,\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~\n  626 |     const uint8_t expected_sha256[SMK37_SHA256_LENGTH],\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n  627 |     const char *package_description, const char *expected_confirmation,\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n  628 |     const char *completion_message) {\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n1 error generated.\n\n",
+      "stdout": ""
+    }
+  },
+  "ordering": {
+    "producer_publication_indices": {
+      "producer.armed_store": 77,
+      "producer.count_store": 73,
+      "producer.memcpy_call": 65,
+      "producer.playback_store": 59,
+      "producer.restore_slot_last": 67,
+      "producer.restore_staging_last": 61,
+      "producer.valid_store": 70
+    },
+    "producer_reset_indices": {
+      "producer.reset_call_producer": 98,
+      "producer.reset_count_store": 94,
+      "producer.reset_csync": 96,
+      "producer.reset_lock_store": 93,
+      "producer.reset_state_store": 95
+    },
+    "selector_fail_closed_indices": {
+      "selector.default_note": 5,
+      "selector.gate_state": 14,
+      "selector.gate_valid": 20,
+      "selector.load_playback_note": 23,
+      "selector.select_source": 24
+    }
+  },
+  "package_manifest_output": {
+    "app_sha256": "c6e4cf567b2f22d7e39d3b4e0f6cae8c7fd140661e31763567b15a9fcf1e3a3d",
+    "payload_sha256": "02f558d74abef624fd7d598683e40968c0f5fcf53643b1c5f13323094d1f757d",
+    "sha256": "376d931e9f5fbdfb5737347b6984fad493f35f023134f8309d4792286c1c7aec",
+    "size": 701140
+  },
+  "release_tokens": {
+    "ota": "INSTALL-SMK37PRO-V15-S1C4-PLAYBACK-NOTE-V3SEG-376D931E",
+    "sender": "SEND-SMK37PRO-V15-S1C4-PLAYBACK-NOTE-V3SEG-EBB0A98D-182E4A54-964715E7-A16C453B"
+  },
+  "rollback": {
+    "candidate_flash_sha256": "8e5d33006798d9e1b852abb5b49aaba4e4b886effa94faef4f18f387bb05c1ec",
+    "manifest_restores": true,
+    "official_flash_sha256": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+    "sector_checks": [
+      {
+        "file": "rollback/official-v15-recovery-sectors/official-v15-sector-04000.bin",
+        "matches_manifest": true,
+        "sector_base": "0x04000",
+        "sha256": "84c51914e8203e19d5b951a6ddba50aa1523a1f49bc2a6f5e19715049bc6750b",
+        "size": 8192
+      },
+      {
+        "file": "rollback/official-v15-recovery-sectors/official-v15-sector-20000.bin",
+        "matches_manifest": true,
+        "sector_base": "0x20000",
+        "sha256": "f98d64e12bcb68b03a2893bf83f4165b6ab55dbd2f8adb3ec9849842b3ea88c1",
+        "size": 8192
+      },
+      {
+        "file": "rollback/official-v15-recovery-sectors/official-v15-sector-22000.bin",
+        "matches_manifest": true,
+        "sector_base": "0x22000",
+        "sha256": "e7c4eaa78ccacdc03e0b376ca095a28a8d28594c809621e3824dbda9b0d020f0",
+        "size": 8192
+      },
+      {
+        "file": "rollback/official-v15-recovery-sectors/official-v15-sector-2a000.bin",
+        "matches_manifest": true,
+        "sector_base": "0x2a000",
+        "sha256": "fffa39e60d1f79efba65fffcb55fd29fe5f8b9fd3fd580e738e1cb9a1c621c5d",
+        "size": 8192
+      },
+      {
+        "file": "rollback/official-v15-recovery-sectors/official-v15-sector-62000.bin",
+        "matches_manifest": true,
+        "sector_base": "0x62000",
+        "sha256": "571f97c9f0922b1e107f64f3524c9d620f0e35fcf78e9ae3c50cc49a3104122e",
+        "size": 8192
+      }
+    ]
+  },
+  "scope": {
+    "device_accessed": false,
+    "flash_performed": false,
+    "live_send_performed": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "ota_performed": false,
+    "reset_performed": false
+  },
+  "stale_metadata_findings": [],
+  "transport": {
+    "all_changed_only_161": true,
+    "default_original_all_playback_equals_trigger": true,
+    "packet_count": 16,
+    "packet_hashes_first4": [
+      "ebb0a98d0a15c01d3f3035f114f852de703920d712d607cc2342637ec3421b88",
+      "182e4a54ef667974c364471675854de526b1b773eeaf35e9edef9629af620cc2",
+      "964715e7c31f7512a9690736fcaa61c1500f55814d807ed8f677d6e9810a21ec",
+      "a16c453b38e7d76791abd90198728db96cda06be454683643e3ba1327e2e6bc9"
+    ],
+    "supported_ingress_modes": [
+      "direct_163_byte_sysex",
+      "segmented_final_sysex_after_final_f7_total_0x9e"
+    ],
+    "wire_playback_note_offset": 161
+  },
+  "v2_to_v3_final_delta": {
+    "app_changed_byte_count": 1,
+    "app_ranges": [
+      {
+        "end_exclusive": 124063,
+        "new_hex": "c4",
+        "old_hex": "c2",
+        "runtime_end_exclusive": "0x0201e49f",
+        "runtime_start": "0x0201e49e",
+        "start": 124062
+      }
+    ],
+    "package_changed_byte_count": 15,
+    "package_ranges": [
+      {
+        "end_exclusive": 4,
+        "new_hex": "d3d75ed8",
+        "old_hex": "d2ba9cae",
+        "start": 0
+      },
+      {
+        "end_exclusive": 71,
+        "new_hex": "81fb",
+        "old_hex": "b6c6",
+        "start": 69
+      },
+      {
+        "end_exclusive": 17432,
+        "new_hex": "16573f32",
+        "old_hex": "bdb1f07a",
+        "start": 17428
+      },
+      {
+        "end_exclusive": 17464,
+        "new_hex": "b40925e3",
+        "old_hex": "4573f43b",
+        "start": 17460
+      },
+      {
+        "end_exclusive": 141779,
+        "new_hex": "e5",
+        "old_hex": "e3",
+        "start": 141778
+      }
+    ]
+  },
+  "verdict": "BLOCK"
+}
