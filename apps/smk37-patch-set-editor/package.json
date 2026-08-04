@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Zero-dependency Chrome Web MIDI patch-set editor for SMK-37 Pro v15 S1-C3",
+  "description": "Zero-dependency Chrome Web MIDI patch-set editor for SMK-37 Pro v15 S1-C4 Playback Note",
   "scripts": {
     "start": "node server.mjs",
     "test": "node --test tests/*.test.mjs"

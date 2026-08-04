@@ -50,7 +50,7 @@ http://127.0.0.1:3737
 5. `16개 Patch 전송`
 6. Pad 1–16 청취 확인
 
-현재 S1-C3는 16개를 하나의 RAM transaction으로 적재합니다. 한 Pad만 교체하더라도 전체 16개를 전송하며, 장치 재부팅 후 다시 전송해야 합니다.
+현재 S1-C4는 16개 Patch와 Playback Note map을 하나의 휘발성 RAM transaction으로 적재합니다. 한 Pad만 교체하더라도 전체 16개를 전송하며, 장치 재부팅 후 다시 전송해야 합니다.
 
 `Trigger Note`는 Physical Pad 식별과 MIDI OUT을 위해 변경하지 않습니다. `Playback Note`는 Patch Set JSON에 별도 저장되며 내부 Ch10 신스의 발음 음높이만 바꾸기 위한 값입니다. 각 163-byte packet의 마지막 staged payload byte에 Playback Note `0..127`을 넣으므로 대응 펌웨어가 필요합니다.
 
