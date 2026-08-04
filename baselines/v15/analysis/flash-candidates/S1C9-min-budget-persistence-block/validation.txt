@@ -1,0 +1,6 @@
+S1C9 minimum-budget persistence analysis: PASS BLOCK
+PASS exact input gates
+PASS helper inventory generated
+PASS one manifest plus 16 prefixes generated
+PASS no firmware artifacts emitted
+PASS fit blocker quantified

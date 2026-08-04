@@ -1,0 +1,89 @@
+{
+  "bounded_memcmp": {
+    "closest_stock_helper": {
+      "address": "0x02048dbc",
+      "classification": "strcmp/zero-terminated compare",
+      "entry_row": "push {rets,r7,r6,r5,r4}",
+      "return_row": "pop {pc,r7,r6,r5,r4}"
+    },
+    "verdict": "BLOCK_NOT_LOCATED",
+    "why_not_enough": "0x02048dbc has no length argument and stops at NUL, so it is not a binary bounded memcmp for a 0x9c manifest/prefix record."
+  },
+  "bounds": {
+    "callable": "0x02005660",
+    "rows": {
+      "0x02005660": "push {rets,r8,r7,r6,r5,r4}",
+      "0x02005670": "ja r5,0x3,0x020057de",
+      "0x0200567e": "ja r6,0x1f,0x020057de",
+      "0x02005694": "add r0,r4,0x1a14",
+      "0x02005698": "mov r2,#0xa3",
+      "0x0200569a": "call 0x02048cce",
+      "0x020057de": "pop {pc,r8,r7,r6,r5,r4}"
+    },
+    "verdict": "PASS_STOCK_GLOBAL_BANK_PRESET_ONLY",
+    "why_not_enough": "0x02005660 bounds only selected global bank<=3 and preset<=31 before loading the current stock patch. It does not bound or validate a custom manifest, record base, slot count, generation, or per-record CRCs."
+  },
+  "crc_or_checksum": {
+    "finding": "An exact IEEE CRC32 table is present as data, but no exact callable CRC/checksum routine ABI, callers, register convention, or side-effect profile is proven. A new PI32 CRC loop would still need code placement.",
+    "standard_crc32_table": {
+      "address": "0x02059210",
+      "bytes": 1024,
+      "direct_imm32_refs_to_table_start": [],
+      "sha256": "12f3e0576d447eb37b36d82ba0c1c5481b8f0d12fdc70347ce4a076b229d4c86"
+    },
+    "verdict": "BLOCK_NO_CALLABLE_ABI"
+  },
+  "memcpy": {
+    "abi": "r0=dst, r1=src, r2=len; preserves r6/r5/r4; clobbers volatile registers",
+    "address": "0x02048cce",
+    "entry_row": "push {rets,r6,r5,r4}",
+    "return_row": "pop {pc,r6,r5,r4}",
+    "verdict": "PASS_COPY_ONLY"
+  },
+  "state_publication": {
+    "derived_initializer": "0x020057e0",
+    "rows": {
+      "0x020057e0": "push {rets,r5,r4}",
+      "0x02005886": "pop {pc,r5,r4}"
+    },
+    "s1c5_producer_window": {
+      "end_exclusive": "0x0201e254",
+      "policy": "runtime SysEx producer publishes resident slots and ARMED last; successor must leave ARMED+valid RAM override byte-for-byte",
+      "sha256": "53bc57acd7e787320400d0d945ec6b3f2e59f2074ae81c9053eb2c11f72560d4",
+      "start": "0x0201e196"
+    },
+    "stock_loader": "0x02005660",
+    "verdict": "PASS_STOCK_CURRENT_STATE_AND_S1C5_ARMED_POLICY_IDENTIFIED"
+  },
+  "storage_read": {
+    "abi": "r0=ram_destination, r1=storage_offset, r2=requested_length; returns requested_length on complete read, else 0",
+    "address": "0x02004870",
+    "rows": {
+      "0x02004870": "push {rets,r4}",
+      "0x02004872": "mov r4,r2",
+      "0x02004874": "mov r2,r1",
+      "0x02004876": "mov r1,r4",
+      "0x02004878": "call 0x020047d8",
+      "0x0200487a": "if (r0 != r4) {",
+      "0x0200487e": "mov r4,#0x0",
+      "0x02004882": "pop {pc,r4}"
+    },
+    "verdict": "PASS_FULL_LENGTH_READ_WRAPPER"
+  },
+  "storage_write": {
+    "abi": "r0=ram_source, r1=storage_offset, r2=requested_length; returns requested_length on complete write, else 0",
+    "address": "0x02004b02",
+    "rows": {
+      "0x02004b02": "push {rets,r4}",
+      "0x02004b04": "mov r4,r2",
+      "0x02004b06": "mov r2,r1",
+      "0x02004b08": "mov r1,r4",
+      "0x02004b0a": "call 0x02004a7a",
+      "0x02004b0c": "if (r0 != r4) {",
+      "0x02004b10": "mov r4,#0x0",
+      "0x02004b12": "}  mov r0, r4",
+      "0x02004b14": "pop {pc,r4}"
+    },
+    "verdict": "PASS_FULL_LENGTH_WRITE_WRAPPER_BUT_WRITER_UNPLACED"
+  }
+}

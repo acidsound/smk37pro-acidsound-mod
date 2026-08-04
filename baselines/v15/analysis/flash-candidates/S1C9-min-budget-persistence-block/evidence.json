@@ -1,0 +1,466 @@
+{
+  "blockers": [
+    "No exact callable CRC/checksum helper ABI is proven, only CRC32 table data.",
+    "No exact bounded memcmp helper is proven; strcmp is zero-terminated and binary-unsafe.",
+    "84-byte disabled SAVE helper region is smaller than the 104-byte positive gate floor before CRC or restore.",
+    "No second proven cold executable region is promotable for split helper placement.",
+    "Boot-only and first-note lazy validation remain design-only without exact placement and ABI proof."
+  ],
+  "candidate_built": false,
+  "data_package": {
+    "combined_prefixes_file": "candidate-prefixes-096-112.bin",
+    "combined_prefixes_sha256": "7eae0faf19fdf4b9bfb2a276aef75622b176ae64d3498c0a404d56923c852d3d",
+    "committed_flag": "0xa5",
+    "format": "smk37-v15-s1c9-one-manifest-plus-16-prefixes-v1",
+    "header_crc32": "0xd9e23a2a",
+    "manifest_magic": "SMK37S9P",
+    "manifest_prefix_file": "manifest-prefix-record-112.bin",
+    "manifest_prefix_sha256": "c24c583b092d65f1d2f0777fcc75b4c3634f77fc2e8cc25f32eba3d33859aba4",
+    "manifest_record": 112,
+    "notes_crc32": "0xc772e2f8",
+    "payload_crc32": "0xa400dfab",
+    "payload_prefix_records": 16,
+    "prefix_len": 156,
+    "raw_stride": 163,
+    "record_range": [
+      96,
+      112
+    ],
+    "records": [
+      {
+        "physical_offset": "0x0fbd20",
+        "playback_note": 60,
+        "prefix_crc32": "0xb17b91ff",
+        "prefix_file": "payload-prefix-record-096-slot-00.bin",
+        "prefix_len": 156,
+        "prefix_sha256": "272e1b0ad872b881073ccfde023561fe7c8f14a0b30ca9d01db7259a7abf142e",
+        "record_index": 96,
+        "slot": 0,
+        "source_packet": "slot00-trigger36-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "7c7a8ac8d57bd78b8d531fa8997e7d9c18ce4e0d8a267cc22549ba71d5e3e9c4",
+        "storage_offset": "0x7d20",
+        "tail_policy": "do not write raw bytes 0x9c..0xa2; target-specific tails must remain unchanged"
+      },
+      {
+        "physical_offset": "0x0fbdc3",
+        "playback_note": 60,
+        "prefix_crc32": "0x29b4e9e9",
+        "prefix_file": "payload-prefix-record-097-slot-01.bin",
+        "prefix_len": 156,
+        "prefix_sha256": "d71db9d238001f58f729def7221f471cf0fdcdb60c133fc689ddeb916a54aa37",
+        "record_index": 97,
+        "slot": 1,
+        "source_packet": "slot01-trigger37-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "523ccbc81eef766fc73bda72a78d3a28ba3f1fcabc1146db78252673f8d5ed7a",
+        "storage_offset": "0x7dc3",
+        "tail_policy": "do not write raw bytes 0x9c..0xa2; target-specific tails must remain unchanged"
+      },
+      {
+        "physical_offset": "0x0fbe66",
+        "playback_note": 60,
+        "prefix_crc32": "0x17d14117",
+        "prefix_file": "payload-prefix-record-098-slot-02.bin",
+        "prefix_len": 156,
+        "prefix_sha256": "d700b2ba11f722eb1d5774c4c6709816e6ff348a059ef1d3615447014a78c594",
+        "record_index": 98,
+        "slot": 2,
+        "source_packet": "slot02-trigger38-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "14d65142c52fbd4775ab071639886c203cc03d860deb62e6de25c048cb9a712b",
+        "storage_offset": "0x7e66",
+        "tail_policy": "do not write raw bytes 0x9c..0xa2; target-specific tails must remain unchanged"
+      },
+      {
+        "physical_offset": "0x0fbf09",
+        "playback_note": 60,
+        "prefix_crc32": "0xab393a1a",
+        "prefix_file": "payload-prefix-record-099-slot-03.bin",
+        "prefix_len": 156,
+        "prefix_sha256": "b03f4ed30de08b82226962bc14536aac374dd8f85ff9a22a94fb3ba4edd8c84f",
+        "record_index": 99,
+        "slot": 3,
+        "source_packet": "slot03-trigger39-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "efab2e0db1e444d4ab8e96cd7125825fdbd0445e3e05b8436ae7bbd2ae830364",
+        "storage_offset": "0x7f09",
+        "tail_policy": "do not write raw bytes 0x9c..0xa2; target-specific tails must remain unchanged"
+      },
+      {
+        "physical_offset": "0x0fbfac",
+        "playback_note": 60,
+        "prefix_crc32": "0x13b2ed9c",
+        "prefix_file": "payload-prefix-record-100-slot-04.bin",
+        "prefix_len": 156,
+        "prefix_sha256": "1211b7ecf3c03a3ecb893ab05236fc7832b0d39cfca8be748403dff12d1e8304",
+        "record_index": 100,
+        "slot": 4,
+        "source_packet": "slot04-trigger40-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "981e0772ac58174cb94a1794bbdac10da9c2679a0f69112b14a114d75d70481b",
+        "storage_offset": "0x7fac",
+        "tail_policy": "do not write raw bytes 0x9c..0xa2; target-specific tails must remain unchanged"
+      },
+      {
+        "physical_offset": "0x0fc04f",
+        "playback_note": 60,
+        "prefix_crc32": "0xf1a46cfa",
+        "prefix_file": "payload-prefix-record-101-slot-05.bin",
+        "prefix_len": 156,
+        "prefix_sha256": "b5c621c347a996f787bb33e036984766be53a58f09a42a52d52d600a62c40e44",
+        "record_index": 101,
+        "slot": 5,
+        "source_packet": "slot05-trigger41-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "d73e236482ecd7d9b791ea6119b13d63b09eae5565f682b8f2dc0b4678277579",
+        "storage_offset": "0x804f",
+        "tail_policy": "do not write raw bytes 0x9c..0xa2; target-specific tails must remain unchanged"
+      },
+      {
+        "physical_offset": "0x0fc0f2",
+        "playback_note": 60,
+        "prefix_crc32": "0x6b1397e4",
+        "prefix_file": "payload-prefix-record-102-slot-06.bin",
+        "prefix_len": 156,
+        "prefix_sha256": "248adb209956ff2394fb61232c1800c17a4998b602880f1f1ee44e5869c4bae6",
+        "record_index": 102,
+        "slot": 6,
+        "source_packet": "slot06-trigger42-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "85625d999b3c23b578362fde17e9022db16ef9ecde5926e198f3206977cdba17",
+        "storage_offset": "0x80f2",
+        "tail_policy": "do not write raw bytes 0x9c..0xa2; target-specific tails must remain unchanged"
+      },
+      {
+        "physical_offset": "0x0fc195",
+        "playback_note": 60,
+        "prefix_crc32": "0x5af1ba7b",
+        "prefix_file": "payload-prefix-record-103-slot-07.bin",
+        "prefix_len": 156,
+        "prefix_sha256": "8b9d910f9deff1f5d5d602e426ffc199b24b7740551de0ad7e343f37baea18ad",
+        "record_index": 103,
+        "slot": 7,
+        "source_packet": "slot07-trigger43-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "3e06351976cdd90b3e888b32ccca8716de991c95ff44eb73e9c26a3b912150dd",
+        "storage_offset": "0x8195",
+        "tail_policy": "do not write raw bytes 0x9c..0xa2; target-specific tails must remain unchanged"
+      },
+      {
+        "physical_offset": "0x0fc238",
+        "playback_note": 60,
+        "prefix_crc32": "0xa95a28b5",
+        "prefix_file": "payload-prefix-record-104-slot-08.bin",
+        "prefix_len": 156,
+        "prefix_sha256": "e5c5df96d4588842b40cafac688c6dde8c9378bbbbcaf197eb37ef8436c0d13f",
+        "record_index": 104,
+        "slot": 8,
+        "source_packet": "slot08-trigger44-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "ef96628a3f2cb2a2b6028687e1dc9fa89f147edf7b4c4eb229b7d27250704805",
+        "storage_offset": "0x8238",
+        "tail_policy": "do not write raw bytes 0x9c..0xa2; target-specific tails must remain unchanged"
+      },
+      {
+        "physical_offset": "0x0fc2db",
+        "playback_note": 60,
+        "prefix_crc32": "0xc49d8d55",
+        "prefix_file": "payload-prefix-record-105-slot-09.bin",
+        "prefix_len": 156,
+        "prefix_sha256": "01b18f192056686ea6cb8805e78442c04ec1f17900e27852b32c9d56ec70bea5",
+        "record_index": 105,
+        "slot": 9,
+        "source_packet": "slot09-trigger45-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "c6483dabc9e1a863f2682b5c11ea8a91e3ef38212926930d8de24afa3db6f9de",
+        "storage_offset": "0x82db",
+        "tail_policy": "do not write raw bytes 0x9c..0xa2; target-specific tails must remain unchanged"
+      },
+      {
+        "physical_offset": "0x0fc37e",
+        "playback_note": 60,
+        "prefix_crc32": "0x0b9367af",
+        "prefix_file": "payload-prefix-record-106-slot-10.bin",
+        "prefix_len": 156,
+        "prefix_sha256": "01da00b4dc5bef384bf1d8491519cd803c844c77934543e909b66e6814fe3df4",
+        "record_index": 106,
+        "slot": 10,
+        "source_packet": "slot10-trigger46-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "11c7dfae80eb8ddaf88ec971ff1b3ce8b4d76894f4550ec3a0b5113c7e58bdde",
+        "storage_offset": "0x837e",
+        "tail_policy": "do not write raw bytes 0x9c..0xa2; target-specific tails must remain unchanged"
+      },
+      {
+        "physical_offset": "0x0fc421",
+        "playback_note": 60,
+        "prefix_crc32": "0xd9022087",
+        "prefix_file": "payload-prefix-record-107-slot-11.bin",
+        "prefix_len": 156,
+        "prefix_sha256": "ec506d0d19fd3fb2da83f2875c4317502a3a20bc0a0824ce364c5a5905b2c834",
+        "record_index": 107,
+        "slot": 11,
+        "source_packet": "slot11-trigger47-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "a97d43e1351177f4b7e4770b2170d07ae7d7dbd33bd6bb6439a441cb66f74a68",
+        "storage_offset": "0x8421",
+        "tail_policy": "do not write raw bytes 0x9c..0xa2; target-specific tails must remain unchanged"
+      },
+      {
+        "physical_offset": "0x0fc4c4",
+        "playback_note": 60,
+        "prefix_crc32": "0xc3d8b518",
+        "prefix_file": "payload-prefix-record-108-slot-12.bin",
+        "prefix_len": 156,
+        "prefix_sha256": "167aca4e29db4fcebe36ddd07326f33c3f4fea1b035784d34dee14e250208489",
+        "record_index": 108,
+        "slot": 12,
+        "source_packet": "slot12-trigger48-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "3680c3abf14c6a13096fe56953789bc2572fe2fd0d82248f8e4e893482a3be19",
+        "storage_offset": "0x84c4",
+        "tail_policy": "do not write raw bytes 0x9c..0xa2; target-specific tails must remain unchanged"
+      },
+      {
+        "physical_offset": "0x0fc567",
+        "playback_note": 60,
+        "prefix_crc32": "0x249b3d1f",
+        "prefix_file": "payload-prefix-record-109-slot-13.bin",
+        "prefix_len": 156,
+        "prefix_sha256": "281c35f888a1065a2c98a2ab26fa607dfb6e10d4584e6492ca300c33d82907c1",
+        "record_index": 109,
+        "slot": 13,
+        "source_packet": "slot13-trigger49-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "6611e75bfb8b11206f6303a63fdf6d50ee9beb8a72be2e69f9233a8f87e93f3a",
+        "storage_offset": "0x8567",
+        "tail_policy": "do not write raw bytes 0x9c..0xa2; target-specific tails must remain unchanged"
+      },
+      {
+        "physical_offset": "0x0fc60a",
+        "playback_note": 60,
+        "prefix_crc32": "0xf1131e99",
+        "prefix_file": "payload-prefix-record-110-slot-14.bin",
+        "prefix_len": 156,
+        "prefix_sha256": "b184b83c68d61a812d36dfe0644aac2a2b0b23af6a3b34bf11ff981080dfa05c",
+        "record_index": 110,
+        "slot": 14,
+        "source_packet": "slot14-trigger50-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "8b3bbbccf103bd41ea93430b694be1b8ab17d9a29ed0bee3d6fc0570e7d95721",
+        "storage_offset": "0x860a",
+        "tail_policy": "do not write raw bytes 0x9c..0xa2; target-specific tails must remain unchanged"
+      },
+      {
+        "physical_offset": "0x0fc6ad",
+        "playback_note": 60,
+        "prefix_crc32": "0x27426a70",
+        "prefix_file": "payload-prefix-record-111-slot-15.bin",
+        "prefix_len": 156,
+        "prefix_sha256": "f45bc93ef795d4e03a54d04df39b509d8f6c1773b0ed3c9b8bc4d6726039e9a9",
+        "record_index": 111,
+        "slot": 15,
+        "source_packet": "slot15-trigger51-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "b06e83fdf0972a652ca4561eb08c6312b51be24c54c2619a1d6c2d67cc2bf30c",
+        "storage_offset": "0x86ad",
+        "tail_policy": "do not write raw bytes 0x9c..0xa2; target-specific tails must remain unchanged"
+      }
+    ],
+    "restore_contract": "read/validate manifest before any RAM publication; absent, uncommitted, short, corrupt, wrong-layout, or CRC-failing seed must fall through exactly as stock S1C5",
+    "runtime_override_contract": "if S1C5 RAM is already ARMED with the selected slot valid, use volatile SysEx RAM and skip persistent fallback for that event/session",
+    "scope": {
+      "device_accessed": false,
+      "firmware_candidate": false,
+      "midi_transport_opened": false,
+      "offline_only": true,
+      "persistent_storage_write_performed": false
+    },
+    "tail_policy": "preserve all target raw tails 0x9c..0xa2; this package writes/generates prefixes only"
+  },
+  "decision": "BLOCK_NO_FIRMWARE_CANDIDATE",
+  "fit_budget": {
+    "boot_or_lazy_validation": {
+      "boot_only": "BLOCK: earlier 0x02005f9c restore-wrapper architecture depends on a larger proven wrapper region and exact register continuation; current evidence revokes promotion to firmware.",
+      "boot_only_or_lazy_data_result": "PASS as data design: one manifest prefix plus 16 payload prefixes can fail closed if a future exact validator exists.",
+      "first_note_lazy": "BLOCK: safest lifecycle in principle because USB/SysEx is live and ARMED RAM can override, but the selector/helper pair still needs manifest validation or a cached valid state before touching RAM; no placement passes."
+    },
+    "minimum_positive_gate_floor": {
+      "available_single_helper_region_bytes": 84,
+      "crc_status": "BLOCK: CRC32 table data is present, but no callable CRC/checksum ABI is proven; new CRC loop code is not included in this floor",
+      "floor_without_any_crc_or_payload_restore": 104,
+      "inline_magic_compare_bytes": 48,
+      "manifest_read_setup_bytes": 20,
+      "memcmp_status": "BLOCK: no bounded memcmp helper is proven; inline compares or unsafe strcmp do not fit the positive gate",
+      "overflow_before_crc_bytes": 20,
+      "version_commit_layout_count_base_record_field_bytes": 36
+    },
+    "owned_s1c5_window": {
+      "bytes": 278,
+      "end_exclusive": "0x0201e254",
+      "free_if_exact_s1c5_selector_and_producer_preserved": 0,
+      "producer_plus_tail_bytes": 190,
+      "selector_bytes": 88,
+      "start": "0x0201e13e"
+    },
+    "proven_disabled_save_helper": {
+      "bytes": 84,
+      "end_exclusive": "0x02026dd4",
+      "free_after_s1c7_shape": 0,
+      "s1c7_no_manifest_helper_bytes": 84,
+      "start": "0x02026d80"
+    },
+    "split_region_review": {
+      "proven_regions": [
+        {
+          "bytes": 278,
+          "range": "0x0201e13e..0x0201e254",
+          "status": "active S1C5 selector/producer; no free bytes if producer and runtime SysEx behavior stay exact"
+        },
+        {
+          "bytes": 84,
+          "range": "0x02026d80..0x02026dd4",
+          "status": "quarantined disabled SAVE body; only standalone helper region; positive gate floor already overflows"
+        }
+      ],
+      "rejected_regions": [
+        {
+          "range": "0x02005f9c/0x02005fa4",
+          "status": "boot hook/design point only; revoked or lacks live proof for a new wrapper and placement"
+        },
+        {
+          "range": "generic zero/ff data caves",
+          "status": "not ownership proof; not promoted to executable placement"
+        }
+      ]
+    }
+  },
+  "format": "smk37-v15-s1c9-min-budget-persistence-block-v1",
+  "helpers": {
+    "bounded_memcmp": {
+      "closest_stock_helper": {
+        "address": "0x02048dbc",
+        "classification": "strcmp/zero-terminated compare",
+        "entry_row": "push {rets,r7,r6,r5,r4}",
+        "return_row": "pop {pc,r7,r6,r5,r4}"
+      },
+      "verdict": "BLOCK_NOT_LOCATED",
+      "why_not_enough": "0x02048dbc has no length argument and stops at NUL, so it is not a binary bounded memcmp for a 0x9c manifest/prefix record."
+    },
+    "bounds": {
+      "callable": "0x02005660",
+      "rows": {
+        "0x02005660": "push {rets,r8,r7,r6,r5,r4}",
+        "0x02005670": "ja r5,0x3,0x020057de",
+        "0x0200567e": "ja r6,0x1f,0x020057de",
+        "0x02005694": "add r0,r4,0x1a14",
+        "0x02005698": "mov r2,#0xa3",
+        "0x0200569a": "call 0x02048cce",
+        "0x020057de": "pop {pc,r8,r7,r6,r5,r4}"
+      },
+      "verdict": "PASS_STOCK_GLOBAL_BANK_PRESET_ONLY",
+      "why_not_enough": "0x02005660 bounds only selected global bank<=3 and preset<=31 before loading the current stock patch. It does not bound or validate a custom manifest, record base, slot count, generation, or per-record CRCs."
+    },
+    "crc_or_checksum": {
+      "finding": "An exact IEEE CRC32 table is present as data, but no exact callable CRC/checksum routine ABI, callers, register convention, or side-effect profile is proven. A new PI32 CRC loop would still need code placement.",
+      "standard_crc32_table": {
+        "address": "0x02059210",
+        "bytes": 1024,
+        "direct_imm32_refs_to_table_start": [],
+        "sha256": "12f3e0576d447eb37b36d82ba0c1c5481b8f0d12fdc70347ce4a076b229d4c86"
+      },
+      "verdict": "BLOCK_NO_CALLABLE_ABI"
+    },
+    "memcpy": {
+      "abi": "r0=dst, r1=src, r2=len; preserves r6/r5/r4; clobbers volatile registers",
+      "address": "0x02048cce",
+      "entry_row": "push {rets,r6,r5,r4}",
+      "return_row": "pop {pc,r6,r5,r4}",
+      "verdict": "PASS_COPY_ONLY"
+    },
+    "state_publication": {
+      "derived_initializer": "0x020057e0",
+      "rows": {
+        "0x020057e0": "push {rets,r5,r4}",
+        "0x02005886": "pop {pc,r5,r4}"
+      },
+      "s1c5_producer_window": {
+        "end_exclusive": "0x0201e254",
+        "policy": "runtime SysEx producer publishes resident slots and ARMED last; successor must leave ARMED+valid RAM override byte-for-byte",
+        "sha256": "53bc57acd7e787320400d0d945ec6b3f2e59f2074ae81c9053eb2c11f72560d4",
+        "start": "0x0201e196"
+      },
+      "stock_loader": "0x02005660",
+      "verdict": "PASS_STOCK_CURRENT_STATE_AND_S1C5_ARMED_POLICY_IDENTIFIED"
+    },
+    "storage_read": {
+      "abi": "r0=ram_destination, r1=storage_offset, r2=requested_length; returns requested_length on complete read, else 0",
+      "address": "0x02004870",
+      "rows": {
+        "0x02004870": "push {rets,r4}",
+        "0x02004872": "mov r4,r2",
+        "0x02004874": "mov r2,r1",
+        "0x02004876": "mov r1,r4",
+        "0x02004878": "call 0x020047d8",
+        "0x0200487a": "if (r0 != r4) {",
+        "0x0200487e": "mov r4,#0x0",
+        "0x02004882": "pop {pc,r4}"
+      },
+      "verdict": "PASS_FULL_LENGTH_READ_WRAPPER"
+    },
+    "storage_write": {
+      "abi": "r0=ram_source, r1=storage_offset, r2=requested_length; returns requested_length on complete write, else 0",
+      "address": "0x02004b02",
+      "rows": {
+        "0x02004b02": "push {rets,r4}",
+        "0x02004b04": "mov r4,r2",
+        "0x02004b06": "mov r2,r1",
+        "0x02004b08": "mov r1,r4",
+        "0x02004b0a": "call 0x02004a7a",
+        "0x02004b0c": "if (r0 != r4) {",
+        "0x02004b10": "mov r4,#0x0",
+        "0x02004b12": "}  mov r0, r4",
+        "0x02004b14": "pop {pc,r4}"
+      },
+      "verdict": "PASS_FULL_LENGTH_WRITE_WRAPPER_BUT_WRITER_UNPLACED"
+    }
+  },
+  "input_gates": {
+    "official_app": {
+      "path": "build/v15-official-app.bin",
+      "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "status": "PASS"
+    },
+    "official_fwsc": {
+      "path": "build/SMK-37_Pro_015.fwsc",
+      "sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+      "status": "PASS"
+    },
+    "quark_listing": {
+      "path": "baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz",
+      "sha256": "f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347",
+      "status": "PASS"
+    },
+    "s1c5_app": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/app.bin",
+      "sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+      "status": "PASS"
+    },
+    "s1c5_fwsc": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/SMK37Pro-v15-S1C5-playback-register-return.fwsc",
+      "sha256": "0a6ac1ae7d4bd34e252eb8f23a4d2c5f39d7454376ade1a3b75ff7d03155ea91",
+      "status": "PASS"
+    },
+    "s1c5_window_identity": {
+      "combined_sha256": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+      "owned_end_exclusive": "0x0201e254",
+      "producer_sha256": "53bc57acd7e787320400d0d945ec6b3f2e59f2074ae81c9053eb2c11f72560d4",
+      "producer_start": "0x0201e196",
+      "selector_end_exclusive": "0x0201e196",
+      "selector_start": "0x0201e13e",
+      "status": "PASS"
+    },
+    "s1c7_root_cause_report": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C7-live-failure-root-cause-20260804/report.md",
+      "sha256": "48ab1fd30abea5b81772a36cc13313241ec55c257f2c032545fedc3588811963"
+    },
+    "s1c8_prior_block_report": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C8-manifest-gated-persistence-block/report.md",
+      "sha256": "77bfec1101546429560bf3c925392bf84acf15edb0e699b1bbc7628656cce94e"
+    }
+  },
+  "scope": {
+    "device_accessed": false,
+    "firmware_artifacts_emitted": false,
+    "flash_performed": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "ota_performed": false,
+    "reset_performed": false
+  }
+}
