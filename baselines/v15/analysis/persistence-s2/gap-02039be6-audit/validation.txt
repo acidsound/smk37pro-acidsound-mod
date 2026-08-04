@@ -1,0 +1,4 @@
+PASS exact 580-byte gap bytes and S1C5 selector/producer hashes
+PASS TBH branch table at 0x020399a2 resolves entry 3 to 0x02039be6
+PASS Quarkslab recursive and Kagaimiq decode rows inside target
+REFUTE 0x02039be6..0x02039e2a as owned/free restore placement
