@@ -1,0 +1,56 @@
+{
+  "format": "smk37-v15-s1c7-forced-recovery-seed-bundle-v1",
+  "source_manifest": "build/s1c7-current-set-prefix-seed-20260804",
+  "source_manifest_sha256": "8e01928fc76afb819b2079ccd57a8c725960300a5474ab44c3b30eadfdc9c039",
+  "input_dump": {
+    "required_double_dump_identity": true,
+    "sha256": "078c13d698ad08a4cfac7723e87014000e5557e655bd1f21d75493dc8f652946",
+    "size": 1048576
+  },
+  "offline_only_built": true,
+  "device_accessed_during_build": false,
+  "transport_opened_during_build": false,
+  "safety_policy": {
+    "write_scope": "exactly sectors 0x0fb000 and 0x0fc000",
+    "preserve_all_other_bytes": true,
+    "required_before_seed_write": "two identical fresh 1 MiB dumps whose SHA-256 equals the locked live SHA",
+    "rollback": "rollback-sectors restore the exact sector bytes from the locked live dump and preserve all other sectors",
+    "forbidden": [
+      "chip erase",
+      "full-flash write",
+      "writes outside 0x0fb000/0x0fc000",
+      "using on any other dump SHA",
+      "live writes during build"
+    ]
+  },
+  "macos": {
+    "live_write_supported": false,
+    "blocker": "No audited mutable macOS WL82 transport is present in this repository bundle; macos-dry-check is supported."
+  },
+  "windows": {
+    "live_write_supported": true,
+    "transport": "reviewed windows_scsi_transport.py copied from audited rollback bundle"
+  },
+  "sectors": [
+    {
+      "changed_byte_count": 416,
+      "expected_pre_sha256": "3de2e14104f864fa7537558256eb69cad34d513d1c371bf4ffff099d546b7ad2",
+      "length": 4096,
+      "patched_sha256": "4adc92b0d62f911f21b1daf5a9e2bc7ab3ecfa63ed790010908674ee7eaf1814",
+      "rollback_file": "rollback-sectors/original-sector-fb000.bin",
+      "sector_base": "0xfb000",
+      "write_file": "write-sectors/patched-sector-fb000.bin"
+    },
+    {
+      "changed_byte_count": 1043,
+      "expected_pre_sha256": "1029292be74d340197572c7cd6f44a2cdb39510ec1e4ce25f6f4acd1899bae0e",
+      "length": 4096,
+      "patched_sha256": "49e58cd6c66d83b0968583d114e2b221e1e42735a6f377ecb2ed385bfa32e650",
+      "rollback_file": "rollback-sectors/original-sector-fc000.bin",
+      "sector_base": "0xfc000",
+      "write_file": "write-sectors/patched-sector-fc000.bin"
+    }
+  ],
+  "post_dump_sha256_if_sectors_applied": "d4f734961f64c390e33cf3973d1d990a1c5aaf77b8928e1fb6dd0958906f498e",
+  "rollback_restores_exact_input_dump": true
+}
