@@ -1,0 +1,22 @@
+$ python3 -m py_compile baselines/v15/analysis/persistence-s2/host-prefix-seed/prepare_s1c5_raw_prefix_seed.py
+py_compile PASS
+
+$ python3 baselines/v15/analysis/persistence-s2/host-prefix-seed/prepare_s1c5_raw_prefix_seed.py self-test
+READBACK VALIDATION PASS: /Users/spectrum/.jcode/scratch/s1c5-prefix-seed-selftest-1yxstca6/pkg/manifest.json
+ROLLBACK VALIDATION PASS: /Users/spectrum/.jcode/scratch/s1c5-prefix-seed-selftest-1yxstca6/pkg/manifest.json
+SELF-TEST PASS: offline regular-file RMW package, readback, and rollback
+
+$ python3 baselines/v15/analysis/persistence-s2/storage/validate.py
+PASS	stock 0x80 flag table ends at +0x9200
+PASS	stock 9-byte selection ends at +0x9209
+PASS	S1C5 persistent voice prefix is 0x9b bytes
+PASS	one S1C5 voice plus playback note fits raw prefix 0x9c
+PASS	16 payload prefixes total 0x9c0 bytes across 16 records
+PASS	packed expansion overwrites every raw prefix byte 0x00..0x9b
+PASS	all seven raw tail bytes have proven stock use
+RESULT	PASS	80 checks
+
+$ python3 baselines/v15/analysis/persistence-s2/restore/analyze_restore.py
+validation checks: 115 PASS
+RESULT BLOCK
+No firmware/device/MIDI/flash/reset action performed
