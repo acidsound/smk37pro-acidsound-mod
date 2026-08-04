@@ -1,0 +1,8 @@
+S1-C7 Current-Set Helper Checkpoint build validation: PASS
+PASS exact S1C5 basis
+PASS full disabled SAVE body used as helper and skipped by UI path
+PASS selector/helper split control
+PASS producer Chrome segmented-final and reset preserved
+PASS FWSC exact-hash artifact and rollback sectors generated offline
+PASS host-seeded current-set prefix records generated offline only
+PASS exact_ota.c compiled and accepted candidate/rejected S1C5 and official controls offline

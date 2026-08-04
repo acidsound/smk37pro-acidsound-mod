@@ -1,0 +1,5 @@
+S1-C7 code evidence: PASS
+PASS selector fits before producer
+PASS helper fits full 0x02026d80..0x02026dd4 region
+PASS producer preserved byte-for-byte
+PASS SAVE UI path skips helper
