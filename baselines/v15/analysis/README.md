@@ -21,6 +21,12 @@
 추정 기반 v15 M01~M08 실험은 폐기되었다. 공식 v15 패키지와 장치 기준선,
 원본 추출·검증 도구 및 복구 수단만 유효한 출발점으로 취급한다.
 
+메모리 영역, 실행 공간, RAM/저장 객체 및 placement 판정의 기준 문서는
+[`MEMORY-MAP.md`](MEMORY-MAP.md)이다. 새 분석에서는 먼저 이 문서를 읽고,
+`OCCUPIED`, `BLOCKED`, `REFUTED`, `PARTIAL`, `UNREVIEWED` 상태를 구분한다.
+특히 listing gap을 free space로 승격하려면 문서의 code/data boundary,
+branch reach, xref, lifecycle hook 및 byte-fit 조건을 모두 다시 입증해야 한다.
+
 현재 mod 가능 범위와 정적·빌드·실기 검증 상태는
 [`mod-capability-matrix.md`](mod-capability-matrix.md)에서 추적한다. 문서의
 주소, SHA-256, R01 manifest, 보호 영역과 체크 상태는 다음 명령으로 대조한다.
