@@ -1,0 +1,40 @@
+PASS	offline-only scope
+PASS	device_accessed=false
+PASS	flash_performed=false
+PASS	ota_performed=false
+PASS	reset_performed=false
+PASS	midi_transport_opened=false
+PASS	firmware_package_built=false
+PASS	artifact exists s1c3_boundary_app
+PASS	artifact sha256 s1c3_boundary_app
+PASS	artifact exists s1c3_r3_app
+PASS	artifact sha256 s1c3_r3_app
+PASS	artifact exists s1c3_r3_fwsc
+PASS	artifact sha256 s1c3_r3_fwsc
+PASS	artifact exists s1c3_r3_producer
+PASS	artifact sha256 s1c3_r3_producer
+PASS	artifact exists s1c3_selector
+PASS	artifact sha256 s1c3_selector
+PASS	owned reservation is 0x0a90
+PASS	header/map area is 0x90
+PASS	header/map area inside owned reservation
+PASS	no RAM boundary expansion required
+PASS	producer reported spare bytes is 4
+PASS	selector padding bytes is 24
+PASS	byte budget blocks implementation candidate
+PASS	no firmware candidate constructed
+PASS	all-Original frame length 0xa3
+PASS	outer direct-product header
+PASS	terminal F7
+PASS	payload length 0x9c
+PASS	all payload bytes are seven-bit
+PASS	SMKPN1 magic
+PASS	version/cmd/flags/count
+PASS	all-original mask decodes to 0xffff
+PASS	all-original note bytes are zero
+PASS	CRC-16/CCITT-FALSE matches
+PASS	padding zero
+PASS	frame sha256 recorded
+PASS	all-original effective notes are 36..51
+PASS	all-original effective notes distinct
+PLAYBACK_NOTE_PROTOCOL_VALIDATION_PASS
