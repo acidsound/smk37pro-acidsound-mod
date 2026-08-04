@@ -84,8 +84,8 @@ def main() -> int:
 
     req("playbackNotes" in SYSEX.read_text(), "UI document has playbackNotes field")
     appjs = APPJS.read_text()
-    req("transmissionOrder(slots, playbackNotes)" in appjs, "current sender passes playbackNotes to queue")
-    req("대응 펌웨어 protocol" in appjs, "current sender warns firmware protocol is absent")
+    req("transmissionOrder(slots, playbackNotes, { encodePlayback: playbackEnabled })" in appjs, "sender passes playbackNotes with firmware capability gate")
+    req("S1-C3 mode" in appjs and "S1-C4 mode" in appjs, "sender distinguishes legacy and Playback Note firmware transport")
 
     req(len(evidence["blockers"]) == 3, "expected blocker count")
     req(evidence["repeated_hit_polyphony_assessment"]["note_off_requirement"].startswith("For every Note On"), "Note Off symmetry assessment")

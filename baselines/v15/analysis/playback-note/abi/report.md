@@ -1,6 +1,6 @@
 # Playback Note ABI analysis for exact v15 S1-C3 r3-reload
 
-Status: **TRACE PASS, PATCH-READY BLOCKERS**.  
+Status: **TRACE PASS, PATCH-READY BLOCKERS; corrected source invariant below**.  
 Scope: offline-only static analysis. No device, flash, OTA, reset, USB, or MIDI transport was used. No v12 assumptions are used.
 
 ## Decision
@@ -47,7 +47,7 @@ For each trigger note `T` in the resident S1-C3 trigger range, define `P = playb
 
 1. Leave the incoming message bytes and MIDI OUT caller argument unchanged.
 2. Use the existing selector gate to ensure Ch10 and valid publication.
-3. Select source slot from `P` only when `P` is supported by the resident source set, currently proven only for `36..51`.
+3. Select the patch source only from the incoming Trigger Note: `source_slot = T - 36`. Playback Note must never select or replace the patch source.
 4. Return from Note Off with native `r5 = P` so `0x0201c648` stores the mapped playback note.
 5. Return from Note On with native `r6 = P` while preserving velocity `r5` so `0x0201c686` stores the mapped playback note and `0x0201c68c` stores the original velocity.
 6. Use the identical lookup in both Note On and Note Off. Note On-only substitution is unsafe and repeats the known stuck-note class.
@@ -66,7 +66,7 @@ This design is local to the synth dispatcher wrapper. It does not mutate the inc
 
 1. **Playback-note firmware transport/persistence:** current UI document and send queue carry `playbackNotes`, but `sendAll` warns that only patch data is transmitted until a corresponding firmware protocol is installed. Current S1-C3 packets and producer have no validated playback-note metadata writer.
 2. **Native-register return ABI:** current selector restores `r5` and `r6`; exact PI32 code is still needed to return with `r5` substituted on Note Off and `r6` substituted on Note On while preserving velocity and caller state.
-3. **Range policy:** resident S1-C3 source slots are proven for notes `36..51`; UI validation accepts `0..127`. Firmware must either constrain consumed playback notes to `36..51` or prove sources for the wider range.
+3. **Playback range:** source slots remain restricted to Trigger Notes `36..51`, independently of pitch. Playback Note is a seven-bit synth metadata value and may be `0..127` once the native-register/metadata substitution is encoded and validated.
 
 ## Validation
 

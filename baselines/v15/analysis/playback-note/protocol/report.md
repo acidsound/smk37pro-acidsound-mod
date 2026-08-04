@@ -1,12 +1,14 @@
 # S1-C3 r3 Playback Note protocol audit
 
-Status: **PROTOCOL DESIGN PASS; FIRMWARE CANDIDATE BLOCKED**.
+Status: **SUPERSEDED PROTOCOL PROPOSAL; FIRMWARE CANDIDATE BLOCKED**.
+
+> Correction: the `note_to_slot` design below maps effective Playback Notes back to patch sources and therefore does not match the accepted product requirement. The active design keeps `slot = trigger_note - 36` immutable and stores one independent Playback Note beside each resident slot. This report is retained as a rejected alternative and must not be used to build firmware.
 
 Scope: offline only. This audit did not access a device, open MIDI/USB, flash, OTA, reset, build a live firmware package, or send traffic. It writes only this evidence directory.
 
 ## Decision
 
-A compact per-pad Playback Note map can be defined safely as a **future** one-shot control frame after the existing 16 S1-C3 r3 patch packets. RAM boundary expansion is **not required** because the proven S1-C3 boundary already reserves `0x01c46f20..0x01c46fb0` for header/map data.
+This historical audit proved that RAM boundary expansion is unnecessary, but its reverse `note_to_slot` map has been rejected. The replacement design transports Playback Note with each resident patch, keeps source selection keyed by Trigger Note, and uses existing owned slot/header metadata.
 
 No firmware package is safe to build now. The installed r3 producer has only **4 reported spare bytes** in `0x0201e1a2..0x0201e254`, and the installed selector is a 96-byte hard-coded `note 36..51 -> slot note-36` selector. A map-aware producer/parser plus a map-aware selector need new byte-exact PI32 bodies and independent decode before packaging.
 
