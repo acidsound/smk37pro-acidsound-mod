@@ -1,0 +1,213 @@
+{
+  "abi": {
+    "compared_to_independently_reviewed_candidate": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return",
+    "marked_vs_unmarked_changed_ranges": [
+      {
+        "end_exclusive": 357030,
+        "start": 357026
+      }
+    ],
+    "note_off": {
+      "decode": "lb.z r5,[r0]; mov r0,r0; mov r0,r0",
+      "hook": "80fffa1a0000",
+      "reload_address": "0x201c644",
+      "reload_bytes": "0d4000160016"
+    },
+    "note_on": {
+      "decode": "lb.z r6,[r0]; mov r0,r0; mov r0,r0",
+      "hook": "80ffc01a0000",
+      "reload_address": "0x201c682",
+      "reload_bytes": "0e4000160016",
+      "velocity_store_address": "0x201c68c",
+      "velocity_store_bytes": "8d42"
+    },
+    "selector_producer": {
+      "byte_for_byte_same_as_unmarked_s1c5": true,
+      "end_exclusive": "0x201e254",
+      "sha256": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+      "start": "0x201e13e"
+    },
+    "unmarked_app_sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189"
+  },
+  "app_marker_and_identity": {
+    "app_sha256": "c8dd9e9e19369a65fd46fb48aabc69a2af7977a456f4152e77cd90a742f7cfe5",
+    "fwsc_identity_gate": "exact_ota check requires firmware.name == SMK-37 Pro and firmware.version == 15 before hash acceptance",
+    "fwsc_sha256": "cfafa3273ca0ba741616e5f3aa87f262a45ecd84445bdefd969900dad256b480",
+    "marker": {
+      "app_offset": "0x572a2",
+      "new_marked": "5331433500",
+      "new_text": "S1C5\\0",
+      "old_text": "1.10\\0",
+      "old_unmarked_s1c5": "312e313000",
+      "runtime": "0x20572a2",
+      "status": "PASS"
+    },
+    "usb_identity_strings": [
+      {
+        "app_offset": "0x5797f",
+        "runtime": "0x205797f",
+        "value": "SMK-37 Pro_015"
+      },
+      {
+        "app_offset": "0x57dc8",
+        "runtime": "0x2057dc8",
+        "value": "SMK-37 Pro_015"
+      }
+    ]
+  },
+  "candidate_inventory": {
+    "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return-S1C5-marked",
+    "top_level_fwsc_files": [
+      "SMK37Pro-v15-S1C5-playback-register-return-S1C5-marked.fwsc"
+    ]
+  },
+  "candidate_validators": {
+    "dry_run_validate_json": {
+      "cmd": "/Applications/Xcode.app/Contents/Developer/usr/bin/python3 dry_run_validate.py --json",
+      "cwd": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return-S1C5-marked",
+      "expect": 0,
+      "pass": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"device_accessed\": false, \"duplicate_playback_note\": \"all C4 (60)\", \"midi_transport_opened\": false, \"package_sha256\": \"cfafa3273ca0ba741616e5f3aa87f262a45ecd84445bdefd969900dad256b480\", \"packet_count\": 16, \"send_enabled\": false, \"status\": \"DRY_RUN_PASS\", \"wire_playback_note_offset\": 161}\n"
+    },
+    "validate_py": {
+      "cmd": "/Applications/Xcode.app/Contents/Developer/usr/bin/python3 validate.py",
+      "cwd": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return-S1C5-marked",
+      "expect": 0,
+      "pass": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "S1-C5 Marked Playback Note validation PASS: app_sha256=c8dd9e9e19369a65fd46fb48aabc69a2af7977a456f4152e77cd90a742f7cfe5; package_sha256=cfafa3273ca0ba741616e5f3aa87f262a45ecd84445bdefd969900dad256b480; ota_confirmation_token=INSTALL-SMK37PRO-V15-S1C5-MARKED-PLAYBACK-CFAFA327; sender_confirmation_token=SEND-SMK37PRO-V15-S1C5-ALL-C4-7C7A8AC8-523CCBC8-14D65142-EFAB2E0D; offline only\n"
+    }
+  },
+  "decision": "PASS",
+  "deterministic_rebuild": {
+    "iterations": [
+      {
+        "app_sha256": "c8dd9e9e19369a65fd46fb48aabc69a2af7977a456f4152e77cd90a742f7cfe5",
+        "evidence_sha256": "42a2b1ee51d5a2bdfa07dcb300a9fcd146ae7b4417be71e05c849625d85c10dd",
+        "fwsc_sha256": "cfafa3273ca0ba741616e5f3aa87f262a45ecd84445bdefd969900dad256b480",
+        "iteration": 1
+      },
+      {
+        "app_sha256": "c8dd9e9e19369a65fd46fb48aabc69a2af7977a456f4152e77cd90a742f7cfe5",
+        "evidence_sha256": "42a2b1ee51d5a2bdfa07dcb300a9fcd146ae7b4417be71e05c849625d85c10dd",
+        "fwsc_sha256": "cfafa3273ca0ba741616e5f3aa87f262a45ecd84445bdefd969900dad256b480",
+        "iteration": 2
+      }
+    ],
+    "match": true,
+    "scratch_copy": "/Users/spectrum/.jcode/scratch/s1c5-marked-review-det-1785867843/SMK37ProMod"
+  },
+  "exact_ota": {
+    "cases": [
+      {
+        "cmd": "/Users/spectrum/.jcode/scratch/s1c5-marked-review-ota/exact_ota check /Users/spectrum/Documents/SMK37ProMod/baselines/v15/analysis/flash-candidates/S1C5-playback-register-return-S1C5-marked/SMK37Pro-v15-S1C5-playback-register-return-S1C5-marked.fwsc",
+        "cwd": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return-S1C5-marked",
+        "expect": 0,
+        "input_sha256": "cfafa3273ca0ba741616e5f3aa87f262a45ecd84445bdefd969900dad256b480",
+        "name": "accept_marked",
+        "pass": true,
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "exact v15 S1-C5 Marked Playback Note package: PASS (701120-byte OTA payload)\n"
+      },
+      {
+        "cmd": "/Users/spectrum/.jcode/scratch/s1c5-marked-review-ota/exact_ota check /Users/spectrum/Documents/SMK37ProMod/baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/SMK37Pro-v15-S1C4-playback-note-v3-segmented-final.fwsc",
+        "cwd": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return-S1C5-marked",
+        "expect": 1,
+        "input_sha256": "376d931e9f5fbdfb5737347b6984fad493f35f023134f8309d4792286c1c7aec",
+        "name": "reject_s1c4_parent",
+        "pass": true,
+        "returncode": 1,
+        "stderr": "offline check rejected: not exact S1-C5 Marked Playback Note package\n",
+        "stdout": ""
+      },
+      {
+        "cmd": "/Users/spectrum/.jcode/scratch/s1c5-marked-review-ota/exact_ota check /Users/spectrum/Documents/SMK37ProMod/baselines/v15/analysis/flash-candidates/S1C2-two-slot-selector-live-v2/inputs/SMK-37_Pro_015.fwsc",
+        "cwd": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return-S1C5-marked",
+        "expect": 1,
+        "input_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+        "name": "reject_official_v15",
+        "pass": true,
+        "returncode": 1,
+        "stderr": "offline check rejected: not exact S1-C5 Marked Playback Note package\n",
+        "stdout": ""
+      },
+      {
+        "cmd": "/Users/spectrum/.jcode/scratch/s1c5-marked-review-ota/exact_ota check /Users/spectrum/Documents/SMK37ProMod/baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/SMK37Pro-v15-S1C5-playback-register-return.fwsc",
+        "cwd": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return-S1C5-marked",
+        "expect": 1,
+        "input_sha256": "0a6ac1ae7d4bd34e252eb8f23a4d2c5f39d7454376ade1a3b75ff7d03155ea91",
+        "name": "reject_unmarked_s1c5",
+        "pass": true,
+        "returncode": 1,
+        "stderr": "offline check rejected: not exact S1-C5 Marked Playback Note package\n",
+        "stdout": ""
+      }
+    ],
+    "compile": {
+      "cmd": "cc -O2 -g -std=c11 -Wall -Wextra -Wpedantic exact_ota.c ../../../../../src/device_info.c ../../../../../src/fwsc.c ../../../../../src/protocol.c ../../../../../src/sha256.c ../../../../../src/usb_probe.c -o /Users/spectrum/.jcode/scratch/s1c5-marked-review-ota/exact_ota -I/opt/homebrew/Cellar/libusb/1.0.30/include/libusb-1.0 -L/opt/homebrew/Cellar/libusb/1.0.30/lib -lusb-1.0",
+      "cwd": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return-S1C5-marked",
+      "expect": 0,
+      "pass": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    "upload_not_invoked": true
+  },
+  "head": {
+    "commit": "ebedcfe6a73ba10f46de7472096ead47e7bc8d87",
+    "expected_prefix": "ebedcfe",
+    "short": "ebedcfe6a73b",
+    "status": "PASS"
+  },
+  "package_and_rollback": {
+    "package_manifest_output": {
+      "app_sha256": "c8dd9e9e19369a65fd46fb48aabc69a2af7977a456f4152e77cd90a742f7cfe5",
+      "payload_sha256": "3b8d8497647537a0f194dfd3fe271b129d89b417dd9ff7a5b8ba9eb6d0868469",
+      "sha256": "cfafa3273ca0ba741616e5f3aa87f262a45ecd84445bdefd969900dad256b480",
+      "size": 701140
+    },
+    "package_safety_gate": "PASS",
+    "rollback_manifest": {
+      "candidate_flash_sha256": "c20a5ab13fcb93b9a884cd561a2e00b5c21f9189775eff79adf944319a0a0541",
+      "changed_sectors": [
+        "0x04000",
+        "0x20000",
+        "0x22000",
+        "0x2a000",
+        "0x5a000",
+        "0x62000"
+      ],
+      "files_all_pass": true,
+      "official_flash_sha256": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+      "rollback_restores_official_flash": true
+    },
+    "sha_inventory_all_pass": true
+  },
+  "scope": {
+    "device_accessed": false,
+    "flash_performed": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "ota_performed": false,
+    "reset_performed": false,
+    "usb_opened": false
+  },
+  "stale_token_scan": {
+    "all_stale_terms_absent": true,
+    "exact_ota_c_sha256": "6b24ada9051feeac9d35863a21c1ec9707d4f104e6cca438e79906aa3d8077ec",
+    "ota_token": "INSTALL-SMK37PRO-V15-S1C5-MARKED-PLAYBACK-CFAFA327",
+    "sender_token": "SEND-SMK37PRO-V15-S1C5-ALL-C4-7C7A8AC8-523CCBC8-14D65142-EFAB2E0D",
+    "stale_terms": {
+      "0A6AC1AE": [],
+      "INSTALL-SMK37PRO-V15-S1C5-PLAYBACK-REGISTER-RETURN": [],
+      "SMK37Pro-v15-S1C5-playback-register-return.fwsc": [],
+      "exact v15 S1-C5 Playback Register Return package": [],
+      "not exact S1-C5 Playback Register Return package": []
+    }
+  }
+}
