@@ -45,12 +45,13 @@ http://127.0.0.1:3737
 1. `검증 세트 불러오기` 또는 Pad별 `.syx` 선택
 2. `Web MIDI 연결`을 누르고 SysEx 권한 허용
 3. SMK-37 Pro MIDI Output 선택
-4. `16개 Patch 전송`
-5. Pad 1–16 청취 확인
+4. 설치된 펌웨어에 맞춰 `S1-C3 r3 · Patch only` 또는 `S1-C4 · Playback Note` 선택
+5. `16개 Patch 전송`
+6. Pad 1–16 청취 확인
 
 현재 S1-C3는 16개를 하나의 RAM transaction으로 적재합니다. 한 Pad만 교체하더라도 전체 16개를 전송하며, 장치 재부팅 후 다시 전송해야 합니다.
 
-`Trigger Note`는 Physical Pad 식별과 MIDI OUT을 위해 변경하지 않습니다. `Playback Note`는 Patch Set JSON에 별도 저장되며 내부 Ch10 신스의 발음 음높이만 바꾸기 위한 값입니다. Playback Note SysEx를 소비하는 대응 펌웨어가 설치되기 전에는 앱이 설정을 저장하되 장치에는 patch data만 전송합니다.
+`Trigger Note`는 Physical Pad 식별과 MIDI OUT을 위해 변경하지 않습니다. `Playback Note`는 Patch Set JSON에 별도 저장되며 내부 Ch10 신스의 발음 음높이만 바꾸기 위한 값입니다. 기본 `S1-C3` mode는 proven `0x3f` transport를 유지합니다. `S1-C4` mode는 각 163-byte packet의 마지막 staged payload byte에 Playback Note `0..127`을 넣으므로 대응 펌웨어가 설치된 경우에만 선택해야 합니다.
 
 ## 테스트
 

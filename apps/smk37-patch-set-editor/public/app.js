@@ -22,6 +22,7 @@ const elements = {
   connect: document.querySelector("#connect-midi"),
   midiState: document.querySelector("#midi-state"),
   output: document.querySelector("#midi-output"),
+  firmwareMode: document.querySelector("#firmware-mode"),
   send: document.querySelector("#send-all"),
   progress: document.querySelector("#send-progress"),
   log: document.querySelector("#activity-log"),
@@ -186,10 +187,10 @@ async function sendAll() {
   const output = selectedOutput();
   if (!output) { log("MIDI Output을 선택하세요.", "ERROR"); return; }
   try {
-    const queue = transmissionOrder(slots, playbackNotes);
-    if (playbackNotes.some((note) => note !== null)) {
-      log("Playback Note 설정은 Set에 저장되었습니다. 대응 펌웨어 protocol이 설치되기 전에는 patch data만 전송됩니다.", "WARN");
-    }
+    const playbackEnabled = elements.firmwareMode.value === "s1c4";
+    const queue = transmissionOrder(slots, playbackNotes, { encodePlayback: playbackEnabled });
+    if (!playbackEnabled && playbackNotes.some((note) => note !== null)) log("S1-C3 mode: Playback Note 설정은 저장되지만 장치에는 patch data만 전송됩니다.", "WARN");
+    if (playbackEnabled) log("S1-C4 mode: 각 patch packet에 Playback Note를 함께 전송합니다.");
     sending = true;
     elements.progress.value = 0;
     updateHealth();
@@ -254,6 +255,7 @@ async function importSet(file) {
 buildPads();
 elements.connect.addEventListener("click", connectMidi);
 elements.output.addEventListener("change", updateHealth);
+elements.firmwareMode.addEventListener("change", () => log(`Firmware capability → ${elements.firmwareMode.selectedOptions[0].textContent}`));
 elements.send.addEventListener("click", sendAll);
 document.querySelector("#load-demo").addEventListener("click", loadDemo);
 document.querySelector("#load-files").addEventListener("click", () => elements.filePicker.click());

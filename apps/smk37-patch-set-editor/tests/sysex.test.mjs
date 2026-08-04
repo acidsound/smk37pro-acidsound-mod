@@ -80,6 +80,16 @@ test("Playback Note changes never alter Trigger Note mapping", async () => {
   assert.equal(midiNoteName(60), "C4");
 });
 
+test("S1-C3 keeps 0x3f while S1-C4 encodes Playback Note in each patch packet", async () => {
+  const slots = await loadSlots();
+  const playbackNotes = Array(16).fill(60);
+  const legacyQueue = transmissionOrder(slots, playbackNotes);
+  const playbackQueue = transmissionOrder(slots, playbackNotes, { encodePlayback: true });
+  assert.deepEqual(legacyQueue.map((item) => item.bytes[CHECKSUM_OFFSET]), Array(16).fill(SMK_RUNTIME_FLAG));
+  assert.deepEqual(playbackQueue.map((item) => item.bytes[CHECKSUM_OFFSET]), Array(16).fill(60));
+  assert.deepEqual(playbackQueue.map((item) => item.triggerNote), legacyQueue.map((item) => item.triggerNote));
+});
+
 test("v1 patch-set imports with Original Playback Notes", async () => {
   const slots = await loadSlots();
   const legacy = createPatchSetDocument(slots, "Legacy");

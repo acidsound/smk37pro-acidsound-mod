@@ -64,10 +64,13 @@ export function validateEditorSysEx(input) {
   };
 }
 
-export function toSmkRuntimePacket(editorBytes) {
+export function toSmkRuntimePacket(editorBytes, transportByte = SMK_RUNTIME_FLAG) {
   const { bytes } = validateEditorSysEx(editorBytes);
+  if (!Number.isInteger(transportByte) || transportByte < 0 || transportByte > 127) {
+    throw new SysExError(`SMK transport byte must be 0..127, received ${transportByte}`);
+  }
   const runtime = Uint8Array.from(bytes);
-  runtime[CHECKSUM_OFFSET] = SMK_RUNTIME_FLAG;
+  runtime[CHECKSUM_OFFSET] = transportByte;
   return runtime;
 }
 
@@ -121,22 +124,23 @@ export function parsePatchSetDocument(document) {
   return { title: String(document.title || "Imported Patch Set"), slots, playbackNotes };
 }
 
-export function transmissionOrder(slots, playbackNotes = Array(16).fill(null)) {
+export function transmissionOrder(slots, playbackNotes = Array(16).fill(null), options = {}) {
   if (slots.length !== 16 || slots.some((slot) => !slot)) throw new SysExError("all 16 Pads are required before transmission");
   const validatedPlaybackNotes = validatePlaybackNotes(playbackNotes);
   return Array.from({ length: 16 }, (_, slot) => {
     const note = slot + 36;
     const pad = NOTE_TO_PAD.get(note);
     const patch = slots[pad - 1];
+    const playbackNote = validatedPlaybackNotes[pad - 1] ?? note;
     return {
       order: slot + 1,
       slot,
       note,
       triggerNote: note,
-      playbackNote: validatedPlaybackNotes[pad - 1] ?? note,
+      playbackNote,
       pad,
       name: patch.name,
-      bytes: toSmkRuntimePacket(patch.bytes),
+      bytes: toSmkRuntimePacket(patch.bytes, options.encodePlayback ? playbackNote : SMK_RUNTIME_FLAG),
     };
   });
 }
