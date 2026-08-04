@@ -1,0 +1,457 @@
+{
+  "blockers": [
+    "No exact callable runtime CRC ABI or compact in-place CRC implementation is proved.",
+    "S1C7's 84-byte helper had no positive manifest gate and already filled the disabled SAVE helper window.",
+    "Preserving exact S1C5 selector and producer leaves no owned bytes in the 0x0201e13e..0x0201e254 window.",
+    "A verified writer with 0x02004b02 full-length checks, 0x02004870 readback, CRC, commit-last ordering, and failure reporting has no defensible placement.",
+    "Post-storage boot hooks remain unproved or revoked; first-note lazy load is only an architecture until code placement passes."
+  ],
+  "data_package": {
+    "combined_records_file": "candidate-records-096-112.bin",
+    "combined_records_sha256": "6b34954243eec925ba3fc0de228c72a294285f194696ff5589427b6513bd44c9",
+    "committed_flag": "0xa5",
+    "format": "smk37-v15-s1c8-manifest-gated-persistence-data-v1",
+    "header_crc32": "0x7bb63606",
+    "manifest_file": "manifest-record-112.bin",
+    "manifest_magic": "SMK37S8P",
+    "manifest_record": 112,
+    "manifest_sha256": "02317088f480229e506fb36c69b4f7ec20b303c3887c025d975b51fd07969465",
+    "manifest_version": 1,
+    "notes_crc32": "0xc772e2f8",
+    "payload_crc32": "0x520c42bf",
+    "payload_record_count": 16,
+    "positive_gate_contract": "firmware must reject unless magic/version/layout/count/record base/manifest record/lengths/committed flag/header CRC/payload CRC/per-record CRCs all validate before touching S1C5 RAM",
+    "record_range": [
+      96,
+      112
+    ],
+    "records": [
+      {
+        "crc32": "0x8d55c07f",
+        "file": "payload-record-096-slot-00.bin",
+        "physical_offset": "0x0fbd20",
+        "playback_note": 60,
+        "record_index": 96,
+        "sha256": "ad9d0da82274a40a1201b7374a12585645f0f425391a46fc96722f846a1b9c87",
+        "slot": 0,
+        "source_packet": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/inputs/packets/slot00-trigger36-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "7c7a8ac8d57bd78b8d531fa8997e7d9c18ce4e0d8a267cc22549ba71d5e3e9c4",
+        "storage_offset": "0x7d20",
+        "tail_hex": "64000000000000",
+        "tail_policy": "forced seeded from exact clean v15 dump twins, not preserved from an unknown target",
+        "trigger_note": 36
+      },
+      {
+        "crc32": "0x7d9b5066",
+        "file": "payload-record-097-slot-01.bin",
+        "physical_offset": "0x0fbdc3",
+        "playback_note": 60,
+        "record_index": 97,
+        "sha256": "c2ea40ae53f5f1a3c76a291bfbb112ab24d63d849e484bd9ce7cd6afdc604b94",
+        "slot": 1,
+        "source_packet": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/inputs/packets/slot01-trigger37-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "523ccbc81eef766fc73bda72a78d3a28ba3f1fcabc1146db78252673f8d5ed7a",
+        "storage_offset": "0x7dc3",
+        "tail_hex": "64000000000000",
+        "tail_policy": "forced seeded from exact clean v15 dump twins, not preserved from an unknown target",
+        "trigger_note": 37
+      },
+      {
+        "crc32": "0xfdb3f5ce",
+        "file": "payload-record-098-slot-02.bin",
+        "physical_offset": "0x0fbe66",
+        "playback_note": 60,
+        "record_index": 98,
+        "sha256": "720393f90cf60b81b0c71eb119f516fbe0a85239a608c9cc4323793d02f94aa0",
+        "slot": 2,
+        "source_packet": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/inputs/packets/slot02-trigger38-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "14d65142c52fbd4775ab071639886c203cc03d860deb62e6de25c048cb9a712b",
+        "storage_offset": "0x7e66",
+        "tail_hex": "64000000000000",
+        "tail_policy": "forced seeded from exact clean v15 dump twins, not preserved from an unknown target",
+        "trigger_note": 38
+      },
+      {
+        "crc32": "0xb2811430",
+        "file": "payload-record-099-slot-03.bin",
+        "physical_offset": "0x0fbf09",
+        "playback_note": 60,
+        "record_index": 99,
+        "sha256": "a5b33847b509dca748efda1bbd2460923ff361710914b76fc2d408d6f02e3b81",
+        "slot": 3,
+        "source_packet": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/inputs/packets/slot03-trigger39-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "efab2e0db1e444d4ab8e96cd7125825fdbd0445e3e05b8436ae7bbd2ae830364",
+        "storage_offset": "0x7f09",
+        "tail_hex": "64000000000000",
+        "tail_policy": "forced seeded from exact clean v15 dump twins, not preserved from an unknown target",
+        "trigger_note": 39
+      },
+      {
+        "crc32": "0x488c0099",
+        "file": "payload-record-100-slot-04.bin",
+        "physical_offset": "0x0fbfac",
+        "playback_note": 60,
+        "record_index": 100,
+        "sha256": "76ff87d82fe4b5270c551317da4c84551bd63b5fab8d7042ab46985b46b5c32a",
+        "slot": 4,
+        "source_packet": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/inputs/packets/slot04-trigger40-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "981e0772ac58174cb94a1794bbdac10da9c2679a0f69112b14a114d75d70481b",
+        "storage_offset": "0x7fac",
+        "tail_hex": "64000000000000",
+        "tail_policy": "forced seeded from exact clean v15 dump twins, not preserved from an unknown target",
+        "trigger_note": 40
+      },
+      {
+        "crc32": "0xe6d055aa",
+        "file": "payload-record-101-slot-05.bin",
+        "physical_offset": "0x0fc04f",
+        "playback_note": 60,
+        "record_index": 101,
+        "sha256": "4baec81ac7a1591b962ec51efadcae0b130b763c39ca3cb9434e0e001efe30fd",
+        "slot": 5,
+        "source_packet": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/inputs/packets/slot05-trigger41-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "d73e236482ecd7d9b791ea6119b13d63b09eae5565f682b8f2dc0b4678277579",
+        "storage_offset": "0x804f",
+        "tail_hex": "64000000000000",
+        "tail_policy": "forced seeded from exact clean v15 dump twins, not preserved from an unknown target",
+        "trigger_note": 41
+      },
+      {
+        "crc32": "0xde7e8e27",
+        "file": "payload-record-102-slot-06.bin",
+        "physical_offset": "0x0fc0f2",
+        "playback_note": 60,
+        "record_index": 102,
+        "sha256": "dcd2496d6c8d4186fad622b11053f66b13d8f66e641a3c6e46f4a3959cda7bf2",
+        "slot": 6,
+        "source_packet": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/inputs/packets/slot06-trigger42-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "85625d999b3c23b578362fde17e9022db16ef9ecde5926e198f3206977cdba17",
+        "storage_offset": "0x80f2",
+        "tail_hex": "64000000000000",
+        "tail_policy": "forced seeded from exact clean v15 dump twins, not preserved from an unknown target",
+        "trigger_note": 42
+      },
+      {
+        "crc32": "0x664f9561",
+        "file": "payload-record-103-slot-07.bin",
+        "physical_offset": "0x0fc195",
+        "playback_note": 60,
+        "record_index": 103,
+        "sha256": "a944695f845007c9f5c5ac04aa411e85d425a7b8750feee8e57586b7b3cc9981",
+        "slot": 7,
+        "source_packet": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/inputs/packets/slot07-trigger43-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "3e06351976cdd90b3e888b32ccca8716de991c95ff44eb73e9c26a3b912150dd",
+        "storage_offset": "0x8195",
+        "tail_hex": "64000000000000",
+        "tail_policy": "forced seeded from exact clean v15 dump twins, not preserved from an unknown target",
+        "trigger_note": 43
+      },
+      {
+        "crc32": "0x39e7d131",
+        "file": "payload-record-104-slot-08.bin",
+        "physical_offset": "0x0fc238",
+        "playback_note": 60,
+        "record_index": 104,
+        "sha256": "7fb128b9f5f67043536fbd00d5b51975dbc603347fd9ac6bf2d9bf8018674e23",
+        "slot": 8,
+        "source_packet": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/inputs/packets/slot08-trigger44-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "ef96628a3f2cb2a2b6028687e1dc9fa89f147edf7b4c4eb229b7d27250704805",
+        "storage_offset": "0x8238",
+        "tail_hex": "64000000000000",
+        "tail_policy": "forced seeded from exact clean v15 dump twins, not preserved from an unknown target",
+        "trigger_note": 44
+      },
+      {
+        "crc32": "0xe1efec6e",
+        "file": "payload-record-105-slot-09.bin",
+        "physical_offset": "0x0fc2db",
+        "playback_note": 60,
+        "record_index": 105,
+        "sha256": "8af7fa62a707fb0981dce0df09c5afe7792b923457ec2f5e94f8bb948af26a8d",
+        "slot": 9,
+        "source_packet": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/inputs/packets/slot09-trigger45-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "c6483dabc9e1a863f2682b5c11ea8a91e3ef38212926930d8de24afa3db6f9de",
+        "storage_offset": "0x82db",
+        "tail_hex": "64000000000000",
+        "tail_policy": "forced seeded from exact clean v15 dump twins, not preserved from an unknown target",
+        "trigger_note": 45
+      },
+      {
+        "crc32": "0x0720f12c",
+        "file": "payload-record-106-slot-10.bin",
+        "physical_offset": "0x0fc37e",
+        "playback_note": 60,
+        "record_index": 106,
+        "sha256": "aed46a50c98398c64f1dc2f478b6aacad9b8d24cbbea0685093749e1dbf1dafb",
+        "slot": 10,
+        "source_packet": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/inputs/packets/slot10-trigger46-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "11c7dfae80eb8ddaf88ec971ff1b3ce8b4d76894f4550ec3a0b5113c7e58bdde",
+        "storage_offset": "0x837e",
+        "tail_hex": "64000000000000",
+        "tail_policy": "forced seeded from exact clean v15 dump twins, not preserved from an unknown target",
+        "trigger_note": 46
+      },
+      {
+        "crc32": "0x8914c3b1",
+        "file": "payload-record-107-slot-11.bin",
+        "physical_offset": "0x0fc421",
+        "playback_note": 60,
+        "record_index": 107,
+        "sha256": "58af6c562ebf389fafca97ca986fdba076b7339fd9d7b70b87ae1fc00055cb90",
+        "slot": 11,
+        "source_packet": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/inputs/packets/slot11-trigger47-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "a97d43e1351177f4b7e4770b2170d07ae7d7dbd33bd6bb6439a441cb66f74a68",
+        "storage_offset": "0x8421",
+        "tail_hex": "64000000000000",
+        "tail_policy": "forced seeded from exact clean v15 dump twins, not preserved from an unknown target",
+        "trigger_note": 47
+      },
+      {
+        "crc32": "0x21de9297",
+        "file": "payload-record-108-slot-12.bin",
+        "physical_offset": "0x0fc4c4",
+        "playback_note": 60,
+        "record_index": 108,
+        "sha256": "301f9ce17ea929091ad6a7cceabc37b9c8fa4814aa3be3970d2892df754cdb87",
+        "slot": 12,
+        "source_packet": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/inputs/packets/slot12-trigger48-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "3680c3abf14c6a13096fe56953789bc2572fe2fd0d82248f8e4e893482a3be19",
+        "storage_offset": "0x84c4",
+        "tail_hex": "64000000000000",
+        "tail_policy": "forced seeded from exact clean v15 dump twins, not preserved from an unknown target",
+        "trigger_note": 48
+      },
+      {
+        "crc32": "0x426161b4",
+        "file": "payload-record-109-slot-13.bin",
+        "physical_offset": "0x0fc567",
+        "playback_note": 60,
+        "record_index": 109,
+        "sha256": "5f90ed8180a8518d6288a27c9698b9a600f143e1726b5941a1d9972fd281279a",
+        "slot": 13,
+        "source_packet": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/inputs/packets/slot13-trigger49-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "6611e75bfb8b11206f6303a63fdf6d50ee9beb8a72be2e69f9233a8f87e93f3a",
+        "storage_offset": "0x8567",
+        "tail_hex": "64000000000000",
+        "tail_policy": "forced seeded from exact clean v15 dump twins, not preserved from an unknown target",
+        "trigger_note": 49
+      },
+      {
+        "crc32": "0xb8837b1c",
+        "file": "payload-record-110-slot-14.bin",
+        "physical_offset": "0x0fc60a",
+        "playback_note": 60,
+        "record_index": 110,
+        "sha256": "6994aad64edb02e64df7f884ebf294216be505319e7ed6988f4e09df366c9229",
+        "slot": 14,
+        "source_packet": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/inputs/packets/slot14-trigger50-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "8b3bbbccf103bd41ea93430b694be1b8ab17d9a29ed0bee3d6fc0570e7d95721",
+        "storage_offset": "0x860a",
+        "tail_hex": "64000000000000",
+        "tail_policy": "forced seeded from exact clean v15 dump twins, not preserved from an unknown target",
+        "trigger_note": 50
+      },
+      {
+        "crc32": "0xb844d731",
+        "file": "payload-record-111-slot-15.bin",
+        "physical_offset": "0x0fc6ad",
+        "playback_note": 60,
+        "record_index": 111,
+        "sha256": "357d07a130af9c2910508e518507e02b3335310d4a7476102ad616c1ec48dff9",
+        "slot": 15,
+        "source_packet": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/inputs/packets/slot15-trigger51-playback60-all-c4-direct-product-163.bin",
+        "source_packet_sha256": "b06e83fdf0972a652ca4561eb08c6312b51be24c54c2619a1d6c2d67cc2bf30c",
+        "storage_offset": "0x86ad",
+        "tail_hex": "64000000000000",
+        "tail_policy": "forced seeded from exact clean v15 dump twins, not preserved from an unknown target",
+        "trigger_note": 51
+      }
+    ],
+    "rollback_requirement": "target-specific full pre-dump and full post-rollback byte equality are mandatory before any external seed writer may be considered",
+    "scope": {
+      "device_accessed": false,
+      "firmware_candidate": false,
+      "midi_transport_opened": false,
+      "offline_only": true,
+      "persistent_storage_write_performed": false
+    }
+  },
+  "decision": "BLOCK",
+  "firmware_artifacts_emitted": false,
+  "fit_and_abi_gates": {
+    "boot_or_lazy_load_hooks": {
+      "decision": "DESIGN_ONLY_BLOCKED_BY_PLACEMENT",
+      "first_note_lazy_load": "safest lifecycle if placement is later proved, because it keeps USB/WebMIDI initialized and can let dynamic SysEx ARMED RAM override persistent restore",
+      "post_storage_boot_hooks": "0x02005f9c revoked; 0x02005fa4 lacks live proof and wrapper placement"
+    },
+    "disabled_save_helper_window": {
+      "bytes": 84,
+      "end_exclusive": "0x02026dd4",
+      "free_after_s1c7_style_no_manifest_helper": 0,
+      "s1c7_no_manifest_helper_bytes": 84,
+      "start": "0x02026d80"
+    },
+    "owned_s1c5_window": {
+      "bytes": 278,
+      "end_exclusive": "0x0201e254",
+      "exact_s1c5_producer_bytes": 188,
+      "exact_s1c5_selector_bytes": 88,
+      "free_bytes_when_preserving_exact_s1c5_selector_and_producer": 0,
+      "inert_tail_bytes": 2,
+      "producer_plus_tail_hash_window_bytes": 190,
+      "start": "0x0201e13e"
+    },
+    "positive_gate_floor": {
+      "crc_implementation": "no exact callable runtime CRC routine or compact PI32 implementation is proven",
+      "decision": "BLOCK_FIT_AND_ABI",
+      "magic_only_compare_floor_bytes": 48,
+      "manifest_read_setup_floor_bytes": 20,
+      "reason": "The S1C7 no-manifest fallback already consumed the whole disabled SAVE helper window. Adding even manifest read plus magic checks exceeds it before CRC, payload reads, rollback fallback, or return ABI repair.",
+      "version_layout_count_commit_crc_checks": "additional, not included in floor"
+    },
+    "writer_floor": {
+      "basis": "baselines/v15/analysis/flash-candidates/S1C6-raw17-persistence-block/report.md",
+      "decision": "BLOCK_BY_PRIOR_FIT_AND_PLACEMENT_GATES",
+      "required": [
+        "write with 0x02004b02 and accept only return == requested_length",
+        "read back with 0x02004870 and verify exact payload",
+        "compute/update manifest CRC and write manifest last",
+        "report failure rather than silently clearing dirty/SAVED state"
+      ]
+    }
+  },
+  "format": "smk37-v15-s1c8-manifest-gated-persistence-block-v1",
+  "input_gates": {
+    "clean_dump_a": {
+      "path": "baselines/v15/device-dumps/v15-clean-baseline-a.bin",
+      "sha256": "1c202201a81ed6d956ec5398adff75ffcd805594a27370a56caafaf18223383b",
+      "status": "PASS"
+    },
+    "clean_dump_b": {
+      "path": "baselines/v15/device-dumps/v15-clean-baseline-b.bin",
+      "sha256": "1c202201a81ed6d956ec5398adff75ffcd805594a27370a56caafaf18223383b",
+      "status": "PASS"
+    },
+    "s1c5_app": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/app.bin",
+      "sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+      "status": "PASS"
+    },
+    "s1c5_fwsc": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/SMK37Pro-v15-S1C5-playback-register-return.fwsc",
+      "sha256": "0a6ac1ae7d4bd34e252eb8f23a4d2c5f39d7454376ade1a3b75ff7d03155ea91",
+      "status": "PASS"
+    },
+    "s1c5_live_validation": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/live-validation-20260804.md",
+      "sha256": "94fc5083ff1ce1061c474eba18a30ad3f10a277f85c84f6cee5a117c2593f152",
+      "status": "PASS"
+    },
+    "s1c5_selector_producer_identity": {
+      "combined_sha256": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+      "producer_end_exclusive": "0x0201e254",
+      "producer_sha256": "53bc57acd7e787320400d0d945ec6b3f2e59f2074ae81c9053eb2c11f72560d4",
+      "producer_start": "0x0201e196",
+      "selector_end_exclusive": "0x0201e196",
+      "selector_start": "0x0201e13e",
+      "status": "PASS"
+    },
+    "s1c6_block_report": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C6-raw17-persistence-block/report.md",
+      "sha256": "3dc0f88c91fb2a07b3ce9fa7c38ddd5d321974786e26a079b3158f754d209fcf",
+      "status": "PASS"
+    },
+    "s1c7_app": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C7-current-set-helper-checkpoint/app.bin",
+      "sha256": "71cfc1fcbeecd1a9277f88272be6b122a96f33fbd741d7486c670ffab6e58646",
+      "status": "PASS"
+    },
+    "s1c7_fwsc": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C7-current-set-helper-checkpoint/SMK37Pro-v15-S1C7-current-set-helper-checkpoint.fwsc",
+      "sha256": "3dfb7e23debbd3a3055945b121991cf7a58b5f1cb59ff98f6dfba7dd084f2593",
+      "status": "PASS"
+    },
+    "s1c7_review": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C7-current-set-helper-checkpoint/reviews/jcode-independent-review-20260804T1251Z/report.md",
+      "sha256": "f6618ee0246c8356ac77db1504e2f1e994677e4e4dacba2e68df92cc01759a13",
+      "status": "PASS"
+    },
+    "s2_block_report": {
+      "path": "baselines/v15/analysis/flash-candidates/S2-persistent-default/report.md",
+      "sha256": "451150aadbde8ce9967ec53b165b145023b1d04870db1d92925a86f2948e4dba",
+      "status": "PASS"
+    }
+  },
+  "reason": "After S1C7 failed silent, a successor cannot trust raw records unless manifest/magic/CRC validation and fail-closed unseeded behavior are implemented. Exact S1C5 preservation leaves no defensible placement for that validator or a verified writer.",
+  "requirements": {
+    "dynamic_sysex_overrides_persistent_restore": {
+      "rule": "if S1C5 ARMED state and selected slot valid are present, selector must consume live RAM; persistent restore may run only when not ARMED and must stop once producer ingress arms RAM",
+      "status": "DESIGN_RULE_RECORDED_NO_FIRMWARE"
+    },
+    "forced_seeded_tail_records": {
+      "rule": "payload record tails 0x9c..0xa2 are forced to exact clean-v15 twin-dump bytes; target-specific rollback remains mandatory before any external writer",
+      "status": "DATA_PACKAGE_ONLY"
+    },
+    "lazy_boot_load": {
+      "rule": "first accepted Ch10 note after storage init is the least risky future hook, not pre-USB boot; exact placement is not available",
+      "status": "DESIGN_ONLY_BLOCKED"
+    },
+    "persistent_data_positively_gated_by_manifest_magic_crc": {
+      "data_format_status": "PASS",
+      "firmware_status": "BLOCK_FIT_ABI",
+      "manifest_magic": "SMK37S8P",
+      "payload_crc32": "0x520c42bf"
+    },
+    "playback_notes_may_duplicate": {
+      "notes": [
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "status": "PASS_IN_DATA_AND_S1C5_BASELINE"
+    },
+    "preserve_exact_s1c5_selector_producer_and_web_coremidi": {
+      "producer_sha256": "53bc57acd7e787320400d0d945ec6b3f2e59f2074ae81c9053eb2c11f72560d4",
+      "selector_producer_sha256": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+      "status": "PASS_BY_NO_FIRMWARE_EMITTED_AND_PINNED_BASELINE"
+    },
+    "separate_manifest_record": {
+      "record": 112,
+      "status": "PASS_IN_DATA_FORMAT"
+    },
+    "unseeded_device_behaves_exactly_s1c5": {
+      "rule_for_future_firmware": "on missing/invalid manifest, jump to exact S1C5 RAM/stock path without reading payload records or modifying Ch10 RAM",
+      "status": "PASS_ONLY_FOR_BLOCK_PACKAGE"
+    }
+  },
+  "s1c7_live_result_from_prompt": "failed silent; therefore S1C7 no-manifest fallback is treated as disqualified for successor promotion",
+  "scope": {
+    "device_accessed": false,
+    "flash_performed": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "ota_performed": false,
+    "reset_performed": false
+  },
+  "successor_contract_if_unblocked": [
+    "Start from exact S1C5 app and preserve the exact selector/producer behavior for ARMED RAM and all Web/CoreMIDI producer paths.",
+    "Reserve payload records 96..111 and manifest record 112 only behind a manifest that validates magic/version/layout/count/record base/lengths/committed flag/header CRC/payload CRC/per-record CRCs.",
+    "On unseeded or corrupt storage, do nothing and return through the exact S1C5 behavior. No silent partial restore is allowed.",
+    "Make dynamic SysEx authoritative: producer ingress updates volatile RAM and Playback Note map, and valid ARMED RAM overrides any persistent default until reboot or explicit future save.",
+    "For writes, write payloads first, verify each full-length write by readback, then write/verify manifest last; never report SAVED or clear dirty on unchecked writes.",
+    "Keep playback notes as data bytes and never collapse duplicate notes into source-slot identity."
+  ]
+}
