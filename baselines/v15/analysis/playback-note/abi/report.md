@@ -1,6 +1,6 @@
 # Playback Note ABI analysis for exact v15 S1-C3 r3-reload
 
-Status: **TRACE PASS, PATCH-READY BLOCKERS; corrected source invariant below**.  
+Status: **TRACE PASS, PATCH-READY BLOCKERS; corrected source invariant below**.
 Scope: offline-only static analysis. No device, flash, OTA, reset, USB, or MIDI transport was used. No v12 assumptions are used.
 
 ## Decision
