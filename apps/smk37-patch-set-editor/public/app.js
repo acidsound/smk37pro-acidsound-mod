@@ -341,6 +341,8 @@ async function sendAll() {
         pad: item.pad,
         triggerNote: item.triggerNote,
         playbackNote: item.playbackNote,
+        fileName: item.fileName,
+        patchName: item.name,
       });
       elements.progress.value = item.order;
       log(`Sent ${item.order}/16 · Pad ${String(item.pad).padStart(2, "0")} · trigger ${item.triggerNote} · playback ${item.playbackNote} · ${item.name}`);
