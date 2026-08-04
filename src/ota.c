@@ -13,8 +13,10 @@
 #include <time.h>
 
 enum {
-    SMK37_VID = 0x4c4a,
-    SMK37_PID = 0xc755,
+    SMK37_V12_VID = 0x4c4a,
+    SMK37_V12_PID = 0xc755,
+    SMK37_V15_VID = 0x4353,
+    SMK37_V15_PID = 0xcf4d,
     SMK37_OTA_VID = 0x4d4a,
     SMK37_OTA_PID = 0x4155,
     SMK37_MAX_OTA_CHUNK = 0x10000 - 15,
@@ -75,6 +77,24 @@ static const uint8_t SMK37_M08_PACKAGE_SHA256[SMK37_SHA256_LENGTH] = {
     0x1b, 0x85, 0x16, 0x7e, 0x5b, 0xa3, 0x69, 0xa5,
     0x05, 0x1d, 0x32, 0xd9, 0x3b, 0xa6, 0x6e, 0x51,
     0x22, 0x9d, 0x5d, 0x25, 0x5c, 0x8d, 0xc3, 0x1f,
+};
+static const uint8_t SMK37_M10_PACKAGE_SHA256[SMK37_SHA256_LENGTH] = {
+    0x6a, 0xd9, 0x9e, 0xd1, 0x52, 0x32, 0xa5, 0xd8,
+    0xe5, 0x5b, 0xe8, 0x36, 0xf3, 0xcb, 0x13, 0x56,
+    0x1b, 0x68, 0xb1, 0x52, 0xaa, 0xae, 0x26, 0x42,
+    0x96, 0x4e, 0x68, 0x55, 0xbd, 0x66, 0x28, 0xb5,
+};
+static const uint8_t SMK37_V015_PACKAGE_SHA256[SMK37_SHA256_LENGTH] = {
+    0xf7, 0xf1, 0x83, 0x1c, 0xd7, 0xc9, 0xad, 0x8b,
+    0x48, 0x31, 0xb6, 0xe7, 0x1e, 0xa0, 0xbd, 0xbc,
+    0xdf, 0xf9, 0xae, 0x4c, 0x40, 0x77, 0x27, 0x6b,
+    0x3c, 0x96, 0x55, 0x11, 0xbf, 0x4d, 0x4f, 0xff,
+};
+static const uint8_t SMK37_V15_R01_PACKAGE_SHA256[SMK37_SHA256_LENGTH] = {
+    0x29, 0x28, 0x09, 0x38, 0x3e, 0x89, 0xba, 0x70,
+    0x32, 0x61, 0x9a, 0xe3, 0x38, 0xdf, 0xb5, 0xbd,
+    0x19, 0x54, 0x09, 0x60, 0x0f, 0x41, 0x7d, 0xe5,
+    0xe8, 0xed, 0xb9, 0x81, 0x49, 0xf6, 0x64, 0x62,
 };
 
 struct ota_usb {
@@ -235,8 +255,10 @@ static int ota_usb_open_normal(struct ota_usb *usb) {
         struct libusb_device_descriptor descriptor;
         if (libusb_get_device_descriptor(devices[index], &descriptor) ==
                 LIBUSB_SUCCESS &&
-            descriptor.idVendor == SMK37_VID &&
-            descriptor.idProduct == SMK37_PID) {
+            ((descriptor.idVendor == SMK37_V12_VID &&
+              descriptor.idProduct == SMK37_V12_PID) ||
+             (descriptor.idVendor == SMK37_V15_VID &&
+              descriptor.idProduct == SMK37_V15_PID))) {
             status = claim_device(usb, devices[index], true);
             break;
         }
@@ -508,10 +530,11 @@ static int wait_for_ota_usb(struct ota_usb *usb, unsigned timeout_ms) {
 static int validate_exact_same_version(
     const struct smk37_fwsc *firmware,
     struct smk37_device_identity *device,
+    unsigned expected_version,
     const uint8_t expected_sha256[SMK37_SHA256_LENGTH],
     const char *package_description) {
     if (strcmp(firmware->name, "SMK-37 Pro") != 0 ||
-        firmware->version != 12 ||
+        firmware->version != expected_version ||
         memcmp(firmware->file_sha256, expected_sha256,
                SMK37_SHA256_LENGTH) != 0) {
         fprintf(stderr, "package is not the exact %s image\n",
@@ -623,6 +646,7 @@ cleanup:
 static int ota_upload_exact(
     const char *firmware_path, const char *transcript_path,
     const char *confirmation,
+    unsigned expected_version,
     const uint8_t expected_sha256[SMK37_SHA256_LENGTH],
     const char *package_description, const char *expected_confirmation,
     const char *completion_message) {
@@ -639,7 +663,8 @@ static int ota_upload_exact(
     if (!smk37_fwsc_load(firmware_path, &firmware)) {
         return 1;
     }
-    if (validate_exact_same_version(&firmware, &device, expected_sha256,
+    if (validate_exact_same_version(&firmware, &device, expected_version,
+                                    expected_sha256,
                                     package_description) != 0) {
         goto cleanup;
     }
@@ -720,6 +745,7 @@ int smk37_ota_upload(const char *firmware_path, const char *transcript_path,
                      const char *confirmation) {
     return ota_upload_exact(
         firmware_path, transcript_path, confirmation,
+        12,
         SMK37_V012_PACKAGE_SHA256, "archived SMK-37 Pro v12",
         "SMK-37-Pro-012",
         "same-version OTA restore: completed and identity verified");
@@ -730,6 +756,7 @@ int smk37_ota_upload_m001(const char *firmware_path,
                           const char *confirmation) {
     return ota_upload_exact(
         firmware_path, transcript_path, confirmation,
+        12,
         SMK37_M001_PACKAGE_SHA256, "SMK37ProMod M001 marker-only",
         "INSTALL-SMK37PRO-M001-AF9EF78C",
         "M001 OTA install: USB identity 012 verified; check display for M001");
@@ -740,6 +767,7 @@ int smk37_ota_upload_m02(const char *firmware_path,
                          const char *confirmation) {
     return ota_upload_exact(
         firmware_path, transcript_path, confirmation,
+        12,
         SMK37_M02_PACKAGE_SHA256, "SMK37ProMod M02 three-character marker",
         "INSTALL-SMK37PRO-M02-C2AA5EE8",
         "M02 OTA install: USB identity 012 verified; check display for M02");
@@ -750,6 +778,7 @@ int smk37_ota_upload_m03(const char *firmware_path,
                          const char *confirmation) {
     return ota_upload_exact(
         firmware_path, transcript_path, confirmation,
+        12,
         SMK37_M03_PACKAGE_SHA256, "SMK37ProMod M03 Hello/acidsound display",
         "INSTALL-SMK37PRO-M03-217BBDC3",
         "M03 OTA install: USB identity 012 verified; check display for M03");
@@ -760,6 +789,7 @@ int smk37_ota_upload_m04(const char *firmware_path,
                          const char *confirmation) {
     return ota_upload_exact(
         firmware_path, transcript_path, confirmation,
+        12,
         SMK37_M04_PACKAGE_SHA256, "SMK37ProMod M04 exact two-line display",
         "INSTALL-SMK37PRO-M04-FFFB9552",
         "M04 OTA install: USB identity 012 verified; check display for M04");
@@ -770,6 +800,7 @@ int smk37_ota_upload_m05(const char *firmware_path,
                          const char *confirmation) {
     return ota_upload_exact(
         firmware_path, transcript_path, confirmation,
+        12,
         SMK37_M05_PACKAGE_SHA256, "SMK37ProMod M05 minimal two-timbre",
         "INSTALL-SMK37PRO-M05-0BEAB977",
         "M05 OTA install: USB identity 012 verified; test MIDI channels 1/2");
@@ -780,6 +811,7 @@ int smk37_ota_upload_m06(const char *firmware_path,
                          const char *confirmation) {
     return ota_upload_exact(
         firmware_path, transcript_path, confirmation,
+        12,
         SMK37_M06_PACKAGE_SHA256, "SMK37ProMod M06 local-pad channel-10 FM",
         "INSTALL-SMK37PRO-M06-61B2F570",
         "M06 OTA install: USB identity 012 verified; test local keys/pads");
@@ -790,6 +822,7 @@ int smk37_ota_upload_m07(const char *firmware_path,
                          const char *confirmation) {
     return ota_upload_exact(
         firmware_path, transcript_path, confirmation,
+        12,
         SMK37_M07_PACKAGE_SHA256, "SMK37ProMod M07 per-note channel-10 FM",
         "INSTALL-SMK37PRO-M07-B80ED748",
         "M07 OTA install: USB identity 012 verified; test all 16 pads");
@@ -800,9 +833,43 @@ int smk37_ota_upload_m08(const char *firmware_path,
                          const char *confirmation) {
     return ota_upload_exact(
         firmware_path, transcript_path, confirmation,
+        12,
         SMK37_M08_PACKAGE_SHA256, "SMK37ProMod M08 isolated fixed Ch10 map",
         "INSTALL-SMK37PRO-M08-4498A935",
         "M08 OTA install: USB identity 012 verified; test Ch1/Ch10 isolation");
+}
+
+int smk37_ota_upload_m10(const char *firmware_path,
+                         const char *transcript_path,
+                         const char *confirmation) {
+    return ota_upload_exact(
+        firmware_path, transcript_path, confirmation,
+        12,
+        SMK37_M10_PACKAGE_SHA256, "SMK37ProMod M10 data-only M08 follow-up",
+        "INSTALL-SMK37PRO-M10-6AD99ED1",
+        "M10 OTA install: USB identity 012 verified; data-only boot probe");
+}
+
+int smk37_ota_upload_v15(const char *firmware_path,
+                         const char *transcript_path,
+                         const char *confirmation) {
+    return ota_upload_exact(
+        firmware_path, transcript_path, confirmation,
+        15, SMK37_V015_PACKAGE_SHA256,
+        "official SMK-37 Pro v15 baseline",
+        "RESTORE-SMK37PRO-OFFICIAL-V15-F7F1831C",
+        "official v15 restore: USB identity 015 verified");
+}
+
+int smk37_ota_upload_v15_r01(const char *firmware_path,
+                             const char *transcript_path,
+                             const char *confirmation) {
+    return ota_upload_exact(
+        firmware_path, transcript_path, confirmation,
+        15, SMK37_V15_R01_PACKAGE_SHA256,
+        "v15 R01 evidence-based Channel-10 HAND DRUM",
+        "INSTALL-SMK37PRO-V15-R01-29280938",
+        "v15 R01 install: USB identity 015 verified; test Ch1 and Ch10");
 }
 
 int smk37_ota_resume_v12(const char *firmware_path,
