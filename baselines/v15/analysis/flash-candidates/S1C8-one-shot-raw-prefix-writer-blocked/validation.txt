@@ -1,0 +1,1 @@
+PASS analyze_blocker.py: current exact evidence blocks a flashable checked one-shot writer; no firmware artifacts emitted.
