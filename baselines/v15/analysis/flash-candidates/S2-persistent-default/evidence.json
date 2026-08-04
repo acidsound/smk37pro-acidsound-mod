@@ -1,0 +1,461 @@
+{
+  "blocking_findings": [
+    "No proven immutable on-device table contains the exact 16 expanded Bank D runtime records.",
+    "The two official record sources are mutable or UI/product-owned and require a converter.",
+    "The exact official conversion path does not fit beside the exact S1C5 selector, and even the conversion core leaves only 12 bytes before required source, locking, publication, and playback-map logic.",
+    "The application/JLFS layout has zero safe append capacity for either the 2496-byte expanded table or the 2048-byte packed table.",
+    "Calling the global factory loader from first-note handling would introduce the specifically disallowed global/UI side effects."
+  ],
+  "candidate_built": false,
+  "decision": "BLOCK",
+  "emitted_artifacts": {
+    "app_bin": false,
+    "exact_ota": false,
+    "fwsc": false,
+    "reason": "User required BLOCK evidence only when infeasible; emitting release/flash artifacts would misrepresent this result.",
+    "rollback_bundle": false
+  },
+  "fit_evidence": {
+    "fit_attempts": [
+      {
+        "bytes": 266,
+        "decision": "BLOCK",
+        "missing_even_before_candidate": [
+          "caller-directed immutable source selection",
+          "destination/slot arithmetic",
+          "nonblocking writer serialization and recheck",
+          "valid-last publication",
+          "constant C4 playback metadata publication"
+        ],
+        "name": "keep exact S1C5 selector, reuse exact official conversion core only",
+        "remaining_bytes": 12,
+        "window_bytes": 278
+      },
+      {
+        "bytes": 316,
+        "decision": "BLOCK",
+        "name": "keep exact S1C5 selector, reuse exact official setup plus conversion",
+        "overrun_bytes": 38,
+        "window_bytes": 278
+      },
+      {
+        "data_bytes": 2496,
+        "decision": "BLOCK",
+        "jlfs_preserving_append_capacity_bytes": 0,
+        "name": "embed exact expanded 16-voice table"
+      },
+      {
+        "data_bytes": 2048,
+        "decision": "BLOCK",
+        "jlfs_preserving_append_capacity_bytes": 0,
+        "name": "embed packed 16-voice table and materialize lazily",
+        "requires_conversion": true
+      }
+    ],
+    "interpretation": "The exact-stock-code fit attempt fails. This is not a theorem that no hand-optimized converter could ever be smaller; candidate promotion is independently blocked by the absence of a proven immutable exact source table and by zero safe app/JLFS data capacity.",
+    "official_factory_expansion_spans": {
+      "pure_128_to_156_conversion_core": {
+        "bytes": 178,
+        "end_exclusive": "0x02005766",
+        "start": "0x020056b4"
+      },
+      "setup_plus_conversion": {
+        "bytes": 228,
+        "end_exclusive": "0x02005766",
+        "start": "0x02005682"
+      },
+      "source_destination_setup": {
+        "bytes": 50,
+        "end_exclusive": "0x020056b4",
+        "start": "0x02005682"
+      }
+    },
+    "owned_executable_window": {
+      "bytes": 278,
+      "bytes_if_host_producer_and_tail_are_reclaimed_but_selector_is_kept": 190,
+      "current_s1c5_producer_bytes": 188,
+      "current_s1c5_selector_bytes": 88,
+      "current_tail_bytes": 2,
+      "end_exclusive": "0x0201e254",
+      "free_bytes_without_replacing_current_functionality": 0,
+      "start": "0x0201e13e"
+    }
+  },
+  "format": "smk37-v15-s2-persistent-default.block-evidence-v1",
+  "goal": {
+    "basis": "exact current S1C5 app/package",
+    "default_set": "Bank D patches 1..16 in trigger-note order 36..51",
+    "playback_note_map": "all 16 Playback Note bytes are C4/60",
+    "requested_lifecycle": "power-cycle default without host SysEx, preferring lazy first-use materialization"
+  },
+  "input_gates": {
+    "app_tail_report": {
+      "path": "baselines/v15/analysis/r03-owned-ram/app-tail-placement/report.md",
+      "sha256": "036eca79c6258a9ffff9f493874058a1876cbbe92f2cd76c27d06efe2f2c105c",
+      "status": "PASS"
+    },
+    "clean_dump": {
+      "path": "baselines/v15/device-dumps/v15-clean-baseline-a.bin",
+      "sha256": "1c202201a81ed6d956ec5398adff75ffcd805594a27370a56caafaf18223383b",
+      "status": "PASS"
+    },
+    "factory_report": {
+      "path": "baselines/v15/analysis/channel-separation-reanalysis/factory-loader/report.md",
+      "sha256": "1cd72971bf4db3bdf1dcdf113d5c795e0bb54f27af735b4ecda1319ef6b90d0d",
+      "status": "PASS"
+    },
+    "official_app": {
+      "path": "extracted from exact official FWSC",
+      "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "status": "PASS"
+    },
+    "official_fwsc": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C2-two-slot-selector-live-v2/inputs/SMK-37_Pro_015.fwsc",
+      "sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+      "status": "PASS"
+    },
+    "packet_manifest": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/inputs/packets/packet-manifest.json",
+      "sha256": "00b33cdef8cde252cc2fa8618c57e14c3d13cf2f961ff20b8de5ee2af698a5ff",
+      "status": "PASS"
+    },
+    "persistence_report": {
+      "path": "baselines/v15/analysis/patch-set-ui/persistence/report.md",
+      "sha256": "88309843407600fdbc9f9ac89e9e276103baf9b508cd310848f019f997440a9b",
+      "status": "PASS"
+    },
+    "ram_ownership_report": {
+      "path": "baselines/v15/analysis/r03-owned-ram/ram-ownership/report.md",
+      "sha256": "02a9727886da2643bf58f8f9b6dc65fa3c9cc6e34ba8fbaa4f4c1358d9ea691e",
+      "status": "PASS"
+    },
+    "runtime_slots": {
+      "path": "baselines/v15/analysis/patch-set-ui/s1c3/packet-set-bank-d-1-16/runtime-slots.bin",
+      "sha256": "fdf7ebdf911041de64ebd80c3d807959b29034ef4e2fed35245b2dfe7b032270",
+      "status": "PASS"
+    },
+    "s1c4_builder": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/build_s1c4_playback_note_v3_segmented_final.py",
+      "sha256": "26fa5ca376cd89de9b403f933e011db56e48b298d45e3ef43be923397501e271",
+      "status": "PASS"
+    },
+    "s1c5_app": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/app.bin",
+      "sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+      "status": "PASS"
+    },
+    "s1c5_fwsc": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/SMK37Pro-v15-S1C5-playback-register-return.fwsc",
+      "sha256": "0a6ac1ae7d4bd34e252eb8f23a4d2c5f39d7454376ade1a3b75ff7d03155ea91",
+      "status": "PASS"
+    }
+  },
+  "packet_and_table_evidence": {
+    "all_packets_match_proven_runtime_table": true,
+    "exact_expanded_table_present_in_target_inputs": false,
+    "expanded_payload_bytes": 2496,
+    "packed_payload_floor_bytes": 2048,
+    "packet_count": 16,
+    "playback_notes": {
+      "kind": "constant",
+      "label": "C4",
+      "value": 60
+    },
+    "resident_stride_bytes_each": 160,
+    "resident_table_bytes": 2560,
+    "runtime_voice_bytes_each": 156,
+    "scan_targets": [
+      "official app",
+      "exact S1C5 app",
+      "clean baseline dump"
+    ],
+    "slots": [
+      {
+        "exact_stock_runtime_occurrences": {
+          "clean_dump": null,
+          "official_app": null,
+          "s1c5_app": null
+        },
+        "matches_proven_runtime_slots_table": true,
+        "name": "BUZZ BASS",
+        "packet_sha256": "7c7a8ac8d57bd78b8d531fa8997e7d9c18ce4e0d8a267cc22549ba71d5e3e9c4",
+        "playback_note": 60,
+        "slot": 0,
+        "stock_runtime_sha256": "e2beb705a28e83940b2708f8ba0976e8c093ca12f45d0045f290b1589760d76b",
+        "trigger_note": 36
+      },
+      {
+        "exact_stock_runtime_occurrences": {
+          "clean_dump": null,
+          "official_app": null,
+          "s1c5_app": null
+        },
+        "matches_proven_runtime_slots_table": true,
+        "name": "Bang ?????",
+        "packet_sha256": "523ccbc81eef766fc73bda72a78d3a28ba3f1fcabc1146db78252673f8d5ed7a",
+        "playback_note": 60,
+        "slot": 1,
+        "stock_runtime_sha256": "5dab954752769609d64dd162360182138c8bc399030b88cf8d61b76fb7208f97",
+        "trigger_note": 37
+      },
+      {
+        "exact_stock_runtime_occurrences": {
+          "clean_dump": null,
+          "official_app": null,
+          "s1c5_app": null
+        },
+        "matches_proven_runtime_slots_table": true,
+        "name": "BASSE BIEN",
+        "packet_sha256": "14d65142c52fbd4775ab071639886c203cc03d860deb62e6de25c048cb9a712b",
+        "playback_note": 60,
+        "slot": 2,
+        "stock_runtime_sha256": "3e140cc8613ec555fcae2109d216c5e838d3193b305352992dc4062556af8b60",
+        "trigger_note": 38
+      },
+      {
+        "exact_stock_runtime_occurrences": {
+          "clean_dump": null,
+          "official_app": null,
+          "s1c5_app": null
+        },
+        "matches_proven_runtime_slots_table": true,
+        "name": "BASS-THING",
+        "packet_sha256": "efab2e0db1e444d4ab8e96cd7125825fdbd0445e3e05b8436ae7bbd2ae830364",
+        "playback_note": 60,
+        "slot": 3,
+        "stock_runtime_sha256": "5f60dc8f39b4ec43dc4368050701550ca56581948451f0c8083ace61e9d98dc7",
+        "trigger_note": 39
+      },
+      {
+        "exact_stock_runtime_occurrences": {
+          "clean_dump": null,
+          "official_app": null,
+          "s1c5_app": null
+        },
+        "matches_proven_runtime_slots_table": true,
+        "name": "BASS SLAP",
+        "packet_sha256": "981e0772ac58174cb94a1794bbdac10da9c2679a0f69112b14a114d75d70481b",
+        "playback_note": 60,
+        "slot": 4,
+        "stock_runtime_sha256": "5da8be28b3468a534aa488b02d47522df36e6b5b02b14f992bcb869fc4bb9ecc",
+        "trigger_note": 40
+      },
+      {
+        "exact_stock_runtime_occurrences": {
+          "clean_dump": null,
+          "official_app": null,
+          "s1c5_app": null
+        },
+        "matches_proven_runtime_slots_table": true,
+        "name": "BEAMER 2",
+        "packet_sha256": "d73e236482ecd7d9b791ea6119b13d63b09eae5565f682b8f2dc0b4678277579",
+        "playback_note": 60,
+        "slot": 5,
+        "stock_runtime_sha256": "d38dfdac699a0fadbf7c99c98103a5f2bf7297a6746e94525d7eca3472223d40",
+        "trigger_note": 41
+      },
+      {
+        "exact_stock_runtime_occurrences": {
+          "clean_dump": null,
+          "official_app": null,
+          "s1c5_app": null
+        },
+        "matches_proven_runtime_slots_table": true,
+        "name": "Onglon",
+        "packet_sha256": "85625d999b3c23b578362fde17e9022db16ef9ecde5926e198f3206977cdba17",
+        "playback_note": 60,
+        "slot": 6,
+        "stock_runtime_sha256": "7727f3b7856a73b3c32bca1b6e15ed74672d6dc97e00641761ef14237b0d8a44",
+        "trigger_note": 42
+      },
+      {
+        "exact_stock_runtime_occurrences": {
+          "clean_dump": null,
+          "official_app": null,
+          "s1c5_app": null
+        },
+        "matches_proven_runtime_slots_table": true,
+        "name": "SOFTSTEEL",
+        "packet_sha256": "3e06351976cdd90b3e888b32ccca8716de991c95ff44eb73e9c26a3b912150dd",
+        "playback_note": 60,
+        "slot": 7,
+        "stock_runtime_sha256": "8b0463a7b52857203105525af3456636b3a427e5db5f1eb75ea687bd6677bbbb",
+        "trigger_note": 43
+      },
+      {
+        "exact_stock_runtime_occurrences": {
+          "clean_dump": null,
+          "official_app": null,
+          "s1c5_app": null
+        },
+        "matches_proven_runtime_slots_table": true,
+        "name": "BASS-ROADS",
+        "packet_sha256": "ef96628a3f2cb2a2b6028687e1dc9fa89f147edf7b4c4eb229b7d27250704805",
+        "playback_note": 60,
+        "slot": 8,
+        "stock_runtime_sha256": "1602db2d94930482f631d087bf4b645d626f12b88da1e8deee21202210b7177c",
+        "trigger_note": 44
+      },
+      {
+        "exact_stock_runtime_occurrences": {
+          "clean_dump": null,
+          "official_app": null,
+          "s1c5_app": null
+        },
+        "matches_proven_runtime_slots_table": true,
+        "name": "E.ORGAN 1",
+        "packet_sha256": "c6483dabc9e1a863f2682b5c11ea8a91e3ef38212926930d8de24afa3db6f9de",
+        "playback_note": 60,
+        "slot": 9,
+        "stock_runtime_sha256": "33dd55bbc6ebc2361260b9a581203f682b49388f9e4284b95de15136b630a178",
+        "trigger_note": 45
+      },
+      {
+        "exact_stock_runtime_occurrences": {
+          "clean_dump": null,
+          "official_app": null,
+          "s1c5_app": null
+        },
+        "matches_proven_runtime_slots_table": true,
+        "name": "YEAAAHH",
+        "packet_sha256": "11c7dfae80eb8ddaf88ec971ff1b3ce8b4d76894f4550ec3a0b5113c7e58bdde",
+        "playback_note": 60,
+        "slot": 10,
+        "stock_runtime_sha256": "9c5abf35d8c039be1c8603f4fb5296f7b7d3e28503b330b5d3dd33c1b5a6dff9",
+        "trigger_note": 46
+      },
+      {
+        "exact_stock_runtime_occurrences": {
+          "clean_dump": null,
+          "official_app": null,
+          "s1c5_app": null
+        },
+        "matches_proven_runtime_slots_table": true,
+        "name": "HAND DRUM",
+        "packet_sha256": "a97d43e1351177f4b7e4770b2170d07ae7d7dbd33bd6bb6439a441cb66f74a68",
+        "playback_note": 60,
+        "slot": 11,
+        "stock_runtime_sha256": "98bc86e7d9625c837ee6c07fa3f01cbd6079960c9d1071017cf51194aa48c1bf",
+        "trigger_note": 47
+      },
+      {
+        "exact_stock_runtime_occurrences": {
+          "clean_dump": null,
+          "official_app": null,
+          "s1c5_app": null
+        },
+        "matches_proven_runtime_slots_table": true,
+        "name": "HAND CLAP1",
+        "packet_sha256": "3680c3abf14c6a13096fe56953789bc2572fe2fd0d82248f8e4e893482a3be19",
+        "playback_note": 60,
+        "slot": 12,
+        "stock_runtime_sha256": "452efa8d41eecc7a5c57f1dfdecc072e1bc4266020cfe824edbc1b87415c2e38",
+        "trigger_note": 48
+      },
+      {
+        "exact_stock_runtime_occurrences": {
+          "clean_dump": null,
+          "official_app": null,
+          "s1c5_app": null
+        },
+        "matches_proven_runtime_slots_table": true,
+        "name": "Mooger #1",
+        "packet_sha256": "6611e75bfb8b11206f6303a63fdf6d50ee9beb8a72be2e69f9233a8f87e93f3a",
+        "playback_note": 60,
+        "slot": 13,
+        "stock_runtime_sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275",
+        "trigger_note": 49
+      },
+      {
+        "exact_stock_runtime_occurrences": {
+          "clean_dump": null,
+          "official_app": null,
+          "s1c5_app": null
+        },
+        "matches_proven_runtime_slots_table": true,
+        "name": "Moog Solo2",
+        "packet_sha256": "8b3bbbccf103bd41ea93430b694be1b8ab17d9a29ed0bee3d6fc0570e7d95721",
+        "playback_note": 60,
+        "slot": 14,
+        "stock_runtime_sha256": "cfa79fc5ba72bcd50b0465a116e109da90ca5dcdcdc40bc89cdad218ee468417",
+        "trigger_note": 50
+      },
+      {
+        "exact_stock_runtime_occurrences": {
+          "clean_dump": null,
+          "official_app": null,
+          "s1c5_app": null
+        },
+        "matches_proven_runtime_slots_table": true,
+        "name": "Mooger Low",
+        "packet_sha256": "b06e83fdf0972a652ca4561eb08c6312b51be24c54c2619a1d6c2d67cc2bf30c",
+        "playback_note": 60,
+        "slot": 15,
+        "stock_runtime_sha256": "a28849a192d5dad000622c8aa749baa6508ad73e2c1cc6659b33a0419b6a0e88",
+        "trigger_note": 51
+      }
+    ],
+    "trigger_notes": [
+      36,
+      51
+    ]
+  },
+  "promotion_requirements": [
+    "Prove an immutable exact Bank D source table address and lifetime, or prove a safe fixed-size in-app replacement region of sufficient size.",
+    "Produce a caller-directed side-effect-free 128-to-156 materializer and exact PI32 fit within a proven executable region.",
+    "Prove nonblocking first-use publication for Note On and matched Note Off identity without loader/storage work in the hot path after publication.",
+    "Then build a child of exact S1C5 with deterministic package, rollback, validator, exact OTA gate, and independent review."
+  ],
+  "scope": {
+    "custom_persistent_write_designed": false,
+    "device_accessed": false,
+    "flash_performed": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "ota_performed": false,
+    "reset_performed": false
+  },
+  "source_matrix": [
+    {
+      "benefit": "official loader-proven packed 0x80 records",
+      "blockers": [
+        "mutable through SAVE/default-load",
+        "not an immutable exact default",
+        "requires 128-to-156 materialization"
+      ],
+      "decision": "BLOCK",
+      "source": "stock packed/current Patch store via *(0x01c33260+0x164)"
+    },
+    {
+      "benefit": "official source for bank-image/default-bank save",
+      "blockers": [
+        "UI/product-owned dynamic workspace",
+        "no session-stable immutable-table proof",
+        "requires format decode/materialization"
+      ],
+      "decision": "BLOCK",
+      "source": "product RAM/default-bank workspace at 0x01c0de20 + bank*0x49e3"
+    },
+    {
+      "benefit": "deterministic byte identity with the known packet set",
+      "blockers": [
+        "2496-byte payload",
+        "0-byte JLFS-preserving append capacity",
+        "exact records absent from official app/S1C5 app/clean dump"
+      ],
+      "decision": "BLOCK",
+      "source": "exact expanded 16-voice table embedded in app/JLFS"
+    },
+    {
+      "benefit": "official materialization behavior",
+      "blockers": [
+        "hardcoded global selection/destination",
+        "UI/helper/global side effects",
+        "not caller-directed",
+        "prohibited in MIDI Note hot path"
+      ],
+      "decision": "BLOCK",
+      "source": "global factory loader 0x02005660 on first note"
+    }
+  ]
+}

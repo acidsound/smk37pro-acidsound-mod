@@ -1,0 +1,6 @@
+PASS exact S1C5 and 16-packet Bank D input gates
+PASS all-C4 Playback Note map and runtime-table identity
+PASS exact expanded-table absence scan
+PASS exact-stock-code fit attempt
+BLOCK persistent-default candidate: source provenance, code fit, and data placement
+BLOCK app/FWSC/rollback/exact OTA/device/flash
