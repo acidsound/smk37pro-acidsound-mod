@@ -6,6 +6,10 @@ if [ "$#" -lt 1 ]; then
     exit 2
 fi
 
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+repo_root=$(dirname -- "$script_dir")
+restore_helper="$repo_root/build/smk37-start-midiserver"
+
 release_midiserver() {
     pids=$(pgrep -x -u "$UID" MIDIServer 2>/dev/null || true)
     if [ -n "$pids" ]; then
@@ -14,6 +18,24 @@ release_midiserver() {
         done
     fi
 }
+
+restore_midiserver() {
+    mkdir -p "$repo_root/build"
+    if cc -O2 -Wall -Wextra -Werror \
+        "$repo_root/tools/start_macos_midiserver.c" \
+        -framework CoreMIDI -framework CoreFoundation \
+        -o "$restore_helper"; then
+        "$restore_helper" || true
+    else
+        printf '%s\n' "warning: failed to build CoreMIDI restore helper" >&2
+    fi
+}
+
+finish() {
+    restore_midiserver
+}
+
+trap finish EXIT
 
 release_midiserver
 "$@" &
