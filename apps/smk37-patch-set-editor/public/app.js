@@ -2,6 +2,7 @@ import {
   PAD_TO_NOTE,
   createPatchSetDocument,
   midiNoteName,
+  midiNoteOnFromMessage,
   parsePatchSetDocument,
   transmissionOrder,
   validateEditorSysEx,
@@ -10,7 +11,9 @@ import {
 const slots = Array(16).fill(null);
 const playbackNotes = Array(16).fill(null);
 let midiAccess = null;
+let midiDevices = new Map();
 let sending = false;
+let focusedPadIndex = null;
 const padElements = [];
 
 const elements = {
@@ -21,8 +24,8 @@ const elements = {
   setState: document.querySelector("#set-state"),
   connect: document.querySelector("#connect-midi"),
   midiState: document.querySelector("#midi-state"),
-  output: document.querySelector("#midi-output"),
-  firmwareMode: document.querySelector("#firmware-mode"),
+  midiLearnState: document.querySelector("#midi-learn-state"),
+  device: document.querySelector("#midi-device"),
   send: document.querySelector("#send-all"),
   progress: document.querySelector("#send-progress"),
   log: document.querySelector("#activity-log"),
@@ -66,6 +69,34 @@ function renderPad(index, error = "") {
   updateHealth();
 }
 
+function focusPad(index) {
+  focusedPadIndex = index;
+  padElements.forEach((card, cardIndex) => card.classList.toggle("midi-learn-focus", cardIndex === index));
+  const pad = index + 1;
+  elements.midiLearnState.textContent = `MIDI Learn 대상: Pad ${pad} · Note를 입력하세요`;
+}
+
+function clearFocusedPad() {
+  focusedPadIndex = null;
+  padElements.forEach((card) => card.classList.remove("midi-learn-focus"));
+  elements.midiLearnState.textContent = selectedInput()
+    ? "Playback Note를 선택한 뒤 MIDI Note를 입력하세요"
+    : "MIDI Input을 선택하세요";
+}
+
+function applyLearnedNote(note) {
+  if (focusedPadIndex === null) return;
+  playbackNotes[focusedPadIndex] = note;
+  renderPad(focusedPadIndex);
+  const pad = focusedPadIndex + 1;
+  log(`Pad ${String(pad).padStart(2, "0")} Playback Note ← MIDI IN ${midiNoteName(note)} (${note})`, "PASS");
+}
+
+function handleMidiMessage(event) {
+  const note = midiNoteOnFromMessage(event.data);
+  if (note !== null) applyLearnedNote(note);
+}
+
 async function loadFileIntoPad(file, pad) {
   try {
     const parsed = validateEditorSysEx(new Uint8Array(await file.arrayBuffer()));
@@ -107,17 +138,19 @@ function buildPads() {
     const card = fragment.querySelector(".pad");
     card.dataset.pad = String(pad);
     card.querySelector(".pad-number").textContent = `PAD ${pad}`;
-    card.querySelector(".pad-note").textContent = `CH10 · NOTE ${PAD_TO_NOTE[index]}`;
+    card.querySelector(".pad-note").textContent = `NOTE ${midiNoteName(PAD_TO_NOTE[index])}/${PAD_TO_NOTE[index]}`;
     const playbackSelect = card.querySelector(".playback-note");
-    playbackSelect.add(new Option(`Original · ${midiNoteName(PAD_TO_NOTE[index])} (${PAD_TO_NOTE[index]})`, ""));
+    playbackSelect.add(new Option(`* ${midiNoteName(PAD_TO_NOTE[index])}/${PAD_TO_NOTE[index]}`, ""));
     for (let note = 0; note <= 127; note += 1) {
-      playbackSelect.add(new Option(`${midiNoteName(note)} · ${note}`, String(note)));
+      playbackSelect.add(new Option(`${midiNoteName(note)}/${note}`, String(note)));
     }
     playbackSelect.addEventListener("change", () => {
       playbackNotes[index] = playbackSelect.value === "" ? null : Number(playbackSelect.value);
       const effective = playbackNotes[index] ?? PAD_TO_NOTE[index];
       log(`Pad ${String(pad).padStart(2, "0")} Playback Note → ${midiNoteName(effective)} (${effective})${playbackNotes[index] === null ? " · Original" : ""}`);
     });
+    card.addEventListener("focusin", () => focusPad(index));
+    card.addEventListener("pointerdown", () => focusPad(index));
     const input = card.querySelector(".pad-file-input");
     card.querySelector(".choose-patch").addEventListener("click", () => input.click());
     input.addEventListener("change", () => input.files?.[0] && loadFileIntoPad(input.files[0], pad));
@@ -141,30 +174,85 @@ function buildPads() {
   }
 }
 
-function refreshOutputs() {
-  const previous = elements.output.value;
+function refreshMidiPorts() {
+  const previous = elements.device.value;
   const outputs = midiAccess ? [...midiAccess.outputs.values()] : [];
-  elements.output.replaceChildren();
-  if (outputs.length === 0) {
-    elements.output.add(new Option("MIDI Output 없음", ""));
-    elements.output.disabled = true;
+  const inputs = midiAccess ? [...midiAccess.inputs.values()] : [];
+  midiDevices = new Map();
+  const addPort = (port, kind) => {
+    const name = port.name || "Unnamed";
+    const manufacturer = port.manufacturer || "Unknown";
+    const key = `${manufacturer}\u0000${name}`.toLowerCase();
+    const device = midiDevices.get(key) || { key, name, manufacturer, input: null, output: null };
+    if (!device[kind]) device[kind] = port;
+    midiDevices.set(key, device);
+  };
+  inputs.forEach((input) => addPort(input, "input"));
+  outputs.forEach((output) => addPort(output, "output"));
+
+  elements.device.replaceChildren();
+  if (midiDevices.size === 0) {
+    elements.device.add(new Option("SMK MIDI 장치 없음", ""));
+    elements.device.disabled = true;
   } else {
-    for (const output of outputs) elements.output.add(new Option(`${output.name || "Unnamed"} · ${output.manufacturer || "Unknown"}`, output.id));
-    elements.output.disabled = false;
-    if (outputs.some((output) => output.id === previous)) elements.output.value = previous;
+    for (const device of midiDevices.values()) {
+      const suffix = device.input && device.output ? "" : device.input ? " · Input only" : " · Output only";
+      elements.device.add(new Option(`${device.name} · ${device.manufacturer}${suffix}`, device.key));
+    }
+    elements.device.disabled = false;
+    if (midiDevices.has(previous)) elements.device.value = previous;
     else {
-      const preferred = outputs.find((output) => /SMK|M-VAVE/i.test(`${output.name} ${output.manufacturer}`));
-      elements.output.value = (preferred || outputs[0]).id;
+      const preferred = [...midiDevices.values()].find((device) => /SMK|M-VAVE/i.test(`${device.name} ${device.manufacturer}`));
+      elements.device.value = (preferred || midiDevices.values().next().value).key;
     }
   }
-  const connected = outputs.length > 0;
-  elements.midiState.textContent = connected ? `${outputs.length}개 Output 사용 가능` : "MIDI Output 없음";
+  bindSelectedDevice();
+  const connected = midiDevices.size > 0;
+  elements.midiState.textContent = connected ? `${midiDevices.size}개 MIDI 장치 사용 가능` : "MIDI 장치 없음";
   elements.midiState.classList.toggle("connected", connected);
   updateHealth();
 }
 
+function bindSelectedDevice() {
+  if (!midiAccess) return;
+  for (const input of midiAccess.inputs.values()) input.onmidimessage = null;
+  const input = selectedInput();
+  if (input) {
+    input.onmidimessage = handleMidiMessage;
+    elements.midiLearnState.textContent = focusedPadIndex === null
+      ? "Playback Note를 선택한 뒤 MIDI Note를 입력하세요"
+      : `MIDI Learn 대상: Pad ${focusedPadIndex + 1} · Note를 입력하세요`;
+  } else {
+    elements.midiLearnState.textContent = "MIDI Input을 선택하세요";
+  }
+}
+
 function selectedOutput() {
-  return midiAccess?.outputs.get(elements.output.value) || null;
+  return midiDevices.get(elements.device.value)?.output || null;
+}
+
+function selectedInput() {
+  return midiDevices.get(elements.device.value)?.input || null;
+}
+
+async function reopenSelectedDevice() {
+  const selectedKey = elements.device.value;
+  refreshMidiPorts();
+  if (selectedKey && midiDevices.has(selectedKey)) elements.device.value = selectedKey;
+  bindSelectedDevice();
+
+  const output = selectedOutput();
+  if (!output) throw new Error("SMK MIDI Output을 다시 연결하세요");
+  if (output.state === "disconnected") throw new Error("SMK MIDI 장치가 연결 해제 상태입니다");
+  await output.open();
+  if (output.connection !== "open") throw new Error("SMK MIDI Output을 열 수 없습니다");
+
+  const input = selectedInput();
+  if (input && input.state !== "disconnected") {
+    await input.open();
+    input.onmidimessage = handleMidiMessage;
+  }
+  return output;
 }
 
 async function connectMidi() {
@@ -174,8 +262,8 @@ async function connectMidi() {
   }
   try {
     midiAccess = await navigator.requestMIDIAccess({ sysex: true });
-    midiAccess.onstatechange = refreshOutputs;
-    refreshOutputs();
+    midiAccess.onstatechange = refreshMidiPorts;
+    refreshMidiPorts();
     log("Web MIDI SysEx 권한이 허용되었습니다.");
   } catch (error) {
     log(`Web MIDI 연결 실패: ${error.message}`, "ERROR");
@@ -184,13 +272,11 @@ async function connectMidi() {
 
 async function sendAll() {
   if (sending) return;
-  const output = selectedOutput();
-  if (!output) { log("MIDI Output을 선택하세요.", "ERROR"); return; }
   try {
-    const playbackEnabled = elements.firmwareMode.value === "s1c4";
-    const queue = transmissionOrder(slots, playbackNotes, { encodePlayback: playbackEnabled });
-    if (!playbackEnabled && playbackNotes.some((note) => note !== null)) log("S1-C3 mode: Playback Note 설정은 저장되지만 장치에는 patch data만 전송됩니다.", "WARN");
-    if (playbackEnabled) log("S1-C4 mode: 각 patch packet에 Playback Note를 함께 전송합니다.");
+    const output = await reopenSelectedDevice();
+    const queue = transmissionOrder(slots, playbackNotes, { encodePlayback: true });
+    log("재부팅/펌웨어 업데이트 후 지워진 휘발성 Patch Set을 다시 전송합니다.");
+    log("각 patch packet에 Playback Note를 함께 전송합니다.");
     sending = true;
     elements.progress.value = 0;
     updateHealth();
@@ -254,8 +340,13 @@ async function importSet(file) {
 
 buildPads();
 elements.connect.addEventListener("click", connectMidi);
-elements.output.addEventListener("change", updateHealth);
-elements.firmwareMode.addEventListener("change", () => log(`Firmware capability → ${elements.firmwareMode.selectedOptions[0].textContent}`));
+elements.device.addEventListener("change", () => {
+  bindSelectedDevice();
+  updateHealth();
+});
+document.addEventListener("pointerdown", (event) => {
+  if (!event.target.closest(".pad")) clearFocusedPad();
+}, true);
 elements.send.addEventListener("click", sendAll);
 document.querySelector("#load-demo").addEventListener("click", loadDemo);
 document.querySelector("#load-files").addEventListener("click", () => elements.filePicker.click());

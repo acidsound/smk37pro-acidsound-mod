@@ -25,6 +25,12 @@ export function midiNoteName(note) {
   return `${names[note % 12]}${Math.floor(note / 12) - 1}`;
 }
 
+export function midiNoteOnFromMessage(input) {
+  const bytes = input instanceof Uint8Array ? input : new Uint8Array(input ?? []);
+  if (bytes.length < 3 || (bytes[0] & 0xf0) !== 0x90 || bytes[2] === 0) return null;
+  return bytes[1] <= 127 ? bytes[1] : null;
+}
+
 export function validatePlaybackNotes(input = Array(16).fill(null)) {
   if (!Array.isArray(input) || input.length !== 16) throw new SysExError("16 Playback Note values are required");
   return input.map((note, index) => {

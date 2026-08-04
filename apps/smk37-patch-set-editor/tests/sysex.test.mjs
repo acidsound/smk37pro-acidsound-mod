@@ -9,6 +9,7 @@ import {
   createPatchSetDocument,
   effectivePlaybackNote,
   midiNoteName,
+  midiNoteOnFromMessage,
   parsePatchSetDocument,
   patchName,
   toSmkRuntimePacket,
@@ -78,6 +79,14 @@ test("Playback Note changes never alter Trigger Note mapping", async () => {
   assert.equal(effectivePlaybackNote(Array(16).fill(null), 1), 40);
   assert.equal(effectivePlaybackNote(playbackNotes, 1), 60);
   assert.equal(midiNoteName(60), "C4");
+});
+
+test("MIDI Learn accepts Note On only and ignores release messages", () => {
+  assert.equal(midiNoteOnFromMessage(Uint8Array.from([0x90, 60, 100])), 60);
+  assert.equal(midiNoteOnFromMessage(Uint8Array.from([0x99, 36, 1])), 36);
+  assert.equal(midiNoteOnFromMessage(Uint8Array.from([0x90, 60, 0])), null);
+  assert.equal(midiNoteOnFromMessage(Uint8Array.from([0x80, 60, 64])), null);
+  assert.equal(midiNoteOnFromMessage(Uint8Array.from([0xb0, 1, 127])), null);
 });
 
 test("S1-C3 keeps 0x3f while S1-C4 encodes Playback Note in each patch packet", async () => {

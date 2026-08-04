@@ -6,7 +6,7 @@ Windows/macOS Desktop Chrome용 무의존성 Web MIDI patch-set 편집기입니�
 
 - Node.js 20 이상
 - Desktop Chrome 또는 Chromium 계열 브라우저
-- S1-C3 r3-reload 펌웨어가 설치된 SMK-37 Pro
+- Playback Note 지원 펌웨어가 설치된 SMK-37 Pro
 - 브라우저의 Web MIDI SysEx 권한 허용
 
 `localhost`는 Web MIDI가 허용되는 secure context로 취급됩니다.
@@ -31,6 +31,7 @@ http://127.0.0.1:3737
 - 실제 2×8 Physical Pad 1–16 배치
 - Pad별 `.syx` 파일 선택 및 drag/drop
 - Pad별 내부 신스 `Playback Note` 선택 (`Original` 또는 MIDI Note `0..127`)
+- Playback Note control 또는 Pad에 포커스한 뒤 선택된 MIDI Input에서 Note On을 받아 즉시 지정하는 MIDI Learn
 - 전체 Playback Note를 `Original` 또는 `C4 (60)`로 일괄 설정
 - Yamaha DX7 163-byte single-voice header/checksum 검증
 - 검증된 Bank D demo 16개 내장
@@ -44,14 +45,14 @@ http://127.0.0.1:3737
 
 1. `검증 세트 불러오기` 또는 Pad별 `.syx` 선택
 2. `Web MIDI 연결`을 누르고 SysEx 권한 허용
-3. SMK-37 Pro MIDI Output 선택
-4. 설치된 펌웨어에 맞춰 `S1-C3 r3 · Patch only` 또는 `S1-C4 · Playback Note` 선택
+3. 단일 `SMK MIDI Device` 선택
+4. Playback Note를 바꿀 Pad 또는 드롭다운을 클릭하고 건반에서 원하는 Note 입력
 5. `16개 Patch 전송`
 6. Pad 1–16 청취 확인
 
 현재 S1-C3는 16개를 하나의 RAM transaction으로 적재합니다. 한 Pad만 교체하더라도 전체 16개를 전송하며, 장치 재부팅 후 다시 전송해야 합니다.
 
-`Trigger Note`는 Physical Pad 식별과 MIDI OUT을 위해 변경하지 않습니다. `Playback Note`는 Patch Set JSON에 별도 저장되며 내부 Ch10 신스의 발음 음높이만 바꾸기 위한 값입니다. 기본 `S1-C3` mode는 proven `0x3f` transport를 유지합니다. `S1-C4` mode는 각 163-byte packet의 마지막 staged payload byte에 Playback Note `0..127`을 넣으므로 대응 펌웨어가 설치된 경우에만 선택해야 합니다.
+`Trigger Note`는 Physical Pad 식별과 MIDI OUT을 위해 변경하지 않습니다. `Playback Note`는 Patch Set JSON에 별도 저장되며 내부 Ch10 신스의 발음 음높이만 바꾸기 위한 값입니다. 각 163-byte packet의 마지막 staged payload byte에 Playback Note `0..127`을 넣으므로 대응 펌웨어가 필요합니다.
 
 ## 테스트
 

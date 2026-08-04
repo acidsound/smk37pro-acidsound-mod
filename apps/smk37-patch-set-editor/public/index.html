@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>SMK-37 Patch Set Editor</title>
+  <link rel="icon" href="data:,">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -18,16 +19,10 @@
       <span id="midi-state" class="status-dot">MIDI 연결 전</span>
       <button id="connect-midi" class="primary">Web MIDI 연결</button>
       <label>
-        MIDI Output
-        <select id="midi-output" disabled><option>장치를 먼저 연결하세요</option></select>
+        SMK MIDI Device
+        <select id="midi-device" disabled><option>장치를 먼저 연결하세요</option></select>
       </label>
-      <label>
-        Firmware capability
-        <select id="firmware-mode">
-          <option value="s1c3">S1-C3 r3 · Patch only</option>
-          <option value="s1c4">S1-C4 · Playback Note</option>
-        </select>
-      </label>
+      <small id="midi-learn-state">Playback Note를 선택한 뒤 MIDI Note를 입력하세요</small>
     </div>
   </header>
 
@@ -86,7 +81,7 @@
       <strong class="patch-name">Empty</strong>
       <span class="patch-file">Drop a 163-byte .syx</span>
       <label class="playback-control">
-        <span>Playback Note</span>
+        <span>Playback</span>
         <select class="playback-note"></select>
       </label>
       <div class="pad-actions">
