@@ -1,0 +1,647 @@
+{
+  "basis": {
+    "clean_dump_sha256": "1c202201a81ed6d956ec5398adff75ffcd805594a27370a56caafaf18223383b",
+    "restore_report": "baselines/v15/analysis/persistence-s2/restore/report.md",
+    "s1c5_app_sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+    "s1c5_candidate": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return",
+    "storage_report": "baselines/v15/analysis/persistence-s2/storage/report.md"
+  },
+  "current_s1c5_packets": [
+    {
+      "name": "BUZZ BASS",
+      "normalized_voice_sha256": "e2beb705a28e83940b2708f8ba0976e8c093ca12f45d0045f290b1589760d76b",
+      "packet_file": "slot00-trigger36-playback60-all-c4-direct-product-163.bin",
+      "packet_sha256": "7c7a8ac8d57bd78b8d531fa8997e7d9c18ce4e0d8a267cc22549ba71d5e3e9c4",
+      "playback_note": 60,
+      "slot": 0,
+      "trigger_note": 36
+    },
+    {
+      "name": "Bang ?????",
+      "normalized_voice_sha256": "5dab954752769609d64dd162360182138c8bc399030b88cf8d61b76fb7208f97",
+      "packet_file": "slot01-trigger37-playback60-all-c4-direct-product-163.bin",
+      "packet_sha256": "523ccbc81eef766fc73bda72a78d3a28ba3f1fcabc1146db78252673f8d5ed7a",
+      "playback_note": 60,
+      "slot": 1,
+      "trigger_note": 37
+    },
+    {
+      "name": "BASSE BIEN",
+      "normalized_voice_sha256": "3e140cc8613ec555fcae2109d216c5e838d3193b305352992dc4062556af8b60",
+      "packet_file": "slot02-trigger38-playback60-all-c4-direct-product-163.bin",
+      "packet_sha256": "14d65142c52fbd4775ab071639886c203cc03d860deb62e6de25c048cb9a712b",
+      "playback_note": 60,
+      "slot": 2,
+      "trigger_note": 38
+    },
+    {
+      "name": "BASS-THING",
+      "normalized_voice_sha256": "5f60dc8f39b4ec43dc4368050701550ca56581948451f0c8083ace61e9d98dc7",
+      "packet_file": "slot03-trigger39-playback60-all-c4-direct-product-163.bin",
+      "packet_sha256": "efab2e0db1e444d4ab8e96cd7125825fdbd0445e3e05b8436ae7bbd2ae830364",
+      "playback_note": 60,
+      "slot": 3,
+      "trigger_note": 39
+    },
+    {
+      "name": "BASS SLAP",
+      "normalized_voice_sha256": "5da8be28b3468a534aa488b02d47522df36e6b5b02b14f992bcb869fc4bb9ecc",
+      "packet_file": "slot04-trigger40-playback60-all-c4-direct-product-163.bin",
+      "packet_sha256": "981e0772ac58174cb94a1794bbdac10da9c2679a0f69112b14a114d75d70481b",
+      "playback_note": 60,
+      "slot": 4,
+      "trigger_note": 40
+    },
+    {
+      "name": "BEAMER 2",
+      "normalized_voice_sha256": "d38dfdac699a0fadbf7c99c98103a5f2bf7297a6746e94525d7eca3472223d40",
+      "packet_file": "slot05-trigger41-playback60-all-c4-direct-product-163.bin",
+      "packet_sha256": "d73e236482ecd7d9b791ea6119b13d63b09eae5565f682b8f2dc0b4678277579",
+      "playback_note": 60,
+      "slot": 5,
+      "trigger_note": 41
+    },
+    {
+      "name": "Onglon",
+      "normalized_voice_sha256": "7727f3b7856a73b3c32bca1b6e15ed74672d6dc97e00641761ef14237b0d8a44",
+      "packet_file": "slot06-trigger42-playback60-all-c4-direct-product-163.bin",
+      "packet_sha256": "85625d999b3c23b578362fde17e9022db16ef9ecde5926e198f3206977cdba17",
+      "playback_note": 60,
+      "slot": 6,
+      "trigger_note": 42
+    },
+    {
+      "name": "SOFTSTEEL",
+      "normalized_voice_sha256": "8b0463a7b52857203105525af3456636b3a427e5db5f1eb75ea687bd6677bbbb",
+      "packet_file": "slot07-trigger43-playback60-all-c4-direct-product-163.bin",
+      "packet_sha256": "3e06351976cdd90b3e888b32ccca8716de991c95ff44eb73e9c26a3b912150dd",
+      "playback_note": 60,
+      "slot": 7,
+      "trigger_note": 43
+    },
+    {
+      "name": "BASS-ROADS",
+      "normalized_voice_sha256": "1602db2d94930482f631d087bf4b645d626f12b88da1e8deee21202210b7177c",
+      "packet_file": "slot08-trigger44-playback60-all-c4-direct-product-163.bin",
+      "packet_sha256": "ef96628a3f2cb2a2b6028687e1dc9fa89f147edf7b4c4eb229b7d27250704805",
+      "playback_note": 60,
+      "slot": 8,
+      "trigger_note": 44
+    },
+    {
+      "name": "E.ORGAN 1",
+      "normalized_voice_sha256": "33dd55bbc6ebc2361260b9a581203f682b49388f9e4284b95de15136b630a178",
+      "packet_file": "slot09-trigger45-playback60-all-c4-direct-product-163.bin",
+      "packet_sha256": "c6483dabc9e1a863f2682b5c11ea8a91e3ef38212926930d8de24afa3db6f9de",
+      "playback_note": 60,
+      "slot": 9,
+      "trigger_note": 45
+    },
+    {
+      "name": "YEAAAHH",
+      "normalized_voice_sha256": "9c5abf35d8c039be1c8603f4fb5296f7b7d3e28503b330b5d3dd33c1b5a6dff9",
+      "packet_file": "slot10-trigger46-playback60-all-c4-direct-product-163.bin",
+      "packet_sha256": "11c7dfae80eb8ddaf88ec971ff1b3ce8b4d76894f4550ec3a0b5113c7e58bdde",
+      "playback_note": 60,
+      "slot": 10,
+      "trigger_note": 46
+    },
+    {
+      "name": "HAND DRUM",
+      "normalized_voice_sha256": "98bc86e7d9625c837ee6c07fa3f01cbd6079960c9d1071017cf51194aa48c1bf",
+      "packet_file": "slot11-trigger47-playback60-all-c4-direct-product-163.bin",
+      "packet_sha256": "a97d43e1351177f4b7e4770b2170d07ae7d7dbd33bd6bb6439a441cb66f74a68",
+      "playback_note": 60,
+      "slot": 11,
+      "trigger_note": 47
+    },
+    {
+      "name": "HAND CLAP1",
+      "normalized_voice_sha256": "452efa8d41eecc7a5c57f1dfdecc072e1bc4266020cfe824edbc1b87415c2e38",
+      "packet_file": "slot12-trigger48-playback60-all-c4-direct-product-163.bin",
+      "packet_sha256": "3680c3abf14c6a13096fe56953789bc2572fe2fd0d82248f8e4e893482a3be19",
+      "playback_note": 60,
+      "slot": 12,
+      "trigger_note": 48
+    },
+    {
+      "name": "Mooger #1",
+      "normalized_voice_sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275",
+      "packet_file": "slot13-trigger49-playback60-all-c4-direct-product-163.bin",
+      "packet_sha256": "6611e75bfb8b11206f6303a63fdf6d50ee9beb8a72be2e69f9233a8f87e93f3a",
+      "playback_note": 60,
+      "slot": 13,
+      "trigger_note": 49
+    },
+    {
+      "name": "Moog Solo2",
+      "normalized_voice_sha256": "cfa79fc5ba72bcd50b0465a116e109da90ca5dcdcdc40bc89cdad218ee468417",
+      "packet_file": "slot14-trigger50-playback60-all-c4-direct-product-163.bin",
+      "packet_sha256": "8b3bbbccf103bd41ea93430b694be1b8ab17d9a29ed0bee3d6fc0570e7d95721",
+      "playback_note": 60,
+      "slot": 14,
+      "trigger_note": 50
+    },
+    {
+      "name": "Mooger Low",
+      "normalized_voice_sha256": "a28849a192d5dad000622c8aa749baa6508ad73e2c1cc6659b33a0419b6a0e88",
+      "packet_file": "slot15-trigger51-playback60-all-c4-direct-product-163.bin",
+      "packet_sha256": "b06e83fdf0972a652ca4561eb08c6312b51be24c54c2619a1d6c2d67cc2bf30c",
+      "playback_note": 60,
+      "slot": 15,
+      "trigger_note": 51
+    }
+  ],
+  "decision": "DATA_ROLLBACK_PASS__FIRMWARE_FIT_BLOCK",
+  "fit_analysis": {
+    "alternate_hooks": [
+      {
+        "address": "0x02005f9c",
+        "classification": "revoked pre-USB storage-init loader callsite",
+        "decision": "BLOCK"
+      },
+      {
+        "address": "0x02005fa4",
+        "classification": "post-storage but still pre-return boot initializer call",
+        "decision": "BLOCK: no live proof and no wrapper placement"
+      },
+      {
+        "address": "0x0201e46c/0x0201e4a0",
+        "classification": "post-product SysEx reloads",
+        "decision": "NOT autonomous across power cycle"
+      },
+      {
+        "address": "0x0202422e",
+        "classification": "UI bank/preset reload",
+        "decision": "NOT every boot and mutates UI-selected patch state"
+      }
+    ],
+    "decision": "BLOCK_FIRMWARE_FIT",
+    "direct_mapped_fallback_lower_bound": {
+      "bytes": 32,
+      "exclusions": [
+        "manifest magic/version/count/CRC validation",
+        "A/B or interrupted-update generation choice",
+        "branch integration from state!=ARMED into fallback and back to metadata return",
+        "destination byte 0x9b repair if using in-record note instead of manifest-map note"
+      ],
+      "instructions": [
+        {
+          "min_bytes": 6,
+          "purpose": "load global g pointer 0x01c33260"
+        },
+        {
+          "min_bytes": 4,
+          "purpose": "ldw mapped raw base from [g+0x164]"
+        },
+        {
+          "min_bytes": 2,
+          "purpose": "copy slot index for raw stride"
+        },
+        {
+          "min_bytes": 4,
+          "purpose": "mul slot by raw stride 0xa3"
+        },
+        {
+          "min_bytes": 2,
+          "purpose": "add mapped base to payload offset"
+        },
+        {
+          "min_bytes": 4,
+          "purpose": "add preferred payload-base mapped offset 0x8750"
+        },
+        {
+          "min_bytes": 2,
+          "purpose": "copy source pointer for manifest-map load"
+        },
+        {
+          "min_bytes": 4,
+          "purpose": "add preferred manifest-map mapped offset 0x7c9d"
+        },
+        {
+          "min_bytes": 2,
+          "purpose": "add slot to manifest-map pointer"
+        },
+        {
+          "min_bytes": 2,
+          "purpose": "lb.z Playback Note from manifest map"
+        }
+      ]
+    },
+    "owned_window": {
+      "bytes": 278,
+      "end_exclusive": "0x0201e254",
+      "start": "0x0201e13e"
+    },
+    "preserve_exact_current": {
+      "producer_bytes": 188,
+      "selector_bytes": 88,
+      "tail_spare_bytes": 2,
+      "volatile_armed_path_sha256": "900e8f05c8157737e89a22338b9a4575aa3ff124bd70ff132de0226654fce29f",
+      "webmidi_producer_sha256": "a7627984549f62592384189a707ef04512921ad693b18409eb483dcccb53c438"
+    },
+    "producer_preserving_selector_budget": 90,
+    "rejected_optimization": {
+      "reason": "The 0x0201e228 reset wrapper is the exact current direct WebMIDI entry and reset-before-first-packet behavior. Removing it does not preserve the requested producer.",
+      "remove_reset_wrapper_bytes": 42
+    },
+    "volatile_armed_plus_raw_lower_bound": 120
+  },
+  "format": "smk37-v15-s1c6-raw-record-persistence.offline-candidate-v1",
+  "persistent_records": {
+    "candidate_records_blob": {
+      "file": "records/candidate-reserved-records.bin",
+      "sha256": "641227ea5e302471c97d2cd0594761d9db2765cacd925e6a75221d0f86e3103c",
+      "size": 2771
+    },
+    "crc32": {
+      "manifest_header_crc32": "0xd95c45c5",
+      "map_crc32": "0xc772e2f8",
+      "payload_crc32": "0x67199fdc"
+    },
+    "manifest_format": {
+      "count_offset": 10,
+      "generation_offset": 12,
+      "header_crc32_offset": 24,
+      "magic": "S1C6RR17",
+      "map_crc32_offset": 20,
+      "map_offset_offset": 11,
+      "payload_base_offset": 9,
+      "payload_crc32_offset": 16,
+      "playback_note_count": 16,
+      "playback_note_map_offset": 32,
+      "record_prefix_size": 156,
+      "tail_policy": "raw bytes 0x9c..0xa2 are preserved from stock records",
+      "version_offset": 8
+    },
+    "preferred_layout": {
+      "direct_mapped_source_formula": "payload = *(g+0x164) + 0x4000 + (112+slot)*0xa3; playback = *(g+0x164) + 0x4000 + 95*0xa3 + 0x20 + slot",
+      "manifest_map_mapped_offset": "0x7c9d",
+      "manifest_record_index": 95,
+      "name": "C32 manifest plus D17..D32 payload records",
+      "payload_base_mapped_offset": "0x8750",
+      "payload_base_record_index": 112,
+      "payload_record_indices": [
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127
+      ],
+      "reservation_policy": "These 17 allocated stock raw records become S1C6-owned and must not be used for stock patch storage while the candidate is active.",
+      "reserved_record_indices": [
+        95,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127
+      ]
+    },
+    "records": [
+      {
+        "payload_dump_offset": "0x0fc750",
+        "payload_mapped_offset": "0x8750",
+        "payload_record_index": 112,
+        "payload_sha256": "daadaaea7ac19a506dfbaa3ffd8e2c2b4fb5941915bab758068f742c6bdf00fd",
+        "playback_note": 60,
+        "restored_voice_sha256": "e2beb705a28e83940b2708f8ba0976e8c093ca12f45d0045f290b1589760d76b",
+        "slot": 0,
+        "tail_sha256": "51a20f801b48990ecbd07b115936429c9e49e332c58fb7f4df0f1d3a712140db"
+      },
+      {
+        "payload_dump_offset": "0x0fc7f3",
+        "payload_mapped_offset": "0x87f3",
+        "payload_record_index": 113,
+        "payload_sha256": "f6aeab11c0bf4939d7504980f49bbd61d75cdc3349d7f643c28cf8544b7ab919",
+        "playback_note": 60,
+        "restored_voice_sha256": "5dab954752769609d64dd162360182138c8bc399030b88cf8d61b76fb7208f97",
+        "slot": 1,
+        "tail_sha256": "51a20f801b48990ecbd07b115936429c9e49e332c58fb7f4df0f1d3a712140db"
+      },
+      {
+        "payload_dump_offset": "0x0fc896",
+        "payload_mapped_offset": "0x8896",
+        "payload_record_index": 114,
+        "payload_sha256": "8c17d5c3c778de861519c176d8447dd54b8602b3ffe2fee647ac7fcad60c0027",
+        "playback_note": 60,
+        "restored_voice_sha256": "3e140cc8613ec555fcae2109d216c5e838d3193b305352992dc4062556af8b60",
+        "slot": 2,
+        "tail_sha256": "51a20f801b48990ecbd07b115936429c9e49e332c58fb7f4df0f1d3a712140db"
+      },
+      {
+        "payload_dump_offset": "0x0fc939",
+        "payload_mapped_offset": "0x8939",
+        "payload_record_index": 115,
+        "payload_sha256": "e2f83c0a04b5a0856a9557f835892bb658b5152a66f46a666033f7acb6790a3a",
+        "playback_note": 60,
+        "restored_voice_sha256": "5f60dc8f39b4ec43dc4368050701550ca56581948451f0c8083ace61e9d98dc7",
+        "slot": 3,
+        "tail_sha256": "51a20f801b48990ecbd07b115936429c9e49e332c58fb7f4df0f1d3a712140db"
+      },
+      {
+        "payload_dump_offset": "0x0fc9dc",
+        "payload_mapped_offset": "0x89dc",
+        "payload_record_index": 116,
+        "payload_sha256": "c6010d90edba01cb824bb90dc38c9d9511c2dde0866e8438bdaf15c23763b9f3",
+        "playback_note": 60,
+        "restored_voice_sha256": "5da8be28b3468a534aa488b02d47522df36e6b5b02b14f992bcb869fc4bb9ecc",
+        "slot": 4,
+        "tail_sha256": "51a20f801b48990ecbd07b115936429c9e49e332c58fb7f4df0f1d3a712140db"
+      },
+      {
+        "payload_dump_offset": "0x0fca7f",
+        "payload_mapped_offset": "0x8a7f",
+        "payload_record_index": 117,
+        "payload_sha256": "dbd42cee22c7540763ef857c419c1180750b8cc6656bf3abc1ac731ab85e91d2",
+        "playback_note": 60,
+        "restored_voice_sha256": "d38dfdac699a0fadbf7c99c98103a5f2bf7297a6746e94525d7eca3472223d40",
+        "slot": 5,
+        "tail_sha256": "51a20f801b48990ecbd07b115936429c9e49e332c58fb7f4df0f1d3a712140db"
+      },
+      {
+        "payload_dump_offset": "0x0fcb22",
+        "payload_mapped_offset": "0x8b22",
+        "payload_record_index": 118,
+        "payload_sha256": "2c396ded4557cc1dd8e416c9266374d9a33ba5c395182f195cbd9b792d9697c9",
+        "playback_note": 60,
+        "restored_voice_sha256": "7727f3b7856a73b3c32bca1b6e15ed74672d6dc97e00641761ef14237b0d8a44",
+        "slot": 6,
+        "tail_sha256": "51a20f801b48990ecbd07b115936429c9e49e332c58fb7f4df0f1d3a712140db"
+      },
+      {
+        "payload_dump_offset": "0x0fcbc5",
+        "payload_mapped_offset": "0x8bc5",
+        "payload_record_index": 119,
+        "payload_sha256": "5cf9e605c0113d12d654ad4c5e5aafa2690405d2c1c2ab51f928f2288deca3c5",
+        "playback_note": 60,
+        "restored_voice_sha256": "8b0463a7b52857203105525af3456636b3a427e5db5f1eb75ea687bd6677bbbb",
+        "slot": 7,
+        "tail_sha256": "51a20f801b48990ecbd07b115936429c9e49e332c58fb7f4df0f1d3a712140db"
+      },
+      {
+        "payload_dump_offset": "0x0fcc68",
+        "payload_mapped_offset": "0x8c68",
+        "payload_record_index": 120,
+        "payload_sha256": "8a0c08a509c01ebc233fdf1e27117722d17a0cf224249d4b40237dcc7e8e5dcf",
+        "playback_note": 60,
+        "restored_voice_sha256": "1602db2d94930482f631d087bf4b645d626f12b88da1e8deee21202210b7177c",
+        "slot": 8,
+        "tail_sha256": "51a20f801b48990ecbd07b115936429c9e49e332c58fb7f4df0f1d3a712140db"
+      },
+      {
+        "payload_dump_offset": "0x0fcd0b",
+        "payload_mapped_offset": "0x8d0b",
+        "payload_record_index": 121,
+        "payload_sha256": "0160eb6c1e50ee8964a6808b580972683500434e21acb9d25e38d9660bd21c97",
+        "playback_note": 60,
+        "restored_voice_sha256": "33dd55bbc6ebc2361260b9a581203f682b49388f9e4284b95de15136b630a178",
+        "slot": 9,
+        "tail_sha256": "51a20f801b48990ecbd07b115936429c9e49e332c58fb7f4df0f1d3a712140db"
+      },
+      {
+        "payload_dump_offset": "0x0fcdae",
+        "payload_mapped_offset": "0x8dae",
+        "payload_record_index": 122,
+        "payload_sha256": "9037ff0f941bd80b70bf4048fd185c8de56c0cf2fda66d2d25eff2aafd00f9ea",
+        "playback_note": 60,
+        "restored_voice_sha256": "9c5abf35d8c039be1c8603f4fb5296f7b7d3e28503b330b5d3dd33c1b5a6dff9",
+        "slot": 10,
+        "tail_sha256": "51a20f801b48990ecbd07b115936429c9e49e332c58fb7f4df0f1d3a712140db"
+      },
+      {
+        "payload_dump_offset": "0x0fce51",
+        "payload_mapped_offset": "0x8e51",
+        "payload_record_index": 123,
+        "payload_sha256": "90e4f047a86442561f0ce8028c86f4133051ae7a9e5eab6f9d2ef71c11937049",
+        "playback_note": 60,
+        "restored_voice_sha256": "98bc86e7d9625c837ee6c07fa3f01cbd6079960c9d1071017cf51194aa48c1bf",
+        "slot": 11,
+        "tail_sha256": "51a20f801b48990ecbd07b115936429c9e49e332c58fb7f4df0f1d3a712140db"
+      },
+      {
+        "payload_dump_offset": "0x0fcef4",
+        "payload_mapped_offset": "0x8ef4",
+        "payload_record_index": 124,
+        "payload_sha256": "572818d6acb4d22afab83c401eb8047f683822b6d12afea4f46fd4406c917113",
+        "playback_note": 60,
+        "restored_voice_sha256": "452efa8d41eecc7a5c57f1dfdecc072e1bc4266020cfe824edbc1b87415c2e38",
+        "slot": 12,
+        "tail_sha256": "51a20f801b48990ecbd07b115936429c9e49e332c58fb7f4df0f1d3a712140db"
+      },
+      {
+        "payload_dump_offset": "0x0fcf97",
+        "payload_mapped_offset": "0x8f97",
+        "payload_record_index": 125,
+        "payload_sha256": "4c92bea373ada550e4b9d13cc3c054d31af25ce04041ba8debfba8c0443a87c5",
+        "playback_note": 60,
+        "restored_voice_sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275",
+        "slot": 13,
+        "tail_sha256": "51a20f801b48990ecbd07b115936429c9e49e332c58fb7f4df0f1d3a712140db"
+      },
+      {
+        "payload_dump_offset": "0x0fd03a",
+        "payload_mapped_offset": "0x903a",
+        "payload_record_index": 126,
+        "payload_sha256": "2193148b592d6e5437b55e68018c6e69abcfdad34fdfe6b481e005bfa4b40b67",
+        "playback_note": 60,
+        "restored_voice_sha256": "cfa79fc5ba72bcd50b0465a116e109da90ca5dcdcdc40bc89cdad218ee468417",
+        "slot": 14,
+        "tail_sha256": "51a20f801b48990ecbd07b115936429c9e49e332c58fb7f4df0f1d3a712140db"
+      },
+      {
+        "payload_dump_offset": "0x0fd0dd",
+        "payload_mapped_offset": "0x90dd",
+        "payload_record_index": 127,
+        "payload_sha256": "59d7e07f426274cc513753e04d300da34676e33ee311fb5c3d0d1374221b073e",
+        "playback_note": 60,
+        "restored_voice_sha256": "a28849a192d5dad000622c8aa749baa6508ad73e2c1cc6659b33a0419b6a0e88",
+        "slot": 15,
+        "tail_sha256": "51a20f801b48990ecbd07b115936429c9e49e332c58fb7f4df0f1d3a712140db"
+      }
+    ],
+    "rollback": {
+      "manifest": "rollback/reserved-stock-raw-records/manifest.json",
+      "official_records_blob_sha256": "4361ce6ca2c1285fe4ef4ab8691c47234b24ac8f1560524dc0bdca9be933812e"
+    }
+  },
+  "scope": {
+    "device_accessed": false,
+    "flash_performed": false,
+    "fwsc_emitted": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "reset_performed": false
+  },
+  "validation": [
+    "PASS\texact current S1C5 app hash",
+    "PASS\texact current S1C5 selector/producer evidence hash",
+    "PASS\tS1C5 packet manifest has 16 slots",
+    "PASS\tcurrent S1C5 Playback Notes are all C4/60",
+    "PASS\tslot 0 exact 163-byte SysEx framing",
+    "PASS\tslot 0 packet hash matches manifest",
+    "PASS\tslot 0 runtime voice is 0x9c bytes",
+    "PASS\tslot 0 wire byte 161 carries Playback Note 60",
+    "PASS\tslot 1 exact 163-byte SysEx framing",
+    "PASS\tslot 1 packet hash matches manifest",
+    "PASS\tslot 1 runtime voice is 0x9c bytes",
+    "PASS\tslot 1 wire byte 161 carries Playback Note 60",
+    "PASS\tslot 2 exact 163-byte SysEx framing",
+    "PASS\tslot 2 packet hash matches manifest",
+    "PASS\tslot 2 runtime voice is 0x9c bytes",
+    "PASS\tslot 2 wire byte 161 carries Playback Note 60",
+    "PASS\tslot 3 exact 163-byte SysEx framing",
+    "PASS\tslot 3 packet hash matches manifest",
+    "PASS\tslot 3 runtime voice is 0x9c bytes",
+    "PASS\tslot 3 wire byte 161 carries Playback Note 60",
+    "PASS\tslot 4 exact 163-byte SysEx framing",
+    "PASS\tslot 4 packet hash matches manifest",
+    "PASS\tslot 4 runtime voice is 0x9c bytes",
+    "PASS\tslot 4 wire byte 161 carries Playback Note 60",
+    "PASS\tslot 5 exact 163-byte SysEx framing",
+    "PASS\tslot 5 packet hash matches manifest",
+    "PASS\tslot 5 runtime voice is 0x9c bytes",
+    "PASS\tslot 5 wire byte 161 carries Playback Note 60",
+    "PASS\tslot 6 exact 163-byte SysEx framing",
+    "PASS\tslot 6 packet hash matches manifest",
+    "PASS\tslot 6 runtime voice is 0x9c bytes",
+    "PASS\tslot 6 wire byte 161 carries Playback Note 60",
+    "PASS\tslot 7 exact 163-byte SysEx framing",
+    "PASS\tslot 7 packet hash matches manifest",
+    "PASS\tslot 7 runtime voice is 0x9c bytes",
+    "PASS\tslot 7 wire byte 161 carries Playback Note 60",
+    "PASS\tslot 8 exact 163-byte SysEx framing",
+    "PASS\tslot 8 packet hash matches manifest",
+    "PASS\tslot 8 runtime voice is 0x9c bytes",
+    "PASS\tslot 8 wire byte 161 carries Playback Note 60",
+    "PASS\tslot 9 exact 163-byte SysEx framing",
+    "PASS\tslot 9 packet hash matches manifest",
+    "PASS\tslot 9 runtime voice is 0x9c bytes",
+    "PASS\tslot 9 wire byte 161 carries Playback Note 60",
+    "PASS\tslot 10 exact 163-byte SysEx framing",
+    "PASS\tslot 10 packet hash matches manifest",
+    "PASS\tslot 10 runtime voice is 0x9c bytes",
+    "PASS\tslot 10 wire byte 161 carries Playback Note 60",
+    "PASS\tslot 11 exact 163-byte SysEx framing",
+    "PASS\tslot 11 packet hash matches manifest",
+    "PASS\tslot 11 runtime voice is 0x9c bytes",
+    "PASS\tslot 11 wire byte 161 carries Playback Note 60",
+    "PASS\tslot 12 exact 163-byte SysEx framing",
+    "PASS\tslot 12 packet hash matches manifest",
+    "PASS\tslot 12 runtime voice is 0x9c bytes",
+    "PASS\tslot 12 wire byte 161 carries Playback Note 60",
+    "PASS\tslot 13 exact 163-byte SysEx framing",
+    "PASS\tslot 13 packet hash matches manifest",
+    "PASS\tslot 13 runtime voice is 0x9c bytes",
+    "PASS\tslot 13 wire byte 161 carries Playback Note 60",
+    "PASS\tslot 14 exact 163-byte SysEx framing",
+    "PASS\tslot 14 packet hash matches manifest",
+    "PASS\tslot 14 runtime voice is 0x9c bytes",
+    "PASS\tslot 14 wire byte 161 carries Playback Note 60",
+    "PASS\tslot 15 exact 163-byte SysEx framing",
+    "PASS\tslot 15 packet hash matches manifest",
+    "PASS\tslot 15 runtime voice is 0x9c bytes",
+    "PASS\tslot 15 wire byte 161 carries Playback Note 60",
+    "PASS\tclean v15 baseline dump hash",
+    "PASS\tpreferred layout reserves exactly 17 distinct stock raw records",
+    "PASS\tall preferred raw record indices are inside stock 128-record table",
+    "PASS\tpayload record 112 slot 0 stores normalized voice byte 0x9b",
+    "PASS\tpayload record 112 preserves seven-byte stock raw tail",
+    "PASS\tpayload record 113 slot 1 stores normalized voice byte 0x9b",
+    "PASS\tpayload record 113 preserves seven-byte stock raw tail",
+    "PASS\tpayload record 114 slot 2 stores normalized voice byte 0x9b",
+    "PASS\tpayload record 114 preserves seven-byte stock raw tail",
+    "PASS\tpayload record 115 slot 3 stores normalized voice byte 0x9b",
+    "PASS\tpayload record 115 preserves seven-byte stock raw tail",
+    "PASS\tpayload record 116 slot 4 stores normalized voice byte 0x9b",
+    "PASS\tpayload record 116 preserves seven-byte stock raw tail",
+    "PASS\tpayload record 117 slot 5 stores normalized voice byte 0x9b",
+    "PASS\tpayload record 117 preserves seven-byte stock raw tail",
+    "PASS\tpayload record 118 slot 6 stores normalized voice byte 0x9b",
+    "PASS\tpayload record 118 preserves seven-byte stock raw tail",
+    "PASS\tpayload record 119 slot 7 stores normalized voice byte 0x9b",
+    "PASS\tpayload record 119 preserves seven-byte stock raw tail",
+    "PASS\tpayload record 120 slot 8 stores normalized voice byte 0x9b",
+    "PASS\tpayload record 120 preserves seven-byte stock raw tail",
+    "PASS\tpayload record 121 slot 9 stores normalized voice byte 0x9b",
+    "PASS\tpayload record 121 preserves seven-byte stock raw tail",
+    "PASS\tpayload record 122 slot 10 stores normalized voice byte 0x9b",
+    "PASS\tpayload record 122 preserves seven-byte stock raw tail",
+    "PASS\tpayload record 123 slot 11 stores normalized voice byte 0x9b",
+    "PASS\tpayload record 123 preserves seven-byte stock raw tail",
+    "PASS\tpayload record 124 slot 12 stores normalized voice byte 0x9b",
+    "PASS\tpayload record 124 preserves seven-byte stock raw tail",
+    "PASS\tpayload record 125 slot 13 stores normalized voice byte 0x9b",
+    "PASS\tpayload record 125 preserves seven-byte stock raw tail",
+    "PASS\tpayload record 126 slot 14 stores normalized voice byte 0x9b",
+    "PASS\tpayload record 126 preserves seven-byte stock raw tail",
+    "PASS\tpayload record 127 slot 15 stores normalized voice byte 0x9b",
+    "PASS\tpayload record 127 preserves seven-byte stock raw tail",
+    "PASS\tmanifest record preserves seven-byte stock raw tail",
+    "PASS\tmanifest/map record stores all 16 Playback Notes",
+    "PASS\tslot 0 direct raw prefix restores normalized S1C5 voice",
+    "PASS\tslot 0 manifest restores Playback Note",
+    "PASS\tslot 1 direct raw prefix restores normalized S1C5 voice",
+    "PASS\tslot 1 manifest restores Playback Note",
+    "PASS\tslot 2 direct raw prefix restores normalized S1C5 voice",
+    "PASS\tslot 2 manifest restores Playback Note",
+    "PASS\tslot 3 direct raw prefix restores normalized S1C5 voice",
+    "PASS\tslot 3 manifest restores Playback Note",
+    "PASS\tslot 4 direct raw prefix restores normalized S1C5 voice",
+    "PASS\tslot 4 manifest restores Playback Note",
+    "PASS\tslot 5 direct raw prefix restores normalized S1C5 voice",
+    "PASS\tslot 5 manifest restores Playback Note",
+    "PASS\tslot 6 direct raw prefix restores normalized S1C5 voice",
+    "PASS\tslot 6 manifest restores Playback Note",
+    "PASS\tslot 7 direct raw prefix restores normalized S1C5 voice",
+    "PASS\tslot 7 manifest restores Playback Note",
+    "PASS\tslot 8 direct raw prefix restores normalized S1C5 voice",
+    "PASS\tslot 8 manifest restores Playback Note",
+    "PASS\tslot 9 direct raw prefix restores normalized S1C5 voice",
+    "PASS\tslot 9 manifest restores Playback Note",
+    "PASS\tslot 10 direct raw prefix restores normalized S1C5 voice",
+    "PASS\tslot 10 manifest restores Playback Note",
+    "PASS\tslot 11 direct raw prefix restores normalized S1C5 voice",
+    "PASS\tslot 11 manifest restores Playback Note",
+    "PASS\tslot 12 direct raw prefix restores normalized S1C5 voice",
+    "PASS\tslot 12 manifest restores Playback Note",
+    "PASS\tslot 13 direct raw prefix restores normalized S1C5 voice",
+    "PASS\tslot 13 manifest restores Playback Note",
+    "PASS\tslot 14 direct raw prefix restores normalized S1C5 voice",
+    "PASS\tslot 14 manifest restores Playback Note",
+    "PASS\tslot 15 direct raw prefix restores normalized S1C5 voice",
+    "PASS\tslot 15 manifest restores Playback Note",
+    "PASS\towned executable window remains exact 278 bytes",
+    "PASS\tcurrent S1C5 selector is exact 88 bytes",
+    "PASS\tcurrent S1C5 producer is exact 188 bytes",
+    "PASS\tcurrent WebMIDI producer publishes ARMED last",
+    "PASS\tpreserving exact S1C5 selector and producer leaves only 2 bytes",
+    "PASS\tdirect mapped raw-record fallback primitive lower bound is 32 bytes",
+    "PASS\tdirect mapped fallback cannot fit while preserving exact S1C5 selector/producer",
+    "PASS\tproducer-preserving selector budget is 90 bytes",
+    "PASS\tvolatile ARMED selector plus minimal raw fallback exceeds producer-preserving budget",
+    "PASS\tremoving reset wrapper would free enough bytes only by breaking current WebMIDI reset contract"
+  ]
+}
