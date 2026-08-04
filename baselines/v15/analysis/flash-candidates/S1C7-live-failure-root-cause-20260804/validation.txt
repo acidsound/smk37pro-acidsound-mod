@@ -1,0 +1,6 @@
+PASS exact S1C5/S1C7 binary gates
+PASS S1C7 producer preserved but selector fallback changed
+PASS dual S1C7 preseed dumps identical and unseeded zero prefixes
+PASS root cause: full-length read accepted unvalidated all-zero records
+PASS successor design requires no-seed stock fallback, S1C5 ARMED priority, and positive magic/CRC
+BLOCK no safe FWSC emitted

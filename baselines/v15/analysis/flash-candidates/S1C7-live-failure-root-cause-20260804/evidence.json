@@ -1,0 +1,227 @@
+{
+  "binaries": {
+    "critical_calls_and_branches": {
+      "s1c5_not_armed_or_invalid_target": "0x0201e186 stock copy path",
+      "s1c7_helper_read_call": "0x02026d92 call32 -> 0x02004870 with r0=dest, r1=0x7d20+slot*0xa3, r2=0x9c",
+      "s1c7_invalid_branch": "0x0201e178 jne r0,#1 -> 0x0201e18c persistent helper call",
+      "s1c7_not_armed_branch": "0x0201e166 jne r0,#2 -> 0x0201e18c persistent helper call",
+      "s1c7_persistent_call": "0x0201e18c call32 -> 0x02026d80",
+      "s1c7_read_ok_gate": "0x02026d98 jne r0,#0 -> trust bytes already copied into dest",
+      "s1c7_stock_copy_call": "0x0201e186 call32 -> 0x02026db2"
+    },
+    "s1c5": {
+      "app_sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+      "combined_window_sha256": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+      "fwsc_sha256": "0a6ac1ae7d4bd34e252eb8f23a4d2c5f39d7454376ade1a3b75ff7d03155ea91",
+      "producer_sha256": "53bc57acd7e787320400d0d945ec6b3f2e59f2074ae81c9053eb2c11f72560d4"
+    },
+    "s1c5_to_s1c7_app_diff": {
+      "byte_count": 104,
+      "producer_preserved_byte_for_byte": true,
+      "ranges": [
+        "0x1e168..0x1e169",
+        "0x1e17a..0x1e17b",
+        "0x1e186..0x1e196",
+        "0x26d7a..0x26dbb",
+        "0x26dbd..0x26dc5",
+        "0x26dc6..0x26dca",
+        "0x26dcb..0x26dd4"
+      ]
+    },
+    "s1c7": {
+      "app_sha256": "71cfc1fcbeecd1a9277f88272be6b122a96f33fbd741d7486c670ffab6e58646",
+      "fwsc_sha256": "3dfb7e23debbd3a3055945b121991cf7a58b5f1cb59ff98f6dfba7dd084f2593",
+      "helper_sha256": "e9ea13c277736c000e5b7f275f97d319b725b2376e9ac15aac97209a8b0f4396",
+      "producer_sha256": "53bc57acd7e787320400d0d945ec6b3f2e59f2074ae81c9053eb2c11f72560d4",
+      "save_skip_bytes": "04ac00160016",
+      "selector_sha256": "b77f2787874ad37d724e1c6305e74f97c8a6eb9fe6b51627c8fce35dd257daeb"
+    }
+  },
+  "decision": "ROOT_CAUSE_CONFIRMED_SAFE_FWSC_BLOCKED",
+  "format": "smk37-v15-s1c7-live-failure-root-cause-v1",
+  "live_dumps": {
+    "interpretation": "S1C7 had no positive seed present. Each 0x9c prefix was all zero, but the S1C7 helper only checked read length/nonzero return, not seed magic or CRC.",
+    "preseed_dual_dump": {
+      "a": "baselines/v15/device-dumps/s1c7-preseed-20260804/pre-a-live.bin",
+      "b": "baselines/v15/device-dumps/s1c7-preseed-20260804/pre-b-live.bin",
+      "byte_identical": true,
+      "sha256": "078c13d698ad08a4cfac7723e87014000e5557e655bd1f21d75493dc8f652946",
+      "size": 1048576
+    },
+    "raw_records_96_111_before_seed": [
+      {
+        "physical_offset": "0x0fbd20",
+        "prefix_all_zero": true,
+        "prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 96,
+        "slot": 0,
+        "tail_hex": "64000000000000"
+      },
+      {
+        "physical_offset": "0x0fbdc3",
+        "prefix_all_zero": true,
+        "prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 97,
+        "slot": 1,
+        "tail_hex": "64000000000000"
+      },
+      {
+        "physical_offset": "0x0fbe66",
+        "prefix_all_zero": true,
+        "prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 98,
+        "slot": 2,
+        "tail_hex": "64000000000000"
+      },
+      {
+        "physical_offset": "0x0fbf09",
+        "prefix_all_zero": true,
+        "prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 99,
+        "slot": 3,
+        "tail_hex": "64000000000000"
+      },
+      {
+        "physical_offset": "0x0fbfac",
+        "prefix_all_zero": true,
+        "prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 100,
+        "slot": 4,
+        "tail_hex": "64000000000000"
+      },
+      {
+        "physical_offset": "0x0fc04f",
+        "prefix_all_zero": true,
+        "prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 101,
+        "slot": 5,
+        "tail_hex": "64000000000000"
+      },
+      {
+        "physical_offset": "0x0fc0f2",
+        "prefix_all_zero": true,
+        "prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 102,
+        "slot": 6,
+        "tail_hex": "64000000000000"
+      },
+      {
+        "physical_offset": "0x0fc195",
+        "prefix_all_zero": true,
+        "prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 103,
+        "slot": 7,
+        "tail_hex": "64000000000000"
+      },
+      {
+        "physical_offset": "0x0fc238",
+        "prefix_all_zero": true,
+        "prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 104,
+        "slot": 8,
+        "tail_hex": "64000000000000"
+      },
+      {
+        "physical_offset": "0x0fc2db",
+        "prefix_all_zero": true,
+        "prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 105,
+        "slot": 9,
+        "tail_hex": "64000000000000"
+      },
+      {
+        "physical_offset": "0x0fc37e",
+        "prefix_all_zero": true,
+        "prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 106,
+        "slot": 10,
+        "tail_hex": "64000000000000"
+      },
+      {
+        "physical_offset": "0x0fc421",
+        "prefix_all_zero": true,
+        "prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 107,
+        "slot": 11,
+        "tail_hex": "64000000000000"
+      },
+      {
+        "physical_offset": "0x0fc4c4",
+        "prefix_all_zero": true,
+        "prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 108,
+        "slot": 12,
+        "tail_hex": "64000000000000"
+      },
+      {
+        "physical_offset": "0x0fc567",
+        "prefix_all_zero": true,
+        "prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 109,
+        "slot": 13,
+        "tail_hex": "64000000000000"
+      },
+      {
+        "physical_offset": "0x0fc60a",
+        "prefix_all_zero": true,
+        "prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 110,
+        "slot": 14,
+        "tail_hex": "64000000000000"
+      },
+      {
+        "physical_offset": "0x0fc6ad",
+        "prefix_all_zero": true,
+        "prefix_sha256": "59bf9091f4cbbd2a8796bfe086a501c57226c42739dcf8ad323e7493ad51e38f",
+        "record_index": 111,
+        "slot": 15,
+        "tail_hex": "64000000000000"
+      }
+    ]
+  },
+  "live_observations": {
+    "observed_s1c5_recovery": "After restoring S1C5 and retransmitting the Patch Set, user reported pad operation normal.",
+    "observed_s1c7_failure": "User reported after S1C7 OTA: Pad side had no sound, and sending SysEx from Patch Set Editor gave the same result.",
+    "s1c5_restore_log": "logs/v15/ota-v15-s1c5-restore-from-s1c7-20260804.log",
+    "s1c5_restore_partial_dump": {
+      "path": "baselines/v15/device-dumps/s1c5-restored-20260804/post-restore.bin",
+      "sha256": "70aee2ea0614042ee51df57492667931aed0d054724d89f9723a5eb848fc7550",
+      "size": 638976
+    },
+    "s1c7_install_log": "logs/v15/ota-v15-s1c7-current-set-helper-20260804.log",
+    "s1c7_seed_bundle": "build/SMK37Pro-WL82-v15-S1C7-seed-20260804-v1",
+    "seed_bundle_declares_target_dump_sha": true,
+    "seed_bundle_readme_sha256": "0e1071b9e03222b6a7b37fe826ca77859a5dc0d74563325642c736b6499dfea3"
+  },
+  "scope": {
+    "device_accessed": false,
+    "flash_performed": false,
+    "fwsc_emitted": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "ota_performed": false,
+    "reset_performed": false
+  },
+  "successor_design": {
+    "manifest_magic_ascii": "SMK37S8P",
+    "manifest_record": 112,
+    "manifest_template_header_crc32": "0xc4f6c192",
+    "manifest_template_sha256": "58f177ef040a8a8ffdc324a0243f904efb0d79de7520e73a3e24cef53333f36f",
+    "minimum_contract": [
+      "Start from exact S1C5. Preserve its selector/producer and product SysEx producer semantics unless a fully reviewed larger placement is found.",
+      "If S1C5 RAM is ARMED and selected slot is valid, use resident RAM before any persistent lookup.",
+      "If no positive persistent seed is present, execute exact S1C5 stock/not-ARMED fallback. Do not copy raw storage bytes into the note payload destination.",
+      "Persistent restore requires a separate manifest record with magic, version, layout, committed flag, header CRC, payload CRC, per-record CRCs, and playback notes.",
+      "Only after all reads and CRCs pass, materialize all 16 resident slots, force voice[0x9b]=0x3f, populate Playback Note map, set valid flags, then publish ARMED last.",
+      "Future save/write must write payloads first, readback verify them, then write/readback verify manifest last. A failed write remains invisible to restore."
+    ],
+    "payload_records": "96..111",
+    "status": "DESIGN_ONLY_BLOCKED_FOR_FIRMWARE_FIT",
+    "why_no_safe_fwsc_emitted": [
+      "S1C5 owned selector/producer window has no free bytes when preserving producer and existing Web/CoreMIDI behavior.",
+      "S1C7's 84-byte helper already fills the quarantined SAVE cave and still lacks magic/CRC validation.",
+      "Adding positive magic plus header CRC plus payload/per-record CRC plus no-seed stock fallback cannot be proven to fit in exact owned placement.",
+      "No exact callable runtime CRC ABI or safe larger lazy-load hook is proven in current evidence."
+    ]
+  }
+}
