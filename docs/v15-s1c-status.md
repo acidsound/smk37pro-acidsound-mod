@@ -53,10 +53,15 @@ offline 검증(validate.py), exact-OTA 컴파일, rollback sector, live transcri
 
 ### 제약 (S1-C5 identity 결합)
 
-S1-C5에서는 packet byte 161이 16-slot transaction identity에 결합되어 있습니다.
-임의 Playback Note를 넣으면 slot identity가 붕괴할 수 있으므로, 웹 에디터의
-FM Drum preset은 identity-safe(Original) 정책을 사용합니다. 임의 drum-map
-Playback Note를 안전하게 쓰려면 추가 펌웨어 변경이 필요합니다.
+S1-C4 시절 live 분석에서 packet byte 161이 trigger/transaction identity로
+취급되어 임의 Playback Note에서 transaction이 붕괴하는 문제가 확인되었습니다.
+S1-C5의 post-hook register reload 수정으로 all-C4(중복) 포함 임의 Playback
+Note가 live 검증되었지만, **trigger 범위(36..51) 내 playback note의 voice-identity
+상호작용은 아직 미검증**이므로 웹 에디터의 FM Drum preset은 identity-safe
+(Original) 정책을 유지합니다.
+
+임의 Playback Note 안전 사용 연구·해제 계획은
+[`docs/playback-note-safety-plan.md`](playback-note-safety-plan.md)에 있습니다.
 
 ## 영속화(persistence) 미해결
 
