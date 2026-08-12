@@ -1,0 +1,53 @@
+#!/bin/sh
+set -eu
+
+if [ "$#" -lt 1 ]; then
+    printf '%s\n' "usage: $0 <command> [args...]" >&2
+    exit 2
+fi
+
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+repo_root=$(dirname -- "$script_dir")
+restore_helper="$repo_root/build/smk37-start-midiserver"
+
+release_midiserver() {
+    pids=$(pgrep -x -u "$UID" MIDIServer 2>/dev/null || true)
+    if [ -n "$pids" ]; then
+        printf '%s\n' "$pids" | while IFS= read -r pid; do
+            kill -TERM "$pid" 2>/dev/null || true
+        done
+    fi
+}
+
+restore_midiserver() {
+    mkdir -p "$repo_root/build"
+    if cc -O2 -Wall -Wextra -Werror \
+        "$repo_root/tools/start_macos_midiserver.c" \
+        -framework CoreMIDI -framework CoreFoundation \
+        -o "$restore_helper"; then
+        "$restore_helper" || true
+    else
+        printf '%s\n' "warning: failed to build CoreMIDI restore helper" >&2
+    fi
+}
+
+finish() {
+    restore_midiserver
+}
+
+trap finish EXIT
+
+release_midiserver
+"$@" &
+tool_pid=$!
+trap 'kill -TERM "$tool_pid" 2>/dev/null || true' HUP INT TERM
+
+while kill -0 "$tool_pid" 2>/dev/null; do
+    release_midiserver
+    sleep 0.1
+done
+
+status=0
+wait "$tool_pid" || status=$?
+trap - HUP INT TERM
+exit "$status"

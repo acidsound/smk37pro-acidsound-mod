@@ -1,0 +1,14 @@
+{
+  "name": "smk37-patch-set-editor",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "SMK-37 Pro Ch10 drum SysEx patch set editor — zero-dependency static Web MIDI app for GitHub Pages",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

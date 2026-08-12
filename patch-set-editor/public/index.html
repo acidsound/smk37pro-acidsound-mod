@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="SMK-37 Pro Ch10 drum SysEx patch set editor. Zero-dependency Web MIDI app hosted on GitHub Pages.">
+  <title>SMK-37 Patch Set Editor</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">SMK-37 PRO · V15 S1-C4 PLAYBACK NOTE</p>
+      <h1>Patch Set Editor</h1>
+      <p class="subtitle">16개의 DX7 single-voice SysEx를 실제 2×8 Pad에 배치하고 Chrome Web MIDI로 전송합니다.</p>
+    </div>
+    <div class="connection-card">
+      <span id="midi-state" class="status-dot">MIDI 연결 전</span>
+      <button id="connect-midi" class="primary">Web MIDI 연결</button>
+      <label>
+        SMK MIDI Device
+        <select id="midi-device" disabled><option>장치를 먼저 연결하세요</option></select>
+      </label>
+      <small id="midi-learn-state">Playback Note를 선택한 뒤 MIDI Note를 입력하세요</small>
+    </div>
+  </header>
+
+  <main>
+    <section class="toolbar panel" aria-label="Patch set actions">
+      <label class="set-name">Patch Set 이름<input id="set-title" value="Bank D Demo"></label>
+      <div class="actions">
+        <button id="load-demo">검증 세트 불러오기</button>
+        <button id="load-drum-kit">FM Drum Preset · Identity-safe</button>
+        <button id="load-files">16개 .syx 선택</button>
+        <button id="import-set">Set 가져오기</button>
+        <button id="export-set">Set 내보내기</button>
+        <button id="all-original">Playback 전체 Original</button>
+        <button id="all-c4">Playback 전체 C4</button>
+        <button id="clear-set" class="danger-quiet">전체 비우기</button>
+      </div>
+      <input id="file-picker" type="file" accept=".syx" multiple hidden>
+      <input id="set-picker" type="file" accept=".json,.smkpatchset.json" hidden>
+    </section>
+
+    <section class="device panel">
+      <div class="device-topline">
+        <div>
+          <span class="eyebrow">PHYSICAL PAD LAYOUT</span>
+          <h2>Pad 1–16</h2>
+        </div>
+        <div class="set-health">
+          <strong id="valid-count">0 / 16</strong>
+          <span id="set-state">패치를 불러오세요</span>
+        </div>
+      </div>
+      <div id="pad-grid" class="pad-grid" aria-label="2 by 8 pad layout"></div>
+    </section>
+
+    <section class="transport panel">
+      <div>
+        <span class="eyebrow">VOLATILE RAM TRANSFER</span>
+        <h2>장치 전송</h2>
+        <p>전체 16개가 note 36→51 순서로 전송됩니다. 재부팅 후에는 다시 전송해야 합니다.</p>
+      </div>
+      <div class="transport-controls">
+        <progress id="send-progress" max="16" value="0"></progress>
+        <button id="send-all" class="primary large" disabled>16개 Patch 전송</button>
+      </div>
+    </section>
+
+    <section class="panel log-panel">
+      <div class="log-title"><h2>Activity</h2><button id="clear-log">로그 지우기</button></div>
+      <pre id="activity-log" aria-live="polite">Ready. Chrome에서 Web MIDI 연결을 허용하세요.</pre>
+    </section>
+  </main>
+
+  <template id="pad-template">
+    <article class="pad" tabindex="0">
+      <div class="pad-number"></div>
+      <div class="pad-note"></div>
+      <strong class="patch-name">Empty</strong>
+      <span class="patch-file">Drop a 163-byte .syx</span>
+      <label class="playback-control">
+        <span>Playback</span>
+        <select class="playback-note"></select>
+      </label>
+      <div class="pad-actions">
+        <button class="choose-patch">Choose</button>
+        <button class="download-patch" disabled>Save</button>
+        <button class="clear-patch" disabled>Clear</button>
+      </div>
+      <input class="pad-file-input" type="file" accept=".syx" hidden>
+    </article>
+  </template>
+
+  <script type="module" src="app.js?v=ghpages-1"></script>
+</body>
+</html>
