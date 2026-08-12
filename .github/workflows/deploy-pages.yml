@@ -35,6 +35,8 @@ jobs:
           mkdir -p _site/patch-set-editor
           cp -r patch-set-editor/public/. _site/patch-set-editor/
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
