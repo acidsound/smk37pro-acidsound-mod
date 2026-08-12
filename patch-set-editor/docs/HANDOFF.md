@@ -107,6 +107,8 @@ GitHub Pages는 강한 캐싱을 하므로 쿼리를 바꾸지 않으면 구버�
 1. **S1-C5 identity 결합**: 임의 drum-map Playback Note를 안전하게 쓰려면
    펌웨어 변경이 선행되어야 합니다. FM Drum Preset은 Original만 사용 중
    (manifest에 `requestedPlaybackNote` 메타데이터로 원래 의도는 보존).
+   해제 연구·단계별 계획은 저장소 루트 `docs/playback-note-safety-plan.md`를
+   참고하세요.
 2. **Safari**: Web MIDI 미지원. Chrome 안내 문구만 존재.
 3. **MIDI Learn**: Note On만 인식. (채널 필터링, CC 매핑 등은 미구현.)
 4. **진단**: GitHub Pages에서 진단 수집 불가. 오류는 로그에만 남습니다.
