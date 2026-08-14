@@ -1,6 +1,6 @@
 # 임의 Playback Note 안전 사용 계획
 
-작성: 2026-08-13 · 갱신: 2026-08-14 · 상태: **루트 원인 확정** — FM 키트 실패는 byte 161이 아니라 프로듀서 리셋 시그니처 콜리전
+작성: 2026-08-13 · 갱신: 2026-08-14 · 상태: **Phase 1 완료 — S1C6(S16) 실기기 검증 PASS** (루트 원인: 프로듀서 리셋 시그니처 콜리전)
 
 > **2026-08-14 정정**: 앞서 "장치가 S1C1"이라 보고했으나 잘못된 정보였습니다.
 > 장치 표시가 `S1C5`의 마지막 글자가 잘려 `S1C`로만 보인 것입니다. 실제 장치는
@@ -272,7 +272,7 @@ byte-for-byte 보존**됩니다 (M09 교훈: cave 없음).
 > MIDIServer 재시작을 수반하므로 브라우저 세션과 병행 불가 — 테스트 간
 > 순서를 정리해야 합니다.
 
-## 6.5 Phase 1 진행 기록 (2026-08-14) — S1C6(S16) 구현 완료, 실기기 대기
+## 6.5 Phase 1 진행 기록 (2026-08-14) — S1C6(S16) 구현 완료 + 실기기 검증 PASS
 
 ### 확정 설계 (R-B)
 
@@ -313,14 +313,30 @@ byte-for-byte 보존**됩니다 (M09 교훈: cave 없음).
   시그니처·7-bit·보이스 검증기 거부 케이스 추가).
 - **C 센더**: `exact_17_packet_sender.c` (리셋 선행, dry-run PASS, live 차단 기본).
 
-### 남은 실기기 단계 (장치 연결 + 승인 필요)
+### 실기기 검증 (2026-08-14, 장치 연결 상태에서 수행) — 전부 PASS
 
-1. exact_ota로 S1C6 OTA (`check` → `upload … --confirm INSTALL-SMK37PRO-V15-S1C6-RESET-SIG-FD449B93`),
-   표시 `S16` 확인.
-2. **재로드 회귀**: Bank D 로드 → FM 키트 재로드(슬롯0 LONG TOM `63 63`) —
-   리셋 없이 전원 사이클 없이 교체 성공이 핵심 확인.
-3. **FM 키트 requested map**: explicit Playback Note(36..51) 16음 전부 드럼 음색.
-4. all-C4(60) 회귀 없음. → PASS 시 Phase 2(identity-safe 해제) 진행.
+1. **S1C6 OTA**: exact_ota `check`(양성 PASS + S1C5-marked 음성 REJECT) →
+   `upload … --confirm INSTALL-SMK37PRO-V15-S1C6-RESET-SIG-FD449B93` 성공.
+   stage-1 검증 요청 1290개 완주(08-04 성공 패턴과 동일) + `completion
+   0xf0000000 acknowledged` → 장치 정상 모드 복귀, identity `SMK-37 Pro_015`
+   응답. (post-update identity 확인은 MIDIServer가 5초 대기 중 인터페이스를
+   재점유해 읽기만 실패 — 플래시 자체는 정상 완료.)
+2. **재로드 회귀**: 직접 USB 센더로 (1) all-C4 17패킷(리셋 + 16, byte 161=60)
+   전송 → (2) **전원 사이클 없이** FM 키트 17패킷(리셋 + 16, byte 161 =
+   requested map 36..51) 재전송. 둘 다 에러 0. FM 키트 재로드 성공.
+3. **FM 키트 requested map**: Pad 1–16 전부 드럼 음색으로 소리남 (KICK DRUM,
+   Kick, SNARE, Swissnare, HAND CLAPS, HITUN RIMS, tom 1, tom 2, LONG TOM,
+   TOM TOMS, CL.HI-HAT, Open HiHat, CRASH CYMB, R.CYMBAL, COW BELL, Shaker).
+   — HITUN RIMS(`62 63`), LONG TOM(`63 63`) 등 충돌 보이스 포함 전부 정상.
+4. 표시 마커 `S16` 확인.
+
+→ S1C6 핵심 회귀 3건(① 리셋 패킷 동작 ② 전원 사이클 없이 재로드 ③ 보이스
+데이터의 `62 63`/`63 63` 충돌 해소) 모두 실기기 검증 완료. **Phase 2
+(identity-safe 해제) 진행 가능.**
+
+참고: 에디터 `RESET_PACKET`(wire 6..7 = `64 65`, byte 161 = 0x00, 163B)은
+위 라이브 검증에 쓴 패킷과 바이트 단위로 동일하고, `sendAll`은 리셋 선행
+17패킷으로 동작 — 에디터 경로는 별도 재검증 시 동일 프로토콜.
 
 ## 7. 위험 및 대응
 
