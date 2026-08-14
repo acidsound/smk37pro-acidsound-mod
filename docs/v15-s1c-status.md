@@ -2,6 +2,24 @@
 
 작성: 2026-08-13 (기준: 최근 성공 flash 2026-08-04)
 
+## 2026-08-14 상태 갱신 — S1C6(S16) 리셋 검출 분리 구현 완료 (실기기 OTA 대기)
+
+**Phase 1(R-B) 펌웨어 S1C6이 offline 게이트 전부 통과**했습니다. 표시 마커는
+`S16`(3자 버저닝 규칙 적용). FM Drum 로드 실패의 루트 원인인 프로듀서 리셋
+시그니처 콜리전을, 구조적 불가능 시그니처(`0x64 0x65`) + 명시적 리셋 패킷
+(리셋 패킷은 보이스로 적재하지 않음)으로 분리했습니다. 에디터도 리셋 패킷 선행
+전송으로 업데이트(테스트 14/14). 아티팩트·게이트 상세는
+[`playback-note-safety-plan.md`](playback-note-safety-plan.md) §6.5와
+워크스페이스 `baselines/v15/analysis/flash-candidates/S1C6-reset-signature-isolation/`
+참조.
+
+- **fwsc**: `SMK37Pro-v15-S1C6-reset-signature-isolation-S16-marked.fwsc`
+  (SHA-256 `fd449b93…`), **OTA token**:
+  `INSTALL-SMK37PRO-V15-S1C6-RESET-SIG-FD449B93`
+- 남은 단계: 실기기 OTA → 재로드 회귀(FM 키트 재로드, 전원 사이클 없음) →
+  requested map(36..51) live 검증 → all-C4 회귀 확인 → **PASS 시 Phase 2
+  (identity-safe 해제)**.
+
 ## 2026-08-14 상태 갱신 — 정정: 장치는 S1C5 (표시 잘림 오독) · 버저닝 3자 전환
 
 초기 "장치 = S1C1" 보고는 **잘못된 정보**였습니다. 표시 마커 `S1C5`의 마지막

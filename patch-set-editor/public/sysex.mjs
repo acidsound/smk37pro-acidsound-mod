@@ -7,6 +7,20 @@ export const HEADER = Uint8Array.from([0xf0, 0x43, 0x00, 0x00, 0x01, 0x1b]);
 export const PAD_TO_NOTE = Object.freeze([40, 41, 42, 43, 48, 49, 50, 51, 36, 37, 38, 39, 44, 45, 46, 47]);
 export const NOTE_TO_PAD = new Map(PAD_TO_NOTE.map((note, index) => [note, index + 1]));
 
+// S1-C6 Reset Signature Isolation (S16) explicit reset packet.
+// Wire bytes 6..7 = 0x64 0x65 are structurally impossible in any DX7 voice
+// (payload bytes 0..1 are OP1 EG rates 1..2 with DX7 value range 0..99), so
+// the S16 firmware resets lock/count/state on this packet and does NOT load
+// it as a voice. Hosts send 1 reset packet before the 16 voice packets so
+// reloading over an armed kit works without a power cycle. Byte 161 is never
+// read by the firmware for this packet and is fixed to 0x00.
+export const RESET_PACKET = (() => {
+  const packet = new Uint8Array(PACKET_SIZE);
+  packet.set([0xf0, 0x43, 0x00, 0x00, 0x01, 0x1b, 0x64, 0x65], 0);
+  packet[PACKET_SIZE - 1] = 0xf7;
+  return packet;
+})();
+
 export class SysExError extends Error {}
 
 export function yamahaChecksum(bytes) {

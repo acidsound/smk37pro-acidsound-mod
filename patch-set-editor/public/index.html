@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <meta name="description" content="SMK-37 Pro Ch10 drum SysEx patch set editor. Zero-dependency Web MIDI app hosted on GitHub Pages.">
   <title>SMK-37 Patch Set Editor</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="styles.css">
@@ -62,7 +61,7 @@
       <div>
         <span class="eyebrow">VOLATILE RAM TRANSFER</span>
         <h2>장치 전송</h2>
-        <p>전체 16개가 note 36→51 순서로 전송됩니다. 재부팅 후에는 다시 전송해야 합니다.</p>
+        <p>S1-C6(S16) 프로토콜: 리셋 패킷 1개 후 전체 16개가 note 36→51 순서로 전송됩니다. 재부팅 후에는 다시 전송해야 합니다.</p>
       </div>
       <div class="transport-controls">
         <progress id="send-progress" max="16" value="0"></progress>
@@ -95,6 +94,6 @@
     </article>
   </template>
 
-  <script type="module" src="app.js?v=ghpages-1"></script>
+  <script type="module" src="app.js?v=20260814-s1c6-reset"></script>
 </body>
 </html>

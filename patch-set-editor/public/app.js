@@ -1,5 +1,6 @@
 import {
   PAD_TO_NOTE,
+  RESET_PACKET,
   createPatchSetDocument,
   midiNoteName,
   midiNoteOnFromMessage,
@@ -7,11 +8,6 @@ import {
   transmissionOrder,
   validateEditorSysEx,
 } from "./sysex.mjs";
-
-const APP_VERSION = "1.0.0-ghpages";
-// The /__diagnostics endpoint exists only on the local dev server (server.mjs).
-// On GitHub Pages the app is fully static, so diagnostics are a no-op.
-const DIAGNOSTICS_ENABLED = new Set(["127.0.0.1", "localhost", "[::1]"]).has(location.hostname);
 
 const slots = Array(16).fill(null);
 const playbackNotes = Array(16).fill(null);
@@ -34,7 +30,6 @@ function portDetails(port) {
 }
 
 function diagnose(event, detail = {}) {
-  if (!DIAGNOSTICS_ENABLED) return;
   fetch("/__diagnostics", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -335,10 +330,18 @@ async function sendAll() {
     });
     log("재부팅/펌웨어 업데이트 후 지워진 휘발성 Patch Set을 다시 전송합니다.");
     log("각 patch packet에 Playback Note를 함께 전송합니다.");
+    log("S1-C6 프로토콜: 먼저 리셋 패킷 1개를 보낸 뒤 patch 16개를 전송합니다.");
     sending = true;
     elements.progress.value = 0;
     updateHealth();
-    log(`${output.name}: 16개 patch 전송 시작`);
+    log(`${output.name}: 리셋 패킷 1개 + patch 16개 전송 시작`);
+    output.send(RESET_PACKET);
+    diagnose("reset-packet-sent", {
+      output: portDetails(output),
+      wireBytes67: [...RESET_PACKET.slice(6, 8)],
+      byte161: RESET_PACKET[161],
+    });
+    await new Promise((resolve) => setTimeout(resolve, 100));
     for (const item of queue) {
       output.send(item.bytes);
       diagnose("packet-sent", {
@@ -354,7 +357,7 @@ async function sendAll() {
       log(`Sent ${item.order}/16 · Pad ${String(item.pad).padStart(2, "0")} · trigger ${item.triggerNote} · playback ${item.playbackNote} · ${item.name}`);
       await new Promise((resolve) => setTimeout(resolve, 100));
     }
-    log("16개 patch 전송 완료. Pad 1–16을 확인하세요.", "PASS");
+    log("리셋 패킷 + 16개 patch 전송 완료. Pad 1–16을 확인하세요.", "PASS");
     diagnose("send-complete", { output: portDetails(output) });
   } catch (error) {
     log(`전송 중단: ${error.message}`, "ERROR");
@@ -451,7 +454,6 @@ document.querySelector("#clear-set").addEventListener("click", () => {
   log("모든 Pad를 비웠습니다.");
 });
 document.querySelector("#clear-log").addEventListener("click", () => { elements.log.textContent = ""; });
-log(`SMK-37 Patch Set Editor ${APP_VERSION} · ${location.hostname === "127.0.0.1" || location.hostname === "localhost" ? "로컬 개발 서버" : "GitHub Pages"} 모드`);
 updateHealth();
 window.addEventListener("error", (event) => diagnose("window-error", { message: event.message, stack: event.error?.stack }));
 window.addEventListener("unhandledrejection", (event) => diagnose("unhandled-rejection", { message: String(event.reason), stack: event.reason?.stack }));

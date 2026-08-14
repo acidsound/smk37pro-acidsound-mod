@@ -169,7 +169,7 @@ identity-safe 유지 사유가 될 수 없습니다**.
 
 | 옵션 | 내용 | 난이도 | 비고 |
 |---|---|---|---|
-| **R-B (권장)**: 명시적 리셋 패킷 + 구조적 불가능 시그니처 | reset wrapper가 `stage[0..1]==62 63 && stage[2]==0x7F`를 검사하고, 일치 시 클리어 후 **producer를 호출하지 않고 반환**(리셋은 보이스가 아님). 호스트는 16개 보이스 전에 리셋 패킷 1개(17개) 전송 | 중 | wire byte 8 = 보이스 EG rate 구간(0..0x63)이라 `0x7F`는 DX7 보이스에서 **구조적으로 불가능** — 번들 32개 스캔으로 0x64+ 없음 확인. 중간 슬롯 보이스가 리셋을 발화할 수 없음 + 슬롯0 비충돌 키트도 재로드 가능 |
+| **R-B (권장·구현 완료)**: 명시적 리셋 패킷 + 구조적 불가능 시그니처 | reset wrapper가 `stage[0..1]==64 65`를 검사하고, 일치 시 클리어 후 **producer를 호출하지 않고 반환**(리셋은 보이스가 아님). 호스트는 16개 보이스 전에 리셋 패킷 1개(17개) 전송 | 중 | **2026-08-14 S1C6(S16)로 구현 완료.** payload bytes 0..1 = OP1 EG rates 1..2(DX7 범위 0..99)라 `0x64/0x65`는 **구조적으로 불가능** (번들 32개 스캔 0건). 시그니처를 2바이트로 확정한 이유: 래퍼가 기존 44B owned tail에 in-place로 맞아 **callsite·core 무변경**(아래 §6.5). 중간 슬롯 보이스가 리셋을 발화할 수 없음 + 슬롯0 비충돌 키트도 재로드 가능 |
 | **R-min (최소)**: count 게이트 추가 | reset 발화 조건에 `count == 0 || count == 16`(트랜잭션 시작/완료 시)만 허용 — 중간 슬롯(1..15)의 `62 63`은 무시 | 낮음 | 오늘의 실측 버그(중간 슬롯 소거)는 해결되지만, 슬롯0이 62 63이 아닌 키트의 재로드 제한은 남음 (전원 사이클 필요) |
 | ~~A/B/C/D~~ | ~~byte 161 분리 transport~~ | — | **폐기** (전제 반증) |
 
@@ -177,13 +177,14 @@ identity-safe 유지 사유가 될 수 없습니다**.
 차단 (2) 슬롯0이 뭐든 재로드 가능 (3) byte 161은 순수 Playback Note로 해방 —
 identity-safe 해제(Phase 2)의 전제가 모두 충족됩니다.
 
-구현 제약: S1C5 selector/producer owned window
-(`0x0201e13e..0x0201e254`)에는 2-byte tail만 여유가 있으므로
-(`persistence-s2/restore-placement-audit`), R-B는 window 재작성 또는 새 code
-cave + 호출부 재작성이 필요합니다. M09 사고 교훈(`docs/m09-brick-incident.md`)
-대로 **data cave 안전성과 wrapper를 분리 검증**해야 합니다. R-min은 2-byte tail
-범위에서 가능할 수 있어 우선 구현 후 live 확인하고, R-B로 승격하는 2단계도
-가능합니다.
+구현 제약(최초 설계 기준): owned window에는 2-byte tail만 여유가 있어 3바이트
+시그니처 R-B는 window 재작성 또는 code cave + 호출부 재작성이 필요했습니다. 그러나
+**2바이트 시그니처(0x64 0x65)로 확정하면서 이 제약이 해소**됐습니다 — r0=stage를
+유지하는 재배치로 `mov r4/r0`·`mov r0/r4` 4바이트를 절약하고, 리셋 매치 시
+producer 호출(10B) 대신 조기 반환(2B)으로 8바이트를 절약해, 새 래퍼는
+`0x0201e228..0x0201e254`(44B) 안에 40B로 수용됩니다. 이로써 **callsite
+(0x0201e468/0x0201e49c)과 selector/producer core(0x0201e13e..0x0201e228)는
+byte-for-byte 보존**됩니다 (M09 교훈: cave 없음).
 
 ### 호스트 변경 (R-B 시)
 
@@ -271,12 +272,62 @@ cave + 호출부 재작성이 필요합니다. M09 사고 교훈(`docs/m09-brick
 > MIDIServer 재시작을 수반하므로 브라우저 세션과 병행 불가 — 테스트 간
 > 순서를 정리해야 합니다.
 
+## 6.5 Phase 1 진행 기록 (2026-08-14) — S1C6(S16) 구현 완료, 실기기 대기
+
+### 확정 설계 (R-B)
+
+- **리셋 시그니처**: wire bytes 6..7 == `0x64 0x65` (둘 다 EG rate 최대 0x63 초과 →
+  유효한 DX7 보이스에 구조적으로 불가능 — 번들 32개 스캔 0건 + DX7 포맷 범위 증명).
+- **리셋 매치 시**: lock/count/state 클리어 → csync → **producer 미호출 조기 반환**
+  (리셋 패킷은 보이스가 아니며 슬롯을 소비하지 않음).
+- **미매치 시**: `r0 = stage` 그대로 producer(0x0201e196) 호출 — 기존 동작과 동일.
+- **callsite·core 무변경**: 래퍼를 기존 owned tail에 in-place(40B)로 재작성.
+  selector/producer core `0x0201e13e..0x0201e228` SHA `1f5ac42f…` 보존.
+- **호스트 프로토콜**: 리셋 패킷 1개(`f0 43 00 00 01 1b 64 65 00…00 f7`) +
+  보이스 16개 = 17개 전송. 첫 로드·재로드 모두 리셋 선행으로 동작.
+
+### 아티팩트
+
+`baselines/v15/analysis/flash-candidates/S1C6-reset-signature-isolation/`
+
+- **fwsc**: `SMK37Pro-v15-S1C6-reset-signature-isolation-S16-marked.fwsc`
+  SHA-256 `fd449b93afc2a9abe777cee10f810e3f4618b8a6b745391f73d8b7d5959fa886`
+- **app**: SHA-256 `312790c080f6fcead69eccd84edf2c608ef3fa7e772455d781ab086dafed44b1`
+- **OTA token**: `INSTALL-SMK37PRO-V15-S1C6-RESET-SIG-FD449B93`
+- 표시 마커: `S16` (3자 버저닝 규칙 적용, `0x020572a2`에 `S16\0\0`)
+
+### offline 게이트 (전부 PASS)
+
+- `build_s1c6_reset_signature_isolation.py` — 결정적 재빌드, diff는 reset wrapper tail
+  (0x0201e228..0x0201e254)과 마커만.
+- `validate.py` — 해시 고정, core 보존, callsite 무변경, diff 범위, rollback sector,
+  dry-run, OTA check 양성/음성(S1C5-marked 거부), sender dry-run + live 차단,
+  SHA256SUMS 전수 검사.
+- 시그니처 충돌 스캔: 번들 보이스(32) bytes 6..7 == `64 65` → **0건**.
+- 전송 패킷 17개(리셋 1 + all-C4 16) framing·해시·순서 검증.
+
+### 호스트 업데이트
+
+- **에디터** (`apps/smk37-patch-set-editor/`): `sysex.mjs`에 `RESET_PACKET` export,
+  `app.js` `sendAll`이 리셋 패킷을 선행 전송. 테스트 14/14 (리셋 패킷 프레이밍·
+  시그니처·7-bit·보이스 검증기 거부 케이스 추가).
+- **C 센더**: `exact_17_packet_sender.c` (리셋 선행, dry-run PASS, live 차단 기본).
+
+### 남은 실기기 단계 (장치 연결 + 승인 필요)
+
+1. exact_ota로 S1C6 OTA (`check` → `upload … --confirm INSTALL-SMK37PRO-V15-S1C6-RESET-SIG-FD449B93`),
+   표시 `S16` 확인.
+2. **재로드 회귀**: Bank D 로드 → FM 키트 재로드(슬롯0 LONG TOM `63 63`) —
+   리셋 없이 전원 사이클 없이 교체 성공이 핵심 확인.
+3. **FM 키트 requested map**: explicit Playback Note(36..51) 16음 전부 드럼 음색.
+4. all-C4(60) 회귀 없음. → PASS 시 Phase 2(identity-safe 해제) 진행.
+
 ## 7. 위험 및 대응
 
 | 위험 | 대응 |
 |---|---|
-| 리셋 시그니처 콜리전 (오늘 실측) | Phase 1 R-B: 시그니처를 구조적 불가능 바이트로 + 명시적 리셋 패킷. 빌드 게이트에 충돌 스캔 |
-| 슬롯0 비충돌 키트 재로드 불가 (조용한 실패) | R-B의 명시적 리셋으로 해소. R-min 선택 시 문서화 + 전원 사이클 안내 |
+| 리셋 시그니처 콜리전 (실측) | **S1C6에서 해소**: 구조적 불가능 시그니처 0x64 0x65 + 명시적 리셋 패킷, 빌드 게이트 충돌 스캔 0건 |
+| 슬롯0 비충돌 키트 재로드 불가 (조용한 실패) | **S1C6에서 해소**: 명시적 리셋이 count/state를 클리어 → 전원 사이클 없이 재로드 |
 | 중복 note cross-release (사용자가 중복 사용 시) | Option D까지 보류, 문서화. FM kit 기본은 one-to-one 유지 |
 | owned window 여유 부족 → 재작성 리스크 | cave 안전성 분리 검증(M09 교훈), exact hash 게이트, rollback 우선 |
 | 휘발성 RAM (재부팅 시 소실) | 에디터 재전송 절차 유지 (변경 없음) |

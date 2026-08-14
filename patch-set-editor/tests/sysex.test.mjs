@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import {
   CHECKSUM_OFFSET,
   PAD_TO_NOTE,
+  RESET_PACKET,
   SMK_RUNTIME_FLAG,
   createPatchSetDocument,
   effectivePlaybackNote,
@@ -29,6 +30,20 @@ async function loadSlots() {
   }
   return slots;
 }
+
+test("S1-C6 reset packet framing and impossible signature", () => {
+  assert.equal(RESET_PACKET.length, 163);
+  assert.deepEqual([...RESET_PACKET.slice(0, 6)], [0xf0, 0x43, 0x00, 0x00, 0x01, 0x1b]);
+  assert.equal(RESET_PACKET[6], 0x64);
+  assert.equal(RESET_PACKET[7], 0x65);
+  assert.equal(RESET_PACKET[161], 0x00);
+  assert.equal(RESET_PACKET[162], 0xf7);
+  for (let index = 1; index < RESET_PACKET.length - 1; index += 1) assert.ok(RESET_PACKET[index] <= 0x7f, "all SysEx data bytes are 7-bit");
+  // The reset packet is a firmware control packet, not a voice: the fixed
+  // byte 161 (0x00) is never a valid Yamaha checksum, so the voice validator
+  // must reject it.
+  assert.throws(() => validateEditorSysEx(RESET_PACKET), /checksum/);
+});
 
 test("all 16 sample files are valid editor SysEx", async () => {
   const slots = await loadSlots();
