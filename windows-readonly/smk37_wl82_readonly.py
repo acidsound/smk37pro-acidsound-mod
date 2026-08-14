@@ -34,10 +34,13 @@ OFFICIAL_LOADER_SHA256 = (
     "9920e66626fc86b2db536050a4d23dec10c8d1081575553539835fd812276c27"
 )
 EXPECTED_RECOVERY_SECTORS = {0x04000, 0x20000, 0x21000, 0x27000, 0x5A000, 0x99000}
-# The 0xFC14 response carries the loader USB buffer size in its first 2 bytes
-# (16-bit big-endian) followed by 2 zero padding bytes. The host conservatively
-# reads Flash in min(buffer_size, 256) chunks, so the upper bound only needs to
-# exclude a misread or missing loader. Observed live on the M09 target: 0x8000.
+# The 0xFC14 response carries the loader USB buffer size in its first 4 bytes
+# (big-endian, effectively bytes[2:4]) followed by 10 bytes of flags/state.
+# The host conservatively reads Flash in min(buffer_size, 256) chunks, so the
+# upper bound only needs to exclude a misread or missing loader. Observed live
+# on the M09 target: bytes 2-4 = 0x0080 (big-endian) = 32768. When the loader
+# is not yet running, the first four bytes are all zero, which is how the
+# sanity check rejects pre-jump or dead-loader responses.
 LOADER_BUFFER_SIZE_MIN = 64
 LOADER_BUFFER_SIZE_MAX = 0x10000
 STANDARD_INQUIRY_CDB = bytes([0x12, 0x00, 0x00, 0x00, 36, 0x00])
@@ -467,10 +470,10 @@ class ReadOnlyWl82:
 
     def loader_info(self) -> dict[str, int]:
         buffer_response = self._response(CMD_LOADER_GET_USB_BUFFER_SIZE)
-        buffer_size = int.from_bytes(buffer_response[:2], "big")
+        buffer_size = int.from_bytes(buffer_response[2:4], "big")
         if not LOADER_BUFFER_SIZE_MIN <= buffer_size <= LOADER_BUFFER_SIZE_MAX:
             LOG.error(
-                "0xFC14 raw 14-byte payload (hex): %s; parsed 16-bit big-endian: %d",
+                "0xFC14 raw 14-byte payload (hex): %s; parsed 32-bit big-endian from bytes 2-4: %d",
                 buffer_response.hex(" "),
                 buffer_size,
             )
@@ -738,7 +741,7 @@ class FakeTransport:
         if not self.loader_running:
             raise AssertionError("loader command sent before RAM jump")
         if command == CMD_LOADER_GET_USB_BUFFER_SIZE:
-            body = (256).to_bytes(2, "big") + b"\x00" * 12
+            body = b"\x00" * 2 + (256).to_bytes(2, "big") + b"\x00" * 10
             return command.to_bytes(2, "big") + body
         if command == CMD_LOADER_GET_ONLINE_DEVICE:
             body = bytes([0x03, 0x00]) + (0x123456).to_bytes(4, "little") + b"\x00" * 8
