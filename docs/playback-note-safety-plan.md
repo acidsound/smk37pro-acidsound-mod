@@ -1,22 +1,29 @@
 # 임의 Playback Note 안전 사용 계획
 
-작성: 2026-08-13 · 갱신: 2026-08-14 · 상태: Phase 0 1차 시도 **무효** (장치가 S1C1이었음) → S1C5 재플래시 후 재시도 필요
+작성: 2026-08-13 · 갱신: 2026-08-14 · 상태: Phase 0 실기기 테스트 **FAIL** (S1C5) → Phase 1(펌웨어 변경) 진행
+
+> **2026-08-14 정정**: 앞서 "장치가 S1C1"이라 보고했으나 잘못된 정보였습니다.
+> 장치 표시가 `S1C5`의 마지막 글자가 잘려 `S1C`로만 보인 것입니다. 실제 장치는
+> **S1C5 (marked)** — 이에 따라 아래 Phase 0 기록은 유효한 S1C5 실기기 결과입니다.
 
 ## 1. 요약 (결론)
 
-- 현재 설치 펌웨어 **S1-C5 Marked Playback** (`cfafa327…`)는 producer/consumer
-  양쪽에서 임의 Playback Note(0..127, 중복 포함)를 이미 **live 검증**했습니다
-  (2026-08-04, all-C4 세트 포함, 사용자 확인 "perfect").
-- FM Drum preset이 identity-safe(Original)로 고정된 이유는 S1-C4 시절 live 실패
-  (all-C4 → Ch1 fallback)와, 이후에도 **trigger 범위(36..51) 내 playback note의
-  voice-identity 상호작용이 ABI로 미검증**이기 때문입니다.
-- FM Drum preset의 requested map(36..51, 전부 **distinct**)은 one-to-one이므로
-  현재 S1C5 코드 기준 이론상 안전합니다. **가장 짧은 경로는 펌웨어 변경 없이
-  실기기 live 테스트(Phase 0)로 확인하는 것**입니다.
-- 만약 Phase 0에서 실패하거나, 방어적으로 완전히 분리하고 싶다면
-  **byte 161을 trigger identity(36..51)로 유지하고 Playback Note map을 별도
-  transport로 쓰는 펌웨어 변경**(Option A/B)이 필요합니다. S1C5 owned window에는
-  여유가 거의 없어(2-byte tail) 재작성 또는 새 코드 cave가 필요합니다.
+- 현재 설치 펌웨어 **S1-C5 Marked Playback** (`cfafa327…`)은 **byte 161 = 60
+  (중복 all-C4)에서 live 검증**되었습니다 (2026-08-04, 사용자 확인 "perfect").
+- **Phase 0 실측 (2026-08-14)**: FM Drum preset(identity-safe: byte 161 = 36..51)
+  과 explicit-playback(byte 161 = 36..51의 순열) **모두 실패**했고, 장치는
+  디폴트 상태로 복귀했습니다. 반면 all-C4(byte 161 = 60)는 통과했으므로
+  **S1C5에서 byte 161이 trigger 범위(36..51)에 들어가면 transaction/playback이
+  붕괴**한다는 live 증거가 확보됐습니다 (정확한 증상은 재확인 필요).
+- 따라서 "36..51 내 playback note는 one-to-one이라 이론상 안전"이라는 기존
+  가정은 **live로 반증**되었고, identity-safe(byte 161 = trigger note 36..51)
+  자체가 실패 구성이므로 **Option A/B의 "byte 161 = trigger identity(36..51)
+  유지" 설계도 함께 재검토**해야 합니다.
+- 실패 원인이 byte 161 값 자체라면 byte 161을 36..51 밖(예: 60..75)으로 옮기는
+  단순 경로도 가능하지만, 드럼 음높이가 2옥타브 올라가 요청 map(36..51)의 음색
+  의도를 보존할 수 없습니다. FM kit 음색 유지에는 별도 map transport가 필요하며
+  S1C5 owned window 여유가 거의 없어(2-byte tail) 재작성 또는 새 code cave가
+  필요합니다.
 
 ## 2. 제약의 기원: byte 161의 이중 역할
 
@@ -110,8 +117,9 @@ map(36..51)을 explicit playback note로 적용한 테스트 set (format v2로
 importable).
 
 절차:
-1. 장치 표시가 정확히 **`S1C5`**인지 반드시 확인 (다른 S1C 버전이면 아래
-   "Phase 0 시도 기록" 참조 — 결과가 무효).
+1. 장치 버전 확인: 표시 마커가 4자(`S1C5`)면 마지막 글자가 잘려 `S1C`로만
+   보이므로, 버전은 OTA 로그·문서 기준으로 확인 (2026-08-14 이후 버저닝은
+   3자 체계 — 아래 "버저닝 3자 전환" 참조).
 2. Patch Set Editor → **Set 가져오기**로 테스트 JSON 로드.
 3. Web MIDI 연결 → **16개 Patch 전송**.
 4. Pad 1–16을 순서대로·겹쳐서 연주하며 확인:
@@ -125,29 +133,34 @@ importable).
 - **FAIL**: 실패 패턴을 기록(어느 pad 조합에서 어떤 증상) → Phase 1로.
   실패 패턴이 "trigger 범위 내 note"와 관련되면 Option A/B로 분리 전송.
 
-## Phase 0 시도 기록 (2026-08-14) — 무효 (장치가 S1C1이었음)
+## Phase 0 시도 기록 (2026-08-14) — FAIL (S1C5, 유효)
 
-시도 당시 장치 표시가 **`S1C1`**이었습니다. S1C1은
-`baselines/v15/analysis/flash-candidates/S1C1-boundary-only/report.md` 기준
-"no per-note selector exists, second slot is never accessed, no persistence" —
-H2 동작을 그대로 보존한 **boundary-only** 빌드로, 16-slot producer·selector·
-playback map이 전혀 없습니다. 16-slot 기능이 들어간 것은 S1C3(producer),
-playback map은 S1C4, register-return 수정은 S1C5부터입니다.
+장치는 **S1C5 (marked)** 였습니다. 초기에 "S1C1"이라 보고했으나, 표시 마커
+`S1C5`의 마지막 글자가 잘려 `S1C`로만 보인 데서 비롯된 오독이었습니다 (정정:
+2026-08-14). S1C1은 마커 변경이 없는 boundary-only 빌드라 `S1C`가 표시될 수
+없고, `S1C`는 4자 마커(`S1C5`)의 잘림이므로 장치가 S1C5-marked임이 확정됩니다.
 
 | 시도 | 결과 | 해석 |
 |---|---|---|
-| FM Drum preset (identity-safe) | **실패** | 예상된 결과. S1C1은 16-slot 키트 트랜잭션을 호스팅하지 못함 |
-| explicit-playback JSON 로드 후 전송 | **디폴트 상태로 복귀** | 예상된 결과. S1C1은 16-패킷 트랜잭션을 수용하지 않음 |
+| FM Drum preset (identity-safe: byte 161 = trigger 36..51) | **실패** | byte 161이 trigger 범위(36..51) → transaction/playback 붕괴 의심 |
+| explicit-playback JSON (byte 161 = 36..51 순열) | **디폴트 상태로 복귀** | 동일. all-C4(byte 161 = 60)는 08-04 live PASS이므로 값 범위가 핵심 변수 |
 
-**결론**: 위 결과는 S1C5 안전성에 대한 증거가 될 수 없습니다. 계획의 전제
-(장치 = S1C5)가 성립하지 않았기 때문입니다. Phase 0은 S1C5
-(`SMK37Pro-v15-S1C5-playback-register-return-S1C5-marked.fwsc`, SHA
-`cfafa3273ca0ba741616e5f3aa87f262a45ecd84445bdefd969900dad256b480`) 재플래시 후
-재실행해야 합니다. OTA token:
-`INSTALL-SMK37PRO-V15-S1C5-MARKED-PLAYBACK-CFAFA327`.
+**결론**: Phase 0 = **FAIL** (S1C5 실기기 유효 결과). "36..51 내 playback note는
+one-to-one이면 안전"이라는 기존 가정이 반증됐습니다. 다음 단계는 Phase 1
+(펌웨어 변경)이며, 정확한 실패 기전(transaction vs playback, 값 범위 vs
+전송 경로)을 분리하기 위한 대조 테스트가 필요합니다:
 
-동일 기기인데 표시가 S1C1인지, 아니면 별도 기기인지는 재확인 필요 —
-`docs/v15-s1c-status.md`의 "현재 설치: S1C5" 기록(2026-08-04)과 불일치합니다.
+1. **대조 A**: C 센더(all-C4와 동일 경로)로 byte 161 = 36..51(identity-safe
+   그대로) 전송 → 에디터 경로가 원인인지 배제.
+2. **대조 B**: 에디터로 byte 161 = 60(모든 패드) 전송 → 36..51 값 자체가
+   원인인지 확인.
+3. 실패 증상 상세 기록 (전송 직후 복귀인지, 연주 중 복귀인지, 어떤 pad 조합에서
+   어떤 소리/오류인지).
+
+> 참고: 2026-08-14 S1C5 → S1C5-marked 재플래시 시도는 stage-1 검증 중단
+> (request 9 = `0x0009b0d3/32`, 08-03 S1C3 실패 시도와 동일 패턴)으로 실패했고
+> **기기는 무변경**입니다. 재플래시는 버전 확인 문제가 해소된 현재 불필요하며,
+> 재시도 시에는 전원 사이클 후 진행 권장 (RAM 적재 상태 초기화).
 
 ### Phase 1 — 펌웨어 변경 (FAIL 시에만)
 
@@ -180,7 +193,8 @@ playback map은 S1C4, register-return 수정은 S1C5부터입니다.
 | 위험 | 대응 |
 |---|---|
 | 중복 note cross-release (사용자가 중복 사용 시) | Option D까지 보류, 문서화. FM kit 기본은 one-to-one 유지 |
-| 36..51 playback note의 allocator 혼동 | Phase 0에서 실측. 실패 시 map을 60+로 옮기거나 Option A |
+| 36..51 playback note의 allocator 혼동 | **Phase 0에서 live 반증됨** — byte 161을 36..51 밖으로 옮기거나(음높이 문제) 별도 map transport |
+| byte 161 = trigger identity 유지(identity-safe)가 실패 | Option A/B의 전제 재검토 — 실패 기전(값 범위 vs 경로) 대조 테스트로 분리 |
 | owned window 여유 부족 → 재작성 리스크 | cave 안전성 분리 검증(M09 교훈), exact hash 게이트, rollback 우선 |
 | 휘발성 RAM (재부팅 시 소실) | 에디터 재전송 절차 유지 (변경 없음) |
 | S1C5 회귀 | identity-safe 유지 시점 동안 기존 정책 보존, Phase 2에서만 전환 |
@@ -188,10 +202,26 @@ playback map은 S1C4, register-return 수정은 S1C5부터입니다.
 ## 8. 열린 질문
 
 1. requested map(36..51)을 그대로 쓸 것인가, 아니면 trigger 범위 밖(예: 60..75)으로
-   옮길 것인가 — Phase 0 결과로 결정.
+   옮길 것인가 — Phase 0 FAIL로 36..51 유지는 반증됨. 60+로 옮기면 드럼 음높이가
+   2옥타브 올라가므로 음색 유지에는 별도 transport 필요.
 2. 중복 playback note가 필요한 사용 사례가 있는가 — 없으면 Option D 불필요.
 3. FM kit의 Hi-Hat 2 voice 호환성 실패(`fm-drum-compatibility`)는 identity와
    무관한 별개 문제 — 해결은 별도 진행(단일 변경 진단 파일 사용).
+4. Phase 0 실패가 값 범위(36..51) 때문인지 전송 경로 때문인지 — 대조 A/B로 분리.
+
+## 9. 버저닝 3자 전환 (2026-08-14)
+
+4자 마커 `S1C5`가 표시에서 `S1C`로 잘려 버전 오독(→ S1C1)이 발생했습니다.
+M-시리즈에서 이미 같은 교훈이 기록돼 있습니다 (`docs/firmware-versioning.md`:
+4자 `M001` → 화면 `M00` 잘림 → 이후 `MNN` 3자 체계로 전환). S1C 시리즈가 이
+교훈을 반복하지 않도록 규칙을 정립합니다:
+
+- **표시 마커는 정확히 3자**: `S` + 2자리 빌드 번호 (M-시리즈 `MNN` 패턴과 동일).
+  - S1C5 → 표시 `S15`, 이후 빌드는 `S16`, `S17`, … (번호는 재사용 금지).
+- 전체 명칭(문서·아티팩트·토큰)은 기존 체계(S1C5 등) 유지 가능하되, 표시 마커와의
+  대응을 문서에 명시.
+- 다음 펌웨어(Phase 1 결과물)부터 이 체계를 적용합니다. 현재 설치된 S1C5의
+  마커는 `S1C5`(표시 `S1C`)를 유지하며, 재빌드가 필요하면 별도 결정.
 
 ## 참조
 

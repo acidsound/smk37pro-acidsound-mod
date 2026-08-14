@@ -2,24 +2,25 @@
 
 작성: 2026-08-13 (기준: 최근 성공 flash 2026-08-04)
 
-## 2026-08-14 상태 갱신 — 현재 테스트 기기 표시: **S1C1**
+## 2026-08-14 상태 갱신 — 정정: 장치는 S1C5 (표시 잘림 오독) · 버저닝 3자 전환
 
-실기기 확인 결과 현재 기기의 버전이 **S1C1**(boundary-only 빌드)입니다.
-아래 "현재 설치 펌웨어: S1-C5" 기록(2026-08-04 성공 flash 기준)과 불일치하며,
-이 기기에서는 S1C5 이후 기능(16-slot producer, playback map, register-return
-수정)이 올라가 있지 않은 상태입니다.
+초기 "장치 = S1C1" 보고는 **잘못된 정보**였습니다. 표시 마커 `S1C5`의 마지막
+글자가 잘려 `S1C`로만 보인 데서 비롯된 오독이며, 실제 장치는 **S1C5 (marked)**
+(2026-08-04 설치 기록과 일치)입니다. S1C1은 마커 변경이 없는 boundary-only
+빌드라 `S1C`가 표시될 수 없습니다.
 
 **의미**:
 
-- S1C1은 16-slot producer/selector가 없는 boundary-only 빌드라, FM Drum
-  preset(identity-safe든 explicit-playback이든)은 이 기기에서 **동작할 수
-  없습니다** (2026-08-14 Phase 0 시도에서 실패 + 디폴트 복귀로 확인).
-- Phase 0(임의 Playback Note 실기기 테스트)은 **S1C5 재플래시 후에만 유효**
-  합니다. fwsc: `SMK37Pro-v15-S1C5-playback-register-return-S1C5-marked.fwsc`
-  (SHA `cfafa3273ca0ba741616e5f3aa87f262a45ecd84445bdefd969900dad256b480`),
-  OTA token `INSTALL-SMK37PRO-V15-S1C5-MARKED-PLAYBACK-CFAFA327`.
-- 상세: [`docs/playback-note-safety-plan.md`](playback-note-safety-plan.md)
+- Phase 0 (2026-08-14) FM Drum 테스트 결과(identity-safe preset 실패 +
+  explicit-playback 디폴트 복귀)는 **유효한 S1C5 실측 = FAIL**입니다.
+  byte 161 = 36..51(trigger 범위)이 핵심 변수로 의심되며(all-C4 = 60은
+  2026-08-04 live PASS), 상세는
+  [`playback-note-safety-plan.md`](playback-note-safety-plan.md)
   "Phase 0 시도 기록" 참조.
+- **버저닝 3자 전환**: 4자 마커가 표시에서 잘리는 문제(M-시리즈 `M001`→`M00`
+  교훈의 반복)를 방지하기 위해, 이후 표시 마커는 **정확히 3자**(`S` + 2자리,
+  S1C5 → `S15`, 다음 빌드 `S16`…)로 통일합니다. 현재 설치된 S1C5의 마커
+  (`S1C5`, 표시 `S1C`)는 유지합니다.
 
 ## 배경
 

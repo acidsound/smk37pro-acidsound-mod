@@ -241,3 +241,16 @@ M10 upload; forced recovery is pending.
 The incident analysis is `docs/m09-brick-incident.md`. It separates the
 confirmed M09 application failure boundary from the still-unproven exact root
 cause and from the independent failure to establish forced recovery first.
+
+## v15 S1C 시리즈 표시 마커 규칙 (2026-08-14)
+
+S1C 시리즈(v15 기반)는 이 문서의 교훈(4자 `M001` → 화면 `M00` 잘림 → `MNN`
+3자 체계로 전환)을 반복해 4자 마커 `S1C5`를 사용했고, 표시에서 `S1C`로 잘려
+버전 오독(→ S1C1)이 발생했습니다.
+
+- 규칙: **표시 마커는 정확히 3자** — `S` + 2자리 빌드 번호 (`S15`, `S16`, …),
+  번호 재사용 금지 (M-시리즈 규칙 1과 동일).
+- 대응: S1C5 ↔ 표시 `S15`. 문서·아티팩트의 전체 명칭(S1C5 등)은 유지하되
+  표시 마커와의 대응을 명시.
+- 다음 v15 펌웨어(Phase 1 결과물)부터 적용. 현재 설치된 S1C5 마커
+  (`S1C5`, 표시 `S1C`)는 재빌드 결정 전까지 유지.
