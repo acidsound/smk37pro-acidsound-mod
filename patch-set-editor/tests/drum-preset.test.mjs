@@ -21,10 +21,10 @@ async function loadSlots() {
   return slots;
 }
 
-test("FM Drum manifest contains all 16 fixed Trigger Notes and identity-safe Original Playback", () => {
+test("FM Drum manifest contains all 16 fixed Trigger Notes and explicit requested-map Playback", () => {
   assert.equal(manifest.patches.length, 16);
   assert.deepEqual(manifest.patches.map((item) => item.note), PAD_TO_NOTE);
-  assert.deepEqual(manifest.patches.map((item) => item.playbackNote), Array(16).fill(null));
+  assert.deepEqual(manifest.patches.map((item) => item.playbackNote), Array.from({ length: 16 }, (_, i) => i + 36));
   assert.deepEqual(manifest.patches.map((item) => item.requestedPlaybackNote), Array.from({ length: 16 }, (_, i) => i + 36));
   assert.ok(manifest.patches.every((item) => item.source === "patches.fm"));
 });
@@ -38,17 +38,21 @@ test("all FM Drum files are valid 163-byte Yamaha single-voice SysEx", async () 
   }
 });
 
-test("FM Drum transmission keeps Trigger Notes and preserves slot identity", async () => {
+test("FM Drum transmission keeps Trigger Notes and sends explicit requested-map Playback", async () => {
   const queue = transmissionOrder(await loadSlots(), manifest.patches.map((item) => item.playbackNote), { encodePlayback: true });
   assert.deepEqual(queue.map((item) => item.note), Array.from({ length: 16 }, (_, i) => i + 36));
   assert.deepEqual(queue.map((item) => item.triggerNote), Array.from({ length: 16 }, (_, i) => i + 36));
-  assert.deepEqual(queue.map((item) => item.playbackNote), Array.from({ length: 16 }, (_, i) => i + 36));
+  // transmission order is note 36..51 -> pad -> playbackNotes[pad - 1]; with the explicit
+  // requested map this is the pad-ordered permutation [44,45,46,47,36,37,38,39,48,49,50,51,40,41,42,43]
+  // (identical to the byte-161 values live-verified on S1C6 via direct USB).
+  assert.deepEqual(queue.map((item) => item.playbackNote), [44, 45, 46, 47, 36, 37, 38, 39, 48, 49, 50, 51, 40, 41, 42, 43]);
   assert.deepEqual(queue.map((item) => item.pad), [9, 10, 11, 12, 1, 2, 3, 4, 13, 14, 15, 16, 5, 6, 7, 8]);
 });
 
-test("FM Drum identity-safe patch-set JSON imports with Original Playback", async () => {
+test("FM Drum S1C6 explicit-playback patch-set JSON imports with requested map (36..51)", async () => {
   const document = JSON.parse(await readFile(`${root}/FM-Drum-Kit-patches.fm.smkpatchset.json`, "utf8"));
+  assert.equal(document.format, "smk37-v15-s1c6-explicit-playback-patch-set-v1");
   const parsed = parsePatchSetDocument(document);
   assert.equal(parsed.slots.length, 16);
-  assert.deepEqual(parsed.playbackNotes, Array(16).fill(null));
+  assert.deepEqual(parsed.playbackNotes, Array.from({ length: 16 }, (_, i) => i + 36));
 });

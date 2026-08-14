@@ -6,7 +6,8 @@ HTML/CSS/JS만으로 동작하므로 GitHub Pages에 그대로 호스팅할 수 
 
 - **호스팅**: GitHub Pages (HTTPS secure context → Web MIDI SysEx 허용)
 - **브라우저**: Desktop Chrome / Chromium 계열만 (Web MIDI 지원 브라우저)
-- **대상 장치**: S1C5 Playback Note 펌웨어가 설치된 SMK-37 Pro
+- **대상 장치**: S1C6 (S16, 표시 마커 `S16`) 펌웨어가 설치된 SMK-37 Pro —
+  리셋 검출 분리 + explicit Playback Note 전송 지원. (S1C5에서는 17패킷 프로토콜 미지원)
 - **의존성**: 없음 (`npm install` 불필요)
 
 > 이 프로젝트는 `smk37pro-acidsound-mod` 저장소의 `patch-set-editor/` 하위 경로로
@@ -34,8 +35,9 @@ npm test
 ```
 
 테스트는 내장 16개 파일의 checksum·헤더 검증, editor→SMK 변환, Physical Pad↔Trigger
-Note 불변, Playback Note 저장·복원, v1 Set 호환성, patch-set JSON 왕복, 손상 파일
-거부, FM Drum preset identity-safe 정책을 확인합니다.
+Note 불변, Playback Note 저장·복원, v1/v2 Set 호환성, patch-set JSON 왕복, 손상 파일
+거부, 리셋 패킷(0x64 0x65) 프레이밍, FM Drum preset explicit requested-map 정책을
+확인합니다.
 
 ## 주요 기능
 
@@ -48,7 +50,7 @@ Note 불변, Playback Note 저장·복원, v1 Set 호환성, patch-set JSON 왕�
 - 검증된 Bank D demo 16개 + patches.fm 기반 FM Drum Preset 16개 내장
 - Pad별 `.syx` 다시 저장, 전체 세트 `.smkpatchset.json` 저장·복원
 - SMK 런타임 플래그 `0x3F` 자동 변환, MIDI note 36→51 순서 자동 변환
-- Web MIDI를 통한 100ms 간격 16개 일괄 전송
+- Web MIDI를 통한 100ms 간격 **17개 일괄 전송 (S1C6 리셋 패킷 1개 + 보이스 16개)**
 
 ## 사용 순서
 

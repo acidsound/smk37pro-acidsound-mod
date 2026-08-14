@@ -20,8 +20,10 @@
   (HITUN RIMS `62 63`·LONG TOM `63 63` 충돌 보이스 포함). 표시 `S16` 확인.
 - 에디터 `RESET_PACKET`(wire 6..7=`64 65`, byte 161=0)은 live 검증 패킷과
   바이트 동일, `sendAll`은 리셋 선행 17패킷(테스트 14/14).
-- **다음: Phase 2 (identity-safe 해제)** — manifest playbackNote 복원,
-  에디터 재배포.
+- **Phase 2 (identity-safe 해제) 완료 (2026-08-14)**: FM Drum manifest
+  `playbackNote` = requested map(36..51) 복원, format
+  `smk37-v15-s1c6-explicit-playback-fm-drum-preset-v1` 승격, 샘플 patch-set
+  JSON 재생성, 테스트 14/14. 에디터 main push 시 Pages 자동 재배포.
 
 ## 2026-08-14 상태 갱신 — 정정: 장치는 S1C5 (표시 잘림 오독) · 버저닝 3자 전환
 

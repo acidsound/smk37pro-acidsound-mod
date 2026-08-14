@@ -72,23 +72,32 @@ RAM transaction**으로 적재합니다.
 - **장치 재부팅/펌웨어 업데이트 후에는 반드시 재전송**해야 합니다 (전원 꺼짐 시 소실).
 - 이 앱의 `16개 Patch 전송` 버튼이 이 전송을 수행합니다.
 
-### S1-C5 identity 결합 (중요)
+### S1-C6 리셋 검출 분리 (S16) — 전송 프로토콜
 
-S1-C5에서는 packet byte 161(transport/Playback Note 값)이 16-slot transaction의
-**identity**에 관여합니다. 임의의 Playback Note를 넣으면 slot identity가 붕괴할 수
-있습니다. 따라서:
+S1-C5의 프로듀서 reset wrapper는 모든 패킷의 `stage[0..1] == 0x62 0x63`(wire bytes
+6..7)을 리셋 시그니처로 검사했고, 이 시그니처가 보이스 데이터(BUZZ BASS, HITUN
+RIMS)와 충돌해 로드 트랜잭션을 붕괴시킬 수 있었습니다 (루트 원인 확정:
+저장소 루트 `docs/playback-note-safety-plan.md` §0).
 
-- **FM Drum Preset**은 `playbackNote: null`(Original)만 사용하는
-  **identity-safe** 정책으로 동작합니다 (`docs/HANDOFF.md` 참조).
-- 임의의 drum-map Playback Note를 안전하게 쓰려면 펌웨어 쪽 변경이 선행되어야
-  합니다.
+S1C6(S16)은 리셋 검출을 **구조적 불가능 시그니처 `0x64 0x65`**(DX7 EG rate 범위
+0..99 초과 — 유효한 보이스에 존재 불가) + **명시적 리셋 패킷**으로 분리했습니다.
+따라서:
+
+- **전송 프로토콜**: 리셋 패킷 1개(`f0 43 00 00 01 1b 64 65 00…00 f7`, byte 161 = 0)
+  + 보이스 16개 = **17개**. 리셋 패킷은 보이스로 적재되지 않으며, 전원 사이클 없이
+  적재된 키트 위에 재로드가 가능합니다.
+- **FM Drum Preset**은 `playbackNote = requested map (36..51)`을 **명시적으로**
+  전송합니다 (S1C6 이상 필수 — S1C5에서는 리셋 패킷이 보이스로 오인됨).
+- S1C5에서는 구 16-packet(리셋 없음) 프로토콜만 동작합니다.
 
 ## 6. Patch Set JSON 포맷
 
 `createPatchSetDocument()` / `parsePatchSetDocument()`가 다루는 포맷:
 
-- 현재: `smk37-v15-s1c3-web-patch-set-v2`
-- import 호환: `smk37-v15-s1c3-web-patch-set-v1`, `smk37-v15-s1c5-identity-safe-patch-set-v1`
+- 현재(생성): `smk37-v15-s1c3-web-patch-set-v2`
+- import 호환: `smk37-v15-s1c3-web-patch-set-v1`, `smk37-v15-s1c5-identity-safe-patch-set-v1`,
+  `smk37-v15-s1c6-explicit-playback-patch-set-v1` (FM Drum Kit 샘플은 S1C6 explicit
+  playback 포맷 사용 — `playbackNotes` = 36..51)
 
 구조 (v2):
 

@@ -26,11 +26,12 @@ source banks, direct URLs, SHA-256 values, fixed Trigger Notes, and explicit Pla
 | 15 | 46 | 50 / D2 | Cowbell | COW BELL |
 | 16 | 47 | 51 / D#2 | Shaker | Shaker |
 
-Trigger Notes are the SMK physical Pad identity and remain unchanged. The prior drum-map
-Playback Notes were not safe on the flashed S1C5: packet byte 161 is still coupled to the
-16-slot transaction identity. This preset therefore uses identity-safe Original Playback
-Notes so all 16 FM voices load without collapsing the slot transaction. A separate firmware
-change is required before arbitrary drum-map Playback Notes can be used safely.
+Trigger Notes are the SMK physical Pad identity and remain unchanged. On S1C6 (S16) this
+preset transmits the requested drum-map notes (36..51) as explicit Playback Notes. The
+17-packet protocol (1 reset packet with the structurally impossible `0x64 0x65` signature +
+16 voices) makes loading and reloading over an armed kit safe — the reset packet is not
+loaded as a voice and cannot collide with voice data. **Requires S1C6 (S16) or newer**;
+on S1C5 the reset packet would be treated as a voice and the old 16-packet protocol applies.
 
 ## Use
 

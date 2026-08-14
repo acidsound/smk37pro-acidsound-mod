@@ -49,8 +49,11 @@ SysEx 16개를 실어 보내는 웹 앱 **SMK-37 Patch Set Editor**를, **GitHub
 - 펌웨어 버전에 따라 byte 161 해석이 다릅니다:
   - S1-C3 이전: `0x3F`(런타임 플래그)만 사용.
   - S1-C4 이후: `0..127` Playback Note 인코딩.
-  - **S1-C5**: byte 161이 16-slot transaction identity에 결합 → 임의 Playback Note는
-    identity 붕괴 위험. FM Drum Preset은 identity-safe(Original) 정책 사용.
+  - **S1-C5**: 프로듀서 reset wrapper가 `stage[0..1] == 62 63`을 리셋으로 오인해
+    보이스 데이터와 충돌 → FM Drum preset 로드 붕괴 (identity-safe 정책 사용).
+  - **S1-C6 (S16, 현재)**: 리셋 검출 분리 — 명시적 리셋 패킷(`64 65`) + 보이스
+    16개 = 17개 전송. FM Drum Preset은 requested map(36..51)을 explicit Playback
+    Note로 전송.
 
 이 내용은 `docs/PROTOCOL.md`에 기술 기준으로 정리되어 있습니다.
 
@@ -61,7 +64,7 @@ SysEx 16개를 실어 보내는 웹 앱 **SMK-37 Patch Set Editor**를, **GitHub
 | 브라우저 | **Desktop Chrome/Chromium 계열만** (Web MIDI 지원). Safari/iOS 미지원 |
 | 보안 컨텍스트 | HTTPS 또는 localhost 필요 → GitHub Pages는 충족 |
 | SysEx 권한 | Chrome에서 사용자 동의 필요 (`chrome://settings/content/midiDevices`) |
-| 대상 펌웨어 | S1-C5 Playback Note 펌웨어 (그 이상에서 Playback Note byte 161 해석 필요) |
+| 대상 펌웨어 | **S1-C6 (S16)** — 리셋 검출 분리 + explicit Playback Note. S1C5 이하는 17패킷 프로토콜 미지원 |
 | 전송 특성 | 16개 일괄·100ms 간격·휘발성 RAM → 재부팅마다 재전송 |
 | 백엔드 | 없음. 모든 로직은 클라이언트. `server.mjs`는 로컬 개발 전용 |
 | 진단 | `/__diagnostics`는 로컬 전용. GitHub Pages에서는 비활성 |
@@ -86,8 +89,8 @@ SysEx 16개를 실어 보내는 웹 앱 **SMK-37 Patch Set Editor**를, **GitHub
 1. 163바이트 DX7 single-voice `.syx`를 준비하고 `public/samples/<set>/`에 배치.
 2. `manifest.json`에 `pad`, `note`(PAD_TO_NOTE 고정), `name`, `file`, `sha256` 기록.
    `sha256sum file`로 계산.
-3. `npm test`로 전체 검증. FM Drum 키트를 바꿀 때는 identity-safe 정책
-   (`playbackNote: null`)을 유지.
+3. `npm test`로 전체 검증. FM Drum 키트의 `playbackNote`는 requested map
+   (36..51, pad 순)을 명시적으로 유지.
 
 ### 코어 로직 변경
 `sysex.mjs`의 검증/변환/순서를 바꾸면 `tests/`의 기대값(체크섬, pad 순서,
@@ -104,11 +107,11 @@ GitHub Pages는 강한 캐싱을 하므로 쿼리를 바꾸지 않으면 구버�
 
 ## 6. 알려진 이슈 / 열린 질문
 
-1. **S1-C5 identity 결합**: 임의 drum-map Playback Note를 안전하게 쓰려면
-   펌웨어 변경이 선행되어야 합니다. FM Drum Preset은 Original만 사용 중
-   (manifest에 `requestedPlaybackNote` 메타데이터로 원래 의도는 보존).
-   해제 연구·단계별 계획은 저장소 루트 `docs/playback-note-safety-plan.md`를
-   참고하세요.
+1. ~~S1-C5 identity 결합~~ — **해소됨 (S1C6/S16, 2026-08-14 실기기 검증 PASS)**.
+   원인은 byte 161 값이 아니라 프로듀서 리셋 시그니처 콜리전이었고, S1C6의
+   구조적 불가능 시그니처(`64 65`) + 명시적 리셋 패킷으로 분리했습니다. FM Drum
+   Preset은 이제 requested map(36..51)을 explicit Playback Note로 전송합니다.
+   전체 기록: 저장소 루트 `docs/playback-note-safety-plan.md`.
 2. **Safari**: Web MIDI 미지원. Chrome 안내 문구만 존재.
 3. **MIDI Learn**: Note On만 인식. (채널 필터링, CC 매핑 등은 미구현.)
 4. **진단**: GitHub Pages에서 진단 수집 불가. 오류는 로그에만 남습니다.
@@ -117,7 +120,7 @@ GitHub Pages는 강한 캐싱을 하므로 쿼리를 바꾸지 않으면 구버�
 
 ## 7. 다음 단계 제안
 
-- 임의 Playback Note 허용을 위한 펌웨어 side 변경 후 앱의 "identity-safe" 경고 제거.
+- ~~identity-safe 경고 제거~~ — S1C6 적용 완료 (Explicit Playback 버튼/문구 반영).
 - PWA(service worker)로 오프라인/설치형 동작 추가 (선택).
 - 커스텀 도메인 연결 (DEPLOY.md 참조).
 - 샘플 세트를 저장소 외부(별도 데이터 URL)로 분리해 저장소 크기 관리.

@@ -1,6 +1,6 @@
 # 임의 Playback Note 안전 사용 계획
 
-작성: 2026-08-13 · 갱신: 2026-08-14 · 상태: **Phase 1 완료 — S1C6(S16) 실기기 검증 PASS** (루트 원인: 프로듀서 리셋 시그니처 콜리전)
+작성: 2026-08-13 · 갱신: 2026-08-14 · 상태: **Phase 1–2 완료 — S1C6(S16) 실기기 검증 PASS + FM Drum identity-safe 해제 적용** (루트 원인: 프로듀서 리셋 시그니처 콜리전)
 
 > **2026-08-14 정정**: 앞서 "장치가 S1C1"이라 보고했으나 잘못된 정보였습니다.
 > 장치 표시가 `S1C5`의 마지막 글자가 잘려 `S1C`로만 보인 것입니다. 실제 장치는
@@ -223,18 +223,20 @@ byte-for-byte 보존**됩니다 (M09 교훈: cave 없음).
 4. 임의 map(0..127, 중복 포함) 검증 케이스 추가 (중복 note는 Option D
    범위로 보류해도 무방 — FM kit는 distinct).
 
-### Phase 2 — identity-safe 해제 (에디터)
+### Phase 2 — identity-safe 해제 (에디터) — 2026-08-14 구현 완료
 
-1. FM drum manifest: `playbackNote`를 `requestedPlaybackNote` 값으로 복원,
-   format `smk37-v15-s1c5-identity-safe-fm-drum-preset-v1` →
-   `smk37-v15-s1c6-explicit-playback-fm-drum-preset-v1` (또는 v2)로 승격.
-2. `FM-Drum-Kit-patches.fm.smkpatchset.json` 재생성 (playbackNote = 36..51
-   순열).
-3. `tests/drum-preset.test.mjs` 기대값 갱신 (playbackNote = 36..51, identity-safe
-   정책 테스트 제거/교체).
-4. `app.js` 로드 메시지·README·HANDOFF·PROTOCOL 문서 갱신 (identity-safe 제약
-   문구 제거).
-5. 에디터 `npm test` 전체 통과 → Pages 재배포.
+1. ✅ FM drum manifest: `playbackNote`를 `requestedPlaybackNote` 값(36..51)으로
+   복원, format → `smk37-v15-s1c6-explicit-playback-fm-drum-preset-v1` 승격.
+2. ✅ `FM-Drum-Kit-patches.fm.smkpatchset.json` 재생성 (playbackNote = 36..51
+   순열, format `smk37-v15-s1c6-explicit-playback-patch-set-v1`, `parsePatchSetDocument`
+   지원 추가).
+3. ✅ `tests/drum-preset.test.mjs` 기대값 갱신 (playbackNote = 36..51, identity-safe
+   정책 테스트 교체). 전송 순서 byte 161 값은 실기기 검증 때와 동일한
+   pad 순열 [44,45,46,47,36,37,38,39,48,49,50,51,40,41,42,43]로 단언.
+4. ✅ `app.js` 로드 메시지·README·HANDOFF·PROTOCOL 문서 갱신 (identity-safe 제약
+   문구 제거, S1C6 17패킷 프로토콜 반영).
+5. ✅ 에디터 `npm test` **14/14 통과** (워크스페이스 + 공개 저장소 복사본).
+   Pages 재배포는 main push 시 자동 (`deploy-pages.yml`).
 
 ### Phase 3 — Release
 

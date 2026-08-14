@@ -126,7 +126,7 @@ export function createPatchSetDocument(slots, title = "Untitled Patch Set", play
 }
 
 export function parsePatchSetDocument(document) {
-  const supported = document?.format === "smk37-v15-s1c3-web-patch-set-v1" || document?.format === "smk37-v15-s1c3-web-patch-set-v2" || document?.format === "smk37-v15-s1c5-identity-safe-patch-set-v1";
+  const supported = document?.format === "smk37-v15-s1c3-web-patch-set-v1" || document?.format === "smk37-v15-s1c3-web-patch-set-v2" || document?.format === "smk37-v15-s1c5-identity-safe-patch-set-v1" || document?.format === "smk37-v15-s1c6-explicit-playback-patch-set-v1";
   if (!supported || !Array.isArray(document.patches) || document.patches.length !== 16) {
     throw new SysExError("unsupported or incomplete patch-set document");
   }
