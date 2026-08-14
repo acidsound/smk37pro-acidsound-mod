@@ -11,12 +11,13 @@
 
 **의미**:
 
-- Phase 0 (2026-08-14) FM Drum 테스트 결과(identity-safe preset 실패 +
-  explicit-playback 디폴트 복귀)는 **유효한 S1C5 실측 = FAIL**입니다.
-  byte 161 = 36..51(trigger 범위)이 핵심 변수로 의심되며(all-C4 = 60은
-  2026-08-04 live PASS), 상세는
-  [`playback-note-safety-plan.md`](playback-note-safety-plan.md)
-  "Phase 0 시도 기록" 참조.
+- Phase 0 (2026-08-14) FM Drum 테스트 결과는 **유효한 S1C5 실측 = FAIL**이며
+  **루트 원인이 확정**됐습니다: byte 161 값(36..51 vs 60)은 **무관** — 직접
+  USB로 둘 다 로드 성공. 실패 원인은 프로듀서 reset wrapper의
+  `stage[0..1] == 0x62 0x63` 검사가 FM 키트의 HITUN RIMS 보이스 데이터
+  (bytes 6..7)와 충돌해, 전송 slot 13에서 리셋이 발화하며 트랜잭션이
+  소거되기 때문입니다. 상세는
+  [`playback-note-safety-plan.md`](playback-note-safety-plan.md) §0 참조.
 - **버저닝 3자 전환**: 4자 마커가 표시에서 잘리는 문제(M-시리즈 `M001`→`M00`
   교훈의 반복)를 방지하기 위해, 이후 표시 마커는 **정확히 3자**(`S` + 2자리,
   S1C5 → `S15`, 다음 빌드 `S16`…)로 통일합니다. 현재 설치된 S1C5의 마커
@@ -71,14 +72,24 @@ offline 검증(validate.py), exact-OTA 컴파일, rollback sector, live transcri
 - Trigger Note(물리 Pad 식별) 불변. 중복 Playback Note(C4 등) 허용이 packet
   artifacts로 증명됨.
 
-### 제약 (S1-C5 identity 결합)
+### 제약 (루트 원인: 프로듀서 리셋 시그니처 콜리전)
 
-S1-C4 시절 live 분석에서 packet byte 161이 trigger/transaction identity로
-취급되어 임의 Playback Note에서 transaction이 붕괴하는 문제가 확인되었습니다.
-S1-C5의 post-hook register reload 수정으로 all-C4(중복) 포함 임의 Playback
-Note가 live 검증되었지만, **trigger 범위(36..51) 내 playback note의 voice-identity
-상호작용은 아직 미검증**이므로 웹 에디터의 FM Drum preset은 identity-safe
-(Original) 정책을 유지합니다.
+**2026-08-14 확정**: identity-safe를 유지하던 실질 이유(byte 161 = 36..51이
+트랜잭션을 붕괴)는 **반증**됐습니다. 직접 USB 대조로 byte 161 값과 무관하게
+Bank D(36..51)와 all-C4(60) 모두 로드 성공했고, FM 키트만 실패했습니다.
+
+실패 원인은 reset wrapper(`0x0201e228`)가 **모든 패킷**의 `stage[0..1] ==
+0x62 0x63`(wire bytes 6..7 = 보이스 데이터 첫 2바이트)을 리셋 시그니처로
+검사하는 것인데, 이 시그니처는 Bank D 슬롯0 보이스(BUZZ BASS)의 실제 음성
+데이터에서 차용된 것입니다. FM 키트의 **HITUN RIMS**(note 49 → 전송 slot 13 =
+14번째 패킷)가 bytes 6..7 = `62 63`이라 중간 슬롯에서 리셋이 발화해
+count/state가 클리어되고, ARMED(count 16)에 도달하지 못해 디폴트로 복귀합니다.
+Bank D가 성공한 것은 유일한 `62 63` 보이스(BUZZ BASS, note 36)가 첫 패킷이었기
+때문입니다.
+
+→ FM Drum preset identity-safe 해제(임의 Playback Note)의 전제는
+**리셋 검출을 음성 데이터와 분리하는 펌웨어 수정**(S1C6/S16, 옵션 R-B: 명시적
+리셋 패킷 + 구조적 불가능 시그니처)입니다. byte 161은 이미 자유입니다.
 
 임의 Playback Note 안전 사용 연구·해제 계획은
 [`docs/playback-note-safety-plan.md`](playback-note-safety-plan.md)에 있습니다.
