@@ -1,6 +1,6 @@
 # 바닥부터 플랫폼 재구축 계획 (SDK 기반)
 
-작성: 2026-08-14 · 상태: 설계·첫 단계 논의
+작성: 2026-08-14 · 상태: **P0a PASS (SDK 빌드 완료, macOS+container+qemu)** — P0b(플래시)는 USB 접근 대기
 
 ## 1. 배경과 동기
 
@@ -106,6 +106,54 @@ P0을 세 갈래로 좁힙니다:
 
 P0이 실패하면 이 방향 자체가 종료되므로, 그 전에는 C 포팅을 시작하지 않습니다.
 C(보드 조사)는 가능한 만큼(사진/FPC 마킹) 병렬로 진행.
+
+### P0a 결과 — **PASS (2026-08-14, macOS arm64)**
+
+**결론: Jieli 툴체인 + AC79 SDK가 macOS(Apple container + qemu)에서 demo 타깃을 정상
+빌드합니다.** `make ac791n_demo_demo_hello` clean rebuild → exit 0, 산출물:
+
+- `sdk.elf` (1,024,432B) — CPU/wl82 링크 완료
+- `app.bin` (119,748B) — .text+.data+.ram0_data+.cache_ram_data 연결 (플래시용)
+- `symbol_tbl.txt`, `sdk.map`
+
+**구성 (워크스페이스 `linux-build/`에 영속)**:
+
+| 구성요소 | 비고 |
+|---|---|
+| `container` (Apple) | `smk-jieli-build` 컨테이너, `/build` ↔ `linux-build/` 바인드 마운트 |
+| Jieli linux 툴체인 | `pkgman.jieliapp.com/s/linux-toolchain` (20250324.1, **x86-64 전용**) |
+| `fw-AC79_AIoT_SDK` | GitHub 미러(jeffreywugz) `release/AC79NN_SDK_V1.0.3` |
+| linux post-build | `pkgman.jieliapp.com/s/linux-postbuild` (isd_download/fw_add/ufw_maker…) |
+| amd64 sysroot | `debootstrap` + libstdc++/libgcc (컨테이너 `/root/amd64-rootfs`) |
+
+**핵심 트릭 — x86-64 툴체인을 arm64에서 실행**: qemu-user는 guest execve를 호스트에
+그대로 통과시켜 **중첩 exec(x86-64→x86-64)가 ENOEXEC**로 깨집니다(clang driver→cc1,
+LTO gold plugin→clang). 해결:
+
+1. 툴체인 ELF를 `.bin`으로 옮기고 같은 이름의 **셸 스크립트 래퍼**(qemu 재진입)로 대체
+   (`/opt/jieli/pi32v2/bin` — Makefile 경로 유지, lib/include는 실체로 심링크).
+2. **LD_PRELOAD 셤** (`linux-build/exec-shim.c`, x86-64 크로스 컴파일): emulated
+   프로세스가 `/opt/jieli/`의 `*.bin`을 exec/posix_spawn하면 스크립트 래퍼로 리다이렉트.
+   LD_PRELOAD는 래퍼가 `-E`로 재주입 → 전 체인 커버.
+3. `linux-build/download.sh` → SDK `cpu/wl82/tools/download.sh` (Linux post-build):
+   objcopy 섹션 추출 → app.bin (isd_download 플래시 단계는 장치 세션에서만 별도 실행).
+
+재현: `container exec smk-jieli-build bash -c 'ulimit -n 8192; cd /build/fw-AC79_AIoT_SDK
+&& make ac791n_demo_demo_hello'`
+
+### P0b 상태 — **준비 완료, USB 접근만 남음**
+
+- **플래시 도구 준비**: `linux-postbuild`의 `isd_download -tonorflash`가 공식 Jieli USB
+  다운로드 도구. isd_config.ini 확인: CHIP_NAME=AC791N, DOWNLOAD_MODEL=usb, 4M flash.
+  장치의 업데이트 모드 VID/PID `4d4a:4155`는 Jieli VID(0x4D4A)와 일치 → 표준
+  tonorflash 프로토콜을 말할 가능성 높음.
+- **블로커: Apple container에 USB 패스스루 없음** (`/dev/bus/usb` 부재, device 옵션 없음).
+  → macOS에서 `isd_download`(x86-64 리눅스)를 돌리려면 **USB 패스스루가 있는 Linux VM**
+  (UTM/QEMU)이 필요. 대안: Jieli tonorflash 프로토콜을 호스트 C 센더로 재구현
+  (exact_ota 기반, 프로토콜 캡처 선행).
+- **update.ufw(OTA) 패키징**: `fw_add`/`ufw_maker`는 jl_isd.fw(플래시 세션 byproduct)가
+  필요 — isd_download 성공 후 실행. 기존 v15 OTA 경로(exact_ota+fwsc)는 SMK 전용
+  포맷이라 SDK 빌드물에는 해당 없음.
 
 ## 8. 관련 문서
 
