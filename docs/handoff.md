@@ -136,8 +136,14 @@ exact_ota upload <fwsc> <transcript.log> --confirm <token>  # 플래시 중 USB 
 
 ## 7. 남은 작업 / 알려진 제약
 
-1. **휘발성 RAM persistence 미해결** — 전원 사이클 후 재전송 필요 (S1C7~S1C9
-   분석 차단, S2 unsafe). 원한다면 별도 연구 과제.
+1. **휘발성 RAM persistence 미해결** — 전원 사이클 후 재전송 필요 (S1C7 live
+   실패, S1C8/S1C9·S2 차단). **2026-08-14 재검증: 여전히 차단** — CRC32
+   테이블(0x02059210)은 존재하나 참조 0건(죽은 데이터, callable ABI 없음),
+   S1C6 tail·SAVE 영역 배치 수학 불변 (보고서:
+   `baselines/v15/analysis/persistence-reassessment-20260814/report.md`).
+   실용 대안: **호스트 측 자동 복원** — S1C6의 안전 재로드(리셋+16) 덕에
+   에디터가 마지막 세트를 저장했다가 부팅/재연결 시 자동 재전송 (펌웨어
+   리스크 0, 추천).
 2. **중복 Playback Note cross-release** — 사용자가 중복 note를 쓸 경우 voice
    identity가 note 기반이라 근본 한계 (Option D 문서화·보류).
 3. **에디터 펌웨어 버전 가드 (제안)** — S16 전용 리셋 패킷을 S1C5 이하 장치에서
