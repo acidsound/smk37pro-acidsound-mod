@@ -733,7 +733,7 @@ class FakeTransport:
         if not self.loader_running:
             raise AssertionError("loader command sent before RAM jump")
         if command == CMD_LOADER_GET_USB_BUFFER_SIZE:
-            body = (256).to_bytes(4, "big") + b"\x00" * 10
+            body = (256).to_bytes(2, "big") + b"\x00" * 12
             return command.to_bytes(2, "big") + body
         if command == CMD_LOADER_GET_ONLINE_DEVICE:
             body = bytes([0x03, 0x00]) + (0x123456).to_bytes(4, "little") + b"\x00" * 8
