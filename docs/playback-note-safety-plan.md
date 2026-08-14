@@ -238,12 +238,13 @@ byte-for-byte 보존**됩니다 (M09 교훈: cave 없음).
 5. ✅ 에디터 `npm test` **14/14 통과** (워크스페이스 + 공개 저장소 복사본).
    Pages 재배포는 main push 시 자동 (`deploy-pages.yml`).
 
-### Phase 3 — Release
+### Phase 3 — Release — 2026-08-14 완료
 
-1. 새 펌웨어(S16) 검증 로그·해시 재확인.
-2. Release 생성 (내용 요약: 리셋 검출 분리, 임의 Playback Note 허용, FM drum
-   map 활성화).
-3. FM kit identity-safe 문서(제약) 제거.
+1. ✅ 새 펌웨어(S16) 검증 로그·해시 재확인 (OTA transcript + SHA-256).
+2. ✅ Release 생성 `v15-s1c6-reset-signature-isolation`
+   (https://github.com/acidsound/smk37pro-acidsound-mod/releases/tag/v15-s1c6-reset-signature-isolation)
+   — fwsc + app.bin + manifests + SHA256SUMS + OTA 로그, 내용 요약 포함.
+3. ✅ FM kit identity-safe 문서(제약) 제거 (Phase 2에서 완료).
 
 ## Phase 0 시도 기록 (2026-08-14) — 루트 원인 확정
 
