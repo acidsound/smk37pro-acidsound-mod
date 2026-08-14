@@ -153,8 +153,11 @@ LTO gold plugin→clang). 해결:
   게이트(양성 PASS/음성 REJECT/재파싱/보호 해시 불변) 전부 통과.
   - 산출물: `SMK37Pro-v15-SDK-DEMO-HELLO.fwsc`, 토큰
     `INSTALL-SMK37PRO-V15-SDK-DEMO-HELLO-4D39EFE4`, 전용 `exact_ota.c`
-- **다음(= P0c)**: exact_ota 컴파일 → 장치 업데이트 모드 → `upload --confirm …`
-  → SDK 앱 부팅 관측. 복원 안전망: 보호 부트 불변 + S1C6 자산 + forced-loader.
+- **다음(= P0c) — 자체 복구 앱 경유 (2026-08-14 확정)**: 업데이트 모드(4d4a:4155)는
+  v15 app 소속이고 스톡 usb_update2는 SMK 프로토콜과 불일치(정적 분석 확인) →
+  **SDK 앱에 SMK OTA 서버를 이식**(`docs/self-recovering-sdk-app.md`)해 플래시 후에도
+  exact_ota로 S16 복원 가능하게 함. 왕복 검증(플래시→복원) 후 실제 P0c 관측.
+  강제 도구(Jieli 4.0/esp32c3-usbkey)는 최후 수단.
 - **버려진 대안**: OrbStack/UTM(USB 패스스루 VM)과 tonorflash 호스트 센더 재구현은
   불필요해짐. `isd_download`/`fw_add`/`ufw_maker`는 SDK 앱의 표준 업데이트
   패키징(update.ufw)이 필요해질 때(2차) 참고용으로 유지.
