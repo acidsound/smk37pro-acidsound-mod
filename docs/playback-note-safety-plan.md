@@ -1,6 +1,6 @@
 # 임의 Playback Note 안전 사용 계획
 
-작성: 2026-08-13 · 상태: 연구 완료, 실행 대기 (Phase 0 실기기 테스트 필요)
+작성: 2026-08-13 · 갱신: 2026-08-14 · 상태: Phase 0 1차 시도 **무효** (장치가 S1C1이었음) → S1C5 재플래시 후 재시도 필요
 
 ## 1. 요약 (결론)
 
@@ -110,7 +110,8 @@ map(36..51)을 explicit playback note로 적용한 테스트 set (format v2로
 importable).
 
 절차:
-1. 현재 S1C5 장치 부팅 확인 (표시 `S1C5`).
+1. 장치 표시가 정확히 **`S1C5`**인지 반드시 확인 (다른 S1C 버전이면 아래
+   "Phase 0 시도 기록" 참조 — 결과가 무효).
 2. Patch Set Editor → **Set 가져오기**로 테스트 JSON 로드.
 3. Web MIDI 연결 → **16개 Patch 전송**.
 4. Pad 1–16을 순서대로·겹쳐서 연주하며 확인:
@@ -123,6 +124,30 @@ importable).
 - **PASS**: identity-safe 해제 가능. Phase 2로 (펌웨어 변경 없이).
 - **FAIL**: 실패 패턴을 기록(어느 pad 조합에서 어떤 증상) → Phase 1로.
   실패 패턴이 "trigger 범위 내 note"와 관련되면 Option A/B로 분리 전송.
+
+## Phase 0 시도 기록 (2026-08-14) — 무효 (장치가 S1C1이었음)
+
+시도 당시 장치 표시가 **`S1C1`**이었습니다. S1C1은
+`baselines/v15/analysis/flash-candidates/S1C1-boundary-only/report.md` 기준
+"no per-note selector exists, second slot is never accessed, no persistence" —
+H2 동작을 그대로 보존한 **boundary-only** 빌드로, 16-slot producer·selector·
+playback map이 전혀 없습니다. 16-slot 기능이 들어간 것은 S1C3(producer),
+playback map은 S1C4, register-return 수정은 S1C5부터입니다.
+
+| 시도 | 결과 | 해석 |
+|---|---|---|
+| FM Drum preset (identity-safe) | **실패** | 예상된 결과. S1C1은 16-slot 키트 트랜잭션을 호스팅하지 못함 |
+| explicit-playback JSON 로드 후 전송 | **디폴트 상태로 복귀** | 예상된 결과. S1C1은 16-패킷 트랜잭션을 수용하지 않음 |
+
+**결론**: 위 결과는 S1C5 안전성에 대한 증거가 될 수 없습니다. 계획의 전제
+(장치 = S1C5)가 성립하지 않았기 때문입니다. Phase 0은 S1C5
+(`SMK37Pro-v15-S1C5-playback-register-return-S1C5-marked.fwsc`, SHA
+`cfafa3273ca0ba741616e5f3aa87f262a45ecd84445bdefd969900dad256b480`) 재플래시 후
+재실행해야 합니다. OTA token:
+`INSTALL-SMK37PRO-V15-S1C5-MARKED-PLAYBACK-CFAFA327`.
+
+동일 기기인데 표시가 S1C1인지, 아니면 별도 기기인지는 재확인 필요 —
+`docs/v15-s1c-status.md`의 "현재 설치: S1C5" 기록(2026-08-04)과 불일치합니다.
 
 ### Phase 1 — 펌웨어 변경 (FAIL 시에만)
 
