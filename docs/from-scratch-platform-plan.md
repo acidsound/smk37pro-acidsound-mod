@@ -161,3 +161,4 @@ LTO gold plugin→clang). 해결:
 - `docs/research-notes.md` — LCD/오디오/보드 미지 사항 체크리스트
 - `docs/dx7-editor-interop-plan.md` — Dexed 연동(에디터 브리지) 설계
 - `docs/handoff.md` — 전체 현황 진입점
+- `docs/linux-build-flash-procedure.md` — Windows 도구 vs Linux 경로 대조 & 플래시 절차
