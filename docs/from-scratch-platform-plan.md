@@ -141,19 +141,23 @@ LTO gold plugin→clang). 해결:
 재현: `container exec smk-jieli-build bash -c 'ulimit -n 8192; cd /build/fw-AC79_AIoT_SDK
 && make ac791n_demo_demo_hello'`
 
-### P0b 상태 — **준비 완료, USB 접근만 남음**
+### P0b 상태 — **② fwsc 재포장 경로로 확정 (2026-08-14) — OrbStack/호스트 센더 불필요**
 
-- **플래시 도구 준비**: `linux-postbuild`의 `isd_download -tonorflash`가 공식 Jieli USB
-  다운로드 도구. isd_config.ini 확인: CHIP_NAME=AC791N, DOWNLOAD_MODEL=usb, 4M flash.
-  장치의 업데이트 모드 VID/PID `4d4a:4155`는 Jieli VID(0x4D4A)와 일치 → 표준
-  tonorflash 프로토콜을 말할 가능성 높음.
-- **블로커: Apple container에 USB 패스스루 없음** (`/dev/bus/usb` 부재, device 옵션 없음).
-  → macOS에서 `isd_download`(x86-64 리눅스)를 돌리려면 **USB 패스스루가 있는 Linux VM**
-  (UTM/QEMU)이 필요. 대안: Jieli tonorflash 프로토콜을 호스트 C 센더로 재구현
-  (exact_ota 기반, 프로토콜 캡처 선행).
-- **update.ufw(OTA) 패키징**: `fw_add`/`ufw_maker`는 jl_isd.fw(플래시 세션 byproduct)가
-  필요 — isd_download 성공 후 실행. 기존 v15 OTA 경로(exact_ota+fwsc)는 SMK 전용
-  포맷이라 SDK 빌드물에는 해당 없음.
+**결정**: SDK 앱을 기존 SMK OTA 경로(exact_ota)로 플래시합니다. fwsc가 Jieli
+표준 UFW 포맷이고 검증이 **CRC16 자체일관성(서명 없음)** 이라 임의 app 내용이
+통과합니다 — S1C1~S1C6(변경 내용) 전부 stage-1 통과가 증거. 상세:
+`baselines/v15/analysis/fwsc-repack-sdk-app/report.md`
+
+- **pack 도구**: `tools/pack_sdk_app_fwsc.py` — SDK app.bin을 0xFF 패딩 후 v15
+  UFW 템플릿에 치환(구조 불변, CRC만 재계산). demo_hello 실패키징 + 오프라인
+  게이트(양성 PASS/음성 REJECT/재파싱/보호 해시 불변) 전부 통과.
+  - 산출물: `SMK37Pro-v15-SDK-DEMO-HELLO.fwsc`, 토큰
+    `INSTALL-SMK37PRO-V15-SDK-DEMO-HELLO-4D39EFE4`, 전용 `exact_ota.c`
+- **다음(= P0c)**: exact_ota 컴파일 → 장치 업데이트 모드 → `upload --confirm …`
+  → SDK 앱 부팅 관측. 복원 안전망: 보호 부트 불변 + S1C6 자산 + forced-loader.
+- **버려진 대안**: OrbStack/UTM(USB 패스스루 VM)과 tonorflash 호스트 센더 재구현은
+  불필요해짐. `isd_download`/`fw_add`/`ufw_maker`는 SDK 앱의 표준 업데이트
+  패키징(update.ufw)이 필요해질 때(2차) 참고용으로 유지.
 
 ## 8. 관련 문서
 
