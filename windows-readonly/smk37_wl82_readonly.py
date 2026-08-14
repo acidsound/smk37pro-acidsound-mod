@@ -469,6 +469,11 @@ class ReadOnlyWl82:
         buffer_response = self._response(CMD_LOADER_GET_USB_BUFFER_SIZE)
         buffer_size = int.from_bytes(buffer_response[:2], "big")
         if not LOADER_BUFFER_SIZE_MIN <= buffer_size <= LOADER_BUFFER_SIZE_MAX:
+            LOG.error(
+                "0xFC14 raw 14-byte payload (hex): %s; parsed 16-bit big-endian: %d",
+                buffer_response.hex(" "),
+                buffer_size,
+            )
             raise SafetyError(f"implausible loader USB buffer size: {buffer_size}")
 
         online = self._response(CMD_LOADER_GET_ONLINE_DEVICE)
