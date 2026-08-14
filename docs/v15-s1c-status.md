@@ -2,6 +2,25 @@
 
 작성: 2026-08-13 (기준: 최근 성공 flash 2026-08-04)
 
+## 2026-08-14 상태 갱신 — 현재 테스트 기기 표시: **S1C1**
+
+실기기 확인 결과 현재 기기의 버전이 **S1C1**(boundary-only 빌드)입니다.
+아래 "현재 설치 펌웨어: S1-C5" 기록(2026-08-04 성공 flash 기준)과 불일치하며,
+이 기기에서는 S1C5 이후 기능(16-slot producer, playback map, register-return
+수정)이 올라가 있지 않은 상태입니다.
+
+**의미**:
+
+- S1C1은 16-slot producer/selector가 없는 boundary-only 빌드라, FM Drum
+  preset(identity-safe든 explicit-playback이든)은 이 기기에서 **동작할 수
+  없습니다** (2026-08-14 Phase 0 시도에서 실패 + 디폴트 복귀로 확인).
+- Phase 0(임의 Playback Note 실기기 테스트)은 **S1C5 재플래시 후에만 유효**
+  합니다. fwsc: `SMK37Pro-v15-S1C5-playback-register-return-S1C5-marked.fwsc`
+  (SHA `cfafa3273ca0ba741616e5f3aa87f262a45ecd84445bdefd969900dad256b480`),
+  OTA token `INSTALL-SMK37PRO-V15-S1C5-MARKED-PLAYBACK-CFAFA327`.
+- 상세: [`docs/playback-note-safety-plan.md`](playback-note-safety-plan.md)
+  "Phase 0 시도 기록" 참조.
+
 ## 배경
 
 공식 v15(`SMK-37 Pro_015`) 기준선 위에서 16-slot 패치 적재(Playback Note) 기능을
