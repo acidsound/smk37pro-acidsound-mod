@@ -4,6 +4,7 @@
 #include <IOKit/usb/IOUSBLib.h>
 
 #include <errno.h>
+#include <signal.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -13,6 +14,18 @@
 #include <unistd.h>
 
 #include "sha256.h"
+
+static const char *g_phase = "init";
+static void crash_handler(int sig) {
+    char msg[128];
+    int n = snprintf(msg, sizeof(msg),
+                     "\n*** SMK37 RECOVERY CRASH: signal %d at phase '%s' ***\n",
+                     sig, g_phase);
+    if (n > 0) {
+        (void)write(STDERR_FILENO, msg, (size_t)n);
+    }
+    _exit(128 + sig);
+}
 
 enum {
     JIELI_VID = 0x4c4a,
@@ -921,11 +934,14 @@ static int bot_open(BotInterface *bot, unsigned wait_seconds) {
     io_service_t service = IO_OBJECT_NULL;
     unsigned waited_ms = 0;
     for (;;) {
+        g_phase = "find_interface";
         IOReturn result = find_interface(&service);
         if (result == kIOReturnSuccess) {
+            g_phase = "open_bot_interface";
             result = open_bot_interface(service, bot);
             IOObjectRelease(service);
             if (result == kIOReturnSuccess) {
+                g_phase = "open_success";
                 return 0;
             }
             if (wait_seconds == 0 || waited_ms >= wait_seconds * 1000U) {
@@ -967,12 +983,15 @@ static int run_dump(const char *loader_path, const char *directory,
         return result;
     }
     char vendor[9], product[17], revision[5];
+    g_phase = "bot_inquiry";
     result = bot_inquiry(&bot, vendor, product, revision);
     if (result == kIOReturnSuccess) {
+        g_phase = "upload_loader";
         result = upload_loader(&bot, loader, loader_length);
     }
     uint32_t loader_buffer = 0;
     if (result == kIOReturnSuccess) {
+        g_phase = "loader_info";
         result = loader_info(&bot, &loader_buffer);
     }
     uint32_t chunk = requested_chunk == 0 ? loader_buffer : requested_chunk;
@@ -991,11 +1010,14 @@ static int run_dump(const char *loader_path, const char *directory,
     }
     if (result == kIOReturnSuccess) {
         printf("single-session dump: chunk=%u\n", chunk);
+        g_phase = "dump_flash_a";
         result = dump_flash(&bot, chunk, dump_a, hash_a);
     }
     if (result == kIOReturnSuccess) {
+        g_phase = "dump_flash_b";
         result = dump_flash(&bot, chunk, dump_b, hash_b);
     }
+    g_phase = "close_bot_interface";
     close_bot_interface(&bot);
     free(loader);
     if (result != kIOReturnSuccess) {
@@ -1314,6 +1336,10 @@ static void usage(const char *program) {
 }
 
 int main(int argc, char **argv) {
+    signal(SIGSEGV, crash_handler);
+    signal(SIGBUS, crash_handler);
+    signal(SIGABRT, crash_handler);
+    g_phase = "main";
     if (argc == 2 && strcmp(argv[1], "self-test") == 0) return self_test();
     if (argc == 2 && strcmp(argv[1], "bot-probe") == 0) {
         BotInterface bot = {0};
