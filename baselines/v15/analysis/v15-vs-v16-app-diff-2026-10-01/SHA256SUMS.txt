@@ -6,9 +6,13 @@
 020ab7bc10b6af60b1a7639f4944faa951f78fd54ec4289ce1530276d27ddefd  baselines/v15/analysis/v15-vs-v16-app-diff-2026-10-01/function-pairs.tsv
 15428d175ffc6976baf20ca225477948b5eeb9babc7609d7b32d842fb34d9d70  baselines/v15/analysis/v15-vs-v16-app-diff-2026-10-01/function-diff.json
 a9668b5cc6067e349464169e63d3af2cdfd3d980d3c5ae4bff1f96c8dc2a72be  baselines/v15/analysis/v15-vs-v16-app-diff-2026-10-01/function-diff-details.md
-4b95828adfa2b88ddd8c778e9fd37ed2d70eb163e4d4e1c7456d374b7594d38d  baselines/v15/analysis/v15-vs-v16-app-diff-2026-10-01/README.md
+f858e75ca3fe220646c429c5e827ff9f3b2c5f6db5d6926dd422977f03687f26  baselines/v15/analysis/v15-vs-v16-app-diff-2026-10-01/README.md
 db7292d77677309d467c981e7b3fbdaeea7ea30e2ce6478662721032f112e1f1  baselines/v15/analysis/v15-vs-v16-app-diff-2026-10-01/results/SHA256SUMS
 199cd5ce1193e8696fdb5ffb4e3cd4e9f07e0b8f2bd84025dd7cbd7e451cc66f  baselines/v15/analysis/v15-vs-v16-app-diff-2026-10-01/results/provenance.txt
 0115328fd8f523d124fa40e45d5d124c53c96dfff8467f23dba02d709d7db6cd  baselines/v15/analysis/v15-vs-v16-app-diff-2026-10-01/results/v16-exhaustive-listing.tsv.gz
 9b149caf43463a214782e1c181795dccccced6d62d3e10f375565b42f216a9cb  baselines/v15/analysis/v15-vs-v16-app-diff-2026-10-01/results/v16-headless.log
 5d2f2ba2477b32257bb7dbb84919968d45c2a72efb3fd642417e2a543cc8bc3b  baselines/v15/analysis/v15-vs-v16-app-diff-2026-10-01/results/v16-recursive-listing.tsv.gz
+17ab01765e745e474f32589eb9dc9f423b275e750a1be997abc34536d398dfee  baselines/v15/analysis/v15-vs-v16-app-diff-2026-10-01/structural-and-newbytes-2026-10-01.md
+3d486cf9dd706b288c8d12bf591f81dde504655a6dccf7c8f5e743e6f5c5e660  tools/smk37_listing_diff.py
+8f112f0cdf9c036386263c72b9b3e4832c7c720d673e5b0cfd40cfcf1d0c7751  tools/smk37_structural_verify.py
+aff804f8dc30f921516af669f14653093b2ca90a500b795ba34097da54354b0d  tools/smk37_structural_bytes.py
