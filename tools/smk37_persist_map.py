@@ -121,14 +121,43 @@ def norm_imm(s):
     return None
 
 
+# Register-indexed addressing: `[r0+r1<<2]`, `[rX + rY<<N]`.  The base is the
+# FIRST register; the second is a scaled index.  Returning the wrong one here
+# makes the tool invent a pointer (it reported `ptr(mem[0xc55])` for a settings
+# table access), which is how a tool bug becomes a published "finding".
+# Any bracket expression containing TWO registers is dynamically addressed,
+# whether or not it is scaled: `[r0+r1<<2]` (scaled) and `[r0+r5]` (plain).
+# Both make the effective offset runtime-dependent.  Guessing produced a fake
+# storage pointer (`ptr(mem[0x1])`) on exactly the second form.
+BRACKET_ANY = re.compile(r"\[([^\]]*)\]")
+REG_TOK = re.compile(r"r\d+")
+
+
 def mem_base_off(m, tk):
-    """(base_reg, off) for a load/store.  The base is inside the brackets."""
-    mb = BRACKETED.search(" ".join(tk))
+    """(base_reg, off) for a load/store.
+
+    Returns (None, off) when the addressing is not statically resolvable, so
+    the caller records UNRESOLVED rather than inventing a pointer.  Two rules:
+      * the base register is the FIRST register inside the brackets;
+      * if the brackets contain a second register, the offset is dynamic and
+        must not be folded into an address.
+    """
+    joined = " ".join(tk)
+
+    mb = BRACKET_ANY.search(joined)
     if mb:
-        base_reg = reg(mb.group(1))
-        off = norm_imm(mb.group(3))
-        if base_reg is not None:
-            return base_reg, (-off if mb.group(2) == "-" else (off or 0))
+        inner = mb.group(1)
+        regs_in = REG_TOK.findall(inner)
+        if not regs_in:
+            return None, 0
+        base_reg = reg(regs_in[0])
+        if len(regs_in) > 1:
+            return base_reg, 0      # dynamic offset -- do not invent one
+        off = norm_imm(inner.replace(regs_in[0], "").strip())
+        if off is None:
+            off = 0
+        return base_reg, off
+
     regs = [reg(x) for x in tk]
     regs = [x for x in regs if x is not None]
     off = 0

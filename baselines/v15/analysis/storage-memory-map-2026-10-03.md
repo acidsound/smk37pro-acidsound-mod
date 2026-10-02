@@ -66,7 +66,7 @@ reconciled with the bulk path: they are different fields.**
 | `mem[g+0x20C]` | 3 | `0x86` | 134 B block |
 | `mem[g+0x0] + 0x27FF8` | 1 | `0x8` | 8 B tag |
 | `mem[g+0x0] + {0, 0x5000, …, 0x23000}` | 15 | `0x49E3` | **bulk window, write+read symmetric (§2.1)** |
-| unresolved | 30 | 4 … `0xA3` | needs the §5 work |
+| unresolved | 31 | 4 … `0xA3` | settings table is register-indexed (§5.6) |
 
 ### 2.1 The bulk window — write and read are provably symmetric
 
@@ -114,7 +114,31 @@ Two of the sixteen remain unresolved: the first read (`0x0200656C`) and
 is the entry of the read sequence and most likely resolves once the preceding
 branch is modelled.
 
-### 2.2 The bulk window does **not** cover the §3 slot
+### 2.2 The `len=0x4` settings cluster is register-indexed
+
+Ten sites write or read exactly 4 bytes, all inside `FUN_0202C616` /
+`FUN_0202C6AC` / `FUN_0202CDF2` / `FUN_020378EA` and their neighbours — the
+"R/W settings cluster" of handoff §4.2. Their storage address is
+**runtime-selected**:
+
+```
+0202c6b0  movz r0,#0x33c2
+0202c6ba  lb.z  r0,[r15 + r0]        ; r15 = g ; index by a g byte
+0202c6c8  mul   r0,r0,#0xc
+0202c6cc  add   r0,r15               ; r0 = g + slot*0xC
+0202c6dc  lw    r1,[r0+r5]           ; storage address read from a table
+0202c7e2  mov   r2,#0x4
+0202c7e6  call  0x02004b02
+```
+
+So these are a **read-modify-write on table-selected settings slots**, not a
+fixed region. Which 4-byte slot is touched depends on a `g` byte and a table
+word. This is consistent with handoff §4.2's read+write classification and
+adds the mechanism: the table at `r0+r5` supplies the storage address.
+
+Not resolvable statically without the table's contents, which live in RAM.
+
+### 2.3 The bulk window does **not** cover the §3 slot
 
 Checked, because it would change §3 if it did:
 
@@ -316,7 +340,25 @@ g+0x03C4  g+0x03D0  g+0x03E8
    4 KiB of §3. That requires the static occupancy prover that does not exist
    yet.
 5. **v16 addresses are not mapped.** Everything is v15.
-6. **A load-prefix class of bug, found and fixed this pass.** quarkslab
+6. **⚠️ The tool invented a storage pointer, and I nearly published it.**
+   Chasing the 10 unresolved `len=0x4` sites, the table showed
+   `r1 = ptr(mem[0xc55])` — an *absolute* storage address in the low region,
+   which would have been a clean new finding. It was an artifact.
+   `lw r2,[r0+r1<<2]` is register-indexed: the base is `r0`, `r1` is a scaled
+   index. My fallback took the last register and produced a pointer out of an
+   index. A second instance, `lw r1,[r0+r5]`, had no `<<` at all and slipped
+   past the first fix.
+
+   Fixed properly: if the brackets contain **two** registers the offset is
+   dynamic, and the function returns UNRESOLVED rather than a guess. The rule
+   is now "the base is the first register in the brackets; a second register
+   means do not fold an address."
+
+   **Two near-miss "discoveries" in one session, both from the same class of
+   bug.** The tell was that a synthetic address appeared at all — no firmware
+   pointer should look like `0xC55`. Treat any absolute address that small as
+   suspect and go read the instruction.
+7. **A load-prefix class of bug, found and fixed this pass.** quarkslab
    prefixes some forms with `_` (`_lw`, `_lb.z`, `_sw`). `_lw` is a plain
    load. It was missing from the `LD` set, and `FUN_02005FAC` reloads the
    storage base with `_lw r1,[r4+0x0]` immediately before its 8 bulk writes —
@@ -337,8 +379,12 @@ g+0x03C4  g+0x03D0  g+0x03E8
    Remaining: **who owns the table at `r10 = 0x01C37030`** — that is the
    record whose field selects the slot, and it is the thing a patch must
    understand.
-3. **Close the 46 unresolved r1 sites**, prioritising len `0x49E3` and
-   `0xA3`. Each one that lands shrinks the unknown surface of §2.
+3. ~~**Close the unresolved r1 sites**, prioritising len `0x49E3`.~~
+   → **done for the bulk window** (46 → 31, §2.1). The remainder is 31:
+   10 are register-indexed settings slots (§2.2, needs RAM table contents),
+   10 have unknown length, and the rest are small reads. The `0xA3` raw-record
+   index chain (`0x02026DA6`) is still unresolved and is now the most
+   interesting single site, because it is the official SAVE's record write.
 4. **Build the static occupancy prover.** Required before any claim about
    free RAM. Do not skip it on the strength of §4's list.
 5. **Extend listing coverage past `BASE+0x58000`.** Everything in §5.1 is
@@ -373,4 +419,6 @@ python3 tools/smk37_listing_query.py --range 02025548:0202556e
   `+0x0FF000`, and the bulk window (§2.1) is a third region entirely.
 - That `0x01C0DE20..0x01C32D38` is safe for our own state. It is a live
   persisted window; using it means contending with the firmware for it.
+- That the `len=0x4` settings cluster has a fixed storage region. Its address
+  is table-derived and RAM-dependent (§2.2).
 - Anything about v16.
