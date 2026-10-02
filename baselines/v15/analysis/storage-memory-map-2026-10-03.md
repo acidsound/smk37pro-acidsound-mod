@@ -60,9 +60,9 @@ New in this pass, beyond closing the gap above:
   blocked on **coverage**, not on missing input.
 - **Coverage is ~58.3%, not 58.2%** — 57.8% measured, then extended by the §8
   pass. ~254 KiB remains undecoded.
-- **That any of the 198 new entries is a proven function.** They are validated
-  by reach >= 4 instructions; a data region that decodes into a long plausible
-  branch chain would also pass.
+- **That any of the 198 new entries is a proven whole function.** 102 of them
+  reach <= 9 instructions, so the set is seeds, not functions (§8.3). Reach >= 4
+  also would not exclude a data region that decodes into a plausible chain.
 - **an address overlap recorded, not resolved**: `0x01C38FD0` is both the end of
   the SysEx slot window and the display-init table destination (§3.9)
 - a warning about `smk37_g_fields.py --field`: its hits are **not** proof of a
@@ -1243,11 +1243,20 @@ g+0x03C4  g+0x03D0  g+0x03E8
    §8.4 decoded `0x0206034C` as `malloc`+`memset`, so those register writes go
    to the heap, not to a controller.
 
-   **How to search, per §8.5:** MMIO here is *base + offset in a register*, never
-   a literal store address — 0 absolute stores into `0x10000..0x100000` across
-   all 117,128 combined rows. Look for a function that loads one of the known
-   bases (`0x10000` ×23, `0x30000` ×31, `0x20000` ×18) and then stores at a
-   computed offset. `0x02005888` is not it.
+   **Where to search, per §8.5.** MMIO here is *base + offset in a register*,
+   never a literal store address — 0 absolute stores into `0x10000..0x100000`
+   across all 117,128 combined rows. So: find a function that loads a base and
+   then **stores** through it. Two facts narrow it:
+
+   - `0x02005888` is **not** it (§8.4: its writes go to the heap).
+   - the region past `0x02057000` is **not** it (§8.5: 3 MMIO accesses there,
+     all reads; opcode profile is library-shaped).
+
+   That leaves the **decoded** region as the place to look, and specifically the
+   LCD's own group. The address map (§5 of the address-space doc) lists
+   `0x10000` groups for USB/audio/ADC/EQ and **no display group**, which is the
+   real open question: either the LCD is on a bus not in that map, or it is
+   reached through one of the 16 substantive functions from §8.3.
 
    **Not required for a text patch.** Writing a string through `0x020299CE` +
    `0x02005152` already changes what appears on screen; MMIO only tells us
@@ -1337,6 +1346,24 @@ The reach filter rejected **136 of 334 (41%)** — a table of integers beginning
 **All 2,916 rows are genuinely new** — zero overlap with the old listings —
 and every one of the 198 entries has a corresponding row.
 
+⚠️ **The 198 entries are a seed set, not a function set.** Reach distribution:
+
+| reach | entries |
+|---|---:|
+| 4–9 | **102** |
+| 10–19 | 27 |
+| 20–49 | 53 |
+| 50–127 | 16 |
+
+Half of them stop within 9 instructions. A matching prologue proves an address
+*starts* a function; it does not prove the whole function was followed. The
+follow halts where the next bytes are ambiguous, which is common at a
+function's tail when the following data is undecoded. So `0x02092604` (the
+`r8 = 0x10008` + `csync` candidate) decoded only its first 4 instructions and
+**cannot be assessed** — I am not claiming it is the LCD.
+
+The 16 entries with reach ≥ 50 are the ones worth reading first.
+
 Two different numbers, both useful:
 
 | measure | before | after |
@@ -1389,6 +1416,29 @@ MMIO in this firmware is reached as **base + offset in a register**, never as a
 literal store address — a search for absolute stores into `0x10000..0x100000`
 returns **0** across all 117,128 combined rows. Any LCD hunt must look for a
 loaded base plus an offset store.
+
+**Applying that rule to the new region returns almost nothing.** Scanning all
+2,916 rows for "load an MMIO-range base, then access through that register
+within 26 instructions":
+
+```
+0x20765fa  r4=0x2fc44  -> 0x2077964  lw  r0,[r4+0x0]
+0x2078572  r1=0x200d0  -> 0x2078690  lw  r1,[r1+0x0]
+0x208c2ba  r2=0x3101c  -> 0x208c2c0  lw  r3,[r2+0x0]
+```
+
+**Three, all plain reads, no store.** The `0x10008` + `csync` at `0x02092604`
+that looked most LCD-like decodes only 4 instructions and cannot be assessed.
+
+So the new region is **library/driver code, not display code**. Opcode profile
+of the 2,916 rows: `mov` 1099, `push` 438, `call` 301, `add` 239, `lw` 171 —
+the shape of a runtime, not a renderer. It references the string pool 4 times
+and `g = 0x01C33260` 15 times, against 2,916 rows total.
+
+**Honest conclusion: the coverage extension did not contain the LCD.** It
+resolved `0x0206034C` (and refuted my hypothesis with it), which was worth the
+run, but the display write is elsewhere and was not found by widening coverage
+of this region.
 
 ### 8.6 Reproduce
 
