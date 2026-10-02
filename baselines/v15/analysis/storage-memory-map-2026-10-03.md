@@ -17,6 +17,14 @@ The 2026-10-02 map left three gaps. This closes the first and bounds the second:
 | §3.3 "layout closes at +0x9209" | **refuted as a global claim** — a proven write reaches `+0x0FF000` (§3) |
 | §4.4 listing coverage 58.2% | **unchanged**, and now explicitly the limiter on every claim (§5) |
 
+New in this pass, beyond closing the gap above:
+
+- a 256-slot x 4 KiB persistent allocator spanning exactly the 1 MiB user
+  partition (§3.1), whose slot index is a field of an existing record word (§3.2)
+- the first measured address-level link between the persistence path and the
+  S1C producer path (§3.3)
+- an honest negative: no reader for that 4 KiB slot exists in our window (§3)
+
 New tool: `tools/smk37_persist_map.py` — resolves all 69 storage-ABI call
 sites into (RAM range, storage base provenance, length) and emits the access
 map of the `g` object at `0x01C33260`. `--selftest` pins 5 known answers.
@@ -115,8 +123,69 @@ That is a strong structural signal: this is **the** user-data slot allocator
 for the device, not an incidental write. 4 KiB granularity, 256 slots, one
 index byte.
 
-The index is persisted at `g+0x1714` (`0x0202554C`), so the scheme stores an
-index, not an address.
+The index is persisted at `g+0x1714` (`0x0202554C`) — and **that store is the
+one that makes the scheme self-describing**: firmware writes the slot number
+into RAM so the next run can find the slot again. It stores an index, not an
+address.
+
+### 3.2 Where the slot index comes from — traced
+
+The mask appears 9 more times in `FUN_02024E8C`, which initially looked like
+"the same allocator repeated". **It is not.** Those 9 sites feed the masked
+value into `ja r0,#N` comparisons — they are **command dispatch**, not slot
+addressing:
+
+```
+02025614  and r0,r9,#0xffff00ff
+02025618  je  r0,#0x4,0x02025ad8      ; command id 4
+02025626  jne r0,#0x5,0x02025aea      ; command id 5
+020256e8  and r4,r9,#0xffff00ff
+020256ec  ja  r4,#0xf,0x020274a6      ; range check
+```
+
+All 9 branch to `0x020274A6`, a **common tail inside the same function**. That
+tail is where the index is manufactured:
+
+```
+020274c2  lw   r6,[r10 + r1<<2]     ; r6 = a word from a table
+020274d8  lsl  r9,r6,0x10           ; r9 = word << 16
+020274dc  lsr  r0,r6,0x18           ; r0 = word >> 24  (a different field)
+020274de  je   r1,#0x0,0x020255d0
+020274e4  je   r0,#0x4,0x0202553c   ; -> the 4 KiB slot write
+```
+
+So the single 32-bit table word is **split into fields**: bits 24-31 become a
+command/branch selector (`r0`), bits 16-23 become the **slot index** (`r9`).
+`FUN_02024E8C` dispatches on one field and, for selector 4, writes the other.
+
+**This is what makes the mechanism usable**: the slot index is a field of an
+existing record word, not something a patch would have to invent. Reading the
+record back and writing the 4 KiB are already wired.
+
+### 3.3 The table base `0x01C37030` touches the S1C producer
+
+`0x01C37030` is loaded in exactly 5 places:
+
+```
+0x02008b7e  mov r5,#0x1c37030   FUN_02008ae0
+0x0201bed2  mov r5,#0x1c37030   FUN_0201be96
+0x0201c2de  mov r5,#0x1c37030   FUN_0201c2a2
+0x0201e3fc  mov r6,#0x1c37030   FUN_0201e254   <-- S1C producer
+0x02025528  mov r10,#0x1c37030  FUN_02024e8c  <-- the slot writer
+```
+
+`FUN_0201E254` is the address the 2026-10-03 handoff §2.5 names as the **end of
+the S1C producer cave** (`0x0201E13E..0x0201E254`), and it is a live function
+in stock v15. It reads `*(g+0x1D8)` and compares a byte against `0xF8`.
+
+So the same RAM base that supplies the 4 KiB slot index is read by the code
+that produces S1C state. That is the first **measured** link between the
+persistence path and the S1C path — previously they were separate tracks.
+
+What this does **not** establish: that the slot write and the S1C read are
+related. They share a base address; whether they share a data structure is
+unproven. Both are stated here as facts about which functions touch the
+address, and no causal link is claimed.
 
 Two readings of that, not yet separated:
 
@@ -147,6 +216,9 @@ the listing cannot distinguish them:
 step 1 of §6 for exactly this reason.
 
 ## 4. `g` object access map — scale
+
+*(§4 and §5 are unchanged from the first pass; see below for the one item that
+this pass did not close.)*
 
 `tools/smk37_persist_map.py --gfield`:
 
@@ -189,12 +261,17 @@ g+0x03C4  g+0x03D0  g+0x03E8
 
 ## 6. Next steps, in order
 
-1. **Find the reader for the §3 4 KiB slot.** Searched this session: absent
-   from our window. Either extend coverage past `BASE+0x58000` or locate the
-   restore path. Until then §3 is a proven write with no proven read.
-2. ~~**Resolve `r9`'s index on the save path.**~~ → **done** (§3.1). The index
-   is persisted at `g+0x1714`; the mask is `0xFFFF00FF` and slots are 1 MiB
-   apart. Remaining: what *value* the UI writes into `g+0x1714`.
+1. **Find the reader for the §3 4 KiB slot.** Partly answered this session:
+   the writer's structure is fully traced (§3.2) but **no reader is in our
+   58.2% window** — searched all 33 `#0x1000` sites. Either extend coverage
+   past `BASE+0x58000` or find `FUN_02024E8C`'s caller, which likely calls
+   both halves. Highest value remaining.
+2. ~~**Resolve `r9`'s index on the save path.**~~ → **done** (§3.1, §3.2).
+   `r9` = bits 16-23 of a table word loaded at `0x020274C2`; the same word's
+   bits 24-31 select the command. The index is persisted at `g+0x1714`.
+   Remaining: **who owns the table at `r10 = 0x01C37030`** — that is the
+   record whose field selects the slot, and it is the thing a patch must
+   understand.
 3. **Close the 46 unresolved r1 sites**, prioritising len `0x49E3` and
    `0xA3`. Each one that lands shrinks the unknown surface of §2.
 4. **Build the static occupancy prover.** Required before any claim about
@@ -217,6 +294,10 @@ python3 tools/smk37_listing_query.py --range 02025548:0202556e
 
 - That the §3 path runs on hardware. Static only.
 - That the §3 4 KiB write is ever read back. No reader is in our window.
+- That `FUN_02024E8C` is reachable, or who calls it. No `call` to it exists in
+  our listing; entry is by a path we cannot see.
+- That the table at `0x01C37030` is what I think it is. Only its role as a
+  32-bit word source is established.
 - That `0x01C37FD0..0x01C38FD0` is safe to write. It is a *persisted* range,
   which makes it more contended than ordinary BSS, not less.
 - That the §4 never-touched words are free. Coverage is 58.2%.
