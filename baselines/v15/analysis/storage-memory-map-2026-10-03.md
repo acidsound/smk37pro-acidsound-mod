@@ -23,6 +23,9 @@ New in this pass, beyond closing the gap above:
   partition (§3.1), whose slot index is a field of an existing record word (§3.2)
 - the first measured address-level link between the persistence path and the
   S1C producer path (§3.3)
+- the record index formula traced to the instruction and **confirmed** — the
+  record array closes at `+0x9180` exactly, matching the flag and selection
+  offsets byte for byte (§2.3)
 - an honest negative: no reader for that 4 KiB slot exists in our window (§3)
 
 New tool: `tools/smk37_persist_map.py` — resolves all 69 storage-ABI call
@@ -138,7 +141,115 @@ adds the mechanism: the table at `r0+r5` supplies the storage address.
 
 Not resolvable statically without the table's contents, which live in RAM.
 
-### 2.3 The bulk window does **not** cover the §3 slot
+### 2.3 The record index formula — traced, and **confirmed**
+
+I set out to refute handoff §3.3 here and did not. It holds. The trace is
+worth recording anyway, because the first two readings of it were both wrong
+and the third only came out by computing.
+
+handoff §3.3 states:
+
+```
+index = bank*32 + preset      (0<=bank<=3, 0<=preset<=31)
+```
+
+The official SAVE at `0x02026D6C` computes it as:
+
+```
+02026d80  add   r5,r8,#0x3a0        ; r5 = g+0x3A0  (selection block)
+02026d84  lb.z  r0,[r5 + 0x4]       ; r0 = bank
+02026d86  lb.z  r1,[r0 + r5]        ; r1 = preset, read at g+0x3A0+bank
+02026d8a  lsl   r0,r0,0x5           ; r0 = bank << 5      <-- r0 here is bank
+02026d8c  ldw   r2,r8,#0x160        ; r2 = *(g+0x160)
+02026d90  add   r0,r1               ; r0 = (bank<<5) + preset
+02026d92  uxtb  r0,r0               ; keep low 8 bits
+02026d94  mul   r0,r0,#0xa3         ; record index
+02026d98  add   r0,r2               ; + storage base
+02026d9a  add   r1,r0,0x4000        ; + raw record area
+02026d9e  add   r4,r8,0x1a14        ; source = g+0x1A14
+02026da2  mov   r2,#0xa3
+02026da6  call  0x02004b02
+```
+
+So the byte-level formula is
+
+```
+index      = ((bank << 5) + preset) & 0xFF
+storage    = *(g+0x160) + 0x4000 + index * 0xA3
+source     = g + 0x1A14
+length     = 0xA3
+```
+
+For bank in 0..3 the term `bank << 5` contributes exactly `0, 32, 64, 96`, which
+matches the handoff's `bank*32`. **So the handoff's multiplier is right and the
+two documents do not actually disagree on that term.**
+
+What the handoff does not carry is the `uxtb` — the truncation to 8 bits:
+
+```
+index_raw = (bank<<5) + preset          0..127   (no truncation)
+index     = index_raw & 0xFF            0..127   -> never wraps
+```
+
+and then `* 0xA3`. With bank 0..3 and preset 0..31 the sum is at most 127, so
+**the `uxtb` never truncates and all 128 combinations stay distinct.** My
+earlier reading took `r0` at `0x02026D8A` to be the preset; it is the **bank**,
+and the preset enters only at `0x02026D90`. Re-derived correctly:
+
+```
+for bank 0..3, preset 0..31:  distinct indices = 128, collisions = 0
+```
+
+**handoff §3.3's formula is confirmed, not refuted.** The record-index model
+stands.
+
+| bank | preset | index | storage offset |
+|---:|---:|---:|---:|
+| 0 | 0 | 0 | `+0x4000` |
+| 0 | 1 | 1 | `+0x40A3` |
+| 1 | 0 | 32 | `+0x5460` |
+| 3 | 31 | 127 | `+0x90DD` |
+
+The last row closes the layout exactly:
+
+```
+bank=3, preset=31  ->  3<<5 = 96 ; 96+31 = 127 ; 127*0xA3 = 0x7C61
+                    ->  +0x4000 = 0x90DD ; +0xA3 = 0x9180
+```
+
+`0x9180` is precisely the flag-table offset in handoff §3.3, and
+`0x9180 + 0x80 = 0x9200` is the selection offset. **The full record layout
+closes with no slack and no gap.** This is the strongest single confirmation in
+the whole map: three independently-derived offsets (`+0x9180` flags,
+`+0x9200` selection, and the record array's own end) agree to the byte.
+
+**Nothing here changes the 17-record plan (handoff §3.5).** The 128-entry
+address space is real, the arithmetic closes the layout exactly, and the
+reservation plan's *preconditions* are intact. What is still missing is
+unchanged: which records are safe to write. This document says nothing about
+that, and §3.5's own caveat (every record is a live library record) stands.
+
+The real gain here is that the record write is now fully specified: source
+`g+0x1A14`, destination `*(g+0x160) + 0x4000 + ((bank<<5)+preset & 0xFF)*0xA3`,
+length `0xA3`. A patch that wants to read or write one record can compute the
+address instead of guessing.
+
+v16 cross-check (`v16-recursive-listing.tsv.gz`, `0x02005660`): the same
+instruction sequence is present, with `g = 0x01C332A0`, storage view
+`g+0x178`, and source `g+0x1A5C`.
+
+```
+02005686  lsl  r0,r5,0x5
+02005688  add  r0,r6
+0200568a  mul  r0,r0,#0xa3
+0200568e  add  r0,r7
+02005690  add  r1,r0,0x4000
+```
+
+Same formula, same `+0x4000` raw area, same `0xA3` length. The formula is not a
+v15 quirk.
+
+### 2.4 The bulk window does **not** cover the §3 slot
 
 Checked, because it would change §3 if it did:
 
@@ -415,8 +526,10 @@ python3 tools/smk37_listing_query.py --range 02025548:0202556e
 - That `0x01C37FD0..0x01C38FD0` is safe to write. It is a *persisted* range,
   which makes it more contended than ordinary BSS, not less.
 - That the §4 never-touched words are free. Coverage is 58.2%.
-- That the record layout ends at `+0x9209`. One confirmed write reaches
-  `+0x0FF000`, and the bulk window (§2.1) is a third region entirely.
+- That the record layout ends at `+0x9209` **for the record path**. §2.3 closes
+  the record array exactly at `+0x9180`, but a separate write reaches
+  `+0x0FF000` (§3) and the bulk window (§2.1) is a third region entirely.
+  So: the record array is exact, the *partition* is not thereby closed.
 - That `0x01C0DE20..0x01C32D38` is safe for our own state. It is a live
   persisted window; using it means contending with the firmware for it.
 - That the `len=0x4` settings cluster has a fixed storage region. Its address
