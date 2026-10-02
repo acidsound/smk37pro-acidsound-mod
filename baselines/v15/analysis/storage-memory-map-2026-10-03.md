@@ -21,8 +21,12 @@ New in this pass, beyond closing the gap above:
 
 - a 256-slot x 4 KiB persistent allocator spanning exactly the 1 MiB user
   partition (§3.1), whose slot index is a field of an existing record word (§3.2)
-- the first measured address-level link between the persistence path and the
-  S1C producer path (§3.3)
+- **the S1C producer calls the record writer directly** — a call-level link,
+  not merely a shared address (§3.3)
+- `0x01C37FD0` identified as SysEx **staging**, which explains why the 4 KiB
+  slot has no reader of that length (§3.3)
+- `0x02005660` is the same function at the same address in v15 and v16, with
+  uniform `+0x40/+0x48` field shifts (§3.4)
 - the record index formula traced to the instruction and **confirmed** — the
   record array closes at `+0x9180` exactly, matching the flag and selection
   offsets byte for byte (§2.3)
@@ -264,7 +268,7 @@ mechanisms are independent: the bulk path cannot restore a slot, and the slot
 path does not depend on the bulk path having run. **This weakens nothing in §3
 and does not supply the missing §3 reader.**
 
-## 3. ⭐ The 4 KiB persistent slot — `0x0202556E`
+## 3. ⭐ The 4 KiB SysEx slot — `0x0202556E`
 
 The single most useful new fact for the persistence goal.
 
@@ -355,7 +359,105 @@ command/branch selector (`r0`), bits 16-23 become the **slot index** (`r9`).
 existing record word, not something a patch would have to invent. Reading the
 record back and writing the 4 KiB are already wired.
 
-### 3.3 The table base `0x01C37030` touches the S1C producer
+### 3.3 The S1C producer calls the record writer directly
+
+The reader hunt produced something better than a reader. `FUN_0201E254` — the
+function handoff §2.5 names as the end of the S1C producer cave, live in stock
+v15 — ends with:
+
+```
+0201e430..0201e444   validate five header bytes against 0x02..0x1B
+0201e448  add  r8,r6,#0xfa0        ; r8 = 0x01C37FD0  (the slot window)
+0201e44c  add  r1,r4,#0x6
+0201e44e  add  r6,r9,#-0x6
+0201e452  mov  r0,r8
+0201e454  mov  r2,r6
+0201e456  call 0x02048cce          ; ingest into 0x01C37FD0
+0201e45c  add  r0,r4,r9
+0201e460  lb.z r0,[r0 + -0x1]
+0201e462  jne  r0,#0xf7            ; terminator check
+0201e466  mov  r0,r8
+0201e468  call 0x0201e13e          ; S1C packer
+0201e46c  call 0x02005660          ; <-- THE RECORD WRITER
+```
+
+And `FUN_02005660` in v15 is, instruction for instruction, the record-write
+function:
+
+```
+02005662  movz r0,#0x3a4
+02005666  mov   r4,#0x1c33260
+0200566c  lb.z  r5,[r4 + r0]        ; bank
+02005676  movz r1,#0x3a0
+0200567a  lb.z  r6,[r0 + r1]        ; preset
+02005682  ldw   r7,r4,#0x164         ; *(g+0x164) storage base
+02005686  lsl   r0,r5,0x5
+02005688  add   r0,r6
+0200568a  mul   r0,r0,#0xa3
+0200568e  add   r0,r7
+02005690  add   r1,r0,0x4000
+02005694  add   r0,r4,#0x1a14        ; source
+02005698  mov   r2,#0xa3
+0200569a  call  0x02048cce          ; write
+```
+
+**So the persistence path is not merely adjacent to the S1C path — the S1C
+producer calls the record writer.** `FUN_0201E254` ingests a SysEx payload into
+`0x01C37FD0`, packs it via `0x0201E13E`, then persists it via `0x02005660`.
+
+This is the measured connection between the two goals. It also means the
+"missing reader" is not missing by accident: `0x01C37FD0` is **staging for
+incoming SysEx**, filled on receive, and the same address is the source of the
+§3 4 KiB slot write. Its reader is the UI/record path, not a boot loader.
+
+Note this function writes via `*(g+0x164)` (the read/map pointer), not
+`*(g+0x160)`. §1's two fields are genuinely both in use.
+
+### 3.4 The same function is at the same address in v15 and v16
+
+`0x02005660` exists at that exact address in both listings, with the same
+instruction sequence and only the `g`-relative offsets plus the call target
+shifted:
+
+| field | v15 | v16 |
+|---|---:|---:|
+| `g` | `0x01C33260` | `0x01C332A0` |
+| selection | `0x3A4` / `0x3A0` | `0x3C8` / `0x3C4` |
+| storage view | `g+0x164` | `g+0x178` |
+| record source | `g+0x1A14` | `g+0x1A5C` |
+| write wrapper | `0x02004B02` | `0x02049698` |
+
+Byte-level, over `0x02005660..0x0200569C`: **12 instructions identical, 6
+differ.** The six are exactly the field constants and the call target:
+
+```
+v15  40e0a403  movz r0,#0x3a4      v16  40e0c803  movz r0,#0x3c8
+v15  c4ff6032c301  mov r4,#0x1c33260   v16  c4ffa032c301  mov r4,#0x1c332a0
+v15  41e0a003  movz r1,#0x3a0      v16  41e0c403  movz r1,#0x3c4
+v15  d1ec4476  ldw r7,r4,#0x164    v16  d1ec4877  ldw r7,r4,#0x178
+v15  10e1144a  add r0,r4,0x1a14    v16  10e15c4a  add r0,r4,0x1a5c
+v15  80ff2e360400 call 0x02048cce  v16  80fff83f0400 call 0x02049698
+```
+
+Note the last line: **the storage wrapper itself moved**, `0x02004B02` →
+`0x02049698`. That is handoff §4.4's warning in concrete form, and it means
+**no v15 write/read address in this document can be reused in v16 without
+re-mapping.** The `mul #0xA3` / `add #0x4000` / `mov r2,#0xA3` core is
+untouched, so the *layout* is stable across versions even though the *entry
+points* are not.
+
+Within this function every field delta is `+0x40` or `+0x48`. Across objects it
+is not uniform (handoff §5.2).
+
+⚠️ **Tool trap hit while verifying this.** `smk37_listing_query.py --exh <file>`
+does not replace the default recursive listing; it *adds* it, and the loader
+returns the first match per address. So a "v16 cross-check" run that only set
+`--exh` silently dumped **v15 rows labelled v16** — I got byte-identical
+dumps for two builds that are demonstrably different, and had to re-run with
+`--rec none --exh <v16>` to see the real values. Identical bytes for a
+cross-version check is a **failure signal**, never a pass.
+
+### 3.5 The table base `0x01C37030` touches the S1C producer
 
 `0x01C37030` is loaded in exactly 5 places:
 
@@ -371,14 +473,9 @@ record back and writing the 4 KiB are already wired.
 the S1C producer cave** (`0x0201E13E..0x0201E254`), and it is a live function
 in stock v15. It reads `*(g+0x1D8)` and compares a byte against `0xF8`.
 
-So the same RAM base that supplies the 4 KiB slot index is read by the code
-that produces S1C state. That is the first **measured** link between the
-persistence path and the S1C path — previously they were separate tracks.
-
-What this does **not** establish: that the slot write and the S1C read are
-related. They share a base address; whether they share a data structure is
-unproven. Both are stated here as facts about which functions touch the
-address, and no causal link is claimed.
+The address-level observation in §3.5 is now backed by a call-level one in
+§3.3: the S1C producer invokes the record writer directly. The 5 sites that
+load `0x01C37030` are the S1C/storage region as a whole.
 
 Two readings of that, not yet separated:
 
@@ -393,20 +490,23 @@ with both. **Not claimed.**
 > were wrong; the third read is what the arithmetic gives. Two of three
 > readings were made by eye and only the third was computed. Run it.
 
-**Searched and not found (this session):** a matching `read(dst, slot, 0x1000)`.
-All 33 `#0x1000` sites in the listing were enumerated; the only ABI call using
-length `0x1000` is this write. The three near-misses at `0x0201D804`,
-`0x0201D81C`, `0x0201E4EC` decode as `_sw`/`sb`/branch — misdecodes, not calls.
+**No matching `read(dst, slot, 0x1000)` exists** — all 33 `#0x1000` sites were
+enumerated and the only ABI call with that length is this write.
 
-So the 4 KiB slot is **write-only inside our 58.2% window**. Two readings, and
-the listing cannot distinguish them:
+**Why, per §3.3:** `0x01C37FD0` is SysEx **staging**. It is written when a
+packet arrives (`FUN_0201E254` -> `0x02048CCE`) and flushed to the slot by the
+save path. It is not a boot-time restore buffer, so the absence of a
+`0x1000`-length read is expected rather than a gap in our coverage.
 
-- it is restored by code outside our window (plausible — a restore routine may
-  live past `BASE+0x58000`), or
-- it is genuinely write-only and something else owns that flash.
+That resolves this item on the mechanism, not on a reader:
 
-**Do not call this a round trip until the reader is found.** The read side is
-step 1 of §6 for exactly this reason.
+- the slot holds **received SysEx payloads**, not a persisted settings blob;
+- the index selects which slot a payload went to;
+- the 4 KiB is enough for a payload plus slack.
+
+**Still not established:** what reads a slot back, or whether the firmware ever
+does. A UI that wants to show stored payloads would need that path, which we
+have not found. Do not claim a round trip.
 
 ## 4. `g` object access map — scale
 
@@ -479,11 +579,11 @@ g+0x03C4  g+0x03D0  g+0x03E8
 
 ## 6. Next steps, in order
 
-1. **Find the reader for the §3 4 KiB slot.** Partly answered this session:
-   the writer's structure is fully traced (§3.2) but **no reader is in our
-   58.2% window** — searched all 33 `#0x1000` sites. Either extend coverage
-   past `BASE+0x58000` or find `FUN_02024E8C`'s caller, which likely calls
-   both halves. Highest value remaining.
+1. ~~**Find the reader for the §3 4 KiB slot.**~~ → **answered by mechanism,
+   not by a reader** (§3.3). `0x01C37FD0` is SysEx staging: written on packet
+   receive, flushed to a slot on save. A `0x1000`-length read is not expected.
+   Now open: *what* reads a slot back, and whether the firmware ever does.
+   That is a UI-display question, so it feeds the UI goal directly.
 2. ~~**Resolve `r9`'s index on the save path.**~~ → **done** (§3.1, §3.2).
    `r9` = bits 16-23 of a table word loaded at `0x020274C2`; the same word's
    bits 24-31 select the command. The index is persisted at `g+0x1714`.
@@ -521,6 +621,10 @@ python3 tools/smk37_listing_query.py --range 02025548:0202556e
 - That the §3 4 KiB write is ever read back. No reader is in our window.
 - That `FUN_02024E8C` is reachable, or who calls it. No `call` to it exists in
   our listing; entry is by a path we cannot see.
+- That a slot written at `0x0202556E` is ever read back. §3.3 explains why no
+  reader of that length exists; it does not show that a reader exists at all.
+- That the SysEx payload format inside the 4 KiB slot is understood. Only the
+  staging address and length are established.
 - That the table at `0x01C37030` is what I think it is. Only its role as a
   32-bit word source is established.
 - That `0x01C37FD0..0x01C38FD0` is safe to write. It is a *persisted* range,
@@ -534,4 +638,7 @@ python3 tools/smk37_listing_query.py --range 02025548:0202556e
   persisted window; using it means contending with the firmware for it.
 - That the `len=0x4` settings cluster has a fixed storage region. Its address
   is table-derived and RAM-dependent (§2.2).
-- Anything about v16.
+- Anything about v16 beyond the one-function comparison in §3.4. The
+  `0x02004B02` -> `0x02049698` wrapper move means every other v15 ABI address
+  here needs re-mapping before v16 use; only the record layout constants
+  (`0xA3`, `0x4000`) are known to survive.
