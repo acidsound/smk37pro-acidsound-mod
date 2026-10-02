@@ -44,6 +44,9 @@ New in this pass, beyond closing the gap above:
   the form "xref 0" in this project was produced by a broken tool and needs
   re-running.
 - handoff §7-3 refuted: `FUN_02024E8C` has **6 callers**, all in-window (§3.7)
+- **handoff §8.1's "dispatcher not found" resolved**: a **73-command-ID dispatch
+  table** with 84 handler targets; the "11-entry callback vector" is 2 entries
+  of it. `ID 0x19E -> 0x02058300` (§3.8)
 
 New tool: `tools/smk37_persist_map.py` — resolves all 69 storage-ABI call
 sites into (RAM range, storage base provenance, length) and emits the access
@@ -727,7 +730,71 @@ support it.
 The refutation stands on its own: the function has 6 callers, all inside our
 window, at `0x0202_xxxx`. That is a fact independent of what they pass.
 
-### 3.8 The same function is at the same address in v15 and v16
+### 3.8 The UI command dispatcher — handoff §8.1's missing dispatcher
+
+handoff §8.1 lists as open: "`0x02058248..0x02058314` callback vector (11
+entries) — **dispatcher not found**". With `--xref` repaired, searching that
+region turns up exactly one reference in the whole window:
+
+```
+0x02055a7a  jne r0,#0x19e,0x02058300
+```
+
+That is a **branch target**, not a data reference, and reading it in context
+resolves §8.1:
+
+```
+0x02055a02  jne r0,#0xc9 ,0x02056b48
+0x02055a0a  jne r0,#0xd3 ,0x020571d0
+0x02055a12  jne r0,#0xe4 ,0x020571d8
+0x02055a1a  jne r0,#0xf7 ,0x020571e0
+0x02055a22  jne r0,#0x10a,0x020571e8
+0x02055a2a  jae r0,#0x11b,0x020571f0
+...
+0x02055a42  jne r0,#0x154,0x02057208
+0x02055a4a  jne r0,#0x167,0x020564d0
+0x02055a52  jne r0,#0x16a,0x020564d8
+0x02055a5a  jmnz r1,r0,0x02055d3a
+0x02055a62  tbb r2                 <- table-branch (computed jump)
+0x02055a72  tbb r2
+0x02055a7a  jne r0,#0x19e,0x02058300   <- the one "vector" reference
+0x02055a8a  je  r0,#0x1e2,0x02057410
+0x02055a92  jne r0,#0x1f5,0x02057558
+...
+```
+
+This is a **single large command-ID dispatch table**: `r0` is compared against
+sparse IDs and each match branches to a handler. Measured over
+`0x02055000..0x02058000`:
+
+| quantity | value |
+|---|---:|
+| comparison-chain jumps | 87 |
+| **distinct command IDs** | **73** |
+| **distinct handler targets** | **84** |
+| ID span | `0x0` … `0xF00` (3,841 wide, sparsely used) |
+| targets inside `0x02058248..0x02058314` | 2 (`0x02058258`, `0x02058300`) |
+
+So the handoff's "11-entry callback vector" is **two entries of a 73-command
+table**, not a standalone vector. The dispatcher exists; §8.1 could not find it
+because it looked for a *data* reference into the region and the region is only
+ever a *branch* target.
+
+`ID 0x19E -> 0x02058300` is the mapping that was missing.
+
+⚠️ Two limits on this. First, the `tbb r2` instructions are **computed jumps
+whose table Ghidra has not resolved**, and the bytes between them are being
+shown as separate instructions (`lh.z r1,[r0 --= 2]`, `rep 0x2,r2`) — that is a
+misdecode, so the ID set above is a **lower bound**. Second, `tbb` appears at
+**178 sites** across the listing, so "table branch" is this compiler's switch
+idiom generally, not a mark of this particular dispatcher. The 73 IDs and 84
+targets are counted from the comparison chain only, which is the sound part.
+
+Not claimed: that any of these handlers is the LCD renderer. What is now
+established is the *shape* — a 73+ entry ID table in one place — which is what
+a UI patch needs to hook a specific screen.
+
+### 3.9 The same function is at the same address in v15 and v16
 
 `0x02005660` exists at that exact address in both listings, with the same
 instruction sequence and only the `g`-relative offsets plus the call target
@@ -771,7 +838,7 @@ dumps for two builds that are demonstrably different, and had to re-run with
 `--rec none --exh <v16>` to see the real values. Identical bytes for a
 cross-version check is a **failure signal**, never a pass.
 
-### 3.9 The table base `0x01C37030` touches the S1C producer
+### 3.10 The table base `0x01C37030` touches the S1C producer
 
 `0x01C37030` is loaded in exactly 5 places:
 
@@ -787,7 +854,7 @@ cross-version check is a **failure signal**, never a pass.
 the S1C producer cave** (`0x0201E13E..0x0201E254`), and it is a live function
 in stock v15. It reads `*(g+0x1D8)` and compares a byte against `0xF8`.
 
-The address-level observation in §3.9 is backed by the call-level one in
+The address-level observation in §3.10 is backed by the call-level one in
 §3.3: the SysEx/S1C path invokes the record writer directly. The 5 sites that
 load `0x01C37030` are the S1C/storage region as a whole.
 
@@ -959,7 +1026,11 @@ python3 tools/smk37_listing_query.py --range 02025548:0202556e
   persisted window; using it means contending with the firmware for it.
 - That the `len=0x4` settings cluster has a fixed storage region. Its address
   is table-derived and RAM-dependent (§2.2).
-- Anything about v16 beyond the one-function comparison in §3.4. The
+- That any handler in the §3.8 table is the LCD renderer. The table's shape is
+  measured; no handler is identified.
+- A complete command-ID list. 73 is a lower bound — the `tbb` jump tables are
+  misdecoded by Ghidra and were not enumerated.
+- Anything about v16 beyond the one-function comparison in §3.9. The
   `0x02004B02` -> `0x02049698` wrapper move means every other v15 ABI address
   here needs re-mapping before v16 use; only the record layout constants
   (`0xA3`, `0x4000`) are known to survive.
