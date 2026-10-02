@@ -1440,6 +1440,41 @@ resolved `0x0206034C` (and refuted my hypothesis with it), which was worth the
 run, but the display write is elsewhere and was not found by widening coverage
 of this region.
 
+### 8.5a The MMIO store census, over the whole decoded corpus
+
+Run against old + new listings together: **102 MMIO store sites**, all in the
+already-decoded UI code region (`0x0200_0000..0x0204_FFFF`). None in the newly
+extended region. So "102 device writes exist and none are in the new code" —
+which is consistent with the extension having produced library code.
+
+The MMIO bases in use, with site counts:
+
+```
+0x10000 x1   0x119c4 x4   0x12f00 x3   0x13e00 x4   0x16001 x3
+0x10008 x1   0x119c8 x2   0x12f40 x3   0x14004 x1   0x16006 x2
+0x10400 x1   0x119cc x2   0x13100 x3   0x1400c x1   0x16008 x2
+0x10500 x1   0x119e0 x2   0x13400 x3   0x15200 x1   0x1600b x1
+0x10600 x2   0x11d00 x4   0x13500 x2   0x16000 x1   0x16102 x1
+0x10700 x1   0x11d04 x1   0x13600 x4   0x16800 x3   0x186a0 x1
+0x10800 x3   0x11e00 x1   0x13b00 x2   0x16a00 x2   0x20000 x1
+0x11800 x3   0x12100 x1   0x13c00 x2   0x16a0c x3   0x30000 x1
+0x11834 x1   0x12114 x1   0x13d00 x1   0x16a10 x1
+```
+
+59 distinct bases. This is a hardware-initialisation corpus: the densest
+cluster, `0x02036xxx`, is a **register-block copy** — `lw r1,[r0+0x10]` then
+`sw r1,[r2+0x0]` repeated with `r2` stepped through `0x13C00`, `0x13600`,
+`0x13100`, i.e. a parameter block pushed out to device registers, SDRAM-init
+style. One site there is a genuine read-modify-write on a device register
+(`or [r2+0x0],#0x40` at `0x020367A4`).
+
+**No LCD group is identifiable from this census**, and the address-space map
+(§5 of the 2026-10-02 doc) lists no display group either. The honest position:
+the LCD write is either on a bus absent from that map, or the display is driven
+through the RAM buffers of §3.9 with the panel controller initialised from a
+table we have not located. **This is unresolved, and I am not naming a
+candidate.**
+
 ### 8.6 Reproduce
 
 ```bash
