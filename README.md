@@ -53,3 +53,14 @@ details, and safety guarantees.
 The offline v12 application-only verifier/repacker is
 `tools/smk37_app_patch.py`. It does not communicate with the device, and the
 live recovery uploader rejects its modified output by SHA-256.
+
+New sessions should start from `docs/handoff-2026-10-03.md` (current state,
+open problems, hard gates, reproduction commands). That file records the
+storage-persistence track and the M08 cave/brick split;
+`docs/handoff-2026-10-01.md` is the previous session.
+
+Before flashing anything that was not built by the stock SMK pipeline, read
+`docs/usb-flash-safety-case.md`. It records the 2026-08-15 SDK-app brick, the
+pre-flight gates that would have caught it, and the machine-checked link-map
+gate `tools/check_sdk_app_layout.py`. The extended memory map behind those
+gates is `baselines/v15/analysis/usb-flash-readiness/`.
