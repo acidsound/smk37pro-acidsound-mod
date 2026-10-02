@@ -65,11 +65,69 @@ reconciled with the bulk path: they are different fields.**
 | `mem[g+0x200] + 0x27FF8` | 2 | `0x8` | 8 B tag |
 | `mem[g+0x20C]` | 3 | `0x86` | 134 B block |
 | `mem[g+0x0] + 0x27FF8` | 1 | `0x8` | 8 B tag |
-| unresolved | 46 | 4 … `0x49E3` | needs the §5 work |
+| `mem[g+0x0] + {0, 0x5000, …, 0x23000}` | 15 | `0x49E3` | **bulk window, write+read symmetric (§2.1)** |
+| unresolved | 30 | 4 … `0xA3` | needs the §5 work |
 
-Raw records (`+0x4000 + index*0xA3`, len `0xA3`) resolve in **r0** but not r1
-on this pass; the index chain (`uxtb` → `mul #0xA3` → `add`) is modelled but
-`lsl r0,r0,0x5` upstream of it is not. That is site `0x02026DA6`.
+### 2.1 The bulk window — write and read are provably symmetric
+
+After fixing the `_lw` load prefix (see §5.6), 15 of the 16 bulk sites resolve:
+
+```
+write  0x020064ba  RAM 0x01c0de20  ->  mem[g+0x0] + 0x00000   len 0x49E3
+write  0x020064c8  RAM 0x01c12803  ->  mem[g+0x0] + 0x05000
+write  0x020064dc  RAM 0x01c171e6  ->  mem[g+0x0] + 0x0a000
+write  0x020064f0  RAM 0x01c1bbc9  ->  mem[g+0x0] + 0x0f000
+write  0x02006504  RAM 0x01c205ac  ->  mem[g+0x0] + 0x14000
+write  0x02006518  RAM 0x01c24f8f  ->  mem[g+0x0] + 0x19000
+write  0x0200652c  RAM 0x01c29972  ->  mem[g+0x0] + 0x1e000
+write  0x02006540  RAM 0x01c2e355  ->  mem[g+0x0] + 0x23000
+
+read   0x0200656c  RAM 0x01c0de20  <-  mem[g+0x0] + 0x00000   len 0x49E3
+read   0x0200657a  RAM 0x01c12803  <-  mem[g+0x0] + 0x05000
+read   0x0200658e  RAM 0x01c171e6  <-  mem[g+0x0] + 0x0a000
+read   0x020065a2  RAM 0x01c1bbc9  <-  mem[g+0x0] + 0x0f000
+read   0x020065b6  RAM 0x01c205ac  <-  mem[g+0x0] + 0x14000
+read   0x020065ca  RAM 0x01c24f8f  <-  mem[g+0x0] + 0x19000
+read   0x020065de  RAM 0x01c29972  <-  mem[g+0x0] + 0x1e000
+read   0x020065f2  RAM 0x01c2e355  <-  mem[g+0x0] + 0x23000
+```
+
+Identical RAM window, identical 8 storage offsets, identical length, opposite
+direction. **The save/restore pair for this window is now proven symmetric from
+the listing.**
+
+The RAM window is contiguous and exact:
+
+```
+0x01C0DE20 .. 0x01C32D38   =  8 x 0x49E3 = 0x24F18 = 151,320 B
+```
+
+which is what `persistence-s3/bulk-path-2026-10-03.md` measured by hand and
+could not confirm the base of. It is `*(g+0x0)`.
+
+The 8 storage offsets have stride `0x5000` against a payload of `0x49E3`, so
+each slot wastes `0x61D` (1,565 B). That slack is a flash-block artefact, not
+addressable space — do not plan on it.
+
+Two of the sixteen remain unresolved: the first read (`0x0200656C`) and
+`0x02024E5C` (a different function, base `mem[g+0x200]`, r0 unknown). The first
+is the entry of the read sequence and most likely resolves once the preceding
+branch is modelled.
+
+### 2.2 The bulk window does **not** cover the §3 slot
+
+Checked, because it would change §3 if it did:
+
+```
+bulk window   0x01C0DE20 .. 0x01C32D38
+4 KiB slot    0x01C37FD0 .. 0x01C38FD0   -> outside
+slot index    g+0x1714 = 0x01C34974      -> outside
+```
+
+Neither the slot payload nor its index is inside the bulk window. So the two
+mechanisms are independent: the bulk path cannot restore a slot, and the slot
+path does not depend on the bulk path having run. **This weakens nothing in §3
+and does not supply the missing §3 reader.**
 
 ## 3. ⭐ The 4 KiB persistent slot — `0x0202556E`
 
@@ -258,6 +316,13 @@ g+0x03C4  g+0x03D0  g+0x03E8
    4 KiB of §3. That requires the static occupancy prover that does not exist
    yet.
 5. **v16 addresses are not mapped.** Everything is v15.
+6. **A load-prefix class of bug, found and fixed this pass.** quarkslab
+   prefixes some forms with `_` (`_lw`, `_lb.z`, `_sw`). `_lw` is a plain
+   load. It was missing from the `LD` set, and `FUN_02005FAC` reloads the
+   storage base with `_lw r1,[r4+0x0]` immediately before its 8 bulk writes —
+   so r1 died at the write and 16 of 69 sites went unresolved. Fixing one set
+   membership took unresolved from 46 to 30 and resolved the whole bulk
+   window. **Any mnemonic-prefix assumption in these tools is suspect.**
 
 ## 6. Next steps, in order
 
@@ -293,6 +358,9 @@ python3 tools/smk37_listing_query.py --range 02025548:0202556e
 ## 8. Not claimed
 
 - That the §3 path runs on hardware. Static only.
+- That the bulk window (§2.1) round-trips correctly at runtime. Its two halves
+  are **statically** symmetric; symmetry of code is not proof that the bytes
+  written equal the bytes restored, and no readback check exists.
 - That the §3 4 KiB write is ever read back. No reader is in our window.
 - That `FUN_02024E8C` is reachable, or who calls it. No `call` to it exists in
   our listing; entry is by a path we cannot see.
@@ -302,5 +370,7 @@ python3 tools/smk37_listing_query.py --range 02025548:0202556e
   which makes it more contended than ordinary BSS, not less.
 - That the §4 never-touched words are free. Coverage is 58.2%.
 - That the record layout ends at `+0x9209`. One confirmed write reaches
-  `+0xFF000`.
+  `+0x0FF000`, and the bulk window (§2.1) is a third region entirely.
+- That `0x01C0DE20..0x01C32D38` is safe for our own state. It is a live
+  persisted window; using it means contending with the firmware for it.
 - Anything about v16.

@@ -44,8 +44,12 @@ ABI = {
     0x02004a7a: ("inner", 3),
 }
 
+# quarkslab prefixes some forms with '_' (`_lw`, `_lb.z`, `_sw`). `_lw` is a
+# plain load and MUST be in here: `FUN_02005FAC` reloads the storage base with
+# `_lw r1,[r4+0x0]` immediately before its 8 bulk writes, and missing it left
+# 16 of the 69 sites unresolved -- the single largest cause.
 LD = {"ldw", "lw", "lwu", "ld", "ldd", "lb.z", "lh.z", "lbz", "lhz", "lbu",
-      "lhu", "lb", "lh"}
+      "lhu", "lb", "lh", "_lw", "_lb.z", "_lb", "_lh", "_lh.z", "_ldw"}
 ST = {"sw", "sb", "sh", "sdw", "_sw", "_sb", "_sh", "sdb"}
 BRACKETED = re.compile(
     r"\[\s*(r\d+)\s*(?:([+-])\s*(#?(?:0x[0-9a-fA-F]+|\d+)))?\s*\]")
