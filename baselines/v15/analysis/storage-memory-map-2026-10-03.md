@@ -51,7 +51,7 @@ reconciled with the bulk path: they are different fields.**
 |---|--:|---|---|
 | `mem[g+0x160] + 0x9180` | 3 | `0x80` | flag table (128 B) — **write + restore** |
 | `mem[g+0x160] + 0x9200` | 2 | `0x9` | selection (9 B) — **write + restore** |
-| `mem[g+0x160] + 0xFF000` | 1 | `0x1000` | **4 KiB slot, see §3** |
+| `mem[g+0x160] + (idx<<12)` | 1 | `0x1000` | **256-slot 4 KiB allocator, §3** |
 | `mem[g+0x1d4]` | 5 | `0x224`, `0x8` | alternate record base |
 | `mem[g+0x200] + 0x0` | 1 | `0x49E3` | 18,915 B bulk |
 | `mem[g+0x200] + 0x27FF8` | 2 | `0x8` | 8 B tag |
@@ -71,7 +71,7 @@ The single most useful new fact for the persistence goal.
 02025548  movz   r0,#0x1714
 0202554c  sb     r9,[r8 + r0]          ; r8 = g ; g+0x1714 = low byte of slot index
 02025550  ldw    r0,r8,#0x160          ; r0 = *(g+0x160)
-02025554  and    r5,r9,#0xffff00ff     ; mask bits 16..23 to zero
+02025554  and    r5,r9,#0xffff00ff     ; keep low byte, zero bits 8..23
 02025558  lsl    r1,r5,0xc             ; x 0x1000
 0202555a  add    r4,r0,r1              ; r4 = *(g+0x160) + (r9 masked)<<12
 0202555c  mov    r0,#0x2
@@ -88,18 +88,16 @@ RAM source   0x01C37FD0 .. 0x01C38FD0      (4,096 B)
 storage dest *(g+0x160) + ((r9 & 0xFFFF00FF) << 12)
 ```
 
-### 3.1 The mask — read it twice
+### 3.1 The mask, computed — it is an 8-bit slot index over 1 MiB
 
-`0xFFFF00FF` keeps byte 0, byte 1 and byte 3; it zeroes **byte 2** (bits 16-23).
-It is **not** a low-byte clear. (I got this wrong on first reading and the
-mask looked like `~0xFF`; the arithmetic settles it: `0xFF & 0xFFFF00FF = 0xFF`.)
+```
+0xFFFF00FF  keeps bits 0..7 and 24..31, zeroes bits 8..23
+=>  effective index = r9 & 0xFF          (8 bits, 256 slots)
+=>  slot stride      = 256 * 0x1000       = 1 MiB
+=>  reachable offsets = (0x00..0xFF) << 12 = 0x00000 .. 0xFF000
+```
 
-The slot index also lands in `g+0x1714` (`0x0202554C`), so it is **persisted
-state**, not a transient.
-
-Consequence: index granularity is `0x100` and the scale is `0x1000`, so
-consecutive slots are **1 MiB apart**. Reachable offsets from the three `r9`
-values assigned in `FUN_02024E8C`:
+Reachable offsets from the three `r9` values assigned inside `FUN_02024E8C`:
 
 | r9 | masked | offset | size |
 |---|---:|---:|---|
@@ -107,21 +105,31 @@ values assigned in `FUN_02024E8C`:
 | `0xFF` | `0x0000FF` | `+0x0FF000` | 4 KiB |
 | `0x19BC` | `0x0000BC` | `+0x0BC000` | 4 KiB |
 
-`+0xFF000` is therefore reachable, and all three are **inside the 1 MiB user
-region** of the physical map (`0x0009C000..0x00100000`, PRESERVE). That is
-consistent, not a conflict.
+**The slot space is exactly the 1 MiB user region.** 256 slots x 4 KiB spans
+`0x0 .. 0xFF000`, and the last slot ends at `0x100000` — the exact top of the
+physical map's PRESERVE user area (`0x0009C000..0x00100000`, §3 of the
+2026-10-02 map). The allocator's range and the partition boundary coincide to
+the byte.
 
-1. **The RAM window is `0x01C37FD0`, which §5.1 of the 2026-10-02 map already
-   names as SysEx staging.** The persisted 4 KiB is that region plus exactly
-   `0x1000`. The persistence window and a known data structure coincide.
-2. **It is a slot allocator keyed on a persisted 8-bit-ish index.** The index
-   lives in `g+0x1714`, which the same function writes. So the scheme is
-   self-describing: firmware stores an index, not an address.
+That is a strong structural signal: this is **the** user-data slot allocator
+for the device, not an incidental write. 4 KiB granularity, 256 slots, one
+index byte.
 
-This is the first write path found that is (a) large, (b) addressed by a
-computed slot index rather than a fixed constant, and (c) whose index is itself
-in RAM. **It is the strongest persistence candidate so far and it needs no new
-code.**
+The index is persisted at `g+0x1714` (`0x0202554C`), so the scheme stores an
+index, not an address.
+
+Two readings of that, not yet separated:
+
+- the index is a slot number the UI selects, or
+- the index is a key (e.g. a category id) and the firmware maps key -> slot.
+
+`g+0x1714` being written by the same routine that consumes it is consistent
+with both. **Not claimed.**
+
+> Correction trail, kept because it is the failure mode to watch: this mask was
+> first read as `~0xFF` (a low-byte clear), then as zeroing byte 2 only. Both
+> were wrong; the third read is what the arithmetic gives. Two of three
+> readings were made by eye and only the third was computed. Run it.
 
 **Searched and not found (this session):** a matching `read(dst, slot, 0x1000)`.
 All 33 `#0x1000` sites in the listing were enumerated; the only ABI call using
