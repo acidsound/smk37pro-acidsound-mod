@@ -14,7 +14,7 @@ The 2026-10-02 map left three gaps. This closes the first and bounds the second:
 | gap | status |
 |---|---|
 | §7 "STORAGE base itself is not fixed in this document" | **closed** — 6 pointer fields in `g`, all set in-app (§1) |
-| §3.3 "layout closes at +0x9209" | **refuted as a global claim** — writes reach `+0xFF000` and +1 MiB strides (§2) |
+| §3.3 "layout closes at +0x9209" | **refuted as a global claim** — a proven write reaches `+0x0FF000` (§3) |
 | §4.4 listing coverage 58.2% | **unchanged**, and now explicitly the limiter on every claim (§5) |
 
 New tool: `tools/smk37_persist_map.py` — resolves all 69 storage-ABI call
@@ -69,11 +69,11 @@ The single most useful new fact for the persistence goal.
 
 ```
 02025548  movz   r0,#0x1714
-0202554c  sb     r9,[r8 + r0]          ; r8 = g ; g+0x1714 = a slot byte
+0202554c  sb     r9,[r8 + r0]          ; r8 = g ; g+0x1714 = low byte of slot index
 02025550  ldw    r0,r8,#0x160          ; r0 = *(g+0x160)
-02025554  and    r5,r9,#0xffff00ff     ; clear low byte  -> bank index
-02025558  lsl    r1,r5,0xc             ; << 12           -> x 4 KiB
-0202555a  add    r4,r0,r1              ; r4 = storage + bank*0x1000
+02025554  and    r5,r9,#0xffff00ff     ; mask bits 16..23 to zero
+02025558  lsl    r1,r5,0xc             ; x 0x1000
+0202555a  add    r4,r0,r1              ; r4 = *(g+0x160) + (r9 masked)<<12
 0202555c  mov    r0,#0x2
 02025560  call   0x02004a54            ; sector lock/prepare
 02025564  add    r0,r10,#0xfa0         ; RAM source
@@ -85,23 +85,43 @@ with `r10 = 0x01C37030` (set at `0x02025532`), giving
 
 ```
 RAM source   0x01C37FD0 .. 0x01C38FD0      (4,096 B)
-storage dest *(g+0x160) + (idx & 0xFFFFFF00) << 12
+storage dest *(g+0x160) + ((r9 & 0xFFFF00FF) << 12)
 ```
 
-Two things fall out:
+### 3.1 The mask — read it twice
+
+`0xFFFF00FF` keeps byte 0, byte 1 and byte 3; it zeroes **byte 2** (bits 16-23).
+It is **not** a low-byte clear. (I got this wrong on first reading and the
+mask looked like `~0xFF`; the arithmetic settles it: `0xFF & 0xFFFF00FF = 0xFF`.)
+
+The slot index also lands in `g+0x1714` (`0x0202554C`), so it is **persisted
+state**, not a transient.
+
+Consequence: index granularity is `0x100` and the scale is `0x1000`, so
+consecutive slots are **1 MiB apart**. Reachable offsets from the three `r9`
+values assigned in `FUN_02024E8C`:
+
+| r9 | masked | offset | size |
+|---|---:|---:|---|
+| `0x01` | `0x000001` | `+0x001000` | 4 KiB |
+| `0xFF` | `0x0000FF` | `+0x0FF000` | 4 KiB |
+| `0x19BC` | `0x0000BC` | `+0x0BC000` | 4 KiB |
+
+`+0xFF000` is therefore reachable, and all three are **inside the 1 MiB user
+region** of the physical map (`0x0009C000..0x00100000`, PRESERVE). That is
+consistent, not a conflict.
 
 1. **The RAM window is `0x01C37FD0`, which §5.1 of the 2026-10-02 map already
    names as SysEx staging.** The persisted 4 KiB is that region plus exactly
    `0x1000`. The persistence window and a known data structure coincide.
-2. **The address is `(idx & ~0xFF) << 12`, i.e. bank-indexed with a 256-byte
-   granularity mask then scaled to 4 KiB slots.** The `& 0xFFFFFF00` is not
-   cosmetic — it discards the low byte of the index, so many indices collapse
-   onto the same slot. That is a *slot allocator*, not a byte offset.
+2. **It is a slot allocator keyed on a persisted 8-bit-ish index.** The index
+   lives in `g+0x1714`, which the same function writes. So the scheme is
+   self-describing: firmware stores an index, not an address.
 
-This is the first write path found that is (a) large, (b) symmetric with the
-flag/selection round-trip, and (c) addressed by a computed slot index rather
-than a fixed constant. **It is the strongest persistence candidate so far and
-it needs no new code.**
+This is the first write path found that is (a) large, (b) addressed by a
+computed slot index rather than a fixed constant, and (c) whose index is itself
+in RAM. **It is the strongest persistence candidate so far and it needs no new
+code.**
 
 **Searched and not found (this session):** a matching `read(dst, slot, 0x1000)`.
 All 33 `#0x1000` sites in the listing were enumerated; the only ABI call using
@@ -164,7 +184,9 @@ g+0x03C4  g+0x03D0  g+0x03E8
 1. **Find the reader for the §3 4 KiB slot.** Searched this session: absent
    from our window. Either extend coverage past `BASE+0x58000` or locate the
    restore path. Until then §3 is a proven write with no proven read.
-2. **Resolve `r9`'s index on the save path.** It decides the slot algebra.
+2. ~~**Resolve `r9`'s index on the save path.**~~ → **done** (§3.1). The index
+   is persisted at `g+0x1714`; the mask is `0xFFFF00FF` and slots are 1 MiB
+   apart. Remaining: what *value* the UI writes into `g+0x1714`.
 3. **Close the 46 unresolved r1 sites**, prioritising len `0x49E3` and
    `0xA3`. Each one that lands shrinks the unknown surface of §2.
 4. **Build the static occupancy prover.** Required before any claim about
