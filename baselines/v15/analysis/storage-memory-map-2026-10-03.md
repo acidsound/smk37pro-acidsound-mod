@@ -15,7 +15,7 @@ The 2026-10-02 map left three gaps. This closes the first and bounds the second:
 |---|---|
 | §7 "STORAGE base itself is not fixed in this document" | **closed** — 6 pointer fields in `g`, all set in-app (§1) |
 | §3.3 "layout closes at +0x9209" | **refuted as a global claim** — a proven write reaches `+0x0FF000` (§3) |
-| §4.4 listing coverage 58.2% | **unchanged**, and now explicitly the limiter on every claim (§5) |
+| §4.4 listing coverage | **re-measured: 57.8%** (356,350 / 617,012 B). The limiter on every claim (§5); the undecoded 260,662 B is ordinary code, not a hole (§3.9, §6.5) |
 
 New in this pass, beyond closing the gap above:
 
@@ -54,16 +54,21 @@ New in this pass, beyond closing the gap above:
 - **`0x02005152` read: a 12-column field renderer**, 4 callers, two of which
   index **`g+0x16BC` by row** (§3.9) — the nearest artefact to the glass so far
 - **`0x02005888` read and *downgraded***: 16 register writes across a 0x8C block,
-  each after `call 0x0206034C` — a function with **no rows in any of our four
-  listings**, called 90 times (§3.9). "Display init" was my inference; the
-  listing cannot support it. Resolving that helper needs coverage past
-  `0x02056FFE`.
+  each after `call 0x0206034C` — no rows in any of our four listings, called
+  90 times (§3.9). "Display init" was my inference; the listing cannot support
+  it. Verified separately that `0x0206034C` is real code on disk, so this is
+  blocked on **coverage**, not on missing input.
+- **Coverage is 57.8%, not 58.2%** — 356,350 of 617,012 B decoded, 260,662 B
+  undecoded, measured this pass against the file size (§6 item 5).
 - **an address overlap recorded, not resolved**: `0x01C38FD0` is both the end of
   the SysEx slot window and the display-init table destination (§3.9)
 - a warning about `smk37_g_fields.py --field`: its hits are **not** proof of a
   `g` access; 7 hits for `0x418` were a different structure's offsets (§3.9)
 - **handoff §8.1's renderer gap is now one hop from closed**: string pool →
-  append → `g+0x418`; only the LCD MMIO write remains
+  append → `g+0x418` / `g+0x16BC`; only the LCD MMIO write remains
+- **coverage measured exactly**: 57.8% (356,350 / 617,012 B), 260,662 B
+  undecoded, and the undecoded part is ordinary code Ghidra never reached —
+  `0x0206034C` decodes by hand to `push {rets,r4}` + `call` (§6 item 5)
 
 New tool: `tools/smk37_persist_map.py` — resolves all 69 storage-ABI call
 sites into (RAM range, storage base provenance, length) and emits the access
@@ -953,27 +958,46 @@ first mislabelled that function.** It looks like panel init: a 1025-word fill of
 `0x100`, then `+0x1C`, `+0x78`, `+0x5C`, `+0x8C`, `+0x74`, `+0x14`, `+0x4`, `+0x8`),
 each preceded by `call 0x0206034C`.
 
-That is **not** an LCD framebuffer write, and the reason is decisive:
-
-```
-0x0206034C  is called 90 times, and has NO listing rows in ANY of our four
-            listings (quarkslab recursive/exhaustive, kagaimiq patched
-            recursive/exhaustive).  Exhaustive coverage ends at 0x02056FFE,
-            and 0x0206034C is past that.
-```
-
 So every register write in `0x02005888` targets a block returned by a function
-we cannot read. The `0x40 / 0x100 / 0x100` values are consistent with a device
-descriptor and equally consistent with LCD mode/page registers; **the listing
-cannot distinguish those**, and "display panel initialisation" was my
-inference, not a measurement. Downgraded to "device/display init, unverified".
+with no listing rows:
 
-The 90 call sites of that unread allocator are themselves the useful finding:
-they span `FUN_02002686`, `FUN_02005888`, `FUN_0201E06C`, `FUN_0201F1AC`,
-`FUN_0201F5D8`, `FUN_0201F84A`, `FUN_02020376` and more, so it is a widely used
-mapping helper — quite possibly the LCD's. **Resolving it needs coverage past
-`0x02056FFE`**, which is handoff §8.2's item 7 and now also the top item for
-the LCD hop.
+```
+0x0206034C  called 90 times, and has NO listing rows in ANY of our four
+            listings (quarkslab recursive/exhaustive, kagaimiq patched
+            recursive/exhaustive).
+```
+
+The `0x40 / 0x100 / 0x100` values are consistent with a device descriptor and
+equally consistent with LCD mode/page registers; **the listing cannot
+distinguish those**, so "display panel initialisation" was inference, not
+measurement. Downgraded to "device/display init, unverified".
+
+**But the reason is not what I first said.** The file covers
+`0x02000000..0x02096A34`, so `0x0206034C` is comfortably inside it, and the
+bytes there are ordinary code:
+
+```
+0206034c  75 04 04 16  bf ea 93 f3  05 16 05 45  41 20 42 16
+```
+
+`75 04` is `push {rets,r4}` — the same prologue family as `7604`
+(`push {rets,r6,r5,r4}`), `7904` and `7f04` throughout the decoded region —
+followed by a `call`. So this is **real, decodable code that Ghidra never
+reached**, not a hole in the file and not data.
+
+That makes coverage extension (item 5) genuinely cheap: the bytes are already
+on disk and merely unvisited. The tail's shape supports it — over the first
+32 KiB past `0x02056FFE` the per-4-KiB entropy runs 4.2..7.3 with 5.6..51.5%
+zero bytes and only 0.0..2.5% code-pointer words, i.e. a mix of real code and
+tables rather than one blank region.
+
+Correction recorded: I wrote "outside coverage" and then read it as "outside
+the file" / "unreadable". It is the first, not the others. Do not downgrade a
+finding to "unresolvable" without checking the bytes.
+
+The 90 call sites span `FUN_02002686`, `FUN_02005888`, `FUN_0201E06C`,
+`FUN_0201F1AC`, `FUN_0201F5D8`, `FUN_0201F84A`, `FUN_02020376` and more, so it
+is a widely used mapping helper — quite possibly the LCD's.
 
 ⚠️ Correction to my own reading this pass: I first took `g+0x418` as the
 display buffer on the strength of 12-column geometry. Searching
@@ -1138,7 +1162,8 @@ g+0x03C4  g+0x03D0  g+0x03E8
 
 ## 5. Limits — read before using any row
 
-1. **Listing coverage is 58.2%.** Everything above is "not seen in the
+1. **Listing coverage is 57.8%** (measured this pass: 356,350 of 617,012 B;
+   the handoff's 58.2% was close). Everything above is "not seen in the
    listing", not "not referenced". `0x02060E2C` (allocator) is already known
    to exist outside our window. A never-touched field may be written from code
    we cannot see. **This is the M09 lesson and it applies verbatim to §4.**
@@ -1215,9 +1240,11 @@ g+0x03C4  g+0x03D0  g+0x03E8
 4. **Build the static occupancy prover.** Required before any claim about
    free RAM. Do not skip it on the strength of §4's list.
 5. **Extend listing coverage past `BASE+0x58000` — now blocking the LCD hop.**
-   `0x0206034C` and its 90 callers sit past the current `0x02056FFE`
-   exhaustive boundary (§3.9), so the display write cannot be followed without
-   this. Everything in §5.1 is
+   **Measured this pass: 57.8% decoded** (356,350 of 617,012 B; exhaustive ends
+   at `0x02056FFE`), **260,662 B undecoded**. `0x0206034C` is inside the file
+   and its bytes are ordinary code — `75 04` = `push {rets,r4}` then a `call`
+   (§3.9) — so this is unvisited code, not a hole in the input. Everything in
+   §5.1 is
    capped by this; until it moves, treat every row as provisional.
 
 ## 7. Reproduce
@@ -1250,7 +1277,7 @@ python3 tools/smk37_listing_query.py --range 02025548:0202556e
   32-bit word source is established.
 - That `0x01C37FD0..0x01C38FD0` is safe to write. It is a *persisted* range,
   which makes it more contended than ordinary BSS, not less.
-- That the §4 never-touched words are free. Coverage is 58.2%.
+- That the §4 never-touched words are free. Coverage is 57.8%.
 - That the record layout ends at `+0x9209` **for the record path**. §2.3 closes
   the record array exactly at `+0x9180`, but a separate write reaches
   `+0x0FF000` (§3) and the bulk window (§2.1) is a third region entirely.
