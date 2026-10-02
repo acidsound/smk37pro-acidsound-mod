@@ -53,9 +53,11 @@ New in this pass, beyond closing the gap above:
   accessor**, same base and stride, so that window has two entry points
 - **`0x02005152` read: a 12-column field renderer**, 4 callers, two of which
   index **`g+0x16BC` by row** (§3.9) — the nearest artefact to the glass so far
-- **`0x02005888` read: display-panel init** — `0x40` / `0x100` / `0x100` into
-  three registers after a 1025-word fill, and it owns the unexplained
-  `0x01C38FD0` overlap (§3.9)
+- **`0x02005888` read and *downgraded***: 16 register writes across a 0x8C block,
+  each after `call 0x0206034C` — a function with **no rows in any of our four
+  listings**, called 90 times (§3.9). "Display init" was my inference; the
+  listing cannot support it. Resolving that helper needs coverage past
+  `0x02056FFE`.
 - **an address overlap recorded, not resolved**: `0x01C38FD0` is both the end of
   the SysEx slot window and the display-init table destination (§3.9)
 - a warning about `smk37_g_fields.py --field`: its hits are **not** proof of a
@@ -945,38 +947,33 @@ The full caller set of `0x02005152`:
 writes to LCD MMIO.** Both buffers are RAM. The row count of `g+0x16BC` is
 also unknown — `g+0x1634` holds *a* row index, not obviously a height.
 
-**`0x02006738` calls `0x02005888` immediately after the field render, and
-that function is display-panel initialisation:**
+**`0x02006738` calls `0x02005888` immediately after the field render — and I
+first mislabelled that function.** It looks like panel init: a 1025-word fill of
+`0x01C38FD0`, then 16 register writes across a 0x8C-byte block (`0x40`, `0x100`,
+`0x100`, then `+0x1C`, `+0x78`, `+0x5C`, `+0x8C`, `+0x74`, `+0x14`, `+0x4`, `+0x8`),
+each preceded by `call 0x0206034C`.
+
+That is **not** an LCD framebuffer write, and the reason is decisive:
 
 ```
-0200588e  mov   r1,#0x4dbe23e8
-02005898  mov   r2,#0x1c38fd0          ; ★ the 4 KiB slot window END
-0200589e  mov   r3,#0x3f801630
-020058ae  sw    r4,[r2+r0<<2]          ; fill 0x401 = 1025 words
-020058b8  jne   r0,#0x401,...
-020058be  mov   r0,#0x1c33260          ; g
-020058c8  add   r9,r0,#0x168
-020058cc  sb    r2,[r9 + 0x0]          ; g[0x168] = 0
-020058d4  call  0x0206034c
-020058e2  _sb   r4,[r5 + 0xc]          ; [12] = 0x0C
-020058f0  sdw   r6_r7,[r5 + 0x0]
-020058f4  sw    0x40,[r5 + 0x8]        ; ★ mode  = 0x40
-020058fe  movz  r0,#0x100
-02005902  _sw   r0,[r5 + 0x10]         ; ★ 0x100
-0200590a  movz  r0,#0x100
-0200590e  _sw   r0,[r5 + 0x18]         ; ★ 0x100
+0x0206034C  is called 90 times, and has NO listing rows in ANY of our four
+            listings (quarkslab recursive/exhaustive, kagaimiq patched
+            recursive/exhaustive).  Exhaustive coverage ends at 0x02056FFE,
+            and 0x0206034C is past that.
 ```
 
-Three setup registers written with `0x40`, `0x100`, `0x100` after a 1025-word
-table fill, each preceded by `call 0x0206034C` (an allocator). `0x01C38FD0` is
-the **end of the §3 slot window**, and this function is the one place in the
-listing that references it — the same address the SysEx path fills as staging.
+So every register write in `0x02005888` targets a block returned by a function
+we cannot read. The `0x40 / 0x100 / 0x100` values are consistent with a device
+descriptor and equally consistent with LCD mode/page registers; **the listing
+cannot distinguish those**, and "display panel initialisation" was my
+inference, not a measurement. Downgraded to "device/display init, unverified".
 
-So `0x01C38FD0` is **both** the end of the SysEx slot buffer **and** the
-destination of a display-initialisation word table. That is an address overlap
-between two unrelated-looking subsystems, and it is not explained. Flagged, not
-resolved: §3 says the slot is SysEx staging, and this says the following
-address is panel-setup scratch. One of the two readings is incomplete.
+The 90 call sites of that unread allocator are themselves the useful finding:
+they span `FUN_02002686`, `FUN_02005888`, `FUN_0201E06C`, `FUN_0201F1AC`,
+`FUN_0201F5D8`, `FUN_0201F84A`, `FUN_02020376` and more, so it is a widely used
+mapping helper — quite possibly the LCD's. **Resolving it needs coverage past
+`0x02056FFE`**, which is handoff §8.2's item 7 and now also the top item for
+the LCD hop.
 
 ⚠️ Correction to my own reading this pass: I first took `g+0x418` as the
 display buffer on the strength of 12-column geometry. Searching
@@ -1145,7 +1142,8 @@ g+0x03C4  g+0x03D0  g+0x03E8
    listing", not "not referenced". `0x02060E2C` (allocator) is already known
    to exist outside our window. A never-touched field may be written from code
    we cannot see. **This is the M09 lesson and it applies verbatim to §4.**
-2. **UNRESOLVED is not ABSENT.** 46 of 69 ABI sites have unresolved r1.
+2. **UNRESOLVED is not ABSENT.** 31 of 69 ABI sites have unresolved r1 (down
+   from 46; §2.1a, §2.2).
    The tracker is a linear replay with no unrolling.
 3. **A known false-positive class.** `lw r6,[r6+0x0]` (a linked-list walk)
    redefines r6, but the tracker keeps it g-relative. This produced the one
@@ -1184,10 +1182,14 @@ g+0x03C4  g+0x03D0  g+0x03E8
 
 ## 6. Next steps, in order
 
-0. **Find the LCD MMIO write.** §3.9 now has string pool → append → 12-column
-   render → `g+0x418` / `g+0x16BC`, plus panel init at `0x02005888`. The one
-   missing hop is the store to LCD MMIO. Everything else needed for a UI patch
-   is in place; this is now the highest-value item.
+0. **Find the LCD MMIO write — blocked on coverage.** §3.9 has string pool →
+   append → 12-column render → `g+0x418` / `g+0x16BC`. The next hop runs
+   through `0x0206034C`, which has **no listing rows anywhere** (exhaustive
+   ends at `0x02056FFE`). Highest-value item, and it requires extending
+   coverage first — see item 5. A patch does not strictly need the MMIO
+   address: writing a string through `0x020299CE` + `0x02005152` would already
+   change what appears on screen. The MMIO write is needed to know *when* the
+   buffer is flushed.
 1. ~~**Find the reader for the §3 4 KiB slot.**~~ → **answered by mechanism,
    not by a reader** (§3.3). `0x01C37FD0` is SysEx staging: written on packet
    receive, flushed to a slot on save. A `0x1000`-length read is not expected.
@@ -1212,7 +1214,10 @@ g+0x03C4  g+0x03D0  g+0x03E8
    interesting single site, because it is the official SAVE's record write.
 4. **Build the static occupancy prover.** Required before any claim about
    free RAM. Do not skip it on the strength of §4's list.
-5. **Extend listing coverage past `BASE+0x58000`.** Everything in §5.1 is
+5. **Extend listing coverage past `BASE+0x58000` — now blocking the LCD hop.**
+   `0x0206034C` and its 90 callers sit past the current `0x02056FFE`
+   exhaustive boundary (§3.9), so the display write cannot be followed without
+   this. Everything in §5.1 is
    capped by this; until it moves, treat every row as provisional.
 
 ## 7. Reproduce
