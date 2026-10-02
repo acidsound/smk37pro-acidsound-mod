@@ -15,7 +15,7 @@ The 2026-10-02 map left three gaps. This closes the first and bounds the second:
 |---|---|
 | §7 "STORAGE base itself is not fixed in this document" | **closed** — 6 pointer fields in `g`, all set in-app (§1) |
 | §3.3 "layout closes at +0x9209" | **refuted as a global claim** — a proven write reaches `+0x0FF000` (§3) |
-| §4.4 listing coverage | **re-measured: 57.8%** (356,350 / 617,012 B). The limiter on every claim (§5); the undecoded 260,662 B is ordinary code, not a hole (§3.9, §6.5) |
+| §4.4 listing coverage | **57.8% -> ~58.3%.** Extension added 2,916 instructions in `0x0205918C..0x02094608` (§8). Still the limiter on every claim (§5); ~254 KiB remains undecoded |
 
 New in this pass, beyond closing the gap above:
 
@@ -58,17 +58,27 @@ New in this pass, beyond closing the gap above:
   90 times (§3.9). "Display init" was my inference; the listing cannot support
   it. Verified separately that `0x0206034C` is real code on disk, so this is
   blocked on **coverage**, not on missing input.
-- **Coverage is 57.8%, not 58.2%** — 356,350 of 617,012 B decoded, 260,662 B
-  undecoded, measured this pass against the file size (§6 item 5).
+- **Coverage is ~58.3%, not 58.2%** — 57.8% measured, then extended by the §8
+  pass. ~254 KiB remains undecoded.
+- **That any of the 198 new entries is a proven function.** They are validated
+  by reach >= 4 instructions; a data region that decodes into a long plausible
+  branch chain would also pass.
 - **an address overlap recorded, not resolved**: `0x01C38FD0` is both the end of
   the SysEx slot window and the display-init table destination (§3.9)
 - a warning about `smk37_g_fields.py --field`: its hits are **not** proof of a
   `g` access; 7 hits for `0x418` were a different structure's offsets (§3.9)
 - **handoff §8.1's renderer gap is now one hop from closed**: string pool →
   append → `g+0x418` / `g+0x16BC`; only the LCD MMIO write remains
-- **coverage measured exactly**: 57.8% (356,350 / 617,012 B), 260,662 B
-  undecoded, and the undecoded part is ordinary code Ghidra never reached —
-  `0x0206034C` decodes by hand to `push {rets,r4}` + `call` (§6 item 5)
+- **coverage measured exactly, then extended** (§8): 57.8% (356,350 / 617,012 B)
+  -> **~58.3%** after a new Ghidra pass added **2,916 instructions** and 198
+  validated entries over `0x0205918C..0x02094608`
+- **`0x0206034C` decoded, and it refuted my own LCD hypothesis** (§8.4): it is
+  `malloc(n)` + `memset(p,0,n)`, so `0x02005888`'s 16 register writes go to the
+  **heap**, not to a display controller. "Display panel init" is now positively
+  refuted rather than merely unsupported
+- **the search rule for MMIO on this SoC** (§8.5): base+offset in a register,
+  never a literal store — 0 absolute stores into `0x10000..0x100000` across all
+  117,128 rows
 
 New tool: `tools/smk37_persist_map.py` — resolves all 69 storage-ABI call
 sites into (RAM range, storage base provenance, length) and emits the access
@@ -995,9 +1005,30 @@ Correction recorded: I wrote "outside coverage" and then read it as "outside
 the file" / "unreadable". It is the first, not the others. Do not downgrade a
 finding to "unresolvable" without checking the bytes.
 
-The 90 call sites span `FUN_02002686`, `FUN_02005888`, `FUN_0201E06C`,
-`FUN_0201F1AC`, `FUN_0201F5D8`, `FUN_0201F84A`, `FUN_02020376` and more, so it
-is a widely used mapping helper — quite possibly the LCD's.
+**Resolved: `0x0206034C` is a plain allocator, not a mapping helper.**
+The coverage extension (§9) decoded it:
+
+```
+0206034c  push {0x5}
+0206034e  mov   r4,r0              ; size
+02060350  call  0x0205ea7a         ; allocate
+02060354  mov   r5,r0              ; ptr
+02060356  jz    r5,0x02060362      ; NULL -> skip
+02060358  mov   r1,#0x0
+0206035a  mov   r2,r4              ; size
+0206035c  call  0x02049b96         ; memset(ptr, 0, size)
+02060362  mov   r0,r5              ; return ptr
+02060364  pop   {pc,0x5}
+```
+
+`malloc(n)` followed by `memset(p, 0, n)`. My "widely used mapping helper,
+quite possibly the LCD's" was **wrong** — it is a zeroing allocator, and the
+90 call sites are ordinary allocation sites. **The register writes in
+`0x02005888` therefore go to a heap block, not to a device.** "Display panel
+initialisation" is now positively refuted, not merely unsupported.
+
+That does not kill the display path, but it removes the one lead I had for
+reaching the LCD controller from `0x02005888`.
 
 ⚠️ Correction to my own reading this pass: I first took `g+0x418` as the
 display buffer on the strength of 12-column geometry. Searching
@@ -1162,8 +1193,8 @@ g+0x03C4  g+0x03D0  g+0x03E8
 
 ## 5. Limits — read before using any row
 
-1. **Listing coverage is 57.8%** (measured this pass: 356,350 of 617,012 B;
-   the handoff's 58.2% was close). Everything above is "not seen in the
+1. **Listing coverage is ~58.3%** (was 57.8%; §8 added 2,916 instructions).
+   The handoff's 58.2% was close. Everything above is "not seen in the
    listing", not "not referenced". `0x02060E2C` (allocator) is already known
    to exist outside our window. A never-touched field may be written from code
    we cannot see. **This is the M09 lesson and it applies verbatim to §4.**
@@ -1207,14 +1238,20 @@ g+0x03C4  g+0x03D0  g+0x03E8
 
 ## 6. Next steps, in order
 
-0. **Find the LCD MMIO write — blocked on coverage.** §3.9 has string pool →
-   append → 12-column render → `g+0x418` / `g+0x16BC`. The next hop runs
-   through `0x0206034C`, which has **no listing rows anywhere** (exhaustive
-   ends at `0x02056FFE`). Highest-value item, and it requires extending
-   coverage first — see item 5. A patch does not strictly need the MMIO
-   address: writing a string through `0x020299CE` + `0x02005152` would already
-   change what appears on screen. The MMIO write is needed to know *when* the
-   buffer is flushed.
+0. **Find the LCD MMIO write.** §3.9 has string pool → append → 12-column
+   render → `g+0x418` / `g+0x16BC`. The lead through `0x02005888` is **dead**:
+   §8.4 decoded `0x0206034C` as `malloc`+`memset`, so those register writes go
+   to the heap, not to a controller.
+
+   **How to search, per §8.5:** MMIO here is *base + offset in a register*, never
+   a literal store address — 0 absolute stores into `0x10000..0x100000` across
+   all 117,128 combined rows. Look for a function that loads one of the known
+   bases (`0x10000` ×23, `0x30000` ×31, `0x20000` ×18) and then stores at a
+   computed offset. `0x02005888` is not it.
+
+   **Not required for a text patch.** Writing a string through `0x020299CE` +
+   `0x02005152` already changes what appears on screen; MMIO only tells us
+   *when* the buffer is flushed.
 1. ~~**Find the reader for the §3 4 KiB slot.**~~ → **answered by mechanism,
    not by a reader** (§3.3). `0x01C37FD0` is SysEx staging: written on packet
    receive, flushed to a slot on save. A `0x1000`-length read is not expected.
@@ -1239,12 +1276,11 @@ g+0x03C4  g+0x03D0  g+0x03E8
    interesting single site, because it is the official SAVE's record write.
 4. **Build the static occupancy prover.** Required before any claim about
    free RAM. Do not skip it on the strength of §4's list.
-5. **Extend listing coverage past `BASE+0x58000` — now blocking the LCD hop.**
-   **Measured this pass: 57.8% decoded** (356,350 of 617,012 B; exhaustive ends
-   at `0x02056FFE`), **260,662 B undecoded**. `0x0206034C` is inside the file
-   and its bytes are ordinary code — `75 04` = `push {rets,r4}` then a `call`
-   (§3.9) — so this is unvisited code, not a hole in the input. Everything in
-   §5.1 is
+5. ~~**Extend listing coverage past `BASE+0x58000`.**~~ → **partly done** (§8).
+   2,916 new instructions, 198 validated entries, `0x0205918C..0x02094608`.
+   `0x0206034C` decoded — and it is a **plain zeroing allocator**, which refuted
+   my LCD hypothesis rather than confirming it. ~254 KiB is still undecoded, so
+   this is not closed. Everything in §5.1 is
    capped by this; until it moves, treat every row as provisional.
 
 ## 7. Reproduce
@@ -1258,7 +1294,139 @@ python3 tools/smk37_g_fields.py --field 0x160       # per-field access
 python3 tools/smk37_listing_query.py --range 02025548:0202556e
 ```
 
-## 8. Not claimed
+## 8. Coverage extension — what was done, and how to re-run it
+
+### 8.1 Why the old listings stopped at 57.8%
+
+Not a decoder limitation and not a hole in the input. `V15DecoderAnalysis.java`
+hard-codes the boundary:
+
+```java
+private static final long EXHAUSTIVE_END = BASE + 0x57000L;
+```
+
+Its own header says why: *"The exhaustive phase can decode embedded data. Its
+extra xrefs are candidates, not proof."* The region past `0x57000` holds the
+descriptor blobs, so a blind aligned sweep there would manufacture code out of
+data — the same inference that bricked M09. **The limit was a deliberate
+soundness choice, and this extension respects it.**
+
+### 8.2 Method
+
+Seed recursive disassembly only at addresses whose bytes match a Jieli function
+prologue (`0x75..0x7F 0x04` = `push {rets,...}`), and require that flow from
+that seed reaches at least 4 instructions. **No aligned sweep of the region.**
+
+```
+candidates=334  decoded=334  accepted=198
+```
+
+The reach filter rejected **136 of 334 (41%)** — a table of integers beginning
+`75 04` is not a function, and this is the check that catches it.
+
+### 8.3 Result
+
+| | |
+|---|---|
+| newly decoded instructions | **2,916** |
+| new region | `0x0205918C..0x02094608` (242,813 B) |
+| accepted function entries | 198 |
+| instructions reached by flow-follow | 320 (unique 3,068) |
+| entries hitting the follow cap | **0** |
+
+**All 2,916 rows are genuinely new** — zero overlap with the old listings —
+and every one of the 198 entries has a corresponding row.
+
+Two different numbers, both useful:
+
+| measure | before | after |
+|---|---:|---:|
+| contiguous bytes decoded from `0x02000000` | 356,350 (57.8%) | 356,350 + 2,916 insns |
+| **address span touched, min..max** | 356,350 B | **607,753 B = 98.5% of the image** |
+
+The span figure is the honest headline: the decoded region now runs from
+`0x02000000` to `0x02094608`, so **almost the whole image has at least been
+reached**, though large stretches inside it are still undecoded. "98.5% of the
+span" is not "98.5% decoded" and the two must not be conflated.
+
+### 8.4 `0x0206034C` resolved — and my "mapping helper" guess was wrong
+
+```
+0206034c  push {0x5}
+0206034e  mov   r4,r0            ; size
+02060350  call  0x0205ea7a       ; allocate
+02060354  mov   r5,r0            ; ptr
+02060356  jz    r5,0x02060362    ; NULL -> skip
+02060358  mov   r1,#0x0
+0206035a  mov   r2,r4            ; size
+0206035c  call  0x02049b96       ; memset(ptr, 0, size)
+02060362  mov   r0,r5            ; return ptr
+02060364  pop   {pc,0x5}
+```
+
+**`malloc(n)` + `memset(p, 0, n)`.** A zeroing allocator. My "widely used
+mapping helper, quite possibly the LCD's" is **refuted**, and with it the
+"display panel initialisation" reading of `0x02005888` (§3.9): those 16 register
+writes go to a **heap block**, not to a device.
+
+That removes the only lead I had for reaching the LCD controller from
+`0x02005888`. The string→append→render path (§3.9) is unaffected.
+
+### 8.5 What the new listing shows
+
+16 MMIO-range references appear in the newly decoded region where the old
+listings had **zero**:
+
+| base group | loads |
+|---|---:|
+| `0x02FC00..` | 3 |
+| `0x020000..` | 3 |
+| `0x013E00..` | 3 |
+| `0x013B00..` | 2 |
+| `0x010900..` / `0x011900..` / `0x028000..` / `0x031000..` / `0x010000..` | 1 each |
+
+MMIO in this firmware is reached as **base + offset in a register**, never as a
+literal store address — a search for absolute stores into `0x10000..0x100000`
+returns **0** across all 117,128 combined rows. Any LCD hunt must look for a
+loaded base plus an offset store.
+
+### 8.6 Reproduce
+
+```bash
+bash baselines/v15/analysis/quarkslab/run-coverage-extension.sh
+```
+
+Environment facts learned the hard way, each of which cost a run:
+
+- **`-loader-baseAddr 0x02000000` is mandatory.** Without it BinaryLoader maps
+  the image at `ram:0` and every address in the script is out of range
+  (`Address ram:02057000 does not exist in memory`). The original run set it
+  the same way.
+- **Ghidra's `ProjectLocator` rejects any path element starting with `.`**, so
+  the project directory cannot live under `~/.hermes`. A dot-free dir is used.
+- **The `pi32v2` extension must be copied into the isolated `user.home`**; it is
+  only installed under the real one. Ghidra then logs "previously defined" and
+  carries on — that ERROR is cosmetic.
+- **Unbounded graph walks hang the run.** The flow-follow pass originally had no
+  `seen` set and no cap; it pinned a core at 100% CPU for ten minutes with no
+  log output. Both bounds are now present, and `capped_entries=0` proves they
+  were not needed for correctness on this input — they are a guard, not a
+  workaround.
+- **Pre-compile the script with `javac` against Ghidra's jars before running.**
+  Two API errors (`InstructionIterator` needs an import; there is no
+  `Instruction.isTerminal()`) were caught in 0.7 s instead of a full run.
+
+### 8.7 Limits
+
+- Coverage is now ~58.3%, not 100%. The remaining 254 KiB is still undecoded and
+  may hold more display code.
+- The 198 entries are **candidates validated by reach**, not proven functions.
+  A data region that disassembles into a long plausible branch chain would pass.
+- Nothing in §8.4–§8.5 identifies the LCD controller. The register writes in
+  `0x02005888` now provably go to the heap, which removes a hypothesis rather
+  than supplying a replacement.
+
+## 9. Not claimed
 
 - That the §3 path runs on hardware. Static only.
 - That the bulk window (§2.1) round-trips correctly at runtime. Its two halves
