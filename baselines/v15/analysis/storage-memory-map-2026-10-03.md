@@ -30,7 +30,14 @@ New in this pass, beyond closing the gap above:
 - the record index formula traced to the instruction and **confirmed** — the
   record array closes at `+0x9180` exactly, matching the flag and selection
   offsets byte for byte (§2.3)
-- an honest negative: no reader for that 4 KiB slot exists in our window (§3)
+- **the slot lifecycle traced end to end** (§3.4-§3.6): SysEx receive, 4 KiB
+  checksum gate, descriptor write, S1C pack, record write, and a read-back that
+  searches a 4-entry table and feeds a string formatter
+- `g+0x1714` reclassified from "index byte" to a **record descriptor**, with
+  all 6 referencing instructions accounted for (§3.5)
+- a correction: handoff §8.1's "text setter `0x0201A6A0`" is **not an
+  instruction boundary**; the real function is `FUN_0201A67C`, a string
+  builder, not an LCD write (§3.5)
 
 New tool: `tools/smk37_persist_map.py` — resolves all 69 storage-ABI call
 sites into (RAM range, storage base provenance, length) and emits the access
@@ -413,7 +420,223 @@ incoming SysEx**, filled on receive, and the same address is the source of the
 Note this function writes via `*(g+0x164)` (the read/map pointer), not
 `*(g+0x160)`. §1's two fields are genuinely both in use.
 
-### 3.4 The same function is at the same address in v15 and v16
+### 3.4 `FUN_0201E254` is a MIDI parser, and it drives the slot directly
+
+Reading the function properly (I had called part of it "SysEx staging"
+without checking what it dispatches) shows it is a **MIDI message parser**:
+status `0xF8` timing clock at entry, `0xF0` SysEx at `0x0201E2EA`, and
+channel-voice note-on at `0x0201E3C6` (velocity to `g+0x1E0`, channel × 2).
+
+That matters because this one function contains the **whole slot lifecycle**:
+
+```
+; --- receive: validate a 6-byte header, then ingest the payload ---
+0201e40e  lb.z r0,[r4 + 0x0]      ; status
+0201e410  jne  r0,#0xf0,...       ; must be SysEx start
+0201e414  lb.z r0,[r4 + 0x1]
+0201e416  jne  r0,#0x43,...       ; manufacturer id 0x43
+0201e41a  lb.z r0,[r4 + 0x2]      ; ...
+0201e420  jne  r0,#0x9,...        ; device 0x09
+0201e426  jne  r0,#0x20,...       ; ... 0x20
+0201e42c  je   r0,#0x0,...        ; payload-length byte
+
+0201e430  lb.z r0,[r4 + 0x2]  ; header form A
+0201e432  jne  r0,#0x0,...
+0201e436  lb.z r0,[r4 + 0x3]
+0201e438  jne  r0,#0x0,...
+0201e43c  lb.z r0,[r4 + 0x4]
+0201e43e  jne  r0,#0x1,...       ; 00 00 01
+0201e442  lb.z r0,[r4 + 0x5]
+0201e444  jne  r0,#0x1b,...      ; 1B = the 6-byte header
+
+0201e448  add  r8,r6,#0xfa0       ; dst = 0x01C37FD0
+0201e44c  add  r1,r4,#0x6         ; src = payload, past the header
+0201e44e  add  r6,r9,#-0x6        ; len = total - 6
+0201e456  call 0x02048cce          ; memcpy the payload into staging
+0201e460  lb.z r0,[r4 + r9 - 0x1]
+0201e462  jne  r0,#0xf7           ; trailing SysEx end required
+0201e468  call 0x0201e13e          ; S1C packer
+0201e46c  call 0x02005660          ; persist
+
+; --- checksum, then select the slot ---
+0201e4de  lb.z r3,[r0 + r6 + r1]   ; running sum over 0x1000 bytes
+0201e4e8  uxtb r2,r2
+0201e4ec  jne  r0,#0x1000,...      ; full 4 KiB checksum
+0201e4f6  and  r1,r2,#0xffffff7f   ; drop the high bit
+0201e4fa  jne  r1,r0,...           ; must match the sent checksum
+
+0201e4fe  mov  r0,#0x1
+0201e500  sb   r0,[r7 + 0x2f]      ; mode <- 1
+0201e504  movz r0,#0x1714
+0201e508  mov  r1,#0xff
+0201e50a  sb   r1,[r7 + r0]        ; ★ slot index <- 0xFF
+0201e510  call 0x0201e06c          ; mode 0x18
+```
+
+**`0xFF` is the largest index the §3.1 mask can produce.** This is the producer
+of the `+0x0FF000` offset observed in the §3.1 table — it is set here, on a
+checksum-validated 4 KiB SysEx payload. The same address appears in
+`FUN_02024E8C` at `0x0202554C` (`sb r9,[r8+0x1714]`) where `r9` came from a
+record field.
+
+So there are two writers of `g+0x1714`, and both are on real receive paths.
+
+The 4 KiB is **checksummed over its full length** before the slot is selected.
+That is a fail-closed guard the handoff's §3.5 plan explicitly asked for, and
+the firmware already has one.
+
+The 6-byte header is `F0 43 <00|09> <00|20> <01|00> <1B>` — manufacturer
+`0x43`, two variant device codes, and a literal `0x1B`. The payload follows at
+offset 6, so **a slot holds `len - 6` bytes of SysEx payload**, and the
+trailing `0xF7` is mandatory.
+
+### 3.5 The slot descriptor at `g+0x1714` — and the read-back path
+
+I had been treating `g+0x1714` as a bare index byte. **It is the base of a
+descriptor**, and there are exactly 6 instructions in our listing that name
+`0x1714`. All 6 are now accounted for.
+
+Writers:
+
+```
+0x0201E504  movz r0,#0x1714 ; mov r1,#0xff ; sb r1,[r7+r0]   ; slot = 0xFF
+0x02025548  movz r0,#0x1714 ; sb r9,[r8+r0]                   ; slot from record
+0x020255B6  movz r0,#0x1714 ; sb r11,[r8+r0]
+0x02027E16  add  r1,r8,0x1714                                 ; descriptor fill
+0x02027E62  movz r1,#0x1714 ; lb.z r1,[r8+r1]                 ; ★ READER
+0x020280CA  movz r0,#0x1714 ; lb.z r4,[r8+r0]                 ; ★ READER
+```
+
+`0x02027E16` is the descriptor producer, and it is not a single byte:
+
+```
+02027e0e  movz r0,#0x3a4
+02027e12  lb.z r0,[r8 + r0]        ; bank
+02027e16  add  r1,r8,0x1714        ; r1 = &descriptor
+02027e1a  add  r0,r8
+02027e1c  _sb  r0,[r1 + 0x0]       ; [0] = bank
+02027e1e  movz r2,#0x3a0
+02027e22  lb.z r2,[r0 + r2]        ; preset
+02027e26  movz r0,#0x1aae
+02027e2a  _sb  r2,[r1 + 0x1]       ; [1] = preset
+02027e2e  sb   r5,[r8 + r0]        ; g+0x1AAE = 0
+02027e32  add  r3,r8,0x1aa5
+02027e36  movz r0,#0x1e8
+02027e3a  _sw  r3,[r1 + 0x4]       ; [4] = g+0x1AA5   (a POINTER)
+02027e3c  lb.z r0,[r8 + r0]
+02027e40  movz r1,#0x1ec
+02027e44  _sb  r0,[r1 + 0x8]       ; [8] = g+0x1E8
+```
+
+So `g+0x1714` is a **record descriptor**, not an index:
+
+| offset | content |
+|---|---|
+| `+0` | bank |
+| `+1` | preset |
+| `+4` | pointer to `g+0x1AA5` |
+| `+8` | copy of `g+0x1E8` |
+
+And the reader at `0x02027E5C` searches a **4-entry** table:
+
+```
+02027e5c  ldw  r0,r8,#0x234
+02027e60  add  r0,#0x8
+02027e62  movz r1,#0x1714
+02027e66  lb.z r1,[r8 + r1]        ; current slot
+02027e6a  lw   r0,[r0+r5<<2]       ; table[r5]
+02027e6e  jne  r5,r1,0x02027e7a    ; match?
+02027e72  mov  r1,#0x1
+02027e74  call 0x0200b6c4          ; hit -> select
+02027e7a  mov  r1,#0x1
+02027e7c  call 0x0200b6d6          ; miss -> deselect
+02027e80  add  r5,#0x1
+02027e82  jne  r5,#0x4,0x02027e5c ; loop exactly 4 times
+02027e86  movz r0,#0x171c
+02027e8a  lb.z r0,[r8 + r0]
+02027e8e  add  r5,r8,#0x234
+02027e92  add  r6,r6,#0x950
+02027e96  _lw  r2,[r5 + 0x0]
+02027e98  lw   r1,[r6+r0<<2]
+02027e9c  lw   r0,[r2 + 0x30]
+02027e9e  call 0x0201a67c          ; see below
+```
+
+⚠️ **handoff §8.1's "text setter `0x0201A6A0`" is not a valid address.**
+`0x0201A6A0` is not an instruction boundary — it falls in the middle of
+`FUN_0201A67C`:
+
+```
+0201a696  _lb.z  r1,[r7 + 0x0]
+0201a698  jmnz   r1,#0xd,0x0201a6b2
+0201a69c  mov    r0,r6
+0201a69e  call   0x02048eca
+0201a6a4  add    r1,r0,#0x1         ; <- 0x0201A6A0 is mid-insn here
+0201a6a6  mov    r0,r6
+0201a6a8  call   0x0200a28c
+0201a6ac  sw     r0,[r4 + 0x24]
+```
+
+The listing has no instruction at `0x0201A6A0`. The real function is
+`FUN_0201A67C`, a **string/buffer manager**: it calls `0x02048ECA` (strlen-like,
+result reused as both length and offset), `0x0200A28C`/`0x02009F98` (append-like),
+`0x02009F70`, and stores a pointer at `[r4+0x24]`, with `0x0D` (carriage return)
+special-cased at three points. It is a dynamic string builder, not a direct
+LCD write.
+
+So the handoff's one "confirmed UI entry point" is mis-addressed, and the
+function it lands in is not a display call. **Do not treat `0x0201A67C` as the
+final LCD write path** — §8.1's renderer gap is unchanged.
+
+What `0x02027E9E` *does* establish: the slot descriptor's match result is
+consumed by a **string builder**, which is consistent with a label being
+formatted for the UI. That is one step closer to the display, not the
+display.
+
+**This closes the item handoff §7 listed first.**
+
+1. A slot is **written** on a checksum-validated SysEx payload (§3.4), with the
+   descriptor's `[4]` pointing at firmware RAM.
+2. The descriptor is **read** back and matched against a 4-entry table.
+3. The match result feeds `0x0201A67C`, a string builder.
+
+So the read-back path exists and it **reaches a string formatter** — one step
+short of the display. The slot mechanism is not write-only.
+
+**Still not established:** whether the *4 KiB payload bytes* are read back, or
+only the descriptor. The two readers load `[r8+r1]` at `+0` only. The payload
+read would be a storage-ABI `read` of `0x1000`, and §2 still shows no such call.
+What comes back is the **descriptor** (bank/preset), not the payload.
+
+### 3.6 What this means for the persistence goal
+
+The slot mechanism is now understood end to end at the descriptor level:
+
+```
+recv SysEx (6-byte header, F0 43 .. .. .. 1B, trailing F7)
+  -> payload copied to 0x01C37FD0
+  -> 4 KiB rolling checksum verified, high bit masked
+  -> descriptor written: [0]=bank [1]=preset [4]=ptr [8]=flag
+  -> S1C packer, then record writer
+  -> on read: descriptor matched against a 4-entry table
+  -> string builder formats the result
+```
+
+For storing our own state this tells us three things that matter:
+
+1. **The guarded pattern already exists in firmware.** Checksum before commit,
+   and a descriptor rather than a bare pointer. A patch should reuse the
+   descriptor shape at `g+0x1714`, not invent a new one — matching what
+   `0x02027E16` writes.
+2. **The payload is checksummed over exactly 4096 bytes**, so any custom payload
+   must be a full 4 KiB with a correct trailing checksum, or the firmware
+   rejects it before the descriptor is touched.
+3. **The round trip carries a descriptor, not the payload.** If the goal is to
+   show UI state from persistent storage, the descriptor fields are what reach
+   a formatter. Whether payload bytes can be read back is still unproven, and
+   that is the single blocking unknown for a UI that displays stored values.
+
+### 3.7 The same function is at the same address in v15 and v16
 
 `0x02005660` exists at that exact address in both listings, with the same
 instruction sequence and only the `g`-relative offsets plus the call target
@@ -457,7 +680,7 @@ dumps for two builds that are demonstrably different, and had to re-run with
 `--rec none --exh <v16>` to see the real values. Identical bytes for a
 cross-version check is a **failure signal**, never a pass.
 
-### 3.5 The table base `0x01C37030` touches the S1C producer
+### 3.8 The table base `0x01C37030` touches the S1C producer
 
 `0x01C37030` is loaded in exactly 5 places:
 
@@ -473,8 +696,8 @@ cross-version check is a **failure signal**, never a pass.
 the S1C producer cave** (`0x0201E13E..0x0201E254`), and it is a live function
 in stock v15. It reads `*(g+0x1D8)` and compares a byte against `0xF8`.
 
-The address-level observation in §3.5 is now backed by a call-level one in
-§3.3: the S1C producer invokes the record writer directly. The 5 sites that
+The address-level observation in §3.8 is backed by the call-level one in
+§3.3: the SysEx/S1C path invokes the record writer directly. The 5 sites that
 load `0x01C37030` are the S1C/storage region as a whole.
 
 Two readings of that, not yet separated:
@@ -582,8 +805,13 @@ g+0x03C4  g+0x03D0  g+0x03E8
 1. ~~**Find the reader for the §3 4 KiB slot.**~~ → **answered by mechanism,
    not by a reader** (§3.3). `0x01C37FD0` is SysEx staging: written on packet
    receive, flushed to a slot on save. A `0x1000`-length read is not expected.
-   Now open: *what* reads a slot back, and whether the firmware ever does.
-   That is a UI-display question, so it feeds the UI goal directly.
+   → **closed at the descriptor level** (§3.5, §3.6). A reader exists:
+   `0x02027E62` and `0x020280CA` both read `g+0x1714`, and `0x02027E5C`
+   searches a 4-entry table then feeds a string formatter.
+   Still open: whether the **4 KiB payload bytes** are ever read back, only
+   the descriptor. No storage-ABI `read` of length `0x1000` exists in our
+   window. **That is the single blocking unknown for a UI that displays
+   stored values** (§3.6).
 2. ~~**Resolve `r9`'s index on the save path.**~~ → **done** (§3.1, §3.2).
    `r9` = bits 16-23 of a table word loaded at `0x020274C2`; the same word's
    bits 24-31 select the command. The index is persisted at `g+0x1714`.
@@ -621,8 +849,10 @@ python3 tools/smk37_listing_query.py --range 02025548:0202556e
 - That the §3 4 KiB write is ever read back. No reader is in our window.
 - That `FUN_02024E8C` is reachable, or who calls it. No `call` to it exists in
   our listing; entry is by a path we cannot see.
-- That a slot written at `0x0202556E` is ever read back. §3.3 explains why no
-  reader of that length exists; it does not show that a reader exists at all.
+- That a slot written at `0x0202556E` is ever read back. The descriptor is read
+  (§3.5); the payload is not, in our window.
+- That `FUN_0201A67C` reaches the LCD. It is a string builder with a `0x0D`
+  special case; the renderer gap in handoff §8.1 is unchanged.
 - That the SysEx payload format inside the 4 KiB slot is understood. Only the
   staging address and length are established.
 - That the table at `0x01C37030` is what I think it is. Only its role as a
