@@ -45,8 +45,23 @@ New in this pass, beyond closing the gap above:
   re-running.
 - handoff §7-3 refuted: `FUN_02024E8C` has **6 callers**, all in-window (§3.7)
 - **handoff §8.1's "dispatcher not found" resolved**: a **73-command-ID dispatch
-  table** with 84 handler targets; the "11-entry callback vector" is 2 entries
-  of it. `ID 0x19E -> 0x02058300` (§3.8)
+  table**; `ID 0x19E -> 0x02058300` (§3.8)
+- **the 11-entry callback vector itself decoded** (§3.9): 2 nulls + **10 code
+  pointers** (slots 2..12, exactly as handoff §8.1 said), including a
+  one-line `g[0x1672]=0` setter, a string-append pair
+  (`0x020299CE` + clamp `0x020299F2`), and **entry 11 = the §2.1 bulk window
+  accessor**, same base and stride, so that window has two entry points
+- **`0x02005152` read: a 12-column field renderer**, 4 callers, two of which
+  index **`g+0x16BC` by row** (§3.9) — the nearest artefact to the glass so far
+- **`0x02005888` read: display-panel init** — `0x40` / `0x100` / `0x100` into
+  three registers after a 1025-word fill, and it owns the unexplained
+  `0x01C38FD0` overlap (§3.9)
+- **an address overlap recorded, not resolved**: `0x01C38FD0` is both the end of
+  the SysEx slot window and the display-init table destination (§3.9)
+- a warning about `smk37_g_fields.py --field`: its hits are **not** proof of a
+  `g` access; 7 hits for `0x418` were a different structure's offsets (§3.9)
+- **handoff §8.1's renderer gap is now one hop from closed**: string pool →
+  append → `g+0x418`; only the LCD MMIO write remains
 
 New tool: `tools/smk37_persist_map.py` — resolves all 69 storage-ABI call
 sites into (RAM range, storage base provenance, length) and emits the access
@@ -794,7 +809,216 @@ Not claimed: that any of these handlers is the LCD renderer. What is now
 established is the *shape* — a 73+ entry ID table in one place — which is what
 a UI patch needs to hook a specific screen.
 
-### 3.9 The same function is at the same address in v15 and v16
+### 3.9 The callback vector — handoff §8.1 was right, and entry 9 is the bulk window
+
+The §3.8 dispatcher sends `ID 0x19E -> 0x02058300`, and 56 of its 85 targets
+have **no instruction rows**. Those targets cluster in
+`0x02057168..0x02057FC8`. Dumping the raw bytes settles what they are:
+
+```
+02058240  00 00 00 00  00 00 00 00  12 99 02 02  36 99 02 02
+02058250  74 99 02 02  ce 99 02 02  f2 99 02 02  16 9a 02 02
+02058260  2e 9a 02 02  46 9a 02 02  78 9a 02 02  aa 9a 02 02
+02058270  9e 43 02 02  ...
+```
+
+That is not code — it is a table of little-endian 32-bit code addresses.
+**Table base `0x02058240`: two nulls, then exactly 11 code pointers**
+`0x02029912 .. 0x0202439E`. So handoff §8.1's "callback vector (11 entries)"
+was **accurate** — and these targets have no instruction rows precisely
+because they are a **data table being branched into**, not instructions.
+
+```
+slot  addr        handler                                          role
+  0   0x02058240  0x00000000                                      null
+  1   0x02058244  0x00000000                                      null
+  2   0x02058248  0x02029912   mov r1,#0 ; movz r0,#0x1672 ;
+                               mov r2,#0x1c33260 ; sb r1,[r2+r0] ;
+                               rts                    ->  g[0x1672] = 0
+  3   0x0205824c  0x02029936   call 0x0201bac2 (r1,#0x18) ; sb r0,[r6+r5]
+  4   0x02058250  0x02029974   goto 0x02029416 ; ldw r1,[r6,#0x15c] ;
+                               sh #0xc8,[r6+0xc0]
+  5   0x02058254  0x020299CE   sb r2,[r1+r0] ; add r0,#1 ;
+                               sb 0,[r1+r0] ; rts        ->  string append
+  6   0x02058258  0x020299F2   clamps a byte against a bound at 0x0205DDA0
+  7   0x0205825c  0x02029A16   add r2,#-1 ; sb r2,[r1+r0]   (same clamp tail)
+  8   0x02058260  0x02029A2E   call 0x0201bac2 ; and r0,#0xFFFF00FF ;
+                               _sb r0,[r5+1] ; mul r1,#0xc
+  9   0x02058264  0x02029A46   call 0x02005152               ->  field render
+ 10   0x02058268  0x02029A78   mov r1,#0x2057250 ; call 0x02005152
+ 11   0x0205826c  0x02029AAA   ★ see below  -> the section 2.1 bulk window
+ 12   0x02058270  0x0202439E   scroll/offset arithmetic (reads [r5+r6], +-0x3F)
+```
+
+Slot 12 (`0x0202439E`) is where the table ends; the word after it,
+`0x01022406`, is not a code address.
+
+Two of these are structurally identifiable and they matter.
+
+**[slot 2] `0x02029912` is a one-line `g` setter** — the simplest handler in the
+table:
+
+```
+02029914  mov   r1,#0
+02029916  movz  r0,#0x1672
+0202991a  mov   r2,#0x1c33260        ; g
+02029920  sb    r1,[r2 + r0]         ; g[0x1672] = 0
+02029924  rts
+```
+
+**[slot 5] `0x020299CE` is a string append** — write a byte, advance, NUL-terminate,
+return. With [6]/[7] clamping it against a bound read from the string pool
+(`0x0205DDA0`), and [9]/[10] handing buffers to `0x02005152`.
+
+**`0x02005152` is a fixed-width field renderer, and it is the closest this map
+has come to the display:**
+
+```
+02005154  mov   r2,#0x1c33260     ; g
+0200515a  add   r3,r0,r2         ; r3 = g + column
+0200515c  add   r4,r3,#0x418     ; r4 = g + 0x418 + column
+02005160  sub   r3,#0xc,r0       ; field width = 12 - column
+02005164  mov   r5,#0x0
+02005168  lb.z  r6,[r1 + r5]     ; source byte
+0200516c  add   r6,r0            ; + column offset
+0200516e  sb    r6,[r4 + r5]     ; -> g[0x418 + column + i]
+02005174  jl    r5,r3,...        ; loop to field width
+02005178  add   r2,r2,#0x418     ; next row
+0200517c  add   r3,#-0xc         ; next row's remaining width
+0200517e  add   r0,#-0xc
+02005182  add   r4,r1,r3
+02005184  lb.z  r4,[r4 + 0xc]
+02005188  sb    r4,[r2 ++= 1]    ; -> g[0x418 + row*12 + i]
+0200518c  jnz   r3,0x02005182    ; rows until exhausted
+```
+
+This is a **12-column display buffer at `g+0x418`**, filled left-justified
+from a source string, in rows of `0xC` (12) bytes. Entry [10] passes
+`0x02057250` as the source — an address in the same data region as the string
+pool — and entry [9] passes `r2`.
+
+So the chain is now: **string pool → append (`0x020299CE`) → field render
+(`0x02005152`) → a 12-column buffer.**
+
+**There are four callers, and they disagree about which buffer is the
+screen.** Two of them — and they are the ones outside the callback vector —
+pass a row index in the same shape:
+
+```
+02006722  movz r1,#0x1634
+02006726  lb.z  r1,[r11 + r1]      ; row count from g+0x1634
+0200672a  mul   r1,r1,#0xc         ; row * 12
+0200672e  add   r1,r12             ; + column
+02006730  add   r1,r1,#0x16bc      ; -> g+0x16BC + row*12 + col
+02006734  call  0x02005152
+
+02025fd8  movz r1,#0x1635
+02025fdc  sb    r0,[r8 + r1]       ; write g+0x1635 = r0
+02025fe2  lb.z  r1,[r8 + r1]       ; read it back
+02025fe6  mul   r1,r1,#0xc
+02025fec  add   r1,r1,#0x16bc      ; same g+0x16BC
+02025ff2  call  0x02005152
+```
+
+`g+0x16BC` is the one both non-vector callers compute, with a `* 0xC` row
+stride, and `0x02025FF2` even round-trips a value through `g+0x1635` before
+using it as the row. **`g+0x16BC` is the better LCD buffer candidate**, not
+`g+0x418`.
+
+Both are 12-column. `g+0x418` is the destination inside the renderer; `g+0x16BC`
+is what the callers index by row. The relationship between them is **not
+established** — the renderer's `add r2,r2,#0x418` walks its own buffer, and
+whether it later blits to `g+0x16BC` or vice versa needs reading
+`0x02005152`'s callers' continuation (`0x02006738` calls `0x02005888` right
+after, which is worth a look).
+
+The full caller set of `0x02005152`:
+
+```
+0x02029a4e  call 0x02005152   ; vector slot 9  (0x02029A46)
+0x02029a86  call 0x02005152   ; vector slot 10 (0x02029A78)
+0x02006734  call 0x02005152   ; row from g+0x1634, +g+0x16BC
+0x02025ff2  call 0x02005152   ; row round-tripped via g+0x1635, +g+0x16BC
+```
+
+⚠️ Still missing, and it is the same missing hop as before: **nothing here
+writes to LCD MMIO.** Both buffers are RAM. The row count of `g+0x16BC` is
+also unknown — `g+0x1634` holds *a* row index, not obviously a height.
+
+**`0x02006738` calls `0x02005888` immediately after the field render, and
+that function is display-panel initialisation:**
+
+```
+0200588e  mov   r1,#0x4dbe23e8
+02005898  mov   r2,#0x1c38fd0          ; ★ the 4 KiB slot window END
+0200589e  mov   r3,#0x3f801630
+020058ae  sw    r4,[r2+r0<<2]          ; fill 0x401 = 1025 words
+020058b8  jne   r0,#0x401,...
+020058be  mov   r0,#0x1c33260          ; g
+020058c8  add   r9,r0,#0x168
+020058cc  sb    r2,[r9 + 0x0]          ; g[0x168] = 0
+020058d4  call  0x0206034c
+020058e2  _sb   r4,[r5 + 0xc]          ; [12] = 0x0C
+020058f0  sdw   r6_r7,[r5 + 0x0]
+020058f4  sw    0x40,[r5 + 0x8]        ; ★ mode  = 0x40
+020058fe  movz  r0,#0x100
+02005902  _sw   r0,[r5 + 0x10]         ; ★ 0x100
+0200590a  movz  r0,#0x100
+0200590e  _sw   r0,[r5 + 0x18]         ; ★ 0x100
+```
+
+Three setup registers written with `0x40`, `0x100`, `0x100` after a 1025-word
+table fill, each preceded by `call 0x0206034C` (an allocator). `0x01C38FD0` is
+the **end of the §3 slot window**, and this function is the one place in the
+listing that references it — the same address the SysEx path fills as staging.
+
+So `0x01C38FD0` is **both** the end of the SysEx slot buffer **and** the
+destination of a display-initialisation word table. That is an address overlap
+between two unrelated-looking subsystems, and it is not explained. Flagged, not
+resolved: §3 says the slot is SysEx staging, and this says the following
+address is panel-setup scratch. One of the two readings is incomplete.
+
+⚠️ Correction to my own reading this pass: I first took `g+0x418` as the
+display buffer on the strength of 12-column geometry. Searching
+`smk37_g_fields.py --field 0x418` returned 7 "accesses" that are **not `g`
+fields at all** — they are `[r5+0x2c]`, `[r5+0x10]` and similar offsets on some
+other structure, and the tool mislabelled them. `g+0x418` is real, verified in
+the renderer itself (`add r3,r0,r2` with `r2 = 0x01C33260`, then `+0x418`), but
+the 7 tool hits are noise. **A `--field` hit is not evidence until the base
+register is checked.**
+
+**[slot 11] `0x02029AAA` uses this map's own constants:**
+
+```
+02029aaa  mov   r2,#0x0
+02029aac  movz  r3,#0x49e3      ; bulk window stride
+02029ab0  mul   r3,r0           ; index * 0x49E3
+02029ab2  mov   r4,#0x1c0de20   ; bulk window RAM base
+02029ab8  movz  r5,#0xa84
+```
+
+`0x01C0DE20` and `0x49E3` are **exactly** the base and stride of the §2.1 bulk
+window, byte for byte. So vector slot 11 is a **bulk-window accessor**, not a
+UI handler: the same 151,320 B region of §2.1 is reachable through this
+callback vector as well as through `FUN_02005FAC`.
+
+That cross-reference is the useful part. It means the bulk window has **two
+independent entry points**, and §2.1's symmetric write/read pair is not the
+only way in or out. A patch that touches the bulk window must account for both.
+
+Corrections to keep straight: §3.8's "73 commands / 84 handlers" counted
+comparison-chain jumps, and 56 of those 85 targets are this data table rather
+than code, so **the handler count for real code is 29, not 84**. The 73 IDs are
+unaffected. On the entry count I was wrong twice before landing right: I read
+10 populated entries first, because I unpacked from `0x02058248` instead of the
+real base `0x02058240`. From the base: two nulls, then **11 code pointers,
+`0x02029912..0x0202439E`** — **handoff §8.1's "11 entries" was correct and my
+10 was not.** Align the unpack to the table base before counting entries.
+
+Not claimed: that `0x02005152` or `0x020299CE` performs the LCD write. §8.1's
+renderer gap is still open; this is the string-building step upstream of it.
+
+### 3.10 The same function is at the same address in v15 and v16
 
 `0x02005660` exists at that exact address in both listings, with the same
 instruction sequence and only the `g`-relative offsets plus the call target
@@ -838,7 +1062,7 @@ dumps for two builds that are demonstrably different, and had to re-run with
 `--rec none --exh <v16>` to see the real values. Identical bytes for a
 cross-version check is a **failure signal**, never a pass.
 
-### 3.10 The table base `0x01C37030` touches the S1C producer
+### 3.11 The table base `0x01C37030` touches the S1C producer
 
 `0x01C37030` is loaded in exactly 5 places:
 
@@ -854,7 +1078,7 @@ cross-version check is a **failure signal**, never a pass.
 the S1C producer cave** (`0x0201E13E..0x0201E254`), and it is a live function
 in stock v15. It reads `*(g+0x1D8)` and compares a byte against `0xF8`.
 
-The address-level observation in §3.10 is backed by the call-level one in
+The address-level observation in §3.11 is backed by the call-level one in
 §3.3: the SysEx/S1C path invokes the record writer directly. The 5 sites that
 load `0x01C37030` are the S1C/storage region as a whole.
 
@@ -960,6 +1184,10 @@ g+0x03C4  g+0x03D0  g+0x03E8
 
 ## 6. Next steps, in order
 
+0. **Find the LCD MMIO write.** §3.9 now has string pool → append → 12-column
+   render → `g+0x418` / `g+0x16BC`, plus panel init at `0x02005888`. The one
+   missing hop is the store to LCD MMIO. Everything else needed for a UI patch
+   is in place; this is now the highest-value item.
 1. ~~**Find the reader for the §3 4 KiB slot.**~~ → **answered by mechanism,
    not by a reader** (§3.3). `0x01C37FD0` is SysEx staging: written on packet
    receive, flushed to a slot on save. A `0x1000`-length read is not expected.
@@ -1026,8 +1254,20 @@ python3 tools/smk37_listing_query.py --range 02025548:0202556e
   persisted window; using it means contending with the firmware for it.
 - That the `len=0x4` settings cluster has a fixed storage region. Its address
   is table-derived and RAM-dependent (§2.2).
-- That any handler in the §3.8 table is the LCD renderer. The table's shape is
-  measured; no handler is identified.
+- That any handler in the §3.8/§3.9 tables is the LCD renderer. §3.9 reaches a
+  string builder that consumes the string pool, which is one step upstream of a
+  display, but `0x02005152` and `0x020299CE` are not shown to be the renderer.
+- That `g+0x418` or `g+0x16BC` is the LCD buffer, or that either reaches the
+  display. Both are RAM, both 12-column, and **neither is shown to be written to
+  LCD MMIO** (§3.9). This remains the nearest-to-the-glass artefact found, and
+  the LCD MMIO write is still missing.
+- The row count of either buffer. `0xC` stride is asserted by the loops;
+  `g+0x1634` holds an index, not a proven height.
+- The relationship between `g+0x418` and `g+0x16BC`. Whether one blits into the
+  other is unread.
+- Why `0x01C38FD0` is both the end of the SysEx slot window and the destination
+  of the display-init word table in `0x02005888` (§3.9). Recorded as an
+  unexplained overlap.
 - A complete command-ID list. 73 is a lower bound — the `tbb` jump tables are
   misdecoded by Ghidra and were not enumerated.
 - Anything about v16 beyond the one-function comparison in §3.9. The
