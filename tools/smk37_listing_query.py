@@ -153,8 +153,16 @@ def cmd_func(args, paths):
 
 
 def cmd_xref(args, paths):
+    # The listing writes addresses as "0x02024e8c".  norm() strips the "0x",
+    # so a plain \b<hex>\b pattern cannot match: "x" and "0" are both word
+    # characters, so no boundary exists there and EVERY xref returned nothing.
+    # That silently hid the six real callers of FUN_02024E8C.
+    # Guard on hex digits only. An earlier version used [0-9a-z], which
+    # wrongly included 'x' -- so the lookbehind rejected the very text it was
+    # meant to match ("call 0x02024e8c") and every xref returned nothing.
     target = norm(args.xref)
-    pat = re.compile(r"\b" + re.escape(target) + r"\b", re.IGNORECASE)
+    pat = re.compile(r"(?<![0-9a-f])0?x?" + re.escape(target) + r"(?![0-9a-f])",
+                     re.IGNORECASE)
     n = 0
     seen = set()
     for p in paths:

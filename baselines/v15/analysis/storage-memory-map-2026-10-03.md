@@ -38,6 +38,12 @@ New in this pass, beyond closing the gap above:
 - a correction: handoff §8.1's "text setter `0x0201A6A0`" is **not an
   instruction boundary**; the real function is `FUN_0201A67C`, a string
   builder, not an LCD write (§3.5)
+- **`--xref` was broken repo-wide and returned nothing for every query**
+  (§3.7). Fixed; the write-wrapper census now reconciles against handoff §4.1
+  and reveals **4 uncatalogued write sites** (§2.1a). Any earlier statement of
+  the form "xref 0" in this project was produced by a broken tool and needs
+  re-running.
+- handoff §7-3 refuted: `FUN_02024E8C` has **6 callers**, all in-window (§3.7)
 
 New tool: `tools/smk37_persist_map.py` — resolves all 69 storage-ABI call
 sites into (RAM range, storage base provenance, length) and emits the access
@@ -127,6 +133,36 @@ Two of the sixteen remain unresolved: the first read (`0x0200656C`) and
 `0x02024E5C` (a different function, base `mem[g+0x200]`, r0 unknown). The first
 is the entry of the read sequence and most likely resolves once the preceding
 branch is modelled.
+
+### 2.1a Four write sites the handoff inventory missed
+
+With `--xref` working, the v15 write-wrapper census reconciles exactly against
+handoff §4.1:
+
+```
+handoff 4.1 write sites : 32
+tool finds              : 36
+handoff-only (missed)   : 0
+tool-only (new)         : 4  ->  0x02037726 0x0203776C 0x02037AC6 0x02037ADA
+read wrapper            : 30  (exact match, no change)
+```
+
+The handoff's 32 are all present; nothing it listed was wrong. Four more exist:
+
+```
+02037726  mov  r2,#0x4 ; call write        (source sp+0x18)
+0203776c  mov  r2,#0x4 ; call write        (source sp+0x18)
+02037ac6  mov  r2,#0x4 ; call write        (source sp+0x0)
+02037ada  movz r0,#0xcef ; lw r0,[r8+r0<<2] ; add r1,r0,#0x4 ; mov r2,r4 ; call write
+```
+
+Three are `len=0x4`. The fourth reads `mem[0xCEF]` — **the same
+register-indexed settings table** as §2.2, whose cluster was previously
+attributed to `FUN_0202C6AC` and friends. So that cluster also reaches
+`FUN_02037ADA`, in a different function, via the same `0xCEF` word.
+
+The census is therefore **36 write / 30 read** in v15, and handoff §4.1's
+"WRITE 32" undercounts by 4. Its "READ 30" is exact.
 
 ### 2.2 The `len=0x4` settings cluster is register-indexed
 
@@ -636,7 +672,62 @@ For storing our own state this tells us three things that matter:
    a formatter. Whether payload bytes can be read back is still unproven, and
    that is the single blocking unknown for a UI that displays stored values.
 
-### 3.7 The same function is at the same address in v15 and v16
+### 3.7 `FUN_02024E8C` has six callers — handoff §7-3 is refuted
+
+handoff §7 item 3 and my own earlier note both said the slot function has no
+`call` in our listing and "its caller lives outside the window". **That was an
+artifact of a broken tool.**
+
+`smk37_listing_query.py --xref` matched `<hex>\b` against the text column.
+The listing writes `call 0x02024e8c`; `norm()` strips the `0x`, and since `x`
+and `0` are both word characters there is no boundary to match against. **Every
+xref in this repo had been silently returning nothing.** The write-wrapper
+regression now returns 36 sites, so the tool is demonstrably live.
+
+Fixed guard:
+
+```python
+pat = re.compile(r"(?<![0-9a-f])0?x?" + re.escape(target) + r"(?![0-9a-f])", re.I)
+```
+
+The first attempt used `[0-9a-z]`, which wrongly included `x` and kept
+rejecting the text it was meant to match. The guard has to exclude hex digits
+only.
+
+With the tool working, the six real callers of `FUN_02024E8C`:
+
+```
+0x20286fe  call 0x02024e8c   [CONDITIONAL_CALL]     fn@0x2025bde
+0x2029b46  call 0x02024e8c   [UNCONDITIONAL_CALL]   fn@0x02029b16
+0x02029bb4 call 0x02024e8c   [UNCONDITIONAL_CALL]   fn@0x02029b82
+0x0202b5b4 call 0x02024e8c   [UNCONDITIONAL_CALL]   fn@0x0202b472
+0x0202b61c call 0x02024e8c   [UNCONDITIONAL_CALL]   fn@0x0202b472
+0x0202ba1c call 0x02024e8c   [UNCONDITIONAL_CALL]   fn@0x0202b938
+```
+
+Two of them are in one function. What they pass is `r0`:
+
+```
+0x020286ee  lb.z r0,[r8 + 0x306]      ; g+0x306
+0x020286f6  sb   r0,[r8 + 0x36]       ; g+0x36
+0x02029ba6  call 0x0201bac2
+0x02029baa  sb   r0,[r6 + r7]
+0x0202b5ae  mov  r0,#0x6
+0x0202b60c  movz r1,#0x1fc           ; g+0x1FC
+0x0202ba16  lb.z r0,[r7 + 0x306]      ; g+0x306
+```
+
+So `g+0x306` and `g+0x36` feed the call, and `g+0x1FC` sits beside another call
+site. **A checked scan of the 32 instructions before each call finds `g`-field
+constants at only one of the six** (the `0x0202B61C` site, via `g+0x1FC`); the
+other five take `r0` from further back, which this pass did not trace. **No UI
+reachability is claimed here** — that was my assumption, and the check did not
+support it.
+
+The refutation stands on its own: the function has 6 callers, all inside our
+window, at `0x0202_xxxx`. That is a fact independent of what they pass.
+
+### 3.8 The same function is at the same address in v15 and v16
 
 `0x02005660` exists at that exact address in both listings, with the same
 instruction sequence and only the `g`-relative offsets plus the call target
@@ -680,7 +771,7 @@ dumps for two builds that are demonstrably different, and had to re-run with
 `--rec none --exh <v16>` to see the real values. Identical bytes for a
 cross-version check is a **failure signal**, never a pass.
 
-### 3.8 The table base `0x01C37030` touches the S1C producer
+### 3.9 The table base `0x01C37030` touches the S1C producer
 
 `0x01C37030` is loaded in exactly 5 places:
 
@@ -696,7 +787,7 @@ cross-version check is a **failure signal**, never a pass.
 the S1C producer cave** (`0x0201E13E..0x0201E254`), and it is a live function
 in stock v15. It reads `*(g+0x1D8)` and compares a byte against `0xF8`.
 
-The address-level observation in §3.8 is backed by the call-level one in
+The address-level observation in §3.9 is backed by the call-level one in
 §3.3: the SysEx/S1C path invokes the record writer directly. The 5 sites that
 load `0x01C37030` are the S1C/storage region as a whole.
 
@@ -820,7 +911,7 @@ g+0x03C4  g+0x03D0  g+0x03E8
    understand.
 3. ~~**Close the unresolved r1 sites**, prioritising len `0x49E3`.~~
    → **done for the bulk window** (46 → 31, §2.1). The remainder is 31:
-   10 are register-indexed settings slots (§2.2, needs RAM table contents),
+   13 are register-indexed settings slots (§2.1a, §2.2, needs RAM table contents),
    10 have unknown length, and the rest are small reads. The `0xA3` raw-record
    index chain (`0x02026DA6`) is still unresolved and is now the most
    interesting single site, because it is the official SAVE's record write.
