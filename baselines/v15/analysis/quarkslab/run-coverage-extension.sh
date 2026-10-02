@@ -50,5 +50,19 @@ rm -rf "$PROJDIR/proj.gpr" "$PROJDIR/proj.rep"
   > "$RUN/analyze.log" 2>&1
 
 rc=$?
-echo "exit=$rc"
+echo "ghidra_exit=$rc"
 grep -E "EXT |ERROR|Exception" "$RUN/analyze.log" | tail -40
+
+# Propagate Ghidra's status.  This script used to end on the grep pipeline above,
+# so it exited 0 even when the run aborted -- two aborted runs in a row reported
+# "exit code 0" to the caller and looked like successes.  A missing or partial
+# listing is now also a failure, not just a non-zero Ghidra exit.
+if [ "$rc" -ne 0 ]; then
+  echo "FAIL: analyzeHeadless exited $rc"
+  exit "$rc"
+fi
+if ! grep -q "EXT listing_rows=" "$RUN/analyze.log"; then
+  echo "FAIL: run finished without writing a listing (no EXT listing_rows line)"
+  exit 1
+fi
+echo "OK: coverage extension listing written"

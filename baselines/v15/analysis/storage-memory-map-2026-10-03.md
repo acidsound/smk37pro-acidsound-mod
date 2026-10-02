@@ -1500,6 +1500,23 @@ Environment facts learned the hard way, each of which cost a run:
 - **Pre-compile the script with `javac` against Ghidra's jars before running.**
   Two API errors (`InstructionIterator` needs an import; there is no
   `Instruction.isTerminal()`) were caught in 0.7 s instead of a full run.
+- **The runner must propagate Ghidra's exit status.** It originally ended on a
+  `grep` pipeline, so it exited 0 even when the run aborted — attempts 2 and 3
+  below both aborted and both reported "exit code 0" to the caller, i.e. a
+  broken run looked like a working one. It now fails on a non-zero Ghidra exit
+  **and** on a log with no `EXT listing_rows=` line, so a missing listing cannot
+  pass silently either.
+
+Attempt history, kept because four of the five failures were environment or
+tooling rather than analysis:
+
+| # | script | Ghidra exit | failure |
+|---|---|---:|---|
+| 1 | run.sh | 1 | `-cspecDefault` is not an option in 12.1.2 |
+| 2 | run2.sh | 0 | script class not found — 2 javac errors |
+| 3 | run2.sh | 0 | `ram:02057000 does not exist` — no `-loader-baseAddr` |
+| 4 | run2.sh | 143 | killed: unbounded flow-follow pinned a core |
+| 5 | run2.sh | 0 | **success — 2,916 rows** |
 
 ### 8.7 Limits
 
