@@ -82,6 +82,7 @@ def fmt(fields):
 def cmd_range(args, paths):
     lo, hi = parse_range(args.range)
     hits = 0
+    seen = set()
     for p in paths:
         with open_text(p) as f:
             for line in f:
@@ -89,7 +90,8 @@ def cmd_range(args, paths):
                 if not is_row(fields):
                     continue
                 a = addr(fields)
-                if lo <= a <= hi:
+                if lo <= a <= hi and a not in seen:
+                    seen.add(a)
                     print(fmt(fields))
                     hits += 1
     if not hits:
@@ -107,7 +109,9 @@ def cmd_func(args, paths):
                 if len(fields) < 7 or not is_row(fields):
                     continue
                 func = fields[6].strip().lower().split("@")[0]
-                if func in (target, "FUN_" + target):
+                # NB: the function column is lower-cased, so the FUN_ prefix
+                # must be lower-case too or every lookup misses.
+                if func in (target, "fun_" + target):
                     want = func
                     break
         if want:
@@ -133,20 +137,35 @@ def cmd_func(args, paths):
         print(f"(no rows for {want})", file=sys.stderr)
         return
     print(f"== {want}  rows {lo:08x}..{hi:08x}  span={hi-lo} ==")
-    cmd_range(args, paths)
+    # print the body directly; --range is not set when invoked via --func
+    seen = set()
+    for p in paths:
+        with open_text(p) as f:
+            for line in f:
+                fields = line.rstrip("\n").split("\t")
+                if len(fields) < 4 or not is_row(fields):
+                    continue
+                a = addr(fields)
+                # both listings usually cover the same rows; print each once
+                if lo <= a <= hi and a not in seen:
+                    seen.add(a)
+                    print(fmt(fields))
 
 
 def cmd_xref(args, paths):
     target = norm(args.xref)
     pat = re.compile(r"\b" + re.escape(target) + r"\b", re.IGNORECASE)
     n = 0
+    seen = set()
     for p in paths:
         with open_text(p) as f:
             for line in f:
                 fields = line.rstrip("\n").split("\t")
                 if len(fields) < 5 or not is_row(fields):
                     continue
-                if pat.search(fields[4]):
+                a = addr(fields)
+                if pat.search(fields[4]) and a not in seen:
+                    seen.add(a)
                     print(fmt(fields))
                     n += 1
     if not n:
