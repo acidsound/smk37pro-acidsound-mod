@@ -1,9 +1,9 @@
 {
-  "format": "smk37-v15-s1c5-identity-safe-fm-drum-preset-v1",
+  "format": "smk37-v15-s1c6-explicit-playback-fm-drum-preset-v1",
   "title": "FM Drum Kit · patches.fm",
-  "description": "16 independent DX7/FM drum voices for SMK-37 Pro Ch10. Trigger Notes remain fixed. Current S1C5 transmission uses identity-safe Original Playback Notes; requested drum-map notes are retained as metadata only.",
+  "description": "16 independent DX7/FM drum voices for SMK-37 Pro Ch10. Trigger Notes remain fixed. S1C6(S16) explicit-playback: Playback Notes = requested drum-map notes (36..51) are transmitted explicitly via the 17-packet reset+16-voice protocol.",
   "triggerNotePolicy": "fixed physical PAD_TO_NOTE; do not edit",
-  "playbackNotePolicy": "identity-safe-original-on-s1c5",
+  "playbackNotePolicy": "explicit-requested-map-on-s1c6",
   "sourceCatalog": "https://patches.fm/patches/dx7/",
   "sourceResearch": [
     "https://coffeeshopped.com/2020/03/yamaha-dx7-patches-drum-sounds",
@@ -13,7 +13,7 @@
     {
       "pad": 1,
       "note": 40,
-      "playbackNote": null,
+      "playbackNote": 36,
       "role": "Kick A",
       "name": "KICK DRUM",
       "file": "pad01-trigger40-playback36-kick_a.syx",
@@ -27,7 +27,7 @@
     {
       "pad": 2,
       "note": 41,
-      "playbackNote": null,
+      "playbackNote": 37,
       "role": "Kick B",
       "name": "Kick",
       "file": "pad02-trigger41-playback37-kick_b.syx",
@@ -41,7 +41,7 @@
     {
       "pad": 3,
       "note": 42,
-      "playbackNote": null,
+      "playbackNote": 38,
       "role": "Snare A",
       "name": "SNARE",
       "file": "pad03-trigger42-playback38-snare_a.syx",
@@ -55,7 +55,7 @@
     {
       "pad": 4,
       "note": 43,
-      "playbackNote": null,
+      "playbackNote": 39,
       "role": "Snare B",
       "name": "Swissnare",
       "file": "pad04-trigger43-playback39-snare_b.syx",
@@ -69,7 +69,7 @@
     {
       "pad": 5,
       "note": 48,
-      "playbackNote": null,
+      "playbackNote": 40,
       "role": "Clap",
       "name": "HAND CLAPS",
       "file": "pad05-trigger48-playback40-clap.syx",
@@ -83,7 +83,7 @@
     {
       "pad": 6,
       "note": 49,
-      "playbackNote": null,
+      "playbackNote": 41,
       "role": "Rim",
       "name": "HITUN RIMS",
       "file": "pad06-trigger49-playback41-rim.syx",
@@ -97,7 +97,7 @@
     {
       "pad": 7,
       "note": 50,
-      "playbackNote": null,
+      "playbackNote": 42,
       "role": "High Tom",
       "name": "**tom 1**",
       "file": "pad07-trigger50-playback42-high_tom.syx",
@@ -111,7 +111,7 @@
     {
       "pad": 8,
       "note": 51,
-      "playbackNote": null,
+      "playbackNote": 43,
       "role": "Middle Tom",
       "name": "**tom 2**",
       "file": "pad08-trigger51-playback43-mid_tom.syx",
@@ -125,7 +125,7 @@
     {
       "pad": 9,
       "note": 36,
-      "playbackNote": null,
+      "playbackNote": 44,
       "role": "Low Tom",
       "name": "LONG TOM",
       "file": "pad09-trigger36-playback44-low_tom.syx",
@@ -139,7 +139,7 @@
     {
       "pad": 10,
       "note": 37,
-      "playbackNote": null,
+      "playbackNote": 45,
       "role": "Floor Tom",
       "name": "TOM TOMS",
       "file": "pad10-trigger37-playback45-floor_tom.syx",
@@ -153,7 +153,7 @@
     {
       "pad": 11,
       "note": 38,
-      "playbackNote": null,
+      "playbackNote": 46,
       "role": "Closed Hi-Hat",
       "name": "CL.HI-HAT",
       "file": "pad11-trigger38-playback46-closed_hh.syx",
@@ -167,7 +167,7 @@
     {
       "pad": 12,
       "note": 39,
-      "playbackNote": null,
+      "playbackNote": 47,
       "role": "Open Hi-Hat",
       "name": "Open HiHat",
       "file": "pad12-trigger39-playback47-open_hh.syx",
@@ -181,7 +181,7 @@
     {
       "pad": 13,
       "note": 44,
-      "playbackNote": null,
+      "playbackNote": 48,
       "role": "Crash Cymbal",
       "name": "CRASH CYMB",
       "file": "pad13-trigger44-playback48-crash.syx",
@@ -195,7 +195,7 @@
     {
       "pad": 14,
       "note": 45,
-      "playbackNote": null,
+      "playbackNote": 49,
       "role": "Ride Cymbal",
       "name": "R.CYMBAL",
       "file": "pad14-trigger45-playback49-ride.syx",
@@ -209,7 +209,7 @@
     {
       "pad": 15,
       "note": 46,
-      "playbackNote": null,
+      "playbackNote": 50,
       "role": "Cowbell",
       "name": "COW BELL",
       "file": "pad15-trigger46-playback50-cowbell.syx",
@@ -223,7 +223,7 @@
     {
       "pad": 16,
       "note": 47,
-      "playbackNote": null,
+      "playbackNote": 51,
       "role": "Shaker",
       "name": "Shaker",
       "file": "pad16-trigger47-playback51-shaker.syx",

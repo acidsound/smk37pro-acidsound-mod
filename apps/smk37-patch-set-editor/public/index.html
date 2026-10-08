@@ -31,7 +31,7 @@
       <label class="set-name">Patch Set 이름<input id="set-title" value="Bank D Demo"></label>
       <div class="actions">
         <button id="load-demo">검증 세트 불러오기</button>
-        <button id="load-drum-kit">FM Drum Preset · Identity-safe</button>
+        <button id="load-drum-kit">FM Drum Preset · Explicit Playback</button>
         <button id="load-files">16개 .syx 선택</button>
         <button id="import-set">Set 가져오기</button>
         <button id="export-set">Set 내보내기</button>
@@ -61,7 +61,7 @@
       <div>
         <span class="eyebrow">VOLATILE RAM TRANSFER</span>
         <h2>장치 전송</h2>
-        <p>전체 16개가 note 36→51 순서로 전송됩니다. 재부팅 후에는 다시 전송해야 합니다.</p>
+        <p>S1-C6(S16) 프로토콜: 리셋 패킷 1개 후 전체 16개가 note 36→51 순서로 전송됩니다. 재부팅 후에는 다시 전송해야 합니다.</p>
       </div>
       <div class="transport-controls">
         <progress id="send-progress" max="16" value="0"></progress>
@@ -94,6 +94,6 @@
     </article>
   </template>
 
-  <script type="module" src="app.js?v=20260804-fmdrum3"></script>
+  <script type="module" src="app.js?v=20260814-s1c6-explicit-playback"></script>
 </body>
 </html>
