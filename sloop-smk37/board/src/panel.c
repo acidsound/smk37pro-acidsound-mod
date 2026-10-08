@@ -1,0 +1,152 @@
+/* SPDX-License-Identifier: GPL-3.0-only
+ * SLOOP for SMK-37 Pro ("sloop-smk37"): physical panel (board level).
+ *
+ * Replaces sloop-fm1's firmware/src/panel.c in the unity build (the build
+ * puts board/src on the include path first). Same structure, same settings
+ * block; only the default table and the id ranges differ, because the
+ * SMK-37 Pro panel is not the FM-1 panel:
+ *
+ *   THE PADS CARRY THE FM-1 BUTTONS THE SMK-37 PRO DOES NOT HAVE.
+ *
+ * The SMK-37 Pro silkscreen covers five of the FM-1's fourteen function
+ * buttons (ARP, SCALE = SCL, PLAY, REC, SEQ PLAY = SEQ). The other nine
+ * (FX, ENV, LFO, EDIT, GLO, HOME, SAVE, OCT-, OCT+) have no silkscreen
+ * control, so they live on pads 1..9 -- hold a pad for the layer, tap it for
+ * its pages, exactly as the FM-1's function buttons behave; the pad RGB
+ * follows the button LED (lit = layer held / page open, glow = landmark).
+ * Pads 10..16 stay unassigned (reserved), as do K8 and faders 1..3: every
+ * control the FM-1 has is reachable, and nothing the FM-1 lacks changes the
+ * behaviour of the core (identical operation, extra hardware idle).
+ *
+ * Two tables make that wiring, one per layer of the port:
+ *   hal/smk37_map.h  SMK37_SLOT_OF[]: physical control (pad / silkscreen
+ *                    button) -> logical button slot 0..13, the space the
+ *                    SLOOP core dispatches on (ui_input.c reads bits 0..13);
+ *   this file        panel.btn[]: slot -> label, identity by default.
+ * HARDWARE CALIBRATION (hold OCT- and OCT+ while powering on = pads 8 and 9
+ * together) asks for each label in turn and permutes panel.btn[]; the
+ * learned table lives in .noinit and, with FELUCCA_FLASH, in flash with the
+ * settings (project.c). The physical slot table is the board design and is
+ * fixed at build time.
+ */
+#include "smk37_board.h"
+
+enum { B_FX, B_SCL, B_ENV, B_LFO, B_EDIT, B_GLO, B_HOME, B_SAVE, B_ARP, B_SEQ, B_PLAY, B_REC,
+       B_OCTDN, B_OCTUP, NB };
+enum { EN_SELECT, EN_ALGO, EN_PRESET, EN_K1, EN_K2, EN_K3, EN_K4, NE };
+static const char *const B_NAME[NB] = {"FX", "SCL", "ENV", "LFO", "EDIT", "GLO", "HOME", "SAVE",
+                                        "ARP", "SEQ", "PLAY", "REC", "OCT-", "OCT+"};
+static const char *const E_NAME[NE] = {"SELECT", "ALGORITHM", "PRESETS", "KNOB 1", "KNOB 2",
+                                        "KNOB 3", "KNOB 4"};
+#define PANEL_MAGIC 0x50414E36u          /* "PAN6": SMK-37 Pro table; bump on change */
+
+typedef struct {
+    uint32_t magic;
+    uint8_t btn[NB];             /* logical button slot (0..13) per label */
+    uint8_t enc[NE];             /* rotary encoder (0..7) per role */
+    int8_t dir[NE];              /* +1 / -1 so that clockwise is + */
+} panel_t;
+panel_t panel __attribute__((section(".noinit")));
+
+/* identity: slot n IS label n; the pad/button that drives each slot is
+ * SMK37_SLOT_OF[] in hal/smk37_map.h (pads 1..9 carry FX, ENV, LFO, EDIT,
+ * GLO, HOME, SAVE, OCT-, OCT+). K5..K7 = SELECT / ALGORITHM / PRESETS,
+ * K1..K4 = the four page knobs; K8 stays spare. */
+static const panel_t PANEL_DEFAULT = {
+    PANEL_MAGIC,
+    {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13},
+    {SMK37_K5, SMK37_K6, SMK37_K7, SMK37_K1, SMK37_K2, SMK37_K3, SMK37_K4},
+    {1, 1, 1, 1, 1, 1, 1},
+};
+
+static void panel_init(void)                     /* also after a flash load: ids are used as array indexes and shifts */
+{
+    uint32_t i, ok = panel.magic == PANEL_MAGIC;
+    for (i = 0; ok && i < NB; i++)
+        ok = panel.btn[i] < 14u;
+    for (i = 0; ok && i < NE; i++)
+        ok = panel.enc[i] < 8u && (panel.dir[i] == 1 || panel.dir[i] == -1);
+    if (!ok)
+        panel = PANEL_DEFAULT;
+}
+
+static uint32_t panel_btn_of(uint32_t matrix_id)        /* label of a matrix button, NB if none */
+{
+    uint32_t b;
+    for (b = 0; b < NB; b++)
+        if (panel.btn[b] == matrix_id)
+            return b;
+    return NB;
+}
+
+static void panel_led(uint32_t label, int on) { fm1_led_key(panel.btn[label], on); }
+
+/* steps of a role, + = clockwise */
+static uint32_t ui_input_ms;                    /* the last button, key or knob turn (ui_input.c; autosave) */
+/* the knobs (roles, bit per EN_*) not to be read again in this UI pass (ui_input: a layer took them, #102 of
+ * Felucca): panel_enc returns 0 and leaves their detents for the next pass */
+static uint32_t enc_hold;
+static int32_t panel_enc(uint32_t role)
+{
+    int32_t s;
+    if ((enc_hold >> role) & 1u)
+        return 0;
+    s = fm1_enc_take(panel.enc[role]) * panel.dir[role];
+    if (s)
+        ui_input_ms = fm1_ms;                      /* a knob turning is not idle either: autosave waits */
+    return s;
+}
+
+/* user settings that survive a reset */
+#define SETTINGS_MAGIC 0x53455433u              /* "SET3" */
+struct { uint32_t magic, palette, lowcut, zoom; } settings __attribute__((section(".noinit")));
+
+/* the lights (menu LIGHTS / KEYS / NOTES), for playing in the dark: kept in flash with the settings
+ * (project.c persist_t.lights), read at every boot; not in .noinit, so nothing there moves. The same
+ * word keeps SYNC and the REC screen's MODE / START (seq.c rec_tempo, rec_count) */
+enum { LIGHTS_OFF, LIGHTS_LOW, LIGHTS_MID, LIGHTS_HIGH, LIGHTS_N };
+enum { KEYS_OFF, KEYS_C, KEYS_WHITE, KEYS_ALL, KEYS_N };   /* (ALL: SLOOP 2.4; an older SLOOP reads it as OFF) */
+static uint8_t lights_lvl, lights_keys;
+static uint8_t lights_notes;                   /* 1: on a synth track the sounding notes light their keys */
+static uint8_t lights_sync;                    /* GLO > SYSTEM > SYNC (G_SYNC), kept here: 0 INT, 1 USB, 2 TRS */
+static uint8_t lights_mout;                    /* GLO > SYSTEM > MIDI (G_MIDI): 1 = the sequencer goes to MIDI OUT too */
+static uint8_t lights_min;                     /* GLO > SYSTEM > IN (G_ROUTE): 1 = MIDI in takes the clock only, no notes */
+static const uint16_t LIGHTS_NS[LIGHTS_N] = {0u, 500u, 1000u, 2000u};
+static uint8_t usb_serial;                     /* menu USB SERIAL: 1 = the serial console presented (usb.c) */
+static uint8_t vis_style;                      /* the visualiser's style, 0..11 (ui_vis.c) */
+static uint32_t lights_word(void)
+{
+    return (uint32_t)lights_lvl | (uint32_t)lights_keys << 4 | (uint32_t)(lights_notes != 0u) << 8 |
+           (uint32_t)(rec_tempo != 0u) << 9 | (uint32_t)(rec_count != 0u) << 10 | (uint32_t)(usb_full != 0u) << 11 |
+           (uint32_t)(lights_sync % 3u) << 12 | (uint32_t)(lights_mout != 0u) << 14 | (uint32_t)(lights_min != 0u) << 15 |
+           (uint32_t)(usb_serial != 0u) << 16 | (uint32_t)(vis_style % 12u) << 17;
+}
+static void lights_from_word(uint32_t w)
+{
+    lights_lvl = (uint8_t)((w & 15u) < LIGHTS_N ? (w & 15u) : LIGHTS_OFF);
+    lights_keys = (uint8_t)(((w >> 4) & 15u) < KEYS_N ? ((w >> 4) & 15u) : KEYS_OFF);
+    lights_notes = (uint8_t)((w >> 8) & 1u);
+    rec_tempo = (uint8_t)((w >> 9) & 1u);       /* the REC screen: MODE, START (seq.c) */
+    rec_count = (uint8_t)((w >> 10) & 1u);
+    usb_full = (uint8_t)((w >> 11) & 1u);       /* menu USB AUDIO (fx.c) */
+    lights_sync = (uint8_t)(((w >> 12) & 3u) % 3u);
+    lights_mout = (uint8_t)((w >> 14) & 1u);    /* GLO > SYSTEM > MIDI (seq.c) */
+    lights_min = (uint8_t)((w >> 15) & 1u);     /* GLO > SYSTEM > IN (seq.c) */
+    usb_serial = (uint8_t)((w >> 16) & 1u);
+    vis_style = (uint8_t)(((w >> 17) & 15u) % 12u);
+}
+
+static void settings_save(void);              /* project.c: flash copy (FELUCCA_FLASH) */
+static uint8_t settings_later;                 /* changed while playing: saved once stopped (project.c) */
+
+static void settings_init(void)
+{
+    if (settings.magic != SETTINGS_MAGIC || settings.palette >= NPALETTES) {
+        settings.magic = SETTINGS_MAGIC;
+        settings.palette = 4;                  /* MONO (default) */
+        settings.lowcut = 0;
+        settings.zoom = 0;                     /* large readout of the touched value: off */
+    }
+    palette_set(settings.palette);
+    fx_lowcut = (uint8_t)(settings.lowcut != 0);
+}
