@@ -48,6 +48,33 @@ SMK-37 Pro에는 **TRS MIDI IN 잭이 없습니다**(OUT만). 따라서 빌드 �
 `FELUCCA_OTA=0`: 업데이트/롤백은 이 저장소 자체 경로(`tools/make_smk37_fwsc.py` +
 `exact_ota`, 강제 복구는 `esp32c3-usbkey`)로 합니다.
 
+## 패드: 스위치 색상
+
+스위치로 쓰는 각 패드는 자기 색을 갖습니다. LCD 팔레트에서 가져옴 (`board/hal/smk37_pad_rgb.h`):
+
+| 패드 | 스위치 | 색 | | 패드 | 스위치 | 색 |
+|---|---|---|---|---|---|---|
+| 1 | FX | 보라 | | 6 | HOME | 흰색 |
+| 2 | ENV | 청록 | | 7 | SAVE | 분홍 |
+| 3 | LFO | 초록 | | 8 | OCT− | 파랑 |
+| 4 | EDIT | 노랑 | | 9 | OCT+ | 라임 |
+| 5 | GLO | 주황 | | 10–16 | 없음 | 꺼짐 |
+
+밝기는 코어가 이미 계산하는 LED 상태를 따릅니다: 켜짐 = 전체 색, 흐림(레이어 랜드마크, 드럼 고스트/하드) = 1/4,
+LIGHTS 백라이트 ≈ 1/10, 꺼짐 = 어두움. 색은 매 스캔마다 계산합니다 (셀 9개 읽기).
+
+**아직 패드에 나오지 않음:** 패드 RGB 프로토콜이 해독되지 않았습니다 (`board/hal/smk37_pad_hw.h`, `SMK37_PAD_HW_NONE`).
+백엔드가 검증되기 전까지 패드는 매트릭스 LED 라인(`SMK37_LEDMAP`, 역시 미검증)만 보여줍니다.
+실제 색을 내려면 패드 LED 라인을 로직 애널라이저로 읽기 전용 캡처 1회가 필요합니다 (`docs/gap-analysis.md` §4).
+
+## 이 빌드가 하지 않는 것
+
+이 빌드는 의도적으로 RAM 전용이며 앱 내 업데이터가 없습니다
+(`FELUCCA_FLASH=0 FELUCCA_OTA=0`, `docs/gap-analysis.md` §1, §3). FM-1의 저장 맵이 이 보드의 앱 슬롯 안에 있어서,
+설정이나 프로젝트를 저장하면 실행 중인 코드를 덮어쓸 수 있습니다. FM-1 대비 빠진 것: 전원을 꺼도 유지되는
+설정·프로젝트·프리셋·자동저장, 웹 에디터 프로토콜, 사용자 샘플, 앱 내 업데이트, USB 레스큐.
+전체 목록과 소유자가 정해야 할 미결 사항은 `docs/gap-analysis.md`에 있습니다.
+
 ## 구성
 
 ```
@@ -58,6 +85,8 @@ sloop-smk37/
 │   │   ├── smk37_board.h     핀맵 + 증거 라벨 ([DECODED]/[INFERRED]/[UNVERIFIED])
 │   │   ├── smk37_map.h       순수 테이블: 스캔 매트릭스, LED 맵, 건반 창, 패드→슬롯 배선
 │   │   ├── fm1_input.h       스캔 글루: 로/스트로브/SPI2 체인, 디바운스, quadrature, LED
+│   │   ├── smk37_pad_rgb.h   패드 색상·밝기 (순수 함수, 호스트 테스트)
+│   │   ├── smk37_pad_hw.h    패드 RGB 출력: 프로토콜 검증 전까지 NONE
 │   │   ├── fm1_lcd_hw.h      SPI1 LCD, D/C = PB5, CS = PC8, 240x240 RGB565
 │   │   ├── fm1_audio.h       ALNK0 -> CS4344 (PC0/1/2/6)
 │   │   ├── fm1_adc.h         SARADC: 페이더, 휠, 페달, 배터리
@@ -72,7 +101,8 @@ sloop-smk37/
 │   ├── unity_syntax.sh        SLOOP 전체 unity TU를 이 HAL로 컴파일 (구문/타입)
 │   ├── ui_pages_smk37_test.c  업스트림 라이브 UI 퍼즈를 이 패널로 컴파일
 │   └── run_smk37_tests.sh
-└── docs/port-evidence.md   모든 보드 상수와 그 출처
+├── docs/port-evidence.md   모든 보드 상수와 그 출처
+└── docs/gap-analysis.md    FM-1 대비 차이, 벽돌 검토, 미결 결정
 ```
 
 칩 단위 HAL(GPIO 포트, TIMER4/5, IRQ/P33, SFC 플래시, USB0)은 FM-1과 같은 실리콘이라
@@ -114,6 +144,9 @@ SHA-256이 일치하는 `PASS` 빌드 기록(`build/smk37-sloop.check.json`)이 
 - 보드 HAL 전기 상세는 증거 라벨을 유지. [INFERRED]/[UNVERIFIED] 항목(스캔 체인의 컬럼
   수, ADC 채널 순서, 백라이트 핀, 패드/LED 라인 맵, 패드 RGB 시리얼 경로)은 `docs/port-evidence.md` §2의
   브링업 체크리스트이며, 캘리브레이션이 닿는 부분은 실기기에서 재학습 가능.
+- 2026-10-09 (2차, 패드·갭 검토): 스위치 9개의 패드 색 추가 (호스트 테스트 통과, 출력은 미검증).
+  `FELUCCA_FLASH=1`이면 실행 중인 코드를 덮어쓸 수 있음을 발견 (FM-1 저장 맵이 SMK 앱 슬롯 안에 있음) →
+  RAM 전용 빌드 + 링크 게이트. 패리티 갭(에디터, 영속성, 업데이터, 레스큐)은 `docs/gap-analysis.md`에 기록.
 - 플래시/실기기 실행 안 함: 저장소의 실기기 무접촉 룰 유지.
 
 ## 라이선스

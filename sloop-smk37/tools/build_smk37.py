@@ -58,7 +58,11 @@ RAM_LO, RAM_HI = 0x01C00000, 0x01C80000
 XIP_LO, XIP_HI = 0x02000000, 0x02100000
 SDRAM_LO, SDRAM_HI = 0x04000000, 0x05000000          # RC-1: refuse outright
 CFLAGS = ["-Os", "-ffunction-sections", "-fno-builtin", "-Wall", "-Wno-unused-function"]
-FLAGS = ["-DFELUCCA_FLASH=1", "-DFELUCCA_OTA=0", "-DFELUCCA_CDC=1",
+# FELUCCA_FLASH=0 on purpose: the FM-1 storage map (fm1_flash.h, storage.c:
+# FL_DATA 0x97000..) lies INSIDE this board's app-data slot (flash 0x4120 +
+# 617,012 B, tools/pack_sdk_app_fwsc.py), so the FM-1 settings / project
+# writes would overwrite running code. Enable only with a verified SMK map.
+FLAGS = ["-DFELUCCA_FLASH=0", "-DFELUCCA_OTA=0", "-DFELUCCA_CDC=1",
          "-DFELUCCA_UART=0", "-DFELUCCA_UAC=1", '-DFELUCCA_ID="SMK37_900"']
 DOCKER_IMAGE = os.environ.get("JIELI_DOCKER_IMAGE", "debian:bookworm-slim")
 
@@ -180,6 +184,11 @@ def check(img: bytes, syms: str, dis: str, rt: str):
         errors.append(f"image starts with {img[:4].hex()}, not the entry stub")
     if [ln for ln in rt.splitlines() if re.search(r"\bcall\b", ln)]:
         errors.append(".ram_text contains calls")
+    # no flash-writing code may be linked: the FM-1 storage map is not this
+    # board's (see FLAGS). Any of these symbols means FELUCCA_FLASH got on.
+    bad_sym = re.findall(r"\b(fl_write|fl_erase4k_ram|fl_erase4k_quiet|st_save|fl_plain_window_init)\b", syms)
+    if bad_sym:
+        errors.append(f"flash-writing symbols linked: {sorted(set(bad_sym))}")
     if len(img) > APP_SLOT:
         errors.append(f"image {len(img)} B exceeds the v15 app slot {APP_SLOT}")
     # RC-1 gate: every loaded section inside the confirmed windows, never SDRAM

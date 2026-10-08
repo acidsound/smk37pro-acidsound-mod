@@ -19,6 +19,13 @@ Evidence labels:
 | SARADC | [DECODED] SARADC `0x13100` used | `fm1_adc.h` CON `0xF04E \| ch<<8` |
 | Peripheral SFR bases | [DECODED] psfr `0x50000,0x50040,0x50044,0x501C4,0x51000,0x5101C,0x51020,0x51028,0x51030`; lsfr incl. `0x11D00` SPI1, `0x11E00` SPI2, `0x12E00` ALNK0, `0x13100` SARADC, `0x10800` TIMER4, `0x13E08` P33, `0x11800` USB | HAL base addresses |
 | Codec enable | [DECODED] pin-id set via GPIO fn `0x02006762` | PC6 enable is still [UNVERIFIED] (see §2) |
+| Pad LEDs are MCU-driven | [INFERRED] `docs/research-notes.md` (M09): pad LEDs stayed lit while the display was black, so they are driven by the MCU, not the display | pad colour output: `smk37_pad_hw.h` (NONE) |
+| Pad LED ABI | [UNVERIFIED] `baselines/v15/analysis/subsystem-feasibility/ui.md` LED row: "ABI unknown", no pad table found | none; needs a logic-analyser capture |
+| App-data slot | [DECODED-repo] `tools/pack_sdk_app_fwsc.py`: app data at flash `0x4120`, 617,012 B, so it ends at `0x9AB53`; the packer is validated on a device | `APP_SLOT`; FM-1 storage must not overlap it |
+| FM-1 storage map | [DECODED-port] `storage.c` / `fm1_flash.h`: data `0x97000..0xDFFFF`, globals `0xFC000..` (inside the SMK app slot for `0x97000..0x9AB53`) | `FELUCCA_FLASH=0` in this build |
+| SFC plain window | [DECODED-port] `fm1_flash.h` `fl_plain_window_init()`: maps `0x93000` upward as plain XIP | runs only with `FELUCCA_FLASH`; not in this build |
+| Tail boundary conflict | [CONFLICT] `docs/flash-layout-cipher-analysis.md` says the tail starts at `0x9A833`; the packer says app data runs to `0x9AB53` | the packer is followed; owner to resolve with a dump |
+| USB identity | [DECODED-repo] stock `4C4A:C755`, update mode `4d4a:4155`; this build `1209:0001` (upstream test ID) | `usb.c` `FELUCCA_USB_PID`; owner decision (`docs/gap-analysis.md` §6) |
 
 ## 2. Bring-up checklist (hardware, read-only first)
 
@@ -34,15 +41,15 @@ Do these before any flash. Each item names what to observe and the file to fix.
 3. **[UNVERIFIED] LCD backlight pin** — `SMK37_LCD_BL_PORT -1` (none).
    If the panel stays dark with the image visible in the dump, look for a
    backlight GPIO and set it.
-4. **[UNVERIFIED] LED line map and pad LEDs** — `smk37_map.h` `SMK37_LEDMAP`.
+4. **[UNVERIFIED] LED line map and pad colours** — `smk37_map.h` `SMK37_LEDMAP`,
+   `smk37_pad_rgb.h` (colours), `smk37_pad_hw.h` (output, NONE).
    The core lights a function by looking its slot up in FM1_KEYMAP (rows 1..4,
    `ui_input.c` `led_pos_init`); the port's LEDMAP places slot s at column
-   `s % 4`, row `1 + s / 4`. This layout was assigned, not measured. Bring-up:
-   light each slot in turn (`fm1_led_key(slot, 1)`), and check that the LED
-   that lights is the intended function. Fix the table where it is not.
-   Pads are RGB: if a pad LED is not a single bit of the column word, the pad
-   colour path (SPI2 leds word vs a separate RGB line) must be added to
-   `fm1_input.h`. Note keys have no LED on this board (by design).
+   `s % 4`, row `1 + s / 4`. This layout was assigned, not measured. The pad
+   colours are computed from it. Bring-up:
+   1. Light each slot in turn (`fm1_led_key(slot, 1)`) and check the lit LED is the intended function. Fix the table where it is not.
+   2. Capture the pad LED line once with a logic analyser while the stock firmware lights a pad (read-only, no flash). Identify the bus (WS2812-style, SPI, or a driver IC), then add a backend to `smk37_pad_hw.h`.
+   Note keys have no LED on this board (by design).
 5. **[UNVERIFIED] PC6 codec enable** — `fm1_audio.h`. Confirm audio output
    with the enable pin high. If silent, the enable line is wrong for this board
    and must be re-derived from the v15 codec init (`0x02006762` call sites).
@@ -50,7 +57,7 @@ Do these before any flash. Each item names what to observe and the file to fix.
    aftertouch come from the scan timing, not an ADC. Play a dynamic test:
    velocity should track strike speed, aftertouch should track pad pressure.
 
-## 3. Pad-button remapping rationale
+## 3. Pad-button remapping rationale (switches and colours)
 
 FM-1 controls with no SMK-37 counterpart are provided by the 16 RGB pads.
 The full table lives in `board/hal/smk37_map.h` (`SMK37_SLOT_OF`,
@@ -64,14 +71,17 @@ inside the HAL debounce, never in `panel.btn[]` directly.
 
 | Check | Covers | Does not cover |
 |---|---|---|
-| `panel_smk37_test` | slot wiring, bijection, key window, LED map complete, calibration fallback | the real chip registers (stubbed) |
+| `panel_smk37_test` | slot wiring, bijection, key window, LED map complete, pad colours and levels, calibration fallback | the real chip registers (stubbed) |
 | `ui_pages_smk37_test` | upstream live-UI fuzz through this panel | HAL: its LED/key tables are stubbed |
 | `unity_syntax.sh` | whole SLOOP TU compiles against this HAL (names, types) | code generation, timing, pi32v2 intrinsics |
 
 Electrical behaviour (scan timing, LED lines, ADC order) is only checked on
 hardware, in the bring-up list above.
 
-## 5. Safety
+## 5. Safety (see docs/gap-analysis.md §3)
+
+- `FELUCCA_FLASH=0`: the FM-1 storage map lies inside this board's app slot.
+  The build's link gate refuses flash-writing symbols.
 
 - `make_smk37_fwsc.py` packages only an image that starts with the entry stub,
   fits the app slot, and has a PASS build record with the same SHA-256.

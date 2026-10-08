@@ -55,6 +55,38 @@ FM-1 installer's wire protocol, so `FELUCCA_OTA=0` here: updates and rollback
 go through this repository's own path (`tools/make_smk37_fwsc.py` +
 `exact_ota`, forced recovery via `esp32c3-usbkey`).
 
+## Pads: switch colours
+
+Each switch pad has its own colour, from the LCD palette (`board/hal/smk37_pad_rgb.h`):
+
+| Pad | Switch | Colour | | Pad | Switch | Colour |
+|---|---|---|---|---|---|---|
+| 1 | FX | violet | | 6 | HOME | white |
+| 2 | ENV | cyan | | 7 | SAVE | pink |
+| 3 | LFO | green | | 8 | OCT− | blue |
+| 4 | EDIT | yellow | | 9 | OCT+ | lime |
+| 5 | GLO | orange | | 10–16 | none | off |
+
+Level follows the LED state the core already computes: lit = full colour,
+dim (layer landmarks, drum ghost / hard) = 1/4, the LIGHTS backlight ≈ 1/10,
+off = dark. The colours are computed on every scan (nine cell reads).
+
+**Not yet on the pads:** the pad RGB protocol is not decoded
+(`board/hal/smk37_pad_hw.h`, `SMK37_PAD_HW_NONE`). Until a backend is verified
+the pads show only their matrix LED line (`SMK37_LEDMAP`, also unverified).
+Colour on the hardware needs one read-only logic-analyser capture of the pad LED
+line (`docs/gap-analysis.md` §4).
+
+## What this build does not do
+
+This build is RAM-only and has no in-app updater, on purpose
+(`FELUCCA_FLASH=0 FELUCCA_OTA=0`, `docs/gap-analysis.md` §1 and §3). The FM-1
+storage map lies inside this board's app slot, so a settings or project save
+would overwrite running code. Missing compared with the FM-1: saved settings,
+projects, presets and autosave across power-off; the web editor protocol; user
+samples; the in-app update; USB rescue. The full list, with the decisions still
+open for the owner, is in `docs/gap-analysis.md`.
+
 ## Layout
 
 ```
@@ -65,6 +97,8 @@ sloop-smk37/
 │   │   ├── smk37_board.h     pin map + evidence labels ([DECODED]/[INFERRED]/[UNVERIFIED])
 │   │   ├── smk37_map.h       pure tables: scan matrix, LED map, key window, pad→slot wiring
 │   │   ├── fm1_input.h       scan glue: rows/strobe/SPI2 chain, debounce, quadrature, LEDs
+│   │   ├── smk37_pad_rgb.h   pad colours and levels (pure, host-tested)
+│   │   ├── smk37_pad_hw.h    pad RGB output: NONE until the protocol is verified
 │   │   ├── fm1_lcd_hw.h      SPI1 LCD, D/C = PB5, CS = PC8, 240x240 RGB565
 │   │   ├── fm1_audio.h       ALNK0 -> CS4344 (PC0/1/2/6)
 │   │   ├── fm1_adc.h         SARADC: faders, wheels, pedal, battery
@@ -79,7 +113,8 @@ sloop-smk37/
 │   ├── ui_pages_smk37_test.c  upstream live-UI fuzz, compiled with this panel
 │   ├── unity_syntax.sh        whole SLOOP unity TU vs this HAL (syntax/types)
 │   └── run_smk37_tests.sh
-└── docs/port-evidence.md   every board constant and where it was read from
+├── docs/port-evidence.md   every board constant and where it was read from
+└── docs/gap-analysis.md    FM-1 vs SMK-37 Pro gaps, brick review, open decisions
 ```
 
 Chip-level HAL (GPIO ports, TIMER4/5, IRQ/P33, SFC flash, USB0) is the same
@@ -108,7 +143,7 @@ record whose SHA-256 matches the bytes (`build/smk37-sloop.check.json`, written
 only after every `build_smk37.py` gate passed). Refusal exits 2 and writes
 nothing.
 
-`build_smk37.py` gates before it emits anything: entry stub and `_start` at
+`build_smk37.py` gates before it emits anything (flash-writing symbols are refused too, since the build is RAM-only): entry stub and `_start` at
 `0x02000120`, `.ram_text` without calls, image within the 617,012 B v15 app
 slot, and — the 2026-08-15 brick lesson (RC-1) — **no section in the SDRAM
 window `0x04000000`**, none outside the confirmed RAM/XIP windows.
@@ -127,6 +162,11 @@ window `0x04000000`**, none outside the confirmed RAM/XIP windows.
   [UNVERIFIED] ones (column count of the scan chain, ADC channel order,
   backlight pin, pad/LED line map, pad RGB serial path) are the bring-up checklist
   in `docs/port-evidence.md` §2, relearnable on-device where calibration applies.
+- 2026-10-09 (second pass, pads and gap review): pad colours added for the nine
+  switches (host-tested; output unverified). Found that `FELUCCA_FLASH=1` would
+  overwrite running code (FM-1 storage map inside the SMK app slot), so the build
+  is RAM-only, with a link gate. Recorded the parity gaps (editor, persistence,
+  updater, rescue) in `docs/gap-analysis.md`.
 - Not flashed, not run on hardware: the repo's no-live-device rule stands.
 
 ## Licence

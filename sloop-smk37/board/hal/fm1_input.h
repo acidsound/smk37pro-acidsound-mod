@@ -55,6 +55,8 @@
 /* the tables (keymap, key window, encoder positions) live in smk37_map.h so
  * the host tests can run the mapping with no chip behind them */
 #include "smk37_map.h"
+#include "smk37_pad_rgb.h"
+#include "smk37_pad_hw.h"
 
 /* the core looks LED positions up in FM1_KEYMAP (ui_input.c led_pos_init);
  * on this board that table is the LED map, not the scan map */
@@ -84,6 +86,7 @@ static volatile uint16_t fm1_led_bg_ns;
 /* SMK-37 extras the FM-1 has no hardware for; the core ignores them, the web
  * editor / future layers may use them. [UNVERIFIED] sources (ADC burst at
  * note-on); 0 until the bring-up table fills them. */
+static uint8_t smk37_pad_out[16][3];       /* pad RGB of this scan (smk37_pad_rgb.h) */
 static uint8_t smk37_pad_vel[16], smk37_pad_touch[16];
 static uint8_t smk37_key_vel[37];
 static uint16_t smk37_fader[SMK37_NFADER], smk37_wheel[SMK37_NWHEEL];
@@ -198,6 +201,9 @@ static void fm1__keys(uint32_t p)
 static void fm1__frame(void)
 {
     uint32_t e;
+    /* pad colours from this scan's LED state (9 switches, cheap) */
+    smk37_pad_frame(fm1_led, fm1_led_dim, fm1_led_bg, smk37_pad_out);
+    smk37_pad_hw_write(smk37_pad_out);
     for (e = 0; e < 8u; e++) {             /* quadrature + detents, as FM-1 */
         const uint8_t *m = SMK37_ENC[e];
         uint32_t cur = ((fm1_in.raw[m[0]] >> m[1]) & 1u) << 1 |

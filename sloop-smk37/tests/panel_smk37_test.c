@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "smk37_map.h"
+#include "smk37_pad_rgb.h"
 
 /* ---- stubs for the symbols board/src/panel.c borrows from the core ---- */
 static volatile uint32_t fm1_ms;
@@ -148,6 +149,61 @@ int main(void)
         CHECK(memcmp(good, &panel, sizeof panel) == 0, "bad magic not restored");
     }
 
+    /* pad colours: the nine switch pads each have their own colour, the
+     * other seven stay black; a switch's colour follows its LED cell's level */
+    {
+        int i, j, k;
+        uint8_t lit[SMK37_NCOL], dim[SMK37_NCOL], bg[SMK37_NCOL], out[16][3];
+        for (i = 0; i < 9; i++) {
+            CHECK((SMK37_PAD_RGB[i].r | SMK37_PAD_RGB[i].g | SMK37_PAD_RGB[i].b) != 0,
+                  "switch pad %d has no colour", i + 1);
+            for (j = 0; j < i; j++)
+                CHECK(memcmp(&SMK37_PAD_RGB[i], &SMK37_PAD_RGB[j], sizeof(smk37_rgb_t)) != 0,
+                      "pads %d and %d share a colour", j + 1, i + 1);
+        }
+        for (i = 9; i < 16; i++)
+            CHECK((SMK37_PAD_RGB[i].r | SMK37_PAD_RGB[i].g | SMK37_PAD_RGB[i].b) == 0,
+                  "pad %d has a colour but no function", i + 1);
+
+        /* the precomputed cells agree with the LED map */
+        for (i = 0; i < 9; i++)
+            CHECK(SMK37_LEDMAP[SMK37_PAD_CELL[i][1]][SMK37_PAD_CELL[i][0]] == (int8_t)SMK37_SLOT_OF[16 + i],
+                  "SMK37_PAD_CELL[%d] is not the LED cell of pad %d", i, i + 1);
+
+        /* all LEDs dark: every pad black */
+        memset(lit, 0, sizeof lit); memset(dim, 0, sizeof dim); memset(bg, 0, sizeof bg);
+        smk37_pad_frame(lit, dim, bg, out);
+        for (i = 0; i < 16; i++)
+            CHECK(out[i][0] == 0 && out[i][1] == 0 && out[i][2] == 0, "dark LEDs, pad %d not black", i + 1);
+
+        /* each switch: its cell lit -> full colour, dim -> 1/4, bg -> ~1/10 */
+        for (i = 0; i < 9; i++) {
+            int col = SMK37_PAD_CELL[i][0], row = SMK37_PAD_CELL[i][1];
+            CHECK(col >= 0, "switch pad %d has no LED cell", i + 1);
+            if (col < 0) continue;
+            for (k = 0; k < 3; k++) {
+                uint8_t *arr[3] = { lit, dim, bg };
+                uint8_t want[3] = { 255, 64, 26 };
+                uint32_t ch[3] = { SMK37_PAD_RGB[i].r, SMK37_PAD_RGB[i].g, SMK37_PAD_RGB[i].b };
+                uint32_t exp, n;
+                memset(lit, 0, sizeof lit); memset(dim, 0, sizeof dim); memset(bg, 0, sizeof bg);
+                arr[k][col] = (uint8_t)(1u << row);
+                smk37_pad_frame(lit, dim, bg, out);
+                for (n = 0; n < 3; n++) {
+                    exp = ch[n] * want[k] / 255u;
+                    CHECK(out[i][n] == exp, "pad %d level %d channel %u: %u want %u",
+                          i + 1, k, (unsigned)n, out[i][n], (unsigned)exp);
+                }
+            }
+        }
+
+        /* every LED lit: the seven free pads still black */
+        memset(lit, 0xFF, sizeof lit); memset(dim, 0, sizeof dim); memset(bg, 0, sizeof bg);
+        smk37_pad_frame(lit, dim, bg, out);
+        for (i = 9; i < 16; i++)
+            CHECK(out[i][0] == 0 && out[i][1] == 0 && out[i][2] == 0, "free pad %d lit", i + 1);
+    }
+
     /* LED map: every logical slot 0..13 lit exactly once, rows 1..4 only
      * (ui_input.c led_pos_init reads no other rows), each cell a valid slot */
     {
@@ -173,6 +229,6 @@ int main(void)
     }
     printf("panel_smk37_test: pads 1..9 carry FX ENV LFO EDIT GLO HOME SAVE OCT- OCT+; "
            "SCL/ARP/SEQ/PLAY/REC on silkscreen; 27-key window; matrix bijective; "
-           "LED map complete; corrupt calibration falls back\n");
+           "LED map complete; pad colours per switch; corrupt calibration falls back\n");
     return 0;
 }
