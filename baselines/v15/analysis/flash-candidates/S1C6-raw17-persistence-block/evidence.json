@@ -1,0 +1,530 @@
+{
+  "blocking_findings": [
+    "Data storage is feasible only with an explicit stock raw-prefix reservation policy, not with free stock records.",
+    "The only always-disabled SAVE slice preserving UI SAVE no-write behavior is 44 bytes at 0x02026da8..0x02026dd4.",
+    "The exact PI32 lower bound for direct raw fallback is larger than that slice; the manifest-note variant adds further bytes.",
+    "A persistence writer that is defensible must check 0x02004b02 full-length returns and verify with 0x02004870 readback; the lower bound does not fit and the current S1C5 producer has no insertion slack.",
+    "The compact-producer path was evaluated: a direct-only raw16/no-readback variant fits at 276/278 bytes, but any segmented-final, reset, readback, or manifest/17th-record defensibility requirement overruns.",
+    "Emitting app/FWSC/OTA artifacts without an on-device writer would not satisfy power-cycle persistence of current WebMIDI updates and would misrepresent the candidate."
+  ],
+  "candidate_architecture_assessment": [
+    {
+      "decision": "PASS_AS_DATA_FORMAT_ONLY",
+      "name": "17 reserved raw-record prefixes",
+      "reason": "storage-s2 proves 16 payload prefixes plus a manifest prefix can encode the data while preserving raw tails"
+    },
+    {
+      "decision": "BLOCK_AS_FLASH_CANDIDATE_TODAY",
+      "name": "selector-side persistent fallback preserving volatile RAM updates",
+      "reason": "architecturally promising, but the exact helper does not fit the only standalone disabled SAVE slice, and promoting split/noncontiguous code still leaves the mandatory writer unplaced and unverified"
+    },
+    {
+      "decision": "BLOCK_AS_DEFENSIBLE_SUCCESSOR",
+      "name": "compact producer replacement with direct-only raw fallback",
+      "reason": "exact accounting shows a direct-only raw16/no-readback experiment can fit in 276/278 bytes, but adding segmented-final compatibility, slot0 reset, manifest/17th-record validation, or readback verification overruns; this is not the requested defensible persistence successor"
+    },
+    {
+      "decision": "BLOCK",
+      "name": "producer-called persistence writer in disabled SAVE body",
+      "reason": "the exact-width lower bound for a single unchecked payload write already consumes the disabled SAVE slice, before producer call insertion, manifest update, return checks, 0x02004870 readback, CRC, or power-loss semantics"
+    },
+    {
+      "decision": "BLOCK",
+      "name": "lazy restore helper in disabled SAVE body",
+      "reason": "a minimal direct raw-prefix copy-and-metadata helper is larger than the dead SAVE slice, and a defensible manifest-validating restore is larger still"
+    }
+  ],
+  "candidate_built": false,
+  "decision": "BLOCK",
+  "emitted_artifacts": {
+    "app_bin": false,
+    "block_validator": true,
+    "exact_ota": false,
+    "fwsc": false,
+    "offline_prefix_encoder": true,
+    "rollback_bundle": false
+  },
+  "fit_evidence": {
+    "available_windows": {
+      "s1c5_owned_window": {
+        "bytes": 278,
+        "current_producer": 188,
+        "current_selector": 88,
+        "current_tail": 2,
+        "end_exclusive": "0x0201e254",
+        "free_without_rewrite": 0,
+        "start": "0x0201e13e"
+      },
+      "save_no_write_dead_slice": {
+        "bytes": 44,
+        "end_exclusive": "0x02026dd4",
+        "requires_preserving_branch_at": "0x02026da6",
+        "start": "0x02026da8"
+      }
+    },
+    "compact_successor_fit_after_boar_dm": {
+      "basis": "S1C3/S1C4 compact sequential producer with reset wrapper removed and reset folded or omitted",
+      "compact_sequential_playback_producer_bytes": 142,
+      "decision": "BLOCK_AS_DEFENSIBLE_SUCCESSOR",
+      "direct_only_no_reset_no_manifest_no_readback_bytes": 276,
+      "fits_if_direct_only_no_reset_no_manifest_no_readback": true,
+      "interpretation": "The compact-producer direction can make a direct-only raw16/no-readback experiment fit, but keeping segmented-final/reset behavior or adding required readback/manifest defensibility overruns the exact byte budget. The fitting variant also uses no 17th manifest and cannot be promoted as the requested defensible 17-record persistence successor.",
+      "overrun_with_defensible_readback_floor": 18,
+      "overrun_with_segmented_stub": 2,
+      "overrun_with_slot0_reset_floor": 28,
+      "owned_window_bytes": 278,
+      "producer_call_to_save_helper_floor_bytes": 6,
+      "segmented_stub_bytes": 4,
+      "selector_with_inline_raw_payload_fallback_floor_bytes": 128,
+      "slot0_signature_reset_fold_floor_bytes": 30
+    },
+    "defensible_writer_required_extras": {
+      "manifest_write_floor_bytes": 42,
+      "needs_0x02004870_readback": true,
+      "needs_full_length_return_check": true,
+      "needs_manifest_construction_or_16_note_snapshot": true,
+      "producer_call_insertion_floor_bytes": 6,
+      "readback_verify_floor_bytes_per_write": 20
+    },
+    "manifest_note_extra_lower_bound": {
+      "bytes": 12,
+      "parts": [
+        {
+          "bytes": 6,
+          "hex": "c6ff50870000",
+          "name": "mov32_manifest_offset",
+          "reason": "manifest record prefix offset"
+        },
+        {
+          "bytes": 2,
+          "hex": "6718",
+          "name": "add_manifest_base",
+          "reason": "direct base + manifest offset"
+        },
+        {
+          "bytes": 2,
+          "hex": "3718",
+          "name": "manifest_slot",
+          "reason": "manifest note byte + slot"
+        },
+        {
+          "bytes": 2,
+          "hex": "7d40",
+          "name": "load_manifest_note",
+          "reason": "load note from manifest"
+        }
+      ]
+    },
+    "manifest_variant_helper_lower_bound": {
+      "bytes": 66,
+      "decision_vs_save_dead_slice": "BLOCK"
+    },
+    "payload_write_helper_lower_bound_no_readback_no_manifest": {
+      "bytes": 42,
+      "decision_vs_save_dead_slice": "PASS_BUT_INSUFFICIENT",
+      "parts": [
+        {
+          "bytes": 6,
+          "hex": "c7ff6032c301",
+          "name": "mov32_g",
+          "reason": "global object base"
+        },
+        {
+          "bytes": 4,
+          "hex": "d1ec6076",
+          "name": "ldw_write_view",
+          "reason": "*(g+0x160), exact-width ldw primitive"
+        },
+        {
+          "bytes": 6,
+          "hex": "c6ff207d0000",
+          "name": "mov32_reserved_offset",
+          "reason": "first reserved raw prefix offset"
+        },
+        {
+          "bytes": 4,
+          "hex": "e3e1a330",
+          "name": "slot_stride",
+          "reason": "slot * 0xa3"
+        },
+        {
+          "bytes": 2,
+          "hex": "6718",
+          "name": "add_reserved_offset",
+          "reason": "write base + reserved offset"
+        },
+        {
+          "bytes": 2,
+          "hex": "3718",
+          "name": "add_slot_offset",
+          "reason": "write address"
+        },
+        {
+          "bytes": 2,
+          "hex": "4016",
+          "name": "source_staging",
+          "reason": "source staging or resident voice prefix"
+        },
+        {
+          "bytes": 2,
+          "hex": "7116",
+          "name": "address_arg",
+          "reason": "storage address argument"
+        },
+        {
+          "bytes": 2,
+          "hex": "623c",
+          "name": "len_arg",
+          "reason": "length 0x9c"
+        },
+        {
+          "bytes": 6,
+          "hex": "80ff54ddfdff",
+          "name": "write_call",
+          "reason": "call 0x02004b02"
+        },
+        {
+          "bytes": 4,
+          "hex": "00000000",
+          "name": "success_check",
+          "reason": "minimum compare/branch gate for return == 0x9c"
+        },
+        {
+          "bytes": 2,
+          "hex": "0459",
+          "name": "return",
+          "reason": "return lower bound"
+        }
+      ]
+    },
+    "raw_payload_fallback_helper_lower_bound": {
+      "bytes": 54,
+      "decision_vs_save_dead_slice": "BLOCK",
+      "parts": [
+        {
+          "bytes": 6,
+          "hex": "c7ff6032c301",
+          "name": "mov32_g",
+          "reason": "global object base"
+        },
+        {
+          "bytes": 4,
+          "hex": "d1ec7476",
+          "name": "ldw_direct_view",
+          "reason": "*(g+0x164), exact-width ldw primitive"
+        },
+        {
+          "bytes": 6,
+          "hex": "c6ff207d0000",
+          "name": "mov32_reserved_offset",
+          "reason": "first reserved raw prefix offset"
+        },
+        {
+          "bytes": 4,
+          "hex": "e3e1a330",
+          "name": "slot_stride",
+          "reason": "slot * 0xa3"
+        },
+        {
+          "bytes": 2,
+          "hex": "6718",
+          "name": "add_reserved_offset",
+          "reason": "direct base + reserved offset"
+        },
+        {
+          "bytes": 2,
+          "hex": "3718",
+          "name": "add_slot_offset",
+          "reason": "source = reserved slot prefix"
+        },
+        {
+          "bytes": 2,
+          "hex": "4016",
+          "name": "copy_dest",
+          "reason": "destination"
+        },
+        {
+          "bytes": 2,
+          "hex": "7116",
+          "name": "copy_source",
+          "reason": "source"
+        },
+        {
+          "bytes": 2,
+          "hex": "623c",
+          "name": "copy_len",
+          "reason": "length 0x9c"
+        },
+        {
+          "bytes": 6,
+          "hex": "80ff201f0200",
+          "name": "memcpy_call",
+          "reason": "copy prefix"
+        },
+        {
+          "bytes": 4,
+          "hex": "00e19b40",
+          "name": "metadata_pointer_9b",
+          "reason": "point at copied note byte"
+        },
+        {
+          "bytes": 2,
+          "hex": "0d40",
+          "name": "load_note",
+          "reason": "load Playback Note from copied byte 0x9b"
+        },
+        {
+          "bytes": 2,
+          "hex": "4e3f",
+          "name": "restore_3f",
+          "reason": "voice[0x9b] restore value"
+        },
+        {
+          "bytes": 2,
+          "hex": "8e40",
+          "name": "store_3f",
+          "reason": "force destination[0x9b]=0x3f"
+        },
+        {
+          "bytes": 4,
+          "hex": "00e19c40",
+          "name": "metadata_pointer_9c",
+          "reason": "return metadata pointer"
+        },
+        {
+          "bytes": 2,
+          "hex": "8d40",
+          "name": "store_metadata",
+          "reason": "store Playback Note metadata"
+        },
+        {
+          "bytes": 2,
+          "hex": "0459",
+          "name": "return_or_pop",
+          "reason": "return to native caller via saved selector frame"
+        }
+      ]
+    },
+    "selector_tailcall_lower_bound": {
+      "bytes": 50,
+      "parts": [
+        {
+          "bytes": 2,
+          "hex": "5316",
+          "name": "note_off_adapter",
+          "reason": "normalize Note Off trigger"
+        },
+        {
+          "bytes": 2,
+          "hex": "0000",
+          "name": "goto_core",
+          "reason": "2-byte local goto lower bound"
+        },
+        {
+          "bytes": 2,
+          "hex": "6316",
+          "name": "note_on_adapter",
+          "reason": "normalize Note On trigger"
+        },
+        {
+          "bytes": 2,
+          "hex": "7904",
+          "name": "push_saved",
+          "reason": "preserve r9..r4 and caller return"
+        },
+        {
+          "bytes": 2,
+          "hex": "0416",
+          "name": "save_dest",
+          "reason": "save destination"
+        },
+        {
+          "bytes": 2,
+          "hex": "3516",
+          "name": "default_note",
+          "reason": "fallback metadata = trigger"
+        },
+        {
+          "bytes": 2,
+          "hex": "9616",
+          "name": "channel_tmp",
+          "reason": "channel temp"
+        },
+        {
+          "bytes": 4,
+          "hex": "00000000",
+          "name": "gate_channel",
+          "reason": "jne non-Ch10 to stock copy"
+        },
+        {
+          "bytes": 4,
+          "hex": "00000000",
+          "name": "gate_low",
+          "reason": "jl below note 36 to stock copy"
+        },
+        {
+          "bytes": 4,
+          "hex": "00000000",
+          "name": "gate_high",
+          "reason": "jge note 52 to stock copy"
+        },
+        {
+          "bytes": 2,
+          "hex": "f33c",
+          "name": "slot_index",
+          "reason": "slot = trigger - 36"
+        },
+        {
+          "bytes": 6,
+          "hex": "80ff648c0000",
+          "name": "tailcall_persistent_or_armed_helper",
+          "reason": "tail-call external helper"
+        },
+        {
+          "bytes": 2,
+          "hex": "4016",
+          "name": "stock_restore_dest",
+          "reason": "stock fallback copy restores destination"
+        },
+        {
+          "bytes": 6,
+          "hex": "80ff8aab0200",
+          "name": "stock_memcpy",
+          "reason": "stock fallback memcpy"
+        },
+        {
+          "bytes": 4,
+          "hex": "00e19c40",
+          "name": "stock_metadata_pointer",
+          "reason": "return metadata pointer"
+        },
+        {
+          "bytes": 2,
+          "hex": "8d40",
+          "name": "stock_metadata_store",
+          "reason": "store fallback note"
+        },
+        {
+          "bytes": 2,
+          "hex": "5904",
+          "name": "pop_return",
+          "reason": "return to native caller"
+        }
+      ]
+    },
+    "tooling": {
+      "sha256": "26fa5ca376cd89de9b403f933e011db56e48b298d45e3ef43be923397501e271",
+      "source": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/build_s1c4_playback_note_v3_segmented_final.py",
+      "status": "reused exact PI32 helper encoders for mov/mov32/mov8/add/add12/mul12/lb/sb/call32/word"
+    }
+  },
+  "format": "smk37-v15-s1c6-raw17-persistence-fit-block-v1",
+  "goal": {
+    "basis_candidate": "official-v15/S1C5 Playback Register Return",
+    "basis_commits": [
+      "90080a5",
+      "c1c06c1"
+    ],
+    "requested_successor": "persist current 16 patch voices plus per-pad Playback Notes across power cycles while preserving volatile WebMIDI updates"
+  },
+  "input_gates": {
+    "compact_producer_evidence": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/inputs/producer/evidence.json",
+      "sha256": "0e8d2c664f770889d6a714fff61a351652552fbd38e5aacf1ff444268c1aed3a",
+      "status": "PASS"
+    },
+    "compact_producer_report": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/inputs/producer/report.md",
+      "sha256": "801e3088e08e62d6736c25f5fd39da948d33a847e591983f4139c3b24dadecc4",
+      "status": "PASS"
+    },
+    "restore_evidence": {
+      "path": "baselines/v15/analysis/persistence-s2/restore/evidence.json",
+      "sha256": "9b57beb9d9cff2a363b59844264f741aadbb4d311d9dd8afcb9f0b211e93041e",
+      "status": "PASS"
+    },
+    "restore_report": {
+      "path": "baselines/v15/analysis/persistence-s2/restore/report.md",
+      "sha256": "c9ce9d4da638790c7e2803a1e85133cedfb8a069204d81ddbdb1bc5eba32b7c1",
+      "status": "PASS"
+    },
+    "s1c4_builder": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/build_s1c4_playback_note_v3_segmented_final.py",
+      "sha256": "26fa5ca376cd89de9b403f933e011db56e48b298d45e3ef43be923397501e271",
+      "status": "PASS"
+    },
+    "s1c5_app": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/app.bin",
+      "sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+      "status": "PASS"
+    },
+    "s1c5_fwsc": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/SMK37Pro-v15-S1C5-playback-register-return.fwsc",
+      "sha256": "0a6ac1ae7d4bd34e252eb8f23a4d2c5f39d7454376ade1a3b75ff7d03155ea91",
+      "status": "PASS"
+    },
+    "s1c5_live_validation": {
+      "path": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/live-validation-20260804.md",
+      "sha256": "94fc5083ff1ce1061c474eba18a30ad3f10a277f85c84f6cee5a117c2593f152",
+      "status": "PASS"
+    },
+    "save_no_write_branch": {
+      "address": "0x02026da6",
+      "bytes": "04960000",
+      "status": "PASS",
+      "target": "0x02026dd4"
+    },
+    "storage_evidence": {
+      "path": "baselines/v15/analysis/persistence-s2/storage/evidence.json",
+      "sha256": "118652843f402c3c4f3eca04da9f1fea38f826bd964276008b039307ac61993e",
+      "status": "PASS"
+    },
+    "storage_report": {
+      "path": "baselines/v15/analysis/persistence-s2/storage/report.md",
+      "sha256": "7867925da16e1c85a7c809dffa8127c371e863987b1570fdc1488460f921dbc7",
+      "status": "PASS"
+    }
+  },
+  "offline_persistence_writer": {
+    "canonical_payload_crc32": "0xa400dfab",
+    "device_accessed": false,
+    "manifest_index": 112,
+    "path": "baselines/v15/analysis/flash-candidates/S1C6-raw17-persistence-block/persistence_writer.py",
+    "persistent_storage_write_performed": false,
+    "record_base": 96,
+    "record_count": 17,
+    "sha256": "945e89457cd54c84d6523897d7804b57de73f8ab24412259de3eeb13a5faaba8",
+    "status": "PASS_OFFLINE_ENCODER_ONLY"
+  },
+  "promotion_requirements": [
+    "Prove a larger owned executable placement or a split-control PI32 implementation with independent branch/call/return review.",
+    "Place a writer that performs full-length write checks, 0x02004870 readback verification, manifest/CRC commit-last behavior, and failure reporting.",
+    "Then build a scoped S1C5 child app/FWSC, exact OTA, rollback, and independent validator without device access."
+  ],
+  "scope": {
+    "device_accessed": false,
+    "flash_performed": false,
+    "fwsc_emitted": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "ota_performed": false,
+    "reset_performed": false
+  },
+  "storage_plan": {
+    "decision": "PASS_AS_DATA_FORMAT_ONLY",
+    "manifest_index": 112,
+    "manifest_offset": "0x8750",
+    "manifest_prefix_role": "magic/version/commit/record base/generation/payload CRC; tail preserved",
+    "manifest_records": 1,
+    "payload_offset_range": [
+      "0x7d20",
+      "0x8750"
+    ],
+    "payload_prefix_encoding": "raw[i][0x00..0x9a]=voice[0x00..0x9a], raw[i][0x9b]=playback_note; raw tails 0x9c..0xa2 preserved",
+    "payload_records": 16,
+    "record_base_index": 96,
+    "record_reservation_policy": "reserve existing stock raw-record prefixes explicitly; they are not proven free records",
+    "restore_rule": "copy prefix, load playback note from byte 0x9b, force destination voice[0x9b]=0x3f, return metadata note",
+    "volatile_webmidi_preservation_rule": "if S1C5 RAM state is ARMED and selected slot valid, keep current RAM selector behavior; persistent fallback is only for not-armed state"
+  }
+}

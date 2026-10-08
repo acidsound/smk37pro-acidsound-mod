@@ -1,0 +1,81 @@
+{
+  "callsites": {
+    "direct_product": {
+      "address": "0x0201e468",
+      "bytes": "bfeadffe",
+      "target": "0x0201e22a"
+    },
+    "segmented_product": {
+      "address": "0x0201e49c",
+      "bytes": "bfeac3fe",
+      "target": "0x0201e226"
+    }
+  },
+  "combined": {
+    "bytes": 278,
+    "hex": "531604816316790404163516961686f81c1283fd1a4803fd1868f33cc8ff2065c40106e19c80684380f80f04e6e1a0308716671807e19c70784080f8060207e1008a37187d4081166118401680ff3eab020000e19c408d40590479040416c0ffbd65c4012000b00040e83d0020000516584280f807005b4183f831004021d8422000048380f82b025b4103fd28203616e6e1a060c7ff2065c401671806e19c704020e840c0ff206fc401301801e19b401a408a404a3f9a4070164116623c80ffccaa0200483fe85f20004021e8405b41c321db4183f8032020004022d84220004020d840200059047904590479040416494081f80bc4494181f808c6c5ffbd65c4014020d840d841d8422000401680ff46ffffff5904",
+    "sha256": "afc8db530873cae0d6e661d9695289ebc380aa03e558754bb5c933efa0a26b95",
+    "tail_padding_hex": ""
+  },
+  "decision": "PASS",
+  "format": "smk37-v15-s1c4-playback-note-v2-slotmeta.exact-pi32-code-evidence-v1",
+  "neutralized_stock_metadata_stores": {
+    "note_off": {
+      "inert": "mov r0,r0 x3",
+      "new_hex": "001600160016",
+      "old_hex": "00e13e618d40",
+      "range": "0x0201c644..0x0201c64a"
+    },
+    "note_on": {
+      "inert": "mov r0,r0 x3",
+      "new_hex": "001600160016",
+      "old_hex": "00e13e718e40",
+      "range": "0x0201c682..0x0201c688"
+    },
+    "velocity_preserved": "Note On velocity store at 0x0201c68c remains stock and uses restored r5 with wrapper-returned r0"
+  },
+  "owned_window": {
+    "bytes": 278,
+    "end_exclusive": "0x0201e254",
+    "start": "0x0201e13e"
+  },
+  "producer": {
+    "armed_last_publishes_map": true,
+    "bytes": 188,
+    "end_exclusive": "0x0201e254",
+    "playback_store": "lb.z r2,[staging+0x9b]; sb [0x01c46f20+slot],r2",
+    "r9_length_gate_removed": true,
+    "reset_entry": "0x0201e22a",
+    "segmented_stub": "0x0201e226",
+    "sha256": "a140a509862d962d2edb4c6a86a5f2419ad0c017ef607bb0d3880df37eb398f9",
+    "slot_restore_before_valid": true,
+    "staging_restore_before_memcpy": true,
+    "start": "0x0201e198"
+  },
+  "scope": {
+    "device_accessed": false,
+    "flash_performed": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "reset_performed": false
+  },
+  "selector": {
+    "bytes": 90,
+    "end_exclusive": "0x0201e198",
+    "metadata_return": "after memcpy wrapper returns r0 = original destination + 0x9c after storing mapped note",
+    "sha256": "c6d707b591539e6c9411f6239a45f24a9a5f53b65a336eb13f0702c473b8e3e9",
+    "source_invariant": "source slot = trigger_note - 36 only; Playback Note is metadata only",
+    "start": "0x0201e13e"
+  },
+  "validation": [
+    "PASS\trange\tselector 0x0201e13e..0x0201e198; producer 0x0201e198..0x0201e254; owned_end 0x0201e254",
+    "PASS\tselector-sha256\tc6d707b591539e6c9411f6239a45f24a9a5f53b65a336eb13f0702c473b8e3e9",
+    "PASS\tproducer-sha256\ta140a509862d962d2edb4c6a86a5f2419ad0c017ef607bb0d3880df37eb398f9",
+    "PASS\tcombined-sha256\tafc8db530873cae0d6e661d9695289ebc380aa03e558754bb5c933efa0a26b95",
+    "PASS\tdirect-callsite\tbfeadffe -> 0x0201e22a",
+    "PASS\tsegmented-callsite\tbfeac3fe -> 0x0201e226",
+    "PASS\tselector-contract\tfail-closed: r5 remains Trigger Note unless Ch10+range+ARMED+selected-slot-valid pass; source slot remains trigger_note-36; Playback Note is metadata only; r0 returns metadata pointer",
+    "PASS\tproducer-contract\twire byte 161 stored to 0x01c46f20+slot; staging and slot[0x9b] restored to 0x3f; ARMED last",
+    "PASS\tplayback-range\t0..127 allowed including duplicates; repeated-note risk documented"
+  ]
+}

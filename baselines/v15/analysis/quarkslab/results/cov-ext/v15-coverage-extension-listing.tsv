@@ -1,0 +1,2917 @@
+address	bytes	length	mnemonic	text	function
+205918c	7504	2	push {0x5}	push {0x5}	-
+205918e	b442	2	jnz r4,0x02059254	jnz r4,0x02059254	-
+2059254	f220	2	add r2,#-0x40	add r2,#-0x40	-
+2059256	b06a	2	sw r0,[r3 + 0x28]	sw r0,[r3 + 0x28]	-
+2059258	4871	2	lh.z r0,[r4 + -0x1e]	lh.z r0,[r4 + -0x1e]	-
+205df7c	7a04	2	push {0xa}	push {0xa}	-
+205df7e	0415	2	mov r4_r5,r0_r1	mov r4_r5,r0_r1	-
+205e730	7f04	2	push {0xf}	push {0xf}	-
+205e732	e29c	2	add sp,#-0x10	add sp,#-0x10	-
+205e734	27d6	2	mov r7,r2  #	mov r7,r2  #	-
+205e736	0563	2	lw r5,[r0 + 0xc]	lw r5,[r0 + 0xc]	-
+205e8ec	7504	2	push {0x5}	push {0x5}	-
+205e8ee	c1ff6032c301	6	mov r1,#0x1c33260	mov r1,#0x1c33260	-
+205e8f4	4020	2	mov r0,#0x0	mov r0,#0x0	-
+205ea7a	7f04	2	push {0xf}	push {0xf}	-
+205ea7c	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+205ea7e	41e08501	4	movz r1,#0x185	movz r1,#0x185	-
+205ea82	ceff6032c301	6	mov r14,#0x1c33260	mov r14,#0x1c33260	-
+205fc26	1004	2	push rets	push rets	-
+205fc28	bfea27f7	4	call 0x0205ea7a	call 0x0205ea7a	-
+205fc2c	0004	2	pop pc	pop pc	-
+205fc2e	7d04	2	push {0xd}	push {0xd}	-
+205fc30	0116	2	mov r1,r0	mov r1,r0	-
+2060344	1004	2	push rets	push rets	-
+2060346	bfea72fc	4	call 0x0205fc2e	call 0x0205fc2e	-
+206034a	0004	2	pop pc	pop pc	-
+206034c	7504	2	push {0x5}	push {0x5}	-
+206034e	0416	2	mov r4,r0	mov r4,r0	-
+2060350	bfea93f3	4	call 0x0205ea7a	call 0x0205ea7a	-
+2060354	0516	2	mov r5,r0	mov r5,r0	-
+2060356	0545	2	jz r5,0x02060362	jz r5,0x02060362	-
+2060358	4120	2	mov r1,#0x0	mov r1,#0x0	-
+206035a	4216	2	mov r2,r4	mov r2,r4	-
+206035c	80ff3498feff	6	call 0x02049b96	call 0x02049b96	-
+2060362	5016	2	mov r0,r5	mov r0,r5	-
+2060364	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+2060da8	7504	2	push {0x5}	push {0x5}	-
+2060daa	0416	2	mov r4,r0	mov r4,r0	-
+2060df8	7504	2	push {0x5}	push {0x5}	-
+2060dfa	41e08501	4	movz r1,#0x185	movz r1,#0x185	-
+2060dfe	c5ff6032c301	6	mov r5,#0x1c33260	mov r5,#0x1c33260	-
+2060e2e	7404	2	push {0x4}	push {0x4}	-
+2060e30	6000	2	cli	cli	-
+2060e98	1004	2	push rets	push rets	-
+2060e9a	6000	2	cli	cli	-
+2060ed4	7404	2	push {0x4}	push {0x4}	-
+2060ed6	518b	2	call 0x02060e2e	call 0x02060e2e	-
+2060ed8	0416	2	mov r4,r0	mov r4,r0	-
+2060eda	9453	2	jnz r4,0x02060f42	jnz r4,0x02060f42	-
+2060edc	6000	2	cli	cli	-
+2060f42	8441	2	jnz r4,0x02060f46	jnz r4,0x02060f46	-
+2060f44	5189	2	call 0x02060e98	call 0x02060e98	-
+2060f46	488c	2	add r0,r4,#0xc	add r0,r4,#0xc	-
+2060f48	5404	2	pop {pc,0x4}	pop {pc,0x4}	-
+2061234	7704	2	push {0x7}	push {0x7}	-
+2061236	c0ffb092c001	6	mov r0,#0x1c092b0	mov r0,#0x1c092b0	-
+206123c	0160	2	lw r1,[r0 + 0x0]	lw r1,[r0 + 0x0]	-
+206123e	c0ffb892c001	6	mov r0,#0x1c092b8	mov r0,#0x1c092b8	-
+2061244	0144	2	jz r1,0x0206124e	jz r1,0x0206124e	-
+20613d4	7a04	2	push {0xa}	push {0xa}	-
+20613d6	c4ffb092c001	6	mov r4,#0x1c092b0	mov r4,#0x1c092b0	-
+20613dc	4060	2	lw r0,[r4 + 0x0]	lw r0,[r4 + 0x0]	-
+20613de	8042	2	jnz r0,0x020613e4	jnz r0,0x020613e4	-
+20613e0	bfea5afd	4	call 0x02060e98	call 0x02060e98	-
+20614c4	7704	2	push {0x7}	push {0x7}	-
+20614c6	0416	2	mov r4,r0	mov r4,r0	-
+20614c8	80fffc79feff	6	call 0x02048eca	call 0x02048eca	-
+206153c	7504	2	push {0x5}	push {0x5}	-
+206153e	6000	2	cli	cli	-
+20615da	6000	2	cli	cli	-
+2061774	7704	2	push {0x7}	push {0x7}	-
+2061776	6000	2	cli	cli	-
+2061948	7904	2	push {0x9}	push {0x9}	-
+206194a	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+206194c	3416	2	mov r4,r3	mov r4,r3	-
+206194e	2516	2	mov r5,r2	mov r5,r2	-
+2061950	1716	2	mov r7,r1	mov r7,r1	-
+2061ac0	7504	2	push {0x5}	push {0x5}	-
+2061ac2	1460	2	lw r4,[r1 + 0x0]	lw r4,[r1 + 0x0]	-
+2061ac4	74f807fe	4	jeq r4,#-0x1,0x02061ad6	jeq r4,#-0x1,0x02061ad6	-
+2061ac8	0b88	2	add r3,r0,#0x8	add r3,r0,#0x8	-
+2061aca	3216	2	mov r2,r3	mov r2,r3	-
+2061acc	2361	2	lw r3,[r2 + 0x4]	lw r3,[r2 + 0x4]	-
+2061ace	3560	2	lw r5,[r3 + 0x0]	lw r5,[r3 + 0x0]	-
+2061ad6	0264	2	lw r2,[r0 + 0x10]	lw r2,[r0 + 0x10]	-
+2061ad8	2361	2	lw r3,[r2 + 0x4]	lw r3,[r2 + 0x4]	-
+2061ada	9361	2	sw r3,[r1 + 0x4]	sw r3,[r1 + 0x4]	-
+2061adc	b162	2	sw r1,[r3 + 0x8]	sw r1,[r3 + 0x8]	-
+2061ade	9262	2	sw r2,[r1 + 0x8]	sw r2,[r1 + 0x8]	-
+2061ae0	a161	2	sw r1,[r2 + 0x4]	sw r1,[r2 + 0x4]	-
+2061ae2	9064	2	sw r0,[r1 + 0x10]	sw r0,[r1 + 0x10]	-
+2061f5c	7904	2	push {0x9}	push {0x9}	-
+2061f5e	0415	2	mov r4_r5,r0_r1	mov r4_r5,r0_r1	-
+2061f60	8442	2	jnz r4,0x02061f66	jnz r4,0x02061f66	-
+2061f62	bfea99f7	4	call 0x02060e98	call 0x02060e98	-
+2061f66	8542	2	jnz r5,0x02061f6c	jnz r5,0x02061f6c	-
+2061f68	bfea96f7	4	call 0x02060e98	call 0x02060e98	-
+2061f6c	6000	2	cli	cli	-
+20624e8	7d04	2	push {0xd}	push {0xd}	-
+20624ea	39d6	2	mov r9,r3  #	mov r9,r3  #	-
+20624ec	072d	2	lw r7,[sp + 0x34]	lw r7,[sp + 0x34]	-
+20627b8	7904	2	push {0x9}	push {0x9}	-
+20627ba	e29c	2	add sp,#-0x10	add sp,#-0x10	-
+20627bc	38d6	2	mov r8,r3  #	mov r8,r3  #	-
+20627be	062c	2	lw r6,[sp + 0x30]	lw r6,[sp + 0x30]	-
+20627c0	29d6	2	mov r9,r2  #	mov r9,r2  #	-
+20627c2	042d	2	lw r4,[sp + 0x34]	lw r4,[sp + 0x34]	-
+20627c4	1716	2	mov r7,r1	mov r7,r1	-
+20627c6	0516	2	mov r5,r0	mov r5,r0	-
+20627c8	8642	2	jnz r6,0x020627ce	jnz r6,0x020627ce	-
+20627ca	bfea65f3	4	call 0x02060e98	call 0x02060e98	-
+20627ce	0456	2	jz r4,0x020627fc	jz r4,0x020627fc	-
+20627d0	0657	2	jz r6,0x02062800	jz r6,0x02062800	-
+20627d2	92d6	2	mov r2,r9  #	mov r2,r9  #	-
+20627d4	002b	2	lw r0,[sp + 0x2c]	lw r0,[sp + 0x2c]	-
+20627fc	bfea4cf3	4	call 0x02060e98	call 0x02060e98	-
+2062800	4020	2	mov r0,#0x0	mov r0,#0x0	-
+2062808	7504	2	push {0x5}	push {0x5}	-
+206280a	6000	2	cli	cli	-
+2062874	7b04	2	push {0xb}	push {0xb}	-
+2062876	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+2062878	3ad6	2	mov r10,r3  #	mov r10,r3  #	-
+206287a	072e	2	lw r7,[sp + 0x38]	lw r7,[sp + 0x38]	-
+206287c	1bd6	2	mov r11,r1  #	mov r11,r1  #	-
+206287e	062c	2	lw r6,[sp + 0x30]	lw r6,[sp + 0x30]	-
+2062880	042d	2	lw r4,[sp + 0x34]	lw r4,[sp + 0x34]	-
+2062882	c8ff9490c001	6	mov r8,#0x1c09094	mov r8,#0x1c09094	-
+2062888	c9ff8c90c001	6	mov r9,#0x1c0908c	mov r9,#0x1c0908c	-
+206288e	0652	2	jz r6,0x020628b4	jz r6,0x020628b4	-
+2062890	6000	2	cli	cli	-
+2062948	7a04	2	push {0xa}	push {0xa}	-
+206294a	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+206294c	3816	2	mov r8,r3	mov r8,r3	-
+206294e	2516	2	mov r5,r2	mov r5,r2	-
+2062950	1916	2	mov r9,r1	mov r9,r1	-
+2062952	0a16	2	mov r10,r0	mov r10,r0	-
+2062954	50a2	2	lsl r0,r5,0x2	lsl r0,r5,0x2	-
+2062956	80ffcad2ffff	6	call 0x0205fc26	call 0x0205fc26	-
+206295c	0716	2	mov r7,r0	mov r7,r0	-
+206295e	143f	2	mov r4,#-0x1	mov r4,#-0x1	-
+2062960	075f	2	jz r7,0x020629a0	jz r7,0x020629a0	-
+2062962	603c	2	mov r0,#0x9c	mov r0,#0x9c	-
+2062964	80ffbcd2ffff	6	call 0x0205fc26	call 0x0205fc26	-
+206296a	0616	2	mov r6,r0	mov r6,r0	-
+206296c	0655	2	jz r6,0x02062998	jz r6,0x02062998	-
+206296e	83d6	2	mov r3,r8  #	mov r3,r8  #	-
+2062970	002c	2	lw r0,[sp + 0x30]	lw r0,[sp + 0x30]	-
+2062972	012b	2	lw r1,[sp + 0x2c]	lw r1,[sp + 0x2c]	-
+2062998	7016	2	mov r0,r7	mov r0,r7	-
+206299a	80ffa4d9ffff	6	call 0x02060344	call 0x02060344	-
+20629a0	4016	2	mov r0,r4	mov r0,r4	-
+20629a2	0283	2	add sp,#0xc	add sp,#0xc	-
+20629a4	5a04	2	pop {pc,0xa}	pop {pc,0xa}	-
+2062ba8	7604	2	push {0x6}	push {0x6}	-
+2063260	7704	2	push {0x7}	push {0x7}	-
+2063598	7504	2	push {0x5}	push {0x5}	-
+206359a	104e	2	jz r0,0x020635f8	jz r0,0x020635f8	-
+206359c	6000	2	cli	cli	-
+20635f8	bfeaefef	4	call 0x020615da	call 0x020615da	-
+20635fc	f79f	2	goto 0x020635fc	goto 0x020635fc	-
+2063740	7f04	2	push {0xf}	push {0xf}	-
+2063742	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+2063744	3816	2	mov r8,r3	mov r8,r3	-
+2063746	2e16	2	mov r14,r2	mov r14,r2	-
+2063748	1a16	2	mov r10,r1	mov r10,r1	-
+206374a	0f16	2	mov r15,r0	mov r15,r0	-
+206374c	0055	2	jz r0,0x02063778	jz r0,0x02063778	-
+206374e	80ff7657feff	6	call 0x02048eca	call 0x02048eca	-
+2063754	173f	2	mov r7,#-0x1	mov r7,#-0x1	-
+2063778	c114	2	clr r9	clr r9	-
+206377a	4520	2	mov r5,#0x0	mov r5,#0x0	-
+206377c	ccff9490c001	6	mov r12,#0x1c09094	mov r12,#0x1c09094	-
+2063782	c6ff8c90c001	6	mov r6,#0x1c0908c	mov r6,#0x1c0908c	-
+2063788	cdff9892c001	6	mov r13,#0x1c09298	mov r13,#0x1c09298	-
+2063bcc	7504	2	push {0x5}	push {0x5}	-
+2063bce	104f	2	jz r0,0x02063c2e	jz r0,0x02063c2e	-
+2063bd0	6000	2	cli	cli	-
+2063c2e	bfead4ec	4	call 0x020615da	call 0x020615da	-
+2063c32	f79f	2	goto 0x02063c32	goto 0x02063c32	-
+2064380	7504	2	push {0x5}	push {0x5}	-
+2064382	c0ffa492c001	6	mov r0,#0x1c092a4	mov r0,#0x1c092a4	-
+2064388	0060	2	lw r0,[r0 + 0x0]	lw r0,[r0 + 0x0]	-
+206438a	6000	2	cli	cli	-
+20650c2	c0ffd492c001	6	mov r0,#0x1c092d4	mov r0,#0x1c092d4	-
+206512c	7904	2	push {0x9}	push {0x9}	-
+206512e	c1ffa090c001	6	mov r1,#0x1c090a0	mov r1,#0x1c090a0	-
+2066620	7f04	2	push {0xf}	push {0xf}	-
+2066630	7f04	2	push {0xf}	push {0xf}	-
+20667de	c0ffd492c001	6	mov r0,#0x1c092d4	mov r0,#0x1c092d4	-
+20667e4	4120	2	mov r1,#0x0	mov r1,#0x0	-
+2066960	6204	2	push {rets,0x2}	push {rets,0x2}	-
+2066962	7404	2	push {0x4}	push {0x4}	-
+2066964	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+2066966	1416	2	mov r4,r1	mov r4,r1	-
+2066968	80ff60760000	6	call 0x0206dfce	call 0x0206dfce	-
+206696e	8a8c	2	add r2,sp,#0xc	add r2,sp,#0xc	-
+2066970	41d6	2	mov r1,r4  #	mov r1,r4  #	-
+2066980	7804	2	push {0x8}	push {0x8}	-
+2066982	e29a	2	add sp,#-0x18	add sp,#-0x18	-
+2066984	aa90	2	add r2,sp,#0x30	add r2,sp,#0x30	-
+2066a58	6204	2	push {rets,0x2}	push {rets,0x2}	-
+2066a5a	7704	2	push {0x7}	push {0x7}	-
+2066a5c	e28f	2	add sp,#-0x44	add sp,#-0x44	-
+2066a5e	1416	2	mov r4,r1	mov r4,r1	-
+2066a60	0516	2	mov r5,r0	mov r5,r0	-
+2066b2c	6204	2	push {rets,0x2}	push {rets,0x2}	-
+2066b2e	1004	2	push rets	push rets	-
+2066b30	a29e	2	add sp,#-0x108	add sp,#-0x108	-
+2066c18	7704	2	push {0x7}	push {0x7}	-
+2066c1a	e29c	2	add sp,#-0x10	add sp,#-0x10	-
+2066c1c	042c	2	lw r4,[sp + 0x30]	lw r4,[sp + 0x30]	-
+2066c1e	052b	2	lw r5,[sp + 0x2c]	lw r5,[sp + 0x2c]	-
+2066c20	062a	2	lw r6,[sp + 0x28]	lw r6,[sp + 0x28]	-
+2066c22	0729	2	lw r7,[sp + 0x24]	lw r7,[sp + 0x24]	-
+2066e08	7704	2	push {0x7}	push {0x7}	-
+2066e0a	2516	2	mov r5,r2	mov r5,r2	-
+2066e0c	1416	2	mov r4,r1	mov r4,r1	-
+2066e0e	00f81c04	4	jeq r0,#0x2,0x02066e4a	jeq r0,#0x2,0x02066e4a	-
+2066e4a	4120	2	mov r1,#0x0	mov r1,#0x0	-
+2066e4c	4016	2	mov r0,r4	mov r0,r4	-
+2066e4e	80ff9a38fdff	6	call 0x0203a6ee	call 0x0203a6ee	-
+2066f4c	7704	2	push {0x7}	push {0x7}	-
+2066f4e	c7ff80fc0200	6	mov r7,#0x2fc80	mov r7,#0x2fc80	-
+20670a0	7a04	2	push {0xa}	push {0xa}	-
+20670a2	a28d	2	add sp,#-0x14c	add sp,#-0x14c	-
+20670a4	1a16	2	mov r10,r1	mov r10,r1	-
+20670a6	0516	2	mov r5,r0	mov r5,r0	-
+20670a8	4020	2	mov r0,#0x0	mov r0,#0x0	-
+20670aa	4120	2	mov r1,#0x0	mov r1,#0x0	-
+20671d4	1004	2	push rets	push rets	-
+20671d6	c1ff18bfc001	6	mov r1,#0x1c0bf18	mov r1,#0x1c0bf18	-
+20671dc	1160	2	lw r1,[r1 + 0x0]	lw r1,[r1 + 0x0]	-
+20671de	081e	2	sub r0,r0,r1	sub r0,r0,r1	-
+20671e0	c1ffffff0000	6	mov r1,#0xffff	mov r1,#0xffff	-
+2067598	7704	2	push {0x7}	push {0x7}	-
+206759a	6000	2	cli	cli	-
+2067634	7604	2	push {0x6}	push {0x6}	-
+2067636	0160	2	lw r1,[r0 + 0x0]	lw r1,[r0 + 0x0]	-
+2067638	6000	2	cli	cli	-
+2067a5c	7504	2	push {0x5}	push {0x5}	-
+2067a5e	0460	2	lw r4,[r0 + 0x0]	lw r4,[r0 + 0x0]	-
+2067ab4	1004	2	push rets	push rets	-
+2067ab6	4128	2	mov r1,#0x8	mov r1,#0x8	-
+2067ab8	4220	2	mov r2,#0x0	mov r2,#0x0	-
+2067aba	bfea6dfd	4	call 0x02067598	call 0x02067598	-
+2067abe	0004	2	pop pc	pop pc	-
+2067ac0	7604	2	push {0x6}	push {0x6}	-
+2067ac2	0416	2	mov r4,r0	mov r4,r0	-
+2067ac4	25d6	2	mov r5,r2  #	mov r5,r2  #	-
+2067ac6	4060	2	lw r0,[r4 + 0x0]	lw r0,[r4 + 0x0]	-
+2067ac8	0042	2	jz r0,0x02067ace	jz r0,0x02067ace	-
+2067ace	40e07102	4	movz r0,#0x271	movz r0,#0x271	-
+2067af2	6204	2	push {rets,0x2}	push {rets,0x2}	-
+2067af4	7c04	2	push {0xc}	push {0xc}	-
+2067af6	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+2067af8	0516	2	mov r5,r0	mov r5,r0	-
+2067afa	a894	2	add r0,sp,#0x34	add r0,sp,#0x34	-
+20680b0	7404	2	push {0x4}	push {0x4}	-
+20680b2	c0ff18bfc001	6	mov r0,#0x1c0bf18	mov r0,#0x1c0bf18	-
+20680b8	0160	2	lw r1,[r0 + 0x0]	lw r1,[r0 + 0x0]	-
+20680ba	4020	2	mov r0,#0x0	mov r0,#0x0	-
+20680bc	4220	2	mov r2,#0x0	mov r2,#0x0	-
+20680be	0482	2	goto 0x020680c4	goto 0x020680c4	-
+20680f4	7604	2	push {0x6}	push {0x6}	-
+20680f6	c0ff18bfc001	6	mov r0,#0x1c0bf18	mov r0,#0x1c0bf18	-
+2068270	7a04	2	push {0xa}	push {0xa}	-
+2068272	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+2068274	bfea1cff	4	call 0x020680b0	call 0x020680b0	-
+2068278	0a16	2	mov r10,r0	mov r10,r0	-
+206827a	bfea3bff	4	call 0x020680f4	call 0x020680f4	-
+206827e	0216	2	mov r2,r0	mov r2,r0	-
+2068428	7704	2	push {0x7}	push {0x7}	-
+206842a	4220	2	mov r2,#0x0	mov r2,#0x0	-
+206842c	43e00025	4	movz r3,#0x2500	movz r3,#0x2500	-
+2068430	4d25	2	mov r5,#0x25	mov r5,#0x25	-
+2068432	4620	2	mov r6,#0x0	mov r6,#0x0	-
+2068434	4420	2	mov r4,#0x0	mov r4,#0x0	-
+2068436	048e	2	goto 0x02068454	goto 0x02068454	-
+2068484	1004	2	push rets	push rets	-
+2068486	0994	2	add r1,r0,#0x14	add r1,r0,#0x14	-
+2068488	4020	2	mov r0,#0x0	mov r0,#0x0	-
+206848a	80ff6c3dfdff	6	call 0x0203c1fc	call 0x0203c1fc	-
+2068490	0043	2	jz r0,0x02068498	jz r0,0x02068498	-
+2068498	0004	2	pop pc	pop pc	-
+20684a8	7504	2	push {0x5}	push {0x5}	-
+20684aa	2516	2	mov r5,r2	mov r5,r2	-
+20684ac	0416	2	mov r4,r0	mov r4,r0	-
+20684ae	1894	2	add r0,r1,#0x14	add r0,r1,#0x14	-
+20684b0	bfea90f6	4	call 0x020671d4	call 0x020671d4	-
+20684c0	7504	2	push {0x5}	push {0x5}	-
+20685a8	7504	2	push {0x5}	push {0x5}	-
+20685aa	4120	2	mov r1,#0x0	mov r1,#0x0	-
+20685ac	c2ff28800200	6	mov r2,#0x28028	mov r2,#0x28028	-
+206860c	7604	2	push {0x6}	push {0x6}	-
+206860e	0416	2	mov r4,r0	mov r4,r0	-
+2068610	25d6	2	mov r5,r2  #	mov r5,r2  #	-
+2068612	4060	2	lw r0,[r4 + 0x0]	lw r0,[r4 + 0x0]	-
+2068614	46e07102	4	movz r6,#0x271	movz r6,#0x271	-
+2068650	7604	2	push {0x6}	push {0x6}	-
+2068652	0316	2	mov r3,r0	mov r3,r0	-
+2068654	1883	2	add r0,r1,#0x3	add r0,r1,#0x3	-
+2068656	8117	2	uxth r1,r0	uxth r1,r0	-
+2068658	44e07102	4	movz r4,#0x271	movz r4,#0x271	-
+206865c	141b	2	mul r4,r1	mul r4,r1	-
+20686cc	7f04	2	push {0xf}	push {0xf}	-
+20686ce	6000	2	cli	cli	-
+2068dd0	7b04	2	push {0xb}	push {0xb}	-
+2068dd2	0416	2	mov r4,r0	mov r4,r0	-
+2068dd4	4060	2	lw r0,[r4 + 0x0]	lw r0,[r4 + 0x0]	-
+2068dd6	00f8fd00	4	jeq r0,#0x0,0x02068fd4	jeq r0,#0x0,0x02068fd4	-
+2068fd4	5b04	2	pop {pc,0xb}	pop {pc,0xb}	-
+206905c	7404	2	push {0x4}	push {0x4}	-
+206905e	2b1e	2	sub r3,r2,r1	sub r3,r2,r1	-
+206910c	7704	2	push {0x7}	push {0x7}	-
+206910e	0416	2	mov r4,r0	mov r4,r0	-
+2069110	16d6	2	mov r6,r1  #	mov r6,r1  #	-
+2069112	4560	2	lw r5,[r4 + 0x0]	lw r5,[r4 + 0x0]	-
+2069114	4131	2	mov r1,#0x11	mov r1,#0x11	-
+2069116	5016	2	mov r0,r5	mov r0,r5	-
+2069118	bfeab1ef	4	call 0x0206707e	call 0x0206707e	-
+206911c	4016	2	mov r0,r4	mov r0,r4	-
+206911e	bfeac9f4	4	call 0x02067ab4	call 0x02067ab4	-
+2069122	50d6	2	mov r0,r5  #	mov r0,r5  #	-
+2069124	6a61	2	lh.z r2,[r6 + 0x2]	lh.z r2,[r6 + 0x2]	-
+2069126	6962	2	lh.z r1,[r6 + 0x4]	lh.z r1,[r6 + 0x4]	-
+2069128	4199	2	call 0x0206905c	call 0x0206905c	-
+206912a	40e02c01	4	movz r0,#0x12c	movz r0,#0x12c	-
+20691c4	7704	2	push {0x7}	push {0x7}	-
+20691c6	0416	2	mov r4,r0	mov r4,r0	-
+20691c8	16d6	2	mov r6,r1  #	mov r6,r1  #	-
+20691ca	4760	2	lw r7,[r4 + 0x0]	lw r7,[r4 + 0x0]	-
+20691cc	419f	2	call 0x0206910c	call 0x0206910c	-
+20691ce	0516	2	mov r5,r0	mov r5,r0	-
+20691d0	954c	2	jnz r5,0x0206922a	jnz r5,0x0206922a	-
+20691d2	7864	2	lh.z r0,[r7 + 0x8]	lh.z r0,[r7 + 0x8]	-
+20691d4	b829	2	bitclr r0,0x9	bitclr r0,0x9	-
+20691d6	f864	2	sh r0,[r7 + 0x8]	sh r0,[r7 + 0x8]	-
+20691d8	7864	2	lh.z r0,[r7 + 0x8]	lh.z r0,[r7 + 0x8]	-
+206922a	5016	2	mov r0,r5	mov r0,r5	-
+206922c	5704	2	pop {pc,0x7}	pop {pc,0x7}	-
+20695c8	c1ffd492c001	6	mov r1,#0x1c092d4	mov r1,#0x1c092d4	-
+2069a84	7704	2	push {0x7}	push {0x7}	-
+2069a86	3516	2	mov r5,r3	mov r5,r3	-
+2069a88	1416	2	mov r4,r1	mov r4,r1	-
+2069a8a	0616	2	mov r6,r0	mov r6,r0	-
+2069a8c	1242	2	jz r2,0x02069ad2	jz r2,0x02069ad2	-
+2069a8e	783f	2	mov r0,#0xff	mov r0,#0xff	-
+2069a90	bfeaf8f4	4	call 0x02068484	call 0x02068484	-
+2069ad2	4020	2	mov r0,#0x0	mov r0,#0x0	-
+2069ad4	5704	2	pop {pc,0x7}	pop {pc,0x7}	-
+2069b14	7b04	2	push {0xb}	push {0xb}	-
+2069b16	0916	2	mov r9,r0	mov r9,r0	-
+206a1d8	7b04	2	push {0xb}	push {0xb}	-
+206a1da	0416	2	mov r4,r0	mov r4,r0	-
+206a278	7a04	2	push {0xa}	push {0xa}	-
+206a27a	0416	2	mov r4,r0	mov r4,r0	-
+206a27c	10d6	2	mov r0,r1  #	mov r0,r1  #	-
+206a27e	4660	2	lw r6,[r4 + 0x0]	lw r6,[r4 + 0x0]	-
+206a280	80ffa6aeffff	6	call 0x0206512c	call 0x0206512c	-
+206a286	0516	2	mov r5,r0	mov r5,r0	-
+206a288	40e07102	4	movz r0,#0x271	movz r0,#0x271	-
+206a4f8	7b04	2	push {0xb}	push {0xb}	-
+206a4fa	80ff8ce4fcff	6	call 0x0203898c	call 0x0203898c	-
+206a500	c4ffc0bec001	6	mov r4,#0x1c0bec0	mov r4,#0x1c0bec0	-
+206a506	cafffbdb0502	6	mov r10,#0x205dbfb	mov r10,#0x205dbfb	-
+206a50c	c9ff9cc90602	6	mov r9,#0x206c99c	mov r9,#0x206c99c	-
+206a512	c8ffdc96c001	6	mov r8,#0x1c096dc	mov r8,#0x1c096dc	-
+206a518	0051	2	jz r0,0x0206a53c	jz r0,0x0206a53c	-
+206a53c	4838	2	mov r0,#0x38	mov r0,#0x38	-
+206a53e	80ff3645ffff	6	call 0x0205ea7a	call 0x0205ea7a	-
+206a544	0716	2	mov r7,r0	mov r7,r0	-
+206a546	c760	2	sw r7,[r4 + 0x0]	sw r7,[r4 + 0x0]	-
+206a548	275d	2	jz r7,0x0206a604	jz r7,0x0206a604	-
+206a54a	4020	2	mov r0,#0x0	mov r0,#0x0	-
+206a54c	7116	2	mov r1,r7	mov r1,r7	-
+206a54e	008d	2	rep 0x2,0xd	rep 0x2,0xd	-
+206a550	9005	2	sw r0,[r1 ++= 4]	sw r0,[r1 ++= 4]	-
+206a552	40e00002	4	movz r0,#0x200	movz r0,#0x200	-
+206a556	80ff1e45ffff	6	call 0x0205ea7a	call 0x0205ea7a	-
+206a55c	f060	2	sw r0,[r7 + 0x0]	sw r0,[r7 + 0x0]	-
+206a55e	4760	2	lw r7,[r4 + 0x0]	lw r7,[r4 + 0x0]	-
+206a560	7060	2	lw r0,[r7 + 0x0]	lw r0,[r7 + 0x0]	-
+206a562	2050	2	jz r0,0x0206a604	jz r0,0x0206a604	-
+206a564	4120	2	mov r1,#0x0	mov r1,#0x0	-
+206a566	42e00002	4	movz r2,#0x200	movz r2,#0x200	-
+206a56a	c314	2	clr r11	clr r11	-
+206a56c	80ff24f6fdff	6	call 0x02049b96	call 0x02049b96	-
+206a604	80ffca68ffff	6	call 0x02060ed4	call 0x02060ed4	-
+206a60a	80ff825cf9ff	6	call 0x02000292	call 0x02000292	-
+206a610	f79f	2	goto 0x0206a610	goto 0x0206a610	-
+206a612	7404	2	push {0x4}	push {0x4}	-
+206a614	c1ffc0bec001	6	mov r1,#0x1c0bec0	mov r1,#0x1c0bec0	-
+206a61a	01d6	2	mov r1,r0  #	mov r1,r0  #	-
+206a61c	1260	2	lw r2,[r1 + 0x0]	lw r2,[r1 + 0x0]	-
+206a654	7704	2	push {0x7}	push {0x7}	-
+206a656	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+206a658	2716	2	mov r7,r2	mov r7,r2	-
+206a65a	1416	2	mov r4,r1	mov r4,r1	-
+206a65c	0516	2	mov r5,r0	mov r5,r0	-
+206a65e	a980	2	add r1,sp,#0x20	add r1,sp,#0x20	-
+206a660	36d6	2	mov r6,r3  #	mov r6,r3  #	-
+206a6b4	7604	2	push {0x6}	push {0x6}	-
+206a6b6	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+206a6b8	1616	2	mov r6,r1	mov r6,r1	-
+206a6ba	0416	2	mov r4,r0	mov r4,r0	-
+206a6bc	899c	2	add r1,sp,#0x1c	add r1,sp,#0x1c	-
+206a6be	25d6	2	mov r5,r2  #	mov r5,r2  #	-
+206a7e4	7804	2	push {0x8}	push {0x8}	-
+206a7e6	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+206a7e8	1416	2	mov r4,r1	mov r4,r1	-
+206a7ea	0516	2	mov r5,r0	mov r5,r0	-
+206aad8	7504	2	push {0x5}	push {0x5}	-
+206aada	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+206ab18	7a04	2	push {0xa}	push {0xa}	-
+206ab1a	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+206ab1c	0416	2	mov r4,r0	mov r4,r0	-
+206ad3c	7e04	2	push {0xe}	push {0xe}	-
+206ad3e	e297	2	add sp,#-0x24	add sp,#-0x24	-
+206ad40	0416	2	mov r4,r0	mov r4,r0	-
+206b3e0	7404	2	push {0x4}	push {0x4}	-
+206b3e2	c4ffa497c001	6	mov r4,#0x1c097a4	mov r4,#0x1c097a4	-
+206b3e8	4060	2	lw r0,[r4 + 0x0]	lw r0,[r4 + 0x0]	-
+206b3ea	8046	2	jnz r0,0x0206b3f8	jnz r0,0x0206b3f8	-
+206b3ec	4828	2	mov r0,#0x28	mov r0,#0x28	-
+206b3ee	80fff612fdff	6	call 0x0203c6ea	call 0x0203c6ea	-
+206b3f4	c060	2	sw r0,[r4 + 0x0]	sw r0,[r4 + 0x0]	-
+206b3f6	0041	2	jz r0,0x0206b3fa	jz r0,0x0206b3fa	-
+206b3f8	5404	2	pop {pc,0x4}	pop {pc,0x4}	-
+206b3fa	80ffd45affff	6	call 0x02060ed4	call 0x02060ed4	-
+206b400	80ff8c4ef9ff	6	call 0x02000292	call 0x02000292	-
+206b406	f79f	2	goto 0x0206b406	goto 0x0206b406	-
+206b408	7504	2	push {0x5}	push {0x5}	-
+206b40a	c5ffa497c001	6	mov r5,#0x1c097a4	mov r5,#0x1c097a4	-
+206b410	04d6	2	mov r4,r0  #	mov r4,r0  #	-
+206b412	5160	2	lw r1,[r5 + 0x0]	lw r1,[r5 + 0x0]	-
+206b414	8142	2	jnz r1,0x0206b41a	jnz r1,0x0206b41a	-
+206b416	7184	2	call 0x0206b3e0	call 0x0206b3e0	-
+206b418	5160	2	lw r1,[r5 + 0x0]	lw r1,[r5 + 0x0]	-
+206b41a	1840	2	lb.z r0,[r1 + 0x0]	lb.z r0,[r1 + 0x0]	-
+206b41c	8046	2	jnz r0,0x0206b42a	jnz r0,0x0206b42a	-
+206b41e	c0ffc8bec001	6	mov r0,#0x1c0bec8	mov r0,#0x1c0bec8	-
+206b424	108e	2	rep 0x4,0xe	rep 0x4,0xe	-
+206b426	4107	2	lb.z r1,[r4 ++= 2]	lb.z r1,[r4 ++= 2]	-
+206b428	8107	2	sb r1,[r0 ++= 1]	sb r1,[r0 ++= 1]	-
+206b42a	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+206b42c	7504	2	push {0x5}	push {0x5}	-
+206b42e	c5ffa497c001	6	mov r5,#0x1c097a4	mov r5,#0x1c097a4	-
+206b434	04d6	2	mov r4,r0  #	mov r4,r0  #	-
+206b436	5160	2	lw r1,[r5 + 0x0]	lw r1,[r5 + 0x0]	-
+206b438	8142	2	jnz r1,0x0206b43e	jnz r1,0x0206b43e	-
+206b43a	6192	2	call 0x0206b3e0	call 0x0206b3e0	-
+206b43c	5160	2	lw r1,[r5 + 0x0]	lw r1,[r5 + 0x0]	-
+206b43e	1561	2	lw r5,[r1 + 0x4]	lw r5,[r1 + 0x4]	-
+206b440	c0ffd7bec001	6	mov r0,#0x1c0bed7	mov r0,#0x1c0bed7	-
+206b446	4120	2	mov r1,#0x0	mov r1,#0x0	-
+206b448	0216	2	mov r2,r0	mov r2,r0	-
+206b44a	009f	2	rep 0x2,0x1f	rep 0x2,0x1f	-
+206b44c	a107	2	sb r1,[r2 ++= 1]	sb r1,[r2 ++= 1]	-
+206b44e	4940	2	lb.z r1,[r4 + 0x0]	lb.z r1,[r4 + 0x0]	-
+206b450	8107	2	sb r1,[r0 ++= 1]	sb r1,[r0 ++= 1]	-
+206b452	4a40	2	lb.z r2,[r4 + 0x0]	lb.z r2,[r4 + 0x0]	-
+206b454	4981	2	add r1,r4,#0x1	add r1,r4,#0x1	-
+206b456	80ff72d8fdff	6	call 0x02048cce	call 0x02048cce	-
+206b45c	0547	2	jz r5,0x0206b46c	jz r5,0x0206b46c	-
+206b45e	5060	2	lw r0,[r5 + 0x0]	lw r0,[r5 + 0x0]	-
+206b460	0045	2	jz r0,0x0206b46c	jz r0,0x0206b46c	-
+206b462	4135	2	mov r1,#0x15	mov r1,#0x15	-
+206b464	4216	2	mov r2,r4	mov r2,r4	-
+206b466	80ff86c6ffff	6	call 0x02067af2	call 0x02067af2	-
+206b46c	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+206b4b0	7604	2	push {0x6}	push {0x6}	-
+206b4b2	c1ffa497c001	6	mov r1,#0x1c097a4	mov r1,#0x1c097a4	-
+206b4b8	04d6	2	mov r4,r0  #	mov r4,r0  #	-
+206b4ba	1160	2	lw r1,[r1 + 0x0]	lw r1,[r1 + 0x0]	-
+206b4bc	1145	2	jz r1,0x0206b508	jz r1,0x0206b508	-
+206b4be	c0ffc8bec001	6	mov r0,#0x1c0bec8	mov r0,#0x1c0bec8	-
+206b4c4	0944	2	lb.z r1,[r0 + 0x4]	lb.z r1,[r0 + 0x4]	-
+206b4c6	01f80208	4	jeq r1,#0x4,0x0206b4ce	jeq r1,#0x4,0x0206b4ce	-
+206b4ce	0a46	2	lb.z r2,[r0 + 0x6]	lb.z r2,[r0 + 0x6]	-
+206b4d0	4d8c	2	add r5,r4,#0xc	add r5,r4,#0xc	-
+206b4d2	0987	2	add r1,r0,#0x7	add r1,r0,#0x7	-
+206b4d4	53d6	2	mov r3,r5  #	mov r3,r5  #	-
+206b4d6	ca4b	2	sb r2,[r4 + 0xb]	sb r2,[r4 + 0xb]	-
+206b4d8	1085	2	rep 0x4,0x5	rep 0x4,0x5	-
+206b4da	1607	2	lb.z r6,[r1 ++= 2]	lb.z r6,[r1 ++= 2]	-
+206b4dc	b607	2	sb r6,[r3 ++= 1]	sb r6,[r3 ++= 1]	-
+206b4de	0845	2	lb.z r0,[r0 + 0x5]	lb.z r0,[r0 + 0x5]	-
+206b508	80ffc659ffff	6	call 0x02060ed4	call 0x02060ed4	-
+206b50e	80ff7e4df9ff	6	call 0x02000292	call 0x02000292	-
+206b514	f79f	2	goto 0x0206b514	goto 0x0206b514	-
+206b558	7904	2	push {0x9}	push {0x9}	-
+206b55a	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+206b55c	c8ffc8bec001	6	mov r8,#0x1c0bec8	mov r8,#0x1c0bec8	-
+206b6a0	7504	2	push {0x5}	push {0x5}	-
+206b6a2	c5ffa497c001	6	mov r5,#0x1c097a4	mov r5,#0x1c097a4	-
+206b6a8	5060	2	lw r0,[r5 + 0x0]	lw r0,[r5 + 0x0]	-
+206b6aa	8043	2	jnz r0,0x0206b6b2	jnz r0,0x0206b6b2	-
+206b6ac	bfea98fe	4	call 0x0206b3e0	call 0x0206b3e0	-
+206b6b0	5060	2	lw r0,[r5 + 0x0]	lw r0,[r5 + 0x0]	-
+206b6b2	0061	2	lw r0,[r0 + 0x4]	lw r0,[r0 + 0x4]	-
+206b6b4	0041	2	jz r0,0x0206b6b8	jz r0,0x0206b6b8	-
+206b6b6	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+206b6b8	4038	2	mov r0,#0x18	mov r0,#0x18	-
+206b6ba	80ff2a10fdff	6	call 0x0203c6ea	call 0x0203c6ea	-
+206b6c0	0416	2	mov r4,r0	mov r4,r0	-
+206b6c2	7459	2	jz r4,0x0206b6b6	jz r4,0x0206b6b6	-
+206b6c4	5060	2	lw r0,[r5 + 0x0]	lw r0,[r5 + 0x0]	-
+206b6c6	8461	2	sw r4,[r0 + 0x4]	sw r4,[r0 + 0x4]	-
+206b6c8	80ffa2cbffff	6	call 0x02068270	call 0x02068270	-
+206b6ce	c060	2	sw r0,[r4 + 0x0]	sw r0,[r4 + 0x0]	-
+206b6d0	7052	2	jz r0,0x0206b6b6	jz r0,0x0206b6b6	-
+206b6d2	41d6	2	mov r1,r4  #	mov r1,r4  #	-
+206b6d4	0060	2	lw r0,[r0 + 0x0]	lw r0,[r0 + 0x0]	-
+206b6d6	c2ff00a60602	6	mov r2,#0x206a600	mov r2,#0x206a600	-
+206b6dc	80fffcccffff	6	call 0x020683de	call 0x020683de	-
+206b6e2	4016	2	mov r0,r4	mov r0,r4	-
+206b6e4	bfea38ff	4	call 0x0206b558	call 0x0206b558	-
+206b6e8	f046	2	jnz r0,0x0206b6b6	jnz r0,0x0206b6b6	-
+206b6ea	5060	2	lw r0,[r5 + 0x0]	lw r0,[r5 + 0x0]	-
+206b6ec	4121	2	mov r1,#0x1	mov r1,#0x1	-
+206b6ee	8940	2	sb r1,[r0 + 0x0]	sb r1,[r0 + 0x0]	-
+206b6f0	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+206b736	7404	2	push {0x4}	push {0x4}	-
+206b738	c4ff9c97c001	6	mov r4,#0x1c0979c	mov r4,#0x1c0979c	-
+206b73e	4060	2	lw r0,[r4 + 0x0]	lw r0,[r4 + 0x0]	-
+206b740	8046	2	jnz r0,0x0206b74e	jnz r0,0x0206b74e	-
+206b742	4820	2	mov r0,#0x20	mov r0,#0x20	-
+206b744	80ffa00ffdff	6	call 0x0203c6ea	call 0x0203c6ea	-
+206b74a	c060	2	sw r0,[r4 + 0x0]	sw r0,[r4 + 0x0]	-
+206b74c	0041	2	jz r0,0x0206b750	jz r0,0x0206b750	-
+206b74e	5404	2	pop {pc,0x4}	pop {pc,0x4}	-
+206b750	80ff7e57ffff	6	call 0x02060ed4	call 0x02060ed4	-
+206b756	80ff364bf9ff	6	call 0x02000292	call 0x02000292	-
+206b75c	f79f	2	goto 0x0206b75c	goto 0x0206b75c	-
+206b80c	7604	2	push {0x6}	push {0x6}	-
+206b80e	c5ff9c97c001	6	mov r5,#0x1c0979c	mov r5,#0x1c0979c	-
+206b814	5160	2	lw r1,[r5 + 0x0]	lw r1,[r5 + 0x0]	-
+206b816	015d	2	jz r1,0x0206b852	jz r1,0x0206b852	-
+206b818	1461	2	lw r4,[r1 + 0x4]	lw r4,[r1 + 0x4]	-
+206b81a	045b	2	jz r4,0x0206b852	jz r4,0x0206b852	-
+206b81c	4060	2	lw r0,[r4 + 0x0]	lw r0,[r4 + 0x0]	-
+206b81e	0044	2	jz r0,0x0206b828	jz r0,0x0206b828	-
+206b820	80ffaad5ffff	6	call 0x02068dd0	call 0x02068dd0	-
+206b826	5160	2	lw r1,[r5 + 0x0]	lw r1,[r5 + 0x0]	-
+206b828	1065	2	lw r0,[r1 + 0x14]	lw r0,[r1 + 0x14]	-
+206b82a	0489	2	goto 0x0206b83e	goto 0x0206b83e	-
+206b83e	c134	2	add r1,#0x14	add r1,#0x14	-
+206b852	5604	2	pop {pc,0x6}	pop {pc,0x6}	-
+206b854	7704	2	push {0x7}	push {0x7}	-
+206b856	c6ff4898c001	6	mov r6,#0x1c09848	mov r6,#0x1c09848	-
+206b85c	1416	2	mov r4,r1	mov r4,r1	-
+206b85e	0516	2	mov r5,r0	mov r5,r0	-
+206b860	6716	2	mov r7,r6	mov r7,r6	-
+206b862	7760	2	lw r7,[r7 + 0x0]	lw r7,[r7 + 0x0]	-
+206b888	7804	2	push {0x8}	push {0x8}	-
+206b8c8	7e04	2	push {0xe}	push {0xe}	-
+206b8ca	e296	2	add sp,#-0x28	add sp,#-0x28	-
+206b8cc	c8ff9897c001	6	mov r8,#0x1c09798	mov r8,#0x1c09798	-
+206bb0c	7604	2	push {0x6}	push {0x6}	-
+206bb0e	c6ff9897c001	6	mov r6,#0x1c09798	mov r6,#0x1c09798	-
+206bb14	04d6	2	mov r4,r0  #	mov r4,r0  #	-
+206bb16	6160	2	lw r1,[r6 + 0x0]	lw r1,[r6 + 0x0]	-
+206bb18	8146	2	jnz r1,0x0206bb26	jnz r1,0x0206bb26	-
+206bb1a	4820	2	mov r0,#0x20	mov r0,#0x20	-
+206bb1c	80ffc80bfdff	6	call 0x0203c6ea	call 0x0203c6ea	-
+206bb22	0116	2	mov r1,r0	mov r1,r0	-
+206bb24	e160	2	sw r1,[r6 + 0x0]	sw r1,[r6 + 0x0]	-
+206bb26	1060	2	lw r0,[r1 + 0x0]	lw r0,[r1 + 0x0]	-
+206bb28	805d	2	jnz r0,0x0206bb64	jnz r0,0x0206bb64	-
+206bb2a	4834	2	mov r0,#0x34	mov r0,#0x34	-
+206bb2c	80ffb80bfdff	6	call 0x0203c6ea	call 0x0203c6ea	-
+206bb32	0516	2	mov r5,r0	mov r5,r0	-
+206bb34	0557	2	jz r5,0x0206bb64	jz r5,0x0206bb64	-
+206bb36	6060	2	lw r0,[r6 + 0x0]	lw r0,[r6 + 0x0]	-
+206bb38	8560	2	sw r5,[r0 + 0x0]	sw r5,[r0 + 0x0]	-
+206bb3a	80ff30c7ffff	6	call 0x02068270	call 0x02068270	-
+206bb40	d060	2	sw r0,[r5 + 0x0]	sw r0,[r5 + 0x0]	-
+206bb42	0050	2	jz r0,0x0206bb64	jz r0,0x0206bb64	-
+206bb44	51d6	2	mov r1,r5  #	mov r1,r5  #	-
+206bb46	0060	2	lw r0,[r0 + 0x0]	lw r0,[r0 + 0x0]	-
+206bb48	c2ff34a50602	6	mov r2,#0x206a534	mov r2,#0x206a534	-
+206bb4e	80ff8ac8ffff	6	call 0x020683de	call 0x020683de	-
+206bb54	6060	2	lw r0,[r6 + 0x0]	lw r0,[r6 + 0x0]	-
+206bb56	c024	2	add r0,#0x4	add r0,#0x4	-
+206bb58	1098	2	rep 0x4,0x18	rep 0x4,0x18	-
+206bb5a	4107	2	lb.z r1,[r4 ++= 2]	lb.z r1,[r4 ++= 2]	-
+206bb5c	8107	2	sb r1,[r0 ++= 1]	sb r1,[r0 ++= 1]	-
+206bb5e	5016	2	mov r0,r5	mov r0,r5	-
+206bb60	bfeab2fe	4	call 0x0206b8c8	call 0x0206b8c8	-
+206bb64	5604	2	pop {pc,0x6}	pop {pc,0x6}	-
+206bbb0	7904	2	push {0x9}	push {0x9}	-
+206bbb2	6000	2	cli	cli	-
+206be50	7c04	2	push {0xc}	push {0xc}	-
+206be52	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+206be54	2616	2	mov r6,r2	mov r6,r2	-
+206be56	1916	2	mov r9,r1	mov r9,r1	-
+206be58	bfeadbf3	4	call 0x0206a612	call 0x0206a612	-
+206be5c	0b16	2	mov r11,r0	mov r11,r0	-
+206be5e	305b	2	jz r0,0x0206bf56	jz r0,0x0206bf56	-
+206bf56	0281	2	add sp,#0x4	add sp,#0x4	-
+206bf58	5c04	2	pop {pc,0xc}	pop {pc,0xc}	-
+206bf68	7804	2	push {0x8}	push {0x8}	-
+206bf6a	0416	2	mov r4,r0	mov r4,r0	-
+206c080	7a04	2	push {0xa}	push {0xa}	-
+206c082	e290	2	add sp,#-0x40	add sp,#-0x40	-
+206c084	1916	2	mov r9,r1	mov r9,r1	-
+206c086	0616	2	mov r6,r0	mov r6,r0	-
+206c088	c8ff12dc0502	6	mov r8,#0x205dc12	mov r8,#0x205dc12	-
+206c08e	1654	2	jz r6,0x0206c0f8	jz r6,0x0206c0f8	-
+206c0f8	4120	2	mov r1,#0x0	mov r1,#0x0	-
+206c128	7604	2	push {0x6}	push {0x6}	-
+206c12a	1416	2	mov r4,r1	mov r4,r1	-
+206c12c	05d6	2	mov r5,r0  #	mov r5,r0  #	-
+206c12e	4964	2	lh.z r1,[r4 + 0x8]	lh.z r1,[r4 + 0x8]	-
+206c1e8	7804	2	push {0x8}	push {0x8}	-
+206c1ea	3816	2	mov r8,r3	mov r8,r3	-
+206c1ec	2716	2	mov r7,r2	mov r7,r2	-
+206c1ee	1616	2	mov r6,r1	mov r6,r1	-
+206c1f0	0516	2	mov r5,r0	mov r5,r0	-
+206c1f2	40e0a001	4	movz r0,#0x1a0	movz r0,#0x1a0	-
+206c1f6	80ffee04fdff	6	call 0x0203c6ea	call 0x0203c6ea	-
+206c1fc	0416	2	mov r4,r0	mov r4,r0	-
+206c1fe	c560	2	sw r5,[r4 + 0x0]	sw r5,[r4 + 0x0]	-
+206c200	4884	2	add r0,r4,#0x4	add r0,r4,#0x4	-
+206c202	0126	2	lw r1,[sp + 0x18]	lw r1,[sp + 0x18]	-
+206c204	1086	2	rep 0x4,0x6	rep 0x4,0x6	-
+206c206	6207	2	lb.z r2,[r6 ++= 2]	lb.z r2,[r6 ++= 2]	-
+206c208	8207	2	sb r2,[r0 ++= 1]	sb r2,[r0 ++= 1]	-
+206c2ac	7604	2	push {0x6}	push {0x6}	-
+206c2ae	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+206c2b0	1416	2	mov r4,r1	mov r4,r1	-
+206c2b2	4a64	2	lh.z r2,[r4 + 0x8]	lh.z r2,[r4 + 0x8]	-
+206c2f8	7604	2	push {0x6}	push {0x6}	-
+206c2fa	0416	2	mov r4,r0	mov r4,r0	-
+206c2fc	402c	2	mov r0,#0xc	mov r0,#0xc	-
+206c2fe	80ffe603fdff	6	call 0x0203c6ea	call 0x0203c6ea	-
+206c304	1056	2	jz r0,0x0206c372	jz r0,0x0206c372	-
+206c306	6000	2	cli	cli	-
+206c372	80ff5c4bffff	6	call 0x02060ed4	call 0x02060ed4	-
+206c378	80ff143ff9ff	6	call 0x02000292	call 0x02000292	-
+206c37e	f79f	2	goto 0x0206c37e	goto 0x0206c37e	-
+206c470	7c04	2	push {0xc}	push {0xc}	-
+206c472	0516	2	mov r5,r0	mov r5,r0	-
+206c694	7c04	2	push {0xc}	push {0xc}	-
+206c696	2c16	2	mov r12,r2	mov r12,r2	-
+206c698	0b16	2	mov r11,r0	mov r11,r0	-
+206c69a	0141	2	jz r1,0x0206c69e	jz r1,0x0206c69e	-
+206c69c	5c04	2	pop {pc,0xc}	pop {pc,0xc}	-
+206c69e	00f8ac00	4	jeq r0,#0x0,0x0206c7fa	jeq r0,#0x0,0x0206c7fa	-
+206c6a2	6000	2	cli	cli	-
+206c7fa	80ffd446ffff	6	call 0x02060ed4	call 0x02060ed4	-
+206c800	80ff8c3af9ff	6	call 0x02000292	call 0x02000292	-
+206c806	f79f	2	goto 0x0206c806	goto 0x0206c806	-
+206c87c	7f04	2	push {0xf}	push {0xf}	-
+206c87e	e299	2	add sp,#-0x1c	add sp,#-0x1c	-
+206c880	c1ffc0bec001	6	mov r1,#0x1c0bec0	mov r1,#0x1c0bec0	-
+206c886	1160	2	lw r1,[r1 + 0x0]	lw r1,[r1 + 0x0]	-
+206c888	1161	2	lw r1,[r1 + 0x4]	lw r1,[r1 + 0x4]	-
+206c88a	6000	2	cli	cli	-
+206ce9c	7604	2	push {0x6}	push {0x6}	-
+206ce9e	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+206cea0	0416	2	mov r4,r0	mov r4,r0	-
+206cea2	80ff1a82ffff	6	call 0x020650c2	call 0x020650c2	-
+206cea8	0516	2	mov r5,r0	mov r5,r0	-
+206ceaa	80ff2e99ffff	6	call 0x020667de	call 0x020667de	-
+206ceb0	4060	2	lw r0,[r4 + 0x0]	lw r0,[r4 + 0x0]	-
+206ceb2	80ff10c7ffff	6	call 0x020695c8	call 0x020695c8	-
+206ceb8	c6ff9d720502	6	mov r6,#0x205729d	mov r6,#0x205729d	-
+206cebe	783e	2	mov r0,#0xfe	mov r0,#0xfe	-
+206cec0	4222	2	mov r2,#0x2	mov r2,#0x2	-
+206cec2	4321	2	mov r3,#0x1	mov r3,#0x1	-
+206cec4	6116	2	mov r1,r6	mov r1,r6	-
+206cec6	80ff609cffff	6	call 0x02066b2c	call 0x02066b2c	-
+206cecc	4031	2	mov r0,#0x11	mov r0,#0x11	-
+206cee8	7504	2	push {0x5}	push {0x5}	-
+206ceea	0416	2	mov r4,r0	mov r4,r0	-
+206ceec	80ffd081ffff	6	call 0x020650c2	call 0x020650c2	-
+206cef2	9047	2	jnz r0,0x0206cf42	jnz r0,0x0206cf42	-
+206cef4	1b95	2	add r3,r1,#0x15	add r3,r1,#0x15	-
+206cef6	3843	2	lb.z r0,[r3 + 0x3]	lb.z r0,[r3 + 0x3]	-
+206cef8	3942	2	lb.z r1,[r3 + 0x2]	lb.z r1,[r3 + 0x2]	-
+206cefa	00b8	2	lsl r0,r0,0x18	lsl r0,r0,0x18	-
+206cf42	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+206d468	7704	2	push {0x7}	push {0x7}	-
+206d46a	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+206d46c	1416	2	mov r4,r1	mov r4,r1	-
+206d46e	05d6	2	mov r5,r0  #	mov r5,r0  #	-
+206d470	4a64	2	lh.z r2,[r4 + 0x8]	lh.z r2,[r4 + 0x8]	-
+206d740	7504	2	push {0x5}	push {0x5}	-
+206d742	c5ff9c97c001	6	mov r5,#0x1c0979c	mov r5,#0x1c0979c	-
+206d748	04d6	2	mov r4,r0  #	mov r4,r0  #	-
+206d74a	5160	2	lw r1,[r5 + 0x0]	lw r1,[r5 + 0x0]	-
+206d74c	8143	2	jnz r1,0x0206d754	jnz r1,0x0206d754	-
+206d74e	bfeaf2ef	4	call 0x0206b736	call 0x0206b736	-
+206d752	5160	2	lw r1,[r5 + 0x0]	lw r1,[r5 + 0x0]	-
+206d798	7504	2	push {0x5}	push {0x5}	-
+206d79a	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+206d79c	0416	2	mov r4,r0	mov r4,r0	-
+206d79e	4020	2	mov r0,#0x0	mov r0,#0x0	-
+206d7a0	c2ff003b0100	6	mov r2,#0x13b00	mov r2,#0x13b00	-
+206d7a6	0487	2	goto 0x0206d7b6	goto 0x0206d7b6	-
+206dad0	c1ffb897c001	6	mov r1,#0x1c097b8	mov r1,#0x1c097b8	-
+206dad6	1085	2	rep 0x4,0x5	rep 0x4,0x5	-
+206dad8	1207	2	lb.z r2,[r1 ++= 2]	lb.z r2,[r1 ++= 2]	-
+206dada	8207	2	sb r2,[r0 ++= 1]	sb r2,[r0 ++= 1]	-
+206dadc	8000	2	rts	rts	-
+206db34	7904	2	push {0x9}	push {0x9}	-
+206db36	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+206db38	052a	2	lw r5,[sp + 0x28]	lw r5,[sp + 0x28]	-
+206dcc6	7404	2	push {0x4}	push {0x4}	-
+206dcc8	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+206dcca	1316	2	mov r3,r1	mov r3,r1	-
+206dccc	04d6	2	mov r4,r0  #	mov r4,r0  #	-
+206dce8	7a04	2	push {0xa}	push {0xa}	-
+206dcea	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+206dcec	8a80	2	add r2,sp,#0x0	add r2,sp,#0x0	-
+206dcee	c3ff03d90602	6	mov r3,#0x206d903	mov r3,#0x206d903	-
+206dcf4	2416	2	mov r4,r2	mov r4,r2	-
+206dcf6	1086	2	rep 0x4,0x6	rep 0x4,0x6	-
+206dcf8	3507	2	lb.z r5,[r3 ++= 2]	lb.z r5,[r3 ++= 2]	-
+206dcfa	c507	2	sb r5,[r4 ++= 1]	sb r5,[r4 ++= 1]	-
+206df8e	7604	2	push {0x6}	push {0x6}	-
+206df90	1616	2	mov r6,r1	mov r6,r1	-
+206df92	0516	2	mov r5,r0	mov r5,r0	-
+206df94	80ff5ad80000	6	call 0x0207b7f4	call 0x0207b7f4	-
+206df9a	4420	2	mov r4,#0x0	mov r4,#0x0	-
+206df9c	0056	2	jz r0,0x0206dfca	jz r0,0x0206dfca	-
+206dfca	4016	2	mov r0,r4	mov r0,r4	-
+206dfcc	5604	2	pop {pc,0x6}	pop {pc,0x6}	-
+206dfce	c2ffd8bfc001	6	mov r2,#0x1c0bfd8	mov r2,#0x1c0bfd8	-
+206dfd4	0116	2	mov r1,r0	mov r1,r0	-
+206dfd6	2016	2	mov r0,r2	mov r0,r2	-
+206dfd8	0487	2	goto 0x0206dfe8	goto 0x0206dfe8	-
+206e03e	7904	2	push {0x9}	push {0x9}	-
+206e040	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+206e042	0415	2	mov r4_r5,r0_r1	mov r4_r5,r0_r1	-
+206e044	6184	2	call 0x0206dfce	call 0x0206dfce	-
+206e046	0616	2	mov r6,r0	mov r6,r0	-
+206e048	0651	2	jz r6,0x0206e06c	jz r6,0x0206e06c	-
+206e06c	1453	2	jz r4,0x0206e0d4	jz r4,0x0206e0d4	-
+206e06e	c5ffd8bfc001	6	mov r5,#0x1c0bfd8	mov r5,#0x1c0bfd8	-
+206e074	c8ff16730502	6	mov r8,#0x2057316	mov r8,#0x2057316	-
+206e07a	49e01600	4	movz r9,#0x16	movz r9,#0x16	-
+206e07e	5616	2	mov r6,r5	mov r6,r5	-
+206e080	1485	2	goto 0x0206e0cc	goto 0x0206e0cc	-
+206e0d4	0282	2	add sp,#0x8	add sp,#0x8	-
+206e0d6	5904	2	pop {pc,0x9}	pop {pc,0x9}	-
+206e0d8	7804	2	push {0x8}	push {0x8}	-
+206e0da	e29b	2	add sp,#-0x14	add sp,#-0x14	-
+206e13c	7904	2	push {0x9}	push {0x9}	-
+206e13e	1816	2	mov r8,r1	mov r8,r1	-
+206e140	0516	2	mov r5,r0	mov r5,r0	-
+206e142	80ff6ae30000	6	call 0x0207c4b2	call 0x0207c4b2	-
+206e148	6000	2	cli	cli	-
+206e224	7504	2	push {0x5}	push {0x5}	-
+206e226	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+206e910	7704	2	push {0x7}	push {0x7}	-
+206e912	0416	2	mov r4,r0	mov r4,r0	-
+206e9ac	7804	2	push {0x8}	push {0x8}	-
+206e9ae	d069	2	sw r0,[r5 + 0x24]	sw r0,[r5 + 0x24]	-
+206e9b0	6060	2	lw r0,[r6 + 0x0]	lw r0,[r6 + 0x0]	-
+206e9b2	80fffa7a0000	6	call 0x020764b2	call 0x020764b2	-
+206e9b8	80ffac8e0000	6	call 0x0207786a	call 0x0207786a	-
+206e9be	6060	2	lw r0,[r6 + 0x0]	lw r0,[r6 + 0x0]	-
+206e9c0	4121	2	mov r1,#0x1	mov r1,#0x1	-
+206e9c2	80ffbe840000	6	call 0x02076e86	call 0x02076e86	-
+206e9c8	6060	2	lw r0,[r6 + 0x0]	lw r0,[r6 + 0x0]	-
+206e9ca	4120	2	mov r1,#0x0	mov r1,#0x0	-
+206e9cc	80ff80d5fbff	6	call 0x0202bf52	call 0x0202bf52	-
+206e9d2	6060	2	lw r0,[r6 + 0x0]	lw r0,[r6 + 0x0]	-
+206e9d4	80ff60bcfcff	6	call 0x0203a63a	call 0x0203a63a	-
+206e9da	5968	2	lh.z r1,[r5 + 0x10]	lh.z r1,[r5 + 0x10]	-
+206e9dc	12a1	2	lsl r2,r1,0x1	lsl r2,r1,0x1	-
+206e9de	41d6	2	mov r1,r4  #	mov r1,r4  #	-
+206e9e0	5844	2	lb.z r0,[r5 + 0x4]	lb.z r0,[r5 + 0x4]	-
+206e9e2	80ff66bcfcff	6	call 0x0203a64e	call 0x0203a64e	-
+206e9e8	5704	2	pop {pc,0x7}	pop {pc,0x7}	-
+206ed6c	7604	2	push {0x6}	push {0x6}	-
+206ed6e	6000	2	cli	cli	-
+206f03c	7704	2	push {0x7}	push {0x7}	-
+206f03e	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+206f040	0416	2	mov r4,r0	mov r4,r0	-
+206f120	7504	2	push {0x5}	push {0x5}	-
+206f122	0416	2	mov r4,r0	mov r4,r0	-
+206f19c	7804	2	push {0x8}	push {0x8}	-
+206f19e	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+206f1a0	1416	2	mov r4,r1	mov r4,r1	-
+206f1a2	0516	2	mov r5,r0	mov r5,r0	-
+206f1a4	c8ff003b0100	6	mov r8,#0x13b00	mov r8,#0x13b00	-
+206f1aa	0496	2	goto 0x0206f1d8	goto 0x0206f1d8	-
+206f1ea	7604	2	push {0x6}	push {0x6}	-
+206f1ec	014f	2	jz r1,0x0206f20c	jz r1,0x0206f20c	-
+206f20c	5604	2	pop {pc,0x6}	pop {pc,0x6}	-
+206f2cc	7804	2	push {0x8}	push {0x8}	-
+206f2ce	d069	2	sw r0,[r5 + 0x24]	sw r0,[r5 + 0x24]	-
+206f2d0	5844	2	lb.z r0,[r5 + 0x4]	lb.z r0,[r5 + 0x4]	-
+206f2d2	c1ff30ea0602	6	mov r1,#0x206ea30	mov r1,#0x206ea30	-
+206f2d8	42d6	2	mov r2,r4  #	mov r2,r4  #	-
+206f2e6	1004	2	push rets	push rets	-
+206f2e8	c1ff9d720502	6	mov r1,#0x205729d	mov r1,#0x205729d	-
+206f2ee	4222	2	mov r2,#0x2	mov r2,#0x2	-
+206f2f0	4320	2	mov r3,#0x0	mov r3,#0x0	-
+206f2f2	80ff524af9ff	6	call 0x02003d4a	call 0x02003d4a	-
+206f2f8	0004	2	pop pc	pop pc	-
+206f588	7704	2	push {0x7}	push {0x7}	-
+2070e04	7904	2	push {0x9}	push {0x9}	-
+2070e06	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+2070e08	0416	2	mov r4,r0	mov r4,r0	-
+20710f2	7504	2	push {0x5}	push {0x5}	-
+20710f4	e297	2	add sp,#-0x24	add sp,#-0x24	-
+20710f6	4220	2	mov r2,#0x0	mov r2,#0x0	-
+20710f8	4320	2	mov r3,#0x0	mov r3,#0x0	-
+2071158	7604	2	push {0x6}	push {0x6}	-
+207115a	e29c	2	add sp,#-0x10	add sp,#-0x10	-
+207115c	0416	2	mov r4,r0	mov r4,r0	-
+207115e	8d80	2	add r5,sp,#0x0	add r5,sp,#0x0	-
+2071160	5116	2	mov r1,r5	mov r1,r5	-
+2071162	6187	2	call 0x020710f2	call 0x020710f2	-
+2071164	c6ff9d720502	6	mov r6,#0x205729d	mov r6,#0x205729d	-
+207116a	4226	2	mov r2,#0x6	mov r2,#0x6	-
+207116c	5321	2	mov r3,#0x41	mov r3,#0x41	-
+207116e	4016	2	mov r0,r4	mov r0,r4	-
+2071170	6116	2	mov r1,r6	mov r1,r6	-
+2071172	80ff50adfbff	6	call 0x0202bec8	call 0x0202bec8	-
+207118c	7604	2	push {0x6}	push {0x6}	-
+207118e	e28f	2	add sp,#-0x44	add sp,#-0x44	-
+2071190	4220	2	mov r2,#0x0	mov r2,#0x0	-
+2071192	4320	2	mov r3,#0x0	mov r3,#0x0	-
+207153c	7504	2	push {0x5}	push {0x5}	-
+207153e	0415	2	mov r4_r5,r0_r1	mov r4_r5,r0_r1	-
+2071950	7604	2	push {0x6}	push {0x6}	-
+2071952	e29c	2	add sp,#-0x10	add sp,#-0x10	-
+2071954	0416	2	mov r4,r0	mov r4,r0	-
+20723c8	7504	2	push {0x5}	push {0x5}	-
+20723ca	0416	2	mov r4,r0	mov r4,r0	-
+20723cc	4520	2	mov r5,#0x0	mov r5,#0x0	-
+2072508	7a04	2	push {0xa}	push {0xa}	-
+207250a	e28f	2	add sp,#-0x44	add sp,#-0x44	-
+207250c	0416	2	mov r4,r0	mov r4,r0	-
+207335a	7d04	2	push {0xd}	push {0xd}	-
+207335c	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+207335e	1a45	2	lb.z r2,[r1 + 0x5]	lb.z r2,[r1 + 0x5]	-
+2073470	7604	2	push {0x6}	push {0x6}	-
+2073472	6000	2	cli	cli	-
+20735e4	7704	2	push {0x7}	push {0x7}	-
+20735e6	2416	2	mov r4,r2	mov r4,r2	-
+20735e8	0516	2	mov r5,r0	mov r5,r0	-
+20735ea	0558	2	jz r5,0x0207361c	jz r5,0x0207361c	-
+207361c	5704	2	pop {pc,0x7}	pop {pc,0x7}	-
+207375c	7f04	2	push {0xf}	push {0xf}	-
+207375e	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+2073760	0f16	2	mov r15,r0	mov r15,r0	-
+2073762	4020	2	mov r0,#0x0	mov r0,#0x0	-
+2073958	7f04	2	push {0xf}	push {0xf}	-
+207395a	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+207395c	c9ffd8bfc001	6	mov r9,#0x1c0bfd8	mov r9,#0x1c0bfd8	-
+2073962	cdff9490c001	6	mov r13,#0x1c09094	mov r13,#0x1c09094	-
+2073968	ceff8c90c001	6	mov r14,#0x1c0908c	mov r14,#0x1c0908c	-
+207396e	c214	2	clr r10	clr r10	-
+2073970	4be00100	4	movz r11,#0x1	movz r11,#0x1	-
+2073974	4ce0ff00	4	movz r12,#0xff	movz r12,#0xff	-
+2073978	9516	2	mov r5,r9	mov r5,r9	-
+207397a	c485	2	goto 0x02073c86	goto 0x02073c86	-
+2073e28	7c04	2	push {0xc}	push {0xc}	-
+2073e2a	6000	2	cli	cli	-
+20743c6	7504	2	push {0x5}	push {0x5}	-
+20743c8	c4ff9898c001	6	mov r4,#0x1c09898	mov r4,#0x1c09898	-
+20743ce	05d6	2	mov r5,r0  #	mov r5,r0  #	-
+20743d0	4163	2	lw r1,[r4 + 0xc]	lw r1,[r4 + 0xc]	-
+20743d2	014a	2	jz r1,0x020743e8	jz r1,0x020743e8	-
+20743d4	9017	2	uxth r0,r1	uxth r0,r1	-
+20743d6	80ff10f4f8ff	6	call 0x020037ec	call 0x020037ec	-
+20743e8	4020	2	mov r0,#0x0	mov r0,#0x0	-
+20743ea	50d6	2	mov r0,r5  #	mov r0,r5  #	-
+20743ec	c846	2	sb r0,[r4 + 0x6]	sb r0,[r4 + 0x6]	-
+20743ee	80ff42360000	6	call 0x02077a36	call 0x02077a36	-
+20743f4	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+20743f6	7904	2	push {0x9}	push {0x9}	-
+20743f8	c4ff9898c001	6	mov r4,#0x1c09898	mov r4,#0x1c09898	-
+20743fe	38d6	2	mov r8,r3  #	mov r8,r3  #	-
+2074400	4663	2	lw r6,[r4 + 0xc]	lw r6,[r4 + 0xc]	-
+2074402	2916	2	mov r9,r2	mov r9,r2	-
+2074404	1516	2	mov r5,r1	mov r5,r1	-
+2074406	0716	2	mov r7,r0	mov r7,r0	-
+2074408	0642	2	jz r6,0x0207440e	jz r6,0x0207440e	-
+207440a	1032	2	mov r0,#-0xe	mov r0,#-0xe	-
+207440c	619c	2	call 0x020743c6	call 0x020743c6	-
+207440e	6000	2	cli	cli	-
+207448c	7504	2	push {0x5}	push {0x5}	-
+207448e	1416	2	mov r4,r1	mov r4,r1	-
+2074490	0516	2	mov r5,r0	mov r5,r0	-
+2074492	80ff5c730000	6	call 0x0207b7f4	call 0x0207b7f4	-
+2074498	0043	2	jz r0,0x020744a0	jz r0,0x020744a0	-
+207449a	bfea24d7	4	call 0x0206f2e6	call 0x0206f2e6	-
+207449e	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+20744a0	4021	2	mov r0,#0x1	mov r0,#0x1	-
+20744a2	4320	2	mov r3,#0x0	mov r3,#0x0	-
+20744a4	5116	2	mov r1,r5	mov r1,r5	-
+20744a6	4216	2	mov r2,r4	mov r2,r4	-
+20744a8	5186	2	call 0x020743f6	call 0x020743f6	-
+20744aa	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+20744ac	7a04	2	push {0xa}	push {0xa}	-
+20744ae	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+20744b0	0416	2	mov r4,r0	mov r4,r0	-
+20744b2	4060	2	lw r0,[r4 + 0x0]	lw r0,[r4 + 0x0]	-
+20744b4	c5fff496c001	6	mov r5,#0x1c096f4	mov r5,#0x1c096f4	-
+20746b8	7604	2	push {0x6}	push {0x6}	-
+20746ba	e29c	2	add sp,#-0x10	add sp,#-0x10	-
+20746bc	0460	2	lw r4,[r0 + 0x0]	lw r4,[r0 + 0x0]	-
+20746be	04f88700	4	jeq r4,#0x0,0x020747d0	jeq r4,#0x0,0x020747d0	-
+20746c2	0361	2	lw r3,[r0 + 0x4]	lw r3,[r0 + 0x4]	-
+20746c4	0d84	2	add r5,r0,#0x4	add r5,r0,#0x4	-
+20747d0	0284	2	add sp,#0x10	add sp,#0x10	-
+20747d2	5604	2	pop {pc,0x6}	pop {pc,0x6}	-
+20747d4	1004	2	push rets	push rets	-
+20747d6	c0ff02004000	6	mov r0,#0x400002	mov r0,#0x400002	-
+20747dc	4121	2	mov r1,#0x1	mov r1,#0x1	-
+20747de	42e0030c	4	movz r2,#0xc03	movz r2,#0xc03	-
+20747e2	80ff7022ffff	6	call 0x02066a58	call 0x02066a58	-
+20747e8	0004	2	pop pc	pop pc	-
+20747ea	c1fff496c001	6	mov r1,#0x1c096f4	mov r1,#0x1c096f4	-
+2074816	c1ffac98c001	6	mov r1,#0x1c098ac	mov r1,#0x1c098ac	-
+2074822	7604	2	push {0x6}	push {0x6}	-
+2074824	0416	2	mov r4,r0	mov r4,r0	-
+2074826	80ff9e46fdff	6	call 0x02048eca	call 0x02048eca	-
+207482c	c021	2	add r0,#0x1	add r0,#0x1	-
+207482e	8517	2	uxth r5,r0	uxth r5,r0	-
+207494c	7504	2	push {0x5}	push {0x5}	-
+207494e	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+2074950	24d6	2	mov r4,r2  #	mov r4,r2  #	-
+20749b8	7804	2	push {0x8}	push {0x8}	-
+20749ba	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+2074c80	7704	2	push {0x7}	push {0x7}	-
+2074c82	6000	2	cli	cli	-
+2074d58	7504	2	push {0x5}	push {0x5}	-
+2074d5a	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+2074d5c	0945	2	lb.z r1,[r0 + 0x5]	lb.z r1,[r0 + 0x5]	-
+2074d5e	0c44	2	lb.z r4,[r0 + 0x4]	lb.z r4,[r0 + 0x4]	-
+2074d90	7504	2	push {0x5}	push {0x5}	-
+2074d92	1416	2	mov r4,r1	mov r4,r1	-
+2074d94	0516	2	mov r5,r0	mov r5,r0	-
+2074d96	4016	2	mov r0,r4	mov r0,r4	-
+2074d98	bfea19c9	4	call 0x0206dfce	call 0x0206dfce	-
+2074d9c	0048	2	jz r0,0x02074dae	jz r0,0x02074dae	-
+2074d9e	4122	2	mov r1,#0x2	mov r1,#0x2	-
+2074da0	42e0fc0c	4	movz r2,#0xcfc	movz r2,#0xcfc	-
+2074da4	4016	2	mov r0,r4	mov r0,r4	-
+2074da6	5316	2	mov r3,r5	mov r3,r5	-
+2074da8	80ffb21bffff	6	call 0x02066960	call 0x02066960	-
+2074dae	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+2074db0	7504	2	push {0x5}	push {0x5}	-
+2074db2	1416	2	mov r4,r1	mov r4,r1	-
+2074db4	0516	2	mov r5,r0	mov r5,r0	-
+2074db6	4016	2	mov r0,r4	mov r0,r4	-
+2074db8	bfea09c9	4	call 0x0206dfce	call 0x0206dfce	-
+2074dbc	0048	2	jz r0,0x02074dce	jz r0,0x02074dce	-
+2074dbe	4122	2	mov r1,#0x2	mov r1,#0x2	-
+2074dc0	42e0fb0c	4	movz r2,#0xcfb	movz r2,#0xcfb	-
+2074dc4	4016	2	mov r0,r4	mov r0,r4	-
+2074dc6	5316	2	mov r3,r5	mov r3,r5	-
+2074dc8	80ff921bffff	6	call 0x02066960	call 0x02066960	-
+2074dce	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+2074e54	7604	2	push {0x6}	push {0x6}	-
+2074e56	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+2074e58	0949	2	lb.z r1,[r0 + 0x9]	lb.z r1,[r0 + 0x9]	-
+2074e5a	0a48	2	lb.z r2,[r0 + 0x8]	lb.z r2,[r0 + 0x8]	-
+20756a4	7a04	2	push {0xa}	push {0xa}	-
+20756a6	e298	2	add sp,#-0x20	add sp,#-0x20	-
+20756a8	3916	2	mov r9,r3	mov r9,r3	-
+20756aa	2a16	2	mov r10,r2	mov r10,r2	-
+20756ac	1716	2	mov r7,r1	mov r7,r1	-
+20756ae	0416	2	mov r4,r0	mov r4,r0	-
+20756b0	40e01001	4	movz r0,#0x110	movz r0,#0x110	-
+20756b4	80ffc093feff	6	call 0x0205ea7a	call 0x0205ea7a	-
+20756ba	0816	2	mov r8,r0	mov r8,r0	-
+20756bc	00f89c00	4	jeq r0,#0x0,0x020757f8	jeq r0,#0x0,0x020757f8	-
+20757f8	80ffd6b6feff	6	call 0x02060ed4	call 0x02060ed4	-
+20757fe	80ff8eaaf8ff	6	call 0x02000292	call 0x02000292	-
+2075804	f79f	2	goto 0x02075804	goto 0x02075804	-
+2075900	7904	2	push {0x9}	push {0x9}	-
+2075902	e29c	2	add sp,#-0x10	add sp,#-0x10	-
+2075904	3416	2	mov r4,r3	mov r4,r3	-
+2075906	2716	2	mov r7,r2	mov r7,r2	-
+2075908	1916	2	mov r9,r1	mov r9,r1	-
+207590a	0616	2	mov r6,r0	mov r6,r0	-
+207590c	40e01001	4	movz r0,#0x110	movz r0,#0x110	-
+2075910	80ff1e650000	6	call 0x0207be34	call 0x0207be34	-
+2075916	0816	2	mov r8,r0	mov r8,r0	-
+2075918	2049	2	jz r0,0x020759ac	jz r0,0x020759ac	-
+207591a	71d6	2	mov r1,r7  #	mov r1,r7  #	-
+207591c	052b	2	lw r5,[sp + 0x2c]	lw r5,[sp + 0x2c]	-
+207591e	8880	2	add r0,sp,#0x0	add r0,sp,#0x0	-
+2075920	0483	2	goto 0x02075928	goto 0x02075928	-
+2075922	6207	2	lb.z r2,[r6 ++= 2]	lb.z r2,[r6 ++= 2]	-
+2075924	8207	2	sb r2,[r0 ++= 1]	sb r2,[r0 ++= 1]	-
+2075926	f93f	2	add r1,#-0x1	add r1,#-0x1	-
+2075928	f15c	2	jnz r1,0x02075922	jnz r1,0x02075922	-
+207592a	8880	2	add r0,sp,#0x0	add r0,sp,#0x0	-
+207592c	891d	2	add r1,r0,r7	add r1,r0,r7	-
+207592e	4220	2	mov r2,#0x0	mov r2,#0x0	-
+2075930	7016	2	mov r0,r7	mov r0,r7	-
+2075932	0489	2	goto 0x02075946	goto 0x02075946	-
+20759ac	80ff22b5feff	6	call 0x02060ed4	call 0x02060ed4	-
+20759b2	80ffdaa8f8ff	6	call 0x02000292	call 0x02000292	-
+20759b8	f79f	2	goto 0x020759b8	goto 0x020759b8	-
+20761fa	7504	2	push {0x5}	push {0x5}	-
+20761fc	c1ffd499c001	6	mov r1,#0x1c099d4	mov r1,#0x1c099d4	-
+2076234	7f04	2	push {0xf}	push {0xf}	-
+2076236	e299	2	add sp,#-0x1c	add sp,#-0x1c	-
+2076238	1b16	2	mov r11,r1	mov r11,r1	-
+207623a	0d16	2	mov r13,r0	mov r13,r0	-
+207623c	619e	2	call 0x020761fa	call 0x020761fa	-
+207623e	caffd499c001	6	mov r10,#0x1c099d4	mov r10,#0x1c099d4	-
+2076468	c0ff1c000200	6	mov r0,#0x2001c	mov r0,#0x2001c	-
+207647a	7404	2	push {0x4}	push {0x4}	-
+207647c	1316	2	mov r3,r1	mov r3,r1	-
+207647e	0416	2	mov r4,r0	mov r4,r0	-
+2076480	7193	2	call 0x02076468	call 0x02076468	-
+20764b2	1004	2	push rets	push rets	-
+20764b4	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+20764b6	8980	2	add r1,sp,#0x0	add r1,sp,#0x0	-
+20764b8	4220	2	mov r2,#0x0	mov r2,#0x0	-
+20764ba	619f	2	call 0x0207647a	call 0x0207647a	-
+20764bc	0020	2	lw r0,[sp + 0x0]	lw r0,[sp + 0x0]	-
+20764be	0281	2	add sp,#0x4	add sp,#0x4	-
+20764c0	0004	2	pop pc	pop pc	-
+207652e	7504	2	push {0x5}	push {0x5}	-
+2076530	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+2076532	1416	2	mov r4,r1	mov r4,r1	-
+2076534	0516	2	mov r5,r0	mov r5,r0	-
+2076536	4198	2	call 0x02076468	call 0x02076468	-
+2076538	50d6	2	mov r0,r5  #	mov r0,r5  #	-
+2076544	7804	2	push {0x8}	push {0x8}	-
+2076546	0416	2	mov r4,r0	mov r4,r0	-
+20765f8	7604	2	push {0x6}	push {0x6}	-
+20765fa	c4ff44fc0200	6	mov r4,#0x2fc44	mov r4,#0x2fc44	-
+2076b8c	4221	2	mov r2,#0x1	mov r2,#0x1	-
+2076b8e	021a	2	lsl r2,r0	lsl r2,r0	-
+2076b90	c0ffd499c001	6	mov r0,#0x1c099d4	mov r0,#0x1c099d4	-
+2076b96	014b	2	jz r1,0x02076bae	jz r1,0x02076bae	-
+2076b98	4120	2	mov r1,#0x0	mov r1,#0x0	-
+2076b9a	0486	2	goto 0x02076ba8	goto 0x02076ba8	-
+2076bae	c1ffffff0000	6	mov r1,#0xffff	mov r1,#0xffff	-
+2076bb4	2919	2	xor r1,r2	xor r1,r2	-
+2076bb6	4220	2	mov r2,#0x0	mov r2,#0x0	-
+2076bb8	0486	2	goto 0x02076bc6	goto 0x02076bc6	-
+2076bcc	7604	2	push {0x6}	push {0x6}	-
+2076bce	6000	2	cli	cli	-
+2076e86	7d04	2	push {0xd}	push {0xd}	-
+2077018	7504	2	push {0x5}	push {0x5}	-
+20777d8	7804	2	push {0x8}	push {0x8}	-
+20777da	0043	2	jz r0,0x020777e2	jz r0,0x020777e2	-
+20777dc	80ff3a430000	6	call 0x0207bb1c	call 0x0207bb1c	-
+20777e2	6000	2	cli	cli	-
+207786a	7504	2	push {0x5}	push {0x5}	-
+207786c	6000	2	cli	cli	-
+207795c	7504	2	push {0x5}	push {0x5}	-
+207795e	c4ff2c99c001	6	mov r4,#0x1c0992c	mov r4,#0x1c0992c	-
+2077964	4060	2	lw r0,[r4 + 0x0]	lw r0,[r4 + 0x0]	-
+2077966	1041	2	jz r0,0x020779aa	jz r0,0x020779aa	-
+2077968	c5ff3399c001	6	mov r5,#0x1c09933	mov r5,#0x1c09933	-
+207796e	5940	2	lb.z r1,[r5 + 0x0]	lb.z r1,[r5 + 0x0]	-
+2077970	815c	2	jnz r1,0x020779aa	jnz r1,0x020779aa	-
+2077972	4121	2	mov r1,#0x1	mov r1,#0x1	-
+20779aa	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+20779b2	c1ff20bfc001	6	mov r1,#0x1c0bf20	mov r1,#0x1c0bf20	-
+20779c6	7604	2	push {0x6}	push {0x6}	-
+20779c8	c5ff2499c001	6	mov r5,#0x1c09924	mov r5,#0x1c09924	-
+20779ce	14d6	2	mov r4,r1  #	mov r4,r1  #	-
+20779d0	5260	2	lw r2,[r5 + 0x0]	lw r2,[r5 + 0x0]	-
+20779d2	1250	2	jz r2,0x02077a34	jz r2,0x02077a34	-
+20779d4	c6ff3099c001	6	mov r6,#0x1c09930	mov r6,#0x1c09930	-
+20779da	6940	2	lb.z r1,[r6 + 0x0]	lb.z r1,[r6 + 0x0]	-
+20779dc	914b	2	jnz r1,0x02077a34	jnz r1,0x02077a34	-
+20779de	4121	2	mov r1,#0x1	mov r1,#0x1	-
+20779e0	e940	2	sb r1,[r6 + 0x0]	sb r1,[r6 + 0x0]	-
+20779e2	0043	2	jz r0,0x020779ea	jz r0,0x020779ea	-
+20779e4	2841	2	lb.z r0,[r2 + 0x1]	lb.z r0,[r2 + 0x1]	-
+20779e6	7185	2	call 0x020779b2	call 0x020779b2	-
+20779e8	5260	2	lw r2,[r5 + 0x0]	lw r2,[r5 + 0x0]	-
+2077a34	5604	2	pop {pc,0x6}	pop {pc,0x6}	-
+2077a36	1004	2	push rets	push rets	-
+2077a38	0116	2	mov r1,r0	mov r1,r0	-
+2077a3a	4021	2	mov r0,#0x1	mov r0,#0x1	-
+2077a3c	6184	2	call 0x020779c6	call 0x020779c6	-
+2077a3e	0004	2	pop pc	pop pc	-
+2077a40	7504	2	push {0x5}	push {0x5}	-
+2077a42	c4ff2899c001	6	mov r4,#0x1c09928	mov r4,#0x1c09928	-
+2077a48	4060	2	lw r0,[r4 + 0x0]	lw r0,[r4 + 0x0]	-
+2077a4a	1044	2	jz r0,0x02077a94	jz r0,0x02077a94	-
+2077a4c	c5ff3299c001	6	mov r5,#0x1c09932	mov r5,#0x1c09932	-
+2077a52	5940	2	lb.z r1,[r5 + 0x0]	lb.z r1,[r5 + 0x0]	-
+2077a54	815f	2	jnz r1,0x02077a94	jnz r1,0x02077a94	-
+2077a56	4121	2	mov r1,#0x1	mov r1,#0x1	-
+2077a58	d940	2	sb r1,[r5 + 0x0]	sb r1,[r5 + 0x0]	-
+2077a5a	c82c	2	add r0,#0x2c	add r0,#0x2c	-
+2077a5c	80ff0a4c0000	6	call 0x0207c66c	call 0x0207c66c	-
+2077a62	bfea02ff	4	call 0x0207786a	call 0x0207786a	-
+2077a66	c1ff20bfc001	6	mov r1,#0x1c0bf20	mov r1,#0x1c0bf20	-
+2077a94	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+2077ab0	7604	2	push {0x6}	push {0x6}	-
+2077ab2	6000	2	cli	cli	-
+2077c5c	7504	2	push {0x5}	push {0x5}	-
+2077c5e	6000	2	cli	cli	-
+2077dbe	4220	2	mov r2,#0x0	mov r2,#0x0	-
+2077dc0	c1ffd499c001	6	mov r1,#0x1c099d4	mov r1,#0x1c099d4	-
+2077dc6	0487	2	goto 0x02077dd6	goto 0x02077dd6	-
+2077e4c	7704	2	push {0x7}	push {0x7}	-
+207820c	7604	2	push {0x6}	push {0x6}	-
+207820e	1616	2	mov r6,r1	mov r6,r1	-
+2078210	0416	2	mov r4,r0	mov r4,r0	-
+2078212	5838	2	mov r0,#0x78	mov r0,#0x78	-
+2078214	80ff4a3c0000	6	call 0x0207be64	call 0x0207be64	-
+207821a	0516	2	mov r5,r0	mov r5,r0	-
+207821c	0558	2	jz r5,0x0207824e	jz r5,0x0207824e	-
+207821e	4034	2	mov r0,#0x14	mov r0,#0x14	-
+2078220	80ff3e3c0000	6	call 0x0207be64	call 0x0207be64	-
+2078226	0053	2	jz r0,0x0207824e	jz r0,0x0207824e	-
+2078228	8e60	2	sh r6,[r0 + 0x0]	sh r6,[r0 + 0x0]	-
+207822a	8564	2	sw r5,[r0 + 0x10]	sw r5,[r0 + 0x10]	-
+207822c	c1ff34a9c001	6	mov r1,#0x1c0a934	mov r1,#0x1c0a934	-
+207824e	80ff808cfeff	6	call 0x02060ed4	call 0x02060ed4	-
+2078254	80ff3880f8ff	6	call 0x02000292	call 0x02000292	-
+207825a	f79f	2	goto 0x0207825a	goto 0x0207825a	-
+207828c	7704	2	push {0x7}	push {0x7}	-
+207828e	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+2078290	3416	2	mov r4,r3	mov r4,r3	-
+2078292	2516	2	mov r5,r2	mov r5,r2	-
+2078294	1616	2	mov r6,r1	mov r6,r1	-
+2078296	0716	2	mov r7,r0	mov r7,r0	-
+2078298	8883	2	add r0,sp,#0x3	add r0,sp,#0x3	-
+207829a	7116	2	mov r1,r7	mov r1,r7	-
+207829c	80ffb8b0ffff	6	call 0x0207335a	call 0x0207335a	-
+207832c	7504	2	push {0x5}	push {0x5}	-
+207832e	c3ff44fc0200	6	mov r3,#0x2fc44	mov r3,#0x2fc44	-
+2078568	7604	2	push {0x6}	push {0x6}	-
+207856a	c1ff7c98c001	6	mov r1,#0x1c0987c	mov r1,#0x1c0987c	-
+2078570	1460	2	lw r4,[r1 + 0x0]	lw r4,[r1 + 0x0]	-
+2078572	c1ffd0000200	6	mov r1,#0x200d0	mov r1,#0x200d0	-
+2078670	7a04	2	push {0xa}	push {0xa}	-
+2078672	0a16	2	mov r10,r0	mov r10,r0	-
+2078674	c6ff20bfc001	6	mov r6,#0x1c0bf20	mov r6,#0x1c0bf20	-
+207867a	00f8f200	4	jeq r0,#0x0,0x02078862	jeq r0,#0x0,0x02078862	-
+207867e	4020	2	mov r0,#0x0	mov r0,#0x0	-
+2078680	6116	2	mov r1,r6	mov r1,r6	-
+2078682	0486	2	goto 0x02078690	goto 0x02078690	-
+2078690	1160	2	lw r1,[r1 + 0x0]	lw r1,[r1 + 0x0]	-
+2078862	6416	2	mov r4,r6	mov r4,r6	-
+2078864	0487	2	goto 0x02078874	goto 0x02078874	-
+2078874	4460	2	lw r4,[r4 + 0x0]	lw r4,[r4 + 0x0]	-
+20788e4	7704	2	push {0x7}	push {0x7}	-
+20788e6	6000	2	cli	cli	-
+2078a50	7604	2	push {0x6}	push {0x6}	-
+2078d44	7f04	2	push {0xf}	push {0xf}	-
+2078d46	ceff2499c001	6	mov r14,#0x1c09924	mov r14,#0x1c09924	-
+2078fb8	7704	2	push {0x7}	push {0x7}	-
+2078fba	c5ff2899c001	6	mov r5,#0x1c09928	mov r5,#0x1c09928	-
+2078fc0	5160	2	lw r1,[r5 + 0x0]	lw r1,[r5 + 0x0]	-
+207905a	c0ff0c000200	6	mov r0,#0x2000c	mov r0,#0x2000c	-
+2079500	7804	2	push {0x8}	push {0x8}	-
+2079502	c0ff3299c001	6	mov r0,#0x1c09932	mov r0,#0x1c09932	-
+2079508	0840	2	lb.z r0,[r0 + 0x0]	lb.z r0,[r0 + 0x0]	-
+207950a	a059	2	jnz r0,0x020795be	jnz r0,0x020795be	-
+207950c	c5ff2899c001	6	mov r5,#0x1c09928	mov r5,#0x1c09928	-
+2079512	5060	2	lw r0,[r5 + 0x0]	lw r0,[r5 + 0x0]	-
+20795be	4020	2	mov r0,#0x0	mov r0,#0x0	-
+20795c0	5804	2	pop {pc,0x8}	pop {pc,0x8}	-
+207a7f4	7604	2	push {0x6}	push {0x6}	-
+207a7f6	c0ff3399c001	6	mov r0,#0x1c09933	mov r0,#0x1c09933	-
+207a7fc	0840	2	lb.z r0,[r0 + 0x0]	lb.z r0,[r0 + 0x0]	-
+207a7fe	8058	2	jnz r0,0x0207a830	jnz r0,0x0207a830	-
+207a800	c5ff2c99c001	6	mov r5,#0x1c0992c	mov r5,#0x1c0992c	-
+207a806	5060	2	lw r0,[r5 + 0x0]	lw r0,[r5 + 0x0]	-
+207a830	4020	2	mov r0,#0x0	mov r0,#0x0	-
+207a832	5604	2	pop {pc,0x6}	pop {pc,0x6}	-
+207a834	7504	2	push {0x5}	push {0x5}	-
+207a836	c0ff3399c001	6	mov r0,#0x1c09933	mov r0,#0x1c09933	-
+207a83c	0940	2	lb.z r1,[r0 + 0x0]	lb.z r1,[r0 + 0x0]	-
+207a83e	4020	2	mov r0,#0x0	mov r0,#0x0	-
+207a840	9158	2	jnz r1,0x0207a8b2	jnz r1,0x0207a8b2	-
+207a842	c5ff2c99c001	6	mov r5,#0x1c0992c	mov r5,#0x1c0992c	-
+207a848	5260	2	lw r2,[r5 + 0x0]	lw r2,[r5 + 0x0]	-
+207a84a	2940	2	lb.z r1,[r2 + 0x0]	lb.z r1,[r2 + 0x0]	-
+207a84c	01f83106	4	jeq r1,#0x3,0x0207a8b2	jeq r1,#0x3,0x0207a8b2	-
+207a850	bfea03f4	4	call 0x0207905a	call 0x0207905a	-
+207a854	bfea08de	4	call 0x02076468	call 0x02076468	-
+207a8b2	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+207a8b4	7504	2	push {0x5}	push {0x5}	-
+207a8b6	c1ff3299c001	6	mov r1,#0x1c09932	mov r1,#0x1c09932	-
+207a8bc	04d6	2	mov r4,r0  #	mov r4,r0  #	-
+207a8be	1940	2	lb.z r1,[r1 + 0x0]	lb.z r1,[r1 + 0x0]	-
+207a8c0	815d	2	jnz r1,0x0207a8fc	jnz r1,0x0207a8fc	-
+207a8c2	c5ff2899c001	6	mov r5,#0x1c09928	mov r5,#0x1c09928	-
+207a8c8	5060	2	lw r0,[r5 + 0x0]	lw r0,[r5 + 0x0]	-
+207a8fc	4020	2	mov r0,#0x0	mov r0,#0x0	-
+207a8fe	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+207a900	7804	2	push {0x8}	push {0x8}	-
+207a902	c6ff2499c001	6	mov r6,#0x1c09924	mov r6,#0x1c09924	-
+207a908	6560	2	lw r5,[r6 + 0x0]	lw r5,[r6 + 0x0]	-
+207a9bc	7504	2	push {0x5}	push {0x5}	-
+207a9be	c5ff2499c001	6	mov r5,#0x1c09924	mov r5,#0x1c09924	-
+207a9c4	04d6	2	mov r4,r0  #	mov r4,r0  #	-
+207a9c6	5260	2	lw r2,[r5 + 0x0]	lw r2,[r5 + 0x0]	-
+207aabc	7504	2	push {0x5}	push {0x5}	-
+207aabe	2416	2	mov r4,r2	mov r4,r2	-
+207aac0	1516	2	mov r5,r1	mov r5,r1	-
+207aac2	bfea7ce9	4	call 0x02077dbe	call 0x02077dbe	-
+207aac6	402f	2	mov r0,#0xf	mov r0,#0xf	-
+207aac8	4116	2	mov r1,r4	mov r1,r4	-
+207aaca	bfea5fe0	4	call 0x02076b8c	call 0x02076b8c	-
+207aace	402b	2	mov r0,#0xb	mov r0,#0xb	-
+207aad0	5116	2	mov r1,r5	mov r1,r5	-
+207aad2	bfea5be0	4	call 0x02076b8c	call 0x02076b8c	-
+207aad6	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+207aad8	7904	2	push {0x9}	push {0x9}	-
+207aada	0416	2	mov r4,r0	mov r4,r0	-
+207ace0	7f04	2	push {0xf}	push {0xf}	-
+207ace2	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+207b158	7504	2	push {0x5}	push {0x5}	-
+207b15a	0216	2	mov r2,r0	mov r2,r0	-
+207b15c	bfea84d9	4	call 0x02076468	call 0x02076468	-
+207b160	c1ff20bfc001	6	mov r1,#0x1c0bf20	mov r1,#0x1c0bf20	-
+207b166	03d6	2	mov r3,r0  #	mov r3,r0  #	-
+207b168	1165	2	lw r1,[r1 + 0x14]	lw r1,[r1 + 0x14]	-
+207b16a	4420	2	mov r4,#0x0	mov r4,#0x0	-
+207b16c	0151	2	jz r1,0x0207b190	jz r1,0x0207b190	-
+207b16e	31d6	2	mov r1,r3  #	mov r1,r3  #	-
+207b170	2561	2	lw r5,[r2 + 0x4]	lw r5,[r2 + 0x4]	-
+207b172	5016	2	mov r0,r5	mov r0,r5	-
+207b174	80ff928cffff	6	call 0x02073e0c	call 0x02073e0c	-
+207b17a	004a	2	jz r0,0x0207b190	jz r0,0x0207b190	-
+207b190	4016	2	mov r0,r4	mov r0,r4	-
+207b192	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+207b4dc	7f04	2	push {0xf}	push {0xf}	-
+207b4de	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+207b4e0	2a16	2	mov r10,r2	mov r10,r2	-
+207b4e2	1616	2	mov r6,r1	mov r6,r1	-
+207b4e4	0f16	2	mov r15,r0	mov r15,r0	-
+207b4e6	5820	2	mov r0,#0x60	mov r0,#0x60	-
+207b4e8	80ff76090000	6	call 0x0207be64	call 0x0207be64	-
+207b4ee	0516	2	mov r5,r0	mov r5,r0	-
+207b4f0	05f8da00	4	jeq r5,#0x0,0x0207b6a8	jeq r5,#0x0,0x0207b6a8	-
+207b6a8	80ff2658feff	6	call 0x02060ed4	call 0x02060ed4	-
+207b6ae	80ffde4bf8ff	6	call 0x02000292	call 0x02000292	-
+207b6b4	f79f	2	goto 0x0207b6b4	goto 0x0207b6b4	-
+207b7f4	7904	2	push {0x9}	push {0x9}	-
+207b7f6	6000	2	cli	cli	-
+207b938	7a04	2	push {0xa}	push {0xa}	-
+207b93a	1716	2	mov r7,r1	mov r7,r1	-
+207b93c	0516	2	mov r5,r0	mov r5,r0	-
+207b93e	c214	2	clr r10	clr r10	-
+207b940	c8ff0020a107	6	mov r8,#0x7a12000	mov r8,#0x7a12000	-
+207b946	c9ffa4dd0502	6	mov r9,#0x205dda4	mov r9,#0x205dda4	-
+207b94c	7416	2	mov r4,r7	mov r4,r7	-
+207b94e	1497	2	goto 0x0207b9be	goto 0x0207b9be	-
+207b9be	4460	2	lw r4,[r4 + 0x0]	lw r4,[r4 + 0x0]	-
+207ba86	7704	2	push {0x7}	push {0x7}	-
+207ba88	0c9c	2	add r4,r0,#0x1c	add r4,r0,#0x1c	-
+207ba8a	c6ff6032c301	6	mov r6,#0x1c33260	mov r6,#0x1c33260	-
+207ba90	c7ff6abc7b00	6	mov r7,#0x7bbc6a	mov r7,#0x7bbc6a	-
+207bb1c	7604	2	push {0x6}	push {0x6}	-
+207bb1e	0944	2	lb.z r1,[r0 + 0x4]	lb.z r1,[r0 + 0x4]	-
+207bc18	7c04	2	push {0xc}	push {0xc}	-
+207bce8	7704	2	push {0x7}	push {0x7}	-
+207bcea	0416	2	mov r4,r0	mov r4,r0	-
+207bd58	7604	2	push {0x6}	push {0x6}	-
+207bd5a	6000	2	cli	cli	-
+207be34	7504	2	push {0x5}	push {0x5}	-
+207be36	c1ff6032c301	6	mov r1,#0x1c33260	mov r1,#0x1c33260	-
+207be64	7604	2	push {0x6}	push {0x6}	-
+207be66	c6ff6032c301	6	mov r6,#0x1c33260	mov r6,#0x1c33260	-
+207c034	7504	2	push {0x5}	push {0x5}	-
+207c036	c4ff6032c301	6	mov r4,#0x1c33260	mov r4,#0x1c33260	-
+207c0a8	7804	2	push {0x8}	push {0x8}	-
+207c0aa	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+207c0ac	c1ff6c8bc001	6	mov r1,#0x1c08b6c	mov r1,#0x1c08b6c	-
+207c0b2	c014	2	clr r8	clr r8	-
+207c0b4	8c80	2	add r4,sp,#0x0	add r4,sp,#0x0	-
+207c0b6	4320	2	mov r3,#0x0	mov r3,#0x0	-
+207c0b8	4520	2	mov r5,#0x0	mov r5,#0x0	-
+207c0ba	1616	2	mov r6,r1	mov r6,r1	-
+207c0bc	0497	2	goto 0x0207c0ec	goto 0x0207c0ec	-
+207c0ec	6660	2	lw r6,[r6 + 0x0]	lw r6,[r6 + 0x0]	-
+207c270	7604	2	push {0x6}	push {0x6}	-
+207c272	c6ff6032c301	6	mov r6,#0x1c33260	mov r6,#0x1c33260	-
+207c3c0	7804	2	push {0x8}	push {0x8}	-
+207c3c2	6000	2	cli	cli	-
+207c4b2	7504	2	push {0x5}	push {0x5}	-
+207c4b4	6000	2	cli	cli	-
+207c598	7604	2	push {0x6}	push {0x6}	-
+207c59a	6000	2	cli	cli	-
+207c66c	7504	2	push {0x5}	push {0x5}	-
+207c66e	6000	2	cli	cli	-
+207c8a8	7504	2	push {0x5}	push {0x5}	-
+207c8aa	6000	2	cli	cli	-
+207c9b4	7504	2	push {0x5}	push {0x5}	-
+207c9b6	6000	2	cli	cli	-
+207ca14	7a04	2	push {0xa}	push {0xa}	-
+207ca16	6000	2	cli	cli	-
+207cb5c	7604	2	push {0x6}	push {0x6}	-
+207cb5e	6000	2	cli	cli	-
+207cbe8	7704	2	push {0x7}	push {0x7}	-
+207cbea	c1ff6032c301	6	mov r1,#0x1c33260	mov r1,#0x1c33260	-
+207ccd4	7604	2	push {0x6}	push {0x6}	-
+207ccd6	1050	2	jz r0,0x0207cd38	jz r0,0x0207cd38	-
+207ccd8	6000	2	cli	cli	-
+207cd38	5604	2	pop {pc,0x6}	pop {pc,0x6}	-
+207d0ae	1004	2	push rets	push rets	-
+207d0b0	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+207d0b2	0316	2	mov r3,r0	mov r3,r0	-
+207d0b4	c0ff34c2c001	6	mov r0,#0x1c0c234	mov r0,#0x1c0c234	-
+207d0ba	0160	2	lw r1,[r0 + 0x0]	lw r1,[r0 + 0x0]	-
+207d0bc	4220	2	mov r2,#0x0	mov r2,#0x0	-
+207d0dc	7604	2	push {0x6}	push {0x6}	-
+207d0de	c2ff10c6c001	6	mov r2,#0x1c0c610	mov r2,#0x1c0c610	-
+207d0e4	2360	2	lw r3,[r2 + 0x0]	lw r3,[r2 + 0x0]	-
+207d0e6	034f	2	jz r3,0x0207d106	jz r3,0x0207d106	-
+207d0e8	4220	2	mov r2,#0x0	mov r2,#0x0	-
+207d0ea	4420	2	mov r4,#0x0	mov r4,#0x0	-
+207d0ec	0489	2	goto 0x0207d100	goto 0x0207d100	-
+207d106	4220	2	mov r2,#0x0	mov r2,#0x0	-
+207d108	0482	2	goto 0x0207d10e	goto 0x0207d10e	-
+207d10e	a017	2	uxth r0,r2	uxth r0,r2	-
+207d110	5604	2	pop {pc,0x6}	pop {pc,0x6}	-
+207d112	7404	2	push {0x4}	push {0x4}	-
+207d114	c1ff10c6c001	6	mov r1,#0x1c0c610	mov r1,#0x1c0c610	-
+207d11a	1160	2	lw r1,[r1 + 0x0]	lw r1,[r1 + 0x0]	-
+207d1f8	7f04	2	push {0xf}	push {0xf}	-
+207d1fa	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+207d1fc	c8ff10c6c001	6	mov r8,#0x1c0c610	mov r8,#0x1c0c610	-
+207d380	7c04	2	push {0xc}	push {0xc}	-
+207d382	c9ff10c6c001	6	mov r9,#0x1c0c610	mov r9,#0x1c0c610	-
+207d4bc	7b04	2	push {0xb}	push {0xb}	-
+207d4be	e298	2	add sp,#-0x20	add sp,#-0x20	-
+207d4c0	0516	2	mov r5,r0	mov r5,r0	-
+207d4c2	c4ff70d1c001	6	mov r4,#0x1c0d170	mov r4,#0x1c0d170	-
+207d860	7704	2	push {0x7}	push {0x7}	-
+207d862	c3ff10c6c001	6	mov r3,#0x1c0c610	mov r3,#0x1c0c610	-
+207d868	3360	2	lw r3,[r3 + 0x0]	lw r3,[r3 + 0x0]	-
+207d86a	134a	2	jz r3,0x0207d8c0	jz r3,0x0207d8c0	-
+207d86c	4520	2	mov r5,#0x0	mov r5,#0x0	-
+207d86e	3416	2	mov r4,r3	mov r4,r3	-
+207d870	0489	2	goto 0x0207d884	goto 0x0207d884	-
+207d8c0	5704	2	pop {pc,0x7}	pop {pc,0x7}	-
+207d8f8	7504	2	push {0x5}	push {0x5}	-
+207d8fa	c0ff6099c001	6	mov r0,#0x1c09960	mov r0,#0x1c09960	-
+207d900	4120	2	mov r1,#0x0	mov r1,#0x0	-
+207d954	7704	2	push {0x7}	push {0x7}	-
+207d956	c2ff7199c001	6	mov r2,#0x1c09971	mov r2,#0x1c09971	-
+207d95c	2c43	2	lb.z r4,[r2 + 0x3]	lb.z r4,[r2 + 0x3]	-
+207d95e	2d42	2	lb.z r5,[r2 + 0x2]	lb.z r5,[r2 + 0x2]	-
+207d960	2840	2	lb.z r0,[r2 + 0x0]	lb.z r0,[r2 + 0x0]	-
+207d962	2e44	2	lb.z r6,[r2 + 0x4]	lb.z r6,[r2 + 0x4]	-
+207d964	4720	2	mov r7,#0x0	mov r7,#0x0	-
+207daca	7804	2	push {0x8}	push {0x8}	-
+207dacc	0416	2	mov r4,r0	mov r4,r0	-
+207dace	c8ff5cc5c001	6	mov r8,#0x1c0c55c	mov r8,#0x1c0c55c	-
+207dad4	4720	2	mov r7,#0x0	mov r7,#0x0	-
+207dad6	8516	2	mov r5,r8	mov r5,r8	-
+207dad8	048f	2	goto 0x0207daf8	goto 0x0207daf8	-
+207db96	1004	2	push rets	push rets	-
+207db98	80fff003ffff	6	call 0x0206df8e	call 0x0206df8e	-
+207db9e	0004	2	pop pc	pop pc	-
+207dba0	7504	2	push {0x5}	push {0x5}	-
+207dba2	0516	2	mov r5,r0	mov r5,r0	-
+207dba4	4120	2	mov r1,#0x0	mov r1,#0x0	-
+207dba6	4420	2	mov r4,#0x0	mov r4,#0x0	-
+207dba8	7196	2	call 0x0207db96	call 0x0207db96	-
+207dbaa	8044	2	jnz r0,0x0207dbb4	jnz r0,0x0207dbb4	-
+207dbac	4122	2	mov r1,#0x2	mov r1,#0x2	-
+207dbae	5016	2	mov r0,r5	mov r0,r5	-
+207dbb0	7192	2	call 0x0207db96	call 0x0207db96	-
+207dbb2	0047	2	jz r0,0x0207dbc2	jz r0,0x0207dbc2	-
+207dbb4	8017	2	uxth r0,r0	uxth r0,r0	-
+207dbb6	4133	2	mov r1,#0x13	mov r1,#0x13	-
+207dbb8	80ff8004ffff	6	call 0x0206e03e	call 0x0206e03e	-
+207dbbe	4016	2	mov r0,r4	mov r0,r4	-
+207dbc0	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+207dbc2	4421	2	mov r4,#0x1	mov r4,#0x1	-
+207dbc4	f79c	2	goto 0x0207dbbe	goto 0x0207dbbe	-
+207dbc6	7404	2	push {0x4}	push {0x4}	-
+207dbc8	0416	2	mov r4,r0	mov r4,r0	-
+207dbca	80ffb6deffff	6	call 0x0207ba86	call 0x0207ba86	-
+207dbec	7704	2	push {0x7}	push {0x7}	-
+207dbee	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+207dbf0	25d6	2	mov r5,r2  #	mov r5,r2  #	-
+207dbf2	0627	2	lw r6,[sp + 0x1c]	lw r6,[sp + 0x1c]	-
+207dbf4	04d6	2	mov r4,r0  #	mov r4,r0  #	-
+207de02	1004	2	push rets	push rets	-
+207de04	41e01502	4	movz r1,#0x215	movz r1,#0x215	-
+207de08	c2ff34c2c001	6	mov r2,#0x1c0c234	mov r2,#0x1c0c234	-
+207de1e	41e01502	4	movz r1,#0x215	movz r1,#0x215	-
+207de22	c2ff34c2c001	6	mov r2,#0x1c0c234	mov r2,#0x1c0c234	-
+207de38	7e04	2	push {0xe}	push {0xe}	-
+207de3a	0816	2	mov r8,r0	mov r8,r0	-
+207de3c	40e00e01	4	movz r0,#0x10e	movz r0,#0x10e	-
+207de40	c5ff34c2c001	6	mov r5,#0x1c0c234	mov r5,#0x1c0c234	-
+207dee4	7704	2	push {0x7}	push {0x7}	-
+207dee6	41e01502	4	movz r1,#0x215	movz r1,#0x215	-
+207deea	c7ff34c2c001	6	mov r7,#0x1c0c234	mov r7,#0x1c0c234	-
+207dfb0	7a04	2	push {0xa}	push {0xa}	-
+207dfb2	c3ff80c4c001	6	mov r3,#0x1c0c480	mov r3,#0x1c0c480	-
+207e0b0	7604	2	push {0x6}	push {0x6}	-
+207e0b2	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+207e0b4	25d6	2	mov r5,r2  #	mov r5,r2  #	-
+207e0b6	0663	2	lw r6,[r0 + 0xc]	lw r6,[r0 + 0xc]	-
+207e0b8	0c6f	2	lh.z r4,[r0 + 0x1e]	lh.z r4,[r0 + 0x1e]	-
+207e0ba	0643	2	jz r6,0x0207e0c2	jz r6,0x0207e0c2	-
+207e0bc	1016	2	mov r0,r1	mov r0,r1	-
+207e0be	4116	2	mov r1,r4	mov r1,r4	-
+207e0c0	0488	2	goto 0x0207e0d2	goto 0x0207e0d2	-
+207e0c2	c2ff80c4c001	6	mov r2,#0x1c0c480	mov r2,#0x1c0c480	-
+207e0c8	2260	2	lw r2,[r2 + 0x0]	lw r2,[r2 + 0x0]	-
+207e0ca	0062	2	lw r0,[r0 + 0x8]	lw r0,[r0 + 0x8]	-
+207e0cc	2660	2	lw r6,[r2 + 0x0]	lw r6,[r2 + 0x0]	-
+207e0d2	c600	2	call r6	call r6	-
+207e0d4	0281	2	add sp,#0x4	add sp,#0x4	-
+207e0d6	5604	2	pop {pc,0x6}	pop {pc,0x6}	-
+207e0d8	7504	2	push {0x5}	push {0x5}	-
+207e0da	e29a	2	add sp,#-0x18	add sp,#-0x18	-
+207e0dc	5a30	2	mov r2,#0x70	mov r2,#0x70	-
+207e1e0	7f04	2	push {0xf}	push {0xf}	-
+207e1e2	e293	2	add sp,#-0x34	add sp,#-0x34	-
+207e1e4	48e00100	4	movz r8,#0x1	movz r8,#0x1	-
+207e1e8	cfff80c4c001	6	mov r15,#0x1c0c480	mov r15,#0x1c0c480	-
+207e1ee	c214	2	clr r10	clr r10	-
+207e1f0	49e00400	4	movz r9,#0x4	movz r9,#0x4	-
+207e1f4	4721	2	mov r7,#0x1	mov r7,#0x1	-
+207e1f6	3487	2	goto 0x0207e2c6	goto 0x0207e2c6	-
+207e684	7c04	2	push {0xc}	push {0xc}	-
+207e686	caff5899c001	6	mov r10,#0x1c09958	mov r10,#0x1c09958	-
+207e8ec	7604	2	push {0x6}	push {0x6}	-
+207e8ee	0416	2	mov r4,r0	mov r4,r0	-
+207e8f0	c6ffc4c4c001	6	mov r6,#0x1c0c4c4	mov r6,#0x1c0c4c4	-
+207e8f6	1445	2	jz r4,0x0207e942	jz r4,0x0207e942	-
+207e980	7704	2	push {0x7}	push {0x7}	-
+207e982	c0ff62c5c001	6	mov r0,#0x1c0c562	mov r0,#0x1c0c562	-
+207e988	4320	2	mov r3,#0x0	mov r3,#0x0	-
+207e98a	0416	2	mov r4,r0	mov r4,r0	-
+207e98c	4120	2	mov r1,#0x0	mov r1,#0x0	-
+207e98e	048b	2	goto 0x0207e9a6	goto 0x0207e9a6	-
+207ea58	7704	2	push {0x7}	push {0x7}	-
+207ea5a	c2ff6099c001	6	mov r2,#0x1c09960	mov r2,#0x1c09960	-
+207ea60	2991	2	add r1,r2,#0x11	add r1,r2,#0x11	-
+207ea62	1b43	2	lb.z r3,[r1 + 0x3]	lb.z r3,[r1 + 0x3]	-
+207ea64	1e42	2	lb.z r6,[r1 + 0x2]	lb.z r6,[r1 + 0x2]	-
+207eaae	c0ff7199c001	6	mov r0,#0x1c09971	mov r0,#0x1c09971	-
+207eab4	0943	2	lb.z r1,[r0 + 0x3]	lb.z r1,[r0 + 0x3]	-
+207eab6	0a42	2	lb.z r2,[r0 + 0x2]	lb.z r2,[r0 + 0x2]	-
+207eb00	7504	2	push {0x5}	push {0x5}	-
+207eb02	80ffcc5cffff	6	call 0x020747d4	call 0x020747d4	-
+207eb08	80ffb44af8ff	6	call 0x020035c2	call 0x020035c2	-
+207eb0e	c0ff74dbc001	6	mov r0,#0x1c0db74	mov r0,#0x1c0db74	-
+207eb14	80ffd05cffff	6	call 0x020747ea	call 0x020747ea	-
+207eb1a	c4ff6099c001	6	mov r4,#0x1c09960	mov r4,#0x1c09960	-
+207eb20	4060	2	lw r0,[r4 + 0x0]	lw r0,[r4 + 0x0]	-
+207eb22	80ffee5cffff	6	call 0x02074816	call 0x02074816	-
+207eb28	c0ff0339c301	6	mov r0,#0x1c33903	mov r0,#0x1c33903	-
+207eb2e	80ffee5cffff	6	call 0x02074822	call 0x02074822	-
+207eb34	4890	2	add r0,r4,#0x10	add r0,r4,#0x10	-
+207eb36	0944	2	lb.z r1,[r0 + 0x4]	lb.z r1,[r0 + 0x4]	-
+207eb38	0a43	2	lb.z r2,[r0 + 0x3]	lb.z r2,[r0 + 0x3]	-
+207ebc4	7504	2	push {0x5}	push {0x5}	-
+207ebc6	4520	2	mov r5,#0x0	mov r5,#0x0	-
+207ebc8	24d6	2	mov r4,r2  #	mov r4,r2  #	-
+207ebca	8560	2	sw r5,[r0 + 0x0]	sw r5,[r0 + 0x0]	-
+207ebcc	0484	2	goto 0x0207ebd6	goto 0x0207ebd6	-
+207ec58	0116	2	mov r1,r0	mov r1,r0	-
+207ec5a	1060	2	lw r0,[r1 + 0x0]	lw r0,[r1 + 0x0]	-
+207ecb4	7904	2	push {0x9}	push {0x9}	-
+207ecb6	1416	2	mov r4,r1	mov r4,r1	-
+207ecb8	0516	2	mov r5,r0	mov r5,r0	-
+207ecba	4620	2	mov r6,#0x0	mov r6,#0x0	-
+207edca	7504	2	push {0x5}	push {0x5}	-
+207edcc	c4ff9899c001	6	mov r4,#0x1c09998	mov r4,#0x1c09998	-
+207edd2	0048	2	jz r0,0x0207ede4	jz r0,0x0207ede4	-
+207edd4	5831	2	mov r0,#0x71	mov r0,#0x71	-
+207edd6	422e	2	mov r2,#0xe	mov r2,#0xe	-
+207edd8	4116	2	mov r1,r4	mov r1,r4	-
+207edda	80ffa647f8ff	6	call 0x02003586	call 0x02003586	-
+207ede0	4521	2	mov r5,#0x1	mov r5,#0x1	-
+207ede2	1480	2	goto 0x0207ee24	goto 0x0207ee24	-
+207ede4	5831	2	mov r0,#0x71	mov r0,#0x71	-
+207ede6	422e	2	mov r2,#0xe	mov r2,#0xe	-
+207ede8	4116	2	mov r1,r4	mov r1,r4	-
+207edea	80fff83af8ff	6	call 0x020028e8	call 0x020028e8	-
+207ee24	5016	2	mov r0,r5	mov r0,r5	-
+207ee26	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+207eeb8	7a04	2	push {0xa}	push {0xa}	-
+207eeba	e293	2	add sp,#-0x34	add sp,#-0x34	-
+207eebc	4020	2	mov r0,#0x0	mov r0,#0x0	-
+207eebe	c214	2	clr r10	clr r10	-
+207eec0	4184	2	call 0x0207edca	call 0x0207edca	-
+207eec2	c6ff9899c001	6	mov r6,#0x1c09998	mov r6,#0x1c09998	-
+207f36a	7504	2	push {0x5}	push {0x5}	-
+207f36c	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+207f36e	4420	2	mov r4,#0x0	mov r4,#0x0	-
+207f39a	7b04	2	push {0xb}	push {0xb}	-
+207f39c	2816	2	mov r8,r2	mov r8,r2	-
+207f39e	1416	2	mov r4,r1	mov r4,r1	-
+207f3a0	0516	2	mov r5,r0	mov r5,r0	-
+207f3a2	6e2a	2	mov r6,#0xaa	mov r6,#0xaa	-
+207f3a4	c7ffc4c4c001	6	mov r7,#0x1c0c4c4	mov r7,#0x1c0c4c4	-
+207f3aa	255c	2	jz r5,0x0207f464	jz r5,0x0207f464	-
+207f3ac	bfea8df3	4	call 0x0207daca	call 0x0207daca	-
+207f3b0	0916	2	mov r9,r0	mov r9,r0	-
+207f3b2	2058	2	jz r0,0x0207f464	jz r0,0x0207f464	-
+207f3b4	04f83c16	4	jeq r4,#0xb,0x0207f430	jeq r4,#0xb,0x0207f430	-
+207f3b8	04f83a1c	4	jeq r4,#0xe,0x0207f430	jeq r4,#0xe,0x0207f430	-
+207f464	044a	2	jz r4,0x0207f47a	jz r4,0x0207f47a	-
+207f466	40e03801	4	movz r0,#0x138	movz r0,#0x138	-
+207f47a	5b04	2	pop {pc,0xb}	pop {pc,0xb}	-
+207f4b8	c2ff28d2c001	6	mov r2,#0x1c0d228	mov r2,#0x1c0d228	-
+207f4be	0047	2	jz r0,0x0207f4ce	jz r0,0x0207f4ce	-
+207f4ce	a960	2	sh r1,[r2 + 0x0]	sh r1,[r2 + 0x0]	-
+207f4d0	8000	2	rts	rts	-
+207f4d2	7904	2	push {0x9}	push {0x9}	-
+207f4d4	1416	2	mov r4,r1	mov r4,r1	-
+207f4d6	0516	2	mov r5,r0	mov r5,r0	-
+207f4d8	4620	2	mov r6,#0x0	mov r6,#0x0	-
+207f558	7704	2	push {0x7}	push {0x7}	-
+207f55a	e298	2	add sp,#-0x20	add sp,#-0x20	-
+207f55c	c2ff0cc6c001	6	mov r2,#0x1c0c60c	mov r2,#0x1c0c60c	-
+207f562	14d6	2	mov r4,r1  #	mov r4,r1  #	-
+207f564	2260	2	lw r2,[r2 + 0x0]	lw r2,[r2 + 0x0]	-
+207f566	05d6	2	mov r5,r0  #	mov r5,r0  #	-
+207f568	2260	2	lw r2,[r2 + 0x0]	lw r2,[r2 + 0x0]	-
+207f56a	c200	2	call r2	call r2	-
+207f56c	104a	2	jz r0,0x0207f5c2	jz r0,0x0207f5c2	-
+207f56e	8880	2	add r0,sp,#0x0	add r0,sp,#0x0	-
+207f570	0e8a	2	add r6,r0,#0xa	add r6,r0,#0xa	-
+207f572	7f3f	2	mov r7,#0xff	mov r7,#0xff	-
+207f574	0493	2	goto 0x0207f59c	goto 0x0207f59c	-
+207f576	0548	2	jz r5,0x0207f588	jz r5,0x0207f588	-
+207f578	4226	2	mov r2,#0x6	mov r2,#0x6	-
+207f57a	5016	2	mov r0,r5	mov r0,r5	-
+207f57c	6116	2	mov r1,r6	mov r1,r6	-
+207f57e	80ff1297fcff	6	call 0x02048c96	call 0x02048c96	-
+207f584	804b	2	jnz r0,0x0207f59c	jnz r0,0x0207f59c	-
+207f586	0492	2	goto 0x0207f5ac	goto 0x0207f5ac	-
+207f588	4022	2	mov r0,#0x2	mov r0,#0x2	-
+207f58a	4920	2	mov r1,#0x20	mov r1,#0x20	-
+207f58c	4195	2	call 0x0207f4b8	call 0x0207f4b8	-
+207f58e	8880	2	add r0,sp,#0x0	add r0,sp,#0x0	-
+207f590	0116	2	mov r1,r0	mov r1,r0	-
+207f592	009f	2	rep 0x2,0x1f	rep 0x2,0x1f	-
+207f594	9707	2	sb r7,[r1 ++= 1]	sb r7,[r1 ++= 1]	-
+207f596	4920	2	mov r1,#0x20	mov r1,#0x20	-
+207f598	4216	2	mov r2,r4	mov r2,r4	-
+207f59a	419b	2	call 0x0207f4d2	call 0x0207f4d2	-
+207f59c	8880	2	add r0,sp,#0x0	add r0,sp,#0x0	-
+207f59e	4920	2	mov r1,#0x20	mov r1,#0x20	-
+207f5a0	4216	2	mov r2,r4	mov r2,r4	-
+207f5a2	bfea87fb	4	call 0x0207ecb4	call 0x0207ecb4	-
+207f5a6	00f8e641	4	jeq r0,#0x20,0x0207f576	jeq r0,#0x20,0x0207f576	-
+207f5aa	048b	2	goto 0x0207f5c2	goto 0x0207f5c2	-
+207f5ac	4022	2	mov r0,#0x2	mov r0,#0x2	-
+207f5ae	4920	2	mov r1,#0x20	mov r1,#0x20	-
+207f5b0	4183	2	call 0x0207f4b8	call 0x0207f4b8	-
+207f5b2	8880	2	add r0,sp,#0x0	add r0,sp,#0x0	-
+207f5b4	793f	2	mov r1,#0xff	mov r1,#0xff	-
+207f5b6	0216	2	mov r2,r0	mov r2,r0	-
+207f5b8	009f	2	rep 0x2,0x1f	rep 0x2,0x1f	-
+207f5ba	a107	2	sb r1,[r2 ++= 1]	sb r1,[r2 ++= 1]	-
+207f5bc	4920	2	mov r1,#0x20	mov r1,#0x20	-
+207f5be	4216	2	mov r2,r4	mov r2,r4	-
+207f5c0	4188	2	call 0x0207f4d2	call 0x0207f4d2	-
+207f5c2	0288	2	add sp,#0x20	add sp,#0x20	-
+207f5c4	5704	2	pop {pc,0x7}	pop {pc,0x7}	-
+207f5e8	7604	2	push {0x6}	push {0x6}	-
+207f5ea	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+207f5ec	1416	2	mov r4,r1	mov r4,r1	-
+207f5ee	0516	2	mov r5,r0	mov r5,r0	-
+207f5f0	4020	2	mov r0,#0x0	mov r0,#0x0	-
+207f5f2	c1ff34c2c001	6	mov r1,#0x1c0c234	mov r1,#0x1c0c234	-
+207f5f8	1261	2	lw r2,[r1 + 0x4]	lw r2,[r1 + 0x4]	-
+207f622	7804	2	push {0x8}	push {0x8}	-
+207f624	c3ff0cc6c001	6	mov r3,#0x1c0c60c	mov r3,#0x1c0c60c	-
+207f62a	26d6	2	mov r6,r2  #	mov r6,r2  #	-
+207f62c	3360	2	lw r3,[r3 + 0x0]	lw r3,[r3 + 0x0]	-
+207f62e	17d6	2	mov r7,r1  #	mov r7,r1  #	-
+207f630	3360	2	lw r3,[r3 + 0x0]	lw r3,[r3 + 0x0]	-
+207f632	0516	2	mov r5,r0	mov r5,r0	-
+207f634	c300	2	call r3	call r3	-
+207f636	c014	2	clr r8	clr r8	-
+207f638	005e	2	jz r0,0x0207f676	jz r0,0x0207f676	-
+207f63a	5c8a	2	add r4,r5,#0xa	add r4,r5,#0xa	-
+207f63c	4920	2	mov r1,#0x20	mov r1,#0x20	-
+207f63e	5016	2	mov r0,r5	mov r0,r5	-
+207f640	6216	2	mov r2,r6	mov r2,r6	-
+207f642	bfea37fb	4	call 0x0207ecb4	call 0x0207ecb4	-
+207f676	8016	2	mov r0,r8	mov r0,r8	-
+207f678	5804	2	pop {pc,0x8}	pop {pc,0x8}	-
+207f924	7704	2	push {0x7}	push {0x7}	-
+207f926	e294	2	add sp,#-0x30	add sp,#-0x30	-
+207f928	1416	2	mov r4,r1	mov r4,r1	-
+207f92a	0516	2	mov r5,r0	mov r5,r0	-
+207f92c	4620	2	mov r6,#0x0	mov r6,#0x0	-
+207f92e	bfeabef8	4	call 0x0207eaae	call 0x0207eaae	-
+207f932	9056	2	jnz r0,0x0207f9a0	jnz r0,0x0207f9a0	-
+207f934	8890	2	add r0,sp,#0x10	add r0,sp,#0x10	-
+207f936	4220	2	mov r2,#0x0	mov r2,#0x0	-
+207f938	5116	2	mov r1,r5	mov r1,r5	-
+207f93a	bfea72fe	4	call 0x0207f622	call 0x0207f622	-
+207f93e	0047	2	jz r0,0x0207f94e	jz r0,0x0207f94e	-
+207f94e	14f827fe	4	jeq r4,#0xff,0x0207f9a0	jeq r4,#0xff,0x0207f9a0	-
+207f952	4020	2	mov r0,#0x0	mov r0,#0x0	-
+207f954	4120	2	mov r1,#0x0	mov r1,#0x0	-
+207f9a0	6017	2	uxtb r0,r6	uxtb r0,r6	-
+207f9a2	028c	2	add sp,#0x30	add sp,#0x30	-
+207f9a4	5704	2	pop {pc,0x7}	pop {pc,0x7}	-
+207f9f0	7604	2	push {0x6}	push {0x6}	-
+207f9f2	c4ff80c4c001	6	mov r4,#0x1c0c480	mov r4,#0x1c0c480	-
+207f9f8	4460	2	lw r4,[r4 + 0x0]	lw r4,[r4 + 0x0]	-
+207f9fa	4569	2	lw r5,[r4 + 0x24]	lw r5,[r4 + 0x24]	-
+207fa2e	1004	2	push rets	push rets	-
+207fa30	c0ff78c4c001	6	mov r0,#0x1c0c478	mov r0,#0x1c0c478	-
+207fa36	0060	2	lw r0,[r0 + 0x0]	lw r0,[r0 + 0x0]	-
+207fa38	c024	2	add r0,#0x4	add r0,#0x4	-
+207fa3a	bfea0df9	4	call 0x0207ec58	call 0x0207ec58	-
+207fa3e	0004	2	pop pc	pop pc	-
+207fa40	c0ff6099c001	6	mov r0,#0x1c09960	mov r0,#0x1c09960	-
+207fa5c	7b04	2	push {0xb}	push {0xb}	-
+207fa5e	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+207fa60	1316	2	mov r3,r1	mov r3,r1	-
+207fcb6	7504	2	push {0x5}	push {0x5}	-
+207fcb8	6000	2	cli	cli	-
+207fd52	7f04	2	push {0xf}	push {0xf}	-
+207fd54	e291	2	add sp,#-0x3c	add sp,#-0x3c	-
+207fd56	09d6	2	mov r9,r0  #	mov r9,r0  #	-
+207fd58	0847	2	lb.z r0,[r0 + 0x7]	lb.z r0,[r0 + 0x7]	-
+2080104	7a04	2	push {0xa}	push {0xa}	-
+2080106	e29b	2	add sp,#-0x14	add sp,#-0x14	-
+2080108	2416	2	mov r4,r2	mov r4,r2	-
+208010a	1516	2	mov r5,r1	mov r5,r1	-
+208010c	00f82904	4	jeq r0,#0x2,0x02080162	jeq r0,#0x2,0x02080162	-
+2080162	5016	2	mov r0,r5	mov r0,r5	-
+2080164	4116	2	mov r1,r4	mov r1,r4	-
+2080166	bfeaf4fd	4	call 0x0207fd52	call 0x0207fd52	-
+208016a	748b	2	goto 0x02080342	goto 0x02080342	-
+2080342	0285	2	add sp,#0x14	add sp,#0x14	-
+2080344	5a04	2	pop {pc,0xa}	pop {pc,0xa}	-
+208035c	7d04	2	push {0xd}	push {0xd}	-
+208035e	e295	2	add sp,#-0x2c	add sp,#-0x2c	-
+2080360	1816	2	mov r8,r1	mov r8,r1	-
+2080362	0c16	2	mov r12,r0	mov r12,r0	-
+20803cc	7604	2	push {0x6}	push {0x6}	-
+20803ce	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+20803d0	0516	2	mov r5,r0	mov r5,r0	-
+20803d2	c0ff34c2c001	6	mov r0,#0x1c0c234	mov r0,#0x1c0c234	-
+20803d8	14d6	2	mov r4,r1  #	mov r4,r1  #	-
+20803da	0160	2	lw r1,[r0 + 0x0]	lw r1,[r0 + 0x0]	-
+20803dc	4220	2	mov r2,#0x0	mov r2,#0x0	-
+2080468	7604	2	push {0x6}	push {0x6}	-
+208046a	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+208046c	40e00c01	4	movz r0,#0x10c	movz r0,#0x10c	-
+2080470	c6ff34c2c001	6	mov r6,#0x1c0c234	mov r6,#0x1c0c234	-
+2080da0	7b04	2	push {0xb}	push {0xb}	-
+2080da2	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+2080e80	7604	2	push {0x6}	push {0x6}	-
+2080e82	c1ff4899c001	6	mov r1,#0x1c09948	mov r1,#0x1c09948	-
+2080e88	05d6	2	mov r5,r0  #	mov r5,r0  #	-
+2080e8a	1460	2	lw r4,[r1 + 0x0]	lw r4,[r1 + 0x0]	-
+2080fd8	7c04	2	push {0xc}	push {0xc}	-
+2080fda	3a16	2	mov r10,r3	mov r10,r3	-
+2080fdc	2716	2	mov r7,r2	mov r7,r2	-
+2080fde	1616	2	mov r6,r1	mov r6,r1	-
+2080fe0	0b16	2	mov r11,r0	mov r11,r0	-
+2080fe2	bfea24f5	4	call 0x0207fa2e	call 0x0207fa2e	-
+2080fe6	0416	2	mov r4,r0	mov r4,r0	-
+2080fe8	3444	2	jz r4,0x020810b2	jz r4,0x020810b2	-
+2080fea	bfea29f5	4	call 0x0207fa40	call 0x0207fa40	-
+2080fee	0916	2	mov r9,r0	mov r9,r0	-
+2080ff0	4121	2	mov r1,#0x1	mov r1,#0x1	-
+2080ff2	6016	2	mov r0,r6	mov r0,r6	-
+2080ff4	bfeacfe5	4	call 0x0207db96	call 0x0207db96	-
+2080ff8	4d84	2	add r5,r4,#0x4	add r5,r4,#0x4	-
+20810b2	5c04	2	pop {pc,0xc}	pop {pc,0xc}	-
+20810b4	7404	2	push {0x4}	push {0x4}	-
+20810b6	c1ff4899c001	6	mov r1,#0x1c09948	mov r1,#0x1c09948	-
+20810bc	01d6	2	mov r1,r0  #	mov r1,r0  #	-
+20810be	1260	2	lw r2,[r1 + 0x0]	lw r2,[r1 + 0x0]	-
+20810c0	4020	2	mov r0,#0x0	mov r0,#0x0	-
+20810c2	0250	2	jz r2,0x020810e4	jz r2,0x020810e4	-
+20810e4	5404	2	pop {pc,0x4}	pop {pc,0x4}	-
+2081132	7804	2	push {0x8}	push {0x8}	-
+2081134	2416	2	mov r4,r2	mov r4,r2	-
+2081136	1816	2	mov r8,r1	mov r8,r1	-
+2081138	0516	2	mov r5,r0	mov r5,r0	-
+208113a	bfeabcf5	4	call 0x0207fcb6	call 0x0207fcb6	-
+208113e	0616	2	mov r6,r0	mov r6,r0	-
+2081140	0655	2	jz r6,0x0208116c	jz r6,0x0208116c	-
+2081142	4888	2	add r0,r4,#0x8	add r0,r4,#0x8	-
+2081144	8017	2	uxth r0,r0	uxth r0,r0	-
+2081146	bfea3ee5	4	call 0x0207dbc6	call 0x0207dbc6	-
+208114a	0716	2	mov r7,r0	mov r7,r0	-
+208114c	0751	2	jz r7,0x02081170	jz r7,0x02081170	-
+208116c	103f	2	mov r0,#-0x1	mov r0,#-0x1	-
+208116e	5804	2	pop {pc,0x8}	pop {pc,0x8}	-
+2081170	80ff5efdfdff	6	call 0x02060ed4	call 0x02060ed4	-
+2081176	80ff16f1f7ff	6	call 0x02000292	call 0x02000292	-
+208117c	f79f	2	goto 0x0208117c	goto 0x0208117c	-
+20811c4	7904	2	push {0x9}	push {0x9}	-
+20811c6	c29e	2	add sp,#-0x88	add sp,#-0x88	-
+20811c8	3616	2	mov r6,r3	mov r6,r3	-
+20811ca	2716	2	mov r7,r2	mov r7,r2	-
+20811cc	1416	2	mov r4,r1	mov r4,r1	-
+20811ce	0816	2	mov r8,r0	mov r8,r0	-
+20811d0	8d88	2	add r5,sp,#0x8	add r5,sp,#0x8	-
+20811d2	4120	2	mov r1,#0x0	mov r1,#0x0	-
+20811d4	6220	2	mov r2,#0x80	mov r2,#0x80	-
+20811d6	c114	2	clr r9	clr r9	-
+20811d8	5016	2	mov r0,r5	mov r0,r5	-
+20811da	80ffb689fcff	6	call 0x02049b96	call 0x02049b96	-
+2081296	1004	2	push rets	push rets	-
+2081298	bfea0df5	4	call 0x0207fcb6	call 0x0207fcb6	-
+208129c	004a	2	jz r0,0x020812b2	jz r0,0x020812b2	-
+20812b2	0004	2	pop pc	pop pc	-
+208139c	7704	2	push {0x7}	push {0x7}	-
+208139e	c29e	2	add sp,#-0x88	add sp,#-0x88	-
+20813a0	0415	2	mov r4_r5,r0_r1	mov r4_r5,r0_r1	-
+20813a2	8888	2	add r0,sp,#0x8	add r0,sp,#0x8	-
+20813a4	4120	2	mov r1,#0x0	mov r1,#0x0	-
+20813a6	6220	2	mov r2,#0x80	mov r2,#0x80	-
+20813a8	4620	2	mov r6,#0x0	mov r6,#0x0	-
+20813aa	80ffe687fcff	6	call 0x02049b96	call 0x02049b96	-
+2081498	7b04	2	push {0xb}	push {0xb}	-
+208149a	c29e	2	add sp,#-0x88	add sp,#-0x88	-
+208149c	3b16	2	mov r11,r3	mov r11,r3	-
+208149e	2516	2	mov r5,r2	mov r5,r2	-
+20814a0	1816	2	mov r8,r1	mov r8,r1	-
+20814a2	0916	2	mov r9,r0	mov r9,r0	-
+20814a4	8e88	2	add r6,sp,#0x8	add r6,sp,#0x8	-
+20814a6	4120	2	mov r1,#0x0	mov r1,#0x0	-
+20814a8	6220	2	mov r2,#0x80	mov r2,#0x80	-
+20814aa	6016	2	mov r0,r6	mov r0,r6	-
+20814ac	80ffe486fcff	6	call 0x02049b96	call 0x02049b96	-
+20814b2	4031	2	mov r0,#0x11	mov r0,#0x11	-
+2081790	7904	2	push {0x9}	push {0x9}	-
+2081792	c29e	2	add sp,#-0x88	add sp,#-0x88	-
+2081794	2415	2	mov r4_r5,r2_r3	mov r4_r5,r2_r3	-
+2081796	1816	2	mov r8,r1	mov r8,r1	-
+2081798	0916	2	mov r9,r0	mov r9,r0	-
+208179a	8f88	2	add r7,sp,#0x8	add r7,sp,#0x8	-
+208179c	4120	2	mov r1,#0x0	mov r1,#0x0	-
+208179e	6220	2	mov r2,#0x80	mov r2,#0x80	-
+20817a0	4620	2	mov r6,#0x0	mov r6,#0x0	-
+20817a2	7016	2	mov r0,r7	mov r0,r7	-
+20817a4	80ffec83fcff	6	call 0x02049b96	call 0x02049b96	-
+20817aa	155c	2	jz r5,0x02081824	jz r5,0x02081824	-
+20817ac	3721	2	bitset r7,0x1	bitset r7,0x1	-
+2081824	6016	2	mov r0,r6	mov r0,r6	-
+2081826	2282	2	add sp,#0x88	add sp,#0x88	-
+2081828	5904	2	pop {pc,0x9}	pop {pc,0x9}	-
+2081944	7c04	2	push {0xc}	push {0xc}	-
+2081946	e298	2	add sp,#-0x20	add sp,#-0x20	-
+2081e0c	c1ff6099c001	6	mov r1,#0x1c09960	mov r1,#0x1c09960	-
+2081e12	1965	2	lh.z r1,[r1 + 0xa]	lh.z r1,[r1 + 0xa]	-
+2081e14	9019	2	not r0,r1	not r0,r1	-
+2081e16	8000	2	rts	rts	-
+2081e18	7f04	2	push {0xf}	push {0xf}	-
+2081e1a	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+2081e1c	3816	2	mov r8,r3	mov r8,r3	-
+2081e1e	2916	2	mov r9,r2	mov r9,r2	-
+2081e20	1516	2	mov r5,r1	mov r5,r1	-
+2081e22	0616	2	mov r6,r0	mov r6,r0	-
+2081e24	bfea51de	4	call 0x0207daca	call 0x0207daca	-
+2081e28	0716	2	mov r7,r0	mov r7,r0	-
+2082200	7a04	2	push {0xa}	push {0xa}	-
+2082202	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+2082204	8b80	2	add r3,sp,#0x0	add r3,sp,#0x0	-
+2082206	1c83	2	add r4,r1,#0x3	add r4,r1,#0x3	-
+2082208	3516	2	mov r5,r3	mov r5,r3	-
+208220a	1083	2	rep 0x4,0x3	rep 0x4,0x3	-
+208220c	4607	2	lb.z r6,[r4 ++= 2]	lb.z r6,[r4 ++= 2]	-
+208220e	d607	2	sb r6,[r5 ++= 1]	sb r6,[r5 ++= 1]	-
+2082210	29d6	2	mov r9,r2  #	mov r9,r2  #	-
+2082212	1c48	2	lb.z r4,[r1 + 0x8]	lb.z r4,[r1 + 0x8]	-
+2082214	08d6	2	mov r8,r0  #	mov r8,r0  #	-
+2082216	1947	2	lb.z r1,[r1 + 0x7]	lb.z r1,[r1 + 0x7]	-
+20823f4	7804	2	push {0x8}	push {0x8}	-
+20823f6	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+20823f8	3616	2	mov r6,r3	mov r6,r3	-
+20823fa	2416	2	mov r4,r2	mov r4,r2	-
+20823fc	1516	2	mov r5,r1	mov r5,r1	-
+20823fe	00f81f0c	4	jeq r0,#0x6,0x02082440	jeq r0,#0x6,0x02082440	-
+2082440	5016	2	mov r0,r5	mov r0,r5	-
+2082442	bfea37f6	4	call 0x020810b4	call 0x020810b4	-
+2082446	0716	2	mov r7,r0	mov r7,r0	-
+2082590	7704	2	push {0x7}	push {0x7}	-
+2082592	0561	2	lw r5,[r0 + 0x4]	lw r5,[r0 + 0x4]	-
+2082668	7604	2	push {0x6}	push {0x6}	-
+208266a	4021	2	mov r0,#0x1	mov r0,#0x1	-
+208266c	9840	2	sb r0,[r1 + 0x0]	sb r0,[r1 + 0x0]	-
+208266e	4020	2	mov r0,#0x0	mov r0,#0x0	-
+2082670	9841	2	sb r0,[r1 + 0x1]	sb r0,[r1 + 0x1]	-
+2082672	4322	2	mov r3,#0x2	mov r3,#0x2	-
+2082674	ab40	2	sb r3,[r2 + 0x0]	sb r3,[r2 + 0x0]	-
+2082676	4427	2	mov r4,#0x7	mov r4,#0x7	-
+2082678	9c42	2	sb r4,[r1 + 0x2]	sb r4,[r1 + 0x2]	-
+208267a	4426	2	mov r4,#0x6	mov r4,#0x6	-
+208267c	9c43	2	sb r4,[r1 + 0x3]	sb r4,[r1 + 0x3]	-
+208267e	c4ff6099c001	6	mov r4,#0x1c09960	mov r4,#0x1c09960	-
+2082684	4d4f	2	lb.z r5,[r4 + 0xf]	lb.z r5,[r4 + 0xf]	-
+2082686	4c66	2	lh.z r4,[r4 + 0xc]	lh.z r4,[r4 + 0xc]	-
+2082688	9845	2	sb r0,[r1 + 0x5]	sb r0,[r1 + 0x5]	-
+208268a	9844	2	sb r0,[r1 + 0x4]	sb r0,[r1 + 0x4]	-
+208268c	7e3f	2	mov r6,#0xff	mov r6,#0xff	-
+208268e	c4a1	2	lsr r4,r4,0x1	lsr r4,r4,0x1	-
+20826b8	7f04	2	push {0xf}	push {0xf}	-
+20828a8	7604	2	push {0x6}	push {0x6}	-
+20828aa	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+20828ac	3416	2	mov r4,r3	mov r4,r3	-
+20828ae	1516	2	mov r5,r1	mov r5,r1	-
+20828b0	0616	2	mov r6,r0	mov r6,r0	-
+20828b2	4121	2	mov r1,#0x1	mov r1,#0x1	-
+20828b4	2016	2	mov r0,r2	mov r0,r2	-
+20828b6	bfea6ed9	4	call 0x0207db96	call 0x0207db96	-
+20828ba	064b	2	jz r6,0x020828d2	jz r6,0x020828d2	-
+20828bc	8550	2	jnz r5,0x020828de	jnz r5,0x020828de	-
+20828de	0281	2	add sp,#0x4	add sp,#0x4	-
+20828e0	5604	2	pop {pc,0x6}	pop {pc,0x6}	-
+2082930	7704	2	push {0x7}	push {0x7}	-
+2082932	bfeacad8	4	call 0x0207daca	call 0x0207daca	-
+2082936	0054	2	jz r0,0x02082960	jz r0,0x02082960	-
+2082960	5704	2	pop {pc,0x7}	pop {pc,0x7}	-
+2082962	7904	2	push {0x9}	push {0x9}	-
+2082964	2616	2	mov r6,r2	mov r6,r2	-
+2082966	1716	2	mov r7,r1	mov r7,r1	-
+2082968	0516	2	mov r5,r0	mov r5,r0	-
+208296a	bfeaaed8	4	call 0x0207daca	call 0x0207daca	-
+208296e	0416	2	mov r4,r0	mov r4,r0	-
+2082970	04f8ed00	4	jeq r4,#0x0,0x02082b4e	jeq r4,#0x0,0x02082b4e	-
+2082b4e	5904	2	pop {pc,0x9}	pop {pc,0x9}	-
+2082b50	7604	2	push {0x6}	push {0x6}	-
+2082b52	0416	2	mov r4,r0	mov r4,r0	-
+2082bb8	7504	2	push {0x5}	push {0x5}	-
+2082bba	c1ffb899c001	6	mov r1,#0x1c099b8	mov r1,#0x1c099b8	-
+2082bc0	04d6	2	mov r4,r0  #	mov r4,r0  #	-
+2082bc2	1160	2	lw r1,[r1 + 0x0]	lw r1,[r1 + 0x0]	-
+2082bc4	0144	2	jz r1,0x02082bce	jz r1,0x02082bce	-
+2082bc6	412e	2	mov r1,#0xe	mov r1,#0xe	-
+2082bc8	4220	2	mov r2,#0x0	mov r2,#0x0	-
+2082bca	bfeacafe	4	call 0x02082962	call 0x02082962	-
+2082bce	4120	2	mov r1,#0x0	mov r1,#0x0	-
+2082bd0	4a2d	2	mov r2,#0x2d	mov r2,#0x2d	-
+2082bd2	4520	2	mov r5,#0x0	mov r5,#0x0	-
+2082bd4	4016	2	mov r0,r4	mov r0,r4	-
+2082bd6	bfeae0e3	4	call 0x0207f39a	call 0x0207f39a	-
+2082bda	4123	2	mov r1,#0x3	mov r1,#0x3	-
+2082bdc	4a31	2	mov r2,#0x31	mov r2,#0x31	-
+2082bde	4320	2	mov r3,#0x0	mov r3,#0x0	-
+2082be0	4016	2	mov r0,r4	mov r0,r4	-
+2082be2	bfeac2e3	4	call 0x0207f36a	call 0x0207f36a	-
+2082be6	c0ff4899c001	6	mov r0,#0x1c09948	mov r0,#0x1c09948	-
+2082bec	0060	2	lw r0,[r0 + 0x0]	lw r0,[r0 + 0x0]	-
+2082cf0	7804	2	push {0x8}	push {0x8}	-
+2082cf2	c29e	2	add sp,#-0x88	add sp,#-0x88	-
+2082cf4	3516	2	mov r5,r3	mov r5,r3	-
+2082cf6	2616	2	mov r6,r2	mov r6,r2	-
+2082cf8	1716	2	mov r7,r1	mov r7,r1	-
+2082cfa	0416	2	mov r4,r0	mov r4,r0	-
+2082cfc	4020	2	mov r0,#0x0	mov r0,#0x0	-
+2082cfe	2446	2	jz r4,0x02082d8c	jz r4,0x02082d8c	-
+2082d8c	2282	2	add sp,#0x88	add sp,#0x88	-
+2082d8e	5804	2	pop {pc,0x8}	pop {pc,0x8}	-
+20830bc	7504	2	push {0x5}	push {0x5}	-
+20830be	0516	2	mov r5,r0	mov r5,r0	-
+20830c0	4424	2	mov r4,#0x4	mov r4,#0x4	-
+20830c2	048f	2	goto 0x020830e2	goto 0x020830e2	-
+2083380	7804	2	push {0x8}	push {0x8}	-
+2083382	4424	2	mov r4,#0x4	mov r4,#0x4	-
+2083384	c8ff9a330802	6	mov r8,#0x208339a	mov r8,#0x208339a	-
+208338a	c6ffffff0000	6	mov r6,#0xffff	mov r6,#0xffff	-
+2083390	1497	2	goto 0x02083400	goto 0x02083400	-
+2083440	7604	2	push {0x6}	push {0x6}	-
+2083442	2416	2	mov r4,r2	mov r4,r2	-
+2083444	1616	2	mov r6,r1	mov r6,r1	-
+2083446	0516	2	mov r5,r0	mov r5,r0	-
+2083448	06f80104	4	jeq r6,#0x2,0x0208344e	jeq r6,#0x2,0x0208344e	-
+208344c	2359	2	jz r3,0x02083500	jz r3,0x02083500	-
+208344e	bfea35fe	4	call 0x020830bc	call 0x020830bc	-
+2083500	5604	2	pop {pc,0x6}	pop {pc,0x6}	-
+208353c	7804	2	push {0x8}	push {0x8}	-
+208353e	2816	2	mov r8,r2	mov r8,r2	-
+2083540	1716	2	mov r7,r1	mov r7,r1	-
+2083542	0416	2	mov r4,r0	mov r4,r0	-
+2083544	bfeabafd	4	call 0x020830bc	call 0x020830bc	-
+2083548	0516	2	mov r5,r0	mov r5,r0	-
+208354a	05f88800	4	jeq r5,#0x0,0x0208365e	jeq r5,#0x0,0x0208365e	-
+208365e	5804	2	pop {pc,0x8}	pop {pc,0x8}	-
+2083690	7504	2	push {0x5}	push {0x5}	-
+2083692	2316	2	mov r3,r2	mov r3,r2	-
+2083694	1216	2	mov r2,r1	mov r2,r1	-
+2083696	0516	2	mov r5,r0	mov r5,r0	-
+2083698	4028	2	mov r0,#0x8	mov r0,#0x8	-
+208369a	bfeab7f3	4	call 0x02081e0c	call 0x02081e0c	-
+208369e	0049	2	jz r0,0x020836b2	jz r0,0x020836b2	-
+20836a0	4421	2	mov r4,#0x1	mov r4,#0x1	-
+20836a2	72f808fe	4	jeq r2,#-0x1,0x020836b6	jeq r2,#-0x1,0x020836b6	-
+20836a6	02f80904	4	jeq r2,#0x2,0x020836bc	jeq r2,#0x2,0x020836bc	-
+20836b2	4420	2	mov r4,#0x0	mov r4,#0x0	-
+20836b4	0489	2	goto 0x020836c8	goto 0x020836c8	-
+20836b6	4120	2	mov r1,#0x0	mov r1,#0x0	-
+20836b8	4220	2	mov r2,#0x0	mov r2,#0x0	-
+20836ba	0483	2	goto 0x020836c2	goto 0x020836c2	-
+20836bc	4122	2	mov r1,#0x2	mov r1,#0x2	-
+20836be	42e0e803	4	movz r2,#0x3e8	movz r2,#0x3e8	-
+20836c2	5016	2	mov r0,r5	mov r0,r5	-
+20836c4	bfeabcfe	4	call 0x02083440	call 0x02083440	-
+20836c8	4016	2	mov r0,r4	mov r0,r4	-
+20836ca	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+20836fc	7604	2	push {0x6}	push {0x6}	-
+20836fe	3416	2	mov r4,r3	mov r4,r3	-
+2083700	0516	2	mov r5,r0	mov r5,r0	-
+2083702	1445	2	jz r4,0x0208374e	jz r4,0x0208374e	-
+2083704	4847	2	lb.z r0,[r4 + 0x7]	lb.z r0,[r4 + 0x7]	-
+208374e	4020	2	mov r0,#0x0	mov r0,#0x0	-
+2083750	5604	2	pop {pc,0x6}	pop {pc,0x6}	-
+20837a0	7604	2	push {0x6}	push {0x6}	-
+20837a2	e295	2	add sp,#-0x2c	add sp,#-0x2c	-
+20837a4	0416	2	mov r4,r0	mov r4,r0	-
+20837a6	8d80	2	add r5,sp,#0x0	add r5,sp,#0x0	-
+20837a8	4120	2	mov r1,#0x0	mov r1,#0x0	-
+20837aa	4a2c	2	mov r2,#0x2c	mov r2,#0x2c	-
+20837ac	4620	2	mov r6,#0x0	mov r6,#0x0	-
+20837ae	5016	2	mov r0,r5	mov r0,r5	-
+20837b0	80ffe063fcff	6	call 0x02049b96	call 0x02049b96	-
+20837b6	4039	2	mov r0,#0x19	mov r0,#0x19	-
+20837e4	7704	2	push {0x7}	push {0x7}	-
+20837e6	1b47	2	lb.z r3,[r1 + 0x7]	lb.z r3,[r1 + 0x7]	-
+20837e8	1c87	2	add r4,r1,#0x7	add r4,r1,#0x7	-
+20839c4	7504	2	push {0x5}	push {0x5}	-
+20839c6	1a46	2	lb.z r2,[r1 + 0x6]	lb.z r2,[r1 + 0x6]	-
+20839c8	1b45	2	lb.z r3,[r1 + 0x5]	lb.z r3,[r1 + 0x5]	-
+2083b84	1004	2	push rets	push rets	-
+2083b86	c0ffc0c4c001	6	mov r0,#0x1c0c4c0	mov r0,#0x1c0c4c0	-
+2083b8c	0060	2	lw r0,[r0 + 0x0]	lw r0,[r0 + 0x0]	-
+2083b8e	0861	2	lh.z r0,[r0 + 0x2]	lh.z r0,[r0 + 0x2]	-
+2083b90	0044	2	jz r0,0x02083b9a	jz r0,0x02083b9a	-
+2083b92	bfea80eb	4	call 0x02081296	call 0x02081296	-
+2083b96	4021	2	mov r0,#0x1	mov r0,#0x1	-
+2083b98	0004	2	pop pc	pop pc	-
+2083b9a	4020	2	mov r0,#0x0	mov r0,#0x0	-
+2083b9c	0004	2	pop pc	pop pc	-
+2083b9e	7504	2	push {0x5}	push {0x5}	-
+2083ba0	c5ffc0c4c001	6	mov r5,#0x1c0c4c0	mov r5,#0x1c0c4c0	-
+2083ba6	14d6	2	mov r4,r1  #	mov r4,r1  #	-
+2083ba8	5260	2	lw r2,[r5 + 0x0]	lw r2,[r5 + 0x0]	-
+2083baa	01d6	2	mov r1,r0  #	mov r1,r0  #	-
+2083bac	2b61	2	lh.z r3,[r2 + 0x2]	lh.z r3,[r2 + 0x2]	-
+2083bae	0343	2	jz r3,0x02083bb6	jz r3,0x02083bb6	-
+2083bb0	7189	2	call 0x02083b84	call 0x02083b84	-
+2083bb2	103e	2	mov r0,#-0x2	mov r0,#-0x2	-
+2083bb4	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+2083bb6	4021	2	mov r0,#0x1	mov r0,#0x1	-
+2083bb8	a846	2	sb r0,[r2 + 0x6]	sb r0,[r2 + 0x6]	-
+2083bba	c0ff36490802	6	mov r0,#0x2084936	mov r0,#0x2084936	-
+2083bc0	c3ffffff0000	6	mov r3,#0xffff	mov r3,#0xffff	-
+2083bc6	4221	2	mov r2,#0x1	mov r2,#0x1	-
+2083bc8	bfea06ea	4	call 0x02080fd8	call 0x02080fd8	-
+2083bcc	5060	2	lw r0,[r5 + 0x0]	lw r0,[r5 + 0x0]	-
+2083bce	8c62	2	sh r4,[r0 + 0x4]	sh r4,[r0 + 0x4]	-
+2083bd0	4020	2	mov r0,#0x0	mov r0,#0x0	-
+2083bd2	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+2083be4	1004	2	push rets	push rets	-
+2083be6	4a36	2	mov r2,#0x36	mov r2,#0x36	-
+2083bf2	1004	2	push rets	push rets	-
+2083bf4	4120	2	mov r1,#0x0	mov r1,#0x0	-
+2083bf6	7196	2	call 0x02083be4	call 0x02083be4	-
+2083bf8	0004	2	pop pc	pop pc	-
+2083d00	1004	2	push rets	push rets	-
+2083d02	bfead8df	4	call 0x0207fcb6	call 0x0207fcb6	-
+2083d06	0116	2	mov r1,r0	mov r1,r0	-
+2083d08	4021	2	mov r0,#0x1	mov r0,#0x1	-
+2083d0a	8141	2	jnz r1,0x02083d0e	jnz r1,0x02083d0e	-
+2083d0c	1016	2	mov r0,r1	mov r0,r1	-
+2083d0e	0004	2	pop pc	pop pc	-
+2083d10	7604	2	push {0x6}	push {0x6}	-
+2083d12	2416	2	mov r4,r2	mov r4,r2	-
+2083d14	1516	2	mov r5,r1	mov r5,r1	-
+2083d16	0616	2	mov r6,r0	mov r6,r0	-
+2083d18	0447	2	jz r4,0x02083d28	jz r4,0x02083d28	-
+2083d1a	7192	2	call 0x02083d00	call 0x02083d00	-
+2083d1c	0045	2	jz r0,0x02083d28	jz r0,0x02083d28	-
+2083d1e	6016	2	mov r0,r6	mov r0,r6	-
+2083d20	5116	2	mov r1,r5	mov r1,r5	-
+2083d22	4216	2	mov r2,r4	mov r2,r4	-
+2083d24	bfea05ea	4	call 0x02081132	call 0x02081132	-
+2083d28	5604	2	pop {pc,0x6}	pop {pc,0x6}	-
+2083d2a	7704	2	push {0x7}	push {0x7}	-
+2083d2c	c280	2	add sp,#-0x100	add sp,#-0x100	-
+2083d2e	1616	2	mov r6,r1	mov r6,r1	-
+2083d30	0416	2	mov r4,r0	mov r4,r0	-
+2083d32	8d80	2	add r5,sp,#0x0	add r5,sp,#0x0	-
+2083d34	4120	2	mov r1,#0x0	mov r1,#0x0	-
+2083d36	42e00001	4	movz r2,#0x100	movz r2,#0x100	-
+2083d3a	5016	2	mov r0,r5	mov r0,r5	-
+2083d3c	80ff545efcff	6	call 0x02049b96	call 0x02049b96	-
+2083d42	c525	2	add r5,#0x5	add r5,#0x5	-
+2083d44	5016	2	mov r0,r5	mov r0,r5	-
+2083d46	bfea54ff	4	call 0x02083bf2	call 0x02083bf2	-
+2083d4a	c0ffcafe0000	6	mov r0,#0xfeca	mov r0,#0xfeca	-
+2083e14	7504	2	push {0x5}	push {0x5}	-
+2083e16	c3ffc0c4c001	6	mov r3,#0x1c0c4c0	mov r3,#0x1c0c4c0	-
+2083e1c	3360	2	lw r3,[r3 + 0x0]	lw r3,[r3 + 0x0]	-
+2083e1e	034e	2	jz r3,0x02083e3c	jz r3,0x02083e3c	-
+2083e20	3d46	2	lb.z r5,[r3 + 0x6]	lb.z r5,[r3 + 0x6]	-
+2083e22	143e	2	mov r4,#-0x2	mov r4,#-0x2	-
+2083e24	854c	2	jnz r5,0x02083e3e	jnz r5,0x02083e3e	-
+2083e26	4420	2	mov r4,#0x0	mov r4,#0x0	-
+2083e28	01f80b04	4	jeq r1,#0x2,0x02083e42	jeq r1,#0x2,0x02083e42	-
+2083e2c	01f81302	4	jeq r1,#0x1,0x02083e56	jeq r1,#0x1,0x02083e56	-
+2083e30	8146	2	jnz r1,0x02083e3e	jnz r1,0x02083e3e	-
+2083e32	a117	2	uxth r1,r2	uxth r1,r2	-
+2083e34	bfeab3fe	4	call 0x02083b9e	call 0x02083b9e	-
+2083e38	0416	2	mov r4,r0	mov r4,r0	-
+2083e3a	0481	2	goto 0x02083e3e	goto 0x02083e3e	-
+2083e3c	143f	2	mov r4,#-0x1	mov r4,#-0x1	-
+2083e3e	4016	2	mov r0,r4	mov r0,r4	-
+2083e40	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+2083e42	3a61	2	lh.z r2,[r3 + 0x2]	lh.z r2,[r3 + 0x2]	-
+2083e44	024b	2	jz r2,0x02083e5c	jz r2,0x02083e5c	-
+2083e46	40e00012	4	movz r0,#0x1200	movz r0,#0x1200	-
+2083e4a	01d6	2	mov r1,r0  #	mov r1,r0  #	-
+2083e4c	b862	2	sh r0,[r3 + 0x4]	sh r0,[r3 + 0x4]	-
+2083e4e	2016	2	mov r0,r2	mov r0,r2	-
+2083e50	bfea6bff	4	call 0x02083d2a	call 0x02083d2a	-
+2083e54	f794	2	goto 0x02083e3e	goto 0x02083e3e	-
+2083e56	bfea95fe	4	call 0x02083b84	call 0x02083b84	-
+2083e5a	f791	2	goto 0x02083e3e	goto 0x02083e3e	-
+2083e5c	41e00012	4	movz r1,#0x1200	movz r1,#0x1200	-
+2083e60	bfea9dfe	4	call 0x02083b9e	call 0x02083b9e	-
+2083e64	f78c	2	goto 0x02083e3e	goto 0x02083e3e	-
+2084630	7804	2	push {0x8}	push {0x8}	-
+2084632	0416	2	mov r4,r0	mov r4,r0	-
+2084634	4b62	2	lh.z r3,[r4 + 0x4]	lh.z r3,[r4 + 0x4]	-
+20846fc	7604	2	push {0x6}	push {0x6}	-
+20846fe	05d6	2	mov r5,r0  #	mov r5,r0  #	-
+2084700	1c40	2	lb.z r4,[r1 + 0x0]	lb.z r4,[r1 + 0x0]	-
+2084702	4016	2	mov r0,r4	mov r0,r4	-
+2084704	bfead1fa	4	call 0x02083caa	call 0x02083caa	-
+2084708	4320	2	mov r3,#0x0	mov r3,#0x0	-
+2084d00	7704	2	push {0x7}	push {0x7}	-
+2084d02	c4ff4899c001	6	mov r4,#0x1c09948	mov r4,#0x1c09948	-
+2084d08	4060	2	lw r0,[r4 + 0x0]	lw r0,[r4 + 0x0]	-
+2084d0a	1050	2	jz r0,0x02084d6c	jz r0,0x02084d6c	-
+2084d0c	4520	2	mov r5,#0x0	mov r5,#0x0	-
+2084d0e	0616	2	mov r6,r0	mov r6,r0	-
+2084d10	1485	2	goto 0x02084d5c	goto 0x02084d5c	-
+2084d6c	4020	2	mov r0,#0x0	mov r0,#0x0	-
+2084d6e	5704	2	pop {pc,0x7}	pop {pc,0x7}	-
+2084d98	7b04	2	push {0xb}	push {0xb}	-
+2084d9a	1416	2	mov r4,r1	mov r4,r1	-
+2084d9c	0516	2	mov r5,r0	mov r5,r0	-
+2084d9e	bfea94c6	4	call 0x0207daca	call 0x0207daca	-
+2084da2	0042	2	jz r0,0x02084da8	jz r0,0x02084da8	-
+2084da4	8c63	2	sh r4,[r0 + 0x6]	sh r4,[r0 + 0x6]	-
+2084da6	5b04	2	pop {pc,0xb}	pop {pc,0xb}	-
+2084da8	c2ffc4c4c001	6	mov r2,#0x1c0c4c4	mov r2,#0x1c0c4c4	-
+2084e78	7504	2	push {0x5}	push {0x5}	-
+2084e7a	0263	2	lw r2,[r0 + 0xc]	lw r2,[r0 + 0xc]	-
+2085a60	7704	2	push {0x7}	push {0x7}	-
+2085a62	c5ff10c6c001	6	mov r5,#0x1c0c610	mov r5,#0x1c0c610	-
+2085a68	14d6	2	mov r4,r1  #	mov r4,r1  #	-
+2085a6a	5260	2	lw r2,[r5 + 0x0]	lw r2,[r5 + 0x0]	-
+2085a6c	1259	2	jz r2,0x02085ae0	jz r2,0x02085ae0	-
+2085a6e	bfea50bb	4	call 0x0207d112	call 0x0207d112	-
+2085ae0	5704	2	pop {pc,0x7}	pop {pc,0x7}	-
+2085b00	a3a8	2	lsr r3,r2,0x8	lsr r3,r2,0x8	-
+2085b62	1004	2	push rets	push rets	-
+2085b64	bfea4dc1	4	call 0x0207de02	call 0x0207de02	-
+2085b68	0004	2	pop pc	pop pc	-
+2085bde	7404	2	push {0x4}	push {0x4}	-
+2085be0	2118	2	add r1,r2	add r1,r2	-
+2085be2	f93f	2	add r1,#-0x1	add r1,#-0x1	-
+2085be4	4320	2	mov r3,#0x0	mov r3,#0x0	-
+2085be6	0484	2	goto 0x02085bf0	goto 0x02085bf0	-
+2085cac	7c04	2	push {0xc}	push {0xc}	-
+2085cae	e293	2	add sp,#-0x34	add sp,#-0x34	-
+2085cb0	ccff9899c001	6	mov r12,#0x1c09998	mov r12,#0x1c09998	-
+2085d88	7504	2	push {0x5}	push {0x5}	-
+2085d8a	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+2085d8c	2416	2	mov r4,r2	mov r4,r2	-
+2085d8e	1516	2	mov r5,r1	mov r5,r1	-
+2085d90	bfea8db9	4	call 0x0207d0ae	call 0x0207d0ae	-
+2085d94	4120	2	mov r1,#0x0	mov r1,#0x0	-
+2085d96	d940	2	sb r1,[r5 + 0x0]	sb r1,[r5 + 0x0]	-
+2085d98	004b	2	jz r0,0x02085db0	jz r0,0x02085db0	-
+2085d9a	8b82	2	add r3,sp,#0x2	add r3,sp,#0x2	-
+2085d9c	3016	2	mov r0,r3	mov r0,r3	-
+2085d9e	80ff2c7dfeff	6	call 0x0206dad0	call 0x0206dad0	-
+2085da4	4226	2	mov r2,#0x6	mov r2,#0x6	-
+2085da6	3016	2	mov r0,r3	mov r0,r3	-
+2085da8	4116	2	mov r1,r4	mov r1,r4	-
+2085daa	bfea18ff	4	call 0x02085bde	call 0x02085bde	-
+2085dae	0482	2	goto 0x02085db4	goto 0x02085db4	-
+2085db0	0085	2	rep 0x2,0x5	rep 0x2,0x5	-
+2085db2	c107	2	sb r1,[r4 ++= 1]	sb r1,[r4 ++= 1]	-
+2085db4	0282	2	add sp,#0x8	add sp,#0x8	-
+2085db6	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+2085db8	7604	2	push {0x6}	push {0x6}	-
+2085dba	e293	2	add sp,#-0x34	add sp,#-0x34	-
+2085dbc	0416	2	mov r4,r0	mov r4,r0	-
+20860a6	1004	2	push rets	push rets	-
+20860a8	bfeab9be	4	call 0x0207de1e	call 0x0207de1e	-
+20860ac	0004	2	pop pc	pop pc	-
+20860c0	7804	2	push {0x8}	push {0x8}	-
+20860c2	3816	2	mov r8,r3	mov r8,r3	-
+20860c4	2616	2	mov r6,r2	mov r6,r2	-
+20860c6	1516	2	mov r5,r1	mov r5,r1	-
+20860c8	0716	2	mov r7,r0	mov r7,r0	-
+20860ca	bfea22b8	4	call 0x0207d112	call 0x0207d112	-
+20860ce	4120	2	mov r1,#0x0	mov r1,#0x0	-
+20860d0	4420	2	mov r4,#0x0	mov r4,#0x0	-
+20864e4	7b04	2	push {0xb}	push {0xb}	-
+20864e6	e293	2	add sp,#-0x34	add sp,#-0x34	-
+20864e8	cbff9899c001	6	mov r11,#0x1c09998	mov r11,#0x1c09998	-
+20865a0	7504	2	push {0x5}	push {0x5}	-
+20865a2	c3ff9899c001	6	mov r3,#0x1c09998	mov r3,#0x1c09998	-
+20865a8	02d6	2	mov r2,r0  #	mov r2,r0  #	-
+20865aa	3c41	2	lb.z r4,[r3 + 0x1]	lb.z r4,[r3 + 0x1]	-
+20865ac	4020	2	mov r0,#0x0	mov r0,#0x0	-
+2086700	7504	2	push {0x5}	push {0x5}	-
+2086798	7704	2	push {0x7}	push {0x7}	-
+208679a	4420	2	mov r4,#0x0	mov r4,#0x0	-
+208679c	c5ff2cd2c001	6	mov r5,#0x1c0d22c	mov r5,#0x1c0d22c	-
+20867a2	0486	2	goto 0x020867b0	goto 0x020867b0	-
+20867b0	133f	2	mov r3,#-0x1	mov r3,#-0x1	-
+20867d4	7604	2	push {0x6}	push {0x6}	-
+208689c	1004	2	push rets	push rets	-
+208689e	80ff0a68ffff	6	call 0x0207d0ae	call 0x0207d0ae	-
+2086bc8	7504	2	push {0x5}	push {0x5}	-
+2086bca	2416	2	mov r4,r2	mov r4,r2	-
+2086bcc	1216	2	mov r2,r1	mov r2,r1	-
+2086bce	0516	2	mov r5,r0	mov r5,r0	-
+2086bd0	4020	2	mov r0,#0x0	mov r0,#0x0	-
+2086bd2	4116	2	mov r1,r4	mov r1,r4	-
+2086bd4	008f	2	rep 0x2,0xf	rep 0x2,0xf	-
+2086bd6	9007	2	sb r0,[r1 ++= 1]	sb r0,[r1 ++= 1]	-
+2086bd8	412c	2	mov r1,#0xc	mov r1,#0xc	-
+2086bda	4016	2	mov r0,r4	mov r0,r4	-
+2086bdc	80ff1eefffff	6	call 0x02085b00	call 0x02085b00	-
+2086be2	412e	2	mov r1,#0xe	mov r1,#0xe	-
+2086be4	5216	2	mov r2,r5	mov r2,r5	-
+2086be6	80ff14efffff	6	call 0x02085b00	call 0x02085b00	-
+2086bec	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+2086c00	7604	2	push {0x6}	push {0x6}	-
+2086c02	e298	2	add sp,#-0x20	add sp,#-0x20	-
+2086c04	c3ffd099c001	6	mov r3,#0x1c099d0	mov r3,#0x1c099d0	-
+2086c0a	14d6	2	mov r4,r1  #	mov r4,r1  #	-
+2086c0c	3360	2	lw r3,[r3 + 0x0]	lw r3,[r3 + 0x0]	-
+2086c0e	4121	2	mov r1,#0x1	mov r1,#0x1	-
+2086d00	7704	2	push {0x7}	push {0x7}	-
+2086d02	c4ffd099c001	6	mov r4,#0x1c099d0	mov r4,#0x1c099d0	-
+2086d08	24d6	2	mov r4,r2  #	mov r4,r2  #	-
+2086d0a	4560	2	lw r5,[r4 + 0x0]	lw r5,[r4 + 0x0]	-
+2086d0c	0216	2	mov r2,r0	mov r2,r0	-
+2086e68	7604	2	push {0x6}	push {0x6}	-
+2086e6a	e29a	2	add sp,#-0x18	add sp,#-0x18	-
+2086e6c	34d6	2	mov r4,r3  #	mov r4,r3  #	-
+2086ed4	7804	2	push {0x8}	push {0x8}	-
+2086ed6	c5ffd099c001	6	mov r5,#0x1c099d0	mov r5,#0x1c099d0	-
+2086edc	04d6	2	mov r4,r0  #	mov r4,r0  #	-
+2086ede	5760	2	lw r7,[r5 + 0x0]	lw r7,[r5 + 0x0]	-
+20870e0	7404	2	push {0x4}	push {0x4}	-
+20870e2	c4ffd099c001	6	mov r4,#0x1c099d0	mov r4,#0x1c099d0	-
+20870e8	4160	2	lw r1,[r4 + 0x0]	lw r1,[r4 + 0x0]	-
+2087170	7604	2	push {0x6}	push {0x6}	-
+2087172	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+2087174	c1ffd099c001	6	mov r1,#0x1c099d0	mov r1,#0x1c099d0	-
+208717a	04d6	2	mov r4,r0  #	mov r4,r0  #	-
+208717c	1160	2	lw r1,[r1 + 0x0]	lw r1,[r1 + 0x0]	-
+208717e	4220	2	mov r2,#0x0	mov r2,#0x0	-
+2087180	c134	2	add r1,#0x14	add r1,#0x14	-
+2087182	9a41	2	sb r2,[r1 + 0x1]	sb r2,[r1 + 0x1]	-
+2087184	1262	2	lw r2,[r1 + 0x8]	lw r2,[r1 + 0x8]	-
+2087290	7804	2	push {0x8}	push {0x8}	-
+2087292	e291	2	add sp,#-0x3c	add sp,#-0x3c	-
+2087294	c7ffd099c001	6	mov r7,#0x1c099d0	mov r7,#0x1c099d0	-
+208729a	08d6	2	mov r8,r0  #	mov r8,r0  #	-
+208729c	7460	2	lw r4,[r7 + 0x0]	lw r4,[r7 + 0x0]	-
+2087f68	7504	2	push {0x5}	push {0x5}	-
+2087f6a	8517	2	uxth r5,r0	uxth r5,r0	-
+2087f6c	5016	2	mov r0,r5	mov r0,r5	-
+2087f6e	bfeab7f8	4	call 0x020870e0	call 0x020870e0	-
+2087f72	5016	2	mov r0,r5	mov r0,r5	-
+2087f74	bfea92f4	4	call 0x0208689c	call 0x0208689c	-
+2087f78	0416	2	mov r4,r0	mov r4,r0	-
+2087f7a	0450	2	jz r4,0x02087f9c	jz r4,0x02087f9c	-
+2087f7c	4133	2	mov r1,#0x13	mov r1,#0x13	-
+2087f7e	5016	2	mov r0,r5	mov r0,r5	-
+2087f80	80ff405dfeff	6	call 0x0206dcc6	call 0x0206dcc6	-
+2087f9c	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+2087fd4	7704	2	push {0x7}	push {0x7}	-
+2087fd6	e289	2	add sp,#-0x5c	add sp,#-0x5c	-
+2087fd8	c1ffd099c001	6	mov r1,#0x1c099d0	mov r1,#0x1c099d0	-
+2087fde	1560	2	lw r5,[r1 + 0x0]	lw r5,[r1 + 0x0]	-
+2087fe0	4120	2	mov r1,#0x0	mov r1,#0x0	-
+208821c	7804	2	push {0x8}	push {0x8}	-
+208821e	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+2088220	2416	2	mov r4,r2	mov r4,r2	-
+2088ae0	1004	2	push rets	push rets	-
+2088ae2	80ffc645ffff	6	call 0x0207d0ae	call 0x0207d0ae	-
+2088af2	1004	2	push rets	push rets	-
+2088af4	80ff68d0ffff	6	call 0x02085b62	call 0x02085b62	-
+2088afa	0004	2	pop pc	pop pc	-
+2088afc	7804	2	push {0x8}	push {0x8}	-
+2088afe	3816	2	mov r8,r3	mov r8,r3	-
+2088b00	2516	2	mov r5,r2	mov r5,r2	-
+2088b02	1616	2	mov r6,r1	mov r6,r1	-
+2088b04	0416	2	mov r4,r0	mov r4,r0	-
+2088b06	718c	2	call 0x02088ae0	call 0x02088ae0	-
+2088b08	0716	2	mov r7,r0	mov r7,r0	-
+2088b0a	075e	2	jz r7,0x02088b48	jz r7,0x02088b48	-
+2088b0c	4016	2	mov r0,r4	mov r0,r4	-
+2088b0e	7191	2	call 0x02088af2	call 0x02088af2	-
+2088b10	005d	2	jz r0,0x02088b4c	jz r0,0x02088b4c	-
+2088b12	80ff8ed5ffff	6	call 0x020860a6	call 0x020860a6	-
+2088b18	c0ff34c2c001	6	mov r0,#0x1c0c234	mov r0,#0x1c0c234	-
+2088b1e	413b	2	mov r1,#0x1b	mov r1,#0x1b	-
+2088b48	4022	2	mov r0,#0x2	mov r0,#0x2	-
+2088b4a	5804	2	pop {pc,0x8}	pop {pc,0x8}	-
+2088b4c	5037	2	mov r0,#0x57	mov r0,#0x57	-
+2088b4e	5804	2	pop {pc,0x8}	pop {pc,0x8}	-
+2088b50	7804	2	push {0x8}	push {0x8}	-
+2088b52	3816	2	mov r8,r3	mov r8,r3	-
+2088b54	2516	2	mov r5,r2	mov r5,r2	-
+2088b56	1616	2	mov r6,r1	mov r6,r1	-
+2088b58	0416	2	mov r4,r0	mov r4,r0	-
+2088b5a	6182	2	call 0x02088ae0	call 0x02088ae0	-
+2088b5c	0716	2	mov r7,r0	mov r7,r0	-
+2088b5e	1754	2	jz r7,0x02088bc8	jz r7,0x02088bc8	-
+2088b60	7165	2	lw r1,[r7 + 0x14]	lw r1,[r7 + 0x14]	-
+2088b62	6030	2	mov r0,#0x90	mov r0,#0x90	-
+2088b64	9150	2	jnz r1,0x02088bc6	jnz r1,0x02088bc6	-
+2088b66	4016	2	mov r0,r4	mov r0,r4	-
+2088b68	6184	2	call 0x02088af2	call 0x02088af2	-
+2088b6a	1050	2	jz r0,0x02088bcc	jz r0,0x02088bcc	-
+2088b6c	f665	2	sw r6,[r7 + 0x14]	sw r6,[r7 + 0x14]	-
+2088b6e	4020	2	mov r0,#0x0	mov r0,#0x0	-
+2088b70	4120	2	mov r1,#0x0	mov r1,#0x0	-
+2088bc6	5804	2	pop {pc,0x8}	pop {pc,0x8}	-
+2088bc8	4022	2	mov r0,#0x2	mov r0,#0x2	-
+2088bca	5804	2	pop {pc,0x8}	pop {pc,0x8}	-
+2088bcc	5037	2	mov r0,#0x57	mov r0,#0x57	-
+2088bce	5804	2	pop {pc,0x8}	pop {pc,0x8}	-
+2088be8	7904	2	push {0x9}	push {0x9}	-
+2088bea	3416	2	mov r4,r3	mov r4,r3	-
+2088bec	2516	2	mov r5,r2	mov r5,r2	-
+2088bee	1616	2	mov r6,r1	mov r6,r1	-
+2088bf0	c9ff4cd2c001	6	mov r9,#0x1c0d24c	mov r9,#0x1c0d24c	-
+2088bf6	00f80c08	4	jeq r0,#0x4,0x02088c12	jeq r0,#0x4,0x02088c12	-
+2088c12	5840	2	lb.z r0,[r5 + 0x0]	lb.z r0,[r5 + 0x0]	-
+2088ca4	7604	2	push {0x6}	push {0x6}	-
+2088ca6	2416	2	mov r4,r2	mov r4,r2	-
+2088e38	7504	2	push {0x5}	push {0x5}	-
+2088e3a	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+2088e3c	c5ff4cd2c001	6	mov r5,#0x1c0d24c	mov r5,#0x1c0d24c	-
+2088e42	23d6	2	mov r3,r2  #	mov r3,r2  #	-
+2088e44	546d	2	lw r4,[r5 + 0x34]	lw r4,[r5 + 0x34]	-
+2088e46	1216	2	mov r2,r1	mov r2,r1	-
+2088e48	0459	2	jz r4,0x02088e7c	jz r4,0x02088e7c	-
+2088e4a	6936	2	mov r1,#0xb6	mov r1,#0xb6	-
+2088e7c	0282	2	add sp,#0x8	add sp,#0x8	-
+2088e7e	5504	2	pop {pc,0x5}	pop {pc,0x5}	-
+2088e80	7e04	2	push {0xe}	push {0xe}	-
+2088e82	e29c	2	add sp,#-0x10	add sp,#-0x10	-
+2088e84	2415	2	mov r4_r5,r2_r3	mov r4_r5,r2_r3	-
+2088e86	ccff4cd2c001	6	mov r12,#0x1c0d24c	mov r12,#0x1c0d24c	-
+2088e8c	00f8f710	4	jeq r0,#0x8,0x0208907e	jeq r0,#0x8,0x0208907e	-
+208907e	1016	2	mov r0,r1	mov r0,r1	-
+2089080	bfea2efd	4	call 0x02088ae0	call 0x02088ae0	-
+2089084	0616	2	mov r6,r0	mov r6,r0	-
+2089086	3641	2	jz r6,0x0208914a	jz r6,0x0208914a	-
+208914a	0284	2	add sp,#0x10	add sp,#0x10	-
+208914c	5e04	2	pop {pc,0xe}	pop {pc,0xe}	-
+2089190	0116	2	mov r1,r0	mov r1,r0	-
+2089192	c0ff8cd2c001	6	mov r0,#0x1c0d28c	mov r0,#0x1c0d28c	-
+2089198	0060	2	lw r0,[r0 + 0x0]	lw r0,[r0 + 0x0]	-
+208919a	0044	2	jz r0,0x020891a4	jz r0,0x020891a4	-
+208919c	0a66	2	lh.z r2,[r0 + 0xc]	lh.z r2,[r0 + 0xc]	-
+20891a4	4020	2	mov r0,#0x0	mov r0,#0x0	-
+20891a6	8000	2	rts	rts	-
+20891f4	7604	2	push {0x6}	push {0x6}	-
+20891f6	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+20891f8	1316	2	mov r3,r1	mov r3,r1	-
+20891fa	0416	2	mov r4,r0	mov r4,r0	-
+20891fc	6189	2	call 0x02089190	call 0x02089190	-
+20891fe	005e	2	jz r0,0x0208923c	jz r0,0x0208923c	-
+2089200	8b6b	2	sh r3,[r0 + 0x16]	sh r3,[r0 + 0x16]	-
+2089202	c6ff8cd2c001	6	mov r6,#0x1c0d28c	mov r6,#0x1c0d28c	-
+2089208	6064	2	lw r0,[r6 + 0x10]	lw r0,[r6 + 0x10]	-
+208920a	0058	2	jz r0,0x0208923c	jz r0,0x0208923c	-
+208920c	6835	2	mov r0,#0xb5	mov r0,#0xb5	-
+208923c	0282	2	add sp,#0x8	add sp,#0x8	-
+208923e	5604	2	pop {pc,0x6}	pop {pc,0x6}	-
+2089240	7504	2	push {0x5}	push {0x5}	-
+2089242	0415	2	mov r4_r5,r0_r1	mov r4_r5,r0_r1	-
+2089262	7604	2	push {0x6}	push {0x6}	-
+2089264	0416	2	mov r4,r0	mov r4,r0	-
+20892b8	7504	2	push {0x5}	push {0x5}	-
+20892ba	0416	2	mov r4,r0	mov r4,r0	-
+20892bc	4520	2	mov r5,#0x0	mov r5,#0x0	-
+20892be	0090	2	rep 0x2,0x10	rep 0x2,0x10	-
+20892c0	8505	2	sw r5,[r0 ++= 4]	sw r5,[r0 ++= 4]	-
+20892c2	40d6	2	mov r0,r4  #	mov r0,r4  #	-
+20892c4	c16f	2	sw r1,[r4 + 0x3c]	sw r1,[r4 + 0x3c]	-
+20892c6	4122	2	mov r1,#0x2	mov r1,#0x2	-
+20892c8	618c	2	call 0x02089262	call 0x02089262	-
+20892ca	c062	2	sw r0,[r4 + 0x8]	sw r0,[r4 + 0x8]	-
+20892cc	0163	2	lw r1,[r0 + 0xc]	lw r1,[r0 + 0xc]	-
+20892ce	9560	2	sw r5,[r1 + 0x0]	sw r5,[r1 + 0x0]	-
+20892f8	7604	2	push {0x6}	push {0x6}	-
+20892fa	1416	2	mov r4,r1	mov r4,r1	-
+20892fc	4124	2	mov r1,#0x4	mov r1,#0x4	-
+20892fe	5191	2	call 0x02089262	call 0x02089262	-
+2089300	0516	2	mov r5,r0	mov r5,r0	-
+2089408	7904	2	push {0x9}	push {0x9}	-
+208957c	7b04	2	push {0xb}	push {0xb}	-
+208957e	2516	2	mov r5,r2	mov r5,r2	-
+2089638	7f04	2	push {0xf}	push {0xf}	-
+208963a	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+20897b8	7804	2	push {0x8}	push {0x8}	-
+20897ba	0416	2	mov r4,r0	mov r4,r0	-
+208981c	7b04	2	push {0xb}	push {0xb}	-
+208981e	829c	2	add sp,#-0x190	add sp,#-0x190	-
+2089820	2a16	2	mov r10,r2	mov r10,r2	-
+2089822	1516	2	mov r5,r1	mov r5,r1	-
+2089824	0116	2	mov r1,r0	mov r1,r0	-
+2089826	c0ffc89c0802	6	mov r0,#0x2089cc8	mov r0,#0x2089cc8	-
+208982c	38d6	2	mov r8,r3  #	mov r8,r3  #	-
+20899a8	7704	2	push {0x7}	push {0x7}	-
+20899aa	a295	2	add sp,#-0x12c	add sp,#-0x12c	-
+20899ac	2416	2	mov r4,r2	mov r4,r2	-
+20899ae	1216	2	mov r2,r1	mov r2,r1	-
+20899b0	0116	2	mov r1,r0	mov r1,r0	-
+20899b2	c0ff67e6096a	6	mov r0,#0x6a09e667	mov r0,#0x6a09e667	-
+2089c68	7904	2	push {0x9}	push {0x9}	-
+2089c6a	3516	2	mov r5,r3	mov r5,r3	-
+2089cb0	7404	2	push {0x4}	push {0x4}	-
+2089cb2	8214	2	clr r2_r3	clr r2_r3	-
+2089cb4	0484	2	goto 0x02089cbe	goto 0x02089cbe	-
+2089cca	7804	2	push {0x8}	push {0x8}	-
+2089ccc	4520	2	mov r5,#0x0	mov r5,#0x0	-
+2089cce	c014	2	clr r8	clr r8	-
+2089cd0	0491	2	goto 0x02089cf4	goto 0x02089cf4	-
+2089cfc	7604	2	push {0x6}	push {0x6}	-
+2089cfe	e298	2	add sp,#-0x20	add sp,#-0x20	-
+2089d00	2316	2	mov r3,r2	mov r3,r2	-
+2089d02	1216	2	mov r2,r1	mov r2,r1	-
+2089d04	0116	2	mov r1,r0	mov r1,r0	-
+2089d06	8c80	2	add r4,sp,#0x0	add r4,sp,#0x0	-
+2089d08	4016	2	mov r0,r4	mov r0,r4	-
+2089d0a	619f	2	call 0x02089cca	call 0x02089cca	-
+2089d0c	4521	2	mov r5,#0x1	mov r5,#0x1	-
+2089d0e	4121	2	mov r1,#0x1	mov r1,#0x1	-
+2089d10	8041	2	jnz r0,0x02089d14	jnz r0,0x02089d14	-
+2089d12	0116	2	mov r1,r0	mov r1,r0	-
+2089d14	16a1	2	lsl r6,r1,0x1	lsl r6,r1,0x1	-
+2089d16	4016	2	mov r0,r4	mov r0,r4	-
+2089d18	3116	2	mov r1,r3	mov r1,r3	-
+2089d1a	618a	2	call 0x02089cb0	call 0x02089cb0	-
+2089d1c	0041	2	jz r0,0x02089d20	jz r0,0x02089d20	-
+2089d1e	4520	2	mov r5,#0x0	mov r5,#0x0	-
+2089d20	d01f	2	sub r0,r5,r6	sub r0,r5,r6	-
+2089d22	0288	2	add sp,#0x20	add sp,#0x20	-
+2089d24	5604	2	pop {pc,0x6}	pop {pc,0x6}	-
+2089d3c	7704	2	push {0x7}	push {0x7}	-
+2089d3e	3760	2	lw r7,[r3 + 0x0]	lw r7,[r3 + 0x0]	-
+2089d40	2660	2	lw r6,[r2 + 0x0]	lw r6,[r2 + 0x0]	-
+2089d42	6415	2	mov r4_r5,r6_r7	mov r4_r5,r6_r7	-
+2089d66	7f04	2	push {0xf}	push {0xf}	-
+2089d68	e28b	2	add sp,#-0x54	add sp,#-0x54	-
+2089d6a	39d6	2	mov r9,r3  #	mov r9,r3  #	-
+2089de8	7a04	2	push {0xa}	push {0xa}	-
+2089dea	6905	2	lw r1,[r6 --= 4]	lw r1,[r6 --= 4]	-
+2089dec	cd88	2	add r5,sp,#0x48	add r5,sp,#0x48	-
+2089dee	ca90	2	add r2,sp,#0x50	add r2,sp,#0x50	-
+2089df0	cb8c	2	add r3,sp,#0x4c	add r3,sp,#0x4c	-
+2089e32	1004	2	push rets	push rets	-
+2089e34	2316	2	mov r3,r2	mov r3,r2	-
+2089e36	1216	2	mov r2,r1	mov r2,r1	-
+2089e38	4196	2	call 0x02089d66	call 0x02089d66	-
+2089e3a	0004	2	pop pc	pop pc	-
+2089e3c	7804	2	push {0x8}	push {0x8}	-
+2089e3e	e298	2	add sp,#-0x20	add sp,#-0x20	-
+2089e40	3416	2	mov r4,r3	mov r4,r3	-
+2089e42	2516	2	mov r5,r2	mov r5,r2	-
+2089e44	1816	2	mov r8,r1	mov r8,r1	-
+2089e46	0716	2	mov r7,r0	mov r7,r0	-
+2089e48	8e80	2	add r6,sp,#0x0	add r6,sp,#0x0	-
+2089e4a	6016	2	mov r0,r6	mov r0,r6	-
+2089e4c	5116	2	mov r1,r5	mov r1,r5	-
+2089e4e	4216	2	mov r2,r4	mov r2,r4	-
+2089e50	7190	2	call 0x02089e32	call 0x02089e32	-
+2089e52	7016	2	mov r0,r7	mov r0,r7	-
+2089e54	7116	2	mov r1,r7	mov r1,r7	-
+2089e56	6216	2	mov r2,r6	mov r2,r6	-
+2089e58	4316	2	mov r3,r4	mov r3,r4	-
+2089e5a	4185	2	call 0x02089d66	call 0x02089d66	-
+2089e5c	6016	2	mov r0,r6	mov r0,r6	-
+2089e5e	6116	2	mov r1,r6	mov r1,r6	-
+2089e60	5216	2	mov r2,r5	mov r2,r5	-
+2089e62	4316	2	mov r3,r4	mov r3,r4	-
+2089e64	4180	2	call 0x02089d66	call 0x02089d66	-
+2089e66	8016	2	mov r0,r8	mov r0,r8	-
+2089e68	8116	2	mov r1,r8	mov r1,r8	-
+2089e6a	6216	2	mov r2,r6	mov r2,r6	-
+2089e6c	4316	2	mov r3,r4	mov r3,r4	-
+2089e6e	bfea7aff	4	call 0x02089d66	call 0x02089d66	-
+2089e72	0288	2	add sp,#0x20	add sp,#0x20	-
+2089e74	5804	2	pop {pc,0x8}	pop {pc,0x8}	-
+2089ff0	7b04	2	push {0xb}	push {0xb}	-
+2089ff2	e297	2	add sp,#-0x24	add sp,#-0x24	-
+2089ff4	39d6	2	mov r9,r3  #	mov r9,r3  #	-
+2089ff6	0732	2	lw r7,[sp + 0x48]	lw r7,[sp + 0x48]	-
+208a0d4	7604	2	push {0x6}	push {0x6}	-
+208a0d6	0416	2	mov r4,r0	mov r4,r0	-
+208a0d8	25d6	2	mov r5,r2  #	mov r5,r2  #	-
+208a0da	4840	2	lb.z r0,[r4 + 0x0]	lb.z r0,[r4 + 0x0]	-
+208a0dc	1216	2	mov r2,r1	mov r2,r1	-
+208a200	7f04	2	push {0xf}	push {0xf}	-
+208a202	c28c	2	add sp,#-0xd0	add sp,#-0xd0	-
+208a5c4	7a04	2	push {0xa}	push {0xa}	-
+208a5c6	e28f	2	add sp,#-0x44	add sp,#-0x44	-
+208a5c8	3a16	2	mov r10,r3	mov r10,r3	-
+208a708	7904	2	push {0x9}	push {0x9}	-
+208a70a	e297	2	add sp,#-0x24	add sp,#-0x24	-
+208a70c	2416	2	mov r4,r2	mov r4,r2	-
+208a70e	8d84	2	add r5,sp,#0x4	add r5,sp,#0x4	-
+208a710	c2ff20dd0502	6	mov r2,#0x205dd20	mov r2,#0x205dd20	-
+208a716	5316	2	mov r3,r5	mov r3,r5	-
+208a718	1087	2	rep 0x4,0x7	rep 0x4,0x7	-
+208a71a	2605	2	lw r6,[r2 ++= 4]	lw r6,[r2 ++= 4]	-
+208a71c	b605	2	sw r6,[r3 ++= 4]	sw r6,[r3 ++= 4]	-
+208a8a0	7604	2	push {0x6}	push {0x6}	-
+208a8a2	e28a	2	add sp,#-0x58	add sp,#-0x58	-
+208a8a4	ac87	2	add r4,sp,#0x27	add r4,sp,#0x27	-
+208a8a6	4516	2	mov r5,r4	mov r5,r4	-
+208a8a8	1097	2	rep 0x4,0x17	rep 0x4,0x17	-
+208a8aa	0607	2	lb.z r6,[r0 ++= 2]	lb.z r6,[r0 ++= 2]	-
+208a8ac	d607	2	sb r6,[r5 ++= 1]	sb r6,[r5 ++= 1]	-
+208a8ae	4898	2	add r0,r4,#0x18	add r0,r4,#0x18	-
+208a8b0	1097	2	rep 0x4,0x17	rep 0x4,0x17	-
+208a8b2	1507	2	lb.z r5,[r1 ++= 2]	lb.z r5,[r1 ++= 2]	-
+208a8b4	8507	2	sb r5,[r0 ++= 1]	sb r5,[r0 ++= 1]	-
+208a8d8	7804	2	push {0x8}	push {0x8}	-
+208a8da	e28f	2	add sp,#-0x44	add sp,#-0x44	-
+208a8dc	ac8c	2	add r4,sp,#0x2c	add r4,sp,#0x2c	-
+208a8de	4616	2	mov r6,r4	mov r6,r4	-
+208a8e0	8d94	2	add r5,sp,#0x14	add r5,sp,#0x14	-
+208a8e2	1097	2	rep 0x4,0x17	rep 0x4,0x17	-
+208a8e4	0707	2	lb.z r7,[r0 ++= 2]	lb.z r7,[r0 ++= 2]	-
+208a8e6	e707	2	sb r7,[r6 ++= 1]	sb r7,[r6 ++= 1]	-
+208a8e8	5016	2	mov r0,r5	mov r0,r5	-
+208a8ea	1097	2	rep 0x4,0x17	rep 0x4,0x17	-
+208a8ec	1607	2	lb.z r6,[r1 ++= 2]	lb.z r6,[r1 ++= 2]	-
+208a8ee	8607	2	sb r6,[r0 ++= 1]	sb r6,[r0 ++= 1]	-
+208a8f0	8e84	2	add r6,sp,#0x4	add r6,sp,#0x4	-
+208a8f2	6888	2	add r0,r6,#0x8	add r0,r6,#0x8	-
+208a8f4	2988	2	add r1,r2,#0x8	add r1,r2,#0x8	-
+208a8f6	1087	2	rep 0x4,0x7	rep 0x4,0x7	-
+208a8f8	1707	2	lb.z r7,[r1 ++= 2]	lb.z r7,[r1 ++= 2]	-
+208a8fa	8707	2	sb r7,[r0 ++= 1]	sb r7,[r0 ++= 1]	-
+208a8fc	6016	2	mov r0,r6	mov r0,r6	-
+208a8fe	1087	2	rep 0x4,0x7	rep 0x4,0x7	-
+208a900	2107	2	lb.z r1,[r2 ++= 2]	lb.z r1,[r2 ++= 2]	-
+208a902	8107	2	sb r1,[r0 ++= 1]	sb r1,[r0 ++= 1]	-
+208a904	3816	2	mov r8,r3	mov r8,r3	-
+208a906	4138	2	mov r1,#0x18	mov r1,#0x18	-
+208a908	4016	2	mov r0,r4	mov r0,r4	-
+208a90a	80ffda48feff	6	call 0x0206f1ea	call 0x0206f1ea	-
+208a910	4138	2	mov r1,#0x18	mov r1,#0x18	-
+208a912	5016	2	mov r0,r5	mov r0,r5	-
+208a914	80ffd048feff	6	call 0x0206f1ea	call 0x0206f1ea	-
+208a91a	4130	2	mov r1,#0x10	mov r1,#0x10	-
+208a91c	6016	2	mov r0,r6	mov r0,r6	-
+208a91e	80ffc648feff	6	call 0x0206f1ea	call 0x0206f1ea	-
+208a984	7704	2	push {0x7}	push {0x7}	-
+208a986	e28a	2	add sp,#-0x58	add sp,#-0x58	-
+208a988	cc80	2	add r4,sp,#0x40	add r4,sp,#0x40	-
+208a98a	4616	2	mov r6,r4	mov r6,r4	-
+208a98c	ad88	2	add r5,sp,#0x28	add r5,sp,#0x28	-
+208a98e	1097	2	rep 0x4,0x17	rep 0x4,0x17	-
+208a990	0707	2	lb.z r7,[r0 ++= 2]	lb.z r7,[r0 ++= 2]	-
+208a992	e707	2	sb r7,[r6 ++= 1]	sb r7,[r6 ++= 1]	-
+208a994	5016	2	mov r0,r5	mov r0,r5	-
+208a996	1097	2	rep 0x4,0x17	rep 0x4,0x17	-
+208a998	1607	2	lb.z r6,[r1 ++= 2]	lb.z r6,[r1 ++= 2]	-
+208a99a	8607	2	sb r6,[r0 ++= 1]	sb r6,[r0 ++= 1]	-
+208a99c	8e98	2	add r6,sp,#0x18	add r6,sp,#0x18	-
+208a99e	6888	2	add r0,r6,#0x8	add r0,r6,#0x8	-
+208a9a0	2988	2	add r1,r2,#0x8	add r1,r2,#0x8	-
+208a9a2	1087	2	rep 0x4,0x7	rep 0x4,0x7	-
+208a9a4	1707	2	lb.z r7,[r1 ++= 2]	lb.z r7,[r1 ++= 2]	-
+208a9a6	8707	2	sb r7,[r0 ++= 1]	sb r7,[r0 ++= 1]	-
+208a9a8	6016	2	mov r0,r6	mov r0,r6	-
+208a9aa	1087	2	rep 0x4,0x7	rep 0x4,0x7	-
+208a9ac	2107	2	lb.z r1,[r2 ++= 2]	lb.z r1,[r2 ++= 2]	-
+208a9ae	8107	2	sb r1,[r0 ++= 1]	sb r1,[r0 ++= 1]	-
+208a9b0	8f88	2	add r7,sp,#0x8	add r7,sp,#0x8	-
+208a9b2	7888	2	add r0,r7,#0x8	add r0,r7,#0x8	-
+208a9b4	3988	2	add r1,r3,#0x8	add r1,r3,#0x8	-
+208a9b6	1087	2	rep 0x4,0x7	rep 0x4,0x7	-
+208a9b8	1207	2	lb.z r2,[r1 ++= 2]	lb.z r2,[r1 ++= 2]	-
+208a9ba	8207	2	sb r2,[r0 ++= 1]	sb r2,[r0 ++= 1]	-
+208a9bc	7016	2	mov r0,r7	mov r0,r7	-
+208a9be	1087	2	rep 0x4,0x7	rep 0x4,0x7	-
+208a9c0	3107	2	lb.z r1,[r3 ++= 2]	lb.z r1,[r3 ++= 2]	-
+208a9c2	8107	2	sb r1,[r0 ++= 1]	sb r1,[r0 ++= 1]	-
+208a9c4	4138	2	mov r1,#0x18	mov r1,#0x18	-
+208a9c6	4016	2	mov r0,r4	mov r0,r4	-
+208a9c8	80ff1c48feff	6	call 0x0206f1ea	call 0x0206f1ea	-
+208a9ce	4138	2	mov r1,#0x18	mov r1,#0x18	-
+208a9d0	5016	2	mov r0,r5	mov r0,r5	-
+208a9d2	80ff1248feff	6	call 0x0206f1ea	call 0x0206f1ea	-
+208a9d8	4130	2	mov r1,#0x10	mov r1,#0x10	-
+208a9da	6016	2	mov r0,r6	mov r0,r6	-
+208a9dc	80ff0848feff	6	call 0x0206f1ea	call 0x0206f1ea	-
+208a9e2	4130	2	mov r1,#0x10	mov r1,#0x10	-
+208a9e4	7016	2	mov r0,r7	mov r0,r7	-
+208a9e6	80fffe47feff	6	call 0x0206f1ea	call 0x0206f1ea	-
+208a9ec	8884	2	add r0,sp,#0x4	add r0,sp,#0x4	-
+208aa24	7704	2	push {0x7}	push {0x7}	-
+208aa26	e287	2	add sp,#-0x64	add sp,#-0x64	-
+208aa28	2416	2	mov r4,r2	mov r4,r2	-
+208aa2a	aa84	2	add r2,sp,#0x24	add r2,sp,#0x24	-
+208aa2c	2d88	2	add r5,r2,#0x8	add r5,r2,#0x8	-
+208aa2e	1e88	2	add r6,r1,#0x8	add r6,r1,#0x8	-
+208aa30	1087	2	rep 0x4,0x7	rep 0x4,0x7	-
+208aa32	6707	2	lb.z r7,[r6 ++= 2]	lb.z r7,[r6 ++= 2]	-
+208aa34	d707	2	sb r7,[r5 ++= 1]	sb r7,[r5 ++= 1]	-
+208aa36	2516	2	mov r5,r2	mov r5,r2	-
+208aa38	1087	2	rep 0x4,0x7	rep 0x4,0x7	-
+208aa3a	1607	2	lb.z r6,[r1 ++= 2]	lb.z r6,[r1 ++= 2]	-
+208aa3c	d607	2	sb r6,[r5 ++= 1]	sb r6,[r5 ++= 1]	-
+208aa3e	2990	2	add r1,r2,#0x10	add r1,r2,#0x10	-
+208aa40	108f	2	rep 0x4,0xf	rep 0x4,0xf	-
+208aa42	4507	2	lb.z r5,[r4 ++= 2]	lb.z r5,[r4 ++= 2]	-
+208aa44	9507	2	sb r5,[r1 ++= 1]	sb r5,[r1 ++= 1]	-
+208abf4	7904	2	push {0x9}	push {0x9}	-
+208abf6	e28a	2	add sp,#-0x58	add sp,#-0x58	-
+208abf8	c4ff62746c6b	6	mov r4,#0x6b6c7462	mov r4,#0x6b6c7462	-
+208b44c	7c04	2	push {0xc}	push {0xc}	-
+208b44e	e298	2	add sp,#-0x20	add sp,#-0x20	-
+208b450	3b16	2	mov r11,r3	mov r11,r3	-
+208b452	1516	2	mov r5,r1	mov r5,r1	-
+208b454	0c16	2	mov r12,r0	mov r12,r0	-
+208b456	4720	2	mov r7,#0x0	mov r7,#0x0	-
+208b4d8	7f04	2	push {0xf}	push {0xf}	-
+208b4da	e290	2	add sp,#-0x40	add sp,#-0x40	-
+208b4dc	c4ff6032c301	6	mov r4,#0x1c33260	mov r4,#0x1c33260	-
+208b67c	7f04	2	push {0xf}	push {0xf}	-
+208b67e	c295	2	add sp,#-0xac	add sp,#-0xac	-
+208b680	0f16	2	mov r15,r0	mov r15,r0	-
+208b682	80ff740efaff	6	call 0x0202c4fc	call 0x0202c4fc	-
+208b688	cdff6032c301	6	mov r13,#0x1c33260	mov r13,#0x1c33260	-
+208b68e	4020	2	mov r0,#0x0	mov r0,#0x0	-
+208bcec	7604	2	push {0x6}	push {0x6}	-
+208bcee	e29e	2	add sp,#-0x8	add sp,#-0x8	-
+208bcf0	c5ff6032c301	6	mov r5,#0x1c33260	mov r5,#0x1c33260	-
+208c284	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+208c2ba	c2ff1c100300	6	mov r2,#0x3101c	mov r2,#0x3101c	-
+208c2c0	2360	2	lw r3,[r2 + 0x0]	lw r3,[r2 + 0x0]	-
+208c2d8	1004	2	push rets	push rets	-
+208c2da	40e00410	4	movz r0,#0x1004	movz r0,#0x1004	-
+208c2de	412c	2	mov r1,#0xc	mov r1,#0xc	-
+208c2e0	6191	2	call 0x0208c284	call 0x0208c284	-
+208c2e2	4036	2	mov r0,#0x16	mov r0,#0x16	-
+208c2e4	4120	2	mov r1,#0x0	mov r1,#0x0	-
+208c2e6	7189	2	call 0x0208c2ba	call 0x0208c2ba	-
+208c2e8	4035	2	mov r0,#0x15	mov r0,#0x15	-
+208c2ea	4931	2	mov r1,#0x31	mov r1,#0x31	-
+208c2ec	7186	2	call 0x0208c2ba	call 0x0208c2ba	-
+208c2ee	4035	2	mov r0,#0x15	mov r0,#0x15	-
+208c2f0	4930	2	mov r1,#0x30	mov r1,#0x30	-
+208c2f2	7183	2	call 0x0208c2ba	call 0x0208c2ba	-
+208c2f4	4039	2	mov r0,#0x19	mov r0,#0x19	-
+208c2f6	4120	2	mov r1,#0x0	mov r1,#0x0	-
+208c2f8	7180	2	call 0x0208c2ba	call 0x0208c2ba	-
+208c2fa	0004	2	pop pc	pop pc	-
+208c2fc	7404	2	push {0x4}	push {0x4}	-
+208c2fe	1416	2	mov r4,r1	mov r4,r1	-
+208c300	0116	2	mov r1,r0	mov r1,r0	-
+208c302	7031	2	mov r0,#0xd1	mov r0,#0xd1	-
+208c304	619a	2	call 0x0208c2ba	call 0x0208c2ba	-
+208c306	7032	2	mov r0,#0xd2	mov r0,#0xd2	-
+208c308	4116	2	mov r1,r4	mov r1,r4	-
+208c30a	6197	2	call 0x0208c2ba	call 0x0208c2ba	-
+208c30c	7030	2	mov r0,#0xd0	mov r0,#0xd0	-
+208c30e	4121	2	mov r1,#0x1	mov r1,#0x1	-
+208c310	6194	2	call 0x0208c2ba	call 0x0208c2ba	-
+208c312	5404	2	pop {pc,0x4}	pop {pc,0x4}	-
+208c314	7404	2	push {0x4}	push {0x4}	-
+208c316	1416	2	mov r4,r1	mov r4,r1	-
+208c318	0116	2	mov r1,r0	mov r1,r0	-
+208c31a	7029	2	mov r0,#0xc9	mov r0,#0xc9	-
+208c31c	618e	2	call 0x0208c2ba	call 0x0208c2ba	-
+208c31e	702a	2	mov r0,#0xca	mov r0,#0xca	-
+208c320	4116	2	mov r1,r4	mov r1,r4	-
+208c322	618b	2	call 0x0208c2ba	call 0x0208c2ba	-
+208c324	7028	2	mov r0,#0xc8	mov r0,#0xc8	-
+208c326	4121	2	mov r1,#0x1	mov r1,#0x1	-
+208c328	6188	2	call 0x0208c2ba	call 0x0208c2ba	-
+208c32a	5404	2	pop {pc,0x4}	pop {pc,0x4}	-
+208c32c	7404	2	push {0x4}	push {0x4}	-
+208c32e	1416	2	mov r4,r1	mov r4,r1	-
+208c330	0116	2	mov r1,r0	mov r1,r0	-
+208c332	7035	2	mov r0,#0xd5	mov r0,#0xd5	-
+208c334	6182	2	call 0x0208c2ba	call 0x0208c2ba	-
+208c336	7036	2	mov r0,#0xd6	mov r0,#0xd6	-
+208c338	4116	2	mov r1,r4	mov r1,r4	-
+208c33a	519f	2	call 0x0208c2ba	call 0x0208c2ba	-
+208c33c	7034	2	mov r0,#0xd4	mov r0,#0xd4	-
+208c33e	4121	2	mov r1,#0x1	mov r1,#0x1	-
+208c340	519c	2	call 0x0208c2ba	call 0x0208c2ba	-
+208c342	5404	2	pop {pc,0x4}	pop {pc,0x4}	-
+208c344	7804	2	push {0x8}	push {0x8}	-
+208c5dc	7f04	2	push {0xf}	push {0xf}	-
+208c646	1004	2	push rets	push rets	-
+208c648	0316	2	mov r3,r0	mov r3,r0	-
+208c676	1004	2	push rets	push rets	-
+208c678	0116	2	mov r1,r0	mov r1,r0	-
+208c67a	7029	2	mov r0,#0xc9	mov r0,#0xc9	-
+208c67c	bfea1dfe	4	call 0x0208c2ba	call 0x0208c2ba	-
+208c680	7028	2	mov r0,#0xc8	mov r0,#0xc8	-
+208c682	4122	2	mov r1,#0x2	mov r1,#0x2	-
+208c684	bfea19fe	4	call 0x0208c2ba	call 0x0208c2ba	-
+208c688	702b	2	mov r0,#0xcb	mov r0,#0xcb	-
+208c68a	619d	2	call 0x0208c646	call 0x0208c646	-
+208c68c	0004	2	pop pc	pop pc	-
+208c68e	1004	2	push rets	push rets	-
+208c690	5020	2	mov r0,#0x40	mov r0,#0x40	-
+208c692	7191	2	call 0x0208c676	call 0x0208c676	-
+208c6cc	1004	2	push rets	push rets	-
+208c6ce	bfea03fe	4	call 0x0208c2d8	call 0x0208c2d8	-
+208c6d2	40e00410	4	movz r0,#0x1004	movz r0,#0x1004	-
+208c6d6	412c	2	mov r1,#0xc	mov r1,#0xc	-
+208c6d8	bfead4fd	4	call 0x0208c284	call 0x0208c284	-
+208c6dc	4039	2	mov r0,#0x19	mov r0,#0x19	-
+208c6de	4138	2	mov r1,#0x18	mov r1,#0x18	-
+208c6e0	bfeaebfd	4	call 0x0208c2ba	call 0x0208c2ba	-
+208c6e4	0004	2	pop pc	pop pc	-
+208c804	7404	2	push {0x4}	push {0x4}	-
+208c806	00a2	2	lsl r0,r0,0x2	lsl r0,r0,0x2	-
+208c808	c1ff047ac001	6	mov r1,#0x1c07a04	mov r1,#0x1c07a04	-
+208cd0c	7e04	2	push {0xe}	push {0xe}	-
+208cd0e	bfeae3fa	4	call 0x0208c2d8	call 0x0208c2d8	-
+208cd12	4035	2	mov r0,#0x15	mov r0,#0x15	-
+208cd14	4120	2	mov r1,#0x0	mov r1,#0x0	-
+208cd16	c414	2	clr r12	clr r12	-
+208cd18	bfeafcfa	4	call 0x0208c314	call 0x0208c314	-
+208cd1c	4034	2	mov r0,#0x14	mov r0,#0x14	-
+208cd1e	4120	2	mov r1,#0x0	mov r1,#0x0	-
+208cd20	bfeaf8fa	4	call 0x0208c314	call 0x0208c314	-
+208cd24	bfeab3fc	4	call 0x0208c68e	call 0x0208c68e	-
+208cd28	bfead0fc	4	call 0x0208c6cc	call 0x0208c6cc	-
+208cd2c	4020	2	mov r0,#0x0	mov r0,#0x0	-
+208cd2e	4123	2	mov r1,#0x3	mov r1,#0x3	-
+208cd30	bfeae4fa	4	call 0x0208c2fc	call 0x0208c2fc	-
+208cd34	503f	2	mov r0,#0x5f	mov r0,#0x5f	-
+208cd36	4130	2	mov r1,#0x10	mov r1,#0x10	-
+208cd38	bfeae0fa	4	call 0x0208c2fc	call 0x0208c2fc	-
+208cd3c	4020	2	mov r0,#0x0	mov r0,#0x0	-
+208cd3e	493e	2	mov r1,#0x3e	mov r1,#0x3e	-
+208cd40	bfeaf4fa	4	call 0x0208c32c	call 0x0208c32c	-
+208cd44	403b	2	mov r0,#0x1b	mov r0,#0x1b	-
+208cd46	4938	2	mov r1,#0x38	mov r1,#0x38	-
+208cd48	bfeaf0fa	4	call 0x0208c32c	call 0x0208c32c	-
+208cd4c	4028	2	mov r0,#0x8	mov r0,#0x8	-
+208cd4e	7120	2	mov r1,#0xc0	mov r1,#0xc0	-
+208cd50	bfeaecfa	4	call 0x0208c32c	call 0x0208c32c	-
+208cd54	4033	2	mov r0,#0x13	mov r0,#0x13	-
+208cd56	4120	2	mov r1,#0x0	mov r1,#0x0	-
+208cd58	bfeae8fa	4	call 0x0208c32c	call 0x0208c32c	-
+208cd5c	4034	2	mov r0,#0x14	mov r0,#0x14	-
+208cd5e	4938	2	mov r1,#0x38	mov r1,#0x38	-
+208cd60	bfeae4fa	4	call 0x0208c32c	call 0x0208c32c	-
+208cd64	4034	2	mov r0,#0x14	mov r0,#0x14	-
+208cd66	4934	2	mov r1,#0x34	mov r1,#0x34	-
+208cd68	bfeae0fa	4	call 0x0208c32c	call 0x0208c32c	-
+208cd6c	4828	2	mov r0,#0x28	mov r0,#0x28	-
+208cd6e	bfea49fd	4	call 0x0208c804	call 0x0208c804	-
+208cd72	cbff0c190100	6	mov r11,#0x1190c	mov r11,#0x1190c	-
+208cd78	c8ff6032c301	6	mov r8,#0x1c33260	mov r8,#0x1c33260	-
+208cd7e	49e0d802	4	movz r9,#0x2d8	movz r9,#0x2d8	-
+208cd82	4ae0d902	4	movz r10,#0x2d9	movz r10,#0x2d9	-
+208d040	7504	2	push {0x5}	push {0x5}	-
+208d042	c4ffb054c401	6	mov r4,#0x1c454b0	mov r4,#0x1c454b0	-
+208d0ca	1004	2	push rets	push rets	-
+208d0cc	c1ffc0000500	6	mov r1,#0x500c0	mov r1,#0x500c0	-
+208d11a	1004	2	push rets	push rets	-
+208d132	1004	2	push rets	push rets	-
+208d134	c1ffb054c401	6	mov r1,#0x1c454b0	mov r1,#0x1c454b0	-
+208d13a	1166	2	lw r1,[r1 + 0x18]	lw r1,[r1 + 0x18]	-
+208d19c	7604	2	push {0x6}	push {0x6}	-
+208d19e	c2ffb054c401	6	mov r2,#0x1c454b0	mov r2,#0x1c454b0	-
+208d1a4	13d6	2	mov r3,r1  #	mov r3,r1  #	-
+208d1a6	226e	2	lw r2,[r2 + 0x38]	lw r2,[r2 + 0x38]	-
+208d1a8	0416	2	mov r4,r0	mov r4,r0	-
+208d1aa	8244	2	jnz r2,0x0208d1b4	jnz r2,0x0208d1b4	-
+208d1ac	c0ff00020400	6	mov r0,#0x40200	mov r0,#0x40200	-
+208d1b2	0260	2	lw r2,[r0 + 0x0]	lw r2,[r0 + 0x0]	-
+208d21c	1004	2	push rets	push rets	-
+208d24c	7504	2	push {0x5}	push {0x5}	-
+208d24e	c2ffb054c401	6	mov r2,#0x1c454b0	mov r2,#0x1c454b0	-
+208d254	12d6	2	mov r2,r1  #	mov r2,r1  #	-
+208d256	256e	2	lw r5,[r2 + 0x38]	lw r5,[r2 + 0x38]	-
+208d258	0316	2	mov r3,r0	mov r3,r0	-
+208d25a	8544	2	jnz r5,0x0208d264	jnz r5,0x0208d264	-
+208d25c	c0ff00020400	6	mov r0,#0x40200	mov r0,#0x40200	-
+208d262	0560	2	lw r5,[r0 + 0x0]	lw r5,[r0 + 0x0]	-
+208d2c8	7804	2	push {0x8}	push {0x8}	-
+208d2ca	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+208d2cc	c4ffb054c401	6	mov r4,#0x1c454b0	mov r4,#0x1c454b0	-
+208d2d2	37d6	2	mov r7,r3  #	mov r7,r3  #	-
+208d2d4	456e	2	lw r5,[r4 + 0x38]	lw r5,[r4 + 0x38]	-
+208d2d6	2416	2	mov r4,r2	mov r4,r2	-
+208d2d8	1616	2	mov r6,r1	mov r6,r1	-
+208d2da	0816	2	mov r8,r0	mov r8,r0	-
+208d2dc	8544	2	jnz r5,0x0208d2e6	jnz r5,0x0208d2e6	-
+208d2de	c0ff00020400	6	mov r0,#0x40200	mov r0,#0x40200	-
+208d2e4	0560	2	lw r5,[r0 + 0x0]	lw r5,[r0 + 0x0]	-
+208d40c	1004	2	push rets	push rets	-
+208d40e	c1ffb054c401	6	mov r1,#0x1c454b0	mov r1,#0x1c454b0	-
+208d414	1166	2	lw r1,[r1 + 0x18]	lw r1,[r1 + 0x18]	-
+208d442	7404	2	push {0x4}	push {0x4}	-
+208d444	c1ff6032c301	6	mov r1,#0x1c33260	mov r1,#0x1c33260	-
+208d4a8	7704	2	push {0x7}	push {0x7}	-
+208d4aa	2416	2	mov r4,r2	mov r4,r2	-
+208d4ac	1516	2	mov r5,r1	mov r5,r1	-
+208d4ae	0616	2	mov r6,r0	mov r6,r0	-
+208d4b0	bfeac6fd	4	call 0x0208d040	call 0x0208d040	-
+208d4b4	4f1d	2	add r7,r4,r5	add r7,r4,r5	-
+208d4b6	7016	2	mov r0,r7	mov r0,r7	-
+208d4b8	bfea3bfe	4	call 0x0208d132	call 0x0208d132	-
+208d4bc	c217	2	uxth r2,r4	uxth r2,r4	-
+208d4be	4320	2	mov r3,#0x0	mov r3,#0x0	-
+208d4c0	6016	2	mov r0,r6	mov r0,r6	-
+208d4c2	5116	2	mov r1,r5	mov r1,r5	-
+208d4c4	bfea00ff	4	call 0x0208d2c8	call 0x0208d2c8	-
+208d4c8	7016	2	mov r0,r7	mov r0,r7	-
+208d4ca	5180	2	call 0x0208d40c	call 0x0208d40c	-
+208d4cc	4020	2	mov r0,#0x0	mov r0,#0x0	-
+208d4ce	5199	2	call 0x0208d442	call 0x0208d442	-
+208d4d0	4016	2	mov r0,r4	mov r0,r4	-
+208d4d2	5704	2	pop {pc,0x7}	pop {pc,0x7}	-
+208d4e4	7404	2	push {0x4}	push {0x4}	-
+208d4e6	c0ffb054c401	6	mov r0,#0x1c454b0	mov r0,#0x1c454b0	-
+208d4ec	006e	2	lw r0,[r0 + 0x38]	lw r0,[r0 + 0x38]	-
+208d4ee	8044	2	jnz r0,0x0208d4f8	jnz r0,0x0208d4f8	-
+208d4f0	c0ff00020400	6	mov r0,#0x40200	mov r0,#0x40200	-
+208d4f6	0060	2	lw r0,[r0 + 0x0]	lw r0,[r0 + 0x0]	-
+208d540	7604	2	push {0x6}	push {0x6}	-
+208d542	bfea7dfd	4	call 0x0208d040	call 0x0208d040	-
+208d546	618e	2	call 0x0208d4e4	call 0x0208d4e4	-
+208d548	0416	2	mov r4,r0	mov r4,r0	-
+208d54a	4020	2	mov r0,#0x0	mov r0,#0x0	-
+208d54c	4620	2	mov r6,#0x0	mov r6,#0x0	-
+208d54e	bfeabcfd	4	call 0x0208d0ca	call 0x0208d0ca	-
+208d552	603f	2	mov r0,#0x9f	mov r0,#0x9f	-
+208d554	bfeae1fd	4	call 0x0208d11a	call 0x0208d11a	-
+208d558	c5ffb054c401	6	mov r5,#0x1c454b0	mov r5,#0x1c454b0	-
+208d55e	d667	2	sw r6,[r5 + 0x1c]	sw r6,[r5 + 0x1c]	-
+208d560	4323	2	mov r3,#0x3	mov r3,#0x3	-
+208d562	0487	2	goto 0x0208d572	goto 0x0208d572	-
+208d564	bfea5afe	4	call 0x0208d21c	call 0x0208d21c	-
+208d568	5167	2	lw r1,[r5 + 0x1c]	lw r1,[r5 + 0x1c]	-
+208d56a	1019	2	or r0,r1	or r0,r1	-
+208d56c	00a8	2	lsl r0,r0,0x8	lsl r0,r0,0x8	-
+208d56e	d067	2	sw r0,[r5 + 0x1c]	sw r0,[r5 + 0x1c]	-
+208d570	fb3f	2	add r3,#-0x1	add r3,#-0x1	-
+208d572	f358	2	jnz r3,0x0208d564	jnz r3,0x0208d564	-
+208d574	4021	2	mov r0,#0x1	mov r0,#0x1	-
+208d576	bfeaa8fd	4	call 0x0208d0ca	call 0x0208d0ca	-
+208d57a	4020	2	mov r0,#0x0	mov r0,#0x0	-
+208d57c	bfeaa5fd	4	call 0x0208d0ca	call 0x0208d0ca	-
+208d580	502b	2	mov r0,#0x4b	mov r0,#0x4b	-
+208d582	bfeacafd	4	call 0x0208d11a	call 0x0208d11a	-
+208d586	4020	2	mov r0,#0x0	mov r0,#0x0	-
+208d588	bfeac7fd	4	call 0x0208d11a	call 0x0208d11a	-
+208d58c	4020	2	mov r0,#0x0	mov r0,#0x0	-
+208d58e	bfeac4fd	4	call 0x0208d11a	call 0x0208d11a	-
+208d592	4020	2	mov r0,#0x0	mov r0,#0x0	-
+208d594	bfeac1fd	4	call 0x0208d11a	call 0x0208d11a	-
+208d598	4020	2	mov r0,#0x0	mov r0,#0x0	-
+208d59a	bfeabefd	4	call 0x0208d11a	call 0x0208d11a	-
+208d59e	0485	2	goto 0x0208d5aa	goto 0x0208d5aa	-
+208d624	7804	2	push {0x8}	push {0x8}	-
+208d6b8	7504	2	push {0x5}	push {0x5}	-
+208d6ba	4020	2	mov r0,#0x0	mov r0,#0x0	-
+208d6bc	bfea05fd	4	call 0x0208d0ca	call 0x0208d0ca	-
+208d6c0	4025	2	mov r0,#0x5	mov r0,#0x5	-
+208d6c2	bfea2afd	4	call 0x0208d11a	call 0x0208d11a	-
+208d6c6	bfeaa9fd	4	call 0x0208d21c	call 0x0208d21c	-
+208d6ca	0416	2	mov r4,r0	mov r4,r0	-
+208d6cc	4021	2	mov r0,#0x1	mov r0,#0x1	-
+208d6ce	bfeafcfc	4	call 0x0208d0ca	call 0x0208d0ca	-
+208d6d2	4020	2	mov r0,#0x0	mov r0,#0x0	-
+208d6d4	bfeaf9fc	4	call 0x0208d0ca	call 0x0208d0ca	-
+208d6d8	4835	2	mov r0,#0x35	mov r0,#0x35	-
+208d6da	bfea1efd	4	call 0x0208d11a	call 0x0208d11a	-
+208d6de	bfea9dfd	4	call 0x0208d21c	call 0x0208d21c	-
+208d6e2	0516	2	mov r5,r0	mov r5,r0	-
+208d6e4	4021	2	mov r0,#0x1	mov r0,#0x1	-
+208d6e6	bfeaf0fc	4	call 0x0208d0ca	call 0x0208d0ca	-
+208d860	7904	2	push {0x9}	push {0x9}	-
+208d862	2516	2	mov r5,r2	mov r5,r2	-
+208d864	1616	2	mov r6,r1	mov r6,r1	-
+208d866	0716	2	mov r7,r0	mov r7,r0	-
+208d868	1553	2	jz r5,0x0208d8d0	jz r5,0x0208d8d0	-
+208d86a	bfeae9fb	4	call 0x0208d040	call 0x0208d040	-
+208d8d0	4020	2	mov r0,#0x0	mov r0,#0x0	-
+208d8d2	5904	2	pop {pc,0x9}	pop {pc,0x9}	-
+208decc	7704	2	push {0x7}	push {0x7}	-
+208dece	c1ff00000000	6	mov r1,#0x0	mov r1,#0x0	-
+208ded4	c2ff07000000	6	mov r2,#0x7	mov r2,#0x7	-
+208dfe0	6000	2	cli	cli	-
+208e0cc	7604	2	push {0x6}	push {0x6}	-
+208e0ce	0416	2	mov r4,r0	mov r4,r0	-
+208e0d0	103f	2	mov r0,#-0x1	mov r0,#-0x1	-
+208e0d2	201a	2	lsl r0,r2	lsl r0,r2	-
+208e0f4	7504	2	push {0x5}	push {0x5}	-
+208e0f6	1216	2	mov r2,r1	mov r2,r1	-
+208e0f8	0316	2	mov r3,r0	mov r3,r0	-
+208e0fa	bd17	2	sxth r5,r3	sxth r5,r3	-
+208e0fc	bfea70ff	4	call 0x0208dfe0	call 0x0208dfe0	-
+208e100	c4ff083e0100	6	mov r4,#0x13e08	mov r4,#0x13e08	-
+208e164	7f04	2	push {0xf}	push {0xf}	-
+208e166	e299	2	add sp,#-0x1c	add sp,#-0x1c	-
+208e4a8	7f04	2	push {0xf}	push {0xf}	-
+208e4aa	e29f	2	add sp,#-0x4	add sp,#-0x4	-
+208e4ac	042e	2	lw r4,[sp + 0x38]	lw r4,[sp + 0x38]	-
+208e754	7f04	2	push {0xf}	push {0xf}	-
+208e756	052d	2	lw r5,[sp + 0x34]	lw r5,[sp + 0x34]	-
+208e758	042e	2	lw r4,[sp + 0x38]	lw r4,[sp + 0x38]	-
+208f4e8	7f04	2	push {0xf}	push {0xf}	-
+208f4ea	e283	2	add sp,#-0x74	add sp,#-0x74	-
+208f4ec	c1ff04090100	6	mov r1,#0x10904	mov r1,#0x10904	-
+208fbb0	7f04	2	push {0xf}	push {0xf}	-
+208fbb2	2499	2	goto 0x0208fc66	goto 0x0208fc66	-
+2090658	7504	2	push {0x5}	push {0x5}	-
+209065a	1216	2	mov r2,r1	mov r2,r1	-
+209065c	0316	2	mov r3,r0	mov r3,r0	-
+209065e	bd17	2	sxth r5,r3	sxth r5,r3	-
+2090660	bfeabeec	4	call 0x0208dfe0	call 0x0208dfe0	-
+2090664	c4ff083e0100	6	mov r4,#0x13e08	mov r4,#0x13e08	-
+2090884	7f04	2	push {0xf}	push {0xf}	-
+2090886	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+2090888	c8fff631c401	6	mov r8,#0x1c431f6	mov r8,#0x1c431f6	-
+20909a8	7504	2	push {0x5}	push {0x5}	-
+20909f0	7f04	2	push {0xf}	push {0xf}	-
+20909f2	e29d	2	add sp,#-0xc	add sp,#-0xc	-
+20909f4	c2ff0a42c401	6	mov r2,#0x1c4420a	mov r2,#0x1c4420a	-
+20909fa	2a60	2	lh.z r2,[r2 + 0x0]	lh.z r2,[r2 + 0x0]	-
+20909fc	c8ff0842c401	6	mov r8,#0x1c44208	mov r8,#0x1c44208	-
+2091376	7604	2	push {0x6}	push {0x6}	-
+2091378	c2ff6032c301	6	mov r2,#0x1c33260	mov r2,#0x1c33260	-
+20913e8	1004	2	push rets	push rets	-
+20913ea	6185	2	call 0x02091376	call 0x02091376	-
+20913ec	0004	2	pop pc	pop pc	-
+2091520	7e04	2	push {0xe}	push {0xe}	-
+2091522	c2fff631c401	6	mov r2,#0x1c431f6	mov r2,#0x1c431f6	-
+2091528	2b60	2	lh.z r3,[r2 + 0x0]	lh.z r3,[r2 + 0x0]	-
+209152a	cbfff431c401	6	mov r11,#0x1c431f4	mov r11,#0x1c431f4	-
+2091a00	7a04	2	push {0xa}	push {0xa}	-
+2091a02	bfeaede2	4	call 0x0208dfe0	call 0x0208dfe0	-
+2091a06	c4ff083e0100	6	mov r4,#0x13e08	mov r4,#0x13e08	-
+2092600	7b04	2	push {0xb}	push {0xb}	-
+2092602	e29c	2	add sp,#-0x10	add sp,#-0x10	-
+2092604	c8ff08000100	6	mov r8,#0x10008	mov r8,#0x10008	-
+2092734	7a04	2	push {0xa}	push {0xa}	-
+2092736	2000	2	csync	csync	-
+2092738	c6ff9490c001	6	mov r6,#0x1c09094	mov r6,#0x1c09094	-
+2092cb0	7804	2	push {0x8}	push {0x8}	-
+2092cb2	7c04	2	push {0xc}	push {0xc}	-
+2093448	7704	2	push {0x7}	push {0x7}	-
+209344a	7304	2	push {0x3}	push {0x3}	-
+209344c	6f04	2	push {rets,0xf}	push {rets,0xf}	-
+209344e	6a04	2	push {rets,0xa}	push {rets,0xa}	-
+2093450	6604	2	push {rets,0x6}	push {rets,0x6}	-
+2093452	6204	2	push {rets,0x2}	push {rets,0x2}	-
+2093454	5d04	2	pop {pc,0xd}	pop {pc,0xd}	-
+2093a64	7404	2	push {0x4}	push {0x4}	-
+2093a66	2363	2	lw r3,[r2 + 0xc]	lw r3,[r2 + 0xc]	-
+2093a8c	7904	2	push {0x9}	push {0x9}	-
+2093a8e	38d6	2	mov r8,r3  #	mov r8,r3  #	-
+2093a90	0627	2	lw r6,[sp + 0x1c]	lw r6,[sp + 0x1c]	-
+2093a92	1716	2	mov r7,r1	mov r7,r1	-
+2093a94	0516	2	mov r5,r0	mov r5,r0	-
+2093a96	7016	2	mov r0,r7	mov r0,r7	-
+2093a98	2116	2	mov r1,r2	mov r1,r2	-
+2093a9a	6216	2	mov r2,r6	mov r2,r6	-
+2093a9c	7183	2	call 0x02093a64	call 0x02093a64	-
+2093a9e	6066	2	lw r0,[r6 + 0x18]	lw r0,[r6 + 0x18]	-
+2093b64	7f04	2	push {0xf}	push {0xf}	-
+2093b66	a29c	2	add sp,#-0x110	add sp,#-0x110	-
+2093b68	25d6	2	mov r5,r2  #	mov r5,r2  #	-
+2093be8	7e04	2	push {0xe}	push {0xe}	-
+2093bea	8e90	2	add r6,sp,#0x10	add r6,sp,#0x10	-
+2093bec	6016	2	mov r0,r6	mov r0,r6	-
+2093bee	5116	2	mov r1,r5	mov r1,r5	-
+2093bf0	80fff2d7ffff	6	call 0x020913e8	call 0x020913e8	-
+2093e94	7804	2	push {0x8}	push {0x8}	-
+2093fb4	7c04	2	push {0xc}	push {0xc}	-
+2093fb6	3c16	2	mov r12,r3	mov r12,r3	-
+2093fb8	1305	2	lw r3,[r1 ++= 4]	lw r3,[r1 ++= 4]	-
+2093fba	1405	2	lw r4,[r1 ++= 4]	lw r4,[r1 ++= 4]	-
+2093fbc	2505	2	lw r5,[r2 ++= 4]	lw r5,[r2 ++= 4]	-
+2093fbe	2605	2	lw r6,[r2 ++= 4]	lw r6,[r2 ++= 4]	-
+2094600	7904	2	push {0x9}	push {0x9}	-
+2094602	fb3f	2	add r3,#-0x1	add r3,#-0x1	-
+2094604	1405	2	lw r4,[r1 ++= 4]	lw r4,[r1 ++= 4]	-
+2094606	2605	2	lw r6,[r2 ++= 4]	lw r6,[r2 ++= 4]	-
+2094608	f303	2	rep 0x20,r3	rep 0x20,r3	-

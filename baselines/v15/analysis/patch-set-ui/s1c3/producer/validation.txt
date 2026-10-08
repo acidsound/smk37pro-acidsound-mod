@@ -1,0 +1,3 @@
+S1-C3 sequential 16-packet producer offline validation: PASS
+Explicit firmware/live verdict: BLOCK
+Checked: S1-C2 exact basis, host protocol, RAM layout, state machine, ABI/budget gates

@@ -1,0 +1,735 @@
+{
+  "app": {
+    "basis_app": "S1C5-playback-register-return-S1C5-marked/app.bin",
+    "basis_app_sha256": "c8dd9e9e19369a65fd46fb48aabc69a2af7977a456f4152e77cd90a742f7cfe5",
+    "display_version": {
+      "address": "0x020572a2",
+      "byte_count": 5,
+      "new": "S16",
+      "old": "S1C5",
+      "status": "same-length visible 3-char marker"
+    },
+    "format": "smk37-v15-s1c6-reset-signature-isolation.app-manifest-v1",
+    "input_gates": [
+      {
+        "name": "official-v15-basis",
+        "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+        "official_fwsc_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+        "status": "PASS"
+      },
+      {
+        "name": "exact-s1c5-marked-parent",
+        "parent_app_sha256": "c8dd9e9e19369a65fd46fb48aabc69a2af7977a456f4152e77cd90a742f7cfe5",
+        "parent_candidate": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return-S1C5-marked",
+        "parent_fwsc_sha256": "cfafa3273ca0ba741616e5f3aa87f262a45ecd84445bdefd969900dad256b480",
+        "status": "PASS"
+      },
+      {
+        "core_combined_sha256": "1f5ac42f0fd34c725193d308e2a608e1a0f8a9c70c60c29f58d38bcd68804744",
+        "core_range": "0x0201e13e..0x0201e228",
+        "name": "s1c5-core-preserved",
+        "producer_core_sha256": "b740203d7c709aaa74dd506cc39739191caac790890056e2aee6ad627377baa5",
+        "reset_wrapper_old_hex": "79040416494081f80bc4494181f808c6c5ffbd65c4014020d840d841d8422000401680ff46ffffff59040016",
+        "selector_sha256": "900e8f05c8157737e89a22338b9a4575aa3ff124bd70ff132de0226654fce29f",
+        "status": "PASS"
+      },
+      {
+        "direct_call": "bfeadefe",
+        "direct_target": "0x0201e228",
+        "name": "callsites-unchanged",
+        "segmented_call": "bfeac4fe",
+        "segmented_target": "0x0201e228",
+        "status": "PASS"
+      },
+      {
+        "device_accessed": false,
+        "flash_performed": false,
+        "midi_transport_opened": false,
+        "name": "offline-scope",
+        "reset_performed": false,
+        "status": "PASS"
+      }
+    ],
+    "output_app_sha256": "312790c080f6fcead69eccd84edf2c608ef3fa7e772455d781ab086dafed44b1",
+    "parent_relative_changed_byte_count": 38,
+    "parent_relative_changed_ranges": [
+      {
+        "end_exclusive": 123456,
+        "start": 123434
+      },
+      {
+        "end_exclusive": 123458,
+        "start": 123457
+      },
+      {
+        "end_exclusive": 123467,
+        "start": 123459
+      },
+      {
+        "end_exclusive": 123469,
+        "start": 123468
+      },
+      {
+        "end_exclusive": 123474,
+        "start": 123470
+      },
+      {
+        "end_exclusive": 357030,
+        "start": 357028
+      }
+    ],
+    "patches": [
+      {
+        "address": "0x0201e228",
+        "byte_count": 44,
+        "end_exclusive": "0x0201e254",
+        "new_hex": "7904094081f80cc8094181f809cac5ffbd65c4014020d840d841d8422000590480ff48ffffff590400160016",
+        "new_sha256": "221779e53fe86fcbc8d92bd1d17a1ddf90e7ed0bc31e2b80bd0fb6416f034c12",
+        "old_hex": "79040416494081f80bc4494181f808c6c5ffbd65c4014020d840d841d8422000401680ff46ffffff59040016",
+        "old_sha256": "c77a4a71c9facca3a4562fca9e38ce5086090762e47eb6d16b7e3b88f2009db7",
+        "purpose": "replace S1-C5 reset wrapper (0x62 0x63 + load-as-voice) with impossible-signature reset wrapper (0x64 0x65, reset packet not a voice)"
+      },
+      {
+        "address": "0x020572a2",
+        "byte_count": 5,
+        "end_exclusive": "0x020572a7",
+        "new_hex": "5331360000",
+        "new_sha256": "bd172904fd8a47f4eddd01a544cd8c29ff3d284a5ace2171437a683bd1cffdae",
+        "old_hex": "5331433500",
+        "old_sha256": "353ab82228c569633a22af3072b3e7c10f747c429cd34330c7120a0da9c2b22c",
+        "purpose": "Visible 3-character firmware marker S16 per versioning rule"
+      }
+    ],
+    "reset_contract": {
+      "callsites": {
+        "direct": {
+          "address": "0x0201e468",
+          "bytes": "bfeadefe",
+          "status": "unchanged"
+        },
+        "segmented": {
+          "address": "0x0201e49c",
+          "bytes": "bfeac4fe",
+          "status": "unchanged"
+        }
+      },
+      "entry": "0x0201e228",
+      "on_match": "clear lock/count/state, csync, return without calling producer (reset packet is not a voice)",
+      "on_mismatch": "r0 = stage preserved, call producer 0x0201e196",
+      "preserved_core": {
+        "range": "0x0201e13e..0x0201e228",
+        "sha256": "1f5ac42f0fd34c725193d308e2a608e1a0f8a9c70c60c29f58d38bcd68804744",
+        "status": "byte-for-byte"
+      },
+      "signature": {
+        "structural_impossibility": "payload bytes 0..1 = OP1 EG rates 1..2, DX7 range 0..99 (0x00..0x63); 0x64/0x65 impossible in any valid voice",
+        "wire_bytes_6_7": [
+          100,
+          101
+        ]
+      }
+    },
+    "runtime_base": "0x02000000"
+  },
+  "basis": {
+    "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "official_fwsc_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "parent_s1c5_marked_app_sha256": "c8dd9e9e19369a65fd46fb48aabc69a2af7977a456f4152e77cd90a742f7cfe5",
+    "parent_s1c5_marked_package_sha256": "cfafa3273ca0ba741616e5f3aa87f262a45ecd84445bdefd969900dad256b480"
+  },
+  "candidate_built": true,
+  "code": {
+    "candidate_dir": "baselines/v15/analysis/flash-candidates/S1C6-reset-signature-isolation/code-evidence",
+    "code_evidence_sha256": "55c6c50fdbacbec7235d0444e173a0b2a3ca208c92aa53e05b9e219f4929b390",
+    "core_sha256": "1f5ac42f0fd34c725193d308e2a608e1a0f8a9c70c60c29f58d38bcd68804744",
+    "reset_wrapper_range": "0x0201e228..0x0201e254"
+  },
+  "collision_scan": {
+    "collisions": 0,
+    "scanned_voices": 16,
+    "signature": [
+      100,
+      101
+    ],
+    "status": "PASS",
+    "structural_argument": "payload bytes 0..1 are OP1 EG rates 1..2 with DX7 value range 0..99 (0x00..0x63); 0x64/0x65 cannot occur in any valid DX7 voice"
+  },
+  "decision": "PASS",
+  "flash": {
+    "artifact": "SMK37Pro-v15-S1C6-reset-signature-isolation-S16-marked.fwsc",
+    "confirmation_token": "INSTALL-SMK37PRO-V15-S1C6-RESET-SIG-FD449B93",
+    "default_check_offline_only": true
+  },
+  "format": "smk37-v15-s1c6-reset-signature-isolation.release-evidence-v1",
+  "input_gates": [
+    {
+      "name": "official-v15-basis",
+      "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "official_fwsc_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+      "status": "PASS"
+    },
+    {
+      "name": "exact-s1c5-marked-parent",
+      "parent_app_sha256": "c8dd9e9e19369a65fd46fb48aabc69a2af7977a456f4152e77cd90a742f7cfe5",
+      "parent_candidate": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return-S1C5-marked",
+      "parent_fwsc_sha256": "cfafa3273ca0ba741616e5f3aa87f262a45ecd84445bdefd969900dad256b480",
+      "status": "PASS"
+    },
+    {
+      "core_combined_sha256": "1f5ac42f0fd34c725193d308e2a608e1a0f8a9c70c60c29f58d38bcd68804744",
+      "core_range": "0x0201e13e..0x0201e228",
+      "name": "s1c5-core-preserved",
+      "producer_core_sha256": "b740203d7c709aaa74dd506cc39739191caac790890056e2aee6ad627377baa5",
+      "reset_wrapper_old_hex": "79040416494081f80bc4494181f808c6c5ffbd65c4014020d840d841d8422000401680ff46ffffff59040016",
+      "selector_sha256": "900e8f05c8157737e89a22338b9a4575aa3ff124bd70ff132de0226654fce29f",
+      "status": "PASS"
+    },
+    {
+      "direct_call": "bfeadefe",
+      "direct_target": "0x0201e228",
+      "name": "callsites-unchanged",
+      "segmented_call": "bfeac4fe",
+      "segmented_target": "0x0201e228",
+      "status": "PASS"
+    },
+    {
+      "device_accessed": false,
+      "flash_performed": false,
+      "midi_transport_opened": false,
+      "name": "offline-scope",
+      "reset_performed": false,
+      "status": "PASS"
+    }
+  ],
+  "invariants": {
+    "callsites_unchanged": true,
+    "core_preserved": "selector/producer core 0x0201e13e..0x0201e228 byte-for-byte",
+    "display_marker": "S16",
+    "playback_note_range": "0..127 including duplicates",
+    "reload_without_power_cycle": true,
+    "reset_not_a_voice": true,
+    "reset_signature": "wire bytes 6..7 == 0x64 0x65 (structurally impossible in any valid DX7 voice)",
+    "trigger_source": "slot = trigger_note - 36; unchanged"
+  },
+  "package": {
+    "candidate_flash_sha256": "a449362a127bf9d08a52070e3001ff073667a218e8efc419c861d94768d56ea4",
+    "changed_app_byte_count_vs_official": 309,
+    "changed_app_byte_count_vs_parent": 38,
+    "changed_app_ranges_vs_official": [
+      {
+        "end_exclusive": 34,
+        "start": 32
+      },
+      {
+        "end_exclusive": 116291,
+        "start": 116288
+      },
+      {
+        "end_exclusive": 116298,
+        "start": 116292
+      },
+      {
+        "end_exclusive": 116353,
+        "start": 116350
+      },
+      {
+        "end_exclusive": 116360,
+        "start": 116354
+      },
+      {
+        "end_exclusive": 123267,
+        "start": 123198
+      },
+      {
+        "end_exclusive": 123311,
+        "start": 123268
+      },
+      {
+        "end_exclusive": 123319,
+        "start": 123312
+      },
+      {
+        "end_exclusive": 123337,
+        "start": 123320
+      },
+      {
+        "end_exclusive": 123353,
+        "start": 123338
+      },
+      {
+        "end_exclusive": 123476,
+        "start": 123354
+      },
+      {
+        "end_exclusive": 124011,
+        "start": 124010
+      },
+      {
+        "end_exclusive": 124063,
+        "start": 124062
+      },
+      {
+        "end_exclusive": 159146,
+        "start": 159142
+      },
+      {
+        "end_exclusive": 159152,
+        "start": 159148
+      },
+      {
+        "end_exclusive": 357030,
+        "start": 357026
+      },
+      {
+        "end_exclusive": 387580,
+        "start": 387578
+      }
+    ],
+    "changed_app_ranges_vs_parent": [
+      {
+        "end_exclusive": 123456,
+        "start": 123434
+      },
+      {
+        "end_exclusive": 123458,
+        "start": 123457
+      },
+      {
+        "end_exclusive": 123467,
+        "start": 123459
+      },
+      {
+        "end_exclusive": 123469,
+        "start": 123468
+      },
+      {
+        "end_exclusive": 123474,
+        "start": 123470
+      },
+      {
+        "end_exclusive": 357030,
+        "start": 357028
+      }
+    ],
+    "changed_flash_sectors_vs_official": [
+      "0x04000",
+      "0x20000",
+      "0x22000",
+      "0x2a000",
+      "0x5a000",
+      "0x62000"
+    ],
+    "changed_package_byte_count_vs_official": 323,
+    "changed_package_ranges_vs_official": [
+      {
+        "end_exclusive": 4,
+        "start": 0
+      },
+      {
+        "end_exclusive": 71,
+        "start": 69
+      },
+      {
+        "end_exclusive": 17432,
+        "start": 17428
+      },
+      {
+        "end_exclusive": 17464,
+        "start": 17460
+      },
+      {
+        "end_exclusive": 17750,
+        "start": 17748
+      },
+      {
+        "end_exclusive": 134007,
+        "start": 134004
+      },
+      {
+        "end_exclusive": 134014,
+        "start": 134008
+      },
+      {
+        "end_exclusive": 134069,
+        "start": 134066
+      },
+      {
+        "end_exclusive": 134076,
+        "start": 134070
+      },
+      {
+        "end_exclusive": 140983,
+        "start": 140914
+      },
+      {
+        "end_exclusive": 141027,
+        "start": 140984
+      },
+      {
+        "end_exclusive": 141035,
+        "start": 141028
+      },
+      {
+        "end_exclusive": 141053,
+        "start": 141036
+      },
+      {
+        "end_exclusive": 141069,
+        "start": 141054
+      },
+      {
+        "end_exclusive": 141192,
+        "start": 141070
+      },
+      {
+        "end_exclusive": 141727,
+        "start": 141726
+      },
+      {
+        "end_exclusive": 141779,
+        "start": 141778
+      },
+      {
+        "end_exclusive": 176862,
+        "start": 176858
+      },
+      {
+        "end_exclusive": 176868,
+        "start": 176864
+      },
+      {
+        "end_exclusive": 374746,
+        "start": 374742
+      },
+      {
+        "end_exclusive": 405296,
+        "start": 405294
+      }
+    ],
+    "official_flash_sha256": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+    "package_sha256": "fd449b93afc2a9abe777cee10f810e3f4618b8a6b745391f73d8b7d5959fa886",
+    "package_size": 701140,
+    "parent_flash_sha256": "c20a5ab13fcb93b9a884cd561a2e00b5c21f9189775eff79adf944319a0a0541",
+    "payload_sha256": "4e06fb5f6bc7cbf3f8463ac81108c064c0f6ad07a48eb2f31ed94e7fd92edc9d",
+    "protected_hashes_candidate": {
+      "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+      "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+      "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+      "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+    },
+    "protected_hashes_official": {
+      "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+      "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+      "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+      "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+    },
+    "rollback_manifest": "rollback/official-v15-recovery-sectors/manifest.json",
+    "rollback_restores_official_flash": true
+  },
+  "scope": {
+    "device_accessed": false,
+    "flash_performed": false,
+    "live_send_performed": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "ota_performed": false,
+    "reset_performed": false
+  },
+  "sender": {
+    "artifact": "exact_17_packet_sender.c",
+    "confirmation_token": "SEND-SMK37PRO-V15-S1C6-RESET-SIG-F0F93762-7C7A8AC8-523CCBC8-14D65142",
+    "default_compile_live_usb_enabled": false,
+    "duplicate_test": "all 16 voice playback notes C4 (60)",
+    "packet_count": 17,
+    "packets": "inputs/packets",
+    "reset_first": true,
+    "wire_playback_note_offset": 161
+  },
+  "transport": {
+    "device_accessed": false,
+    "duplicate_playback_note_test": {
+      "label": "C4",
+      "slots": 16,
+      "status": "PASS",
+      "value": 60
+    },
+    "format": "smk37-v15-s1c6-reset-signature-isolation.reset-transport-packets-v1",
+    "midi_transport_opened": false,
+    "order_basis": "explicit reset first, then resident_slot_order_trigger_note_36_51",
+    "packet_bytes": 163,
+    "packet_count": 17,
+    "packets": [
+      {
+        "byte_161": 0,
+        "file": "packet00-reset-signature-6465.bin",
+        "kind": "reset",
+        "name": "explicit reset packet (structurally impossible signature 0x64 0x65; not loaded as a voice)",
+        "order": 0,
+        "playback_note": null,
+        "sha256": "f0f9376291d53e169daae0cbb05de43ad2a6c6f836ff5edd1541f314e2515c8e",
+        "slot": null,
+        "trigger_note": null,
+        "wire_bytes_6_7": "6465"
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "packet01-slot00-trigger36-playback60-all-c4-163.bin",
+        "kind": "voice",
+        "name": "BUZZ BASS",
+        "only_changed_wire_offsets_vs_template": [],
+        "order": 1,
+        "playback_note": 60,
+        "sha256": "7c7a8ac8d57bd78b8d531fa8997e7d9c18ce4e0d8a267cc22549ba71d5e3e9c4",
+        "slot": 0,
+        "template_file": "slot00-trigger36-playback60-all-c4-direct-product-163.bin",
+        "template_sha256": "7c7a8ac8d57bd78b8d531fa8997e7d9c18ce4e0d8a267cc22549ba71d5e3e9c4",
+        "trigger_note": 36,
+        "wire_bytes_6_7": "6263"
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "packet02-slot01-trigger37-playback60-all-c4-163.bin",
+        "kind": "voice",
+        "name": "Bang ?????",
+        "only_changed_wire_offsets_vs_template": [],
+        "order": 2,
+        "playback_note": 60,
+        "sha256": "523ccbc81eef766fc73bda72a78d3a28ba3f1fcabc1146db78252673f8d5ed7a",
+        "slot": 1,
+        "template_file": "slot01-trigger37-playback60-all-c4-direct-product-163.bin",
+        "template_sha256": "523ccbc81eef766fc73bda72a78d3a28ba3f1fcabc1146db78252673f8d5ed7a",
+        "trigger_note": 37,
+        "wire_bytes_6_7": "6363"
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "packet03-slot02-trigger38-playback60-all-c4-163.bin",
+        "kind": "voice",
+        "name": "BASSE BIEN",
+        "only_changed_wire_offsets_vs_template": [],
+        "order": 3,
+        "playback_note": 60,
+        "sha256": "14d65142c52fbd4775ab071639886c203cc03d860deb62e6de25c048cb9a712b",
+        "slot": 2,
+        "template_file": "slot02-trigger38-playback60-all-c4-direct-product-163.bin",
+        "template_sha256": "14d65142c52fbd4775ab071639886c203cc03d860deb62e6de25c048cb9a712b",
+        "trigger_note": 38,
+        "wire_bytes_6_7": "632d"
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "packet04-slot03-trigger39-playback60-all-c4-163.bin",
+        "kind": "voice",
+        "name": "BASS-THING",
+        "only_changed_wire_offsets_vs_template": [],
+        "order": 4,
+        "playback_note": 60,
+        "sha256": "efab2e0db1e444d4ab8e96cd7125825fdbd0445e3e05b8436ae7bbd2ae830364",
+        "slot": 3,
+        "template_file": "slot03-trigger39-playback60-all-c4-direct-product-163.bin",
+        "template_sha256": "efab2e0db1e444d4ab8e96cd7125825fdbd0445e3e05b8436ae7bbd2ae830364",
+        "trigger_note": 39,
+        "wire_bytes_6_7": "6352"
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "packet05-slot04-trigger40-playback60-all-c4-163.bin",
+        "kind": "voice",
+        "name": "BASS SLAP",
+        "only_changed_wire_offsets_vs_template": [],
+        "order": 5,
+        "playback_note": 60,
+        "sha256": "981e0772ac58174cb94a1794bbdac10da9c2679a0f69112b14a114d75d70481b",
+        "slot": 4,
+        "template_file": "slot04-trigger40-playback60-all-c4-direct-product-163.bin",
+        "template_sha256": "981e0772ac58174cb94a1794bbdac10da9c2679a0f69112b14a114d75d70481b",
+        "trigger_note": 40,
+        "wire_bytes_6_7": "6363"
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "packet06-slot05-trigger41-playback60-all-c4-163.bin",
+        "kind": "voice",
+        "name": "BEAMER 2",
+        "only_changed_wire_offsets_vs_template": [],
+        "order": 6,
+        "playback_note": 60,
+        "sha256": "d73e236482ecd7d9b791ea6119b13d63b09eae5565f682b8f2dc0b4678277579",
+        "slot": 5,
+        "template_file": "slot05-trigger41-playback60-all-c4-direct-product-163.bin",
+        "template_sha256": "d73e236482ecd7d9b791ea6119b13d63b09eae5565f682b8f2dc0b4678277579",
+        "trigger_note": 41,
+        "wire_bytes_6_7": "6363"
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "packet07-slot06-trigger42-playback60-all-c4-163.bin",
+        "kind": "voice",
+        "name": "Onglon",
+        "only_changed_wire_offsets_vs_template": [],
+        "order": 7,
+        "playback_note": 60,
+        "sha256": "85625d999b3c23b578362fde17e9022db16ef9ecde5926e198f3206977cdba17",
+        "slot": 6,
+        "template_file": "slot06-trigger42-playback60-all-c4-direct-product-163.bin",
+        "template_sha256": "85625d999b3c23b578362fde17e9022db16ef9ecde5926e198f3206977cdba17",
+        "trigger_note": 42,
+        "wire_bytes_6_7": "2463"
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "packet08-slot07-trigger43-playback60-all-c4-163.bin",
+        "kind": "voice",
+        "name": "SOFTSTEEL",
+        "only_changed_wire_offsets_vs_template": [],
+        "order": 8,
+        "playback_note": 60,
+        "sha256": "3e06351976cdd90b3e888b32ccca8716de991c95ff44eb73e9c26a3b912150dd",
+        "slot": 7,
+        "template_file": "slot07-trigger43-playback60-all-c4-direct-product-163.bin",
+        "template_sha256": "3e06351976cdd90b3e888b32ccca8716de991c95ff44eb73e9c26a3b912150dd",
+        "trigger_note": 43,
+        "wire_bytes_6_7": "5f1c"
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "packet09-slot08-trigger44-playback60-all-c4-163.bin",
+        "kind": "voice",
+        "name": "BASS-ROADS",
+        "only_changed_wire_offsets_vs_template": [],
+        "order": 9,
+        "playback_note": 60,
+        "sha256": "ef96628a3f2cb2a2b6028687e1dc9fa89f147edf7b4c4eb229b7d27250704805",
+        "slot": 8,
+        "template_file": "slot08-trigger44-playback60-all-c4-direct-product-163.bin",
+        "template_sha256": "ef96628a3f2cb2a2b6028687e1dc9fa89f147edf7b4c4eb229b7d27250704805",
+        "trigger_note": 44,
+        "wire_bytes_6_7": "634a"
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "packet10-slot09-trigger45-playback60-all-c4-163.bin",
+        "kind": "voice",
+        "name": "E.ORGAN 1",
+        "only_changed_wire_offsets_vs_template": [],
+        "order": 10,
+        "playback_note": 60,
+        "sha256": "c6483dabc9e1a863f2682b5c11ea8a91e3ef38212926930d8de24afa3db6f9de",
+        "slot": 9,
+        "template_file": "slot09-trigger45-playback60-all-c4-direct-product-163.bin",
+        "template_sha256": "c6483dabc9e1a863f2682b5c11ea8a91e3ef38212926930d8de24afa3db6f9de",
+        "trigger_note": 45,
+        "wire_bytes_6_7": "5c36"
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "packet11-slot10-trigger46-playback60-all-c4-163.bin",
+        "kind": "voice",
+        "name": "YEAAAHH",
+        "only_changed_wire_offsets_vs_template": [],
+        "order": 11,
+        "playback_note": 60,
+        "sha256": "11c7dfae80eb8ddaf88ec971ff1b3ce8b4d76894f4550ec3a0b5113c7e58bdde",
+        "slot": 10,
+        "template_file": "slot10-trigger46-playback60-all-c4-direct-product-163.bin",
+        "template_sha256": "11c7dfae80eb8ddaf88ec971ff1b3ce8b4d76894f4550ec3a0b5113c7e58bdde",
+        "trigger_note": 46,
+        "wire_bytes_6_7": "6323"
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "packet12-slot11-trigger47-playback60-all-c4-163.bin",
+        "kind": "voice",
+        "name": "HAND DRUM",
+        "only_changed_wire_offsets_vs_template": [],
+        "order": 12,
+        "playback_note": 60,
+        "sha256": "a97d43e1351177f4b7e4770b2170d07ae7d7dbd33bd6bb6439a441cb66f74a68",
+        "slot": 11,
+        "template_file": "slot11-trigger47-playback60-all-c4-direct-product-163.bin",
+        "template_sha256": "a97d43e1351177f4b7e4770b2170d07ae7d7dbd33bd6bb6439a441cb66f74a68",
+        "trigger_note": 47,
+        "wire_bytes_6_7": "6331"
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "packet13-slot12-trigger48-playback60-all-c4-163.bin",
+        "kind": "voice",
+        "name": "HAND CLAP1",
+        "only_changed_wire_offsets_vs_template": [],
+        "order": 13,
+        "playback_note": 60,
+        "sha256": "3680c3abf14c6a13096fe56953789bc2572fe2fd0d82248f8e4e893482a3be19",
+        "slot": 12,
+        "template_file": "slot12-trigger48-playback60-all-c4-direct-product-163.bin",
+        "template_sha256": "3680c3abf14c6a13096fe56953789bc2572fe2fd0d82248f8e4e893482a3be19",
+        "trigger_note": 48,
+        "wire_bytes_6_7": "6334"
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "packet14-slot13-trigger49-playback60-all-c4-163.bin",
+        "kind": "voice",
+        "name": "Mooger #1",
+        "only_changed_wire_offsets_vs_template": [],
+        "order": 14,
+        "playback_note": 60,
+        "sha256": "6611e75bfb8b11206f6303a63fdf6d50ee9beb8a72be2e69f9233a8f87e93f3a",
+        "slot": 13,
+        "template_file": "slot13-trigger49-playback60-all-c4-direct-product-163.bin",
+        "template_sha256": "6611e75bfb8b11206f6303a63fdf6d50ee9beb8a72be2e69f9233a8f87e93f3a",
+        "trigger_note": 49,
+        "wire_bytes_6_7": "4b32"
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "packet15-slot14-trigger50-playback60-all-c4-163.bin",
+        "kind": "voice",
+        "name": "Moog Solo2",
+        "only_changed_wire_offsets_vs_template": [],
+        "order": 15,
+        "playback_note": 60,
+        "sha256": "8b3bbbccf103bd41ea93430b694be1b8ab17d9a29ed0bee3d6fc0570e7d95721",
+        "slot": 14,
+        "template_file": "slot14-trigger50-playback60-all-c4-direct-product-163.bin",
+        "template_sha256": "8b3bbbccf103bd41ea93430b694be1b8ab17d9a29ed0bee3d6fc0570e7d95721",
+        "trigger_note": 50,
+        "wire_bytes_6_7": "6363"
+      },
+      {
+        "duplicate_group": "all-c4",
+        "file": "packet16-slot15-trigger51-playback60-all-c4-163.bin",
+        "kind": "voice",
+        "name": "Mooger Low",
+        "only_changed_wire_offsets_vs_template": [],
+        "order": 16,
+        "playback_note": 60,
+        "sha256": "b06e83fdf0972a652ca4561eb08c6312b51be24c54c2619a1d6c2d67cc2bf30c",
+        "slot": 15,
+        "template_file": "slot15-trigger51-playback60-all-c4-direct-product-163.bin",
+        "template_sha256": "b06e83fdf0972a652ca4561eb08c6312b51be24c54c2619a1d6c2d67cc2bf30c",
+        "trigger_note": 51,
+        "wire_bytes_6_7": "5537"
+      }
+    ],
+    "payload_playback_note_offset": 155,
+    "policy": "host sends 1 explicit reset packet then 16 voice packets; reset packet clears lock/count/state and is never loaded; voice packets may use any Playback Note 0..127 including duplicates",
+    "reset_packet_count": 1,
+    "reset_signature": {
+      "not_loaded_as_voice": true,
+      "structural_impossibility": "payload bytes 0..1 are OP1 EG rates 1..2 (DX7 range 0..99); 0x64/0x65 cannot occur in any valid voice",
+      "wire_bytes_6_7": [
+        100,
+        101
+      ]
+    },
+    "send_enabled": false,
+    "status": "PASS",
+    "supported_ingress_modes": [
+      "direct_163_byte_sysex",
+      "segmented_final_sysex_after_final_f7_total_0x9e"
+    ],
+    "voice_packet_count": 16,
+    "wire_playback_note_offset": 161
+  }
+}

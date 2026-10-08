@@ -1,0 +1,561 @@
+{
+  "blockers": [
+    {
+      "consequence": "The committed exact wrapper cannot perform candidate acceptance or parent/official rejection. Those subgates remain blocked even though a diagnostic one-argument removal makes all three hash checks return the intended 0/1/1 results.",
+      "detail": "The call supplies obsolete argument 15, so Clang reports: too many arguments to function call, expected 7, have 8.",
+      "id": "B-EXACT-OTA-API",
+      "summary": "Committed exact_ota.c does not compile against src/ota.c at exact commit 90080a5."
+    }
+  ],
+  "decision": "FAIL",
+  "diagnostic_after_minimal_api_fix": {
+    "checks": {
+      "candidate": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "exact v15 S1-C5 Playback Register Return package: PASS (701120-byte OTA payload)\n"
+      },
+      "official": {
+        "returncode": 1,
+        "stderr": "offline check rejected: not exact S1-C5 Playback Register Return package\n",
+        "stdout": ""
+      },
+      "parent": {
+        "returncode": 1,
+        "stderr": "offline check rejected: not exact S1-C5 Playback Register Return package\n",
+        "stdout": ""
+      }
+    },
+    "compile_returncode": 0,
+    "compile_stderr": "",
+    "performed": true,
+    "scope": "diagnostic only; does not close the committed-artifact release gate",
+    "single_source_change": "remove obsolete integer argument 15 before PACKAGE_SHA256"
+  },
+  "format": "smk37-v15-s1c5-independent-review-v1",
+  "gates": [
+    {
+      "evidence": {
+        "byte_identical_to_exact_object": true,
+        "exact_object_artifacts": {
+          "app_sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+          "exact_ota_c_sha256": "03da93a1f59d4cacf4bdeb05c244752501d6880c7a8e3c51ed0ab5e09ab015c2",
+          "fwsc_sha256": "0a6ac1ae7d4bd34e252eb8f23a4d2c5f39d7454376ade1a3b75ff7d03155ea91"
+        },
+        "rebuilds": [
+          {
+            "app_sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+            "checkout": "A",
+            "fwsc_sha256": "0a6ac1ae7d4bd34e252eb8f23a4d2c5f39d7454376ade1a3b75ff7d03155ea91",
+            "returncode": 0,
+            "stderr": "",
+            "stdout": "S1-C5 Playback Register Return build gate: PASS\napp_sha256=8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189\npackage_sha256=0a6ac1ae7d4bd34e252eb8f23a4d2c5f39d7454376ade1a3b75ff7d03155ea91\nota_confirmation_token=INSTALL-SMK37PRO-V15-S1C5-PLAYBACK-REGISTER-RETURN-0A6AC1AE\nsender_confirmation_token=SEND-SMK37PRO-V15-S1C5-ALL-C4-7C7A8AC8-523CCBC8-14D65142-EFAB2E0D\n"
+          },
+          {
+            "app_sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+            "checkout": "B",
+            "fwsc_sha256": "0a6ac1ae7d4bd34e252eb8f23a4d2c5f39d7454376ade1a3b75ff7d03155ea91",
+            "returncode": 0,
+            "stderr": "",
+            "stdout": "S1-C5 Playback Register Return build gate: PASS\napp_sha256=8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189\npackage_sha256=0a6ac1ae7d4bd34e252eb8f23a4d2c5f39d7454376ade1a3b75ff7d03155ea91\nota_confirmation_token=INSTALL-SMK37PRO-V15-S1C5-PLAYBACK-REGISTER-RETURN-0A6AC1AE\nsender_confirmation_token=SEND-SMK37PRO-V15-S1C5-ALL-C4-7C7A8AC8-523CCBC8-14D65142-EFAB2E0D\n"
+          }
+        ]
+      },
+      "name": "deterministic-app-fwsc-rebuild",
+      "status": "PASS"
+    },
+    {
+      "evidence": {
+        "candidate_app_sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+        "changed_byte_count": 4,
+        "changed_offsets": [
+          116292,
+          116293,
+          116354,
+          116355
+        ],
+        "changed_ranges": [
+          {
+            "end_exclusive": 116294,
+            "start": 116292
+          },
+          {
+            "end_exclusive": 116356,
+            "start": 116354
+          }
+        ],
+        "changed_runtime_addresses": [
+          "0x0201c644",
+          "0x0201c645",
+          "0x0201c682",
+          "0x0201c683"
+        ],
+        "parent_app_sha256": "c6e4cf567b2f22d7e39d3b4e0f6cae8c7fd140661e31763567b15a9fcf1e3a3d",
+        "windows": [
+          {
+            "address": "0x0201c644",
+            "candidate": "0d4000160016",
+            "parent": "001600160016"
+          },
+          {
+            "address": "0x0201c682",
+            "candidate": "0e4000160016",
+            "parent": "001600160016"
+          }
+        ]
+      },
+      "name": "parent-relative-four-changed-bytes",
+      "status": "PASS"
+    },
+    {
+      "evidence": {
+        "encoding_rule": "16-bit little-endian word: (word & 0xe088)==0x4008; dst=word&7; base=(word>>4)&7; unsigned byte offset=(word>>8)&0x1f",
+        "note_off": {
+          "base_register": 0,
+          "byte_offset": 0,
+          "bytes": "0d40",
+          "destination_register": 5,
+          "operation": "load unsigned byte and zero-extend to register"
+        },
+        "note_on": {
+          "base_register": 0,
+          "byte_offset": 0,
+          "bytes": "0e40",
+          "destination_register": 6,
+          "operation": "load unsigned byte and zero-extend to register"
+        },
+        "padding_note_off": "00160016",
+        "padding_note_on": "00160016",
+        "semantic_result": "0x400d loads memory byte [r0] into r5 with zero extension; 0x400e loads memory byte [r0] into r6 with zero extension; neither changes r0"
+      },
+      "name": "pi32-lb-z-decode-and-semantics",
+      "status": "PASS"
+    },
+    {
+      "evidence": {
+        "byte_identical_to_parent": true,
+        "candidate_combined_sha256": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+        "contract": "selector saves original destination in r4, copies trigger-selected source, computes r0=r4+0x9c, stores mapped note at [r0], then pop-return restores r9..r4 but not r0; caller therefore receives r0=dest+0x9c",
+        "note_off_adapter_0x0201e13e": "5316",
+        "note_on_adapter_0x0201e142": "6316",
+        "parent_combined_sha256": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+        "pop_return_0x0201e194": "5904",
+        "push_saved_0x0201e144": "7904",
+        "restore_destination_0x0201e186": "4016",
+        "return_metadata_pointer_0x0201e18e": "00e19c40",
+        "source_selected_before_metadata_0x0201e184": "6116",
+        "store_metadata_byte_0x0201e192": "8d40",
+        "trigger_slot_subtract_36_0x0201e158": "f33c",
+        "trigger_slot_to_map_0x0201e17c_0x0201e182": "07e1008a37187d40",
+        "trigger_slot_to_source_0x0201e16a_0x0201e170": "3616e6e1a0608618"
+      },
+      "name": "selector-r0-return-contract",
+      "status": "PASS"
+    },
+    {
+      "evidence": {
+        "note_off_reload": {
+          "base_register": 0,
+          "byte_offset": 0,
+          "bytes": "0d40",
+          "destination_register": 5,
+          "operation": "load unsigned byte and zero-extend to register"
+        },
+        "note_on_reload": {
+          "base_register": 0,
+          "byte_offset": 0,
+          "bytes": "0e40",
+          "destination_register": 6,
+          "operation": "load unsigned byte and zero-extend to register"
+        },
+        "note_on_velocity_store": {
+          "base_register": 0,
+          "byte_offset": 2,
+          "bytes": "8d42",
+          "operation": "store low byte of register",
+          "source_register": 5
+        },
+        "selector_push_pop_preserves_r5_r6": {
+          "pop": "5904",
+          "push": "7904"
+        },
+        "stock_note_on_note_load_0x0201c670": "1e41",
+        "stock_note_on_velocity_load_0x0201c66a": "1d42",
+        "symmetry": "Note Off reloads mapped [r0] into native note register r5; Note On reloads mapped [r0] into native note register r6 while native velocity remains r5 and is stored at [r0+2]"
+      },
+      "name": "note-on-velocity-and-note-off-symmetry",
+      "status": "PASS"
+    },
+    {
+      "evidence": {
+        "identity_result": "producer slot identity is sequential loaded_count, selector source identity is trigger_note-36, and playback note is a separate map byte; sixteen repeated values of 60 do not merge source slots",
+        "packet_rows": [
+          {
+            "manifest_sha256": "7c7a8ac8d57bd78b8d531fa8997e7d9c18ce4e0d8a267cc22549ba71d5e3e9c4",
+            "playback_note": 60,
+            "sha256": "7c7a8ac8d57bd78b8d531fa8997e7d9c18ce4e0d8a267cc22549ba71d5e3e9c4",
+            "slot": 0,
+            "trigger_note": 36,
+            "wire_byte_161": 60
+          },
+          {
+            "manifest_sha256": "523ccbc81eef766fc73bda72a78d3a28ba3f1fcabc1146db78252673f8d5ed7a",
+            "playback_note": 60,
+            "sha256": "523ccbc81eef766fc73bda72a78d3a28ba3f1fcabc1146db78252673f8d5ed7a",
+            "slot": 1,
+            "trigger_note": 37,
+            "wire_byte_161": 60
+          },
+          {
+            "manifest_sha256": "14d65142c52fbd4775ab071639886c203cc03d860deb62e6de25c048cb9a712b",
+            "playback_note": 60,
+            "sha256": "14d65142c52fbd4775ab071639886c203cc03d860deb62e6de25c048cb9a712b",
+            "slot": 2,
+            "trigger_note": 38,
+            "wire_byte_161": 60
+          },
+          {
+            "manifest_sha256": "efab2e0db1e444d4ab8e96cd7125825fdbd0445e3e05b8436ae7bbd2ae830364",
+            "playback_note": 60,
+            "sha256": "efab2e0db1e444d4ab8e96cd7125825fdbd0445e3e05b8436ae7bbd2ae830364",
+            "slot": 3,
+            "trigger_note": 39,
+            "wire_byte_161": 60
+          },
+          {
+            "manifest_sha256": "981e0772ac58174cb94a1794bbdac10da9c2679a0f69112b14a114d75d70481b",
+            "playback_note": 60,
+            "sha256": "981e0772ac58174cb94a1794bbdac10da9c2679a0f69112b14a114d75d70481b",
+            "slot": 4,
+            "trigger_note": 40,
+            "wire_byte_161": 60
+          },
+          {
+            "manifest_sha256": "d73e236482ecd7d9b791ea6119b13d63b09eae5565f682b8f2dc0b4678277579",
+            "playback_note": 60,
+            "sha256": "d73e236482ecd7d9b791ea6119b13d63b09eae5565f682b8f2dc0b4678277579",
+            "slot": 5,
+            "trigger_note": 41,
+            "wire_byte_161": 60
+          },
+          {
+            "manifest_sha256": "85625d999b3c23b578362fde17e9022db16ef9ecde5926e198f3206977cdba17",
+            "playback_note": 60,
+            "sha256": "85625d999b3c23b578362fde17e9022db16ef9ecde5926e198f3206977cdba17",
+            "slot": 6,
+            "trigger_note": 42,
+            "wire_byte_161": 60
+          },
+          {
+            "manifest_sha256": "3e06351976cdd90b3e888b32ccca8716de991c95ff44eb73e9c26a3b912150dd",
+            "playback_note": 60,
+            "sha256": "3e06351976cdd90b3e888b32ccca8716de991c95ff44eb73e9c26a3b912150dd",
+            "slot": 7,
+            "trigger_note": 43,
+            "wire_byte_161": 60
+          },
+          {
+            "manifest_sha256": "ef96628a3f2cb2a2b6028687e1dc9fa89f147edf7b4c4eb229b7d27250704805",
+            "playback_note": 60,
+            "sha256": "ef96628a3f2cb2a2b6028687e1dc9fa89f147edf7b4c4eb229b7d27250704805",
+            "slot": 8,
+            "trigger_note": 44,
+            "wire_byte_161": 60
+          },
+          {
+            "manifest_sha256": "c6483dabc9e1a863f2682b5c11ea8a91e3ef38212926930d8de24afa3db6f9de",
+            "playback_note": 60,
+            "sha256": "c6483dabc9e1a863f2682b5c11ea8a91e3ef38212926930d8de24afa3db6f9de",
+            "slot": 9,
+            "trigger_note": 45,
+            "wire_byte_161": 60
+          },
+          {
+            "manifest_sha256": "11c7dfae80eb8ddaf88ec971ff1b3ce8b4d76894f4550ec3a0b5113c7e58bdde",
+            "playback_note": 60,
+            "sha256": "11c7dfae80eb8ddaf88ec971ff1b3ce8b4d76894f4550ec3a0b5113c7e58bdde",
+            "slot": 10,
+            "trigger_note": 46,
+            "wire_byte_161": 60
+          },
+          {
+            "manifest_sha256": "a97d43e1351177f4b7e4770b2170d07ae7d7dbd33bd6bb6439a441cb66f74a68",
+            "playback_note": 60,
+            "sha256": "a97d43e1351177f4b7e4770b2170d07ae7d7dbd33bd6bb6439a441cb66f74a68",
+            "slot": 11,
+            "trigger_note": 47,
+            "wire_byte_161": 60
+          },
+          {
+            "manifest_sha256": "3680c3abf14c6a13096fe56953789bc2572fe2fd0d82248f8e4e893482a3be19",
+            "playback_note": 60,
+            "sha256": "3680c3abf14c6a13096fe56953789bc2572fe2fd0d82248f8e4e893482a3be19",
+            "slot": 12,
+            "trigger_note": 48,
+            "wire_byte_161": 60
+          },
+          {
+            "manifest_sha256": "6611e75bfb8b11206f6303a63fdf6d50ee9beb8a72be2e69f9233a8f87e93f3a",
+            "playback_note": 60,
+            "sha256": "6611e75bfb8b11206f6303a63fdf6d50ee9beb8a72be2e69f9233a8f87e93f3a",
+            "slot": 13,
+            "trigger_note": 49,
+            "wire_byte_161": 60
+          },
+          {
+            "manifest_sha256": "8b3bbbccf103bd41ea93430b694be1b8ab17d9a29ed0bee3d6fc0570e7d95721",
+            "playback_note": 60,
+            "sha256": "8b3bbbccf103bd41ea93430b694be1b8ab17d9a29ed0bee3d6fc0570e7d95721",
+            "slot": 14,
+            "trigger_note": 50,
+            "wire_byte_161": 60
+          },
+          {
+            "manifest_sha256": "b06e83fdf0972a652ca4561eb08c6312b51be24c54c2619a1d6c2d67cc2bf30c",
+            "playback_note": 60,
+            "sha256": "b06e83fdf0972a652ca4561eb08c6312b51be24c54c2619a1d6c2d67cc2bf30c",
+            "slot": 15,
+            "trigger_note": 51,
+            "wire_byte_161": 60
+          }
+        ],
+        "producer_count_to_slot_bytes_0x0201e1c4_0x0201e1d8": "5b4103fd28203616e6e1a060c7ff2065c401671806e1",
+        "producer_map_pointer_and_store_0x0201e1e0_0x0201e1f0": "c0ff206fc401301801e19b401a408a40",
+        "producer_post_copy_count_reload_increment_store_0x0201e20a_0x0201e210": "5b41c321db41",
+        "selector_results": [
+          {
+            "playback_note": 60,
+            "source_slot": 0,
+            "trigger_note": 36
+          },
+          {
+            "playback_note": 60,
+            "source_slot": 1,
+            "trigger_note": 37
+          },
+          {
+            "playback_note": 60,
+            "source_slot": 2,
+            "trigger_note": 38
+          },
+          {
+            "playback_note": 60,
+            "source_slot": 3,
+            "trigger_note": 39
+          },
+          {
+            "playback_note": 60,
+            "source_slot": 4,
+            "trigger_note": 40
+          },
+          {
+            "playback_note": 60,
+            "source_slot": 5,
+            "trigger_note": 41
+          },
+          {
+            "playback_note": 60,
+            "source_slot": 6,
+            "trigger_note": 42
+          },
+          {
+            "playback_note": 60,
+            "source_slot": 7,
+            "trigger_note": 43
+          },
+          {
+            "playback_note": 60,
+            "source_slot": 8,
+            "trigger_note": 44
+          },
+          {
+            "playback_note": 60,
+            "source_slot": 9,
+            "trigger_note": 45
+          },
+          {
+            "playback_note": 60,
+            "source_slot": 10,
+            "trigger_note": 46
+          },
+          {
+            "playback_note": 60,
+            "source_slot": 11,
+            "trigger_note": 47
+          },
+          {
+            "playback_note": 60,
+            "source_slot": 12,
+            "trigger_note": 48
+          },
+          {
+            "playback_note": 60,
+            "source_slot": 13,
+            "trigger_note": 49
+          },
+          {
+            "playback_note": 60,
+            "source_slot": 14,
+            "trigger_note": 50
+          },
+          {
+            "playback_note": 60,
+            "source_slot": 15,
+            "trigger_note": 51
+          }
+        ],
+        "simulated_map": [
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60
+        ]
+      },
+      "name": "repeated-playback-note-60-no-slot-collapse",
+      "status": "PASS"
+    },
+    {
+      "evidence": {
+        "candidate_flash_sha256": "fa7708182dccf6b98963756e23fdecc2482f157f258379dadbeae917f7045f12",
+        "candidate_package_app_sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+        "changed_byte_below_0x4000": false,
+        "changed_sectors": [
+          "0x04000",
+          "0x20000",
+          "0x22000",
+          "0x2a000",
+          "0x62000"
+        ],
+        "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+        "official_flash_sha256": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+        "protected_hashes_candidate": {
+          "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+          "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+          "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+          "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+        },
+        "protected_hashes_official": {
+          "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+          "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+          "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+          "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+        }
+      },
+      "name": "protected-regions",
+      "status": "PASS"
+    },
+    {
+      "evidence": {
+        "byte_identical_to_official": true,
+        "official_flash_sha256": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+        "reconstructed_flash_sha256": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+        "sectors": [
+          {
+            "manifest_sha256": "84c51914e8203e19d5b951a6ddba50aa1523a1f49bc2a6f5e19715049bc6750b",
+            "matches_official_sector": true,
+            "sector_base": "0x04000",
+            "sha256": "84c51914e8203e19d5b951a6ddba50aa1523a1f49bc2a6f5e19715049bc6750b",
+            "size": 8192
+          },
+          {
+            "manifest_sha256": "f98d64e12bcb68b03a2893bf83f4165b6ab55dbd2f8adb3ec9849842b3ea88c1",
+            "matches_official_sector": true,
+            "sector_base": "0x20000",
+            "sha256": "f98d64e12bcb68b03a2893bf83f4165b6ab55dbd2f8adb3ec9849842b3ea88c1",
+            "size": 8192
+          },
+          {
+            "manifest_sha256": "e7c4eaa78ccacdc03e0b376ca095a28a8d28594c809621e3824dbda9b0d020f0",
+            "matches_official_sector": true,
+            "sector_base": "0x22000",
+            "sha256": "e7c4eaa78ccacdc03e0b376ca095a28a8d28594c809621e3824dbda9b0d020f0",
+            "size": 8192
+          },
+          {
+            "manifest_sha256": "fffa39e60d1f79efba65fffcb55fd29fe5f8b9fd3fd580e738e1cb9a1c621c5d",
+            "matches_official_sector": true,
+            "sector_base": "0x2a000",
+            "sha256": "fffa39e60d1f79efba65fffcb55fd29fe5f8b9fd3fd580e738e1cb9a1c621c5d",
+            "size": 8192
+          },
+          {
+            "manifest_sha256": "571f97c9f0922b1e107f64f3524c9d620f0e35fcf78e9ae3c50cc49a3104122e",
+            "matches_official_sector": true,
+            "sector_base": "0x62000",
+            "sha256": "571f97c9f0922b1e107f64f3524c9d620f0e35fcf78e9ae3c50cc49a3104122e",
+            "size": 8192
+          }
+        ]
+      },
+      "name": "rollback-reconstructs-official-v15",
+      "status": "PASS"
+    },
+    {
+      "evidence": {
+        "candidate_call": "ota_upload_exact(argv[2], argv[3], argv[5], 15, PACKAGE_SHA256, DESCRIPTION, CONFIRM, completion_message)",
+        "command": "cc -O2 -g -std=c11 -Wall -Wextra -Wpedantic exact_ota.c ../../../../../src/device_info.c ../../../../../src/fwsc.c ../../../../../src/protocol.c ../../../../../src/sha256.c ../../../../../src/usb_probe.c -o <tmp>/exact_ota -I/opt/homebrew/Cellar/libusb/1.0.30/include/libusb-1.0 -L/opt/homebrew/Cellar/libusb/1.0.30/lib -lusb-1.0",
+        "current_api_signature": "ota_upload_exact(firmware_path, transcript_path, confirmation, expected_sha256, package_description, expected_confirmation, completion_message)",
+        "ota_c_inclusion": "exact_ota.c directly includes ../../../../../src/ota.c",
+        "returncode": 1,
+        "stderr": "exact_ota.c:12:291: error: too many arguments to function call, expected 7, have 8\n   12 | int main(int argc, char **argv) { if (argc == 3 && strcmp(argv[1], \"check\") == 0) return check_exact(argv[2]); if (argc == 6 && strcmp(argv[1], \"upload\") == 0 && strcmp(argv[4], \"--confirm\") == 0) return ota_upload_exact(argv[2], argv[3], argv[5], 15, PACKAGE_SHA256, DESCRIPTION, CONFIRM, \"v15 S1-C5 Playback Register Return candidate installed\"); fprintf(stderr, \"usage:\\n  %s check <fwsc>\\n  %s upload <fwsc> <transcript> --confirm %s\\n\", argv[0], argv[0], CONFIRM); return 2; }\n      |                                                                                                                                                                                                             ~~~~~~~~~~~~~~~~                                                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n./../../../../../src/ota.c:623:12: note: 'ota_upload_exact' declared here\n  623 | static int ota_upload_exact(\n      |            ^\n  624 |     const char *firmware_path, const char *transcript_path,\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n  625 |     const char *confirmation,\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~\n  626 |     const uint8_t expected_sha256[SMK37_SHA256_LENGTH],\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n  627 |     const char *package_description, const char *expected_confirmation,\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n  628 |     const char *completion_message) {\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n1 error generated.\n",
+        "stdout": ""
+      },
+      "name": "exact-ota-current-src-api-compilation",
+      "status": "FAIL"
+    },
+    {
+      "evidence": {
+        "candidate": {
+          "reason": "committed exact_ota.c did not compile",
+          "status": "BLOCKED"
+        },
+        "official": {
+          "reason": "committed exact_ota.c did not compile",
+          "status": "BLOCKED"
+        },
+        "parent": {
+          "reason": "committed exact_ota.c did not compile",
+          "status": "BLOCKED"
+        }
+      },
+      "name": "exact-ota-candidate-accept-parent-official-reject",
+      "status": "BLOCKED"
+    }
+  ],
+  "release_gate_summary": {
+    "deterministic-app-fwsc-rebuild": "PASS",
+    "exact-ota-candidate-accept-parent-official-reject": "BLOCKED",
+    "exact-ota-current-src-api-compilation": "FAIL",
+    "note-on-velocity-and-note-off-symmetry": "PASS",
+    "parent-relative-four-changed-bytes": "PASS",
+    "pi32-lb-z-decode-and-semantics": "PASS",
+    "protected-regions": "PASS",
+    "repeated-playback-note-60-no-slot-collapse": "PASS",
+    "rollback-reconstructs-official-v15": "PASS",
+    "selector-r0-return-contract": "PASS"
+  },
+  "reviewed_commit": "90080a59564e6255a30aa08dcf05d3ae4d8831df",
+  "reviewed_parent": "71954397c2a91dc3a9a34f86eb02095a42cb3063",
+  "reviewed_tree": "ae88bd64345e29fe542984307f49d372f52ab675",
+  "scope": {
+    "candidate": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return",
+    "device_accessed": false,
+    "flash_performed": false,
+    "live_send_performed": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "ota_performed": false
+  }
+}

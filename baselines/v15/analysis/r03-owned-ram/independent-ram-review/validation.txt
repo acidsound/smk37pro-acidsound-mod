@@ -1,0 +1,25 @@
+PASS	official-v15-app-sha256	36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS	pinned-mem-heap-object-sha256	82fb6c5a2546861c6114442f556b573da739717c5f53cfbc31853337e36e5fb6
+PASS	sbrk-address-and-size	0x0205e9da size=0x00000062
+PASS	sbrk-three-relocated-instructions	[{'relative_offset': '0x0000000e', 'symbol': 'sbrk.__init_addr', 'v15_value': '0x01c32d94'}, {'relative_offset': '0x0000001e', 'symbol': 'HEAP_BEGIN', 'v15_value': '0x01c46520'}, {'relative_offset': '0x00000026', 'symbol': 'HEAP_END', 'v15_value': '0x01c7fd30'}]
+PASS	sbrk-all-80-non-relocated-bytes-exact	80/80
+PASS	sbrk-only-relocation-payload-differs	[16, 17, 18, 19, 32, 33, 34, 35, 40, 41, 42, 43]
+PASS	sbrk-init-address	0x01c32d94
+PASS	heap-begin	0x01c46520
+PASS	heap-end	0x01c7fd30
+PASS	boot-bss-start-instruction	c3ffd499c001
+PASS	boot-bss-size-instruction	c2ff48cb0300
+PASS	boot-zero-loop-is-word-granular	a2a20203b105f25d
+PASS	bss-end-arithmetic	0x01c4651c
+PASS	pointer-slot-is-four-byte-padding	0x01c4651c..0x01c46520
+PASS	pointer-slot-has-no-raw-absolute-reference	[]
+PASS	option-a-zero-stops-at-old-heap	0x01c46520
+PASS	option-b-zero-stops-at-new-heap	0x01c465e0
+PASS	option-b-zero-size-word-aligned	0x0003cc0c
+PASS	option-b-prefix-size	0x000000c0
+PASS	option-b-voice-plus-metadata-fit	needed=0x000000a4 available=0x000000c0
+PASS	old-and-new-heap-bounds-aligned-32	old=0x01c46520 new=0x01c465e0
+PASS	only-old-heap-begin-mov-in-prefix	[{'instruction': '0x0205e9f8', 'value': '0x01c46520', 'bytes': 'c5ff2065c401'}]
+PASS	heap-loss-exactly-0xc0	old=0x00039810 new=0x00039750 loss=0x000000c0
+PASS	current-requirement-forbids-allocator-change	requirements.md Gate C
+PASS	current-requirement-forbids-absence-only-claim	requirements.md Gate A.8

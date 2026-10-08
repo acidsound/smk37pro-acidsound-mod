@@ -1,0 +1,188 @@
+{
+  "abi_contract": {
+    "r0": "stage on entry, preserved through the skip path",
+    "r0_r1": "scratch, as in S1-C5",
+    "r4_r9": "preserved by push/pop (segmented caller r7 contract)",
+    "r5": "clobbered and restored by push/pop, as in S1-C5"
+  },
+  "basis": {
+    "parent_app_sha256": "c8dd9e9e19369a65fd46fb48aabc69a2af7977a456f4152e77cd90a742f7cfe5",
+    "parent_candidate": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return-S1C5-marked",
+    "parent_package_sha256": "cfafa3273ca0ba741616e5f3aa87f262a45ecd84445bdefd969900dad256b480"
+  },
+  "callsites": {
+    "direct": {
+      "address": "0x0201e468",
+      "bytes": "bfeadefe",
+      "status": "unchanged",
+      "target": "0x0201e228"
+    },
+    "segmented": {
+      "address": "0x0201e49c",
+      "bytes": "bfeac4fe",
+      "status": "unchanged",
+      "target": "0x0201e228"
+    }
+  },
+  "changed_code": {
+    "bytes": 44,
+    "end_exclusive": "0x0201e254",
+    "instructions": [
+      {
+        "address": "0x0201e228",
+        "asm": "push {rets,r9..r4}",
+        "bytes": "7904",
+        "meaning": "preserve r4..r9 for segmented caller r7 contract",
+        "name": "reset.push_saved",
+        "size": 2
+      },
+      {
+        "address": "0x0201e22a",
+        "asm": "lb.z r1,[r0]",
+        "bytes": "0940",
+        "meaning": "wire byte 6 = payload byte 0 (OP1 EG rate 1); r0 = stage from callsite",
+        "name": "reset.sig0_load",
+        "size": 2
+      },
+      {
+        "address": "0x0201e22c",
+        "asm": "jne r1,#0x64,skip",
+        "bytes": "81f80cc8",
+        "meaning": "not reset packet -> producer",
+        "name": "reset.sig0_mismatch",
+        "size": 4,
+        "target": "0x0201e248"
+      },
+      {
+        "address": "0x0201e230",
+        "asm": "lb.z r1,[r0+1]",
+        "bytes": "0941",
+        "meaning": "wire byte 7 = payload byte 1 (OP1 EG rate 2)",
+        "name": "reset.sig1_load",
+        "size": 2
+      },
+      {
+        "address": "0x0201e232",
+        "asm": "jne r1,#0x65,skip",
+        "bytes": "81f809ca",
+        "meaning": "not reset packet -> producer",
+        "name": "reset.sig1_mismatch",
+        "size": 4,
+        "target": "0x0201e248"
+      },
+      {
+        "address": "0x0201e236",
+        "asm": "mov r5,#0x1c465bd",
+        "bytes": "c5ffbd65c401",
+        "meaning": "control base",
+        "name": "reset.control_pointer",
+        "size": 6
+      },
+      {
+        "address": "0x0201e23c",
+        "asm": "mov r0,#0",
+        "bytes": "4020",
+        "meaning": "zero",
+        "name": "reset.zero",
+        "size": 2
+      },
+      {
+        "address": "0x0201e23e",
+        "asm": "sb [r5],r0",
+        "bytes": "d840",
+        "meaning": "clear lock",
+        "name": "reset.lock_store",
+        "size": 2
+      },
+      {
+        "address": "0x0201e240",
+        "asm": "sb [r5+1],r0",
+        "bytes": "d841",
+        "meaning": "clear count",
+        "name": "reset.count_store",
+        "size": 2
+      },
+      {
+        "address": "0x0201e242",
+        "asm": "sb [r5+2],r0",
+        "bytes": "d842",
+        "meaning": "state EMPTY hides stale map until ARMED",
+        "name": "reset.state_store",
+        "size": 2
+      },
+      {
+        "address": "0x0201e244",
+        "asm": "csync",
+        "bytes": "2000",
+        "meaning": "publish reset",
+        "name": "reset.reset_csync",
+        "size": 2
+      },
+      {
+        "address": "0x0201e246",
+        "asm": "pop {pc,r9..r4}",
+        "bytes": "5904",
+        "meaning": "reset packet is not a voice: return without calling producer",
+        "name": "reset.return_reset",
+        "size": 2
+      },
+      {
+        "address": "0x0201e248",
+        "asm": "call 0x201e196",
+        "bytes": "80ff48ffffff",
+        "meaning": "r0 = stage preserved on skip path; sequential producer",
+        "name": "reset.call_producer",
+        "size": 6
+      },
+      {
+        "address": "0x0201e24e",
+        "asm": "pop {pc,r9..r4}",
+        "bytes": "5904",
+        "meaning": "return",
+        "name": "reset.return_voice",
+        "size": 2
+      }
+    ],
+    "start": "0x0201e228",
+    "tail_padding_hex": "00160016"
+  },
+  "decision": "PASS",
+  "format": "smk37-v15-s1c6-reset-signature-isolation.code-evidence-v1",
+  "preserved_code": {
+    "combined_sha256": "1f5ac42f0fd34c725193d308e2a608e1a0f8a9c70c60c29f58d38bcd68804744",
+    "end_exclusive": "0x0201e228",
+    "producer_core_sha256": "b740203d7c709aaa74dd506cc39739191caac790890056e2aee6ad627377baa5",
+    "selector_sha256": "900e8f05c8157737e89a22338b9a4575aa3ff124bd70ff132de0226654fce29f",
+    "start": "0x0201e13e",
+    "status": "preserved byte-for-byte from exact S1-C5 marked"
+  },
+  "reset_contract": {
+    "host_protocol": "1 explicit reset packet + 16 voice packets = 17 total",
+    "on_match": "clear lock/count/state, csync, pop return (packet NOT loaded as voice)",
+    "on_mismatch": "r0 = stage preserved, call producer 0x0201e196",
+    "signature": {
+      "structural_impossibility": "payload bytes 0..1 = OP1 EG rates 1..2, DX7 range 0..99; 0x64/0x65 impossible in any valid voice",
+      "wire_bytes_6_7": [
+        100,
+        101
+      ]
+    }
+  },
+  "scope": {
+    "device_accessed": false,
+    "flash_performed": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "reset_performed": false
+  },
+  "validation": [
+    "PASS\treset-wrapper\t0x0201e228..0x0201e254\t2-byte impossible signature 0x64 0x65; reset returns without producer; voice path calls 0x0201e196",
+    "PASS\treset-semantics\treset packet clears lock/count/state and is NOT loaded as a voice; no slot consumed",
+    "PASS\tcallsites\tunchanged direct/segmented callsites still target reset entry",
+    "PASS\tframe\tr4..r9 preserved by push/pop (segmented caller r7 contract); r0/r1 scratch as in S1-C5",
+    "PASS\treset-wrapper\t0x0201e228..0x0201e254\t2-byte impossible signature 0x64 0x65; reset returns without producer; voice path calls 0x0201e196",
+    "PASS\treset-semantics\treset packet clears lock/count/state and is NOT loaded as a voice; no slot consumed",
+    "PASS\tcallsites\tunchanged direct/segmented callsites still target reset entry",
+    "PASS\tframe\tr4..r9 preserved by push/pop (segmented caller r7 contract); r0/r1 scratch as in S1-C5"
+  ]
+}

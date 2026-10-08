@@ -1,0 +1,148 @@
+S1C6 raw-record persistence offline validation PASS; firmware fit BLOCK
+PASS	exact current S1C5 app hash
+PASS	exact current S1C5 selector/producer evidence hash
+PASS	S1C5 packet manifest has 16 slots
+PASS	current S1C5 Playback Notes are all C4/60
+PASS	slot 0 exact 163-byte SysEx framing
+PASS	slot 0 packet hash matches manifest
+PASS	slot 0 runtime voice is 0x9c bytes
+PASS	slot 0 wire byte 161 carries Playback Note 60
+PASS	slot 1 exact 163-byte SysEx framing
+PASS	slot 1 packet hash matches manifest
+PASS	slot 1 runtime voice is 0x9c bytes
+PASS	slot 1 wire byte 161 carries Playback Note 60
+PASS	slot 2 exact 163-byte SysEx framing
+PASS	slot 2 packet hash matches manifest
+PASS	slot 2 runtime voice is 0x9c bytes
+PASS	slot 2 wire byte 161 carries Playback Note 60
+PASS	slot 3 exact 163-byte SysEx framing
+PASS	slot 3 packet hash matches manifest
+PASS	slot 3 runtime voice is 0x9c bytes
+PASS	slot 3 wire byte 161 carries Playback Note 60
+PASS	slot 4 exact 163-byte SysEx framing
+PASS	slot 4 packet hash matches manifest
+PASS	slot 4 runtime voice is 0x9c bytes
+PASS	slot 4 wire byte 161 carries Playback Note 60
+PASS	slot 5 exact 163-byte SysEx framing
+PASS	slot 5 packet hash matches manifest
+PASS	slot 5 runtime voice is 0x9c bytes
+PASS	slot 5 wire byte 161 carries Playback Note 60
+PASS	slot 6 exact 163-byte SysEx framing
+PASS	slot 6 packet hash matches manifest
+PASS	slot 6 runtime voice is 0x9c bytes
+PASS	slot 6 wire byte 161 carries Playback Note 60
+PASS	slot 7 exact 163-byte SysEx framing
+PASS	slot 7 packet hash matches manifest
+PASS	slot 7 runtime voice is 0x9c bytes
+PASS	slot 7 wire byte 161 carries Playback Note 60
+PASS	slot 8 exact 163-byte SysEx framing
+PASS	slot 8 packet hash matches manifest
+PASS	slot 8 runtime voice is 0x9c bytes
+PASS	slot 8 wire byte 161 carries Playback Note 60
+PASS	slot 9 exact 163-byte SysEx framing
+PASS	slot 9 packet hash matches manifest
+PASS	slot 9 runtime voice is 0x9c bytes
+PASS	slot 9 wire byte 161 carries Playback Note 60
+PASS	slot 10 exact 163-byte SysEx framing
+PASS	slot 10 packet hash matches manifest
+PASS	slot 10 runtime voice is 0x9c bytes
+PASS	slot 10 wire byte 161 carries Playback Note 60
+PASS	slot 11 exact 163-byte SysEx framing
+PASS	slot 11 packet hash matches manifest
+PASS	slot 11 runtime voice is 0x9c bytes
+PASS	slot 11 wire byte 161 carries Playback Note 60
+PASS	slot 12 exact 163-byte SysEx framing
+PASS	slot 12 packet hash matches manifest
+PASS	slot 12 runtime voice is 0x9c bytes
+PASS	slot 12 wire byte 161 carries Playback Note 60
+PASS	slot 13 exact 163-byte SysEx framing
+PASS	slot 13 packet hash matches manifest
+PASS	slot 13 runtime voice is 0x9c bytes
+PASS	slot 13 wire byte 161 carries Playback Note 60
+PASS	slot 14 exact 163-byte SysEx framing
+PASS	slot 14 packet hash matches manifest
+PASS	slot 14 runtime voice is 0x9c bytes
+PASS	slot 14 wire byte 161 carries Playback Note 60
+PASS	slot 15 exact 163-byte SysEx framing
+PASS	slot 15 packet hash matches manifest
+PASS	slot 15 runtime voice is 0x9c bytes
+PASS	slot 15 wire byte 161 carries Playback Note 60
+PASS	clean v15 baseline dump hash
+PASS	preferred layout reserves exactly 17 distinct stock raw records
+PASS	all preferred raw record indices are inside stock 128-record table
+PASS	payload record 112 slot 0 stores normalized voice byte 0x9b
+PASS	payload record 112 preserves seven-byte stock raw tail
+PASS	payload record 113 slot 1 stores normalized voice byte 0x9b
+PASS	payload record 113 preserves seven-byte stock raw tail
+PASS	payload record 114 slot 2 stores normalized voice byte 0x9b
+PASS	payload record 114 preserves seven-byte stock raw tail
+PASS	payload record 115 slot 3 stores normalized voice byte 0x9b
+PASS	payload record 115 preserves seven-byte stock raw tail
+PASS	payload record 116 slot 4 stores normalized voice byte 0x9b
+PASS	payload record 116 preserves seven-byte stock raw tail
+PASS	payload record 117 slot 5 stores normalized voice byte 0x9b
+PASS	payload record 117 preserves seven-byte stock raw tail
+PASS	payload record 118 slot 6 stores normalized voice byte 0x9b
+PASS	payload record 118 preserves seven-byte stock raw tail
+PASS	payload record 119 slot 7 stores normalized voice byte 0x9b
+PASS	payload record 119 preserves seven-byte stock raw tail
+PASS	payload record 120 slot 8 stores normalized voice byte 0x9b
+PASS	payload record 120 preserves seven-byte stock raw tail
+PASS	payload record 121 slot 9 stores normalized voice byte 0x9b
+PASS	payload record 121 preserves seven-byte stock raw tail
+PASS	payload record 122 slot 10 stores normalized voice byte 0x9b
+PASS	payload record 122 preserves seven-byte stock raw tail
+PASS	payload record 123 slot 11 stores normalized voice byte 0x9b
+PASS	payload record 123 preserves seven-byte stock raw tail
+PASS	payload record 124 slot 12 stores normalized voice byte 0x9b
+PASS	payload record 124 preserves seven-byte stock raw tail
+PASS	payload record 125 slot 13 stores normalized voice byte 0x9b
+PASS	payload record 125 preserves seven-byte stock raw tail
+PASS	payload record 126 slot 14 stores normalized voice byte 0x9b
+PASS	payload record 126 preserves seven-byte stock raw tail
+PASS	payload record 127 slot 15 stores normalized voice byte 0x9b
+PASS	payload record 127 preserves seven-byte stock raw tail
+PASS	manifest record preserves seven-byte stock raw tail
+PASS	manifest/map record stores all 16 Playback Notes
+PASS	slot 0 direct raw prefix restores normalized S1C5 voice
+PASS	slot 0 manifest restores Playback Note
+PASS	slot 1 direct raw prefix restores normalized S1C5 voice
+PASS	slot 1 manifest restores Playback Note
+PASS	slot 2 direct raw prefix restores normalized S1C5 voice
+PASS	slot 2 manifest restores Playback Note
+PASS	slot 3 direct raw prefix restores normalized S1C5 voice
+PASS	slot 3 manifest restores Playback Note
+PASS	slot 4 direct raw prefix restores normalized S1C5 voice
+PASS	slot 4 manifest restores Playback Note
+PASS	slot 5 direct raw prefix restores normalized S1C5 voice
+PASS	slot 5 manifest restores Playback Note
+PASS	slot 6 direct raw prefix restores normalized S1C5 voice
+PASS	slot 6 manifest restores Playback Note
+PASS	slot 7 direct raw prefix restores normalized S1C5 voice
+PASS	slot 7 manifest restores Playback Note
+PASS	slot 8 direct raw prefix restores normalized S1C5 voice
+PASS	slot 8 manifest restores Playback Note
+PASS	slot 9 direct raw prefix restores normalized S1C5 voice
+PASS	slot 9 manifest restores Playback Note
+PASS	slot 10 direct raw prefix restores normalized S1C5 voice
+PASS	slot 10 manifest restores Playback Note
+PASS	slot 11 direct raw prefix restores normalized S1C5 voice
+PASS	slot 11 manifest restores Playback Note
+PASS	slot 12 direct raw prefix restores normalized S1C5 voice
+PASS	slot 12 manifest restores Playback Note
+PASS	slot 13 direct raw prefix restores normalized S1C5 voice
+PASS	slot 13 manifest restores Playback Note
+PASS	slot 14 direct raw prefix restores normalized S1C5 voice
+PASS	slot 14 manifest restores Playback Note
+PASS	slot 15 direct raw prefix restores normalized S1C5 voice
+PASS	slot 15 manifest restores Playback Note
+PASS	owned executable window remains exact 278 bytes
+PASS	current S1C5 selector is exact 88 bytes
+PASS	current S1C5 producer is exact 188 bytes
+PASS	current WebMIDI producer publishes ARMED last
+PASS	preserving exact S1C5 selector and producer leaves only 2 bytes
+PASS	direct mapped raw-record fallback primitive lower bound is 32 bytes
+PASS	direct mapped fallback cannot fit while preserving exact S1C5 selector/producer
+PASS	producer-preserving selector budget is 90 bytes
+PASS	volatile ARMED selector plus minimal raw fallback exceeds producer-preserving budget
+PASS	removing reset wrapper would free enough bytes only by breaking current WebMIDI reset contract

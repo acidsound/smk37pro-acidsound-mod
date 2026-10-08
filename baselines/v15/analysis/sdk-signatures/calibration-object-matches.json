@@ -1,0 +1,906 @@
+{
+  "accepted": [
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": null,
+      "body_sha256": "d7c2b361a0710defd69c3852566bf829b30722e1b92fed4a7038acdec43e4ae7",
+      "fixed_bytes": 12,
+      "masked_ranges": [
+        [
+          12,
+          18
+        ]
+      ],
+      "name": "gpio2reg",
+      "object": "gpio.pi32.o",
+      "relocation_count": 1,
+      "size": 24,
+      "strict_masked_matches": [
+        16258
+      ]
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": null,
+      "body_sha256": "2ca6267201db68ff165a13cfc1cd196e437c0dfb1ec22e5229f990fd39594bf6",
+      "fixed_bytes": 8,
+      "masked_ranges": [
+        [
+          8,
+          14
+        ],
+        [
+          20,
+          26
+        ]
+      ],
+      "name": "pb0_io_init",
+      "object": "gpio.pi32.o",
+      "relocation_count": 2,
+      "size": 28,
+      "strict_masked_matches": [
+        19438
+      ]
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": null,
+      "body_sha256": "315678b564bb89adf5c32de29379ea997dc9139a668849bf840d30cd759793e0",
+      "fixed_bytes": 8,
+      "masked_ranges": [
+        [
+          8,
+          14
+        ]
+      ],
+      "name": "pb0_io_out",
+      "object": "gpio.pi32.o",
+      "relocation_count": 1,
+      "size": 16,
+      "strict_masked_matches": [
+        16880
+      ]
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": null,
+      "body_sha256": "103094d8f6d0c3e4e028158fcce28140da490afe5965420c58616363ddb57937",
+      "fixed_bytes": 8,
+      "masked_ranges": [
+        [
+          8,
+          14
+        ]
+      ],
+      "name": "pb0_io_pulldown",
+      "object": "gpio.pi32.o",
+      "relocation_count": 1,
+      "size": 16,
+      "strict_masked_matches": [
+        16548
+      ]
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": null,
+      "body_sha256": "d4ab9220c8e6cf2d32ef5bce38887d6d540ebb05e3dad8e7f96fe426b8b2b6ad",
+      "fixed_bytes": 8,
+      "masked_ranges": [
+        [
+          8,
+          14
+        ]
+      ],
+      "name": "pb0_io_pullup",
+      "object": "gpio.pi32.o",
+      "relocation_count": 1,
+      "size": 16,
+      "strict_masked_matches": [
+        16242
+      ]
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": null,
+      "body_sha256": "f4bc7641829b9e20e23121db547152ef182787f04d914ff88d75d63f5e140ced",
+      "fixed_bytes": 8,
+      "masked_ranges": [
+        [
+          8,
+          14
+        ]
+      ],
+      "name": "pb0_io_set_die",
+      "object": "gpio.pi32.o",
+      "relocation_count": 1,
+      "size": 16,
+      "strict_masked_matches": [
+        17186
+      ]
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": {
+        "app_address": 33825570,
+        "app_offset": 271138,
+        "covered_fixed_bytes": 24,
+        "unique_windows": 2
+      },
+      "body_sha256": "3d9b0f6122c5134e30ab6834ea30f968657eb198566aa0c86039a83cdf24bdd4",
+      "fixed_bytes": 24,
+      "masked_ranges": [],
+      "name": "usb_iomode",
+      "object": "gpio.pi32.o",
+      "relocation_count": 0,
+      "size": 24,
+      "strict_masked_matches": [
+        271138
+      ]
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": {
+        "app_address": 33571218,
+        "app_offset": 16786,
+        "covered_fixed_bytes": 64,
+        "unique_windows": 6
+      },
+      "body_sha256": "add6bca7e408db83a6d09ed0864d46ad7fc0aa6d4b5ae2eab0347c6681b95177",
+      "fixed_bytes": 96,
+      "masked_ranges": [],
+      "name": "usb_output",
+      "object": "gpio.pi32.o",
+      "relocation_count": 0,
+      "size": 96,
+      "strict_masked_matches": []
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": {
+        "app_address": 33571580,
+        "app_offset": 17148,
+        "covered_fixed_bytes": 24,
+        "unique_windows": 2
+      },
+      "body_sha256": "eb7f0db2742492bd453bc7331684020d4cb4c27e2234463cae9fd2cb04064fbf",
+      "fixed_bytes": 40,
+      "masked_ranges": [],
+      "name": "usb_set_die",
+      "object": "gpio.pi32.o",
+      "relocation_count": 0,
+      "size": 40,
+      "strict_masked_matches": []
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": {
+        "app_address": 33786908,
+        "app_offset": 232476,
+        "covered_fixed_bytes": 24,
+        "unique_windows": 2
+      },
+      "body_sha256": "284cdadf942a4a9382ca257f10d33eca97b8a2b3848b877819928f4374c1fa85",
+      "fixed_bytes": 40,
+      "masked_ranges": [],
+      "name": "usb_set_dieh",
+      "object": "gpio.pi32.o",
+      "relocation_count": 0,
+      "size": 40,
+      "strict_masked_matches": []
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": {
+        "app_address": 33571180,
+        "app_offset": 16748,
+        "covered_fixed_bytes": 24,
+        "unique_windows": 2
+      },
+      "body_sha256": "715b0f7bc1cd22d801abd5a4ccd4b80e3b9a9db9f7a4f20c1e5166d683fc0e51",
+      "fixed_bytes": 40,
+      "masked_ranges": [],
+      "name": "usb_set_direction",
+      "object": "gpio.pi32.o",
+      "relocation_count": 0,
+      "size": 40,
+      "strict_masked_matches": []
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": {
+        "app_address": 33570896,
+        "app_offset": 16464,
+        "covered_fixed_bytes": 56,
+        "unique_windows": 5
+      },
+      "body_sha256": "ec6f5fc1898a6b26a88e95f2ba1f339bf5f98e1f9a38df7d5615487d403c969c",
+      "fixed_bytes": 86,
+      "masked_ranges": [],
+      "name": "usb_set_pull_down",
+      "object": "gpio.pi32.o",
+      "relocation_count": 0,
+      "size": 86,
+      "strict_masked_matches": []
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": {
+        "app_address": 33570608,
+        "app_offset": 16176,
+        "covered_fixed_bytes": 48,
+        "unique_windows": 4
+      },
+      "body_sha256": "5c1035ca2c8ab301c902a82e9ce1b3c2f051cada48f017d5dfb29c5f7e34990f",
+      "fixed_bytes": 68,
+      "masked_ranges": [],
+      "name": "usb_set_pull_up",
+      "object": "gpio.pi32.o",
+      "relocation_count": 0,
+      "size": 68,
+      "strict_masked_matches": []
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": {
+        "app_address": 33740736,
+        "app_offset": 186304,
+        "covered_fixed_bytes": 32,
+        "unique_windows": 2
+      },
+      "body_sha256": "bcafd91e1505a43cb9c21725ffeee4eee5387ec44ea326165c25f89b5c1db6f5",
+      "fixed_bytes": 70,
+      "masked_ranges": [
+        [
+          18,
+          24
+        ],
+        [
+          32,
+          38
+        ],
+        [
+          54,
+          60
+        ]
+      ],
+      "name": "__sdfile_path_get_name",
+      "object": "sdfile_new.pi32.o",
+      "relocation_count": 3,
+      "size": 88,
+      "strict_masked_matches": []
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": null,
+      "body_sha256": "dcbb2a451aa9ab98c3169693d5f876aca768e3d5d90d25f18df9d6cdfafe521d",
+      "fixed_bytes": 12,
+      "masked_ranges": [
+        [
+          2,
+          8
+        ],
+        [
+          20,
+          26
+        ]
+      ],
+      "name": "hook_norsdfile_spirec_read",
+      "object": "sdfile_new.pi32.o",
+      "relocation_count": 2,
+      "size": 28,
+      "strict_masked_matches": [
+        299064
+      ]
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": {
+        "app_address": 33742198,
+        "app_offset": 187766,
+        "covered_fixed_bytes": 40,
+        "unique_windows": 4
+      },
+      "body_sha256": "d270bf43334cc0361ad7220b1051891e1f4de526d9d195f9b2bd2dc05a6e596a",
+      "fixed_bytes": 42,
+      "masked_ranges": [],
+      "name": "sdfile_get_name",
+      "object": "sdfile_new.pi32.o",
+      "relocation_count": 0,
+      "size": 42,
+      "strict_masked_matches": [
+        187766
+      ]
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": null,
+      "body_sha256": "4c98bd5cd816fdc885d9b04ef1504ba10996c0947683453e20c399edceb0a1ff",
+      "fixed_bytes": 14,
+      "masked_ranges": [],
+      "name": "sdfile_len",
+      "object": "sdfile_new.pi32.o",
+      "relocation_count": 0,
+      "size": 14,
+      "strict_masked_matches": [
+        187738
+      ]
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": null,
+      "body_sha256": "714432b4f39f3c6fbd574216527171c2c60492464fda3aaac3b6f9354d97c035",
+      "fixed_bytes": 14,
+      "masked_ranges": [],
+      "name": "sdfile_pos",
+      "object": "sdfile_new.pi32.o",
+      "relocation_count": 0,
+      "size": 14,
+      "strict_masked_matches": [
+        187752
+      ]
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": {
+        "app_address": 33742136,
+        "app_offset": 187704,
+        "covered_fixed_bytes": 32,
+        "unique_windows": 3
+      },
+      "body_sha256": "fd0815005c685c2cddd090cbc92e39d0e9a45a2a3b25390752a5e79fcaafba60",
+      "fixed_bytes": 34,
+      "masked_ranges": [],
+      "name": "sdfile_seek",
+      "object": "sdfile_new.pi32.o",
+      "relocation_count": 0,
+      "size": 34,
+      "strict_masked_matches": [
+        187704
+      ]
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": {
+        "app_address": 33740710,
+        "app_offset": 186278,
+        "covered_fixed_bytes": 24,
+        "unique_windows": 2
+      },
+      "body_sha256": "4bb7ab9ae94abdb00df6f6b9880bfc7a5c93a522d05f98a96213f8307c4f6313",
+      "fixed_bytes": 26,
+      "masked_ranges": [],
+      "name": "sdfile_str_to_upper",
+      "object": "sdfile_new.pi32.o",
+      "relocation_count": 0,
+      "size": 26,
+      "strict_masked_matches": [
+        186278
+      ]
+    },
+    {
+      "accepted_by_threshold": true,
+      "best_window_cluster": {
+        "app_address": 33740814,
+        "app_offset": 186382,
+        "covered_fixed_bytes": 48,
+        "unique_windows": 5
+      },
+      "body_sha256": "7d6131226e4378f7d8dc5ed65c686827283188a34a9eb4344f14c8d0f47f0a42",
+      "fixed_bytes": 124,
+      "masked_ranges": [
+        [
+          44,
+          50
+        ],
+        [
+          56,
+          62
+        ]
+      ],
+      "name": "sdfile_strcase_cmp",
+      "object": "sdfile_new.pi32.o",
+      "relocation_count": 2,
+      "size": 142,
+      "strict_masked_matches": []
+    }
+  ],
+  "app": {
+    "runtime_base": 33554432,
+    "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "size": 617012
+  },
+  "criterion": "all fixed islands, or >=2 aligned unique 16-byte windows covering >=24 fixed bytes",
+  "format": "smk37-v15-relocation-aware-object-matches-v1",
+  "objects": [
+    {
+      "code_signature_sha256": "747e6563fa85af0edb0704aa6640cb39d0505841e4cfb99d05125ba76732fa5d",
+      "function_count": 52,
+      "functions_with_hits": [
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": null,
+          "body_sha256": "d7c2b361a0710defd69c3852566bf829b30722e1b92fed4a7038acdec43e4ae7",
+          "fixed_bytes": 12,
+          "masked_ranges": [
+            [
+              12,
+              18
+            ]
+          ],
+          "name": "gpio2reg",
+          "relocation_count": 1,
+          "size": 24,
+          "strict_masked_matches": [
+            16258
+          ]
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": null,
+          "body_sha256": "2ca6267201db68ff165a13cfc1cd196e437c0dfb1ec22e5229f990fd39594bf6",
+          "fixed_bytes": 8,
+          "masked_ranges": [
+            [
+              8,
+              14
+            ],
+            [
+              20,
+              26
+            ]
+          ],
+          "name": "pb0_io_init",
+          "relocation_count": 2,
+          "size": 28,
+          "strict_masked_matches": [
+            19438
+          ]
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": null,
+          "body_sha256": "315678b564bb89adf5c32de29379ea997dc9139a668849bf840d30cd759793e0",
+          "fixed_bytes": 8,
+          "masked_ranges": [
+            [
+              8,
+              14
+            ]
+          ],
+          "name": "pb0_io_out",
+          "relocation_count": 1,
+          "size": 16,
+          "strict_masked_matches": [
+            16880
+          ]
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": null,
+          "body_sha256": "103094d8f6d0c3e4e028158fcce28140da490afe5965420c58616363ddb57937",
+          "fixed_bytes": 8,
+          "masked_ranges": [
+            [
+              8,
+              14
+            ]
+          ],
+          "name": "pb0_io_pulldown",
+          "relocation_count": 1,
+          "size": 16,
+          "strict_masked_matches": [
+            16548
+          ]
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": null,
+          "body_sha256": "d4ab9220c8e6cf2d32ef5bce38887d6d540ebb05e3dad8e7f96fe426b8b2b6ad",
+          "fixed_bytes": 8,
+          "masked_ranges": [
+            [
+              8,
+              14
+            ]
+          ],
+          "name": "pb0_io_pullup",
+          "relocation_count": 1,
+          "size": 16,
+          "strict_masked_matches": [
+            16242
+          ]
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": null,
+          "body_sha256": "f4bc7641829b9e20e23121db547152ef182787f04d914ff88d75d63f5e140ced",
+          "fixed_bytes": 8,
+          "masked_ranges": [
+            [
+              8,
+              14
+            ]
+          ],
+          "name": "pb0_io_set_die",
+          "relocation_count": 1,
+          "size": 16,
+          "strict_masked_matches": [
+            17186
+          ]
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": {
+            "app_address": 33825570,
+            "app_offset": 271138,
+            "covered_fixed_bytes": 24,
+            "unique_windows": 2
+          },
+          "body_sha256": "3d9b0f6122c5134e30ab6834ea30f968657eb198566aa0c86039a83cdf24bdd4",
+          "fixed_bytes": 24,
+          "masked_ranges": [],
+          "name": "usb_iomode",
+          "relocation_count": 0,
+          "size": 24,
+          "strict_masked_matches": [
+            271138
+          ]
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": {
+            "app_address": 33571218,
+            "app_offset": 16786,
+            "covered_fixed_bytes": 64,
+            "unique_windows": 6
+          },
+          "body_sha256": "add6bca7e408db83a6d09ed0864d46ad7fc0aa6d4b5ae2eab0347c6681b95177",
+          "fixed_bytes": 96,
+          "masked_ranges": [],
+          "name": "usb_output",
+          "relocation_count": 0,
+          "size": 96,
+          "strict_masked_matches": []
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": {
+            "app_address": 33571580,
+            "app_offset": 17148,
+            "covered_fixed_bytes": 24,
+            "unique_windows": 2
+          },
+          "body_sha256": "eb7f0db2742492bd453bc7331684020d4cb4c27e2234463cae9fd2cb04064fbf",
+          "fixed_bytes": 40,
+          "masked_ranges": [],
+          "name": "usb_set_die",
+          "relocation_count": 0,
+          "size": 40,
+          "strict_masked_matches": []
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": {
+            "app_address": 33786908,
+            "app_offset": 232476,
+            "covered_fixed_bytes": 24,
+            "unique_windows": 2
+          },
+          "body_sha256": "284cdadf942a4a9382ca257f10d33eca97b8a2b3848b877819928f4374c1fa85",
+          "fixed_bytes": 40,
+          "masked_ranges": [],
+          "name": "usb_set_dieh",
+          "relocation_count": 0,
+          "size": 40,
+          "strict_masked_matches": []
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": {
+            "app_address": 33571180,
+            "app_offset": 16748,
+            "covered_fixed_bytes": 24,
+            "unique_windows": 2
+          },
+          "body_sha256": "715b0f7bc1cd22d801abd5a4ccd4b80e3b9a9db9f7a4f20c1e5166d683fc0e51",
+          "fixed_bytes": 40,
+          "masked_ranges": [],
+          "name": "usb_set_direction",
+          "relocation_count": 0,
+          "size": 40,
+          "strict_masked_matches": []
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": {
+            "app_address": 33570896,
+            "app_offset": 16464,
+            "covered_fixed_bytes": 56,
+            "unique_windows": 5
+          },
+          "body_sha256": "ec6f5fc1898a6b26a88e95f2ba1f339bf5f98e1f9a38df7d5615487d403c969c",
+          "fixed_bytes": 86,
+          "masked_ranges": [],
+          "name": "usb_set_pull_down",
+          "relocation_count": 0,
+          "size": 86,
+          "strict_masked_matches": []
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": {
+            "app_address": 33570608,
+            "app_offset": 16176,
+            "covered_fixed_bytes": 48,
+            "unique_windows": 4
+          },
+          "body_sha256": "5c1035ca2c8ab301c902a82e9ce1b3c2f051cada48f017d5dfb29c5f7e34990f",
+          "fixed_bytes": 68,
+          "masked_ranges": [],
+          "name": "usb_set_pull_up",
+          "relocation_count": 0,
+          "size": 68,
+          "strict_masked_matches": []
+        }
+      ],
+      "path": "gpio.pi32.o"
+    },
+    {
+      "code_signature_sha256": "ce9c0697d360eb45a1e80bf0c7ecc06ef6a16d45992e0f139e5ef2e90ea401fa",
+      "function_count": 55,
+      "functions_with_hits": [
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": {
+            "app_address": 33740736,
+            "app_offset": 186304,
+            "covered_fixed_bytes": 32,
+            "unique_windows": 2
+          },
+          "body_sha256": "bcafd91e1505a43cb9c21725ffeee4eee5387ec44ea326165c25f89b5c1db6f5",
+          "fixed_bytes": 70,
+          "masked_ranges": [
+            [
+              18,
+              24
+            ],
+            [
+              32,
+              38
+            ],
+            [
+              54,
+              60
+            ]
+          ],
+          "name": "__sdfile_path_get_name",
+          "relocation_count": 3,
+          "size": 88,
+          "strict_masked_matches": []
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": null,
+          "body_sha256": "dcbb2a451aa9ab98c3169693d5f876aca768e3d5d90d25f18df9d6cdfafe521d",
+          "fixed_bytes": 12,
+          "masked_ranges": [
+            [
+              2,
+              8
+            ],
+            [
+              20,
+              26
+            ]
+          ],
+          "name": "hook_norsdfile_spirec_read",
+          "relocation_count": 2,
+          "size": 28,
+          "strict_masked_matches": [
+            299064
+          ]
+        },
+        {
+          "accepted_by_threshold": false,
+          "best_window_cluster": {
+            "app_address": 33741154,
+            "app_offset": 186722,
+            "covered_fixed_bytes": 16,
+            "unique_windows": 1
+          },
+          "body_sha256": "8c28f2504aed475cd04b44f2e5aa04de8de45558dfda365d0e0dfae75afeae3a",
+          "fixed_bytes": 90,
+          "masked_ranges": [
+            [
+              30,
+              36
+            ],
+            [
+              40,
+              46
+            ],
+            [
+              96,
+              102
+            ]
+          ],
+          "name": "sdfile_for_each_file_in_dir",
+          "relocation_count": 3,
+          "size": 112,
+          "strict_masked_matches": []
+        },
+        {
+          "accepted_by_threshold": false,
+          "best_window_cluster": {
+            "app_address": 33742348,
+            "app_offset": 187916,
+            "covered_fixed_bytes": 16,
+            "unique_windows": 1
+          },
+          "body_sha256": "ec676b03d137bd931ff8a0492c27779bcd4e11b07e52fc106d906c573bc9c7e4",
+          "fixed_bytes": 36,
+          "masked_ranges": [],
+          "name": "sdfile_get_attrs",
+          "relocation_count": 0,
+          "size": 36,
+          "strict_masked_matches": []
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": {
+            "app_address": 33742198,
+            "app_offset": 187766,
+            "covered_fixed_bytes": 40,
+            "unique_windows": 4
+          },
+          "body_sha256": "d270bf43334cc0361ad7220b1051891e1f4de526d9d195f9b2bd2dc05a6e596a",
+          "fixed_bytes": 42,
+          "masked_ranges": [],
+          "name": "sdfile_get_name",
+          "relocation_count": 0,
+          "size": 42,
+          "strict_masked_matches": [
+            187766
+          ]
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": null,
+          "body_sha256": "4c98bd5cd816fdc885d9b04ef1504ba10996c0947683453e20c399edceb0a1ff",
+          "fixed_bytes": 14,
+          "masked_ranges": [],
+          "name": "sdfile_len",
+          "relocation_count": 0,
+          "size": 14,
+          "strict_masked_matches": [
+            187738
+          ]
+        },
+        {
+          "accepted_by_threshold": false,
+          "best_window_cluster": {
+            "app_address": 33740574,
+            "app_offset": 186142,
+            "covered_fixed_bytes": 16,
+            "unique_windows": 1
+          },
+          "body_sha256": "9ffc6fe2c7c8bd55b0e5590b2691ba4e6a99890ca35d022e07da44b7841017cf",
+          "fixed_bytes": 92,
+          "masked_ranges": [
+            [
+              2,
+              8
+            ],
+            [
+              32,
+              38
+            ],
+            [
+              42,
+              48
+            ],
+            [
+              50,
+              56
+            ]
+          ],
+          "name": "sdfile_mount",
+          "relocation_count": 4,
+          "size": 124,
+          "strict_masked_matches": []
+        },
+        {
+          "accepted_by_threshold": false,
+          "best_window_cluster": {
+            "app_address": 33741258,
+            "app_offset": 186826,
+            "covered_fixed_bytes": 16,
+            "unique_windows": 1
+          },
+          "body_sha256": "30e45b648b0c7b8aff6425182df4c29b4785f5333201deea42129bc46479e78e",
+          "fixed_bytes": 48,
+          "masked_ranges": [],
+          "name": "sdfile_open_file_in_dir",
+          "relocation_count": 0,
+          "size": 48,
+          "strict_masked_matches": []
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": null,
+          "body_sha256": "714432b4f39f3c6fbd574216527171c2c60492464fda3aaac3b6f9354d97c035",
+          "fixed_bytes": 14,
+          "masked_ranges": [],
+          "name": "sdfile_pos",
+          "relocation_count": 0,
+          "size": 14,
+          "strict_masked_matches": [
+            187752
+          ]
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": {
+            "app_address": 33742136,
+            "app_offset": 187704,
+            "covered_fixed_bytes": 32,
+            "unique_windows": 3
+          },
+          "body_sha256": "fd0815005c685c2cddd090cbc92e39d0e9a45a2a3b25390752a5e79fcaafba60",
+          "fixed_bytes": 34,
+          "masked_ranges": [],
+          "name": "sdfile_seek",
+          "relocation_count": 0,
+          "size": 34,
+          "strict_masked_matches": [
+            187704
+          ]
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": {
+            "app_address": 33740710,
+            "app_offset": 186278,
+            "covered_fixed_bytes": 24,
+            "unique_windows": 2
+          },
+          "body_sha256": "4bb7ab9ae94abdb00df6f6b9880bfc7a5c93a522d05f98a96213f8307c4f6313",
+          "fixed_bytes": 26,
+          "masked_ranges": [],
+          "name": "sdfile_str_to_upper",
+          "relocation_count": 0,
+          "size": 26,
+          "strict_masked_matches": [
+            186278
+          ]
+        },
+        {
+          "accepted_by_threshold": true,
+          "best_window_cluster": {
+            "app_address": 33740814,
+            "app_offset": 186382,
+            "covered_fixed_bytes": 48,
+            "unique_windows": 5
+          },
+          "body_sha256": "7d6131226e4378f7d8dc5ed65c686827283188a34a9eb4344f14c8d0f47f0a42",
+          "fixed_bytes": 124,
+          "masked_ranges": [
+            [
+              44,
+              50
+            ],
+            [
+              56,
+              62
+            ]
+          ],
+          "name": "sdfile_strcase_cmp",
+          "relocation_count": 2,
+          "size": 142,
+          "strict_masked_matches": []
+        }
+      ],
+      "path": "sdfile_new.pi32.o"
+    }
+  ]
+}

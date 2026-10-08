@@ -1,0 +1,53 @@
+address	size	bytes	op	target	dst	src	reg	imm	imm_signed	base	offset	mutates	detail
+0x0201e1a2	2	7904	push
+0x0201e1a4	2	0416	mov_reg		4	0
+0x0201e1a6	2	9016	mov_reg		0	9
+0x0201e1a8	2	e020	add_imm8		0				-128
+0x0201e1aa	2	f03d	add_imm8		0				-35
+0x0201e1ac	4	80f84000	jne_imm7	0x0201e230			0	0x00000000
+0x0201e1b0	6	c0ffbd65c401	mov_imm32		0			0x01c465bd
+0x0201e1b6	4	2000b000	trylock									True	csync; testset b[r0]
+0x0201e1ba	4	40e83900	ifeq	0x0201e230
+0x0201e1be	2	2000	csync
+0x0201e1c0	6	c5ffbc65c401	mov_imm32		5			0x01c465bc
+0x0201e1c6	2	5843	load_byte		0					5	3
+0x0201e1c8	4	80f81100	jne_imm7	0x0201e1ee			0	0x00000000
+0x0201e1cc	2	4021	mov_imm8		0			0x00000001
+0x0201e1ce	2	d843	store_byte			0				5	3	True
+0x0201e1d0	2	2000	csync
+0x0201e1d2	2	4824	mov_imm8		0			0x00000024
+0x0201e1d4	2	d842	store_byte			0				5	2	True
+0x0201e1d6	6	c0ff2065c401	mov_imm32		0			0x01c46520
+0x0201e1dc	2	4116	mov_reg		1	4
+0x0201e1de	2	623c	mov_imm8		2			0x0000009c
+0x0201e1e0	6	80ffe8aa0200	call32	0x02048cce								True
+0x0201e1e6	2	2000	csync
+0x0201e1e8	2	4021	mov_imm8		0			0x00000001
+0x0201e1ea	2	d840	store_byte			0				5	0	True
+0x0201e1ec	2	049a	goto	0x0201e222
+0x0201e1ee	4	80f81802	jne_imm7	0x0201e222			0	0x00000001
+0x0201e1f2	2	5840	load_byte		0					5	0
+0x0201e1f4	4	80f81502	jne_imm7	0x0201e222			0	0x00000001
+0x0201e1f8	4	06e1a050	add_imm12		6	5		0x000000a0
+0x0201e1fc	2	6840	load_byte		0					6	0
+0x0201e1fe	4	80f81000	jne_imm7	0x0201e222			0	0x00000000
+0x0201e202	2	482d	mov_imm8		0			0x0000002d
+0x0201e204	2	e842	store_byte			0				6	2	True
+0x0201e206	6	c0ffc065c401	mov_imm32		0			0x01c465c0
+0x0201e20c	2	4116	mov_reg		1	4
+0x0201e20e	2	623c	mov_imm8		2			0x0000009c
+0x0201e210	6	80ffb8aa0200	call32	0x02048cce								True
+0x0201e216	2	2000	csync
+0x0201e218	2	4021	mov_imm8		0			0x00000001
+0x0201e21a	2	e840	store_byte			0				6	0	True
+0x0201e21c	2	2000	csync
+0x0201e21e	2	4022	mov_imm8		0			0x00000002
+0x0201e220	2	d843	store_byte			0				5	3	True
+0x0201e222	6	c0ffbd65c401	mov_imm32		0			0x01c465bd
+0x0201e228	2	2000	csync
+0x0201e22a	2	4120	mov_imm8		1			0x00000000
+0x0201e22c	2	8940	store_byte			1				0	0	True
+0x0201e22e	2	2000	csync
+0x0201e230	2	5904	pop_pc
+0x0201e232	2	7904	push
+0x0201e234	2	5904	pop_pc

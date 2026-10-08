@@ -1,0 +1,7614 @@
+{
+  "base_image": "build/v16-analysis/app-015-decoded.bin",
+  "target_image": "build/v16-analysis/app-016-decoded.bin",
+  "base_functions": 684,
+  "target_functions": 697,
+  "paired": 651,
+  "counts": {
+    "relocated": 415,
+    "ram_relocated": 103,
+    "constants_changed": 106,
+    "structural": 12
+  },
+  "ram_deltas_observed": [
+    64,
+    68,
+    70,
+    100,
+    132,
+    136,
+    400,
+    416
+  ],
+  "added_target_functions": [
+    "0x2000886",
+    "0x2005fac",
+    "0x200a0ea",
+    "0x200a110",
+    "0x200b16c",
+    "0x200ee22",
+    "0x201b494",
+    "0x201b66a",
+    "0x201c7e0",
+    "0x201cc02",
+    "0x201e276",
+    "0x201e29e",
+    "0x201e32a",
+    "0x201e332",
+    "0x201e456",
+    "0x202052e",
+    "0x2026674",
+    "0x2026ef6",
+    "0x2029a8c",
+    "0x202a722",
+    "0x202cbe4",
+    "0x202df8a",
+    "0x202e17a",
+    "0x20346b0",
+    "0x2039a78",
+    "0x203c328",
+    "0x203d9cc",
+    "0x203d9e0",
+    "0x203d9e8",
+    "0x203da4a",
+    "0x203daac",
+    "0x203db10",
+    "0x203db54",
+    "0x203db8e",
+    "0x203dba2",
+    "0x203dbc8",
+    "0x203dc18",
+    "0x203dc22",
+    "0x203e640",
+    "0x203f19c",
+    "0x203f970",
+    "0x203fabc",
+    "0x2040b82",
+    "0x2040e5c",
+    "0x2049eca",
+    "0x2057d7a"
+  ],
+  "removed_base_functions": [
+    "0x2000886",
+    "0x20043ea",
+    "0x2005fac",
+    "0x200a0e0",
+    "0x200a104",
+    "0x200b15c",
+    "0x200b6c4",
+    "0x200ee0a",
+    "0x201b46e",
+    "0x201b63c",
+    "0x201b808",
+    "0x201c722",
+    "0x201cae2",
+    "0x201e036",
+    "0x201e06c",
+    "0x201e254",
+    "0x2020376",
+    "0x202459c",
+    "0x20245ac",
+    "0x2024938",
+    "0x2024d4c",
+    "0x20291ce",
+    "0x2029b04",
+    "0x2029dc6",
+    "0x2029e80",
+    "0x202c238",
+    "0x202d7bc",
+    "0x202de80",
+    "0x2034f36",
+    "0x2035da4",
+    "0x203935e",
+    "0x2040d96",
+    "0x204541e"
+  ],
+  "split_merge_candidates": [
+    {
+      "base": "0x2000886",
+      "target": "0x2000886",
+      "instructions": 177
+    },
+    {
+      "base": "0x2005fac",
+      "target": "0x2005fac",
+      "instructions": 73
+    },
+    {
+      "base": "0x200a0e0",
+      "target": "0x200a0ea",
+      "instructions": 12
+    },
+    {
+      "base": "0x200a104",
+      "target": "0x200a110",
+      "instructions": 30
+    },
+    {
+      "base": "0x200b15c",
+      "target": "0x200b16c",
+      "instructions": 47
+    },
+    {
+      "base": "0x201b46e",
+      "target": "0x201b494",
+      "instructions": 60
+    },
+    {
+      "base": "0x201e036",
+      "target": "0x201e276",
+      "instructions": 1
+    },
+    {
+      "base": "0x201e254",
+      "target": "0x201e456",
+      "instructions": 318
+    },
+    {
+      "base": "0x2020376",
+      "target": "0x202052e",
+      "instructions": 4143
+    },
+    {
+      "base": "0x20291ce",
+      "target": "0x2029a8c",
+      "instructions": 2
+    },
+    {
+      "base": "0x202c238",
+      "target": "0x202cbe4",
+      "instructions": 4133
+    }
+  ],
+  "genuinely_removed_base_functions": [
+    "0x20043ea",
+    "0x200b6c4",
+    "0x200ee0a",
+    "0x201b63c",
+    "0x201b808",
+    "0x201c722",
+    "0x201cae2",
+    "0x201e06c",
+    "0x202459c",
+    "0x20245ac",
+    "0x2024938",
+    "0x2024d4c",
+    "0x2029b04",
+    "0x2029dc6",
+    "0x2029e80",
+    "0x202d7bc",
+    "0x202de80",
+    "0x2034f36",
+    "0x2035da4",
+    "0x203935e",
+    "0x2040d96",
+    "0x204541e"
+  ],
+  "pairs": [
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33554628,
+      "target_entry": 33554628,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 1,
+      "target_instructions": 1,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33554630,
+      "target_entry": 33554630,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 17,
+      "target_instructions": 17,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.931,
+      "base_entry": 33554680,
+      "target_entry": 33554680,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 58,
+      "target_instructions": 58,
+      "ram_deltas": [
+        70
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33555090,
+      "target_entry": 33555090,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9444,
+      "base_entry": 33555640,
+      "target_entry": 33555640,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 90,
+      "target_instructions": 90,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33555890,
+      "target_entry": 33555890,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 12,
+      "target_instructions": 12,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9545,
+      "base_entry": 33555916,
+      "target_entry": 33555916,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 44,
+      "target_instructions": 44,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.5,
+      "base_entry": 33556036,
+      "target_entry": 33556036,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33556050,
+      "target_entry": 33556050,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33556064,
+      "target_entry": 33556064,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.6667,
+      "base_entry": 33556116,
+      "target_entry": 33556116,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33556134,
+      "target_entry": 33556134,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.7143,
+      "base_entry": 33556152,
+      "target_entry": 33556152,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 7,
+      "target_instructions": 7,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33556172,
+      "target_entry": 33556172,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.75,
+      "base_entry": 33556188,
+      "target_entry": 33556188,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9091,
+      "base_entry": 33556200,
+      "target_entry": 33556200,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 11,
+      "target_instructions": 11,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8333,
+      "base_entry": 33556448,
+      "target_entry": 33556448,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 18,
+      "target_instructions": 18,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.5455,
+      "base_entry": 33556498,
+      "target_entry": 33556498,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 11,
+      "target_instructions": 11,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.7143,
+      "base_entry": 33556540,
+      "target_entry": 33556540,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 7,
+      "target_instructions": 7,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.6875,
+      "base_entry": 33556562,
+      "target_entry": 33556562,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 16,
+      "target_instructions": 16,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33557158,
+      "target_entry": 33557158,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 16,
+      "target_instructions": 16,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9286,
+      "base_entry": 33557204,
+      "target_entry": 33557204,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 28,
+      "target_instructions": 28,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.9769,
+      "base_entry": 33557276,
+      "target_entry": 33557276,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 173,
+      "target_instructions": 173,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33559766,
+      "target_entry": 33559768,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33559778,
+      "target_entry": 33559780,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33559790,
+      "target_entry": 33559792,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 21,
+      "target_instructions": 21,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9787,
+      "base_entry": 33559850,
+      "target_entry": 33559852,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 47,
+      "target_instructions": 47,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33560274,
+      "target_entry": 33560276,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8276,
+      "base_entry": 33560382,
+      "target_entry": 33560384,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 29,
+      "target_instructions": 29,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33560514,
+      "target_entry": 33560516,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 23,
+      "target_instructions": 23,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.6912,
+      "base_entry": 33562106,
+      "target_entry": 33562108,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 68,
+      "target_instructions": 68,
+      "ram_deltas": [
+        416
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8636,
+      "base_entry": 33562352,
+      "target_entry": 33562354,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 22,
+      "target_instructions": 22,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8824,
+      "base_entry": 33562412,
+      "target_entry": 33562414,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 34,
+      "target_instructions": 34,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8,
+      "base_entry": 33563932,
+      "target_entry": 33563934,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33563994,
+      "target_entry": 33563996,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8684,
+      "base_entry": 33564006,
+      "target_entry": 33564008,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 38,
+      "target_instructions": 38,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33564126,
+      "target_entry": 33564128,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.7692,
+      "base_entry": 33564138,
+      "target_entry": 33564140,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 26,
+      "target_instructions": 26,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.7857,
+      "base_entry": 33564248,
+      "target_entry": 33564250,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 14,
+      "target_instructions": 14,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8916,
+      "base_entry": 33564294,
+      "target_entry": 33564296,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 166,
+      "target_instructions": 166,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33564786,
+      "target_entry": 33564788,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 7,
+      "target_instructions": 7,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8235,
+      "base_entry": 33564802,
+      "target_entry": 33564804,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 17,
+      "target_instructions": 17,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8421,
+      "base_entry": 33564848,
+      "target_entry": 33564850,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 19,
+      "target_instructions": 19,
+      "ram_deltas": [
+        132
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9615,
+      "base_entry": 33564904,
+      "target_entry": 33564906,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 52,
+      "target_instructions": 52,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33565054,
+      "target_entry": 33565056,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 16,
+      "target_instructions": 16,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9744,
+      "base_entry": 33565092,
+      "target_entry": 33565094,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 39,
+      "target_instructions": 39,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9932,
+      "base_entry": 33565200,
+      "target_entry": 33565202,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 148,
+      "target_instructions": 148,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.9955,
+      "base_entry": 33566334,
+      "target_entry": 33566336,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 442,
+      "target_instructions": 442,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33567694,
+      "target_entry": 33567696,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.9241,
+      "base_entry": 33567716,
+      "target_entry": 33567718,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 79,
+      "target_instructions": 79,
+      "ram_deltas": [
+        64,
+        100
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33567948,
+      "target_entry": 33567950,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.6923,
+      "base_entry": 33567966,
+      "target_entry": 33567968,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 13,
+      "target_instructions": 13,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.7,
+      "base_entry": 33568010,
+      "target_entry": 33568012,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 40,
+      "target_instructions": 40,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9167,
+      "base_entry": 33568134,
+      "target_entry": 33568136,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 24,
+      "target_instructions": 24,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8947,
+      "base_entry": 33568194,
+      "target_entry": 33568196,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 57,
+      "target_instructions": 57,
+      "ram_deltas": [
+        64,
+        416
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.872,
+      "base_entry": 33568368,
+      "target_entry": 33568370,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 125,
+      "target_instructions": 125,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33568756,
+      "target_entry": 33568758,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.982,
+      "base_entry": 33568762,
+      "target_entry": 33568764,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 111,
+      "target_instructions": 111,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.964,
+      "base_entry": 33569066,
+      "target_entry": 33569068,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 139,
+      "target_instructions": 139,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33569452,
+      "target_entry": 33569454,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 61,
+      "target_instructions": 61,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9048,
+      "base_entry": 33569634,
+      "target_entry": 33569636,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 21,
+      "target_instructions": 21,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33569702,
+      "target_entry": 33569704,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33569708,
+      "target_entry": 33569710,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9675,
+      "base_entry": 33569720,
+      "target_entry": 33569722,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 123,
+      "target_instructions": 123,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33570096,
+      "target_entry": 33570098,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33570108,
+      "target_entry": 33570110,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8571,
+      "base_entry": 33570122,
+      "target_entry": 33570124,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 28,
+      "target_instructions": 28,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.7778,
+      "base_entry": 33570204,
+      "target_entry": 33570206,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 27,
+      "target_instructions": 27,
+      "ram_deltas": [
+        416
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9375,
+      "base_entry": 33570286,
+      "target_entry": 33570288,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 16,
+      "target_instructions": 16,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8689,
+      "base_entry": 33570326,
+      "target_entry": 33570328,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 61,
+      "target_instructions": 61,
+      "ram_deltas": [
+        416
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9091,
+      "base_entry": 33570490,
+      "target_entry": 33570492,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 11,
+      "target_instructions": 11,
+      "ram_deltas": [
+        416
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9,
+      "base_entry": 33570518,
+      "target_entry": 33570520,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33570544,
+      "target_entry": 33570546,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 18,
+      "target_instructions": 18,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33570608,
+      "target_entry": 33570610,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 22,
+      "target_instructions": 22,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8,
+      "base_entry": 33570674,
+      "target_entry": 33570676,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.875,
+      "base_entry": 33570690,
+      "target_entry": 33570692,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9024,
+      "base_entry": 33570714,
+      "target_entry": 33570716,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 41,
+      "target_instructions": 41,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33570896,
+      "target_entry": 33570898,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 29,
+      "target_instructions": 29,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8,
+      "base_entry": 33570980,
+      "target_entry": 33570982,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9024,
+      "base_entry": 33570996,
+      "target_entry": 33570998,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 41,
+      "target_instructions": 41,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33571180,
+      "target_entry": 33571182,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 13,
+      "target_instructions": 13,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33571218,
+      "target_entry": 33571220,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 31,
+      "target_instructions": 31,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8,
+      "base_entry": 33571312,
+      "target_entry": 33571314,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.84,
+      "base_entry": 33571328,
+      "target_entry": 33571330,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 25,
+      "target_instructions": 25,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9024,
+      "base_entry": 33571404,
+      "target_entry": 33571406,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 41,
+      "target_instructions": 41,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33571580,
+      "target_entry": 33571582,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 13,
+      "target_instructions": 13,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8,
+      "base_entry": 33571618,
+      "target_entry": 33571620,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9024,
+      "base_entry": 33571634,
+      "target_entry": 33571636,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 41,
+      "target_instructions": 41,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.7778,
+      "base_entry": 33571852,
+      "target_entry": 33571854,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": [
+        132
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.7857,
+      "base_entry": 33571886,
+      "target_entry": 33571888,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 14,
+      "target_instructions": 14,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33572410,
+      "target_entry": 33572412,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.75,
+      "base_entry": 33572430,
+      "target_entry": 33572432,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33572456,
+      "target_entry": 33572458,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.9079,
+      "base_entry": 33572472,
+      "target_entry": 33572474,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 76,
+      "target_instructions": 76,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33572758,
+      "target_entry": 33572760,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 30,
+      "target_instructions": 30,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.7333,
+      "base_entry": 33572824,
+      "target_entry": 33572826,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 45,
+      "target_instructions": 45,
+      "ram_deltas": [
+        64,
+        416
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33572976,
+      "target_entry": 33572978,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33572996,
+      "target_entry": 33572998,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "structural",
+      "raw_agreement": 0.8642,
+      "base_entry": 33573014,
+      "target_entry": 33573016,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 81,
+      "target_instructions": 81,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9167,
+      "base_entry": 33573460,
+      "target_entry": 33573462,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 12,
+      "target_instructions": 12,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.7556,
+      "base_entry": 33573498,
+      "target_entry": 33573500,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 45,
+      "target_instructions": 45,
+      "ram_deltas": [
+        64,
+        416
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33573634,
+      "target_entry": 33573636,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8462,
+      "base_entry": 33573654,
+      "target_entry": 33573656,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 13,
+      "target_instructions": 13,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8824,
+      "base_entry": 33573696,
+      "target_entry": 33573698,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 34,
+      "target_instructions": 34,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.7778,
+      "base_entry": 33573870,
+      "target_entry": 33573872,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9412,
+      "base_entry": 33573898,
+      "target_entry": 33573900,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 34,
+      "target_instructions": 34,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8,
+      "base_entry": 33574542,
+      "target_entry": 33574544,
+      "entry_delta": 2,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": [
+        132
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8696,
+      "base_entry": 33575250,
+      "target_entry": 33575250,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 23,
+      "target_instructions": 23,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.5,
+      "base_entry": 33576210,
+      "target_entry": 33576210,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.6364,
+      "base_entry": 33576238,
+      "target_entry": 33576238,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 22,
+      "target_instructions": 22,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.7,
+      "base_entry": 33576334,
+      "target_entry": 33576334,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.5714,
+      "base_entry": 33576440,
+      "target_entry": 33576440,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 7,
+      "target_instructions": 7,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.5714,
+      "base_entry": 33576492,
+      "target_entry": 33576492,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 7,
+      "target_instructions": 7,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8718,
+      "base_entry": 33576544,
+      "target_entry": 33576544,
+      "entry_delta": 0,
+      "entry_prediction_error": 0,
+      "base_instructions": 117,
+      "target_instructions": 117,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.75,
+      "base_entry": 33580898,
+      "target_entry": 33580884,
+      "entry_delta": -14,
+      "entry_prediction_error": -18,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "structural",
+      "raw_agreement": 0.5714,
+      "base_entry": 33580908,
+      "target_entry": 33580894,
+      "entry_delta": -14,
+      "entry_prediction_error": -18,
+      "base_instructions": 7,
+      "target_instructions": 7,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33580930,
+      "target_entry": 33580918,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9048,
+      "base_entry": 33584164,
+      "target_entry": 33584152,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 21,
+      "target_instructions": 21,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9,
+      "base_entry": 33584224,
+      "target_entry": 33584212,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": [
+        100
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9,
+      "base_entry": 33584254,
+      "target_entry": 33584242,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": [
+        100
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9643,
+      "base_entry": 33584466,
+      "target_entry": 33584454,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 28,
+      "target_instructions": 28,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33584608,
+      "target_entry": 33584596,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 2,
+      "target_instructions": 2,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8333,
+      "base_entry": 33584614,
+      "target_entry": 33584602,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 18,
+      "target_instructions": 18,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9474,
+      "base_entry": 33584664,
+      "target_entry": 33584652,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 38,
+      "target_instructions": 38,
+      "ram_deltas": [
+        100
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33584790,
+      "target_entry": 33584778,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 17,
+      "target_instructions": 17,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33584836,
+      "target_entry": 33584824,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9574,
+      "base_entry": 33584970,
+      "target_entry": 33584958,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 47,
+      "target_instructions": 47,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33585104,
+      "target_entry": 33585092,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 21,
+      "target_instructions": 21,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9512,
+      "base_entry": 33585306,
+      "target_entry": 33585294,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 41,
+      "target_instructions": 41,
+      "ram_deltas": [
+        100
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9574,
+      "base_entry": 33585568,
+      "target_entry": 33585556,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 47,
+      "target_instructions": 47,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.875,
+      "base_entry": 33586428,
+      "target_entry": 33586416,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": [
+        100
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33586454,
+      "target_entry": 33586442,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.9412,
+      "base_entry": 33586590,
+      "target_entry": 33586578,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 85,
+      "target_instructions": 85,
+      "ram_deltas": [
+        64,
+        100
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9574,
+      "base_entry": 33587528,
+      "target_entry": 33587516,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 47,
+      "target_instructions": 47,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8846,
+      "base_entry": 33588926,
+      "target_entry": 33588914,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 26,
+      "target_instructions": 26,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9423,
+      "base_entry": 33589222,
+      "target_entry": 33589210,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 52,
+      "target_instructions": 52,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9459,
+      "base_entry": 33589514,
+      "target_entry": 33589502,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 37,
+      "target_instructions": 37,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.92,
+      "base_entry": 33589624,
+      "target_entry": 33589612,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 25,
+      "target_instructions": 25,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.92,
+      "base_entry": 33589798,
+      "target_entry": 33589786,
+      "entry_delta": -12,
+      "entry_prediction_error": 0,
+      "base_instructions": 25,
+      "target_instructions": 25,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33593388,
+      "target_entry": 33593398,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33593606,
+      "target_entry": 33593616,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33593618,
+      "target_entry": 33593628,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 38,
+      "target_instructions": 38,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9938,
+      "base_entry": 33593714,
+      "target_entry": 33593724,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 161,
+      "target_instructions": 161,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33594348,
+      "target_entry": 33594358,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33594358,
+      "target_entry": 33594368,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33594382,
+      "target_entry": 33594392,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 16,
+      "target_instructions": 16,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33594420,
+      "target_entry": 33594430,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 90,
+      "target_instructions": 90,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9524,
+      "base_entry": 33594652,
+      "target_entry": 33594662,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 21,
+      "target_instructions": 21,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33594740,
+      "target_entry": 33594750,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33594756,
+      "target_entry": 33594766,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33594980,
+      "target_entry": 33594990,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33595118,
+      "target_entry": 33595128,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 12,
+      "target_instructions": 12,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.875,
+      "base_entry": 33595248,
+      "target_entry": 33595258,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 16,
+      "target_instructions": 16,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.6667,
+      "base_entry": 33595288,
+      "target_entry": 33595298,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33595310,
+      "target_entry": 33595320,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 70,
+      "target_instructions": 70,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33595500,
+      "target_entry": 33595510,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33595508,
+      "target_entry": 33595518,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 32,
+      "target_instructions": 32,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33595592,
+      "target_entry": 33595602,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33595604,
+      "target_entry": 33595614,
+      "entry_delta": 10,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "structural",
+      "raw_agreement": 0.7778,
+      "base_entry": 33595728,
+      "target_entry": 33595744,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 18,
+      "target_instructions": 51,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33595890,
+      "target_entry": 33595906,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 13,
+      "target_instructions": 13,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9167,
+      "base_entry": 33596012,
+      "target_entry": 33596028,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 12,
+      "target_instructions": 12,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.6923,
+      "base_entry": 33596044,
+      "target_entry": 33596060,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 13,
+      "target_instructions": 13,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33596084,
+      "target_entry": 33596100,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33596094,
+      "target_entry": 33596110,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33596106,
+      "target_entry": 33596122,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.84,
+      "base_entry": 33596118,
+      "target_entry": 33596134,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 25,
+      "target_instructions": 25,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.875,
+      "base_entry": 33596184,
+      "target_entry": 33596200,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.875,
+      "base_entry": 33596206,
+      "target_entry": 33596222,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.875,
+      "base_entry": 33596228,
+      "target_entry": 33596244,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33596250,
+      "target_entry": 33596266,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 30,
+      "target_instructions": 30,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9848,
+      "base_entry": 33596358,
+      "target_entry": 33596374,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 66,
+      "target_instructions": 66,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9375,
+      "base_entry": 33596532,
+      "target_entry": 33596548,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 16,
+      "target_instructions": 16,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9375,
+      "base_entry": 33596574,
+      "target_entry": 33596590,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 16,
+      "target_instructions": 16,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33596616,
+      "target_entry": 33596632,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 111,
+      "target_instructions": 111,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33596948,
+      "target_entry": 33596964,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 52,
+      "target_instructions": 52,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9737,
+      "base_entry": 33597104,
+      "target_entry": 33597120,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 76,
+      "target_instructions": 76,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33597362,
+      "target_entry": 33597378,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 29,
+      "target_instructions": 29,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9231,
+      "base_entry": 33597440,
+      "target_entry": 33597456,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 13,
+      "target_instructions": 13,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9048,
+      "base_entry": 33597480,
+      "target_entry": 33597496,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 21,
+      "target_instructions": 21,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9167,
+      "base_entry": 33597544,
+      "target_entry": 33597560,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 12,
+      "target_instructions": 12,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8889,
+      "base_entry": 33597632,
+      "target_entry": 33597648,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 18,
+      "target_instructions": 18,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9474,
+      "base_entry": 33597692,
+      "target_entry": 33597708,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 57,
+      "target_instructions": 57,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9878,
+      "base_entry": 33597928,
+      "target_entry": 33597944,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 82,
+      "target_instructions": 82,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.5556,
+      "base_entry": 33598196,
+      "target_entry": 33598212,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.9286,
+      "base_entry": 33598224,
+      "target_entry": 33598240,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 28,
+      "target_instructions": 28,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.898,
+      "base_entry": 33598836,
+      "target_entry": 33598852,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 49,
+      "target_instructions": 49,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33599002,
+      "target_entry": 33599018,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9759,
+      "base_entry": 33599162,
+      "target_entry": 33599178,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 83,
+      "target_instructions": 83,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9474,
+      "base_entry": 33599374,
+      "target_entry": 33599390,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 19,
+      "target_instructions": 19,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9375,
+      "base_entry": 33599418,
+      "target_entry": 33599434,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 16,
+      "target_instructions": 16,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.6667,
+      "base_entry": 33599464,
+      "target_entry": 33599480,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33599472,
+      "target_entry": 33599488,
+      "entry_delta": 16,
+      "entry_prediction_error": 0,
+      "base_instructions": 20,
+      "target_instructions": 20,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9412,
+      "base_entry": 33599966,
+      "target_entry": 33599990,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 17,
+      "target_instructions": 17,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9286,
+      "base_entry": 33600266,
+      "target_entry": 33600290,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 14,
+      "target_instructions": 14,
+      "ram_deltas": [
+        132
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8851,
+      "base_entry": 33600302,
+      "target_entry": 33600326,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 322,
+      "target_instructions": 322,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33601238,
+      "target_entry": 33601262,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33601258,
+      "target_entry": 33601282,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8889,
+      "base_entry": 33601278,
+      "target_entry": 33601302,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33601494,
+      "target_entry": 33601518,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8824,
+      "base_entry": 33601600,
+      "target_entry": 33601624,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 17,
+      "target_instructions": 17,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33601766,
+      "target_entry": 33601790,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8889,
+      "base_entry": 33601810,
+      "target_entry": 33601834,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33601954,
+      "target_entry": 33601978,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.92,
+      "base_entry": 33601970,
+      "target_entry": 33601994,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 25,
+      "target_instructions": 25,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33602158,
+      "target_entry": 33602182,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33602174,
+      "target_entry": 33602198,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9,
+      "base_entry": 33602200,
+      "target_entry": 33602224,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.9286,
+      "base_entry": 33602228,
+      "target_entry": 33602252,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 84,
+      "target_instructions": 84,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33603634,
+      "target_entry": 33603658,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.92,
+      "base_entry": 33603662,
+      "target_entry": 33603686,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 25,
+      "target_instructions": 25,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33603718,
+      "target_entry": 33603742,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33603736,
+      "target_entry": 33603760,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9714,
+      "base_entry": 33603762,
+      "target_entry": 33603786,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 35,
+      "target_instructions": 35,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9167,
+      "base_entry": 33603848,
+      "target_entry": 33603872,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 24,
+      "target_instructions": 24,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8391,
+      "base_entry": 33603912,
+      "target_entry": 33603936,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 87,
+      "target_instructions": 87,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33604180,
+      "target_entry": 33604204,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9189,
+      "base_entry": 33604198,
+      "target_entry": 33604222,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 37,
+      "target_instructions": 37,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8182,
+      "base_entry": 33606986,
+      "target_entry": 33607010,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 11,
+      "target_instructions": 11,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33607608,
+      "target_entry": 33607632,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 7,
+      "target_instructions": 7,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9286,
+      "base_entry": 33607626,
+      "target_entry": 33607650,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 28,
+      "target_instructions": 28,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33607700,
+      "target_entry": 33607724,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33608628,
+      "target_entry": 33608652,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 16,
+      "target_instructions": 16,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9751,
+      "base_entry": 33608664,
+      "target_entry": 33608688,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 281,
+      "target_instructions": 281,
+      "ram_deltas": [
+        132
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9412,
+      "base_entry": 33609704,
+      "target_entry": 33609728,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 17,
+      "target_instructions": 17,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9231,
+      "base_entry": 33609750,
+      "target_entry": 33609774,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 26,
+      "target_instructions": 26,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9091,
+      "base_entry": 33609820,
+      "target_entry": 33609844,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 11,
+      "target_instructions": 11,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.95,
+      "base_entry": 33612858,
+      "target_entry": 33612882,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 20,
+      "target_instructions": 20,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9143,
+      "base_entry": 33612916,
+      "target_entry": 33612940,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 70,
+      "target_instructions": 70,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33613114,
+      "target_entry": 33613138,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 18,
+      "target_instructions": 18,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9048,
+      "base_entry": 33613862,
+      "target_entry": 33613886,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 21,
+      "target_instructions": 21,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8529,
+      "base_entry": 33613960,
+      "target_entry": 33613984,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 34,
+      "target_instructions": 34,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9286,
+      "base_entry": 33614046,
+      "target_entry": 33614070,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 14,
+      "target_instructions": 14,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8889,
+      "base_entry": 33614080,
+      "target_entry": 33614104,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 18,
+      "target_instructions": 18,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33614134,
+      "target_entry": 33614158,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 78,
+      "target_instructions": 78,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33614360,
+      "target_entry": 33614384,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 23,
+      "target_instructions": 23,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33614416,
+      "target_entry": 33614440,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 23,
+      "target_instructions": 23,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33614466,
+      "target_entry": 33614490,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 11,
+      "target_instructions": 11,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.9932,
+      "base_entry": 33614490,
+      "target_entry": 33614514,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 147,
+      "target_instructions": 147,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33614940,
+      "target_entry": 33614964,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 15,
+      "target_instructions": 15,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33614974,
+      "target_entry": 33614998,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 49,
+      "target_instructions": 49,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33616914,
+      "target_entry": 33616938,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 24,
+      "target_instructions": 24,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8,
+      "base_entry": 33616976,
+      "target_entry": 33617000,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33616988,
+      "target_entry": 33617012,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33617004,
+      "target_entry": 33617028,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9583,
+      "base_entry": 33617028,
+      "target_entry": 33617052,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 24,
+      "target_instructions": 24,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33617110,
+      "target_entry": 33617134,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 188,
+      "target_instructions": 188,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9286,
+      "base_entry": 33617680,
+      "target_entry": 33617704,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 14,
+      "target_instructions": 14,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33617716,
+      "target_entry": 33617740,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33617722,
+      "target_entry": 33617746,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8611,
+      "base_entry": 33617740,
+      "target_entry": 33617764,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 216,
+      "target_instructions": 216,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9211,
+      "base_entry": 33618600,
+      "target_entry": 33618624,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 38,
+      "target_instructions": 38,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8889,
+      "base_entry": 33618828,
+      "target_entry": 33618852,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 36,
+      "target_instructions": 36,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33618946,
+      "target_entry": 33618970,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 21,
+      "target_instructions": 21,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "structural",
+      "raw_agreement": 0.6657,
+      "base_entry": 33618996,
+      "target_entry": 33619020,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 350,
+      "target_instructions": 344,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9677,
+      "base_entry": 33620024,
+      "target_entry": 33620048,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 124,
+      "target_instructions": 124,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9944,
+      "base_entry": 33621650,
+      "target_entry": 33621674,
+      "entry_delta": 24,
+      "entry_prediction_error": 0,
+      "base_instructions": 358,
+      "target_instructions": 358,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9688,
+      "base_entry": 33624186,
+      "target_entry": 33624214,
+      "entry_delta": 28,
+      "entry_prediction_error": 0,
+      "base_instructions": 128,
+      "target_instructions": 128,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9167,
+      "base_entry": 33624492,
+      "target_entry": 33624520,
+      "entry_delta": 28,
+      "entry_prediction_error": 0,
+      "base_instructions": 24,
+      "target_instructions": 24,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33624758,
+      "target_entry": 33624786,
+      "entry_delta": 28,
+      "entry_prediction_error": 0,
+      "base_instructions": 18,
+      "target_instructions": 18,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33624808,
+      "target_entry": 33624836,
+      "entry_delta": 28,
+      "entry_prediction_error": 0,
+      "base_instructions": 26,
+      "target_instructions": 26,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9811,
+      "base_entry": 33626086,
+      "target_entry": 33626114,
+      "entry_delta": 28,
+      "entry_prediction_error": 0,
+      "base_instructions": 106,
+      "target_instructions": 106,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.92,
+      "base_entry": 33626380,
+      "target_entry": 33626408,
+      "entry_delta": 28,
+      "entry_prediction_error": 0,
+      "base_instructions": 25,
+      "target_instructions": 25,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9545,
+      "base_entry": 33626442,
+      "target_entry": 33626470,
+      "entry_delta": 28,
+      "entry_prediction_error": 0,
+      "base_instructions": 44,
+      "target_instructions": 44,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9245,
+      "base_entry": 33634816,
+      "target_entry": 33634844,
+      "entry_delta": 28,
+      "entry_prediction_error": 0,
+      "base_instructions": 53,
+      "target_instructions": 53,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9375,
+      "base_entry": 33634976,
+      "target_entry": 33635004,
+      "entry_delta": 28,
+      "entry_prediction_error": 0,
+      "base_instructions": 32,
+      "target_instructions": 32,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33651730,
+      "target_entry": 33651762,
+      "entry_delta": 32,
+      "entry_prediction_error": 0,
+      "base_instructions": 14,
+      "target_instructions": 14,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.75,
+      "base_entry": 33651906,
+      "target_entry": 33651938,
+      "entry_delta": 32,
+      "entry_prediction_error": 0,
+      "base_instructions": 36,
+      "target_instructions": 36,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.7436,
+      "base_entry": 33652008,
+      "target_entry": 33652040,
+      "entry_delta": 32,
+      "entry_prediction_error": 0,
+      "base_instructions": 39,
+      "target_instructions": 39,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8571,
+      "base_entry": 33652118,
+      "target_entry": 33652150,
+      "entry_delta": 32,
+      "entry_prediction_error": 0,
+      "base_instructions": 7,
+      "target_instructions": 7,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9286,
+      "base_entry": 33652192,
+      "target_entry": 33652224,
+      "entry_delta": 32,
+      "entry_prediction_error": 0,
+      "base_instructions": 14,
+      "target_instructions": 14,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9,
+      "base_entry": 33652226,
+      "target_entry": 33652258,
+      "entry_delta": 32,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9375,
+      "base_entry": 33652398,
+      "target_entry": 33652430,
+      "entry_delta": 32,
+      "entry_prediction_error": 0,
+      "base_instructions": 32,
+      "target_instructions": 32,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33653838,
+      "target_entry": 33653870,
+      "entry_delta": 32,
+      "entry_prediction_error": 0,
+      "base_instructions": 7,
+      "target_instructions": 7,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9767,
+      "base_entry": 33653880,
+      "target_entry": 33653912,
+      "entry_delta": 32,
+      "entry_prediction_error": 0,
+      "base_instructions": 43,
+      "target_instructions": 43,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9773,
+      "base_entry": 33653996,
+      "target_entry": 33654028,
+      "entry_delta": 32,
+      "entry_prediction_error": 0,
+      "base_instructions": 44,
+      "target_instructions": 44,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33654118,
+      "target_entry": 33654150,
+      "entry_delta": 32,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33654136,
+      "target_entry": 33654168,
+      "entry_delta": 32,
+      "entry_prediction_error": 0,
+      "base_instructions": 72,
+      "target_instructions": 72,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33654344,
+      "target_entry": 33654376,
+      "entry_delta": 32,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33655790,
+      "target_entry": 33655822,
+      "entry_delta": 32,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8,
+      "base_entry": 33656892,
+      "target_entry": 33656924,
+      "entry_delta": 32,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33657466,
+      "target_entry": 33657498,
+      "entry_delta": 32,
+      "entry_prediction_error": 0,
+      "base_instructions": 2,
+      "target_instructions": 2,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.875,
+      "base_entry": 33657670,
+      "target_entry": 33657702,
+      "entry_delta": 32,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8696,
+      "base_entry": 33657734,
+      "target_entry": 33657766,
+      "entry_delta": 32,
+      "entry_prediction_error": 0,
+      "base_instructions": 92,
+      "target_instructions": 92,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8889,
+      "base_entry": 33661372,
+      "target_entry": 33661408,
+      "entry_delta": 36,
+      "entry_prediction_error": 0,
+      "base_instructions": 18,
+      "target_instructions": 18,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.825,
+      "base_entry": 33662588,
+      "target_entry": 33662624,
+      "entry_delta": 36,
+      "entry_prediction_error": 0,
+      "base_instructions": 40,
+      "target_instructions": 40,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.963,
+      "base_entry": 33666330,
+      "target_entry": 33666376,
+      "entry_delta": 46,
+      "entry_prediction_error": 0,
+      "base_instructions": 27,
+      "target_instructions": 27,
+      "ram_deltas": [
+        136
+      ]
+    },
+    {
+      "verdict": "structural",
+      "raw_agreement": 0.7879,
+      "base_entry": 33666416,
+      "target_entry": 33666462,
+      "entry_delta": 46,
+      "entry_prediction_error": 0,
+      "base_instructions": 66,
+      "target_instructions": 66,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33667778,
+      "target_entry": 33667960,
+      "entry_delta": 182,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8696,
+      "base_entry": 33667968,
+      "target_entry": 33668150,
+      "entry_delta": 182,
+      "entry_prediction_error": 0,
+      "base_instructions": 23,
+      "target_instructions": 23,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8182,
+      "base_entry": 33668554,
+      "target_entry": 33668736,
+      "entry_delta": 182,
+      "entry_prediction_error": 0,
+      "base_instructions": 11,
+      "target_instructions": 11,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8889,
+      "base_entry": 33668590,
+      "target_entry": 33668772,
+      "entry_delta": 182,
+      "entry_prediction_error": 0,
+      "base_instructions": 54,
+      "target_instructions": 54,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8049,
+      "base_entry": 33668758,
+      "target_entry": 33668940,
+      "entry_delta": 182,
+      "entry_prediction_error": 0,
+      "base_instructions": 41,
+      "target_instructions": 41,
+      "ram_deltas": [
+        64,
+        68,
+        400
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.7692,
+      "base_entry": 33670372,
+      "target_entry": 33670562,
+      "entry_delta": 190,
+      "entry_prediction_error": 12,
+      "base_instructions": 39,
+      "target_instructions": 39,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33670500,
+      "target_entry": 33670690,
+      "entry_delta": 190,
+      "entry_prediction_error": 0,
+      "base_instructions": 1,
+      "target_instructions": 1,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33670558,
+      "target_entry": 33670748,
+      "entry_delta": 190,
+      "entry_prediction_error": 0,
+      "base_instructions": 30,
+      "target_instructions": 30,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9626,
+      "base_entry": 33670636,
+      "target_entry": 33670826,
+      "entry_delta": 190,
+      "entry_prediction_error": 0,
+      "base_instructions": 107,
+      "target_instructions": 107,
+      "ram_deltas": [
+        136
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8,
+      "base_entry": 33670972,
+      "target_entry": 33671178,
+      "entry_delta": 206,
+      "entry_prediction_error": 0,
+      "base_instructions": 20,
+      "target_instructions": 20,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8,
+      "base_entry": 33671214,
+      "target_entry": 33671420,
+      "entry_delta": 206,
+      "entry_prediction_error": 0,
+      "base_instructions": 20,
+      "target_instructions": 20,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8137,
+      "base_entry": 33673332,
+      "target_entry": 33673772,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 102,
+      "target_instructions": 102,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8571,
+      "base_entry": 33676686,
+      "target_entry": 33677262,
+      "entry_delta": 576,
+      "entry_prediction_error": 0,
+      "base_instructions": 7,
+      "target_instructions": 7,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8235,
+      "base_entry": 33676932,
+      "target_entry": 33677508,
+      "entry_delta": 576,
+      "entry_prediction_error": 0,
+      "base_instructions": 17,
+      "target_instructions": 17,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "structural",
+      "raw_agreement": 1.0,
+      "base_entry": 33677630,
+      "target_entry": 33678144,
+      "entry_delta": 514,
+      "entry_prediction_error": 0,
+      "base_instructions": 70,
+      "target_instructions": 105,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8116,
+      "base_entry": 33678922,
+      "target_entry": 33679584,
+      "entry_delta": 662,
+      "entry_prediction_error": 0,
+      "base_instructions": 69,
+      "target_instructions": 69,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33679430,
+      "target_entry": 33679870,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 84,
+      "target_instructions": 84,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9091,
+      "base_entry": 33679712,
+      "target_entry": 33680152,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 22,
+      "target_instructions": 22,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.875,
+      "base_entry": 33679786,
+      "target_entry": 33680226,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 80,
+      "target_instructions": 80,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33680000,
+      "target_entry": 33680440,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33680020,
+      "target_entry": 33680460,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 15,
+      "target_instructions": 15,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8095,
+      "base_entry": 33680050,
+      "target_entry": 33680490,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 42,
+      "target_instructions": 42,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.875,
+      "base_entry": 33680190,
+      "target_entry": 33680630,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8182,
+      "base_entry": 33680212,
+      "target_entry": 33680652,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 11,
+      "target_instructions": 11,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8539,
+      "base_entry": 33680244,
+      "target_entry": 33680684,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 89,
+      "target_instructions": 89,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33680486,
+      "target_entry": 33680926,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33680500,
+      "target_entry": 33680940,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.875,
+      "base_entry": 33680514,
+      "target_entry": 33680954,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.875,
+      "base_entry": 33680538,
+      "target_entry": 33680978,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 32,
+      "target_instructions": 32,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33680622,
+      "target_entry": 33681062,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33680638,
+      "target_entry": 33681078,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33680654,
+      "target_entry": 33681094,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.85,
+      "base_entry": 33680670,
+      "target_entry": 33681110,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 20,
+      "target_instructions": 20,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33680722,
+      "target_entry": 33681162,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33680742,
+      "target_entry": 33681182,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33680758,
+      "target_entry": 33681198,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33680772,
+      "target_entry": 33681212,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33680788,
+      "target_entry": 33681228,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33680804,
+      "target_entry": 33681244,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33680820,
+      "target_entry": 33681260,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9722,
+      "base_entry": 33680836,
+      "target_entry": 33681276,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 36,
+      "target_instructions": 36,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8,
+      "base_entry": 33680922,
+      "target_entry": 33681362,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33680934,
+      "target_entry": 33681374,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33680950,
+      "target_entry": 33681390,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33680964,
+      "target_entry": 33681404,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9245,
+      "base_entry": 33680980,
+      "target_entry": 33681420,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 53,
+      "target_instructions": 53,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.875,
+      "base_entry": 33681140,
+      "target_entry": 33681580,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.7381,
+      "base_entry": 33681162,
+      "target_entry": 33681602,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 42,
+      "target_instructions": 42,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8,
+      "base_entry": 33681454,
+      "target_entry": 33681894,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.75,
+      "base_entry": 33681744,
+      "target_entry": 33682184,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 28,
+      "target_instructions": 28,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8699,
+      "base_entry": 33681836,
+      "target_entry": 33682276,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 146,
+      "target_instructions": 146,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8864,
+      "base_entry": 33682904,
+      "target_entry": 33683344,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 220,
+      "target_instructions": 220,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8872,
+      "base_entry": 33683530,
+      "target_entry": 33683970,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 266,
+      "target_instructions": 266,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33684326,
+      "target_entry": 33684766,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33684342,
+      "target_entry": 33684782,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33684356,
+      "target_entry": 33684796,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.875,
+      "base_entry": 33684370,
+      "target_entry": 33684810,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9032,
+      "base_entry": 33684394,
+      "target_entry": 33684834,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 31,
+      "target_instructions": 31,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33684476,
+      "target_entry": 33684916,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33684494,
+      "target_entry": 33684934,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8,
+      "base_entry": 33684512,
+      "target_entry": 33684952,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33684526,
+      "target_entry": 33684966,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 16,
+      "target_instructions": 16,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33684564,
+      "target_entry": 33685004,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 112,
+      "target_instructions": 112,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33684894,
+      "target_entry": 33685334,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33685060,
+      "target_entry": 33685500,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 43,
+      "target_instructions": 43,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9974,
+      "base_entry": 33685192,
+      "target_entry": 33685632,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 389,
+      "target_instructions": 389,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9091,
+      "base_entry": 33686218,
+      "target_entry": 33686658,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 11,
+      "target_instructions": 11,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9149,
+      "base_entry": 33686246,
+      "target_entry": 33686686,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 47,
+      "target_instructions": 47,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.875,
+      "base_entry": 33686366,
+      "target_entry": 33686806,
+      "entry_delta": 440,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8,
+      "base_entry": 33698980,
+      "target_entry": 33710122,
+      "entry_delta": 11142,
+      "entry_prediction_error": 0,
+      "base_instructions": 90,
+      "target_instructions": 90,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "structural",
+      "raw_agreement": 0.625,
+      "base_entry": 33699260,
+      "target_entry": 33710402,
+      "entry_delta": 11142,
+      "entry_prediction_error": 0,
+      "base_instructions": 16,
+      "target_instructions": 16,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8,
+      "base_entry": 33700564,
+      "target_entry": 33711720,
+      "entry_delta": 11156,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.6364,
+      "base_entry": 33700618,
+      "target_entry": 33711774,
+      "entry_delta": 11156,
+      "entry_prediction_error": 0,
+      "base_instructions": 11,
+      "target_instructions": 11,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8095,
+      "base_entry": 33700930,
+      "target_entry": 33712086,
+      "entry_delta": 11156,
+      "entry_prediction_error": 0,
+      "base_instructions": 21,
+      "target_instructions": 21,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.963,
+      "base_entry": 33700994,
+      "target_entry": 33712150,
+      "entry_delta": 11156,
+      "entry_prediction_error": 0,
+      "base_instructions": 27,
+      "target_instructions": 27,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.9565,
+      "base_entry": 33701296,
+      "target_entry": 33712452,
+      "entry_delta": 11156,
+      "entry_prediction_error": 0,
+      "base_instructions": 23,
+      "target_instructions": 23,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8,
+      "base_entry": 33701362,
+      "target_entry": 33712518,
+      "entry_delta": 11156,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.96,
+      "base_entry": 33702460,
+      "target_entry": 33713616,
+      "entry_delta": 11156,
+      "entry_prediction_error": 0,
+      "base_instructions": 25,
+      "target_instructions": 25,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.7778,
+      "base_entry": 33721926,
+      "target_entry": 33724164,
+      "entry_delta": 2238,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8,
+      "base_entry": 33721956,
+      "target_entry": 33724194,
+      "entry_delta": 2238,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "structural",
+      "raw_agreement": 0.8,
+      "base_entry": 33721990,
+      "target_entry": 33724228,
+      "entry_delta": 2238,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "structural",
+      "raw_agreement": 0.8,
+      "base_entry": 33722022,
+      "target_entry": 33724260,
+      "entry_delta": 2238,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33722056,
+      "target_entry": 33724294,
+      "entry_delta": 2238,
+      "entry_prediction_error": 0,
+      "base_instructions": 12,
+      "target_instructions": 12,
+      "ram_deltas": [
+        132
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8333,
+      "base_entry": 33722090,
+      "target_entry": 33724328,
+      "entry_delta": 2238,
+      "entry_prediction_error": 0,
+      "base_instructions": 12,
+      "target_instructions": 12,
+      "ram_deltas": [
+        132
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.6,
+      "base_entry": 33722872,
+      "target_entry": 33725110,
+      "entry_delta": 2238,
+      "entry_prediction_error": 0,
+      "base_instructions": 25,
+      "target_instructions": 25,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.64,
+      "base_entry": 33722948,
+      "target_entry": 33725186,
+      "entry_delta": 2238,
+      "entry_prediction_error": 0,
+      "base_instructions": 25,
+      "target_instructions": 25,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8649,
+      "base_entry": 33725068,
+      "target_entry": 33727280,
+      "entry_delta": 2212,
+      "entry_prediction_error": 0,
+      "base_instructions": 37,
+      "target_instructions": 37,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8462,
+      "base_entry": 33726600,
+      "target_entry": 33728992,
+      "entry_delta": 2392,
+      "entry_prediction_error": 0,
+      "base_instructions": 13,
+      "target_instructions": 13,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9468,
+      "base_entry": 33733208,
+      "target_entry": 33735684,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 94,
+      "target_instructions": 94,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33733468,
+      "target_entry": 33735944,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33733480,
+      "target_entry": 33735956,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 23,
+      "target_instructions": 23,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33733536,
+      "target_entry": 33736012,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9524,
+      "base_entry": 33733550,
+      "target_entry": 33736026,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 42,
+      "target_instructions": 42,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8913,
+      "base_entry": 33733666,
+      "target_entry": 33736142,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 184,
+      "target_instructions": 184,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8529,
+      "base_entry": 33734240,
+      "target_entry": 33736716,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 34,
+      "target_instructions": 34,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33734338,
+      "target_entry": 33736814,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8148,
+      "base_entry": 33734344,
+      "target_entry": 33736820,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 27,
+      "target_instructions": 27,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.5714,
+      "base_entry": 33734420,
+      "target_entry": 33736896,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 7,
+      "target_instructions": 7,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33734444,
+      "target_entry": 33736920,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.4286,
+      "base_entry": 33734458,
+      "target_entry": 33736934,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 7,
+      "target_instructions": 7,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.75,
+      "base_entry": 33734482,
+      "target_entry": 33736958,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.75,
+      "base_entry": 33734496,
+      "target_entry": 33736972,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.6667,
+      "base_entry": 33734510,
+      "target_entry": 33736986,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 12,
+      "target_instructions": 12,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8,
+      "base_entry": 33735932,
+      "target_entry": 33738408,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": [
+        416
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.6667,
+      "base_entry": 33735966,
+      "target_entry": 33738442,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9286,
+      "base_entry": 33735976,
+      "target_entry": 33738452,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 14,
+      "target_instructions": 14,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.6,
+      "base_entry": 33736008,
+      "target_entry": 33738484,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8824,
+      "base_entry": 33736028,
+      "target_entry": 33738504,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 34,
+      "target_instructions": 34,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.75,
+      "base_entry": 33736122,
+      "target_entry": 33738598,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": [
+        416
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8095,
+      "base_entry": 33736150,
+      "target_entry": 33738626,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 21,
+      "target_instructions": 21,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8485,
+      "base_entry": 33736214,
+      "target_entry": 33738690,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 33,
+      "target_instructions": 33,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9167,
+      "base_entry": 33736308,
+      "target_entry": 33738784,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 24,
+      "target_instructions": 24,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8621,
+      "base_entry": 33736364,
+      "target_entry": 33738840,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 116,
+      "target_instructions": 116,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.7736,
+      "base_entry": 33736748,
+      "target_entry": 33739224,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 53,
+      "target_instructions": 53,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8,
+      "base_entry": 33736928,
+      "target_entry": 33739404,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 20,
+      "target_instructions": 20,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.85,
+      "base_entry": 33736988,
+      "target_entry": 33739464,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 20,
+      "target_instructions": 20,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.6667,
+      "base_entry": 33737048,
+      "target_entry": 33739524,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9158,
+      "base_entry": 33737056,
+      "target_entry": 33739532,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 95,
+      "target_instructions": 95,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8333,
+      "base_entry": 33737378,
+      "target_entry": 33739854,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 30,
+      "target_instructions": 30,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9,
+      "base_entry": 33738098,
+      "target_entry": 33740574,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8919,
+      "base_entry": 33738120,
+      "target_entry": 33740596,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 37,
+      "target_instructions": 37,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8661,
+      "base_entry": 33738226,
+      "target_entry": 33740702,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 112,
+      "target_instructions": 112,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.6667,
+      "base_entry": 33738552,
+      "target_entry": 33741028,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8451,
+      "base_entry": 33738562,
+      "target_entry": 33741038,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 71,
+      "target_instructions": 71,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8,
+      "base_entry": 33738792,
+      "target_entry": 33741268,
+      "entry_delta": 2476,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": [
+        132
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.7273,
+      "base_entry": 33739404,
+      "target_entry": 33741884,
+      "entry_delta": 2480,
+      "entry_prediction_error": 4,
+      "base_instructions": 33,
+      "target_instructions": 33,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.9,
+      "base_entry": 33739692,
+      "target_entry": 33742172,
+      "entry_delta": 2480,
+      "entry_prediction_error": 0,
+      "base_instructions": 50,
+      "target_instructions": 50,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9032,
+      "base_entry": 33740318,
+      "target_entry": 33742812,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 31,
+      "target_instructions": 31,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9286,
+      "base_entry": 33740398,
+      "target_entry": 33742892,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 28,
+      "target_instructions": 28,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33740710,
+      "target_entry": 33743204,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 1,
+      "target_instructions": 1,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9091,
+      "base_entry": 33740736,
+      "target_entry": 33743230,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 33,
+      "target_instructions": 33,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33740822,
+      "target_entry": 33743316,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 57,
+      "target_instructions": 57,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.625,
+      "base_entry": 33740956,
+      "target_entry": 33743450,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8,
+      "base_entry": 33742422,
+      "target_entry": 33744916,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 15,
+      "target_instructions": 15,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33743146,
+      "target_entry": 33745640,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 21,
+      "target_instructions": 21,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9333,
+      "base_entry": 33743204,
+      "target_entry": 33745698,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 60,
+      "target_instructions": 60,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "structural",
+      "raw_agreement": 0.9487,
+      "base_entry": 33743366,
+      "target_entry": 33745860,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 39,
+      "target_instructions": 39,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33744046,
+      "target_entry": 33746540,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33744058,
+      "target_entry": 33746552,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33744068,
+      "target_entry": 33746562,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33744090,
+      "target_entry": 33746584,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 36,
+      "target_instructions": 36,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "structural",
+      "raw_agreement": 0.7447,
+      "base_entry": 33744170,
+      "target_entry": 33746664,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 141,
+      "target_instructions": 135,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9231,
+      "base_entry": 33744600,
+      "target_entry": 33747094,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 13,
+      "target_instructions": 13,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8596,
+      "base_entry": 33744632,
+      "target_entry": 33747126,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 57,
+      "target_instructions": 57,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33744802,
+      "target_entry": 33747296,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 27,
+      "target_instructions": 27,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33744868,
+      "target_entry": 33747362,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 34,
+      "target_instructions": 34,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9945,
+      "base_entry": 33744954,
+      "target_entry": 33747448,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 182,
+      "target_instructions": 182,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33745906,
+      "target_entry": 33748400,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33745922,
+      "target_entry": 33748416,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 25,
+      "target_instructions": 25,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33745986,
+      "target_entry": 33748480,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9524,
+      "base_entry": 33747980,
+      "target_entry": 33750474,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 21,
+      "target_instructions": 21,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33748038,
+      "target_entry": 33750532,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9762,
+      "base_entry": 33748048,
+      "target_entry": 33750542,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 42,
+      "target_instructions": 42,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33748162,
+      "target_entry": 33750656,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 11,
+      "target_instructions": 11,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33748350,
+      "target_entry": 33750844,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 114,
+      "target_instructions": 114,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33748668,
+      "target_entry": 33751162,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 22,
+      "target_instructions": 22,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33748718,
+      "target_entry": 33751212,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 208,
+      "target_instructions": 208,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9608,
+      "base_entry": 33749324,
+      "target_entry": 33751818,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 51,
+      "target_instructions": 51,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9674,
+      "base_entry": 33749458,
+      "target_entry": 33751952,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 92,
+      "target_instructions": 92,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33749722,
+      "target_entry": 33752216,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 40,
+      "target_instructions": 40,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33749824,
+      "target_entry": 33752318,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 14,
+      "target_instructions": 14,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33749862,
+      "target_entry": 33752356,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 14,
+      "target_instructions": 14,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9828,
+      "base_entry": 33749900,
+      "target_entry": 33752394,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 408,
+      "target_instructions": 408,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33751092,
+      "target_entry": 33753586,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 65,
+      "target_instructions": 65,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9792,
+      "base_entry": 33751262,
+      "target_entry": 33753756,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 48,
+      "target_instructions": 48,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.6667,
+      "base_entry": 33752042,
+      "target_entry": 33754536,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.746,
+      "base_entry": 33752636,
+      "target_entry": 33755130,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 63,
+      "target_instructions": 63,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33752834,
+      "target_entry": 33755328,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8636,
+      "base_entry": 33753274,
+      "target_entry": 33755768,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 22,
+      "target_instructions": 22,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33753468,
+      "target_entry": 33755962,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 23,
+      "target_instructions": 23,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9487,
+      "base_entry": 33753524,
+      "target_entry": 33756018,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 39,
+      "target_instructions": 39,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9623,
+      "base_entry": 33753630,
+      "target_entry": 33756124,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 53,
+      "target_instructions": 53,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33753802,
+      "target_entry": 33756296,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 31,
+      "target_instructions": 31,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33753890,
+      "target_entry": 33756384,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33753910,
+      "target_entry": 33756404,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 68,
+      "target_instructions": 68,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33754072,
+      "target_entry": 33756566,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 10,
+      "target_instructions": 10,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.925,
+      "base_entry": 33754096,
+      "target_entry": 33756590,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 40,
+      "target_instructions": 40,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33754208,
+      "target_entry": 33756702,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 23,
+      "target_instructions": 23,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33754260,
+      "target_entry": 33756754,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33754284,
+      "target_entry": 33756778,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 16,
+      "target_instructions": 16,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33754326,
+      "target_entry": 33756820,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 95,
+      "target_instructions": 95,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33754574,
+      "target_entry": 33757068,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 52,
+      "target_instructions": 52,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.981,
+      "base_entry": 33754704,
+      "target_entry": 33757198,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 105,
+      "target_instructions": 105,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33754986,
+      "target_entry": 33757480,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 204,
+      "target_instructions": 204,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33755554,
+      "target_entry": 33758048,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 12,
+      "target_instructions": 12,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33755586,
+      "target_entry": 33758080,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 35,
+      "target_instructions": 35,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33755916,
+      "target_entry": 33758410,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 59,
+      "target_instructions": 59,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33756758,
+      "target_entry": 33759252,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 16,
+      "target_instructions": 16,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "structural",
+      "raw_agreement": 0.9231,
+      "base_entry": 33756798,
+      "target_entry": 33759292,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 13,
+      "target_instructions": 13,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33757732,
+      "target_entry": 33760226,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33758970,
+      "target_entry": 33761464,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 7,
+      "target_instructions": 7,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33758986,
+      "target_entry": 33761480,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33759108,
+      "target_entry": 33761602,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 60,
+      "target_instructions": 60,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9711,
+      "base_entry": 33759274,
+      "target_entry": 33761768,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 173,
+      "target_instructions": 173,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9799,
+      "base_entry": 33760934,
+      "target_entry": 33763428,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 199,
+      "target_instructions": 199,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9906,
+      "base_entry": 33761538,
+      "target_entry": 33764032,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 106,
+      "target_instructions": 106,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33763894,
+      "target_entry": 33766388,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33764126,
+      "target_entry": 33766620,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 40,
+      "target_instructions": 40,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9167,
+      "base_entry": 33764858,
+      "target_entry": 33767352,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 48,
+      "target_instructions": 48,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33764980,
+      "target_entry": 33767474,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 36,
+      "target_instructions": 36,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9444,
+      "base_entry": 33765062,
+      "target_entry": 33767556,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 18,
+      "target_instructions": 18,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9605,
+      "base_entry": 33765834,
+      "target_entry": 33768328,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 76,
+      "target_instructions": 76,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.6667,
+      "base_entry": 33766066,
+      "target_entry": 33768560,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33766488,
+      "target_entry": 33768982,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33766822,
+      "target_entry": 33769316,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 24,
+      "target_instructions": 24,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8636,
+      "base_entry": 33766888,
+      "target_entry": 33769382,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 22,
+      "target_instructions": 22,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33766962,
+      "target_entry": 33769456,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.875,
+      "base_entry": 33767074,
+      "target_entry": 33769568,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 40,
+      "target_instructions": 40,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9226,
+      "base_entry": 33770710,
+      "target_entry": 33773204,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 155,
+      "target_instructions": 155,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33771478,
+      "target_entry": 33773972,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 70,
+      "target_instructions": 70,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9565,
+      "base_entry": 33772306,
+      "target_entry": 33774800,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 46,
+      "target_instructions": 46,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33773550,
+      "target_entry": 33776044,
+      "entry_delta": 2494,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.75,
+      "base_entry": 33775126,
+      "target_entry": 33777622,
+      "entry_delta": 2496,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.7188,
+      "base_entry": 33775196,
+      "target_entry": 33777692,
+      "entry_delta": 2496,
+      "entry_prediction_error": 0,
+      "base_instructions": 32,
+      "target_instructions": 32,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8934,
+      "base_entry": 33775326,
+      "target_entry": 33777822,
+      "entry_delta": 2496,
+      "entry_prediction_error": 0,
+      "base_instructions": 122,
+      "target_instructions": 122,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.6944,
+      "base_entry": 33775674,
+      "target_entry": 33778170,
+      "entry_delta": 2496,
+      "entry_prediction_error": 0,
+      "base_instructions": 36,
+      "target_instructions": 36,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8693,
+      "base_entry": 33777966,
+      "target_entry": 33780462,
+      "entry_delta": 2496,
+      "entry_prediction_error": 0,
+      "base_instructions": 199,
+      "target_instructions": 199,
+      "ram_deltas": [
+        68,
+        70,
+        416
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.7273,
+      "base_entry": 33778962,
+      "target_entry": 33781458,
+      "entry_delta": 2496,
+      "entry_prediction_error": 0,
+      "base_instructions": 11,
+      "target_instructions": 11,
+      "ram_deltas": [
+        68,
+        70
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9231,
+      "base_entry": 33779322,
+      "target_entry": 33781818,
+      "entry_delta": 2496,
+      "entry_prediction_error": 0,
+      "base_instructions": 39,
+      "target_instructions": 39,
+      "ram_deltas": [
+        68,
+        416
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.6923,
+      "base_entry": 33779436,
+      "target_entry": 33781932,
+      "entry_delta": 2496,
+      "entry_prediction_error": 0,
+      "base_instructions": 13,
+      "target_instructions": 13,
+      "ram_deltas": [
+        68,
+        416
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33779500,
+      "target_entry": 33781996,
+      "entry_delta": 2496,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8889,
+      "base_entry": 33779506,
+      "target_entry": 33782002,
+      "entry_delta": 2496,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8478,
+      "base_entry": 33779536,
+      "target_entry": 33782032,
+      "entry_delta": 2496,
+      "entry_prediction_error": 0,
+      "base_instructions": 46,
+      "target_instructions": 46,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33780314,
+      "target_entry": 33782810,
+      "entry_delta": 2496,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8889,
+      "base_entry": 33780424,
+      "target_entry": 33782920,
+      "entry_delta": 2496,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9167,
+      "base_entry": 33781144,
+      "target_entry": 33783640,
+      "entry_delta": 2496,
+      "entry_prediction_error": 0,
+      "base_instructions": 12,
+      "target_instructions": 12,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33781982,
+      "target_entry": 33784488,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8065,
+      "base_entry": 33781994,
+      "target_entry": 33784500,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 31,
+      "target_instructions": 31,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.5,
+      "base_entry": 33783106,
+      "target_entry": 33785612,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.75,
+      "base_entry": 33783120,
+      "target_entry": 33785626,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8696,
+      "base_entry": 33783794,
+      "target_entry": 33786300,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 23,
+      "target_instructions": 23,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8889,
+      "base_entry": 33783856,
+      "target_entry": 33786362,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9412,
+      "base_entry": 33783902,
+      "target_entry": 33786408,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 34,
+      "target_instructions": 34,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8043,
+      "base_entry": 33785090,
+      "target_entry": 33787596,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 46,
+      "target_instructions": 46,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33786834,
+      "target_entry": 33789340,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9333,
+      "base_entry": 33786854,
+      "target_entry": 33789360,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 15,
+      "target_instructions": 15,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33786908,
+      "target_entry": 33789414,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 13,
+      "target_instructions": 13,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8636,
+      "base_entry": 33786946,
+      "target_entry": 33789452,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 22,
+      "target_instructions": 22,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.8308,
+      "base_entry": 33787064,
+      "target_entry": 33789570,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 65,
+      "target_instructions": 65,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33787256,
+      "target_entry": 33789762,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33787284,
+      "target_entry": 33789790,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33787312,
+      "target_entry": 33789818,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9474,
+      "base_entry": 33787332,
+      "target_entry": 33789838,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 38,
+      "target_instructions": 38,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.7632,
+      "base_entry": 33787446,
+      "target_entry": 33789952,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 38,
+      "target_instructions": 38,
+      "ram_deltas": [
+        416
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33787552,
+      "target_entry": 33790058,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33787580,
+      "target_entry": 33790086,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33787594,
+      "target_entry": 33790100,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 16,
+      "target_instructions": 16,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33787632,
+      "target_entry": 33790138,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33787644,
+      "target_entry": 33790150,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 25,
+      "target_instructions": 25,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33787746,
+      "target_entry": 33790252,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 64,
+      "target_instructions": 64,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33787904,
+      "target_entry": 33790410,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 54,
+      "target_instructions": 54,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33789012,
+      "target_entry": 33791518,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 28,
+      "target_instructions": 28,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.9956,
+      "base_entry": 33789424,
+      "target_entry": 33791930,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 229,
+      "target_instructions": 229,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.7778,
+      "base_entry": 33790002,
+      "target_entry": 33792508,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 27,
+      "target_instructions": 27,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33790166,
+      "target_entry": 33792672,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33793634,
+      "target_entry": 33796140,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8974,
+      "base_entry": 33794034,
+      "target_entry": 33796540,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 39,
+      "target_instructions": 39,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9333,
+      "base_entry": 33799364,
+      "target_entry": 33801870,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 15,
+      "target_instructions": 15,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9596,
+      "base_entry": 33799400,
+      "target_entry": 33801906,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 99,
+      "target_instructions": 99,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9434,
+      "base_entry": 33799714,
+      "target_entry": 33802220,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 53,
+      "target_instructions": 53,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.86,
+      "base_entry": 33799876,
+      "target_entry": 33802382,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 50,
+      "target_instructions": 50,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33800026,
+      "target_entry": 33802532,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.913,
+      "base_entry": 33800038,
+      "target_entry": 33802544,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 23,
+      "target_instructions": 23,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9032,
+      "base_entry": 33800104,
+      "target_entry": 33802610,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 31,
+      "target_instructions": 31,
+      "ram_deltas": [
+        132
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9722,
+      "base_entry": 33800190,
+      "target_entry": 33802696,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 36,
+      "target_instructions": 36,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33800504,
+      "target_entry": 33803010,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9726,
+      "base_entry": 33800934,
+      "target_entry": 33803440,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 73,
+      "target_instructions": 73,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33801132,
+      "target_entry": 33803638,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.6667,
+      "base_entry": 33804102,
+      "target_entry": 33806608,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9412,
+      "base_entry": 33804110,
+      "target_entry": 33806616,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 34,
+      "target_instructions": 34,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9333,
+      "base_entry": 33804424,
+      "target_entry": 33806930,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 15,
+      "target_instructions": 15,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33804464,
+      "target_entry": 33806970,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 17,
+      "target_instructions": 17,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33808394,
+      "target_entry": 33810900,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9429,
+      "base_entry": 33808406,
+      "target_entry": 33810912,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 35,
+      "target_instructions": 35,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33808506,
+      "target_entry": 33811012,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.7692,
+      "base_entry": 33808520,
+      "target_entry": 33811026,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 13,
+      "target_instructions": 13,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9429,
+      "base_entry": 33808610,
+      "target_entry": 33811116,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 35,
+      "target_instructions": 35,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9,
+      "base_entry": 33809326,
+      "target_entry": 33811832,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 40,
+      "target_instructions": 40,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33810178,
+      "target_entry": 33812684,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 29,
+      "target_instructions": 29,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.75,
+      "base_entry": 33810452,
+      "target_entry": 33812958,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 12,
+      "target_instructions": 12,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33810608,
+      "target_entry": 33813114,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9286,
+      "base_entry": 33816526,
+      "target_entry": 33819032,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 56,
+      "target_instructions": 56,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9091,
+      "base_entry": 33816748,
+      "target_entry": 33819254,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 11,
+      "target_instructions": 11,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9565,
+      "base_entry": 33816892,
+      "target_entry": 33819398,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 46,
+      "target_instructions": 46,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33817760,
+      "target_entry": 33820266,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 1,
+      "target_instructions": 1,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33818738,
+      "target_entry": 33821244,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 26,
+      "target_instructions": 26,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33818798,
+      "target_entry": 33821304,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 27,
+      "target_instructions": 27,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9863,
+      "base_entry": 33818866,
+      "target_entry": 33821372,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 73,
+      "target_instructions": 73,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33819654,
+      "target_entry": 33822160,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 16,
+      "target_instructions": 16,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33820042,
+      "target_entry": 33822548,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33820290,
+      "target_entry": 33822796,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 2,
+      "target_instructions": 2,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33820526,
+      "target_entry": 33823032,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9365,
+      "base_entry": 33820532,
+      "target_entry": 33823038,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 126,
+      "target_instructions": 126,
+      "ram_deltas": [
+        68
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9216,
+      "base_entry": 33823610,
+      "target_entry": 33826116,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 51,
+      "target_instructions": 51,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9528,
+      "base_entry": 33824928,
+      "target_entry": 33827434,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 106,
+      "target_instructions": 106,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33825570,
+      "target_entry": 33828076,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9286,
+      "base_entry": 33825594,
+      "target_entry": 33828100,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 56,
+      "target_instructions": 56,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.8824,
+      "base_entry": 33826694,
+      "target_entry": 33829200,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 17,
+      "target_instructions": 17,
+      "ram_deltas": [
+        132
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.95,
+      "base_entry": 33826844,
+      "target_entry": 33829350,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 40,
+      "target_instructions": 40,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.9337,
+      "base_entry": 33831508,
+      "target_entry": 33834014,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 181,
+      "target_instructions": 181,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.9375,
+      "base_entry": 33832128,
+      "target_entry": 33834634,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 32,
+      "target_instructions": 32,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.9062,
+      "base_entry": 33832334,
+      "target_entry": 33834840,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 32,
+      "target_instructions": 32,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33834284,
+      "target_entry": 33836790,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 5,
+      "target_instructions": 5,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33835238,
+      "target_entry": 33837744,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 14,
+      "target_instructions": 14,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9714,
+      "base_entry": 33835276,
+      "target_entry": 33837782,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 35,
+      "target_instructions": 35,
+      "ram_deltas": [
+        416
+      ]
+    },
+    {
+      "verdict": "ram_relocated",
+      "raw_agreement": 0.9841,
+      "base_entry": 33835380,
+      "target_entry": 33837886,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 63,
+      "target_instructions": 63,
+      "ram_deltas": [
+        416
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.9091,
+      "base_entry": 33835574,
+      "target_entry": 33838080,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 55,
+      "target_instructions": 55,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.8571,
+      "base_entry": 33835726,
+      "target_entry": 33838232,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 287,
+      "target_instructions": 287,
+      "ram_deltas": [
+        64,
+        68
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.9493,
+      "base_entry": 33840218,
+      "target_entry": 33842724,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 335,
+      "target_instructions": 335,
+      "ram_deltas": [
+        64
+      ]
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.9649,
+      "base_entry": 33841300,
+      "target_entry": 33843806,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 57,
+      "target_instructions": 57,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33841472,
+      "target_entry": 33843978,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 37,
+      "target_instructions": 37,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33841574,
+      "target_entry": 33844080,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 27,
+      "target_instructions": 27,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33841640,
+      "target_entry": 33844146,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 0.9778,
+      "base_entry": 33845216,
+      "target_entry": 33847722,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 45,
+      "target_instructions": 45,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33849674,
+      "target_entry": 33852180,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 46,
+      "target_instructions": 46,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33849816,
+      "target_entry": 33852322,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 1,
+      "target_instructions": 1,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "constants_changed",
+      "raw_agreement": 0.994,
+      "base_entry": 33849820,
+      "target_entry": 33852326,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 663,
+      "target_instructions": 663,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33851942,
+      "target_entry": 33854448,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 115,
+      "target_instructions": 115,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33852270,
+      "target_entry": 33854776,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 2,
+      "target_instructions": 2,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33852274,
+      "target_entry": 33854780,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 3,
+      "target_instructions": 3,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33852284,
+      "target_entry": 33854790,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 68,
+      "target_instructions": 68,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33852510,
+      "target_entry": 33855016,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 12,
+      "target_instructions": 12,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33852566,
+      "target_entry": 33855072,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 21,
+      "target_instructions": 21,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33852622,
+      "target_entry": 33855128,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 71,
+      "target_instructions": 71,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33852840,
+      "target_entry": 33855346,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33852860,
+      "target_entry": 33855366,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 58,
+      "target_instructions": 58,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33853020,
+      "target_entry": 33855526,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 38,
+      "target_instructions": 38,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33853130,
+      "target_entry": 33855636,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33853142,
+      "target_entry": 33855648,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 12,
+      "target_instructions": 12,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33853168,
+      "target_entry": 33855674,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33853520,
+      "target_entry": 33856026,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 9,
+      "target_instructions": 9,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33853550,
+      "target_entry": 33856056,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 6,
+      "target_instructions": 6,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33853584,
+      "target_entry": 33856090,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 196,
+      "target_instructions": 196,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33854308,
+      "target_entry": 33856814,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 54,
+      "target_instructions": 54,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33854484,
+      "target_entry": 33856990,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 52,
+      "target_instructions": 52,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33854716,
+      "target_entry": 33857222,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 1,
+      "target_instructions": 1,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33854718,
+      "target_entry": 33857224,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 1,
+      "target_instructions": 1,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33854722,
+      "target_entry": 33857228,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 1,
+      "target_instructions": 1,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33854724,
+      "target_entry": 33857230,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 11,
+      "target_instructions": 11,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33854778,
+      "target_entry": 33857284,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 230,
+      "target_instructions": 230,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33855562,
+      "target_entry": 33858068,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 17,
+      "target_instructions": 17,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33855638,
+      "target_entry": 33858144,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 11,
+      "target_instructions": 11,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33855692,
+      "target_entry": 33858198,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 201,
+      "target_instructions": 201,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33856400,
+      "target_entry": 33858906,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 2,
+      "target_instructions": 2,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33856406,
+      "target_entry": 33858912,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 8,
+      "target_instructions": 8,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33856572,
+      "target_entry": 33859078,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 20,
+      "target_instructions": 20,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33856656,
+      "target_entry": 33859162,
+      "entry_delta": 2506,
+      "entry_prediction_error": 0,
+      "base_instructions": 12,
+      "target_instructions": 12,
+      "ram_deltas": null
+    },
+    {
+      "verdict": "relocated",
+      "raw_agreement": 1.0,
+      "base_entry": 33903750,
+      "target_entry": 33906246,
+      "entry_delta": 2496,
+      "entry_prediction_error": 0,
+      "base_instructions": 4,
+      "target_instructions": 4,
+      "ram_deltas": null
+    }
+  ]
+}

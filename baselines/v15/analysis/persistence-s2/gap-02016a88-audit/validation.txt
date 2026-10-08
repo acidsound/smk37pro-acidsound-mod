@@ -1,0 +1,4 @@
+PASS exact 602-byte gap bytes and S1C5 selector/producer hashes
+PASS pre-gap callee 0x0200ad74 has normal pop-pc returns
+REFUTE 0x02016a88..0x02016ce2 as owned/free restore placement
+PASS next exhaustive-listing gaps >=300 ranked

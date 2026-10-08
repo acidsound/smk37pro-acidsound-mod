@@ -1,0 +1,23 @@
+address	size	bytes	name	asm	meaning	target
+0x02026d80	2	1716	helper.save_stock_source	mov r7,r1	keep stock source for read failure rollback	
+0x02026d82	6	c1ff207d0000	helper.storage_base	mov r1,#0x7d20	raw record 96 storage offset	
+0x02026d88	4	e3e1a330	helper.slot_stride	mul r3,r3,#0xa3	slot * raw record stride	
+0x02026d8c	2	3118	helper.storage_slot	add r1,r3	storage offset for selected slot	
+0x02026d8e	2	4016	helper.read_dest	mov r0,r4	read into destination prefix	
+0x02026d90	2	623c	helper.read_len	mov r2,#0x9c	full prefix length	
+0x02026d92	6	80ffd8dafdff	helper.read_wrapper	call 0x2004870	0x02004870 full-length checked read wrapper	
+0x02026d98	4	80f80200	helper.read_ok	jne r0,#0,read_ok	wrapper returns zero on short/failing read	0x02026da0
+0x02026d9c	2	7116	helper.restore_stock_source	mov r1,r7	restore original source on read failure	
+0x02026d9e	2	0489	helper.goto_stock_copy	goto stock_copy	rollback to stock copy path	0x02026db2
+0x02026da0	4	00e19b40	helper.voice_note_ptr	add r0,r4,#0x9b	point at persisted Playback Note byte	
+0x02026da4	2	0d40	helper.load_note	lb.z r5,[r0]	load persisted Playback Note	
+0x02026da6	2	4e3f	helper.restore_3f	mov r6,#0x3f	restore voice byte 0x9b	
+0x02026da8	2	8e40	helper.store_3f	sb [r0],r6	force voice[0x9b]=0x3f	
+0x02026daa	4	00e19c40	helper.metadata_pointer	add r0,r4,#0x9c	metadata return pointer	
+0x02026dae	2	8d40	helper.metadata_store	sb [r0],r5	store Playback Note metadata	
+0x02026db0	2	5904	helper.return_persistent	pop {pc,r9..r4}	return to selector caller	
+0x02026db2	2	4016	helper.stock_restore_dest	mov r0,r4	stock/armed destination	
+0x02026db4	6	80ff141f0200	helper.stock_memcpy	call 0x2048cce	copy resident/stock source prefix	
+0x02026dba	4	00e19c40	helper.stock_metadata_pointer	add r0,r4,#0x9c	metadata return pointer	
+0x02026dbe	2	8d40	helper.stock_metadata_store	sb [r0],r5	store mapped/default metadata	
+0x02026dc0	2	5904	helper.stock_return	pop {pc,r9..r4}	return to selector caller	

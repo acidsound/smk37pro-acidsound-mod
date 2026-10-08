@@ -1,0 +1,510 @@
+{
+  "app": {
+    "app_size": 617012,
+    "artifact_scope": "offline S1-C2-parent-only boundary diagnostic; no new selector, parser, persistence, packet, or 16-slot consumption behavior",
+    "boundary": {
+      "additional_bytes_over_h2_h0": 2544,
+      "additional_bytes_over_s1c2_parent": 2384,
+      "additional_hex_over_h2_h0": "0x09f0",
+      "additional_hex_over_s1c2_parent": "0x0950",
+      "boot_bss_extension_vs_official_bytes": 2708,
+      "boot_bss_extension_vs_official_hex": "0x0a94",
+      "boot_bss_zero_end_exclusive": "0x01c46fb0",
+      "boot_bss_zero_size_bytes": 251356,
+      "boot_bss_zero_size_hex": "0x0003d5dc",
+      "boot_bss_zero_start": "0x01c099d4",
+      "boundary_bytes": {
+        "bss_size_instruction_address": "0x0200001e",
+        "candidate_bss_size_hex": "c2ffdcd50300",
+        "candidate_heap_begin_hex": "c5ffb06fc401",
+        "heap_begin_instruction_address": "0x0205e9f8",
+        "s1c2_parent_bss_size_hex": "c2ff8ccc0300",
+        "s1c2_parent_heap_begin_hex": "c5ff6066c401"
+      },
+      "candidate_heap_begin": "0x01c46fb0",
+      "data_model_required_reservation_bytes": 2704,
+      "data_model_required_reservation_hex": "0x0a90",
+      "h2_h0_heap_begin": "0x01c465c0",
+      "layout": [
+        {
+          "purpose": "16 slot records at stride 0xa0",
+          "range": "0x01c46520..0x01c46f20",
+          "size_hex": "0x0a00"
+        },
+        {
+          "purpose": "slot 0 voice, exact H2 source",
+          "range": "0x01c46520..0x01c465bc",
+          "size_hex": "0x009c"
+        },
+        {
+          "address": "0x01c465bc",
+          "purpose": "slot 0 valid, exact H2 valid",
+          "size": 1
+        },
+        {
+          "address": "0x01c465bd",
+          "purpose": "global nonblocking producer lock, exact H2 lock",
+          "size": 1
+        },
+        {
+          "purpose": "header plus 128-entry note_to_slot map",
+          "range": "0x01c46f20..0x01c46fb0",
+          "size_hex": "0x0090"
+        }
+      ],
+      "official_heap_begin": "0x01c46520",
+      "patch_set_base": "0x01c46520",
+      "patch_set_end_exclusive": "0x01c46fb0",
+      "s1c2_parent_heap_begin": "0x01c46660"
+    },
+    "changes": [
+      {
+        "address": "0x0200001e",
+        "changed_byte_offsets_in_app": [
+          32,
+          33
+        ],
+        "file_offset": 30,
+        "new_hex": "c2ffdcd50300",
+        "old_hex": "c2ff8ccc0300",
+        "purpose": "parent-only boundary: extend boot BSS zeroing from S1-C2 end 0x01c46660 through 0x01c46fb0"
+      },
+      {
+        "address": "0x0205e9f8",
+        "changed_byte_offsets_in_app": [
+          387578,
+          387579
+        ],
+        "file_offset": 387576,
+        "new_hex": "c5ffb06fc401",
+        "old_hex": "c5ff6066c401",
+        "purpose": "parent-only boundary: move S1-C2 HEAP_BEGIN forward to full 16-slot layout end 0x01c46fb0"
+      }
+    ],
+    "format": "smk37-v15-s1c3-16slot-boundary-only.app-manifest-v1",
+    "invariants": {
+      "new_executable_bytes": 0,
+      "new_packets_or_host_protocol": false,
+      "s1c2_code_byte_identical_except_boundary_immediates": true,
+      "save_policy": "unchanged exact S1-C2 live v2 inherited H2 no-write block",
+      "selector_behavior": "unchanged exact S1-C2 live v2 two-slot selector",
+      "sixteen_slot_consumption": false
+    },
+    "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "official_relative_changed_byte_count": 262,
+    "official_relative_changed_ranges": [
+      {
+        "end_exclusive": 34,
+        "start": 32
+      },
+      {
+        "end_exclusive": 116291,
+        "start": 116288
+      },
+      {
+        "end_exclusive": 116353,
+        "start": 116350
+      },
+      {
+        "end_exclusive": 123224,
+        "start": 123198
+      },
+      {
+        "end_exclusive": 123231,
+        "start": 123225
+      },
+      {
+        "end_exclusive": 123245,
+        "start": 123232
+      },
+      {
+        "end_exclusive": 123319,
+        "start": 123246
+      },
+      {
+        "end_exclusive": 123389,
+        "start": 123320
+      },
+      {
+        "end_exclusive": 123397,
+        "start": 123390
+      },
+      {
+        "end_exclusive": 123446,
+        "start": 123398
+      },
+      {
+        "end_exclusive": 124011,
+        "start": 124010
+      },
+      {
+        "end_exclusive": 124063,
+        "start": 124062
+      },
+      {
+        "end_exclusive": 159146,
+        "start": 159142
+      },
+      {
+        "end_exclusive": 159152,
+        "start": 159148
+      },
+      {
+        "end_exclusive": 387580,
+        "start": 387578
+      }
+    ],
+    "output_app_sha256": "c18ed6f4e8ba2c16b99c41e6264cc36804fb38d8800d03ec518ab6bd838a8d14",
+    "runtime_base": "0x02000000",
+    "s1c2_parent_app_sha256": "4afd13d7301c2ae209c11d3fe932d019faa770b551f2d8a38cf4c018c7aafa8a",
+    "s1c2_parent_relative_changed_byte_count": 4,
+    "s1c2_parent_relative_changed_ranges": [
+      {
+        "end_exclusive": 34,
+        "start": 32
+      },
+      {
+        "end_exclusive": 387580,
+        "start": 387578
+      }
+    ]
+  },
+  "candidate_built": true,
+  "decision": "PASS",
+  "evidence_inputs": {
+    "data_model_source": "baselines/v15/analysis/patch-set-ui/data-model/report.md",
+    "h2_live_policy_source": "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/report.md",
+    "official_v15_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "official_v15_fwsc_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "s1c1_live_boundary_source": "baselines/v15/analysis/flash-candidates/S1C1-boundary-only/live-validation-20260802.md",
+    "s1c2_live_parent_source": "baselines/v15/analysis/flash-candidates/S1C2-two-slot-selector-live-v2/live-validation-20260803.md"
+  },
+  "flash": {
+    "confirmation_token": "INSTALL-SMK37PRO-V15-S1C3-16SLOT-BOUNDARY-2345102A",
+    "offline_check_command": "build/smk37-v15-s1c3-boundary-ota check baselines/v15/analysis/flash-candidates/S1C3-16slot-boundary-only/SMK37Pro-v15-S1C3-16slot-boundary-only.fwsc",
+    "upload_command": "build/smk37-v15-s1c3-boundary-ota upload baselines/v15/analysis/flash-candidates/S1C3-16slot-boundary-only/SMK37Pro-v15-S1C3-16slot-boundary-only.fwsc baselines/v15/analysis/flash-candidates/S1C3-16slot-boundary-only/live-install-YYYYMMDDTHHMMZ.txt --confirm INSTALL-SMK37PRO-V15-S1C3-16SLOT-BOUNDARY-2345102A"
+  },
+  "format": "smk37-v15-s1c3-16slot-boundary-only",
+  "package": {
+    "app_sha256": "c18ed6f4e8ba2c16b99c41e6264cc36804fb38d8800d03ec518ab6bd838a8d14",
+    "candidate_flash_sha256": "f5b1113fc8a7abfab1b12347d39991a338cf68765d8c835deb4ac56c3c5baf8c",
+    "changed_app_byte_count_vs_official": 262,
+    "changed_app_byte_count_vs_s1c2_parent": 4,
+    "changed_app_ranges_vs_official": [
+      {
+        "end_exclusive": 34,
+        "start": 32
+      },
+      {
+        "end_exclusive": 116291,
+        "start": 116288
+      },
+      {
+        "end_exclusive": 116353,
+        "start": 116350
+      },
+      {
+        "end_exclusive": 123224,
+        "start": 123198
+      },
+      {
+        "end_exclusive": 123231,
+        "start": 123225
+      },
+      {
+        "end_exclusive": 123245,
+        "start": 123232
+      },
+      {
+        "end_exclusive": 123319,
+        "start": 123246
+      },
+      {
+        "end_exclusive": 123389,
+        "start": 123320
+      },
+      {
+        "end_exclusive": 123397,
+        "start": 123390
+      },
+      {
+        "end_exclusive": 123446,
+        "start": 123398
+      },
+      {
+        "end_exclusive": 124011,
+        "start": 124010
+      },
+      {
+        "end_exclusive": 124063,
+        "start": 124062
+      },
+      {
+        "end_exclusive": 159146,
+        "start": 159142
+      },
+      {
+        "end_exclusive": 159152,
+        "start": 159148
+      },
+      {
+        "end_exclusive": 387580,
+        "start": 387578
+      }
+    ],
+    "changed_app_ranges_vs_s1c2_parent": [
+      {
+        "end_exclusive": 34,
+        "start": 32
+      },
+      {
+        "end_exclusive": 387580,
+        "start": 387578
+      }
+    ],
+    "changed_flash_byte_count_vs_official": 270,
+    "changed_flash_byte_count_vs_s1c2_parent": 12,
+    "changed_flash_ranges_vs_official": [
+      {
+        "end_exclusive": 16388,
+        "start": 16384
+      },
+      {
+        "end_exclusive": 16420,
+        "start": 16416
+      },
+      {
+        "end_exclusive": 16706,
+        "start": 16704
+      },
+      {
+        "end_exclusive": 132963,
+        "start": 132960
+      },
+      {
+        "end_exclusive": 133025,
+        "start": 133022
+      },
+      {
+        "end_exclusive": 139896,
+        "start": 139870
+      },
+      {
+        "end_exclusive": 139903,
+        "start": 139897
+      },
+      {
+        "end_exclusive": 139917,
+        "start": 139904
+      },
+      {
+        "end_exclusive": 139991,
+        "start": 139918
+      },
+      {
+        "end_exclusive": 140061,
+        "start": 139992
+      },
+      {
+        "end_exclusive": 140069,
+        "start": 140062
+      },
+      {
+        "end_exclusive": 140118,
+        "start": 140070
+      },
+      {
+        "end_exclusive": 140683,
+        "start": 140682
+      },
+      {
+        "end_exclusive": 140735,
+        "start": 140734
+      },
+      {
+        "end_exclusive": 175818,
+        "start": 175814
+      },
+      {
+        "end_exclusive": 175824,
+        "start": 175820
+      },
+      {
+        "end_exclusive": 404252,
+        "start": 404250
+      }
+    ],
+    "changed_flash_ranges_vs_s1c2_parent": [
+      {
+        "end_exclusive": 16388,
+        "start": 16384
+      },
+      {
+        "end_exclusive": 16420,
+        "start": 16416
+      },
+      {
+        "end_exclusive": 16706,
+        "start": 16704
+      },
+      {
+        "end_exclusive": 404252,
+        "start": 404250
+      }
+    ],
+    "changed_flash_sectors_vs_official": [
+      "0x04000",
+      "0x20000",
+      "0x22000",
+      "0x2a000",
+      "0x62000"
+    ],
+    "changed_flash_sectors_vs_s1c2_parent": [
+      "0x04000",
+      "0x62000"
+    ],
+    "changed_package_byte_count_vs_official": 276,
+    "changed_package_byte_count_vs_s1c2_parent": 18,
+    "changed_package_ranges_vs_official": [
+      {
+        "end_exclusive": 4,
+        "start": 0
+      },
+      {
+        "end_exclusive": 71,
+        "start": 69
+      },
+      {
+        "end_exclusive": 17432,
+        "start": 17428
+      },
+      {
+        "end_exclusive": 17464,
+        "start": 17460
+      },
+      {
+        "end_exclusive": 17750,
+        "start": 17748
+      },
+      {
+        "end_exclusive": 134007,
+        "start": 134004
+      },
+      {
+        "end_exclusive": 134069,
+        "start": 134066
+      },
+      {
+        "end_exclusive": 140940,
+        "start": 140914
+      },
+      {
+        "end_exclusive": 140947,
+        "start": 140941
+      },
+      {
+        "end_exclusive": 140961,
+        "start": 140948
+      },
+      {
+        "end_exclusive": 141035,
+        "start": 140962
+      },
+      {
+        "end_exclusive": 141105,
+        "start": 141036
+      },
+      {
+        "end_exclusive": 141113,
+        "start": 141106
+      },
+      {
+        "end_exclusive": 141162,
+        "start": 141114
+      },
+      {
+        "end_exclusive": 141727,
+        "start": 141726
+      },
+      {
+        "end_exclusive": 141779,
+        "start": 141778
+      },
+      {
+        "end_exclusive": 176862,
+        "start": 176858
+      },
+      {
+        "end_exclusive": 176868,
+        "start": 176864
+      },
+      {
+        "end_exclusive": 405296,
+        "start": 405294
+      }
+    ],
+    "changed_package_ranges_vs_s1c2_parent": [
+      {
+        "end_exclusive": 4,
+        "start": 0
+      },
+      {
+        "end_exclusive": 71,
+        "start": 69
+      },
+      {
+        "end_exclusive": 17432,
+        "start": 17428
+      },
+      {
+        "end_exclusive": 17464,
+        "start": 17460
+      },
+      {
+        "end_exclusive": 17750,
+        "start": 17748
+      },
+      {
+        "end_exclusive": 405296,
+        "start": 405294
+      }
+    ],
+    "expected_app_flash_offsets_match": true,
+    "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "official_flash_sha256": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+    "official_package_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "package_sha256": "2345102aadded732b13e22d1410d3f7b05f104ffc408bd1d6eba03ea2afc058c",
+    "package_size": 701140,
+    "protected_hashes_candidate": {
+      "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+      "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+      "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+      "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+    },
+    "protected_hashes_official": {
+      "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+      "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+      "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+      "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+    },
+    "protected_prefix_0x0000_0x3fff_unchanged": true,
+    "repacker_metadata_flash_offsets": [
+      "0x04000",
+      "0x04001",
+      "0x04002",
+      "0x04003",
+      "0x04020",
+      "0x04021",
+      "0x04022",
+      "0x04023"
+    ],
+    "rollback_manifest": "rollback/official-v15-recovery-sectors/manifest.json",
+    "rollback_restores_official_flash": true,
+    "s1c2_parent_app_sha256": "4afd13d7301c2ae209c11d3fe932d019faa770b551f2d8a38cf4c018c7aafa8a",
+    "s1c2_parent_flash_sha256": "2592990c071fcd7654f3ea913d70f341553d19f79801e693f74801fe160021ad",
+    "s1c2_parent_package_sha256": "63e3cfa39473df08bd225df2c8ae81dbfe7aafbd31da6cc6dcf64ca03453681e",
+    "validation_gate": "PASS"
+  },
+  "risk_statement": "PASS is only for deterministic boundary diagnostic packaging. Functional 16-slot implementation and heap headroom remain unproven until later live/stress gates.",
+  "scope": "offline-only; no device access; S1-C2-parent-only boundary diagnostic"
+}

@@ -1,0 +1,45 @@
+{
+  "candidate_flash_sha256": "c20a5ab13fcb93b9a884cd561a2e00b5c21f9189775eff79adf944319a0a0541",
+  "changed_sectors": [
+    {
+      "file": "rollback/official-v15-recovery-sectors/official-v15-sector-04000.bin",
+      "sector_base": "0x04000",
+      "sha256": "84c51914e8203e19d5b951a6ddba50aa1523a1f49bc2a6f5e19715049bc6750b",
+      "size": 8192
+    },
+    {
+      "file": "rollback/official-v15-recovery-sectors/official-v15-sector-20000.bin",
+      "sector_base": "0x20000",
+      "sha256": "f98d64e12bcb68b03a2893bf83f4165b6ab55dbd2f8adb3ec9849842b3ea88c1",
+      "size": 8192
+    },
+    {
+      "file": "rollback/official-v15-recovery-sectors/official-v15-sector-22000.bin",
+      "sector_base": "0x22000",
+      "sha256": "e7c4eaa78ccacdc03e0b376ca095a28a8d28594c809621e3824dbda9b0d020f0",
+      "size": 8192
+    },
+    {
+      "file": "rollback/official-v15-recovery-sectors/official-v15-sector-2a000.bin",
+      "sector_base": "0x2a000",
+      "sha256": "fffa39e60d1f79efba65fffcb55fd29fe5f8b9fd3fd580e738e1cb9a1c621c5d",
+      "size": 8192
+    },
+    {
+      "file": "rollback/official-v15-recovery-sectors/official-v15-sector-5a000.bin",
+      "sector_base": "0x5a000",
+      "sha256": "1e49a98608a5ffddf09db1238bf2d207b9e20bcc4c5da606fbdb0ea7598ecaae",
+      "size": 8192
+    },
+    {
+      "file": "rollback/official-v15-recovery-sectors/official-v15-sector-62000.bin",
+      "sector_base": "0x62000",
+      "sha256": "571f97c9f0922b1e107f64f3524c9d620f0e35fcf78e9ae3c50cc49a3104122e",
+      "size": 8192
+    }
+  ],
+  "format": "smk37-v15-s1c5-playback-register-return-marked.official-v15-sector-rollback-v1",
+  "official_flash_sha256": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+  "rollback_restores_official_flash": true,
+  "sector_size": 8192
+}

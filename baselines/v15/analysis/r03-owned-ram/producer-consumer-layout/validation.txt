@@ -1,0 +1,61 @@
+PASS	official-app-sha256	36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS	official-package-sha256	f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff
+PASS	listing-sha256	f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347
+PASS	manifest-app-binding	36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS	manifest-package-binding	f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff
+PASS	bytes-0x02000016	c3ffd499c001
+PASS	bytes-0x0200001e	c2ff48cb0300
+PASS	bytes-0x0205e9f8	c5ff2065c401
+PASS	bytes-0x0205ea00	caff30fdc701
+PASS	bytes-0x0201c67c	80ff4cc60200
+PASS	bytes-0x0201c63e	80ff8ac60200
+PASS	bytes-0x0201e468	bfea69fe
+PASS	bytes-0x0201e49c	bfea4ffe
+PASS	bytes-0x02026da6	beeaacee
+PASS	bytes-0x02026dac	bfeac7b9
+PASS	row-0x0201e462	jne r0,#0xf7
+PASS	row-0x0201e466	mov r0,r8
+PASS	row-0x0201e468	call 0x0201e13e
+PASS	row-0x0201e46c	call 0x02005660
+PASS	row-0x0201e480	jne r1,#0xf7
+PASS	row-0x0201e484	jne r5,#0x9e
+PASS	row-0x0201e49a	mov r0,r6
+PASS	row-0x0201e49c	call 0x0201e13e
+PASS	row-0x0201e4a0	call 0x02005660
+PASS	row-0x0201c63a	mov r2,#0x9c
+PASS	row-0x0201c63c	mov r1,r8
+PASS	row-0x0201c63e	call 0x02048cce
+PASS	row-0x0201c678	mov r2,#0x9c
+PASS	row-0x0201c67a	mov r1,r8
+PASS	row-0x0201c67c	call 0x02048cce
+PASS	row-0x02026d9e	add r4,r8,0x1a14
+PASS	row-0x02026da2	mov r2,#0xa3
+PASS	row-0x02026da4	mov r0,r4
+PASS	row-0x02026da6	call 0x02004b02
+PASS	row-0x02026daa	mov r0,r4
+PASS	row-0x02026dac	call 0x0201e13e
+PASS	row-0x02026dd4	movz r0,#0x1ec
+PASS	row-0x02026dd8	sb r15,[r8 + r0]
+PASS	sbrk-body-sha256	cfbf871082dc6e52b7dd08f678dc5b4080d6cd29d4b44da4e556fd481eabbe1a
+PASS	sbrk-heap-begin-offset	2065c401
+PASS	sbrk-heap-end-offset	30fdc701
+PASS	opcode-call32-official-note-on	80ff4cc60200
+PASS	opcode-call16-official-product	bfea69fe
+PASS	opcode-jne-imm7-official	80f8fc00
+PASS	opcode-forward-goto-official	0496
+PASS	unique-literal-0x3cb48	1
+PASS	unique-literal-0x1c46520	1
+PASS	unique-literal-0x1c7fd30	1
+PASS	old-bss-end	0x01c4651c
+PASS	anchor-gap-size	4
+PASS	fixed-state-size	0xc0
+PASS	new-bss-end	0x01c465e0
+PASS	new-heap-shrink	0xc0
+PASS	note-on-size	48
+PASS	note-off-size	56
+PASS	producer-size	54
+PASS	cave-used	158
+PASS	cave-fit	end=0x0201e1dc margin=120
+PASS	replacement-encodings	{"0x0200001e": "c2ff0ccc0300", "0x0201c63e": "80ff2a1b0000", "0x0201c67c": "80ffbc1a0000", "0x0201e468": "bfea9dfe", "0x0201e49c": "bfea83fe", "0x02026da6": "04960000", "0x02026dac": "00000000", "0x0205e9f8": "c5ffe065c401"}
+PASS	pointer-lower-bound-fits-mechanically	lower_bound=208 margin=70
+OVERALL	PASS_STATIC_ANALYSIS_BUILD_FLASH_BLOCKED

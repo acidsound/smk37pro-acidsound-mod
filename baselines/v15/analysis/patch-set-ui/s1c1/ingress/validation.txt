@@ -1,0 +1,14 @@
+S1-C1 guarded ingress validation
+RESULT	PASS
+PASS	inputs	7 exact official-v15/H2 artifacts SHA-256 gated
+PASS	parser-path	0x0202d202 completed-message ABI; 0x0201e254 r0/r1 -> r4/r9
+PASS	accepted-packet	163 bytes; 156-byte seven-bit runtime payload; no inherited exact-length/checksum claim
+PASS	stock-separation	private F0 7D SMK; Yamaha F0 43 delegates unchanged to H2
+PASS	transaction	LOAD0=173 LOAD1_COMMIT=176; one-message floor=333 > 0xfe
+PASS	ram	0x01c46520..0x01c46660 size=0x140; H2 delta=0xa0
+PASS	state-machine	EMPTY->LOADING->ARMED; valid/ARMED last; immutable after ARMED
+PASS	rejection-model	2680 single-bit packet mutations plus length/state/bounds/CRC/replay cases
+PASS	vectors	LOAD0 sha256=41f2adada4c3fa191ea52088d3919cf6351205c835dc7c7b09879cdb5c679c78 LOAD1 sha256=a61bec7b97594ec16e31213ddffe53dde007ab13083231f056c825bf70334ca3
+BLOCK	implementation	executable placement, exact code size, heap headroom, note ABI, ACK/NAK
+BLOCK	official-stock-pack-save	H2 parent semantics are preserved, not official persistent pack/SAVE semantics
+SCOPE	no firmware build; no device; no flash; no v12; no guessed handler address

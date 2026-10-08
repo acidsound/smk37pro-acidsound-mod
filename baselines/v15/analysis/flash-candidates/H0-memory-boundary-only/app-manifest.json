@@ -1,0 +1,37 @@
+{
+  "app_size": 617012,
+  "artifact_scope": "offline H0 diagnostic only; not a live functional success claim",
+  "changed_app_byte_count": 2,
+  "changed_app_byte_offsets": [
+    "0x00020",
+    "0x5e9fa"
+  ],
+  "changes": [
+    {
+      "address": "0x0200001e",
+      "file_offset": 30,
+      "new_hex": "c2ffeccb0300",
+      "old_hex": "c2ff48cb0300"
+    },
+    {
+      "address": "0x0205e9f8",
+      "file_offset": 387576,
+      "new_hex": "c5ffc065c401",
+      "old_hex": "c5ff2065c401"
+    }
+  ],
+  "diagnostic_notice": "Only tests the memory-boundary hypothesis H0; it does not claim functional success.",
+  "format": "smk37-v15-h0-memory-boundary-only-v1",
+  "input_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+  "output_app_sha256": "ab2d4d210605f20e35b96a8471c9f2e1102c24e18f3b062d6eabd4970f9794ce",
+  "runtime_base": "0x02000000",
+  "stock_preserved": {
+    "all_other_app_bytes": "unchanged",
+    "code_cave": "unchanged",
+    "note_on_off_calls": "unchanged",
+    "packer": "unchanged",
+    "product_calls": "unchanged",
+    "save_calls": "unchanged",
+    "ui": "unchanged"
+  }
+}

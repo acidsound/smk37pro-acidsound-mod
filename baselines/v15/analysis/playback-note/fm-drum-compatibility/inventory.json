@@ -1,0 +1,692 @@
+{
+  "format": "smk37-fm-drum-comparison-v1",
+  "source": "/Users/spectrum/Downloads/fmDrumSet",
+  "source_file_count": 26,
+  "all_inputs_valid_163_byte_yamaha_single_voice": true,
+  "records": [
+    {
+      "file": "BD/BASS DR. 1.syx",
+      "category": "BD",
+      "length": 163,
+      "sha256": "7d93d8ca2dd53de04130a4aee21dcfa5daa2d44fe295c74549be2ab2fcda3929",
+      "semantic": {
+        "algorithm": 5,
+        "feedback": 0,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "BASS DR. 1",
+        "operator_output": [
+          97,
+          94,
+          87,
+          99,
+          59,
+          99
+        ]
+      }
+    },
+    {
+      "file": "BD/BASS DR. 2.syx",
+      "category": "BD",
+      "length": 163,
+      "sha256": "7238be632b7bb941400e79185842b5519d638b86abefeb7a7ba55f0ea502a444",
+      "semantic": {
+        "algorithm": 5,
+        "feedback": 0,
+        "osc_sync": 1,
+        "transpose": 12,
+        "name": "BASS DR. 2",
+        "operator_output": [
+          97,
+          94,
+          87,
+          99,
+          59,
+          99
+        ]
+      }
+    },
+    {
+      "file": "BD/BASS DRUM.syx",
+      "category": "BD",
+      "length": 163,
+      "sha256": "6f7cb5808be172fec7890da50280d36961c199961928de08975f1dbbdc1eef54",
+      "semantic": {
+        "algorithm": 2,
+        "feedback": 0,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "BASS DRUM",
+        "operator_output": [
+          94,
+          98,
+          99,
+          94,
+          98,
+          99
+        ]
+      }
+    },
+    {
+      "file": "BD/BASS DRUM2.syx",
+      "category": "BD",
+      "length": 163,
+      "sha256": "3dbd23f101ede13f0330e1f517af258b91574f68def9da1b41f698a352a8a31d",
+      "semantic": {
+        "algorithm": 31,
+        "feedback": 0,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "BASS DRUM",
+        "operator_output": [
+          99,
+          99,
+          95,
+          99,
+          99,
+          99
+        ]
+      }
+    },
+    {
+      "file": "BD/Kick.syx",
+      "category": "BD",
+      "length": 163,
+      "sha256": "1a6b4837c58dd74b8987eb20bd88ed857b87f868f34ca5986fa45b9f9868898c",
+      "semantic": {
+        "algorithm": 16,
+        "feedback": 7,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "Kick",
+        "operator_output": [
+          0,
+          78,
+          33,
+          97,
+          78,
+          99
+        ]
+      }
+    },
+    {
+      "file": "CYM/CYMBAL_YAMAHA.syx",
+      "category": "CYM",
+      "length": 163,
+      "sha256": "ccfa2b1c241ce6f07025678e9be83adfc9217a94509abbec3c74ce218a616f0e",
+      "semantic": {
+        "algorithm": 6,
+        "feedback": 7,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "CYMBAL",
+        "operator_output": [
+          88,
+          86,
+          99,
+          90,
+          91,
+          99
+        ]
+      }
+    },
+    {
+      "file": "CYM/Cymbal.4.syx",
+      "category": "CYM",
+      "length": 163,
+      "sha256": "edafe8cd0934c681b647d15d36ebca8b7b4b06189a25d61877320d88a91633e0",
+      "semantic": {
+        "algorithm": 6,
+        "feedback": 7,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "Cymbal.4",
+        "operator_output": [
+          88,
+          86,
+          99,
+          90,
+          78,
+          99
+        ]
+      }
+    },
+    {
+      "file": "CYM/Cymbal.syx",
+      "category": "CYM",
+      "length": 163,
+      "sha256": "311dc03e987d554940556214c5284eb4c264ad2c05cf6ac23a1b78c201f7f67f",
+      "semantic": {
+        "algorithm": 2,
+        "feedback": 2,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "Cymbal",
+        "operator_output": [
+          84,
+          99,
+          99,
+          99,
+          99,
+          99
+        ]
+      }
+    },
+    {
+      "file": "CYM/SpaceCymbl.syx",
+      "category": "CYM",
+      "length": 163,
+      "sha256": "328dcf88e95cd5733978d1eacdc5cf988299abeae7449abd487afeb7aef05181",
+      "semantic": {
+        "algorithm": 4,
+        "feedback": 7,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "SpaceCymbl",
+        "operator_output": [
+          91,
+          99,
+          99,
+          99,
+          99,
+          99
+        ]
+      }
+    },
+    {
+      "file": "HH/CL.HI-HAT.syx",
+      "category": "HH",
+      "length": 163,
+      "sha256": "1f287cbc8b1a163515a4b7a4ca5bd328748111e25166aafc684b72868e8e8006",
+      "semantic": {
+        "algorithm": 8,
+        "feedback": 7,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "CL.HI-HAT",
+        "operator_output": [
+          94,
+          99,
+          99,
+          99,
+          99,
+          99
+        ]
+      }
+    },
+    {
+      "file": "HH/Hi-Hat 1.syx",
+      "category": "HH",
+      "length": 163,
+      "sha256": "6a197880e5d5212217b21d88c7add75ef9e9c799ce4cbc9e4f98659d44da5dbc",
+      "semantic": {
+        "algorithm": 10,
+        "feedback": 0,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "Hi-Hat 1",
+        "operator_output": [
+          79,
+          94,
+          99,
+          99,
+          91,
+          99
+        ]
+      }
+    },
+    {
+      "file": "HH/Hi-Hat 2.syx",
+      "category": "HH",
+      "length": 163,
+      "sha256": "9683037ba3a405efaf2124e9ce702a4fabab529412365896272b49344846742c",
+      "semantic": {
+        "algorithm": 10,
+        "feedback": 7,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "Hi-Hat 2",
+        "operator_output": [
+          79,
+          97,
+          99,
+          99,
+          92,
+          99
+        ]
+      }
+    },
+    {
+      "file": "HH/Open HiHat.syx",
+      "category": "HH",
+      "length": 163,
+      "sha256": "fa981b5eb0290b5e6088382a5cb990860fc696147fd4af26e221718c2e4698c6",
+      "semantic": {
+        "algorithm": 10,
+        "feedback": 0,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "Open HiHat",
+        "operator_output": [
+          79,
+          94,
+          99,
+          99,
+          91,
+          99
+        ]
+      }
+    },
+    {
+      "file": "SD/K SNARE  7.syx",
+      "category": "SD",
+      "length": 163,
+      "sha256": "a310bbef0cafe5f06fb377c78e04958ca5bf27e8801df54ec3dc635661882ad2",
+      "semantic": {
+        "algorithm": 15,
+        "feedback": 7,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "K SNARE  7",
+        "operator_output": [
+          97,
+          51,
+          82,
+          81,
+          99,
+          99
+        ]
+      }
+    },
+    {
+      "file": "SD/Kik.Snare.syx",
+      "category": "SD",
+      "length": 163,
+      "sha256": "0291f51e816f48b44f0b2778df390878ff9254d90f82ebf55fdc118389fd3771",
+      "semantic": {
+        "algorithm": 27,
+        "feedback": 7,
+        "osc_sync": 1,
+        "transpose": 12,
+        "name": "Kik.Snare",
+        "operator_output": [
+          99,
+          99,
+          99,
+          86,
+          98,
+          99
+        ]
+      }
+    },
+    {
+      "file": "SD/SNARE (1).syx",
+      "category": "SD",
+      "length": 163,
+      "sha256": "acf0268fac34e80bedb277e626f60613bd5aab3dc37b03d309e94a49982d270a",
+      "semantic": {
+        "algorithm": 10,
+        "feedback": 7,
+        "osc_sync": 1,
+        "transpose": 48,
+        "name": "SNARE",
+        "operator_output": [
+          99,
+          99,
+          86,
+          77,
+          86,
+          99
+        ]
+      }
+    },
+    {
+      "file": "SD/SNARE.syx",
+      "category": "SD",
+      "length": 163,
+      "sha256": "acf0268fac34e80bedb277e626f60613bd5aab3dc37b03d309e94a49982d270a",
+      "semantic": {
+        "algorithm": 10,
+        "feedback": 7,
+        "osc_sync": 1,
+        "transpose": 48,
+        "name": "SNARE",
+        "operator_output": [
+          99,
+          99,
+          86,
+          77,
+          86,
+          99
+        ]
+      }
+    },
+    {
+      "file": "SD/SNAREDRUM.syx",
+      "category": "SD",
+      "length": 163,
+      "sha256": "bd12aa3f7e112f33cf78c4a6d91e91b0127cb0847389025c38bfe69c8623042c",
+      "semantic": {
+        "algorithm": 3,
+        "feedback": 7,
+        "osc_sync": 1,
+        "transpose": 12,
+        "name": "SNAREDRUM",
+        "operator_output": [
+          85,
+          99,
+          99,
+          75,
+          84,
+          99
+        ]
+      }
+    },
+    {
+      "file": "SD/SnareDr.4.syx",
+      "category": "SD",
+      "length": 163,
+      "sha256": "5f882e56933debb572a133dca98e918856d78bfc9ee294671041b6d441745dbc",
+      "semantic": {
+        "algorithm": 17,
+        "feedback": 5,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "SnareDr.4",
+        "operator_output": [
+          98,
+          99,
+          57,
+          94,
+          68,
+          99
+        ]
+      }
+    },
+    {
+      "file": "SD/Swissnare.syx",
+      "category": "SD",
+      "length": 163,
+      "sha256": "b3139346dcbcd3274fdff6a34dbb9dc1377d473cdfbc97f70c3ba25821a73eda",
+      "semantic": {
+        "algorithm": 3,
+        "feedback": 7,
+        "osc_sync": 1,
+        "transpose": 12,
+        "name": "Swissnare",
+        "operator_output": [
+          99,
+          99,
+          99,
+          75,
+          84,
+          99
+        ]
+      }
+    },
+    {
+      "file": "TOM/SYN TOMS '.syx",
+      "category": "TOM",
+      "length": 163,
+      "sha256": "1ff6de67aefa4598d626f097e3191fefe2b846e3a98b91f678c49c5f5721b63c",
+      "semantic": {
+        "algorithm": 15,
+        "feedback": 7,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "SYN TOMS '",
+        "operator_output": [
+          99,
+          58,
+          0,
+          0,
+          99,
+          99
+        ]
+      }
+    },
+    {
+      "file": "TOM/SYN TOMS 3 (1).syx",
+      "category": "TOM",
+      "length": 163,
+      "sha256": "9545a46de0adec37b20901c1c9bd8da2ffc46eae57012ca25febee1ae91c91d0",
+      "semantic": {
+        "algorithm": 15,
+        "feedback": 7,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "SYN TOMS 3",
+        "operator_output": [
+          75,
+          99,
+          99,
+          0,
+          99,
+          99
+        ]
+      }
+    },
+    {
+      "file": "TOM/SYN TOMS 3.syx",
+      "category": "TOM",
+      "length": 163,
+      "sha256": "1162a152a0f6e9d970efbc607857d82edc159f6371c4af0152f5c8330adb2eed",
+      "semantic": {
+        "algorithm": 15,
+        "feedback": 7,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "SYN TOMS 3",
+        "operator_output": [
+          75,
+          99,
+          99,
+          0,
+          99,
+          99
+        ]
+      }
+    },
+    {
+      "file": "TOM/SimTomTom4.syx",
+      "category": "TOM",
+      "length": 163,
+      "sha256": "1eaf49a518bd8b53ba43a1bd72dab1ec0c1f8b5add008f1c1ef2fa28d906f3bc",
+      "semantic": {
+        "algorithm": 15,
+        "feedback": 7,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "SimTomTom4",
+        "operator_output": [
+          75,
+          99,
+          99,
+          0,
+          99,
+          99
+        ]
+      }
+    },
+    {
+      "file": "TOM/TOM-TOM 2.syx",
+      "category": "TOM",
+      "length": 163,
+      "sha256": "bed4a2d0fb2f7c539bb9c4e6233967ff46d9e13b9c307607fd98997d1050137d",
+      "semantic": {
+        "algorithm": 3,
+        "feedback": 3,
+        "osc_sync": 1,
+        "transpose": 12,
+        "name": "TOM-TOM 2",
+        "operator_output": [
+          99,
+          75,
+          99,
+          83,
+          84,
+          78
+        ]
+      }
+    },
+    {
+      "file": "TOM/Tom.3.syx",
+      "category": "TOM",
+      "length": 163,
+      "sha256": "67e4d5a05da8047f9806c7cabf90313d81135c0b807242489be70dd93a8261dd",
+      "semantic": {
+        "algorithm": 16,
+        "feedback": 7,
+        "osc_sync": 1,
+        "transpose": 5,
+        "name": "Tom.3",
+        "operator_output": [
+          79,
+          99,
+          77,
+          74,
+          63,
+          99
+        ]
+      }
+    }
+  ],
+  "known_cases": {
+    "known_good": "HH/Hi-Hat 1.syx",
+    "known_fail": "HH/Hi-Hat 2.syx",
+    "good_sha256": "6a197880e5d5212217b21d88c7add75ef9e9c799ce4cbc9e4f98659d44da5dbc",
+    "fail_sha256": "9683037ba3a405efaf2124e9ce702a4fabab529412365896272b49344846742c",
+    "good_to_fail_payload_changes": {
+      "3": 10,
+      "24": 19,
+      "37": 97,
+      "42": 72,
+      "43": 55,
+      "44": 90,
+      "45": 61,
+      "64": 24,
+      "65": 91,
+      "85": 26,
+      "87": 19,
+      "100": 92,
+      "105": 64,
+      "106": 50,
+      "108": 58,
+      "135": 7,
+      "152": 50
+    },
+    "good_to_fail_sound_changes": {
+      "3": 10,
+      "24": 19,
+      "37": 97,
+      "42": 72,
+      "43": 55,
+      "44": 90,
+      "45": 61,
+      "64": 24,
+      "65": 91,
+      "85": 26,
+      "87": 19,
+      "100": 92,
+      "105": 64,
+      "106": 50,
+      "108": 58,
+      "135": 7
+    },
+    "good_to_open_payload_changes": {
+      "68": 0,
+      "106": 48,
+      "145": 79,
+      "146": 112,
+      "147": 101,
+      "148": 110,
+      "149": 32,
+      "150": 72,
+      "151": 105,
+      "152": 72,
+      "153": 97,
+      "154": 116
+    },
+    "good_to_open_sound_changes": {
+      "68": 0,
+      "106": 48
+    }
+  },
+  "controlled_variants": [
+    {
+      "file": "controlled-variants/Hi-Hat-1-feedback-7.syx",
+      "source": "HH/Hi-Hat 1.syx",
+      "changes": {
+        "135": 7
+      },
+      "rationale": "Hi-Hat 1 with only feedback changed to Hi-Hat 2's value",
+      "sha256": "0f3b81d63b03e09b61f37b6126c4452264c69cc0a067e6397454e310607c0026",
+      "semantic": {
+        "algorithm": 10,
+        "feedback": 7,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "Hi-Hat 1",
+        "operator_output": [
+          79,
+          94,
+          99,
+          99,
+          91,
+          99
+        ]
+      },
+      "length": 163
+    },
+    {
+      "file": "controlled-variants/Hi-Hat-1-open-hihat-byte68.syx",
+      "source": "HH/Hi-Hat 1.syx",
+      "changes": {
+        "68": 0
+      },
+      "rationale": "Hi-Hat 1 with only Open HiHat runtime offset 68",
+      "sha256": "55883af9e58db5fdff7ff4c6d2839a0b39e747e48d6d75a93984323255520f46",
+      "semantic": {
+        "algorithm": 10,
+        "feedback": 0,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "Hi-Hat 1",
+        "operator_output": [
+          79,
+          94,
+          99,
+          99,
+          91,
+          99
+        ]
+      },
+      "length": 163
+    },
+    {
+      "file": "controlled-variants/Hi-Hat-1-open-hihat-byte106.syx",
+      "source": "HH/Hi-Hat 1.syx",
+      "changes": {
+        "106": 48
+      },
+      "rationale": "Hi-Hat 1 with only Open HiHat runtime offset 106",
+      "sha256": "39376072811b52aaedba87128e001a923c4f901e2063a62b659a42383a840500",
+      "semantic": {
+        "algorithm": 10,
+        "feedback": 0,
+        "osc_sync": 1,
+        "transpose": 24,
+        "name": "Hi-Hat 1",
+        "operator_output": [
+          79,
+          94,
+          99,
+          99,
+          91,
+          99
+        ]
+      },
+      "length": 163
+    }
+  ]
+}

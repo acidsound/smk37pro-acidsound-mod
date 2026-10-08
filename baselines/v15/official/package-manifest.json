@@ -1,0 +1,89 @@
+{
+  "app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+  "flash_sha256": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+  "format": "smk37-v15-inspection-v1",
+  "layout": {
+    "app_area_end_exclusive": 634067,
+    "app_area_start": 16384,
+    "app_data_size": 617012,
+    "app_data_start": 16672,
+    "chip_key": "0x980f",
+    "flash_offset": 1024,
+    "flash_size": 638976
+  },
+  "package_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+  "payload_sha256": "141f8b1780b18c0cddc4bdcfbe13690029804a5b0021f92869ec756c2f2d3ad9",
+  "protected_flash_hashes": {
+    "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+    "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+    "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+    "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+  },
+  "safety_gate": "PASS",
+  "ufw_entries": [
+    {
+      "data_crc16": "0x54e8",
+      "index": 0,
+      "name": "flash.bin",
+      "offset": 1024,
+      "size": 638976,
+      "type": 0
+    },
+    {
+      "data_crc16": "0x0000",
+      "index": 1,
+      "name": "info.log",
+      "offset": 640000,
+      "size": 0,
+      "type": 2
+    },
+    {
+      "data_crc16": "0x0fbf",
+      "index": 2,
+      "name": "USR",
+      "offset": 640000,
+      "size": 37382,
+      "type": 50
+    },
+    {
+      "data_crc16": "0x6a1b",
+      "index": 3,
+      "name": "isd_config.ini",
+      "offset": 677408,
+      "size": 3427,
+      "type": 52
+    },
+    {
+      "data_crc16": "0xa1c9",
+      "index": 4,
+      "name": "ota.bin",
+      "offset": 680864,
+      "size": 19969,
+      "type": 100
+    },
+    {
+      "data_crc16": "0xaab7",
+      "index": 5,
+      "name": "script.ver",
+      "offset": 700864,
+      "size": 27,
+      "type": 251
+    },
+    {
+      "data_crc16": "0x7662",
+      "index": 6,
+      "name": "blimit.bin",
+      "offset": 700896,
+      "size": 144,
+      "type": 161
+    },
+    {
+      "data_crc16": "0x8936",
+      "index": 7,
+      "name": "tail.bin",
+      "offset": 701056,
+      "size": 64,
+      "type": 255
+    }
+  ]
+}

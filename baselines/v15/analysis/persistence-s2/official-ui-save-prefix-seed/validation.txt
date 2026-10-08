@@ -1,0 +1,37 @@
+PASS	official app exists
+PASS	official fwsc exists
+PASS	storage report exists
+PASS	sysex report exists
+PASS	official v15 app SHA-256
+PASS	official v15 FWSC SHA-256
+PASS	exact official bytes 0x0201e468 bfea69fe complete product SysEx calls 0x0201e13e packer
+PASS	exact official bytes 0x0201e46c bfeaf838 complete product SysEx reloads selected record through 0x02005660
+PASS	exact official bytes 0x0201e49c bfea4ffe segmented-final product SysEx calls 0x0201e13e packer
+PASS	exact official bytes 0x0201e4a0 bfeade38 segmented-final product SysEx reloads selected record through 0x02005660
+PASS	exact official bytes 0x0201e606 89f8180e single-parameter path requires exact 7-byte message
+PASS	exact official bytes 0x0201e622 42f0141a single-parameter writer targets current snapshot base +0x1a14
+PASS	exact official bytes 0x0201e630 0017 single-parameter index is truncated to 8 bits
+PASS	exact official bytes 0x0201e634 d8ee0112 single-parameter writer stores msg[5] to current snapshot index
+PASS	exact official bytes 0x0201e236 bfea6434 stock packer writes selected packed 0x80 record through 0x02004b02
+PASS	exact official bytes 0x02026da6 beeaacee stock SAVE writes selected raw 0xa3 record through 0x02004b02
+PASS	exact official bytes 0x02026dac bfeac7b9 stock SAVE calls stock packer after raw write
+PASS	exact official bytes 0x02026dd0 beea97ee stock SAVE flushes flag table through 0x02004b02
+PASS	report snippet present in baselines/v15/analysis/persistence-s2/storage/report.md: 0x02026da6`: write `g+0x1a14`, length `0xa3`, to `*(g+0x160)+0x4000+inde
+PASS	report snippet present in baselines/v15/analysis/persistence-s2/storage/report.md: Both `0x02004b02` returns are ignored.
+PASS	report snippet present in baselines/v15/analysis/persistence-s2/storage/report.md: bank   = g[0x3a4]
+PASS	report snippet present in baselines/v15/analysis/persistence-s2/storage/report.md: preset = g[0x3a0 + bank]
+PASS	report snippet present in baselines/v15/analysis/persistence-s2/storage/report.md: It returns early for `bank > 3` or `preset > 31`.
+PASS	report snippet present in baselines/v15/analysis/persistence-s2/storage/report.md: Raw record `index` is:
+PASS	report snippet present in baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md: F0 43 00 00 01 1B` + `0x9c` bytes + `F7`
+PASS	report snippet present in baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md: `0x0201e468` and `0x0201e49c` are the two official v15 calls from the Sy
+PASS	report snippet present in baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md: `0x0201e13e` consumes the expanded single-voice source pointer in `r0`, 
+PASS	report snippet present in baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md: Single-parameter writer
+PASS	report snippet present in baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md: `0201e634	d8ee0112	sb	sb r1,[r0 + r2]
+PASS	storage exact-rows.tsv contains 02005662
+PASS	storage exact-rows.tsv contains 02026da6
+PASS	storage exact-rows.tsv contains 02026dac
+PASS	storage exact-rows.tsv contains 02026dd0
+PASS	Bank D slots 1..16 map to records 96..111
+PASS	record 96 raw storage offset 0x7d20
+PASS	record 111 physical start 0x0fc6ad
+RESULT	PASS

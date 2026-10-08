@@ -1,0 +1,38 @@
+{
+  "format": "smk37-v15-h0-forced-recovery-plan-v1",
+  "hash_representation": "FWSC-unpacked flash.bin bytes; same representation previously validated against WL82 forced-loader dumps",
+  "safety_policy": {
+    "device_access": "none; offline artifact preparation only",
+    "required_before_write": "two identical fresh 1 MiB forced-loader dumps and exact H0 target-sector hashes",
+    "write_scope": "two audited 4 KiB application sectors only",
+    "forbidden": "chip erase, full-flash write, key burn, boot-prefix write, reset, or run-app"
+  },
+  "stock_package_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+  "h0_package_sha256": "114d814b5def641c979a5f0fbd2e5dc06d982c807662d5221dc2e0e936e5e566",
+  "stock_flash_sha256": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+  "h0_flash_sha256": "458d1c0a1e08e5f74ad07ab3dd04cf7d7b591a421668f5ff822a15b250746998",
+  "flash_length": 638976,
+  "confirmations": [
+    "I_UNDERSTAND_THIS_ERASES_EXACTLY_TWO_H0_SECTORS",
+    "I_HAVE_TWO_IDENTICAL_1MIB_DUMPS_AND_H0_TARGET_HASHES",
+    "RESTORE_OFFICIAL_V15_SECTORS_NOW"
+  ],
+  "sectors": [
+    {
+      "address": "0x04000",
+      "length": 4096,
+      "stock_file": "stock-sector-04000.bin",
+      "stock_sha256": "f0dbdd1756fdb0fbf31def403c74c4f4c69ec30bfc6a405f88d9bd540a9cf8e9",
+      "expected_target_sha256": "46b2e6d5f4aad172e92911202fa1f095c84924a1d5137cbb2f66b3a767e7d6cc",
+      "changed_byte_count": 9
+    },
+    {
+      "address": "0x62000",
+      "length": 4096,
+      "stock_file": "stock-sector-62000.bin",
+      "stock_sha256": "7fbd04123b6ffecd937f5b9896e385c62a12a1ef16a316888dd071fa43649f6d",
+      "expected_target_sha256": "bc70da294bd64036f9e3ea33fa62d026bae7694ef51729c949396303aaf7a6c2",
+      "changed_byte_count": 1
+    }
+  ]
+}

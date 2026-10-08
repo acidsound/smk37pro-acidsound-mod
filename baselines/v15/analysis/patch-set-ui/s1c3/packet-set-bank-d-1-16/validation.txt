@@ -1,0 +1,5 @@
+PASS offline exact Bank D 1..16 packet set
+PASS 16 runtime objects: 156 bytes each, hashes pinned
+PASS 16 direct Yamaha product SysEx packets: 163 bytes each, order pinned
+PASS note-ordered slots 0..15 -> notes 36..51 and physical Pad permutation from 2a23cf5
+BLOCK device access, firmware/FWSC, flash/reset, MIDI transport, live send

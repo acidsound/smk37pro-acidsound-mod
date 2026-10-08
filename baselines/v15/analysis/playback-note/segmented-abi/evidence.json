@@ -1,0 +1,459 @@
+{
+  "blockers": [
+    "Current committed S1-C4 v2 package is fail-closed for segmented final because 0x0201e49c targets the stub at 0x0201e224.",
+    "A future flashable fix needs deterministic rebuild/review/rollback of a package with segmented callsite 0x0201e49c retargeted to reset wrapper 0x0201e228 or an equivalently reviewed segmented-safe entry.",
+    "This static pass proves the firmware ABI once the official segmented-final path is entered. It does not live-prove Chrome/CoreMIDI scheduling or device state that selects that path."
+  ],
+  "callsites": {
+    "official_direct": {
+      "address": "0x0201e468",
+      "bytes": "bfea69fe",
+      "target": "0x0201e13e"
+    },
+    "official_segmented": {
+      "address": "0x0201e49c",
+      "bytes": "bfea4ffe",
+      "target": "0x0201e13e"
+    },
+    "s1c3_direct": {
+      "address": "0x0201e468",
+      "bytes": "bfeaddfe",
+      "target": "0x0201e226"
+    },
+    "s1c3_segmented": {
+      "address": "0x0201e49c",
+      "bytes": "bfeac1fe",
+      "target": "0x0201e222"
+    },
+    "s1c4_direct": {
+      "address": "0x0201e468",
+      "bytes": "bfeadefe",
+      "target": "0x0201e228"
+    },
+    "s1c4_segmented_current": {
+      "address": "0x0201e49c",
+      "bytes": "bfeac2fe",
+      "target": "0x0201e224"
+    },
+    "s1c4_segmented_safe_retarget_to_reset_wrapper": {
+      "address": "0x0201e49c",
+      "bytes": "bfeac4fe",
+      "status": "not applied by this evidence pass",
+      "target": "0x0201e228"
+    }
+  },
+  "decision": "PASS_STATIC_ABI_PROVEN_CURRENT_S1C4_SEGMENTED_ROUTE_BLOCKED",
+  "format": "smk37-v15-playback-note-segmented-abi-evidence-v1",
+  "handler_register_abi": {
+    "entry": {
+      "r0": "incoming chunk pointer",
+      "r1": "incoming chunk length",
+      "r4": "saved chunk pointer",
+      "r6": "0x01c37030 before +0x0fa0 stage addend",
+      "r7": "0x01c33260 object/control base",
+      "r9": "saved chunk length"
+    },
+    "final_segmented": {
+      "cleanup_after_reload": "goto 0x0201e538 clears segmented state then returns",
+      "copy": "memcpy(0x01c37fd0 + previous_len, r4, r9 - 2)",
+      "length_gate": "previous_len + r9 == 0x9e",
+      "previous_len": "r0 = lh.z [r7+0x9c]",
+      "producer_call_arg": "r0 = 0x01c37fd0",
+      "r9_at_product_call": "final chunk length, not 0xa3 and not total",
+      "reload_after_product": "0x0201e4a0 -> 0x02005660",
+      "state_gate": "[r7+0x104] == 2 branches to 0x0201e472",
+      "terminal_gate": "*(r4+r9-1) == 0xf7"
+    },
+    "initial_segmented": {
+      "copy": "memcpy(0x01c37fd0, chunk+6, r9-6)",
+      "gate": "F0 43 00 09 20 00 reaches 0x0201e57a",
+      "no_product_call": true,
+      "published_offset": "sh (r9-6), [r7+0x9c]"
+    }
+  },
+  "official_listing_rows": {
+    "33677908": {
+      "address": "0x0201e254",
+      "bytes": "7904",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "push",
+      "text": "push {rets,r9,r8,r7,r6,r5,r4}"
+    },
+    "33677910": {
+      "address": "0x0201e256",
+      "bytes": "0416",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "mov",
+      "text": "mov r4,r0"
+    },
+    "33677912": {
+      "address": "0x0201e258",
+      "bytes": "19d6",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "mov",
+      "text": "mov r9,r1"
+    },
+    "33678328": {
+      "address": "0x0201e3f8",
+      "bytes": "50ee7401",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "lb.z",
+      "text": "lb.z r0,[r7 + 0x104]"
+    },
+    "33678332": {
+      "address": "0x0201e3fc",
+      "bytes": "c6ff3070c301",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "mov",
+      "text": "mov r6,#0x1c37030"
+    },
+    "33678338": {
+      "address": "0x0201e402",
+      "bytes": "00f83604",
+      "flow": "CONDITIONAL_JUMP",
+      "mnemonic": "je",
+      "text": "je r0,0x2,0x0201e472"
+    },
+    "33678450": {
+      "address": "0x0201e472",
+      "bytes": "50ed7c09",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "lh.z",
+      "text": "lh.z r0,[r7 + 0x9c]"
+    },
+    "33678454": {
+      "address": "0x0201e476",
+      "bytes": "b4e04019",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "add",
+      "text": "add r1,r4,r9"
+    },
+    "33678458": {
+      "address": "0x0201e47a",
+      "bytes": "b4f00059",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "add",
+      "text": "add r5,r0,r9"
+    },
+    "33678462": {
+      "address": "0x0201e47e",
+      "bytes": "195f",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "_lb.z",
+      "text": "_lb.z r1,[r1 + -0x1]"
+    },
+    "33678464": {
+      "address": "0x0201e480",
+      "bytes": "91f849ee",
+      "flow": "CONDITIONAL_JUMP",
+      "mnemonic": "jne",
+      "text": "jne r1,#0xf7"
+    },
+    "33678468": {
+      "address": "0x0201e484",
+      "bytes": "95f8583c",
+      "flow": "CONDITIONAL_JUMP",
+      "mnemonic": "jne",
+      "text": "jne r5,#0x9e"
+    },
+    "33678472": {
+      "address": "0x0201e488",
+      "bytes": "06e1a06f",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "add",
+      "text": "add r6,r6,#0xfa0"
+    },
+    "33678476": {
+      "address": "0x0201e48c",
+      "bytes": "6018",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "add",
+      "text": "add r0,r6"
+    },
+    "33678478": {
+      "address": "0x0201e48e",
+      "bytes": "32e1fe9f",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "add",
+      "text": "add r2,r9,#-0x2"
+    },
+    "33678482": {
+      "address": "0x0201e492",
+      "bytes": "4116",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "mov",
+      "text": "mov r1,r4"
+    },
+    "33678484": {
+      "address": "0x0201e494",
+      "bytes": "80ff34a80200",
+      "flow": "UNCONDITIONAL_CALL",
+      "mnemonic": "call",
+      "text": "call 0x02048cce"
+    },
+    "33678490": {
+      "address": "0x0201e49a",
+      "bytes": "6016",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "mov",
+      "text": "mov r0,r6"
+    },
+    "33678492": {
+      "address": "0x0201e49c",
+      "bytes": "bfea4ffe",
+      "flow": "UNCONDITIONAL_CALL",
+      "mnemonic": "call",
+      "text": "call 0x0201e13e"
+    },
+    "33678496": {
+      "address": "0x0201e4a0",
+      "bytes": "bfeade38",
+      "flow": "UNCONDITIONAL_CALL",
+      "mnemonic": "call",
+      "text": "call 0x02005660"
+    },
+    "33678500": {
+      "address": "0x0201e4a4",
+      "bytes": "2489",
+      "flow": "UNCONDITIONAL_JUMP",
+      "mnemonic": "goto",
+      "text": "goto 0x0201e538"
+    },
+    "33678648": {
+      "address": "0x0201e538",
+      "bytes": "4020",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "mov",
+      "text": "mov r0,#0x0"
+    },
+    "33678650": {
+      "address": "0x0201e53a",
+      "bytes": "52ee7401",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "sb",
+      "text": "sb r0,[r7 + 0x14]"
+    },
+    "33678714": {
+      "address": "0x0201e57a",
+      "bytes": "4021",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "mov",
+      "text": "mov r0,#0x1"
+    },
+    "33678720": {
+      "address": "0x0201e580",
+      "bytes": "00e1a06f",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "add",
+      "text": "add r0,r6,#0xfa0"
+    },
+    "33678724": {
+      "address": "0x0201e584",
+      "bytes": "4986",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "add",
+      "text": "add r1,r4,#0x6"
+    },
+    "33678726": {
+      "address": "0x0201e586",
+      "bytes": "34e1fa9f",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "add",
+      "text": "add r4,r9,#-0x6"
+    },
+    "33678730": {
+      "address": "0x0201e58a",
+      "bytes": "4216",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "mov",
+      "text": "mov r2,r4"
+    },
+    "33678732": {
+      "address": "0x0201e58c",
+      "bytes": "80ff3ca70200",
+      "flow": "UNCONDITIONAL_CALL",
+      "mnemonic": "call",
+      "text": "call 0x02048cce"
+    },
+    "33678738": {
+      "address": "0x0201e592",
+      "bytes": "50ed7d49",
+      "flow": "FALL_THROUGH",
+      "mnemonic": "sh",
+      "text": "sh r4,[r7 + 0x9c]"
+    }
+  },
+  "s1c4_producer_rows": {
+    "0x0201e1e8": {
+      "asm": "add r1,r4,#0x9b",
+      "bytes": "01e19b40",
+      "meaning": "staging[0x9b] pointer",
+      "name": "producer.staging_last_pointer"
+    },
+    "0x0201e1ec": {
+      "asm": "lb.z r2,[r1]",
+      "bytes": "1a40",
+      "meaning": "Playback Note from wire byte 161",
+      "name": "producer.playback_load"
+    },
+    "0x0201e1ee": {
+      "asm": "sb [r0],r2",
+      "bytes": "8a40",
+      "meaning": "store note to 0x01c46f20+slot",
+      "name": "producer.playback_store"
+    },
+    "0x0201e1f2": {
+      "asm": "sb [r1],r2",
+      "bytes": "9a40",
+      "meaning": "restore staging[0x9b] before copy/reload",
+      "name": "producer.restore_staging_last"
+    },
+    "0x0201e1fa": {
+      "asm": "call 0x2048cce",
+      "bytes": "80ffceaa0200",
+      "meaning": "memcpy clobbers volatile r3",
+      "name": "producer.memcpy_call"
+    },
+    "0x0201e202": {
+      "asm": "sb [r6-1],r0",
+      "bytes": "e85f",
+      "meaning": "restore slot.voice[0x9b] before valid/reload",
+      "name": "producer.restore_slot_last"
+    },
+    "0x0201e208": {
+      "asm": "sb [r6],r0",
+      "bytes": "e840",
+      "meaning": "valid last for slot",
+      "name": "producer.valid_store"
+    },
+    "0x0201e20e": {
+      "asm": "sb [r5+1],r3",
+      "bytes": "db41",
+      "meaning": "loaded_count after valid",
+      "name": "producer.count_store"
+    },
+    "0x0201e218": {
+      "asm": "sb [r5+2],r0",
+      "bytes": "d842",
+      "meaning": "state ARMED last publishes map",
+      "name": "producer.armed_store"
+    },
+    "0x0201e224": {
+      "asm": "push {rets,r9..r4}",
+      "bytes": "7904",
+      "meaning": "segmented no-mutation stub",
+      "name": "producer.segmented_stub_push"
+    },
+    "0x0201e226": {
+      "asm": "pop {pc,r9..r4}",
+      "bytes": "5904",
+      "meaning": "return",
+      "name": "producer.segmented_stub_return"
+    },
+    "0x0201e228": {
+      "asm": "push {rets,r9..r4}",
+      "bytes": "7904",
+      "meaning": "reset wrapper",
+      "name": "producer.reset_push_saved"
+    },
+    "0x0201e24a": {
+      "asm": "call 0x201e196",
+      "bytes": "80ff46ffffff",
+      "meaning": "call sequential producer",
+      "name": "producer.reset_call_producer"
+    }
+  },
+  "safe_publication": {
+    "current_blocker": "S1-C4 v2 failclosed routes 0x0201e49c to 0x0201e224 no-mutation stub, so split accepted final packets cannot publish playback byte",
+    "minimal_safe_retarget": "0x0201e49c short call bytes bfeac4fe -> reset wrapper 0x0201e228; this preserves reset lifecycle and then calls producer 0x0201e196",
+    "not_done_here": "No firmware/package was modified or flashed by this investigation",
+    "requirement": "publish from assembled stage[0x9b], never from r4/r9/final chunk offsets",
+    "s1c4_producer_satisfies_stage_read_order": true,
+    "why": "official final ABI has already reconstructed 0x9c payload bytes at 0x01c37fd0 and passes r0=stage; r9 is final chunk length only"
+  },
+  "scope": {
+    "device_accessed": false,
+    "flash_performed": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "reset_performed": false
+  },
+  "sha256": {
+    "official_app": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "s1c3_app": "7c672938023beee74d599f43ccd5c7642396b89819e929501274239aed5e5d4b",
+    "s1c4_app": "66ac465cc058682ee015e0f1b980da6593b09ac345f4f7d5abd6396077b46b25",
+    "s1c4_combined": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+    "s1c4_producer": "a7627984549f62592384189a707ef04512921ad693b18409eb483dcccb53c438",
+    "s1c4_selector": "900e8f05c8157737e89a22338b9a4575aa3ff124bd70ff132de0226654fce29f"
+  },
+  "split_models": [
+    {
+      "accepted_total_previous_plus_r9": 158,
+      "assembled_stage_payload_len": 156,
+      "direct_wire_playback_offset": 161,
+      "final_chunk_len_r9": 158,
+      "final_copy_len_r2": 156,
+      "playback_byte_source": "final chunk",
+      "playback_value": 36,
+      "previous_len": 0,
+      "stage_byte_0x9b": 36,
+      "stage_playback_offset": 155
+    },
+    {
+      "accepted_total_previous_plus_r9": 158,
+      "assembled_stage_payload_len": 156,
+      "direct_wire_playback_offset": 161,
+      "final_chunk_len_r9": 157,
+      "final_copy_len_r2": 155,
+      "playback_byte_source": "final chunk",
+      "playback_value": 37,
+      "previous_len": 1,
+      "stage_byte_0x9b": 37,
+      "stage_playback_offset": 155
+    },
+    {
+      "accepted_total_previous_plus_r9": 158,
+      "assembled_stage_payload_len": 156,
+      "direct_wire_playback_offset": 161,
+      "final_chunk_len_r9": 78,
+      "final_copy_len_r2": 76,
+      "playback_byte_source": "final chunk",
+      "playback_value": 64,
+      "previous_len": 80,
+      "stage_byte_0x9b": 64,
+      "stage_playback_offset": 155
+    },
+    {
+      "accepted_total_previous_plus_r9": 158,
+      "assembled_stage_payload_len": 156,
+      "direct_wire_playback_offset": 161,
+      "final_chunk_len_r9": 3,
+      "final_copy_len_r2": 1,
+      "playback_byte_source": "final chunk",
+      "playback_value": 127,
+      "previous_len": 155,
+      "stage_byte_0x9b": 127,
+      "stage_playback_offset": 155
+    },
+    {
+      "accepted_total_previous_plus_r9": 158,
+      "assembled_stage_payload_len": 156,
+      "direct_wire_playback_offset": 161,
+      "final_chunk_len_r9": 2,
+      "final_copy_len_r2": 0,
+      "playback_byte_source": "initial chunk",
+      "playback_value": 0,
+      "previous_len": 156,
+      "stage_byte_0x9b": 0,
+      "stage_playback_offset": 155
+    }
+  ],
+  "stage": {
+    "addend": "0x0fa0",
+    "base": "0x01c37fd0",
+    "direct_wire_playback_offset": 161,
+    "playback_payload_offset": 155,
+    "product_payload_len": 156,
+    "root": "0x01c37030"
+  }
+}

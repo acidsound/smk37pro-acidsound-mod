@@ -1,0 +1,90 @@
+{
+  "format": "smk37-v15-channel10-abc-design-matrix-v2",
+  "scope": "official v15 static evidence plus R01/R01b/R01c live evidence; no patch addresses inferred",
+  "status": "design_ready_not_patch_ready",
+  "fixed_evidence": {
+    "current_object_alias": "0x01c33260+0x1a14 == 0x01c34c74",
+    "loader": {
+      "address": "0x02005660",
+      "function_end": "0x020057de",
+      "caller_supplied_destination": false,
+      "fixed_object_base": "0x01c33260",
+      "raw_copy_size": "0xa3",
+      "note_source_prefix_size": "0x9c",
+      "external_side_effects": [
+        "four helper calls driven by current tail 0x9c..0x9f",
+        "writes through object field +0x15c",
+        "flag-dependent exchange between current +0x86/+0x87 and tail +0xa0/+0xa1"
+      ]
+    },
+    "dispatcher": {
+      "address": "0x0201c5ec",
+      "channel_register": "r9",
+      "note_off_copy_callsite": "0x0201c63e",
+      "note_on_copy_callsite": "0x0201c67c",
+      "copy_size": "0x9c",
+      "stock_source": "0x01c34c74"
+    },
+    "live": {
+      "channel_branch_separation": "PASS",
+      "matched_note_on_off_source": "PASS in R01b/R01c",
+      "static_named_factory_snapshot": "FAIL",
+      "intentional_known_ch10_patch": "NOT ESTABLISHED"
+    },
+    "clean_mooger_negative_evidence": {
+      "r01c_source_sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275",
+      "simulated_loader_first_0x9c_sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275",
+      "byte_equal": true,
+      "implication": "A first-0x9c clone alone is not yet a credible fix for the R01c wrong-timbre failure. Tail/helper external state must be isolated or disproven with actual live capture."
+    }
+  },
+  "designs": [
+    {
+      "id": "A",
+      "name": "full UI Patch/runtime object clone then loader call",
+      "decision": "reject",
+      "source_destination_lifetime": "Full object boundary, pointee ownership, and deep-copy lifetime are unknown. A shallow clone aliases live UI, synth, and storage objects.",
+      "polyphony": "Global/helper aliases can contaminate overlapping Ch1/Ch10 events. The 16 indexed dispatcher slots do not prove 16-note polyphony.",
+      "note_off": "The same cloned source/state generation would still be required for Note On and Note Off.",
+      "ui_impact": "High because loader and helpers are hardcoded to the live global object.",
+      "code_cave": "At least the approximately 0x180-byte loader plus helper adaptation and deep-clone RAM would be needed. No safe cave or RAM region is proven."
+    },
+    {
+      "id": "B",
+      "name": "existing loader loads a factory bank entry into a separate RAM object",
+      "decision": "literal_design_reject; first_0x9c_clone_variant_on_hold",
+      "source_destination_lifetime": "The existing loader has no destination argument and always overwrites the live current object. Dedicated RAM owner and preload lifetime are unknown.",
+      "polyphony": "An immutable self-contained source would be low risk, but self-containment is currently contradicted by the clean Mooger first-0x9c equality and R01c live failure.",
+      "note_off": "Any viable variant must use the identical Ch10 source/state generation for Note On and Note Off.",
+      "ui_impact": "Low only after a side-effect-free preload exists. Temporary live selection/load/restore is high impact and rejected.",
+      "code_cave": "No preload writer, owned RAM, or safe executable cave is proven."
+    },
+    {
+      "id": "C",
+      "name": "switch current object pointer or state at Note On",
+      "decision": "global_state_switch_reject; source_pointer_dispatch_only_conditional",
+      "source_destination_lifetime": "A source-pointer switch is usable only if an independently valid immutable source exists. Global selection/loader state is shared and mutable.",
+      "polyphony": "Per-event global switching has the highest cross-channel race and release-order risk.",
+      "note_off": "Note-On-only switching is directly disproven by R01 stuck voice. Note Off must select the same source/state generation.",
+      "ui_impact": "Global state switching changes current Patch, helper state, and SAVE/SAVED-related behavior.",
+      "code_cave": "A source-only wrapper can be small, but its source producer is blocked. Save/load/restore and synchronization are not a minimal trampoline."
+    }
+  ],
+  "final_decision": {
+    "approved_patch_spec": null,
+    "reason": "No design currently has a proven self-contained Ch10 timbre source, owned lifetime, and safe code cave.",
+    "next_proof": [
+      "Capture actual live full 0xa3 current object immediately after stock target-Patch load.",
+      "Capture helper-updated external state and compare actual first 0x9c to the R01c/simulated hash.",
+      "If first 0x9c is equal, reject 0x9c-only clone and trace the external per-voice dependency.",
+      "Only after self-containment, RAM ownership, and safe cave proofs, route both Note On and Note Off to the same Ch10 source."
+    ],
+    "forbidden_now": [
+      "Calling 0x02005660 in the Note hot path",
+      "Assuming 0x02005660 accepts a caller-provided destination",
+      "Using 0x0201e13e as a safe cave",
+      "Assigning any unproven RAM or executable address",
+      "Switching only Note On without matched Note Off"
+    ]
+  }
+}

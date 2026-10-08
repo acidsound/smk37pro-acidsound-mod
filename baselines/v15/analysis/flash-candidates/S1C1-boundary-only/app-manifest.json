@@ -1,0 +1,44 @@
+{
+  "app_size": 617012,
+  "artifact_scope": "offline boundary discriminator only; no second-slot read/write or selector",
+  "changes": [
+    {
+      "address": "0x0200001e",
+      "file_offset": 30,
+      "new_hex": "c2ff8ccc0300",
+      "old_hex": "c2ffeccb0300",
+      "purpose": "boundary-only: extend BSS zeroing by 0xa0 through 0x01c46660"
+    },
+    {
+      "address": "0x0205e9f8",
+      "file_offset": 387576,
+      "new_hex": "c5ff6066c401",
+      "old_hex": "c5ffc065c401",
+      "purpose": "boundary-only: move H2 heap begin forward by exactly 0xa0"
+    }
+  ],
+  "format": "smk37-v15-s1c1-boundary-only-v1",
+  "h2_parent_app_sha256": "d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59",
+  "h2_to_child_changed_byte_count": 4,
+  "h2_to_child_changed_ranges": [
+    {
+      "end_exclusive": 34,
+      "start": 32
+    },
+    {
+      "end_exclusive": 387580,
+      "start": 387578
+    }
+  ],
+  "invariants": {
+    "additional_heap_reduction": 160,
+    "h2_code_byte_identical": true,
+    "h2_product_and_consumer_behavior_preserved": true,
+    "reserved_end": "0x01c46660",
+    "save_policy": "unchanged H2 no-write block",
+    "second_slot_access": false,
+    "selector_behavior": false
+  },
+  "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+  "output_app_sha256": "16023c9006f2d4d6467ef2d72d6165c14ffeb6cb758d074f7d8163a68146fb2e"
+}

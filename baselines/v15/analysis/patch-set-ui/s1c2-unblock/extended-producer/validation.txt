@@ -1,0 +1,10 @@
+$ python3 baselines/v15/analysis/patch-set-ui/s1c2-unblock/extended-producer/build_extended_producer.py
+candidate bytes: 134 / 178
+range: 0x0201e1a2..0x0201e228
+sha256: d989d7e852102126ae8dc2e4025b2717808e4f808bc2bf7885cb9c77ddeb05f7
+$ python3 baselines/v15/analysis/patch-set-ui/s1c2-unblock/extended-producer/validate.py
+extended producer candidate: PASS (134 / 178 bytes)
+range 0x0201e1a2..0x0201e228; handler 0x0201e254 untouched
+independent decode: PASS
+branch reach: PASS
+packet/route length gate: omitted, no producer ABI evidence for length/route

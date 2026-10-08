@@ -1,0 +1,5 @@
+segmented-final ABI validation PASS
+stage_base=0x01c37fd0 payload_len=0x9c playback_payload_offset=0x9b direct_wire_offset=161
+official_final_copy=memcpy(stage+previous_len, r4, r9-2); gate previous_len+r9==0x9e; product call r0=stage
+current_s1c4_segmented_call=0x0201e49c bfeac2fe -> 0x0201e224 stub BLOCKS split publication
+safe_retarget_candidate=0x0201e49c bfeac4fe -> 0x0201e228 reset wrapper; not applied here

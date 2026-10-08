@@ -1,0 +1,450 @@
+{
+  "byte_checks": {
+    "official": [
+      {
+        "address": "0x0201c62e",
+        "bytes": "1d41",
+        "path": "build/v15-official-app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c63e",
+        "bytes": "80ff8ac60200",
+        "path": "build/v15-official-app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c644",
+        "bytes": "00e13e61",
+        "path": "build/v15-official-app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c648",
+        "bytes": "8d40",
+        "path": "build/v15-official-app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c66a",
+        "bytes": "1d42",
+        "path": "build/v15-official-app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c66c",
+        "bytes": "e1f1a020",
+        "path": "build/v15-official-app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c670",
+        "bytes": "1e41",
+        "path": "build/v15-official-app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c672",
+        "bytes": "0f1c",
+        "path": "build/v15-official-app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c674",
+        "bytes": "00e1a270",
+        "path": "build/v15-official-app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c67c",
+        "bytes": "80ff4cc60200",
+        "path": "build/v15-official-app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c682",
+        "bytes": "00e13e71",
+        "path": "build/v15-official-app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c686",
+        "bytes": "8e40",
+        "path": "build/v15-official-app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c68c",
+        "bytes": "8d42",
+        "path": "build/v15-official-app.bin",
+        "status": "PASS"
+      }
+    ],
+    "s1c3": [
+      {
+        "address": "0x0201c63e",
+        "bytes": "80fffa1a0000",
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c644",
+        "bytes": "00e13e61",
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c648",
+        "bytes": "8d40",
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c67c",
+        "bytes": "80ffc01a0000",
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c682",
+        "bytes": "00e13e71",
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c686",
+        "bytes": "8e40",
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c68c",
+        "bytes": "8d42",
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201e142",
+        "bytes": "6316",
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201e14a",
+        "bytes": "85f81712",
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201e156",
+        "bytes": "f33c",
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201e158",
+        "bytes": "c8ff2065c401",
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201e17e",
+        "bytes": "80ff4aab0200",
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201e184",
+        "bytes": "5904",
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/app.bin",
+        "status": "PASS"
+      }
+    ],
+    "s1c4": [
+      {
+        "address": "0x0201c63e",
+        "bytes": "80fffa1a0000",
+        "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c644",
+        "bytes": "001600160016",
+        "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c67c",
+        "bytes": "80ffc01a0000",
+        "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c682",
+        "bytes": "001600160016",
+        "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201c68c",
+        "bytes": "8d42",
+        "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201e142",
+        "bytes": "6316",
+        "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201e158",
+        "bytes": "f33c",
+        "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201e17c",
+        "bytes": "07e1008a",
+        "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201e182",
+        "bytes": "7d40",
+        "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201e184",
+        "bytes": "6116",
+        "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201e188",
+        "bytes": "80ff40ab0200",
+        "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201e18e",
+        "bytes": "00e19c40",
+        "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201e192",
+        "bytes": "8d40",
+        "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201e1e8",
+        "bytes": "01e19b40",
+        "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201e1ec",
+        "bytes": "1a40",
+        "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201e1ee",
+        "bytes": "8a40",
+        "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin",
+        "status": "PASS"
+      },
+      {
+        "address": "0x0201e1f0",
+        "bytes": "4a3f",
+        "path": "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin",
+        "status": "PASS"
+      }
+    ]
+  },
+  "decision": "TRACE PASS; S1-C4 byte161 sideband is rejected by live evidence; minimum safe hook is consumer-side per-slot map after trigger-selected slot validation with byte161 identity preserved.",
+  "format": "smk37-v15-playback-note-live-reanalysis-consumer-v1",
+  "inputs": {
+    "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/app.bin": {
+      "sha256": "7c672938023beee74d599f43ccd5c7642396b89819e929501274239aed5e5d4b",
+      "status": "PASS"
+    },
+    "baselines/v15/analysis/flash-candidates/S1C4-playback-note-v3-segmented-final/app.bin": {
+      "sha256": "c6e4cf567b2f22d7e39d3b4e0f6cae8c7fd140661e31763567b15a9fcf1e3a3d",
+      "status": "PASS"
+    },
+    "build/v15-official-app.bin": {
+      "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "status": "PASS"
+    }
+  },
+  "minimum_hook": {
+    "apply_map": [
+      "Let T = proven native trigger register, r6 for Note On and r5 for Note Off.",
+      "Let slot = T - 36 after the existing selector range gate.",
+      "Let P = playback_map[slot], defaulting to T for Original.",
+      "Copy source = 0x01c46520 + slot*0xa0 to the per-voice destination with r2 = 0x9c.",
+      "For Note On, deliver P to destination+0x9c while preserving r5 velocity for 0x0201c68c.",
+      "For Note Off, deliver the same P to destination+0x9c so release identity matches Note On."
+    ],
+    "blocked_until_proven": [
+      "A per-slot playback_map writer/transport that leaves byte 161 as trigger identity 36..51.",
+      "A validation case showing duplicate playback notes do not alter transaction slot identity.",
+      "Symmetric Note On and Note Off delivery of P."
+    ],
+    "hook_point": "consumer selector path reached from 0x0201c63e/0x0201c67c, after Ch10/range/ARMED/valid gates and before the synth metadata note store",
+    "minimal_code_shape": "S1-C4's consumer-side map load/store shape is the right hook location, but its producer sideband is not: replace the byte161 map writer with an identity-preserving map source, or use a fixed/static map. Until that writer is proven, this remains analysis/minimal-hook guidance, not a flash candidate.",
+    "preserve_trigger_identity": [
+      "Do not change the incoming MIDI event buffer msg[1].",
+      "Do not change direct-product packet byte 161 away from trigger note 36..51 for resident slot loading.",
+      "Do not use playback note P to select source; source_slot = trigger_note - 36 only."
+    ]
+  },
+  "official_ch10_note_off_consumer_symmetry": {
+    "consumer_note_register": "r5",
+    "reason_for_symmetry": "A playback Note On map without the same Note Off map can leave mismatched release identity.",
+    "rows": [
+      {
+        "address": "0x0201c62e",
+        "bytes": "1d41",
+        "meaning": "r5 = msg[1] trigger/native note"
+      },
+      {
+        "address": "0x0201c63e",
+        "bytes": "80ff8ac60200",
+        "meaning": "stock memcpy(voice+0xa2, source, 0x9c)"
+      },
+      {
+        "address": "0x0201c644",
+        "bytes": "00e13e61",
+        "meaning": "r0 = voice slot + 0x13e = copy destination + 0x9c"
+      },
+      {
+        "address": "0x0201c648",
+        "bytes": "8d40",
+        "meaning": "synth-visible note metadata store consumes r5"
+      }
+    ]
+  },
+  "official_ch10_note_on_consumer": {
+    "channel_register": "r9 = status & 0x0f; Ch10 is r9 == 9",
+    "consumer_note_register": "r6",
+    "consumer_note_store": "0x0201c686 stores r6 to destination+0x9c",
+    "dispatcher": "0x0201c5ec",
+    "packet_byte_161_role": "not in this official Note On consumer path",
+    "rows": [
+      {
+        "address": "0x0201c66a",
+        "bytes": "1d42",
+        "meaning": "r5 = msg[2] velocity"
+      },
+      {
+        "address": "0x0201c66c",
+        "bytes": "e1f1a020",
+        "meaning": "r1 = voice index * 0xa0"
+      },
+      {
+        "address": "0x0201c670",
+        "bytes": "1e41",
+        "meaning": "r6 = msg[1] trigger/native note"
+      },
+      {
+        "address": "0x0201c672",
+        "bytes": "0f1c",
+        "meaning": "r7 = per-voice slot base"
+      },
+      {
+        "address": "0x0201c674",
+        "bytes": "00e1a270",
+        "meaning": "r0 = per-voice slot base + 0xa2"
+      },
+      {
+        "address": "0x0201c678",
+        "bytes": "623c",
+        "meaning": "r2 = 0x9c copy length"
+      },
+      {
+        "address": "0x0201c67a",
+        "bytes": "8116",
+        "meaning": "r1 = current patch source 0x01c34c74"
+      },
+      {
+        "address": "0x0201c67c",
+        "bytes": "80ff4cc60200",
+        "meaning": "stock memcpy(voice+0xa2, source, 0x9c)"
+      },
+      {
+        "address": "0x0201c682",
+        "bytes": "00e13e71",
+        "meaning": "r0 = voice slot + 0x13e = copy destination + 0x9c"
+      },
+      {
+        "address": "0x0201c686",
+        "bytes": "8e40",
+        "meaning": "synth-visible note metadata store consumes r6"
+      },
+      {
+        "address": "0x0201c68c",
+        "bytes": "8d42",
+        "meaning": "synth-visible velocity metadata store consumes r5"
+      }
+    ]
+  },
+  "s1c3_selector_path": {
+    "delivered_note": "stock 0x0201c686 stores restored r6, so S1-C3 delivers Trigger Note as synth note",
+    "note_off_hook": "0x0201c63e -> 0x0201e13e",
+    "note_on_hook": "0x0201c67c -> 0x0201e142",
+    "path": [
+      "0x0201e142 mov r3,r6: normalize Note On trigger note",
+      "0x0201e144 push {rets,r9..r4}: saves/restores r5 velocity and r6 trigger note",
+      "0x0201e14a gate r9 == 9: Ch10 only",
+      "0x0201e14e/0x0201e152 gate 36 <= trigger note < 52",
+      "0x0201e156 slot = trigger note - 36",
+      "0x0201e158 base = 0x01c46520",
+      "0x0201e168 multiply slot by 0xa0; 0x0201e16e source = base + slot*0xa0",
+      "0x0201e174/0x0201e176 require selected slot valid == 1",
+      "0x0201e17a r1 = trigger-selected source",
+      "0x0201e17c r0 = saved destination",
+      "0x0201e17e call memcpy; 0x0201e184 pop restores r6/r5 before stock stores"
+    ]
+  },
+  "s1c4_selector_and_transport_path": {
+    "consumer_hook_route": "same Note On/Off hooks as S1-C3, but stock note stores at 0x0201c644 and 0x0201c682 are neutralized",
+    "live_reanalysis": "Playback Original works when byte 161 remains trigger 36..51; all-C4 fails when byte 161 is 60 repeated. Therefore byte 161 must be treated as trigger/transaction identity, not a safe playback-note sideband.",
+    "producer_wire_byte_161_path": [
+      "0x0201e1e8 r1 = staging + 0x9b, the payload byte that appears as wire packet byte 161",
+      "0x0201e1ec r2 = *(staging+0x9b)",
+      "0x0201e1ee playback_map[count_slot] = r2",
+      "0x0201e1f0/0x0201e1f2 restore staging+0x9b to 0x3f before resident slot copy"
+    ],
+    "selector_map_path": [
+      "0x0201e158 slot = trigger note - 36; Trigger still selects source slot",
+      "0x0201e17c map base = 0x01c46520 + 0xa00 = 0x01c46f20",
+      "0x0201e182 r5 = playback_map[trigger slot]",
+      "0x0201e184 r1 = trigger-selected source, not playback-note-selected source",
+      "0x0201e188 call memcpy",
+      "0x0201e18e r0 = saved destination + 0x9c",
+      "0x0201e192 store r5 as local synth note metadata"
+    ]
+  },
+  "scope": {
+    "allowed_evidence": [
+      "official v15 app bytes",
+      "current S1-C3 evidence/artifacts",
+      "current S1-C4 evidence/artifacts",
+      "user-provided live result in request"
+    ],
+    "no_firmware_build": true,
+    "no_flash": true,
+    "no_usb_or_midi_opened": true,
+    "no_v12_assumptions": true
+  },
+  "user_live_result_used": {
+    "all_c4": "wire packet byte 161 = 60 repeated; transaction failure / Ch1 fallback",
+    "deduction_limit": "This falsifies S1-C4's neutral-sideband assumption for byte 161. It does not prove the internal cause of the transaction failure.",
+    "playback_original": "wire packet byte 161 = trigger note 36..51; 16 patches normal"
+  }
+}

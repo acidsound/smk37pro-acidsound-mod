@@ -1,0 +1,19 @@
+run_id=20260802T091433Z
+image=/Users/spectrum/Documents/SMK37ProMod/build/v15-official-app.bin
+image_sha256=36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+package=/Users/spectrum/Documents/SMK37ProMod/build/SMK-37_Pro_015.fwsc
+package_sha256=f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff
+runtime_mapped_base=0x02000000
+ghidra_home=/opt/homebrew/Cellar/ghidra/12.1.2/libexec
+ghidra_version=12.1.2
+jdk=Picked up JAVA_TOOL_OPTIONS: -Duser.home=/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/home-kagaimiq-patched
+quarkslab_url=https://github.com/quarkslab/ghidra-jieli.git
+quarkslab_commit=e1bd0707874b77b759401555d24839ad43af1267
+quarkslab_tree=a4efeb0a0afb74224e561ef59dc9b6cdabff243f
+quarkslab_sla_sha256=6d774eacaa7f5769ebb536699c6c13500dbb806a265740094464c64951a906d4
+kagaimiq_url=https://github.com/kagaimiq/ghidra-jieli.git
+kagaimiq_commit=b5e60122b6cd3e6b615387035994b8bed0ea1a26
+kagaimiq_tree=153ab0cbd902f5abb96246de027b21c578727bf9
+patch=/Users/spectrum/Documents/SMK37ProMod/patches/ghidra-jieli-pi32v2-smk37.patch
+patch_sha256=298aa34ba5e0c75e94b28f7288825fa9c2c48bb3abe0f6e19551d6bbf46b683d
+kagaimiq_patched_sla_sha256=8499de8322988e0e762c4f4fda72ed36715327c8edd1945e4eba867a3d750fba

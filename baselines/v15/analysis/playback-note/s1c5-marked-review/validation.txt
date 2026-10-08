@@ -1,0 +1,24 @@
+S1C5 marked playback-note review PASS
+{
+  "head": "ebedcfe6a73ba10f46de7472096ead47e7bc8d87",
+  "app_sha256": "c8dd9e9e19369a65fd46fb48aabc69a2af7977a456f4152e77cd90a742f7cfe5",
+  "fwsc_sha256": "cfafa3273ca0ba741616e5f3aa87f262a45ecd84445bdefd969900dad256b480",
+  "ota_cases": [
+    [
+      "accept_marked",
+      0
+    ],
+    [
+      "reject_s1c4_parent",
+      1
+    ],
+    [
+      "reject_official_v15",
+      1
+    ],
+    [
+      "reject_unmarked_s1c5",
+      1
+    ]
+  ]
+}

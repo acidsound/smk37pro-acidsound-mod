@@ -1,0 +1,50 @@
+fixed official-v15 USB MIDI matrix (selection=all)
+cable0-note-on                     group=cables    bytes=09 90 3c 18  # short low-velocity note
+cable0-note-off                    group=cables    bytes=08 80 3c 40  # paired cleanup
+cable1-note-on                     group=cables    bytes=19 90 3c 18  # short low-velocity note
+cable1-note-off                    group=cables    bytes=18 80 3c 40  # paired cleanup
+cable2-note-on                     group=cables    bytes=29 90 3c 18  # short low-velocity note
+cable2-note-off                    group=cables    bytes=28 80 3c 40  # paired cleanup
+cable3-note-on                     group=cables    bytes=39 90 3c 18  # one-above-described-jack-count boundary
+cable3-note-off                    group=cables    bytes=38 80 3c 40  # paired cleanup
+channel1-note-on                   group=channels  bytes=09 90 3c 18  # channel 1 dispatch
+channel1-note-off                  group=channels  bytes=08 80 3c 40  # paired cleanup
+channel10-note-on                  group=channels  bytes=09 99 24 18  # channel 10 dispatch
+channel10-note-off                 group=channels  bytes=08 89 24 40  # paired cleanup
+channel16-note-on                  group=channels  bytes=09 9f 43 18  # channel 16 boundary
+channel16-note-off                 group=channels  bytes=08 8f 43 40  # paired cleanup
+cin2-song-select                   group=cin       bytes=02 f3 00 00  # defined two-byte system-common CIN
+cin3-song-position                 group=cin       bytes=03 f2 00 00  # defined three-byte system-common CIN
+cin8-note-off                      group=cin       bytes=08 80 3c 40  # channel voice CIN 8
+cin9-note-on-zero                  group=cin       bytes=09 90 3c 00  # channel voice CIN 9 with note-off semantics
+cina-poly-pressure-zero            group=cin       bytes=0a a0 3c 00  # channel voice CIN A
+cinb-cc-zero                       group=cin       bytes=0b b0 01 00  # channel voice CIN B
+cinc-program-zero                  group=cin       bytes=0c c0 00 00  # channel voice CIN C
+cind-pressure-zero                 group=cin       bytes=0d d0 00 00  # channel voice CIN D
+cine-bend-center                   group=cin       bytes=0e e0 00 40  # channel voice CIN E
+cinf-clock                         group=cin       bytes=0f f8 00 00  # single-byte realtime CIN F
+program-ch1-0                      group=program   bytes=0c c0 00 00  # Program Change lower boundary
+program-ch1-1                      group=program   bytes=0c c0 01 00  # Program Change adjacent value
+program-ch1-restore0               group=program   bytes=0c c0 00 00  # best-effort restore to program 0
+program-ch10-0                     group=program   bytes=0c c9 00 00  # Program Change channel routing
+cc1-zero                           group=cc        bytes=0b b0 01 00  # modulation lower boundary
+cc1-mid                            group=cc        bytes=0b b0 01 40  # modulation nonzero value
+cc1-restore                        group=cc        bytes=0b b0 01 00  # restore modulation to zero
+cc64-off                           group=cc        bytes=0b b0 40 00  # sustain explicitly off
+cc123-all-notes-off                group=cc        bytes=0b b0 7b 00  # bounded cleanup/control dispatch
+bend-min                           group=pitch     bytes=0e e0 00 00  # pitch-bend lower boundary
+bend-center-a                      group=pitch     bytes=0e e0 00 40  # pitch-bend center
+bend-max                           group=pitch     bytes=0e e0 7f 7f  # pitch-bend upper boundary
+bend-center-b                      group=pitch     bytes=0e e0 00 40  # restore pitch-bend center
+sysex-cin6-two-byte                group=sysex     bytes=06 f0 f7 00  # complete empty SysEx boundary
+sysex-cin7-three-byte              group=sysex     bytes=07 f0 7f f7  # complete three-byte SysEx boundary
+sysex-cin4-cin5-four-byte          group=sysex     bytes=04 f0 7d 00 05 f7 00 00  # two-event SysEx ending with CIN 5
+universal-identity-request         group=sysex     bytes=04 f0 7e 7f 07 06 01 f7  # standard non-realtime identity request
+malformed-reserved-cin0            group=malformed bytes=00 00 00 00  # reserved CIN with zero payload
+malformed-reserved-cin1            group=malformed bytes=01 00 00 00  # reserved CIN with zero payload
+malformed-cin9-status8             group=malformed bytes=09 80 3c 00  # CIN/status mismatch with note-off status
+malformed-cin8-status9-zero        group=malformed bytes=08 90 3c 00  # CIN/status mismatch with note-on velocity zero
+malformed-program-padding          group=malformed bytes=0c c0 00 7f  # nonzero ignored padding byte
+malformed-sysex-end-only           group=malformed bytes=05 f7 00 00  # SysEx terminator without start
+malformed-data-status              group=malformed bytes=09 00 00 00  # channel CIN with data byte in status slot
+outbound events=50 cap=80

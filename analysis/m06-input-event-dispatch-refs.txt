@@ -1,0 +1,4 @@
+target=02029f0e
+  from=0202a062 type=UNCONDITIONAL_CALL instruction=call 0x02029f0e
+  from=0202a100 type=UNCONDITIONAL_CALL instruction=call 0x02029f0e
+count=2

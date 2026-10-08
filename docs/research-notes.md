@@ -17,8 +17,21 @@ When adding a result, record the date, evidence, source or measurement, confiden
 - Community documentation repository: `jonathaslacerda/smk-37-pro-docs`
 - Inspected commit: `8f1bf1115cc8fe874bbac326d4f1f1513d743844` (2026-03-24)
 - Repository: <https://github.com/jonathaslacerda/smk-37-pro-docs>
+- 외부 커스텀 펌웨어 저장소 (검토 2026-10-08): <https://github.com/amalahama/smk37-firmware-custom-mod>
+  - 스냅샷: 커밋 `9d56145` (2026-10-03, 릴리스 v022), 로컬 클론 `external-research/smk37-firmware-custom-mod/`
+  - 검토 보고서: `external-research/REVIEW-2026-10-08-amalahama-smk37-firmware-custom-mod.md`
+  - 우리에게 새로 확인된 것: v16의 **36블록** FWSC interleave와 flash.bin `0x9D000`,
+    BLE 스택 패치 오프셋 모음(GATT/CCCD/SMP/MAC VM 키), v16 함수 카탈로그 2,203행.
+  - 이 저장소 검토 중 **우리 v16 flash.bin 보관 해시(`e524920a…`)가 오추출**인 것이 드러나
+    `baselines/v15/analysis/external-refresh-2026-10-01/README.md`에 정정 주석을 기입했다.
 - Official AC79 documentation used: <https://doc.zh-jieli.com/AC79/zh-cn/release_v1.2.0/>
 - Official AC79 SDK branch used: <https://gitee.com/Jieli-Tech/fw-AC79_AIoT_SDK/tree/release/AC79NN_SDK_V1.2.0>
+
+> **2026-10-01 외부 재조사**: 커뮤니티 저장소에 **펌웨어 16 (1.16, 2026-08-12)** 이
+> 추가되었고 SoC 표기가 AC7911B8로 정정되었다. 신규 외부 자원(SSTIC 2026 Pi32v2
+> SLEIGH, ElectronicCats JieLi RE 도구)과 함께
+> [`baselines/v15/analysis/external-refresh-2026-10-01/`](../baselines/v15/analysis/external-refresh-2026-10-01/README.md)
+> 에 정리했다. 아래 스냅샷은 2026-03-24 시점 그대로이며 갱신하지 않았다.
 
 ## Current conclusions
 

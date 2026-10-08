@@ -1,0 +1,102 @@
+address	size	bytes	name	asm	meaning	target
+0x0201e13e	2	5316	selector.note_off_adapter	mov r3,r5	normalize Note Off trigger note
+0x0201e140	2	0481	selector.note_off_goto_core	goto core	skip Note On adapter	0x0201e144
+0x0201e142	2	6316	selector.note_on_adapter	mov r3,r6	normalize Note On trigger note; velocity saved
+0x0201e144	2	7904	selector.push_saved	push {rets,r9..r4}	preserve trigger registers and velocity
+0x0201e146	2	0416	selector.save_dest	mov r4,r0	save original payload destination
+0x0201e148	2	3516	selector.default_note	mov r5,r3	fallback metadata note is unchanged Trigger Note
+0x0201e14a	2	9616	selector.channel_tmp	mov r6,r9	channel nibble temp
+0x0201e14c	4	86f81b12	selector.gate_channel	jne r6,#9,copy	non-Ch10 fallback	0x0201e186
+0x0201e150	4	83fd1948	selector.gate_low	jl r3,#36,copy	below trigger range fallback	0x0201e186
+0x0201e154	4	03fd1768	selector.gate_high	jge r3,#52,copy	above trigger range fallback	0x0201e186
+0x0201e158	2	f33c	selector.slot_index	add r3,#-36	r3 = trigger slot
+0x0201e15a	6	c8ff2065c401	selector.patch_base	mov r8,#0x1c46520	resident slot base
+0x0201e160	4	06e19c80	selector.state_base	add r6,r8,#0x9c	slot0 valid/control base
+0x0201e164	2	6843	selector.state_load	lb.z r0,[r6+3]	load ARMED state before consuming Playback Note map
+0x0201e166	4	80f80e04	selector.gate_state	jne r0,#2,copy	not ARMED fallback, leaving metadata note as Trigger Note	0x0201e186
+0x0201e16a	4	07e1008a	selector.map_base	add r7,r8,#0xa00	Playback Note map base, after ARMED gate
+0x0201e16e	2	3718	selector.map_slot	add r7,r3	map pointer = 0x01c46f20 + trigger slot
+0x0201e170	2	7d40	selector.load_playback_note	lb.z r5,[r7]	r5 = Playback Note metadata byte
+0x0201e172	4	e3e1a030	selector.slot_offset	mul r3,r3,#0xa0	source offset from trigger slot
+0x0201e176	2	8616	selector.slot_base_seed	mov r6,r8	source base seed
+0x0201e178	2	3618	selector.slot_base_add	add r6,r3	source slot selected solely by trigger slot
+0x0201e17a	4	07e19c60	selector.valid_pointer	add r7,r6,#0x9c	selected slot valid pointer
+0x0201e17e	2	7840	selector.valid_load	lb.z r0,[r7]	selected slot valid
+0x0201e180	4	80f80102	selector.gate_valid	jne r0,#1,copy	invalid source fallback	0x0201e186
+0x0201e184	2	6116	selector.select_source	mov r1,r6	source = trigger-selected resident slot; no playback-note-to-source mapping
+0x0201e186	2	4016	selector.restore_dest	mov r0,r4	restore memcpy destination
+0x0201e188	6	80ff40ab0200	selector.memcpy_call	call 0x2048cce	copy exactly r2=0x9c
+0x0201e18e	4	00e19c40	selector.metadata_pointer	add r0,r4,#0x9c	return r0 = original destination + 0x9c
+0x0201e192	2	8d40	selector.metadata_note_store	sb [r0],r5	store mapped metadata note locally
+0x0201e194	2	5904	selector.pop_return	pop {pc,r9..r4}	restore trigger registers and Note On velocity
+0x0201e196	2	7904	producer.push_saved	push {rets,r9..r4}	save producer frame
+0x0201e198	2	0416	producer.save_stage	mov r4,r0	staging pointer
+0x0201e19a	6	c0ffbd65c401	producer.lock_pointer	mov r0,#0x1c465bd	lock pointer; redundant r9 length gate removed
+0x0201e1a0	4	2000b000	producer.trylock	csync; testset b[r0]	nonblocking lock
+0x0201e1a4	4	40e83d00	producer.trylock_failed	ifeq return	failed lock returns	0x0201e222
+0x0201e1a8	2	2000	producer.acquired_csync	csync	after lock
+0x0201e1aa	2	0516	producer.metadata_pointer	mov r5,r0	control base
+0x0201e1ac	2	5842	producer.state_load	lb.z r0,[r5+2]	load state
+0x0201e1ae	4	80f80700	producer.state_not_empty	jne r0,#0,not_empty	non-empty path	0x0201e1c0
+0x0201e1b2	2	5b41	producer.empty_count_load	lb.z r3,[r5+1]	load count
+0x0201e1b4	4	83f83100	producer.empty_count_reject	jne r3,#0,unlock	bad EMPTY count	0x0201e21a
+0x0201e1b8	2	4021	producer.state_loading_value	mov r0,#1	LOADING
+0x0201e1ba	2	d842	producer.state_loading_store	sb [r5+2],r0	state=LOADING before slot0
+0x0201e1bc	2	2000	producer.loading_csync	csync	publish LOADING
+0x0201e1be	2	0483	producer.empty_done_goto	goto after_state	join	0x0201e1c6
+0x0201e1c0	4	80f82b02	producer.state_not_loading	jne r0,#1,unlock	reject ARMED/invalid	0x0201e21a
+0x0201e1c4	2	5b41	producer.loading_count_load	lb.z r3,[r5+1]	load count
+0x0201e1c6	4	03fd2820	producer.count_full	jge r3,#16,unlock	late packet reject	0x0201e21a
+0x0201e1ca	2	3616	producer.copy_count	mov r6,r3	slot index
+0x0201e1cc	4	e6e1a060	producer.slot_offset	mul r6,r6,#0xa0	slot offset
+0x0201e1d0	6	c7ff2065c401	producer.slot_base_seed	mov r7,#0x1c46520	slot0 base
+0x0201e1d6	2	6718	producer.slot_base_add	add r7,r6	slot base
+0x0201e1d8	4	06e19c70	producer.valid_pointer	add r6,r7,#0x9c	valid pointer; slot[0x9b] is [r6-1]
+0x0201e1dc	2	4020	producer.valid_clear_value	mov r0,#0	zero
+0x0201e1de	2	e840	producer.valid_clear_store	sb [r6],r0	valid=0 before copy
+0x0201e1e0	6	c0ff206fc401	producer.map_pointer	mov r0,#0x1c46f20	Playback Note map base
+0x0201e1e6	2	3018	producer.map_slot	add r0,r3	map pointer + slot
+0x0201e1e8	4	01e19b40	producer.staging_last_pointer	add r1,r4,#0x9b	staging[0x9b] pointer
+0x0201e1ec	2	1a40	producer.playback_load	lb.z r2,[r1]	Playback Note from wire byte 161
+0x0201e1ee	2	8a40	producer.playback_store	sb [r0],r2	store note to 0x01c46f20+slot
+0x0201e1f0	2	4a3f	producer.restore_value	mov r2,#0x3f	proven 0x3f
+0x0201e1f2	2	9a40	producer.restore_staging_last	sb [r1],r2	restore staging[0x9b] before copy/reload
+0x0201e1f4	2	7016	producer.copy_destination	mov r0,r7	slot destination
+0x0201e1f6	2	4116	producer.copy_source	mov r1,r4	restored staging source
+0x0201e1f8	2	623c	producer.copy_size	mov r2,#0x9c	copy size
+0x0201e1fa	6	80ffceaa0200	producer.memcpy_call	call 0x2048cce	memcpy clobbers volatile r3
+0x0201e200	2	483f	producer.restore_slot_value	mov r0,#0x3f	proven 0x3f
+0x0201e202	2	e85f	producer.restore_slot_last	sb [r6-1],r0	restore slot.voice[0x9b] before valid/reload
+0x0201e204	2	2000	producer.copy_csync	csync	order restoration before valid
+0x0201e206	2	4021	producer.valid_value	mov r0,#1	valid value
+0x0201e208	2	e840	producer.valid_store	sb [r6],r0	valid last for slot
+0x0201e20a	2	5b41	producer.post_memcpy_count_reload	lb.z r3,[r5+1]	reload count after memcpy
+0x0201e20c	2	c321	producer.count_increment	add r3,#1	count++
+0x0201e20e	2	db41	producer.count_store	sb [r5+1],r3	loaded_count after valid
+0x0201e210	4	83f80320	producer.not_last	jne r3,#16,unlock	only slot15 arms	0x0201e21a
+0x0201e214	2	2000	producer.armed_csync	csync	before ARMED
+0x0201e216	2	4022	producer.armed_value	mov r0,#2	ARMED
+0x0201e218	2	d842	producer.armed_store	sb [r5+2],r0	state ARMED last publishes map
+0x0201e21a	2	2000	producer.unlock_csync_before	csync	before unlock
+0x0201e21c	2	4020	producer.unlock_zero	mov r0,#0	zero
+0x0201e21e	2	d840	producer.unlock_store	sb [r5],r0	unlock
+0x0201e220	2	2000	producer.unlock_csync_after	csync	after unlock
+0x0201e222	2	5904	producer.return_restore	pop {pc,r9..r4}	return
+0x0201e224	2	7904	producer.segmented_stub_push	push {rets,r9..r4}	segmented no-mutation stub
+0x0201e226	2	5904	producer.segmented_stub_return	pop {pc,r9..r4}	return
+0x0201e228	2	7904	producer.reset_push_saved	push {rets,r9..r4}	reset wrapper
+0x0201e22a	2	0416	producer.reset_save_stage	mov r4,r0	stage
+0x0201e22c	2	4940	producer.reset_sig0_load	lb.z r1,[r4]	signature byte 0
+0x0201e22e	4	81f80bc4	producer.reset_sig0_mismatch	jne r1,#0x62,reset_skip	skip reset	0x0201e248
+0x0201e232	2	4941	producer.reset_sig1_load	lb.z r1,[r4+1]	signature byte 1
+0x0201e234	4	81f808c6	producer.reset_sig1_mismatch	jne r1,#0x63,reset_skip	skip reset	0x0201e248
+0x0201e238	6	c5ffbd65c401	producer.reset_metadata_pointer	mov r5,#0x1c465bd	control base
+0x0201e23e	2	4020	producer.reset_zero	mov r0,#0	zero
+0x0201e240	2	d840	producer.reset_lock_store	sb [r5],r0	clear lock
+0x0201e242	2	d841	producer.reset_count_store	sb [r5+1],r0	clear count
+0x0201e244	2	d842	producer.reset_state_store	sb [r5+2],r0	state EMPTY hides stale map until ARMED
+0x0201e246	2	2000	producer.reset_csync	csync	publish reset
+0x0201e248	2	4016	producer.reset_restore_stage	mov r0,r4	restore stage
+0x0201e24a	6	80ff46ffffff	producer.reset_call_producer	call 0x201e196	call sequential producer
+0x0201e250	2	5904	producer.reset_return_restore	pop {pc,r9..r4}	return
+0x0201e252	2	0016	padding.tail_mov_r0_r0	mov r0,r0	unreached inert tail

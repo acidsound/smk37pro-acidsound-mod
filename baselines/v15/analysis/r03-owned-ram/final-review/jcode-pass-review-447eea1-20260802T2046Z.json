@@ -1,0 +1,82 @@
+{
+  "decision": "PASS",
+  "reviewer": "Jcode",
+  "reviewed_commit": "447eea1e80e3acdd55821c5c2141f6d3865ba7ac",
+  "scope": "latest v15 R03 code/artifacts only, including rollback v4",
+  "device_or_flash_action": false,
+  "validator": {
+    "command": "python3 tools/validate_v15_r03.py",
+    "result": "v15 R03 fixed-prefix artifact, PI32 decode, package, and rollback: PASS",
+    "rollback_sha256": "ee8af217f78576a69ac1406ad839eb69721f031b8e2996825ef540d07a38c751",
+    "sectors": ["0x04000", "0x20000", "0x22000", "0x2a000", "0x62000"]
+  },
+  "deterministic_rebuilds": {
+    "app": {
+      "sha256": "3ff9c46b9686c0cea1348a11bed553ebd2d677e2d3452a0f436ce14f3ba5c788",
+      "byte_identical": true
+    },
+    "package": {
+      "sha256": "001582c097277d6a4a619ed407cf121d5f30097ef82f312d53a2e45c4a9a5a62",
+      "byte_identical": true
+    },
+    "rollback_v4_zip": {
+      "sha256": "ee8af217f78576a69ac1406ad839eb69721f031b8e2996825ef540d07a38c751",
+      "byte_identical": true
+    }
+  },
+  "rollback_v4_confirmations": {
+    "wrapper_confirms": [
+      "I_UNDERSTAND_THIS_ERASES_EXACTLY_FIVE_R03_SECTORS",
+      "I_HAVE_TWO_IDENTICAL_1MIB_DUMPS_AND_R03_TARGET_HASHES",
+      "RESTORE_OFFICIAL_V15_SECTORS_NOW"
+    ],
+    "guard_confirms": [
+      "I_UNDERSTAND_THIS_ERASES_EXACTLY_FIVE_R03_SECTORS",
+      "I_HAVE_TWO_IDENTICAL_1MIB_DUMPS_AND_R03_TARGET_HASHES",
+      "RESTORE_OFFICIAL_V15_SECTORS_NOW"
+    ],
+    "confirm_lists_match": true,
+    "zip_wrapper_matches_directory_wrapper": true,
+    "directory_stale_r02_hits": 0,
+    "zip_stale_r02_hits": 0
+  },
+  "uploader_gate": {
+    "r03_package_accepted": true,
+    "official_v15_rejected": true,
+    "confirm_token": "INSTALL-SMK37PRO-V15-R03-001582C0",
+    "source_sha256": "d0c2afdff619d907a68c12abed55269e38e00b17c0248f3039e7674c8a1f7eac"
+  },
+  "trylock": {
+    "reproducer_result": "official PI32 try-lock rebuild and objdump: PASS",
+    "source_sha256": "2e82edb679ceb2e2c4e66903ceb96310ad4eb3f18aa24dd0b802fddd1bd8b3be",
+    "object_sha256": "e12ebf05608c78c4ba81cbea8eded0230ddd26febb89a2412174c694744c22c6",
+    "objdump_sha256": "faaf49e7fdd8a85c6cf79246a00c48678e3a96688d452a545fbc137200c6fb04",
+    "failure_branch": "0x0201e1ac bytes 40e81b00 targets 0x0201e1e6 producer_return"
+  },
+  "hashes": {
+    "official_v15_app": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "r03_app": "3ff9c46b9686c0cea1348a11bed553ebd2d677e2d3452a0f436ce14f3ba5c788",
+    "official_v15_fwsc": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "r03_fwsc": "001582c097277d6a4a619ed407cf121d5f30097ef82f312d53a2e45c4a9a5a62",
+    "rollback_v4_zip": "ee8af217f78576a69ac1406ad839eb69721f031b8e2996825ef540d07a38c751"
+  },
+  "flash_scope": {
+    "app_changed_bytes": 187,
+    "flash_changed_bytes_including_crc_fields": 195,
+    "changed_sectors": ["0x04000", "0x20000", "0x22000", "0x2a000", "0x62000"],
+    "protected_prefix_equal": true,
+    "protected_prefix_sha256": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67"
+  },
+  "save_no_write": {
+    "branch": "0x02026da6 bytes 04960000 decoded goto 0x02026dd4",
+    "neutralized_call": "0x02026dac four zero bytes",
+    "verdict": "rejected before both persistent writes"
+  },
+  "stale_artifacts": {
+    "latest_v4_rollback_directory_stale_r02_hits": 0,
+    "latest_v4_rollback_zip_stale_r02_hits": 0,
+    "r03_spinlock_artifacts_present": false,
+    "active_count_in_app_manifest": false,
+    "notes": "Remaining R02 strings in tracked source are template replacement inputs or negative validator assertions, not latest v4 artifacts."
+  }
+}

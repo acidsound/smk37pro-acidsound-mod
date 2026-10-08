@@ -1,0 +1,806 @@
+{
+  "format": "smk37-v15-memory-map-v2",
+  "scope": "Extension of baselines/v15/analysis/memory-map/memory-map.json for the question 'what must be true before any further USB flash'. Adds the physical chip bound, the SDK-vs-SMK execution layout contrast, the UI/synth ownership rows that v1 only partially covered, and the decode-coverage holes. Offline only: no device access, no flash, no OTA.",
+  "generated_utc": "2026-10-01T00:08:09Z",
+  "extends": "baselines/v15/analysis/memory-map/memory-map.json",
+  "does_not_supersede": "baselines/v15/analysis/memory-map/memory-map.json",
+  "address_spaces": {
+    "flash_physical": "0x00000000..0x000FFFFF - the SPI NOR actually fitted (1 MiB)",
+    "runtime_xip": "0x02000000 + app.bin file offset",
+    "ram0": "0x01C00000..0x01C7FFFF - on-chip SRAM window used by stock firmware",
+    "sdram_window": "0x04000000..0x041FFFFF - declared by the SDK default layout; presence on this unit UNPROVEN",
+    "protocol": "non-address markers for the OTA transport contract"
+  },
+  "evidence_confidence": {
+    "PROVEN": "exact static or live-validated evidence",
+    "OBSERVED": "exact evidence with a partial boundary or unresolved ABI",
+    "INFERRED": "arithmetic or policy consequence",
+    "BLOCKED": "explicitly unsafe, refuted, or unproven - must not be used",
+    "REFUTED": "an earlier candidate shown to be unusable"
+  },
+  "rows": [
+    {
+      "id": "v2-fl-001",
+      "address_space": "flash_physical",
+      "section": "bound",
+      "start": "0x00000000",
+      "end_exclusive": "0x00100000",
+      "size": 1048576,
+      "type_owner": "SPI NOR chip extent actually present on the unit",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Hard upper bound. No address >= 0x00100000 may ever be written.",
+      "source_artifacts": [
+        "docs/m09-wl82-dump-2026-08-15.md",
+        "docs/V15-RESTORE-HANDOFF.md"
+      ],
+      "notes": "Two independent 1 MiB forced-loader dumps and the v15 restore dumps are all 0x100000 bytes. Flash id 0x856014, device id 0xEA924."
+    },
+    {
+      "id": "v2-fl-002",
+      "address_space": "flash_physical",
+      "section": "confirmed",
+      "start": "0x00000000",
+      "end_exclusive": "0x00004000",
+      "size": 16384,
+      "type_owner": "boot header / uboot / layout prefix (device-specific)",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "PRESERVE. Never overwrite. Not reconstructible from any package.",
+      "source_artifacts": [
+        "docs/flash-layout-cipher-analysis.md",
+        "baselines/v15/analysis/memory-map/memory-map.json"
+      ],
+      "notes": "Package contents differ from live for every device; block 0 matches lfsr(CHIP_KEY) only."
+    },
+    {
+      "id": "v2-fl-003",
+      "address_space": "flash_physical",
+      "section": "confirmed",
+      "start": "0x00004000",
+      "end_exclusive": "0x00004300",
+      "size": 768,
+      "type_owner": "JLFS header sector",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "PRESERVE. Live form is plain ^ lfsr(0x132b).",
+      "source_artifacts": [
+        "docs/flash-layout-cipher-analysis.md"
+      ],
+      "notes": "Contains app_area_head, app.bin, cfg_tool.bin, PRCT, CODE, BTIF, AUTORIM, USRFLASH entries."
+    },
+    {
+      "id": "v2-fl-004",
+      "address_space": "flash_physical",
+      "section": "confirmed",
+      "start": "0x00004300",
+      "end_exclusive": "0x0009A833",
+      "size": 615731,
+      "type_owner": "application area (the only region an app-only OTA may replace)",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "WRITE ONLY through a validated package + rollback manifest, or through guarded sector restore.",
+      "source_artifacts": [
+        "docs/flash-layout-cipher-analysis.md",
+        "tools/smk37_guarded_restore.py"
+      ],
+      "notes": "sf4 cipher, base 0x4000, CHIP_KEY 0x980F. Verified byte-exact against the v15 clean baseline after decode."
+    },
+    {
+      "id": "v2-fl-005",
+      "address_space": "flash_physical",
+      "section": "confirmed",
+      "start": "0x0009A833",
+      "end_exclusive": "0x0009C000",
+      "size": 6093,
+      "type_owner": "tail metadata (static in package, dynamic on device)",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "PRESERVE. Live tail data is not present in any package.",
+      "source_artifacts": [
+        "docs/flash-layout-cipher-analysis.md"
+      ],
+      "notes": "Later S1C packages end the app area at 0x9AD33; 0x9A833..0x9AD33 is version-dependent."
+    },
+    {
+      "id": "v2-fl-006",
+      "address_space": "flash_physical",
+      "section": "confirmed",
+      "start": "0x0009C000",
+      "end_exclusive": "0x00100000",
+      "size": 409600,
+      "type_owner": "beyond-package region (user/preset/config data)",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "PRESERVE. Never written by an app-only OTA or by the guarded restore.",
+      "source_artifacts": [
+        "docs/flash-layout-cipher-analysis.md",
+        "baselines/v15/analysis/MEMORY-MAP.md"
+      ],
+      "notes": "Holds the four DX7 banks at 0xF4000..0xF7FFF and per-preset records from 0xF8000. Losing this destroys owner data."
+    },
+    {
+      "id": "v2-rx-001",
+      "address_space": "runtime_xip",
+      "section": "confirmed",
+      "start": "0x02000000",
+      "end_exclusive": "0x02096A34",
+      "size": 617012,
+      "type_owner": "official v15 application runtime window (file offset + 0x02000000)",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Patch only inside reproducible, reviewed windows.",
+      "source_artifacts": [
+        "baselines/v15/analysis/usb-flash-readiness/coverage.json",
+        "baselines/v15/analysis/evidence.md"
+      ],
+      "notes": "0x96A34 = 617,012 bytes, SHA-256 36fe8299... . S1C5 is 0x96934 (0x100 smaller)."
+    },
+    {
+      "id": "v2-rx-002",
+      "address_space": "runtime_xip",
+      "section": "confirmed",
+      "start": "0x02000000",
+      "end_exclusive": "0x020000A4",
+      "size": 164,
+      "type_owner": "boot/reset, data copy and BSS-zero code",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "DO NOT PATCH.",
+      "source_artifacts": [
+        "baselines/v15/analysis/r03-owned-ram/heap-boundary/report.md",
+        "baselines/v15/analysis/memory-map/memory-map.json"
+      ],
+      "notes": "Sets sp=0x01c3a2d4, ssp=0x01c3b2d4, copies data to 0x01c00000, zeros BSS to 0x01c4651c."
+    },
+    {
+      "id": "v2-rx-003",
+      "address_space": "runtime_xip",
+      "section": "confirmed",
+      "start": "0x02004870",
+      "end_exclusive": "0x02004B14",
+      "size": 676,
+      "type_owner": "storage raw read/write wrappers",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Call only with return==requested_length checks.",
+      "source_artifacts": [
+        "baselines/v15/analysis/persistence-s2/storage/report.md"
+      ],
+      "notes": "read_02004870 / write_02004b02. No CRC/memcmp ABI established."
+    },
+    {
+      "id": "v2-rx-004",
+      "address_space": "runtime_xip",
+      "section": "confirmed",
+      "start": "0x02005660",
+      "end_exclusive": "0x02005780",
+      "size": 288,
+      "type_owner": "stock selected-record loader and current-snapshot producer",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Do not bypass without preserving the stock lifecycle.",
+      "source_artifacts": [
+        "baselines/v15/analysis/channel-separation-reanalysis/runtime-source/report.md"
+      ],
+      "notes": "Copies the 0xa3 raw record then expands packed fields; destination is the current snapshot."
+    },
+    {
+      "id": "v2-rx-005",
+      "address_space": "runtime_xip",
+      "section": "confirmed",
+      "start": "0x0201C5EC",
+      "end_exclusive": "0x0201C6A0",
+      "size": 180,
+      "type_owner": "Note On/Off dispatcher (channel discrimination point)",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Patch only at validated post-hook bytes.",
+      "source_artifacts": [
+        "baselines/v15/analysis/mod-capability-matrix.md",
+        "baselines/v15/analysis/channel-separation-reanalysis/runtime-source/report.md"
+      ],
+      "notes": "r9==9 selects the Ch10 branch; copies 0x9c bytes to the per-voice destination."
+    },
+    {
+      "id": "v2-rx-006",
+      "address_space": "runtime_xip",
+      "section": "confirmed",
+      "start": "0x0201C63E",
+      "end_exclusive": "0x0201C688",
+      "size": 74,
+      "type_owner": "Note Off / Note On voice-source copy sites",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Live-validated patch windows in S1C5/S1C6 lineage only.",
+      "source_artifacts": [
+        "baselines/v15/analysis/mod-capability-matrix.md",
+        "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/app-manifest.json"
+      ],
+      "notes": "0x0201c63e Note Off source, 0x0201c67c Note On source; both already replaced in the installed S1C6 firmware."
+    },
+    {
+      "id": "v2-rx-007",
+      "address_space": "runtime_xip",
+      "section": "confirmed",
+      "start": "0x0201E13E",
+      "end_exclusive": "0x0201E254",
+      "size": 278,
+      "type_owner": "S1C producer/selector and reset-signature detector",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "S1C lineage owned; preserve SHA unless the slot ABI is rebuilt.",
+      "source_artifacts": [
+        "baselines/v15/analysis/flash-candidates/S1C6-reset-signature-isolation/app-manifest.json",
+        "baselines/v15/analysis/MEMORY-MAP.md"
+      ],
+      "notes": "Only 2 bytes of slack remain. M09 proved this region must not be extended into an assumed code cave."
+    },
+    {
+      "id": "v2-rx-008",
+      "address_space": "runtime_xip",
+      "section": "confirmed",
+      "start": "0x0201E254",
+      "end_exclusive": "0x0201E6A0",
+      "size": 1100,
+      "type_owner": "SysEx ingress and staging handler",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Do not use as durable storage.",
+      "source_artifacts": [
+        "baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md"
+      ],
+      "notes": "Bulk and single-parameter paths; transport byte 161 doubles as the Yamaha checksum slot."
+    },
+    {
+      "id": "v2-rx-009",
+      "address_space": "runtime_xip",
+      "section": "observed",
+      "start": "0x02048CCE",
+      "end_exclusive": "0x02048D00",
+      "size": 50,
+      "type_owner": "memcpy-like routine",
+      "evidence_confidence": "OBSERVED",
+      "mutability_patch_policy": "Call only under the established ABI.",
+      "source_artifacts": [
+        "baselines/v15/analysis/r03-owned-ram/heap-boundary/report.md"
+      ],
+      "notes": "146 decoded callsites."
+    },
+    {
+      "id": "v2-rx-010",
+      "address_space": "runtime_xip",
+      "section": "observed",
+      "start": "0x02060E2C",
+      "end_exclusive": "0x02060F20",
+      "size": 244,
+      "type_owner": "allocator / heap init region",
+      "evidence_confidence": "OBSERVED",
+      "mutability_patch_policy": "Do not claim heap ownership; arena bounds blocked.",
+      "source_artifacts": [
+        "baselines/v15/analysis/r03-owned-ram/heap-boundary/report.md"
+      ],
+      "notes": "heap_init / malloc_like / free_like observed without arena proof."
+    },
+    {
+      "id": "v2-rx-011",
+      "address_space": "runtime_xip",
+      "section": "unresolved",
+      "start": "0x020000A4",
+      "end_exclusive": "0x02004870",
+      "size": 18380,
+      "type_owner": "early init/boot-adjacent code region - 274 decoded functions, almost none mapped",
+      "evidence_confidence": "BLOCKED",
+      "mutability_patch_policy": "UNMAPPED. Contains real decoded code. Must not be treated as a gap or as free space.",
+      "source_artifacts": [
+        "baselines/v15/analysis/quarkslab/results/quarkslab-recursive-listing.tsv.gz",
+        "baselines/v15/analysis/usb-flash-readiness/coverage.json"
+      ],
+      "notes": "Ownership per function is not established. 274 of the 684 recursively decoded functions sit in 0x02000000..0x02005000; the memory map names only the boot stub (0x02000000..0x020000A4), the storage wrappers (0x02004870..) and later anchors. This is the largest block of known-but-unowned code in the image and the only place the boot-to-main init chain (and therefore USB/board init) can live."
+    },
+    {
+      "id": "v2-rx-012",
+      "address_space": "runtime_xip",
+      "section": "confirmed",
+      "start": "0x020020A0",
+      "end_exclusive": "0x02002140",
+      "size": 160,
+      "type_owner": "application main entry reached by the boot stub",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "DO NOT PATCH.",
+      "source_artifacts": [
+        "baselines/v15/analysis/quarkslab/results/quarkslab-recursive-listing.tsv.gz"
+      ],
+      "notes": "Boot code 0x02000090: mov r6,#0x020020A0 ; goto r6. The code at main configures tick/frequency values (constant 0xf4240 = 1e6, 0x2dc6c00 = 48e6) and manipulates peripheral fields with base+offset addressing. This is the app-side clock/tick setup point; PLL/oscillator bring-up itself is upstream (uboot), which is why the original G-04 framing (\"find v15 PLL init in the app\") was probably the wrong question."
+    },
+    {
+      "id": "v2-rx-013",
+      "address_space": "runtime_xip",
+      "section": "confirmed",
+      "start": "0x02057250",
+      "end_exclusive": "0x02057F04",
+      "size": 3252,
+      "type_owner": "shared stock string/table blob (codec strings, JLFS/storage names, UI strings, dispatch tables)",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Read-only reference data. Not a code cave.",
+      "source_artifacts": [
+        "baselines/v15/analysis/quarkslab/results/quarkslab-recursive-listing.tsv.gz",
+        "baselines/v15/analysis/evidence.md"
+      ],
+      "notes": "Byte-verified: 0x02057250 = NUL-separated codec/extension strings (wav/lc3/aac/m4a/mp3...), 0x02057954 = \"app_area_head\", 0x02057d98 = UI strings (\"9 Mono#/#C65050 Poly\"), 0x0205785b = table containing code pointers (0x02040d6e/72/80), 0x02057f04 = table containing code pointer 0x0202c348. The USB descriptors live inside this same blob (0x020579ae interface, 0x02057ab0 CIN table, 0x02057b53 device descriptor, 0x02058274 jack graph). CORRECTION: the 12 functions that reference this range reference it overwhelmingly as STRINGS (e.g. FUN_02004a54 uses \"app_area_head\" = storage), so they are not USB anchors. No decoded instruction references any descriptor base, and no 32-bit pointer to one exists in the image."
+    },
+    {
+      "id": "v2-rx-014",
+      "address_space": "runtime_xip",
+      "section": "candidate",
+      "start": "0x020014EE",
+      "end_exclusive": "0x02003F20",
+      "size": 10802,
+      "type_owner": "the only three decoded functions that touch core SFRs (clock/SFC-controller candidates)",
+      "evidence_confidence": "OBSERVED",
+      "mutability_patch_policy": "Candidate only. Function boundaries are partial (spans a range, not three exact extents).",
+      "source_artifacts": [
+        "baselines/v15/analysis/quarkslab/results/quarkslab-recursive-listing.tsv.gz"
+      ],
+      "notes": "A full immediate scan of the 51,089-row recursive listing finds only 7 SFR references in the whole image: FUN_020014ee (0x1eef300, 0x1eef100), FUN_0200152a (same pair), FUN_02003ef0 (same pair). These are the only clock/controller-configuration candidates found by the SFR axis. Caveat: pi32v2 immediates may be stored shifted, and most peripheral access is base-register + offset, so this axis is underexplored rather than exhausted."
+    },
+    {
+      "id": "v2-ui-001",
+      "address_space": "runtime_xip",
+      "section": "candidate",
+      "start": "0x02029290",
+      "end_exclusive": "0x02029528",
+      "size": 664,
+      "type_owner": "UI state machine / render update (strong candidate)",
+      "evidence_confidence": "OBSERVED",
+      "mutability_patch_policy": "Candidate only. No live validation. Do not patch yet.",
+      "source_artifacts": [
+        "baselines/v15/analysis/ui-preflash/README.md"
+      ],
+      "notes": "ui-preflash REQ-02: setter-to-redraw path not closed; final LCD write unresolved."
+    },
+    {
+      "id": "v2-ui-002",
+      "address_space": "runtime_xip",
+      "section": "candidate",
+      "start": "0x02029528",
+      "end_exclusive": "0x02029600",
+      "size": 216,
+      "type_owner": "grid/submode dispatch on state +0x302",
+      "evidence_confidence": "OBSERVED",
+      "mutability_patch_policy": "Candidate only.",
+      "source_artifacts": [
+        "baselines/v15/analysis/ui-preflash/README.md"
+      ],
+      "notes": "Observed dispatch values 2..6."
+    },
+    {
+      "id": "v2-ui-003",
+      "address_space": "runtime_xip",
+      "section": "candidate",
+      "start": "0x0201A67C",
+      "end_exclusive": "0x0201A700",
+      "size": 132,
+      "type_owner": "object field +0x24 C-string setter",
+      "evidence_confidence": "OBSERVED",
+      "mutability_patch_policy": "Candidate only.",
+      "source_artifacts": [
+        "baselines/v15/analysis/ui-preflash/README.md"
+      ],
+      "notes": "Reached from 0x02020376 with the 'Keys Channel-' descriptor at 0x02058314."
+    },
+    {
+      "id": "v2-ui-004",
+      "address_space": "runtime_xip",
+      "section": "candidate",
+      "start": "0x02026D6C",
+      "end_exclusive": "0x02026DD4",
+      "size": 104,
+      "type_owner": "current Patch record save writer (strong candidate)",
+      "evidence_confidence": "OBSERVED",
+      "mutability_patch_policy": "Candidate; the S1C7-S1C9 persistence attempts against this area all failed.",
+      "source_artifacts": [
+        "baselines/v15/analysis/ui-preflash/README.md",
+        "baselines/v15/analysis/MEMORY-MAP.md"
+      ],
+      "notes": "0x02026d80..0x02026dd4 can become a callable leaf only after the SAVE branch at 0x02026d7a changes."
+    },
+    {
+      "id": "v2-ui-005",
+      "address_space": "runtime_xip",
+      "section": "blocked",
+      "start": "0x02058248",
+      "end_exclusive": "0x02058314",
+      "size": 204,
+      "type_owner": "11-entry internal callback vector",
+      "evidence_confidence": "BLOCKED",
+      "mutability_patch_policy": "Table existence only. No dispatcher/caller found; physical event IDs must not be promoted from this.",
+      "source_artifacts": [
+        "baselines/v15/analysis/ui-preflash/README.md",
+        "baselines/v15/analysis/ui-preflash/final-pass/sdk-match/report.md"
+      ],
+      "notes": "This is exactly the class of 'looks like a table, assume it is free/known' shortcut that M09 punished."
+    },
+    {
+      "id": "v2-rm-001",
+      "address_space": "ram0",
+      "section": "confirmed",
+      "start": "0x01C00000",
+      "end_exclusive": "0x01C099D4",
+      "size": 39380,
+      "type_owner": "initialized data RAM (boot copy destination)",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Stock RAM. Not free unless an owner is proven.",
+      "source_artifacts": [
+        "baselines/v15/analysis/r03-owned-ram/heap-boundary/report.md"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "v2-rm-002",
+      "address_space": "ram0",
+      "section": "confirmed",
+      "start": "0x01C099D4",
+      "end_exclusive": "0x01C4651C",
+      "size": 248648,
+      "type_owner": "BSS / heap zero span actually reached by stock v15",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Not free by zeroing. Stack, globals, heap and task aliases must be excluded.",
+      "source_artifacts": [
+        "baselines/v15/analysis/r03-owned-ram/ram-ownership/report.md",
+        "baselines/v15/analysis/r03-owned-ram/heap-boundary/report.md"
+      ],
+      "notes": "BSS zero size 0x3cb48."
+    },
+    {
+      "id": "v2-rm-003",
+      "address_space": "ram0",
+      "section": "blocked",
+      "start": "0x01C4651C",
+      "end_exclusive": "0x01C7FD50",
+      "size": 235572,
+      "type_owner": "RAM0 above the stock v15 high-water mark",
+      "evidence_confidence": "BLOCKED",
+      "mutability_patch_policy": "UNPROVEN. Zero evidence of ownership or absence of alias. Must not host an SDK app's data/bss/heap until proven.",
+      "source_artifacts": [
+        "baselines/v15/analysis/r03-owned-ram/ram-ownership/report.md",
+        "docs/m09-brick-incident.md"
+      ],
+      "notes": "M09 was lost to exactly this reasoning error: 'undecoded and zero' was treated as available."
+    },
+    {
+      "id": "v2-rm-004",
+      "address_space": "ram0",
+      "section": "sdk-convention",
+      "start": "0x01C7FD50",
+      "end_exclusive": "0x01C7FD80",
+      "size": 48,
+      "type_owner": "SDK BOOT_INFO slot (BOOT_INFO_SIZE = 48)",
+      "evidence_confidence": "OBSERVED",
+      "mutability_patch_policy": "SHARED PLATFORM CONVENTION: the stock app itself populates this slot. Still device state - do not repurpose.",
+      "source_artifacts": [
+        "linux-build/fw-AC79_AIoT_SDK/cpu/wl82/sdk_ld_sfc.c",
+        "linux-build/fw-AC79_AIoT_SDK/cpu/wl82/tools/sdk.map"
+      ],
+      "notes": "REFINED: boot code FUN_020000c6 at 0x020000c6 copies fields from the pointer passed in r0 into 0x01c7fd50 (+0x00, +0x10, +0x18, +0x1c, +0x1e, +0x20) - exactly the SDK BOOT_INFO_SIZE=48 slot. Six decoded sites reference 0x01c7fd50 in total. So the SMK boot chain and the SDK share this convention; the earlier \"SDK-only, SMK chain does not write it\" note was wrong."
+    },
+    {
+      "id": "v2-rm-005",
+      "address_space": "ram0",
+      "section": "sdk-convention",
+      "start": "0x01C7FD80",
+      "end_exclusive": "0x01C7FE00",
+      "size": 128,
+      "type_owner": "SDK UPDATA_BEG update-flag region",
+      "evidence_confidence": "OBSERVED",
+      "mutability_patch_policy": "SHARED PLATFORM CONVENTION: stock code reads it at boot. Do not repurpose.",
+      "source_artifacts": [
+        "linux-build/fw-AC79_AIoT_SDK/cpu/wl82/sdk_ld_sfc.c",
+        "linux-build/fw-AC79_AIoT_SDK/cpu/wl82/sdk_ld_sdram.c"
+      ],
+      "notes": "REFINED: the boot chain calls FUN_02007424 (0x0200008a) which references 0x01c7fd80, i.e. UPDATA_BEG is live in stock firmware, not an SDK-only slot."
+    },
+    {
+      "id": "v2-rm-006",
+      "address_space": "ram0",
+      "section": "confirmed",
+      "start": "0x01C33260",
+      "end_exclusive": "0x01C34C74",
+      "size": 6676,
+      "type_owner": "main UI/Patch state object base (stock global)",
+      "evidence_confidence": "OBSERVED",
+      "mutability_patch_policy": "Patch only via proven field offsets. Do not encode custom state.",
+      "source_artifacts": [
+        "baselines/v15/analysis/ui-preflash/README.md",
+        "baselines/v15/analysis/persistence-s2/storage/report.md"
+      ],
+      "notes": "Fields: +0x200 page, +0x302 submode, +0x309..+0x30f pending input, +0x3a0 bank presets, +0x3a4 selected bank, +0x129c dirty flags, +0x1a14 current Patch record."
+    },
+    {
+      "id": "v2-rm-007",
+      "address_space": "ram0",
+      "section": "confirmed",
+      "start": "0x01C34C74",
+      "end_exclusive": "0x01C34D17",
+      "size": 163,
+      "type_owner": "current voice/patch snapshot (0xa3 raw record)",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Mutable stock state. Safe only as a source at the instant of copy.",
+      "source_artifacts": [
+        "baselines/v15/analysis/channel-separation-reanalysis/runtime-source/report.md"
+      ],
+      "notes": "0x9c dispatch prefix + 7-byte stock tail."
+    },
+    {
+      "id": "v2-rm-008",
+      "address_space": "ram0",
+      "section": "live",
+      "start": "0x01C46E80",
+      "end_exclusive": "0x01C46F30",
+      "size": 176,
+      "type_owner": "S1C 16-slot RAM envelope and Playback Note map",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "VOLATILE, owned while S1C6 is installed. Re-sent after every reboot.",
+      "source_artifacts": [
+        "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/app-manifest.json",
+        "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return/live-validation-20260804.md"
+      ],
+      "notes": "Producer stores wire byte 161 to 0x01c46f20 + slot."
+    },
+    {
+      "id": "v2-rm-009",
+      "address_space": "ram0",
+      "section": "confirmed",
+      "start": "0x01C37FD0",
+      "end_exclusive": "0x01C3806D",
+      "size": 157,
+      "type_owner": "SysEx staging complete-message window",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Transient. Never durable storage.",
+      "source_artifacts": [
+        "baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md"
+      ],
+      "notes": "0x9c payload plus F7."
+    },
+    {
+      "id": "v2-rm-010",
+      "address_space": "ram0",
+      "section": "observed",
+      "start": "0x01C3A2D4",
+      "end_exclusive": "0x01C3C5D4",
+      "size": 8960,
+      "type_owner": "boot stack initializer value range (sp/ssp/usp)",
+      "evidence_confidence": "OBSERVED",
+      "mutability_patch_policy": "No patch. Not a complete allocation map.",
+      "source_artifacts": [
+        "baselines/v15/analysis/r03-owned-ram/heap-boundary/report.md"
+      ],
+      "notes": "sp=0x01c3a2d4, ssp=0x01c3b2d4."
+    },
+    {
+      "id": "v2-sd-001",
+      "address_space": "sdram_window",
+      "section": "blocked",
+      "start": "0x04000000",
+      "end_exclusive": "0x04200000",
+      "size": 2097152,
+      "type_owner": "SDRAM window declared by the SDK default ('sdram') layout",
+      "evidence_confidence": "BLOCKED",
+      "mutability_patch_policy": "MUST NOT be used until SDRAM presence and controller bring-up on this unit are proven. The stock v15 app never addresses it.",
+      "source_artifacts": [
+        "linux-build/fw-AC79_AIoT_SDK/doc/datasheet/AC791N规格书/schematic/AC7911B0_AC7911B8参考原理图/AC7911B8_Datasheet_V1.0.pdf",
+        "linux-build/fw-AC79_AIoT_SDK/doc/datasheet/AC791N规格书/datasheet/AC7911B_Datasheet_V1.1.pdf",
+        "linux-build/fw-AC79_AIoT_SDK/cpu/wl82/sdk_ld_sdram.c",
+        "baselines/v15/analysis/public-research.md",
+        "baselines/v15/analysis/subsystem-feasibility/pcm-realtime-synth.md"
+      ],
+      "notes": "The SDK default 'sdram' layout needs 2 MiB at 0x04000000. The official AC7911B8 datasheet shipped in the SDK (V1.0, 2021-12-10, section 4 'Package Type Specification') defines the part number as AC7911 + <chip/binding> + <memory code>, where the memory code is a single position: 0 none, 2/4/8/6/3/5/7 = 2/4/8/16/32/64/128 Mbit flash, A = 1Mx16 SDRAM, B = 4Mx16 SDRAM, C = 16 Mbit PSRAM, D = 64 Mbit PSRAM. The unit is marked C108221-11B8 and its flash measures 1 MiB = 8 Mbit, which is exactly memory code 8. An AC7911B8 is therefore an 8-Mbit-flash member, not one of the SDRAM/PSRAM members, and the SDk 4 MiB/2 MiB demo defaults are not this part. The stock v15 app never addresses 0x04000000 either."
+    },
+    {
+      "id": "v2-sd-002",
+      "address_space": "sdram_window",
+      "section": "evidence",
+      "start": "0x04000000",
+      "end_exclusive": "0x04000988",
+      "size": 2440,
+      "type_owner": "flashed SDK app .data (the bricking build)",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Evidence of the failure mode, not a usable region.",
+      "source_artifacts": [
+        "linux-build/fw-AC79_AIoT_SDK/cpu/wl82/tools/sdk.map"
+      ],
+      "notes": "sdk.map: .data 0x04000000 size 0x988. app.bin SHA-256 5caaaf32... = the exact app inside the FWSC flashed 2026-08-15."
+    },
+    {
+      "id": "v2-sd-003",
+      "address_space": "sdram_window",
+      "section": "evidence",
+      "start": "0x040009A0",
+      "end_exclusive": "0x04003550",
+      "size": 11184,
+      "type_owner": "flashed SDK app .bss (the bricking build)",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Evidence of the failure mode.",
+      "source_artifacts": [
+        "linux-build/fw-AC79_AIoT_SDK/cpu/wl82/tools/sdk.map"
+      ],
+      "notes": ".bss 0x040009a0 size 0x2bb0."
+    },
+    {
+      "id": "v2-sd-004",
+      "address_space": "sdram_window",
+      "section": "evidence",
+      "start": "0x04003550",
+      "end_exclusive": "0x041FFFE0",
+      "size": 2083472,
+      "type_owner": "flashed SDK app malloc heap",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Evidence of the failure mode.",
+      "source_artifacts": [
+        "linux-build/fw-AC79_AIoT_SDK/cpu/wl82/sdk_ld_sdram.c",
+        "linux-build/fw-AC79_AIoT_SDK/cpu/wl82/tools/sdk.map"
+      ],
+      "notes": "_HEAP_BEGIN after .bss, _HEAP_END = 0x4000000 + SDRAM_SIZE - 32 = 0x041fffe0. Every os_task_create/malloc in app_main touches this window."
+    },
+    {
+      "id": "v2-sd-005",
+      "address_space": "sdram_window",
+      "section": "evidence",
+      "start": "0x04000000",
+      "end_exclusive": "0x04200000",
+      "size": 2097152,
+      "type_owner": "AC7911B8 part-number memory code (why this window is unavailable)",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Evidence row. The window stays BLOCKED for placement.",
+      "source_artifacts": [
+        "linux-build/fw-AC79_AIoT_SDK/doc/datasheet/AC791N规格书/schematic/AC7911B0_AC7911B8参考原理图/AC7911B8_Datasheet_V1.0.pdf",
+        "linux-build/fw-AC79_AIoT_SDK/doc/datasheet/AC791N规格书/datasheet/AC7911B_Datasheet_V1.1.pdf",
+        "docs/m09-wl82-dump-2026-08-15.md"
+      ],
+      "notes": "Datasheet section 4: AC7911<chip><memory-code>; memory code 8 = 8 Mbit Flash. The forced-loader dumps independently measure a 1 MiB (8 Mbit) SPI NOR. The datasheet lists SDRAM/PSRAM as different memory codes (A/B/C/D) in the same single position, so this part is not an SDRAM member. Residual question is only whether an EXTERNAL DRAM die exists on the SMK PCB, which the existing FCC/owner photos can settle."
+    },
+    {
+      "id": "v2-cv-001",
+      "address_space": "runtime_xip",
+      "section": "unresolved",
+      "start": "0x02057000",
+      "end_exclusive": "0x02097000",
+      "size": 262144,
+      "type_owner": "256 KiB with zero recursive decode and <512 B/page exhaustive decode",
+      "evidence_confidence": "BLOCKED",
+      "mutability_patch_policy": "UNKNOWN CONTENT. Not data, not code, not free - simply unproven. No patch or storage may target it.",
+      "source_artifacts": [
+        "baselines/v15/analysis/usb-flash-readiness/coverage.json",
+        "baselines/v15/analysis/quarkslab/results/quarkslab-recursive-listing.tsv.gz"
+      ],
+      "notes": "Exactly 64 pages. Contains the UI descriptor seen at 0x02058314 ('Keys Channel-') and the callback table at 0x02058248, so it is at least partly stock data."
+    },
+    {
+      "id": "v2-cv-002",
+      "address_space": "runtime_xip",
+      "section": "unresolved",
+      "start": "0x02026000",
+      "end_exclusive": "0x02027000",
+      "size": 4096,
+      "type_owner": "page with zero recursive decode",
+      "evidence_confidence": "BLOCKED",
+      "mutability_patch_policy": "Unknown.",
+      "source_artifacts": [
+        "baselines/v15/analysis/usb-flash-readiness/coverage.json"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "v2-cv-003",
+      "address_space": "runtime_xip",
+      "section": "unresolved",
+      "start": "0x02051000",
+      "end_exclusive": "0x02053000",
+      "size": 8192,
+      "type_owner": "two pages with zero recursive decode",
+      "evidence_confidence": "BLOCKED",
+      "mutability_patch_policy": "Unknown.",
+      "source_artifacts": [
+        "baselines/v15/analysis/usb-flash-readiness/coverage.json"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "v2-cv-004",
+      "address_space": "runtime_xip",
+      "section": "measurement",
+      "start": "0x02000000",
+      "end_exclusive": "0x02096A34",
+      "size": 617012,
+      "type_owner": "runtime decode coverage measurement (not a placement row)",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Measurement only.",
+      "source_artifacts": [
+        "baselines/v15/analysis/usb-flash-readiness/coverage.json"
+      ],
+      "notes": "Recursive decode covers 149,332 bytes = 24.2% of the window; exhaustive 325,010 bytes = 52.7%. 67 of 151 pages have no recursive decode at all."
+    },
+    {
+      "id": "v2-ot-001",
+      "address_space": "protocol",
+      "section": "confirmed",
+      "start": "OTA_NORMAL_VID_PID",
+      "end_exclusive": "OTA_NORMAL_VID_PID",
+      "size": 0,
+      "type_owner": "normal-mode USB identity 4C4A:C755, MIDI interface 4, EP 0x04/0x84",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Read-only observation. Never rewrite descriptors in an app-only candidate without a live rollback proof.",
+      "source_artifacts": [
+        "baselines/v15/analysis/runtime-trace/README.md",
+        "docs/firmware-runbook.md"
+      ],
+      "notes": "Observed v15 runtime enumeration on this unit is 4353:cf4d, MIDI Streaming interface 4, EP 0x04/0x84. The in-image descriptor block is separately recorded in v2-usb-001. Do not filter a scan by a single VID/PID without first resolving which identity the installed build presents."
+    },
+    {
+      "id": "v2-ot-002",
+      "address_space": "protocol",
+      "section": "confirmed",
+      "start": "OTA_UPDATE_VID_PID",
+      "end_exclusive": "OTA_UPDATE_VID_PID",
+      "size": 0,
+      "type_owner": "update-mode USB identity 4D4A:4155 (Jieli), MIDI interface 1, EP 0x04/0x84",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Entered only by the running app or by hardware recovery.",
+      "source_artifacts": [
+        "docs/firmware-runbook.md",
+        "docs/self-recovering-sdk-app.md"
+      ],
+      "notes": "The SMK update mode is implemented IN the v15 application data, not in the boot loader."
+    },
+    {
+      "id": "v2-ot-003",
+      "address_space": "protocol",
+      "section": "confirmed",
+      "start": "OTA_COMPLETION_VERIFY",
+      "end_exclusive": "OTA_COMPLETION_VERIFY",
+      "size": 0,
+      "type_owner": "verification completion request 0xE0000000 / 8 bytes",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Host answers with ASCII 'success' + NUL.",
+      "source_artifacts": [
+        "docs/self-recovering-sdk-app.md",
+        "logs/v15/ota-v15-s1c6-restore-from-stock-20260816.log"
+      ],
+      "notes": "Stage boundary between the running app and the update loader."
+    },
+    {
+      "id": "v2-usb-001",
+      "address_space": "runtime_xip",
+      "section": "confirmed",
+      "start": "0x0205773B",
+      "end_exclusive": "0x02058314",
+      "size": 3033,
+      "type_owner": "stock USB-MIDI descriptor / string / class-table area (in-image bytes)",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "These are the bytes an SDK app must reproduce for SMK identity. Do not edit in place without a live rollback proof.",
+      "source_artifacts": [
+        "baselines/v15/analysis/evidence.md",
+        "baselines/v15/analysis/ui-preflash/README.md",
+        "baselines/v15/analysis/usb-flash-readiness/coverage.json"
+      ],
+      "notes": "Contains: USB device descriptor 0x02057b53 (VID 0x4353/PID 0x4b4d), MIDIStreaming interface 0x020579ae, CIN payload-length table 0x02057ab0, UTF-16LE product string 0x02057fa8, bulk EPs 0x02057fc6/0x02057fd6, 12-descriptor MIDI jack graph 0x02058274, and the 11-entry callback vector 0x02058248. Corroboration: evidence.md already probed runtime region 0x02057000..0x020584ff and this range has zero recursive decode in coverage.json - two independent methods agree it is data, not code."
+    },
+    {
+      "id": "v2-usb-002",
+      "address_space": "protocol",
+      "section": "confirmed",
+      "start": "OTA_IN_IMAGE_DESCRIPTOR",
+      "end_exclusive": "OTA_IN_IMAGE_DESCRIPTOR",
+      "size": 0,
+      "type_owner": "in-image normal-mode descriptor identity: VID 0x4353, PID 0x4b4d",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Reference only.",
+      "source_artifacts": [
+        "baselines/v15/analysis/evidence.md"
+      ],
+      "notes": "Distinguish three different identities in the record: in-image descriptor 4353:4b4d; observed runtime enumeration 4353:cf4d (runtime-trace); macOS enumeration of the firmware-1.05 unit 4C4A:C755 (research notes). Resolve which one a given build will present before filtering a scan by VID/PID."
+    },
+    {
+      "id": "v2-ot-004",
+      "address_space": "protocol",
+      "section": "confirmed",
+      "start": "OTA_COMPLETION_UPGRADE",
+      "end_exclusive": "OTA_COMPLETION_UPGRADE",
+      "size": 0,
+      "type_owner": "upgrade completion request 0xF0000000 / 8 bytes",
+      "evidence_confidence": "PROVEN",
+      "mutability_patch_policy": "Host answers 'success' then the device reboots.",
+      "source_artifacts": [
+        "docs/self-recovering-sdk-app.md",
+        "logs/v15/ota-v15-s1c6-restore-from-stock-20260816.log"
+      ],
+      "notes": "1241 requests for a full 701,120-byte payload."
+    }
+  ]
+}

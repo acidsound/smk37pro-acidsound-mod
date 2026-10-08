@@ -1,0 +1,25 @@
+{
+  "changed_sector_count": 2,
+  "changed_sectors": [
+    {
+      "file": "rollback/recovery-sectors/stock-sector-04000.bin",
+      "sector_base": "0x04000",
+      "sha256": "84c51914e8203e19d5b951a6ddba50aa1523a1f49bc2a6f5e19715049bc6750b",
+      "size": 8192
+    },
+    {
+      "file": "rollback/recovery-sectors/stock-sector-62000.bin",
+      "sector_base": "0x62000",
+      "sha256": "571f97c9f0922b1e107f64f3524c9d620f0e35fcf78e9ae3c50cc49a3104122e",
+      "size": 8192
+    }
+  ],
+  "format": "smk37-v15-h0-memory-boundary-only-v1.rollback-v1",
+  "h0_flash_sha256": "458d1c0a1e08e5f74ad07ab3dd04cf7d7b591a421668f5ff822a15b250746998",
+  "reconstructed_flash_sha256": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+  "rollback_restores_changed_offsets": true,
+  "rollback_restores_stock_flash": true,
+  "scope": "changed sectors only, stock bytes from official v15 package",
+  "sector_size": 8192,
+  "stock_flash_sha256": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a"
+}

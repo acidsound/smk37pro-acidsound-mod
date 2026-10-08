@@ -1,0 +1,13 @@
+/home/spectrum.guest/r03-trylock.o:	file format ELF32-pi32v2
+
+Disassembly of section .text:
+r03_try_lock:
+       0:    20 00             	csync
+       2:    b0 00             	testset b[r0]
+       4:    40 e8 03 00       	ifeq goto 6 <r03_try_lock+0xE : e >
+       8:    20 00             	csync
+       a:    40 21             	r0 = 1
+       c:    80 00             	rts
+       e:    40 20             	r0 = 0
+      10:    80 00             	rts
+      12:    f7 9f             	goto -2 <r03_try_lock+0x12 : 12 >

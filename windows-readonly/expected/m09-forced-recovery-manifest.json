@@ -1,0 +1,65 @@
+{
+  "format": "smk37-m09-forced-recovery-plan-v1",
+  "hash_representation": "FWSC-unpacked flash.bin bytes; not directly comparable to a forced-loader dump until its returned representation is validated",
+  "safety_policy": {
+    "device_access": "none; offline artifact preparation only",
+    "required_before_write": "two identical forced-loader dumps plus separately validated dump/package representation semantics",
+    "write_scope": "six audited 4 KiB application sectors only",
+    "forbidden": "chip erase, full-flash write, key burn, or boot-prefix write"
+  },
+  "stock_package_sha256": "c6a9187e706aeae921447ec88e29fecbc618e3f1fc3de54c743c78e41781580a",
+  "m09_package_sha256": "5ac1264eba85ce5f1747458a90203bc144d21f87dc66f189ca055b74700ab5c8",
+  "stock_flash_sha256": "f36327e48e012845d69f661441a70beefc1eafad4acd02321de99345392e169a",
+  "m09_flash_sha256": "f1047d34f4b72d956282a9b4b22440f2d84a650c25c2099b1dbdbc949e7df2ff",
+  "flash_length": 638976,
+  "sectors": [
+    {
+      "address": "0x04000",
+      "length": 4096,
+      "stock_file": "stock-sector-04000.bin",
+      "stock_sha256": "cad1ffdd7f47fabc707b5a0edbd0a4edad4bfd02d3b1afa24ae9b2133c7dc86f",
+      "expected_m09_sha256": "f9aa69246238249abab08497eeca933d688aa92f2e241146bd0b4cada6b7837a",
+      "changed_byte_count": 8
+    },
+    {
+      "address": "0x20000",
+      "length": 4096,
+      "stock_file": "stock-sector-20000.bin",
+      "stock_sha256": "26ed236707717086221c517b4b2a3c69e08db6f3e72ebcd7ad7acf13d928a6c2",
+      "expected_m09_sha256": "c8bc2291e6147b5b1ab3353da82bbcca585cfbecdf3e4d3e2ac838251b15ce0d",
+      "changed_byte_count": 6
+    },
+    {
+      "address": "0x21000",
+      "length": 4096,
+      "stock_file": "stock-sector-21000.bin",
+      "stock_sha256": "c2a878ffb593b473c5f43df846c54efccbeeb54886192513c4191ff0b8d59820",
+      "expected_m09_sha256": "4d2f1a9d45e4bc4f2c16de5b8b92aee58966b83e96ba96e99a48333631519739",
+      "changed_byte_count": 126
+    },
+    {
+      "address": "0x27000",
+      "length": 4096,
+      "stock_file": "stock-sector-27000.bin",
+      "stock_sha256": "b4ae27d3eacccbc1ce3607c2af855c9463e30a191e9ca0f8cb6f9eaa04e63831",
+      "expected_m09_sha256": "a3406596c4a9561100239dd806ebf10119db121f58d1b0be734a69e01b8ce1e7",
+      "changed_byte_count": 6
+    },
+    {
+      "address": "0x5a000",
+      "length": 4096,
+      "stock_file": "stock-sector-5a000.bin",
+      "stock_sha256": "c24c6d31c084e43cb0eb67f0253948d11e775a8cca8e364dd537fbe008216112",
+      "expected_m09_sha256": "d19331ed3d96e9f1843d67a4ccbf4c57a3cbe5bdbd0a3825f4e73f108a147f84",
+      "changed_byte_count": 4
+    },
+    {
+      "address": "0x99000",
+      "length": 4096,
+      "stock_file": "stock-sector-99000.bin",
+      "stock_sha256": "48393f2b7a6f01a5f247a603c7080002d07d4a664b43c3596f42b0a063fbe1be",
+      "expected_m09_sha256": "6090befc3e5d5f3a6c756b2acc0fbcd766b2bd0e65fe82c0e0976966e55b4e82",
+      "changed_byte_count": 789
+    }
+  ]
+}

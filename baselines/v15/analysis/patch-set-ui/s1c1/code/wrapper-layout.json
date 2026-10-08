@@ -1,0 +1,229 @@
+{
+  "hex": "53160481631679040416951685f82312c8ff2065c40105e19c80584380f80500584080f818028116049680f814045842381980f80500584080f80d028116048b05e1a0505842381980f80500584080f8020201e1a080401680ff32ab02005904",
+  "hook_encodings": {
+    "0x0201c63e": "80fffa1a0000",
+    "0x0201c67c": "80ffc01a0000"
+  },
+  "instructions": [
+    {
+      "address": "0x0201e13e",
+      "bytes": "5316",
+      "meaning": "r3 = Note Off r5 note; native r5 remains untouched",
+      "name": "off_note_adapter"
+    },
+    {
+      "address": "0x0201e140",
+      "bytes": "0481",
+      "meaning": "compact forward goto shared core",
+      "name": "off_to_core"
+    },
+    {
+      "address": "0x0201e142",
+      "bytes": "6316",
+      "meaning": "r3 = Note On r6 note; fall through to shared core",
+      "name": "on_note_adapter"
+    },
+    {
+      "address": "0x0201e144",
+      "bytes": "7904",
+      "meaning": "save original rets and r4..r9, including r5/r6 note/velocity state",
+      "name": "push_saved"
+    },
+    {
+      "address": "0x0201e146",
+      "bytes": "0416",
+      "meaning": "r4 = original memcpy destination",
+      "name": "save_destination"
+    },
+    {
+      "address": "0x0201e148",
+      "bytes": "9516",
+      "meaning": "temporary r5 = exact dispatcher channel nibble r9",
+      "name": "normalize_channel"
+    },
+    {
+      "address": "0x0201e14a",
+      "bytes": "85f82312",
+      "meaning": "r5 != 9 -> common stock copy",
+      "name": "non_ch10_branch"
+    },
+    {
+      "address": "0x0201e14e",
+      "bytes": "c8ff2065c401",
+      "meaning": "temporary r8 = exact H2/private slot0 source",
+      "name": "slot0_source_pointer"
+    },
+    {
+      "address": "0x0201e154",
+      "bytes": "05e19c80",
+      "meaning": "r5 = r8 + 0x9c = H2 valid0 / slot0 metadata base",
+      "name": "slot0_metadata_pointer"
+    },
+    {
+      "address": "0x0201e158",
+      "bytes": "5843",
+      "meaning": "r0 = EMPTY/LOADING/ARMED state",
+      "name": "state_load"
+    },
+    {
+      "address": "0x0201e15a",
+      "bytes": "80f80500",
+      "meaning": "state != EMPTY -> LOADING/ARMED discriminator",
+      "name": "state_nonempty_branch"
+    },
+    {
+      "address": "0x0201e15e",
+      "bytes": "5840",
+      "meaning": "EMPTY compatibility: r0 = exact H2 valid0",
+      "name": "h2_valid0_load"
+    },
+    {
+      "address": "0x0201e160",
+      "bytes": "80f81802",
+      "meaning": "EMPTY and valid0 != 1 -> stock copy",
+      "name": "h2_invalid_branch"
+    },
+    {
+      "address": "0x0201e164",
+      "bytes": "8116",
+      "meaning": "EMPTY and valid0 == 1 preserves exact H2 slot0 source",
+      "name": "h2_slot0_source"
+    },
+    {
+      "address": "0x0201e166",
+      "bytes": "0496",
+      "meaning": "skip private ARMED lookup and use common copy",
+      "name": "h2_slot0_to_copy"
+    },
+    {
+      "address": "0x0201e168",
+      "bytes": "80f81404",
+      "meaning": "state != ARMED -> stock copy; LOADING never exposes owned RAM",
+      "name": "state_armed_branch"
+    },
+    {
+      "address": "0x0201e16c",
+      "bytes": "5842",
+      "meaning": "r0 = immutable slot0 note byte",
+      "name": "note0_load"
+    },
+    {
+      "address": "0x0201e16e",
+      "bytes": "3819",
+      "meaning": "r0 = slot0 note XOR normalized event note",
+      "name": "note0_compare"
+    },
+    {
+      "address": "0x0201e170",
+      "bytes": "80f80500",
+      "meaning": "slot0 note != event note -> note1 test",
+      "name": "note0_branch"
+    },
+    {
+      "address": "0x0201e174",
+      "bytes": "5840",
+      "meaning": "matched slot0: r0 = valid0",
+      "name": "slot0_valid_load"
+    },
+    {
+      "address": "0x0201e176",
+      "bytes": "80f80d02",
+      "meaning": "matched slot0 but valid0 != 1 -> stock copy",
+      "name": "slot0_invalid_branch"
+    },
+    {
+      "address": "0x0201e17a",
+      "bytes": "8116",
+      "meaning": "selected r1 = immutable slot0 voice",
+      "name": "slot0_source"
+    },
+    {
+      "address": "0x0201e17c",
+      "bytes": "048b",
+      "meaning": "skip note1 test/source and use common copy",
+      "name": "slot0_to_copy"
+    },
+    {
+      "address": "0x0201e17e",
+      "bytes": "05e1a050",
+      "meaning": "r5 += 0xa0 = slot1 valid/transaction/note metadata base",
+      "name": "slot1_metadata_pointer"
+    },
+    {
+      "address": "0x0201e182",
+      "bytes": "5842",
+      "meaning": "r0 = immutable slot1 note byte",
+      "name": "note1_load"
+    },
+    {
+      "address": "0x0201e184",
+      "bytes": "3819",
+      "meaning": "r0 = slot1 note XOR normalized event note",
+      "name": "note1_compare"
+    },
+    {
+      "address": "0x0201e186",
+      "bytes": "80f80500",
+      "meaning": "slot1 note != event note -> common stock copy",
+      "name": "note1_branch"
+    },
+    {
+      "address": "0x0201e18a",
+      "bytes": "5840",
+      "meaning": "matched slot1: r0 = valid1",
+      "name": "slot1_valid_load"
+    },
+    {
+      "address": "0x0201e18c",
+      "bytes": "80f80202",
+      "meaning": "matched slot1 but valid1 != 1 -> stock copy",
+      "name": "slot1_invalid_branch"
+    },
+    {
+      "address": "0x0201e190",
+      "bytes": "01e1a080",
+      "meaning": "selected r1 = r8 + 0xa0 = immutable slot1 voice",
+      "name": "slot1_source"
+    },
+    {
+      "address": "0x0201e194",
+      "bytes": "4016",
+      "meaning": "restore original r0 immediately before memcpy",
+      "name": "restore_destination"
+    },
+    {
+      "address": "0x0201e196",
+      "bytes": "80ff32ab0200",
+      "meaning": "call memcpy with original r2 == 0x9c",
+      "name": "memcpy"
+    },
+    {
+      "address": "0x0201e19c",
+      "bytes": "5904",
+      "meaning": "pop pc,r9..r4; restore native r5/r6 and channel r9",
+      "name": "return_restore"
+    }
+  ],
+  "layout": {
+    "channel_branch": "0x0201e14a",
+    "copy": "0x0201e194",
+    "core": "0x0201e144",
+    "end": "0x0201e19e",
+    "h2_invalid_branch": "0x0201e160",
+    "h2_slot0_goto": "0x0201e166",
+    "memcpy_call": "0x0201e196",
+    "note0_branch": "0x0201e170",
+    "note1_branch": "0x0201e186",
+    "note1_test": "0x0201e17e",
+    "off_entry": "0x0201e13e",
+    "off_goto": "0x0201e140",
+    "on_entry": "0x0201e142",
+    "slot0_goto": "0x0201e17c",
+    "slot0_invalid_branch": "0x0201e176",
+    "slot1_invalid_branch": "0x0201e18c",
+    "state_armed_branch": "0x0201e168",
+    "state_nonempty": "0x0201e168",
+    "state_nonempty_branch": "0x0201e15a"
+  },
+  "sha256": "adb8774971811f6dbdce8b7338f2265f18b8bb22544ccab746e74610366d4e35"
+}

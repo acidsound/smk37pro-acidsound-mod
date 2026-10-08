@@ -1,0 +1,3 @@
+# High-confidence application functions not reached by initial raw-binary analysis.
+0x0202c864	app_state_init
+0x0202c876	midi_route_receive_loop

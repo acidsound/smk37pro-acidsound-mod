@@ -1,0 +1,15 @@
+address	size	bytes	name	asm	meaning	target
+0x0201e228	2	7904	reset.push_saved	push {rets,r9..r4}	preserve r4..r9 for segmented caller r7 contract	
+0x0201e22a	2	0940	reset.sig0_load	lb.z r1,[r0]	wire byte 6 = payload byte 0 (OP1 EG rate 1); r0 = stage from callsite	
+0x0201e22c	4	81f80cc8	reset.sig0_mismatch	jne r1,#0x64,skip	not reset packet -> producer	0x0201e248
+0x0201e230	2	0941	reset.sig1_load	lb.z r1,[r0+1]	wire byte 7 = payload byte 1 (OP1 EG rate 2)	
+0x0201e232	4	81f809ca	reset.sig1_mismatch	jne r1,#0x65,skip	not reset packet -> producer	0x0201e248
+0x0201e236	6	c5ffbd65c401	reset.control_pointer	mov r5,#0x1c465bd	control base	
+0x0201e23c	2	4020	reset.zero	mov r0,#0	zero	
+0x0201e23e	2	d840	reset.lock_store	sb [r5],r0	clear lock	
+0x0201e240	2	d841	reset.count_store	sb [r5+1],r0	clear count	
+0x0201e242	2	d842	reset.state_store	sb [r5+2],r0	state EMPTY hides stale map until ARMED	
+0x0201e244	2	2000	reset.reset_csync	csync	publish reset	
+0x0201e246	2	5904	reset.return_reset	pop {pc,r9..r4}	reset packet is not a voice: return without calling producer	
+0x0201e248	6	80ff48ffffff	reset.call_producer	call 0x201e196	r0 = stage preserved on skip path; sequential producer	
+0x0201e24e	2	5904	reset.return_voice	pop {pc,r9..r4}	return	

@@ -1,0 +1,1172 @@
+{
+  "app": {
+    "basis_app_sha256": "c18ed6f4e8ba2c16b99c41e6264cc36804fb38d8800d03ec518ab6bd838a8d14",
+    "boundary_relative_changed_byte_count": 211,
+    "boundary_relative_changed_ranges": [
+      {
+        "end_exclusive": 123213,
+        "start": 123212
+      },
+      {
+        "end_exclusive": 123253,
+        "start": 123214
+      },
+      {
+        "end_exclusive": 123257,
+        "start": 123256
+      },
+      {
+        "end_exclusive": 123259,
+        "start": 123258
+      },
+      {
+        "end_exclusive": 123292,
+        "start": 123260
+      },
+      {
+        "end_exclusive": 123311,
+        "start": 123310
+      },
+      {
+        "end_exclusive": 123325,
+        "start": 123324
+      },
+      {
+        "end_exclusive": 123393,
+        "start": 123328
+      },
+      {
+        "end_exclusive": 123414,
+        "start": 123394
+      },
+      {
+        "end_exclusive": 123419,
+        "start": 123417
+      },
+      {
+        "end_exclusive": 123452,
+        "start": 123422
+      },
+      {
+        "end_exclusive": 123460,
+        "start": 123453
+      },
+      {
+        "end_exclusive": 123470,
+        "start": 123461
+      },
+      {
+        "end_exclusive": 124011,
+        "start": 124010
+      },
+      {
+        "end_exclusive": 124063,
+        "start": 124062
+      }
+    ],
+    "callsite_contract": {
+      "direct_product_callsite": {
+        "address": "0x0201e468",
+        "bytes": "bfeadcfe",
+        "target": "0x0201e224"
+      },
+      "direct_reload_callsite": {
+        "address": "0x0201e46c",
+        "bytes": "bfeaf838",
+        "status": "preserved"
+      },
+      "segmented_product_callsite": {
+        "address": "0x0201e49c",
+        "bytes": "bfeac0fe",
+        "target": "0x0201e220"
+      },
+      "segmented_reload_callsite": {
+        "address": "0x0201e4a0",
+        "bytes": "bfeade38",
+        "status": "preserved"
+      }
+    },
+    "format": "smk37-v15-s1c3-16slot-functional-release-v1.app-manifest-v1",
+    "input_gates": [
+      {
+        "app_hash": "c18ed6f4e8ba2c16b99c41e6264cc36804fb38d8800d03ec518ab6bd838a8d14",
+        "boundary_commit": "779356aa3565c43de8141ca289c269e5c1e57796",
+        "candidate_built": true,
+        "evidence_decision": "PASS",
+        "fwsc_hash": "2345102aadded732b13e22d1410d3f7b05f104ffc408bd1d6eba03ea2afc058c",
+        "live_pass_text_present": true,
+        "name": "exact-live-pass-s1c3-boundary-app",
+        "pad_permutation_commit": "2a23cf5017eff520f775e511f8d3d80e15163e7d",
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-boundary-only/app.bin",
+        "status": "PASS"
+      },
+      {
+        "end_exclusive": "0x0201e19e",
+        "firmware_candidate": "BLOCK",
+        "live_code_hash": "894f61ee4eedb942b6653bd36dc72934d3719b54a9a413f6c94f29d0084f8ffc",
+        "name": "reviewed-96-byte-16-note-selector",
+        "note_first_inclusive": 36,
+        "note_last_inclusive": 51,
+        "path": "baselines/v15/analysis/patch-set-ui/s1c3/selector/selector.bin",
+        "raw_selector_design": "PASS",
+        "selector_commit": "3e99ac3e8b40a1c0733cf6a2a6e6fd5aabbbfa90",
+        "selector_hash": "ea2c76595a93cf2cf6a39236e09b749781e2721e3575d0c1b40194855cd4e915",
+        "selector_size": 96,
+        "slot_formula": "slot = note - 36",
+        "start": "0x0201e13e",
+        "status": "PASS",
+        "validation_pass_text_present": true
+      },
+      {
+        "device_accessed": false,
+        "direct_callsite_bytes": "bfeadcfe",
+        "end_exclusive": "0x0201e24e",
+        "entry": "0x0201e1a2",
+        "manifest_hash": "5c0ec6675c29b8f20d055938425ceb12c356513c29b79b761f1a469eaa068a75",
+        "name": "compact-16-slot-producer",
+        "owned_end_exclusive": "0x0201e254",
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional/inputs/producer/producer.bin",
+        "producer_hash": "5c0ec6675c29b8f20d055938425ceb12c356513c29b79b761f1a469eaa068a75",
+        "producer_size": 172,
+        "segmented_callsite_bytes": "bfeac0fe",
+        "source_commit": "3507a5634cf1379f63dc40fa65c55456d4bb9091",
+        "source_evidence_sha256": "0bed1fd8ba8dba7e42c371eec8d5cb71e8296ced3b95d688407e9732eeb8a288",
+        "source_exact_pi32_producer_bytes": "PASS",
+        "status": "PASS"
+      },
+      {
+        "manifest": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional/inputs/packets/packet-manifest.json",
+        "name": "exact-16-packet-set",
+        "packets": [
+          {
+            "file": "slot00-note36-direct-product-163.bin",
+            "name": "BUZZ BASS",
+            "note": 36,
+            "order": 1,
+            "runtime_sha256": "e2beb705a28e83940b2708f8ba0976e8c093ca12f45d0045f290b1589760d76b",
+            "sha256": "1c9239621563722eaac0a85db411571963f9ebbd0dbbb00b21044b76b1581427",
+            "slot": 0
+          },
+          {
+            "file": "slot01-note37-direct-product-163.bin",
+            "name": "Bang ?????",
+            "note": 37,
+            "order": 2,
+            "runtime_sha256": "5dab954752769609d64dd162360182138c8bc399030b88cf8d61b76fb7208f97",
+            "sha256": "afa8957005341e6144962ce3120bb1d829475714077617ea8da2c3fee4a0aa21",
+            "slot": 1
+          },
+          {
+            "file": "slot02-note38-direct-product-163.bin",
+            "name": "BASSE BIEN",
+            "note": 38,
+            "order": 3,
+            "runtime_sha256": "3e140cc8613ec555fcae2109d216c5e838d3193b305352992dc4062556af8b60",
+            "sha256": "8a87a409056457e61944d01bf4bbc0266414b8385c3a848125700da9e8417de3",
+            "slot": 2
+          },
+          {
+            "file": "slot03-note39-direct-product-163.bin",
+            "name": "BASS-THING",
+            "note": 39,
+            "order": 4,
+            "runtime_sha256": "5f60dc8f39b4ec43dc4368050701550ca56581948451f0c8083ace61e9d98dc7",
+            "sha256": "a5c086a77b4de1ce9546e747b72f79d8f6ad7b0dbd7c3b6e1665ef7edf83ff58",
+            "slot": 3
+          },
+          {
+            "file": "slot04-note40-direct-product-163.bin",
+            "name": "BASS SLAP",
+            "note": 40,
+            "order": 5,
+            "runtime_sha256": "5da8be28b3468a534aa488b02d47522df36e6b5b02b14f992bcb869fc4bb9ecc",
+            "sha256": "ffd1bcc6c7a7c5d8a1bb35f5bf7e39bf63058e62ac574e1e308ba53edc6670ff",
+            "slot": 4
+          },
+          {
+            "file": "slot05-note41-direct-product-163.bin",
+            "name": "BEAMER 2",
+            "note": 41,
+            "order": 6,
+            "runtime_sha256": "d38dfdac699a0fadbf7c99c98103a5f2bf7297a6746e94525d7eca3472223d40",
+            "sha256": "57136706fa633b5b47008ed2616471f72ae629d69e601e33c66daad991df94e9",
+            "slot": 5
+          },
+          {
+            "file": "slot06-note42-direct-product-163.bin",
+            "name": "Onglon",
+            "note": 42,
+            "order": 7,
+            "runtime_sha256": "7727f3b7856a73b3c32bca1b6e15ed74672d6dc97e00641761ef14237b0d8a44",
+            "sha256": "0f202d88578152ca024b3822f56a7c74c485c42996695033a4c239449d30f366",
+            "slot": 6
+          },
+          {
+            "file": "slot07-note43-direct-product-163.bin",
+            "name": "SOFTSTEEL",
+            "note": 43,
+            "order": 8,
+            "runtime_sha256": "8b0463a7b52857203105525af3456636b3a427e5db5f1eb75ea687bd6677bbbb",
+            "sha256": "d4ee6f2ccfce2d0c548917bb58ead4988dc3038c2b84edaaa37f047d2e006ea2",
+            "slot": 7
+          },
+          {
+            "file": "slot08-note44-direct-product-163.bin",
+            "name": "BASS-ROADS",
+            "note": 44,
+            "order": 9,
+            "runtime_sha256": "1602db2d94930482f631d087bf4b645d626f12b88da1e8deee21202210b7177c",
+            "sha256": "c8c489b72b195dfe5f373b6a860b32f0d07a29a83a9f2c070299df5af88a9cb3",
+            "slot": 8
+          },
+          {
+            "file": "slot09-note45-direct-product-163.bin",
+            "name": "E.ORGAN 1",
+            "note": 45,
+            "order": 10,
+            "runtime_sha256": "33dd55bbc6ebc2361260b9a581203f682b49388f9e4284b95de15136b630a178",
+            "sha256": "9c895d925a6cb79c4dff9f9f27727cce02f6dd0ed86467c994d7f459f1036258",
+            "slot": 9
+          },
+          {
+            "file": "slot10-note46-direct-product-163.bin",
+            "name": "YEAAAHH",
+            "note": 46,
+            "order": 11,
+            "runtime_sha256": "9c5abf35d8c039be1c8603f4fb5296f7b7d3e28503b330b5d3dd33c1b5a6dff9",
+            "sha256": "802944d0e1a8f4e85f1a3a694e2a0dbbfe9bb55972814f11ed4c7be7575b6704",
+            "slot": 10
+          },
+          {
+            "file": "slot11-note47-direct-product-163.bin",
+            "name": "HAND DRUM",
+            "note": 47,
+            "order": 12,
+            "runtime_sha256": "98bc86e7d9625c837ee6c07fa3f01cbd6079960c9d1071017cf51194aa48c1bf",
+            "sha256": "c4e8458edeb04d8106ca60a35243525e6b5f3f5de272091492409a440e3a9a8d",
+            "slot": 11
+          },
+          {
+            "file": "slot12-note48-direct-product-163.bin",
+            "name": "HAND CLAP1",
+            "note": 48,
+            "order": 13,
+            "runtime_sha256": "452efa8d41eecc7a5c57f1dfdecc072e1bc4266020cfe824edbc1b87415c2e38",
+            "sha256": "622a06870f189b6e4582f0093255f450403d4112836f09563c0b4623c1b287cd",
+            "slot": 12
+          },
+          {
+            "file": "slot13-note49-direct-product-163.bin",
+            "name": "Mooger #1",
+            "note": 49,
+            "order": 14,
+            "runtime_sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275",
+            "sha256": "6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27",
+            "slot": 13
+          },
+          {
+            "file": "slot14-note50-direct-product-163.bin",
+            "name": "Moog Solo2",
+            "note": 50,
+            "order": 15,
+            "runtime_sha256": "cfa79fc5ba72bcd50b0465a116e109da90ca5dcdcdc40bc89cdad218ee468417",
+            "sha256": "b159db617616621759bb9990991a8214c585d1f7ecd1be0f36d53a0b71b160c8",
+            "slot": 14
+          },
+          {
+            "file": "slot15-note51-direct-product-163.bin",
+            "name": "Mooger Low",
+            "note": 51,
+            "order": 16,
+            "runtime_sha256": "a28849a192d5dad000622c8aa749baa6508ad73e2c1cc6659b33a0419b6a0e88",
+            "sha256": "39a3e4eca1c740f719b3495f2a88c63e3b5d575a16a98c7b05fbc211fbfa4775",
+            "slot": 15
+          }
+        ],
+        "pad_permutation": {
+          "blocked_from": [
+            "producer_order",
+            "selector_order",
+            "packet_send_order",
+            "runtime_slot_order"
+          ],
+          "format": "smk37-v15-s1c3-functional-physical-pad-permutation-ui-only-v1",
+          "note_order_invariant": "producer/selector/sender/packet manifest use slot = note - 36 for notes 36..51",
+          "pad_1_to_16_note_sequence": [
+            40,
+            41,
+            42,
+            43,
+            48,
+            49,
+            50,
+            51,
+            36,
+            37,
+            38,
+            39,
+            44,
+            45,
+            46,
+            47
+          ],
+          "pad_1_to_16_to_note_order_slot": [
+            4,
+            5,
+            6,
+            7,
+            12,
+            13,
+            14,
+            15,
+            0,
+            1,
+            2,
+            3,
+            8,
+            9,
+            10,
+            11
+          ],
+          "rows": [
+            {
+              "bank_letter": "D",
+              "midi_note": 40,
+              "midi_note_hex": "0x28",
+              "note_ordered_slot": 4,
+              "patch_1_based": 5,
+              "physical_pad_1_based": 1,
+              "slot_patch_name": "BASS SLAP"
+            },
+            {
+              "bank_letter": "D",
+              "midi_note": 41,
+              "midi_note_hex": "0x29",
+              "note_ordered_slot": 5,
+              "patch_1_based": 6,
+              "physical_pad_1_based": 2,
+              "slot_patch_name": "BEAMER 2"
+            },
+            {
+              "bank_letter": "D",
+              "midi_note": 42,
+              "midi_note_hex": "0x2a",
+              "note_ordered_slot": 6,
+              "patch_1_based": 7,
+              "physical_pad_1_based": 3,
+              "slot_patch_name": "Onglon"
+            },
+            {
+              "bank_letter": "D",
+              "midi_note": 43,
+              "midi_note_hex": "0x2b",
+              "note_ordered_slot": 7,
+              "patch_1_based": 8,
+              "physical_pad_1_based": 4,
+              "slot_patch_name": "SOFTSTEEL"
+            },
+            {
+              "bank_letter": "D",
+              "midi_note": 48,
+              "midi_note_hex": "0x30",
+              "note_ordered_slot": 12,
+              "patch_1_based": 13,
+              "physical_pad_1_based": 5,
+              "slot_patch_name": "HAND CLAP1"
+            },
+            {
+              "bank_letter": "D",
+              "midi_note": 49,
+              "midi_note_hex": "0x31",
+              "note_ordered_slot": 13,
+              "patch_1_based": 14,
+              "physical_pad_1_based": 6,
+              "slot_patch_name": "Mooger #1"
+            },
+            {
+              "bank_letter": "D",
+              "midi_note": 50,
+              "midi_note_hex": "0x32",
+              "note_ordered_slot": 14,
+              "patch_1_based": 15,
+              "physical_pad_1_based": 7,
+              "slot_patch_name": "Moog Solo2"
+            },
+            {
+              "bank_letter": "D",
+              "midi_note": 51,
+              "midi_note_hex": "0x33",
+              "note_ordered_slot": 15,
+              "patch_1_based": 16,
+              "physical_pad_1_based": 8,
+              "slot_patch_name": "Mooger Low"
+            },
+            {
+              "bank_letter": "D",
+              "midi_note": 36,
+              "midi_note_hex": "0x24",
+              "note_ordered_slot": 0,
+              "patch_1_based": 1,
+              "physical_pad_1_based": 9,
+              "slot_patch_name": "BUZZ BASS"
+            },
+            {
+              "bank_letter": "D",
+              "midi_note": 37,
+              "midi_note_hex": "0x25",
+              "note_ordered_slot": 1,
+              "patch_1_based": 2,
+              "physical_pad_1_based": 10,
+              "slot_patch_name": "Bang ?????"
+            },
+            {
+              "bank_letter": "D",
+              "midi_note": 38,
+              "midi_note_hex": "0x26",
+              "note_ordered_slot": 2,
+              "patch_1_based": 3,
+              "physical_pad_1_based": 11,
+              "slot_patch_name": "BASSE BIEN"
+            },
+            {
+              "bank_letter": "D",
+              "midi_note": 39,
+              "midi_note_hex": "0x27",
+              "note_ordered_slot": 3,
+              "patch_1_based": 4,
+              "physical_pad_1_based": 12,
+              "slot_patch_name": "BASS-THING"
+            },
+            {
+              "bank_letter": "D",
+              "midi_note": 44,
+              "midi_note_hex": "0x2c",
+              "note_ordered_slot": 8,
+              "patch_1_based": 9,
+              "physical_pad_1_based": 13,
+              "slot_patch_name": "BASS-ROADS"
+            },
+            {
+              "bank_letter": "D",
+              "midi_note": 45,
+              "midi_note_hex": "0x2d",
+              "note_ordered_slot": 9,
+              "patch_1_based": 10,
+              "physical_pad_1_based": 14,
+              "slot_patch_name": "E.ORGAN 1"
+            },
+            {
+              "bank_letter": "D",
+              "midi_note": 46,
+              "midi_note_hex": "0x2e",
+              "note_ordered_slot": 10,
+              "patch_1_based": 11,
+              "physical_pad_1_based": 15,
+              "slot_patch_name": "YEAAAHH"
+            },
+            {
+              "bank_letter": "D",
+              "midi_note": 47,
+              "midi_note_hex": "0x2f",
+              "note_ordered_slot": 11,
+              "patch_1_based": 12,
+              "physical_pad_1_based": 16,
+              "slot_patch_name": "HAND DRUM"
+            }
+          ],
+          "slot_0_to_15_physical_pad_sequence": [
+            9,
+            10,
+            11,
+            12,
+            1,
+            2,
+            3,
+            4,
+            13,
+            14,
+            15,
+            16,
+            5,
+            6,
+            7,
+            8
+          ],
+          "source_commit": "2a23cf5017eff520f775e511f8d3d80e15163e7d",
+          "ui_only": true
+        },
+        "status": "PASS"
+      }
+    ],
+    "output_app_sha256": "a6f99cf6672ae3bd5b00312876a77ce1ed0e8a909ef56df7af0db34a2f726e05",
+    "patches": [
+      {
+        "address": "0x0201e13e",
+        "byte_count": 96,
+        "end_exclusive": "0x0201e19e",
+        "file_offset": 123198,
+        "new_hex": "53160481631679040416951685f8171283fd154803fd1368f33cc8ff2065c40105e19c80584380f80a04e3e1a0308516351806e19c50684080f801025116401680ff4aab02005904590459045904590459045904590459045904590459045904",
+        "new_sha256": "ea2c76595a93cf2cf6a39236e09b749781e2721e3575d0c1b40194855cd4e915",
+        "old_hex": "53160481631679040416951685f82312c8ff2065c40105e19c80584380f80500584080f818028116049680f814045842381980f80500584080f80d028116048b05e1a0505842381980f80500584080f8020201e1a080401680ff32ab02005904",
+        "old_sha256": "adb8774971811f6dbdce8b7338f2265f18b8bb22544ccab746e74610366d4e35",
+        "purpose": "install reviewed 96-byte S1-C3 16-note selector"
+      },
+      {
+        "address": "0x0201e1a2",
+        "byte_count": 172,
+        "end_exclusive": "0x0201e24e",
+        "file_offset": 123298,
+        "new_hex": "790404169016e020f03d80f83700c0ffbd65c4012000b00040e8300020000516584280f807005b4183f824004021d8422000048380f81e025b4103fd1b203616e6e1a060c7ff2065c401671806e19c704020e84070164116623c80ffccaa020020004021e840c321db4183f8032020004022d84220004020d840200059047904590479040416494081f80bc4494181f808c6c5ffbd65c4014020d840d841d8422000401680ff56ffffff5904",
+        "new_sha256": "5c0ec6675c29b8f20d055938425ceb12c356513c29b79b761f1a469eaa068a75",
+        "old_hex": "790404169016e020f03d80f84000c0ffbd65c4012000b00040e839002000c5ffbc65c401584380f811004021d84320004824d842c0ff2065c4014116623c80ffe8aa020020004021d840049a80f81802584080f8150206e1a050684080f81000482de842c0ffc065c4014116623c80ffb8aa020020004021e84020004022d843c0ffbd65c4012000412089402000590479045904bfea64345844d8ee001500a51018401841e09c124220d8ee",
+        "old_sha256": "af9f6c88e70bf5902d79557c4a43d8ee073c79e22bb3143e689ee4bacb632ad0",
+        "purpose": "install compact reviewed S1-C3 16-slot producer"
+      },
+      {
+        "address": "0x0201e468",
+        "byte_count": 4,
+        "end_exclusive": "0x0201e46c",
+        "file_offset": 124008,
+        "new_hex": "bfeadcfe",
+        "new_sha256": "8a7d2606aa8e571b9e7640e81ad4eeca3f959b9a054592c4cc1ea38f1ee50d03",
+        "old_hex": "bfea9bfe",
+        "old_sha256": "5f641fcce5143caa69e15f6dc01c27d9b8a3373f5b9e0e66adabff9187ce86a4",
+        "purpose": "pin direct product callsite to compact producer entry"
+      },
+      {
+        "address": "0x0201e49c",
+        "byte_count": 4,
+        "end_exclusive": "0x0201e4a0",
+        "file_offset": 124060,
+        "new_hex": "bfeac0fe",
+        "new_sha256": "5144cda6386eb7cc8555544f124183352555892298c0da21d6e6511875083082",
+        "old_hex": "bfeac9fe",
+        "old_sha256": "f8dfd1cb906aa46df9435eee4b95b24b8830e4a9712f84b4304a45273d7ae1be",
+        "purpose": "pin segmented product callsite to compact no-mutation stub"
+      }
+    ],
+    "runtime_base": "0x02000000"
+  },
+  "artifact_policy": "app/FWSC/rollback/exact OTA/guarded sender are emitted only after all input gates PASS",
+  "blockers": [],
+  "candidate_built": true,
+  "decision": "PASS",
+  "device_accessed": false,
+  "dry_run_validator": {
+    "command": "python3 dry_run_validate.py --json",
+    "device_accessed": false,
+    "send_enabled": false
+  },
+  "flash": {
+    "confirmation_token": "INSTALL-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-974C1675",
+    "offline_build_scope": "check only; upload is blocked unless explicitly authorized later",
+    "offline_check_command": "cc -O2 -g -std=c11 -Wall -Wextra -Wpedantic exact_ota.c ../../../../../src/device_info.c ../../../../../src/fwsc.c ../../../../../src/protocol.c ../../../../../src/sha256.c ../../../../../src/usb_probe.c -o exact_ota $(pkg-config --cflags --libs libusb-1.0) && ./exact_ota check SMK37Pro-v15-S1C3-16slot-functional.fwsc",
+    "upload_command": "./exact_ota upload SMK37Pro-v15-S1C3-16slot-functional.fwsc live-install-YYYYMMDDTHHMMZ.txt --confirm INSTALL-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-974C1675"
+  },
+  "flash_performed": false,
+  "format": "smk37-v15-s1c3-16slot-functional-release-v1",
+  "input_gates": [
+    {
+      "app_hash": "c18ed6f4e8ba2c16b99c41e6264cc36804fb38d8800d03ec518ab6bd838a8d14",
+      "boundary_commit": "779356aa3565c43de8141ca289c269e5c1e57796",
+      "candidate_built": true,
+      "evidence_decision": "PASS",
+      "fwsc_hash": "2345102aadded732b13e22d1410d3f7b05f104ffc408bd1d6eba03ea2afc058c",
+      "live_pass_text_present": true,
+      "name": "exact-live-pass-s1c3-boundary-app",
+      "pad_permutation_commit": "2a23cf5017eff520f775e511f8d3d80e15163e7d",
+      "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-boundary-only/app.bin",
+      "status": "PASS"
+    },
+    {
+      "end_exclusive": "0x0201e19e",
+      "firmware_candidate": "BLOCK",
+      "live_code_hash": "894f61ee4eedb942b6653bd36dc72934d3719b54a9a413f6c94f29d0084f8ffc",
+      "name": "reviewed-96-byte-16-note-selector",
+      "note_first_inclusive": 36,
+      "note_last_inclusive": 51,
+      "path": "baselines/v15/analysis/patch-set-ui/s1c3/selector/selector.bin",
+      "raw_selector_design": "PASS",
+      "selector_commit": "3e99ac3e8b40a1c0733cf6a2a6e6fd5aabbbfa90",
+      "selector_hash": "ea2c76595a93cf2cf6a39236e09b749781e2721e3575d0c1b40194855cd4e915",
+      "selector_size": 96,
+      "slot_formula": "slot = note - 36",
+      "start": "0x0201e13e",
+      "status": "PASS",
+      "validation_pass_text_present": true
+    },
+    {
+      "device_accessed": false,
+      "direct_callsite_bytes": "bfeadcfe",
+      "end_exclusive": "0x0201e24e",
+      "entry": "0x0201e1a2",
+      "manifest_hash": "5c0ec6675c29b8f20d055938425ceb12c356513c29b79b761f1a469eaa068a75",
+      "name": "compact-16-slot-producer",
+      "owned_end_exclusive": "0x0201e254",
+      "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional/inputs/producer/producer.bin",
+      "producer_hash": "5c0ec6675c29b8f20d055938425ceb12c356513c29b79b761f1a469eaa068a75",
+      "producer_size": 172,
+      "segmented_callsite_bytes": "bfeac0fe",
+      "source_commit": "3507a5634cf1379f63dc40fa65c55456d4bb9091",
+      "source_evidence_sha256": "0bed1fd8ba8dba7e42c371eec8d5cb71e8296ced3b95d688407e9732eeb8a288",
+      "source_exact_pi32_producer_bytes": "PASS",
+      "status": "PASS"
+    },
+    {
+      "manifest": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional/inputs/packets/packet-manifest.json",
+      "name": "exact-16-packet-set",
+      "packets": [
+        {
+          "file": "slot00-note36-direct-product-163.bin",
+          "name": "BUZZ BASS",
+          "note": 36,
+          "order": 1,
+          "runtime_sha256": "e2beb705a28e83940b2708f8ba0976e8c093ca12f45d0045f290b1589760d76b",
+          "sha256": "1c9239621563722eaac0a85db411571963f9ebbd0dbbb00b21044b76b1581427",
+          "slot": 0
+        },
+        {
+          "file": "slot01-note37-direct-product-163.bin",
+          "name": "Bang ?????",
+          "note": 37,
+          "order": 2,
+          "runtime_sha256": "5dab954752769609d64dd162360182138c8bc399030b88cf8d61b76fb7208f97",
+          "sha256": "afa8957005341e6144962ce3120bb1d829475714077617ea8da2c3fee4a0aa21",
+          "slot": 1
+        },
+        {
+          "file": "slot02-note38-direct-product-163.bin",
+          "name": "BASSE BIEN",
+          "note": 38,
+          "order": 3,
+          "runtime_sha256": "3e140cc8613ec555fcae2109d216c5e838d3193b305352992dc4062556af8b60",
+          "sha256": "8a87a409056457e61944d01bf4bbc0266414b8385c3a848125700da9e8417de3",
+          "slot": 2
+        },
+        {
+          "file": "slot03-note39-direct-product-163.bin",
+          "name": "BASS-THING",
+          "note": 39,
+          "order": 4,
+          "runtime_sha256": "5f60dc8f39b4ec43dc4368050701550ca56581948451f0c8083ace61e9d98dc7",
+          "sha256": "a5c086a77b4de1ce9546e747b72f79d8f6ad7b0dbd7c3b6e1665ef7edf83ff58",
+          "slot": 3
+        },
+        {
+          "file": "slot04-note40-direct-product-163.bin",
+          "name": "BASS SLAP",
+          "note": 40,
+          "order": 5,
+          "runtime_sha256": "5da8be28b3468a534aa488b02d47522df36e6b5b02b14f992bcb869fc4bb9ecc",
+          "sha256": "ffd1bcc6c7a7c5d8a1bb35f5bf7e39bf63058e62ac574e1e308ba53edc6670ff",
+          "slot": 4
+        },
+        {
+          "file": "slot05-note41-direct-product-163.bin",
+          "name": "BEAMER 2",
+          "note": 41,
+          "order": 6,
+          "runtime_sha256": "d38dfdac699a0fadbf7c99c98103a5f2bf7297a6746e94525d7eca3472223d40",
+          "sha256": "57136706fa633b5b47008ed2616471f72ae629d69e601e33c66daad991df94e9",
+          "slot": 5
+        },
+        {
+          "file": "slot06-note42-direct-product-163.bin",
+          "name": "Onglon",
+          "note": 42,
+          "order": 7,
+          "runtime_sha256": "7727f3b7856a73b3c32bca1b6e15ed74672d6dc97e00641761ef14237b0d8a44",
+          "sha256": "0f202d88578152ca024b3822f56a7c74c485c42996695033a4c239449d30f366",
+          "slot": 6
+        },
+        {
+          "file": "slot07-note43-direct-product-163.bin",
+          "name": "SOFTSTEEL",
+          "note": 43,
+          "order": 8,
+          "runtime_sha256": "8b0463a7b52857203105525af3456636b3a427e5db5f1eb75ea687bd6677bbbb",
+          "sha256": "d4ee6f2ccfce2d0c548917bb58ead4988dc3038c2b84edaaa37f047d2e006ea2",
+          "slot": 7
+        },
+        {
+          "file": "slot08-note44-direct-product-163.bin",
+          "name": "BASS-ROADS",
+          "note": 44,
+          "order": 9,
+          "runtime_sha256": "1602db2d94930482f631d087bf4b645d626f12b88da1e8deee21202210b7177c",
+          "sha256": "c8c489b72b195dfe5f373b6a860b32f0d07a29a83a9f2c070299df5af88a9cb3",
+          "slot": 8
+        },
+        {
+          "file": "slot09-note45-direct-product-163.bin",
+          "name": "E.ORGAN 1",
+          "note": 45,
+          "order": 10,
+          "runtime_sha256": "33dd55bbc6ebc2361260b9a581203f682b49388f9e4284b95de15136b630a178",
+          "sha256": "9c895d925a6cb79c4dff9f9f27727cce02f6dd0ed86467c994d7f459f1036258",
+          "slot": 9
+        },
+        {
+          "file": "slot10-note46-direct-product-163.bin",
+          "name": "YEAAAHH",
+          "note": 46,
+          "order": 11,
+          "runtime_sha256": "9c5abf35d8c039be1c8603f4fb5296f7b7d3e28503b330b5d3dd33c1b5a6dff9",
+          "sha256": "802944d0e1a8f4e85f1a3a694e2a0dbbfe9bb55972814f11ed4c7be7575b6704",
+          "slot": 10
+        },
+        {
+          "file": "slot11-note47-direct-product-163.bin",
+          "name": "HAND DRUM",
+          "note": 47,
+          "order": 12,
+          "runtime_sha256": "98bc86e7d9625c837ee6c07fa3f01cbd6079960c9d1071017cf51194aa48c1bf",
+          "sha256": "c4e8458edeb04d8106ca60a35243525e6b5f3f5de272091492409a440e3a9a8d",
+          "slot": 11
+        },
+        {
+          "file": "slot12-note48-direct-product-163.bin",
+          "name": "HAND CLAP1",
+          "note": 48,
+          "order": 13,
+          "runtime_sha256": "452efa8d41eecc7a5c57f1dfdecc072e1bc4266020cfe824edbc1b87415c2e38",
+          "sha256": "622a06870f189b6e4582f0093255f450403d4112836f09563c0b4623c1b287cd",
+          "slot": 12
+        },
+        {
+          "file": "slot13-note49-direct-product-163.bin",
+          "name": "Mooger #1",
+          "note": 49,
+          "order": 14,
+          "runtime_sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275",
+          "sha256": "6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27",
+          "slot": 13
+        },
+        {
+          "file": "slot14-note50-direct-product-163.bin",
+          "name": "Moog Solo2",
+          "note": 50,
+          "order": 15,
+          "runtime_sha256": "cfa79fc5ba72bcd50b0465a116e109da90ca5dcdcdc40bc89cdad218ee468417",
+          "sha256": "b159db617616621759bb9990991a8214c585d1f7ecd1be0f36d53a0b71b160c8",
+          "slot": 14
+        },
+        {
+          "file": "slot15-note51-direct-product-163.bin",
+          "name": "Mooger Low",
+          "note": 51,
+          "order": 16,
+          "runtime_sha256": "a28849a192d5dad000622c8aa749baa6508ad73e2c1cc6659b33a0419b6a0e88",
+          "sha256": "39a3e4eca1c740f719b3495f2a88c63e3b5d575a16a98c7b05fbc211fbfa4775",
+          "slot": 15
+        }
+      ],
+      "pad_permutation": {
+        "blocked_from": [
+          "producer_order",
+          "selector_order",
+          "packet_send_order",
+          "runtime_slot_order"
+        ],
+        "format": "smk37-v15-s1c3-functional-physical-pad-permutation-ui-only-v1",
+        "note_order_invariant": "producer/selector/sender/packet manifest use slot = note - 36 for notes 36..51",
+        "pad_1_to_16_note_sequence": [
+          40,
+          41,
+          42,
+          43,
+          48,
+          49,
+          50,
+          51,
+          36,
+          37,
+          38,
+          39,
+          44,
+          45,
+          46,
+          47
+        ],
+        "pad_1_to_16_to_note_order_slot": [
+          4,
+          5,
+          6,
+          7,
+          12,
+          13,
+          14,
+          15,
+          0,
+          1,
+          2,
+          3,
+          8,
+          9,
+          10,
+          11
+        ],
+        "rows": [
+          {
+            "bank_letter": "D",
+            "midi_note": 40,
+            "midi_note_hex": "0x28",
+            "note_ordered_slot": 4,
+            "patch_1_based": 5,
+            "physical_pad_1_based": 1,
+            "slot_patch_name": "BASS SLAP"
+          },
+          {
+            "bank_letter": "D",
+            "midi_note": 41,
+            "midi_note_hex": "0x29",
+            "note_ordered_slot": 5,
+            "patch_1_based": 6,
+            "physical_pad_1_based": 2,
+            "slot_patch_name": "BEAMER 2"
+          },
+          {
+            "bank_letter": "D",
+            "midi_note": 42,
+            "midi_note_hex": "0x2a",
+            "note_ordered_slot": 6,
+            "patch_1_based": 7,
+            "physical_pad_1_based": 3,
+            "slot_patch_name": "Onglon"
+          },
+          {
+            "bank_letter": "D",
+            "midi_note": 43,
+            "midi_note_hex": "0x2b",
+            "note_ordered_slot": 7,
+            "patch_1_based": 8,
+            "physical_pad_1_based": 4,
+            "slot_patch_name": "SOFTSTEEL"
+          },
+          {
+            "bank_letter": "D",
+            "midi_note": 48,
+            "midi_note_hex": "0x30",
+            "note_ordered_slot": 12,
+            "patch_1_based": 13,
+            "physical_pad_1_based": 5,
+            "slot_patch_name": "HAND CLAP1"
+          },
+          {
+            "bank_letter": "D",
+            "midi_note": 49,
+            "midi_note_hex": "0x31",
+            "note_ordered_slot": 13,
+            "patch_1_based": 14,
+            "physical_pad_1_based": 6,
+            "slot_patch_name": "Mooger #1"
+          },
+          {
+            "bank_letter": "D",
+            "midi_note": 50,
+            "midi_note_hex": "0x32",
+            "note_ordered_slot": 14,
+            "patch_1_based": 15,
+            "physical_pad_1_based": 7,
+            "slot_patch_name": "Moog Solo2"
+          },
+          {
+            "bank_letter": "D",
+            "midi_note": 51,
+            "midi_note_hex": "0x33",
+            "note_ordered_slot": 15,
+            "patch_1_based": 16,
+            "physical_pad_1_based": 8,
+            "slot_patch_name": "Mooger Low"
+          },
+          {
+            "bank_letter": "D",
+            "midi_note": 36,
+            "midi_note_hex": "0x24",
+            "note_ordered_slot": 0,
+            "patch_1_based": 1,
+            "physical_pad_1_based": 9,
+            "slot_patch_name": "BUZZ BASS"
+          },
+          {
+            "bank_letter": "D",
+            "midi_note": 37,
+            "midi_note_hex": "0x25",
+            "note_ordered_slot": 1,
+            "patch_1_based": 2,
+            "physical_pad_1_based": 10,
+            "slot_patch_name": "Bang ?????"
+          },
+          {
+            "bank_letter": "D",
+            "midi_note": 38,
+            "midi_note_hex": "0x26",
+            "note_ordered_slot": 2,
+            "patch_1_based": 3,
+            "physical_pad_1_based": 11,
+            "slot_patch_name": "BASSE BIEN"
+          },
+          {
+            "bank_letter": "D",
+            "midi_note": 39,
+            "midi_note_hex": "0x27",
+            "note_ordered_slot": 3,
+            "patch_1_based": 4,
+            "physical_pad_1_based": 12,
+            "slot_patch_name": "BASS-THING"
+          },
+          {
+            "bank_letter": "D",
+            "midi_note": 44,
+            "midi_note_hex": "0x2c",
+            "note_ordered_slot": 8,
+            "patch_1_based": 9,
+            "physical_pad_1_based": 13,
+            "slot_patch_name": "BASS-ROADS"
+          },
+          {
+            "bank_letter": "D",
+            "midi_note": 45,
+            "midi_note_hex": "0x2d",
+            "note_ordered_slot": 9,
+            "patch_1_based": 10,
+            "physical_pad_1_based": 14,
+            "slot_patch_name": "E.ORGAN 1"
+          },
+          {
+            "bank_letter": "D",
+            "midi_note": 46,
+            "midi_note_hex": "0x2e",
+            "note_ordered_slot": 10,
+            "patch_1_based": 11,
+            "physical_pad_1_based": 15,
+            "slot_patch_name": "YEAAAHH"
+          },
+          {
+            "bank_letter": "D",
+            "midi_note": 47,
+            "midi_note_hex": "0x2f",
+            "note_ordered_slot": 11,
+            "patch_1_based": 12,
+            "physical_pad_1_based": 16,
+            "slot_patch_name": "HAND DRUM"
+          }
+        ],
+        "slot_0_to_15_physical_pad_sequence": [
+          9,
+          10,
+          11,
+          12,
+          1,
+          2,
+          3,
+          4,
+          13,
+          14,
+          15,
+          16,
+          5,
+          6,
+          7,
+          8
+        ],
+        "source_commit": "2a23cf5017eff520f775e511f8d3d80e15163e7d",
+        "ui_only": true
+      },
+      "status": "PASS"
+    }
+  ],
+  "midi_transport_opened": false,
+  "package": {
+    "candidate_flash_sha256": "2ce48c756fe408e1456a7644c5430fe56ac81634296284e3d5a7bcdf01aba6ad",
+    "changed_app_byte_count_vs_official": 288,
+    "changed_app_ranges_vs_official": [
+      {
+        "end_exclusive": 34,
+        "start": 32
+      },
+      {
+        "end_exclusive": 116291,
+        "start": 116288
+      },
+      {
+        "end_exclusive": 116353,
+        "start": 116350
+      },
+      {
+        "end_exclusive": 123319,
+        "start": 123198
+      },
+      {
+        "end_exclusive": 123381,
+        "start": 123320
+      },
+      {
+        "end_exclusive": 123452,
+        "start": 123382
+      },
+      {
+        "end_exclusive": 123460,
+        "start": 123453
+      },
+      {
+        "end_exclusive": 123470,
+        "start": 123461
+      },
+      {
+        "end_exclusive": 124011,
+        "start": 124010
+      },
+      {
+        "end_exclusive": 124063,
+        "start": 124062
+      },
+      {
+        "end_exclusive": 159146,
+        "start": 159142
+      },
+      {
+        "end_exclusive": 159152,
+        "start": 159148
+      },
+      {
+        "end_exclusive": 387580,
+        "start": 387578
+      }
+    ],
+    "changed_flash_sectors_vs_official": [
+      "0x04000",
+      "0x20000",
+      "0x22000",
+      "0x2a000",
+      "0x62000"
+    ],
+    "changed_package_byte_count_vs_official": 302,
+    "changed_package_ranges_vs_official": [
+      {
+        "end_exclusive": 4,
+        "start": 0
+      },
+      {
+        "end_exclusive": 71,
+        "start": 69
+      },
+      {
+        "end_exclusive": 17432,
+        "start": 17428
+      },
+      {
+        "end_exclusive": 17464,
+        "start": 17460
+      },
+      {
+        "end_exclusive": 17750,
+        "start": 17748
+      },
+      {
+        "end_exclusive": 134007,
+        "start": 134004
+      },
+      {
+        "end_exclusive": 134069,
+        "start": 134066
+      },
+      {
+        "end_exclusive": 141035,
+        "start": 140914
+      },
+      {
+        "end_exclusive": 141097,
+        "start": 141036
+      },
+      {
+        "end_exclusive": 141168,
+        "start": 141098
+      },
+      {
+        "end_exclusive": 141176,
+        "start": 141169
+      },
+      {
+        "end_exclusive": 141186,
+        "start": 141177
+      },
+      {
+        "end_exclusive": 141727,
+        "start": 141726
+      },
+      {
+        "end_exclusive": 141779,
+        "start": 141778
+      },
+      {
+        "end_exclusive": 176862,
+        "start": 176858
+      },
+      {
+        "end_exclusive": 176868,
+        "start": 176864
+      },
+      {
+        "end_exclusive": 405296,
+        "start": 405294
+      }
+    ],
+    "official_flash_sha256": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+    "package_sha256": "974c1675426e5d43f6b48e7ac7a1142f40062fca945dc6ba1b3ace8b0d144496",
+    "package_size": 701140,
+    "protected_hashes_candidate": {
+      "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+      "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+      "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+      "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+    },
+    "protected_hashes_official": {
+      "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+      "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+      "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+      "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+    },
+    "rollback_manifest": "rollback/official-v15-recovery-sectors/manifest.json",
+    "rollback_restores_official_flash": true
+  },
+  "pad_mapping": {
+    "physical_pad_permutation_commit": "2a23cf5017eff520f775e511f8d3d80e15163e7d",
+    "physical_pad_to_note_order_slot": [
+      4,
+      5,
+      6,
+      7,
+      12,
+      13,
+      14,
+      15,
+      0,
+      1,
+      2,
+      3,
+      8,
+      9,
+      10,
+      11
+    ],
+    "producer_selector_packet_order": "note_order_36_51",
+    "scope": "UI_ONLY"
+  },
+  "sender": {
+    "confirmation_token": "SEND-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-1C923962-AFA89570-8A87A409-A5C086A7",
+    "default_compile_live_usb_enabled": false,
+    "delay_rationale": "The nonblocking producer may reject a packet while its lock is held; pacing prevents silent partial publication before ARMED.",
+    "dry_run_command": "cc -O2 -g -std=c11 -Wall -Wextra -Wpedantic exact_16_packet_sender.c ../../../../../src/sha256.c -o exact_16_packet_sender && ./exact_16_packet_sender dry-run inputs/packets",
+    "inter_packet_delay_ms": 100,
+    "offline_build_scope": "dry-run only; live send is fail-closed unless compiled with S1C3_ENABLE_LIVE_USB after explicit authorization",
+    "send_command": "./exact_16_packet_sender send inputs/packets --confirm SEND-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-1C923962-AFA89570-8A87A409-A5C086A7"
+  },
+  "source_commits": {
+    "bank_d_packet_set": "fe3350063c56a0cff7ab855735b0c7e8a04c957e",
+    "boundary": "779356aa3565c43de8141ca289c269e5c1e57796",
+    "compact_producer": "3507a5634cf1379f63dc40fa65c55456d4bb9091",
+    "pad_permutation": "2a23cf5017eff520f775e511f8d3d80e15163e7d",
+    "selector": "3e99ac3e8b40a1c0733cf6a2a6e6fd5aabbbfa90"
+  }
+}

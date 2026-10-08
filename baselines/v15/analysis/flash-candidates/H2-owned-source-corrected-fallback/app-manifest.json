@@ -1,0 +1,153 @@
+{
+  "app_size": 617012,
+  "artifact_scope": "offline H2 discriminator only; not a live functional success claim",
+  "changed_app_byte_count": 191,
+  "changed_app_ranges": [
+    {
+      "end_exclusive": 33,
+      "start": 32
+    },
+    {
+      "end_exclusive": 116291,
+      "start": 116288
+    },
+    {
+      "end_exclusive": 116353,
+      "start": 116350
+    },
+    {
+      "end_exclusive": 123199,
+      "start": 123198
+    },
+    {
+      "end_exclusive": 123372,
+      "start": 123200
+    },
+    {
+      "end_exclusive": 124011,
+      "start": 124010
+    },
+    {
+      "end_exclusive": 124063,
+      "start": 124062
+    },
+    {
+      "end_exclusive": 159146,
+      "start": 159142
+    },
+    {
+      "end_exclusive": 159152,
+      "start": 159148
+    },
+    {
+      "end_exclusive": 387579,
+      "start": 387578
+    }
+  ],
+  "changes": [
+    {
+      "address": "0x0201e13e",
+      "file_offset": 123198,
+      "new_hex": "79040516931683f80f12c4ffbc65c401484080f809025016c1ff2065c401623c80ff6aab02005904501680ff60ab0200590479040516931683f80f12c4ffbc65c401484080f809025016c1ff2065c401623c80ff38ab02005904501680ff2eab0200590479040416c0ffbd65c4012000b00040e81b002000c5ffbc65c401584080f80d00c0ff2065c4014116623c80fffcaa0200c5ffbc65c4014021d840c0ffbd65c40120004120894020005904",
+      "old_hex": "7604e2808980c13042201492831c34e1f01f3516108a5607c60758ee3b4074f1fc403d4155a265e10c5054199c5b3c4274f1f8403d4955a365e1785054199c5c3c4374f1fc403d4455a265e11c5054199c5d3c459c5e3c4674f1fe403d4755a165e13e5054199c5f3b48d2ee1131c23582f8ccfd8b8001e17e0002e16630141610884507a5071a4972f1f8201c4a44a364e108404219dee96f2002e170301c8b10834507a5071a4f58ee0e4872f1",
+      "purpose": "corrected owned-source Note Off/On consumers plus H1 producer"
+    },
+    {
+      "address": "0x0201c63e",
+      "file_offset": 116286,
+      "new_hex": "80fffa1a0000",
+      "old_hex": "80ff8ac60200",
+      "purpose": "Note Off uses corrected Ch10 owned-source consumer with stock fallback r0 restore"
+    },
+    {
+      "address": "0x0201c67c",
+      "file_offset": 116348,
+      "new_hex": "80ffee1a0000",
+      "old_hex": "80ff4cc60200",
+      "purpose": "Note On uses corrected Ch10 owned-source consumer with stock fallback r0 restore"
+    },
+    {
+      "address": "0x0201e468",
+      "file_offset": 124008,
+      "new_hex": "bfea9bfe",
+      "old_hex": "bfea69fe",
+      "purpose": "accepted one-shot accepted product packet calls H2 producer after official final-F7 gates"
+    },
+    {
+      "address": "0x0201e49c",
+      "file_offset": 124060,
+      "new_hex": "bfea81fe",
+      "old_hex": "bfea4ffe",
+      "purpose": "accepted segmented accepted product packet calls H2 producer after official final-F7 gates"
+    },
+    {
+      "address": "0x02026da6",
+      "file_offset": 159142,
+      "new_hex": "04960000",
+      "old_hex": "beeaacee",
+      "purpose": "no-write SAVE block before first persistent write because stock packer body is replaced"
+    },
+    {
+      "address": "0x02026dac",
+      "file_offset": 159148,
+      "new_hex": "00000000",
+      "old_hex": "bfeac7b9",
+      "purpose": "neutralize now-unreachable SAVE packer call into replaced code cave"
+    },
+    {
+      "address": "0x0200001e",
+      "file_offset": 30,
+      "new_hex": "c2ffeccb0300",
+      "old_hex": "c2ff48cb0300",
+      "purpose": "H0 BSS zero extension through 0x01c465c0"
+    },
+    {
+      "address": "0x0205e9f8",
+      "file_offset": 387576,
+      "new_hex": "c5ffc065c401",
+      "old_hex": "c5ff2065c401",
+      "purpose": "H0 HEAP_BEGIN shift to 0x01c465c0"
+    }
+  ],
+  "discriminator_outcomes": {
+    "intended_mooger_note_off_no_reboot": "owned source 0x01c46520 is consumed safely with corrected fallback semantics",
+    "reboot": "H2 FAIL: owned-source consumption or surrounding corrected consumer path still faults",
+    "stock_sound_no_reboot": "corrected fallback path is safe, but producer did not publish valid before consumer or product was not accepted"
+  },
+  "format": "smk37-v15-h2-owned-source-corrected-fallback-v1",
+  "h2_policy": {
+    "consumer_source_when_invalid_or_non_ch10": "original stock r1 source at dispatcher callsite",
+    "consumer_source_when_valid": "0x01c46520",
+    "copy_size": 156,
+    "lock": "0x01c465bd",
+    "producer_owned_destination": "0x01c46520..0x01c465bc",
+    "producer_source": "accepted packet staging pointer passed in r0 by product parser",
+    "product_reload_calls_preserved": true,
+    "save_policy": "blocked before first persistent write; later packer call neutralized",
+    "stock_fallback_preserves_original_r1_r2": true,
+    "stock_fallback_r0_restore": true,
+    "valid": "0x01c465bc"
+  },
+  "input_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+  "layout": {
+    "end": "0x0201e1ec",
+    "off_channel_branch": "0x0201e144",
+    "off_end": "0x0201e170",
+    "off_entry": "0x0201e13e",
+    "off_owned": "0x0201e154",
+    "off_stock": "0x0201e166",
+    "off_valid_branch": "0x0201e150",
+    "on_channel_branch": "0x0201e176",
+    "on_end": "0x0201e1a2",
+    "on_entry": "0x0201e170",
+    "on_owned": "0x0201e186",
+    "on_stock": "0x0201e198",
+    "on_valid_branch": "0x0201e182",
+    "producer": "0x0201e1a2",
+    "producer_return": "0x0201e1ea",
+    "producer_unlock": "0x0201e1dc",
+    "try_fail_branch": "0x0201e1b0"
+  },
+  "output_app_sha256": "d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59",
+  "runtime_base": "0x02000000"
+}

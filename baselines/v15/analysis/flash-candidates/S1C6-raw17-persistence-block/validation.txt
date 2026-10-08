@@ -1,0 +1,5 @@
+S1C6 raw17 persistence fit-first validation: BLOCK
+PASS input hashes
+PASS raw-prefix storage format and offline encoder
+PASS exact PI32 lower-bound accounting
+BLOCK app/FWSC/exact OTA/rollback emission

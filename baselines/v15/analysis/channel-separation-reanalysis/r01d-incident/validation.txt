@@ -1,0 +1,19 @@
+# Validation, R01d incident reanalysis
+
+## tools/validate_v15_r01d.py
+v15 R01d artifact integrity only: PASS
+not a functional success claim; no flash/OTA/device access performed
+app bdcfdcf1b5e6d60e04e8c9316db94aa38e6cae4a7bcfaf63abefd38bb5347bb3
+package add7baacc38d90bcd28cf51a1d096abe0737c8430ec01f70d5b41423d5dc9a96
+hooks: post-init preload + matched Note On/Off RAM source wrapper
+
+## analyze_r01d_incident.py
+{
+  "status": "PASS",
+  "output": "baselines/v15/analysis/channel-separation-reanalysis/r01d-incident/evidence.json"
+}
+
+## SHA256SUMS
+analyze_r01d_incident.py: OK
+evidence.json: OK
+report.md: OK

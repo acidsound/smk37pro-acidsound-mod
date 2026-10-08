@@ -1,0 +1,265 @@
+{
+  "basis": {
+    "artifacts": {
+      "s1c3_boundary_app": {
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-boundary-only/app.bin",
+        "sha256": "c18ed6f4e8ba2c16b99c41e6264cc36804fb38d8800d03ec518ab6bd838a8d14"
+      },
+      "s1c3_r3_app": {
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/app.bin",
+        "sha256": "7c672938023beee74d599f43ccd5c7642396b89819e929501274239aed5e5d4b"
+      },
+      "s1c3_r3_fwsc": {
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/SMK37Pro-v15-S1C3-16slot-functional-v2-r3-reload.fwsc",
+        "sha256": "0f1c4bf42329a0ca184ac38bb228195b239ed07820fcc0d39be352c2f15982b9"
+      },
+      "s1c3_r3_producer": {
+        "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/inputs/producer/producer.bin",
+        "sha256": "48abedfe48368aed6528900725404a4c8f41c0957f25196cc91b246a9b7a8607"
+      },
+      "s1c3_selector": {
+        "path": "baselines/v15/analysis/patch-set-ui/s1c3/selector/selector.bin",
+        "sha256": "ea2c76595a93cf2cf6a39236e09b749781e2721e3575d0c1b40194855cd4e915"
+      }
+    },
+    "current_behavior": "slots 0..15 are loaded by direct-product packets in note order 36..51; selector maps Ch10 notes 36..51 to slot = note - 36",
+    "r3_review_decision": "PASS offline/live install evidence exists; no action performed by this audit",
+    "target": "proven S1-C3 16-slot functional v2 r3-reload"
+  },
+  "blockers": [
+    "No current r3 firmware handler recognizes SMKPN1; sending a map frame to current r3 is unsupported and should not be used as a live feature.",
+    "Producer has only 4 reported spare bytes and cannot safely validate/publish the map without a new byte-exact body and independent decode.",
+    "Selector is hard-coded to notes 36..51; a map-aware selector must be encoded and independently validated before any package exists.",
+    "Browser support must be manifest/capability gated so it does not imply current r3 can accept Playback Note maps."
+  ],
+  "browser_editor_send_plan": {
+    "capability_gate_required": true,
+    "order": [
+      "Compile or select 16 patch payload packets exactly as S1-C3 r3 already requires.",
+      "Send the 16 existing direct-product patch packets in resident slot order 0..15, which currently corresponds to notes 36..51.",
+      "Translate the browser physical Pad UI order to resident S1-C3 slot order before building the Playback Note frame. The current captured physical Pad order is [40,41,42,43,48,49,50,51,36,37,38,39,44,45,46,47], but this is configuration evidence, not a hardcoded hardware invariant.",
+      "For each slot, encode Original by setting the original_mask bit; encode a custom playback note by clearing the bit and writing 0..127 in playback_note[i].",
+      "Append the single SMKPN1 direct-product control frame after the 16 patch packets only when the selected firmware/package manifest advertises SMKPN1 map support. Against current r3 it should be treated as unsupported/no-op because no handler exists."
+    ],
+    "status": "design only; do not send to a live device from this task"
+  },
+  "current_executable_placement": {
+    "byte_budget_blockers": [
+      "The installed producer has only 4 reported spare bytes, while a safe map frame needs magic, version/cmd/flags/count, 16 entries, original mask, CRC validation, duplicate checks, lock handling, 128-entry clear/fill, and valid-last publication.",
+      "The selector has 24 bytes of padding, but the current 96-byte selector is hard-coded to notes 36..51 and no byte-exact map-aware replacement has been encoded or independently decoded.",
+      "The 4-byte inter-blob gap and 4-byte tail are not a reviewed executable budget for a parser and are insufficient even if reclaimed."
+    ],
+    "byte_budget_decision": "BLOCK for implementation candidate",
+    "destroyed_packer_region": {
+      "range": "0x0201e13e..0x0201e254",
+      "size": 278
+    },
+    "inter_blob_gap": {
+      "bytes": 4,
+      "hex": "02005904",
+      "range": "0x0201e19e..0x0201e1a2",
+      "sha256": "1726c7b500f187c3ba425050fe0cc4ac13f5daa92df18b1ff401803480e4ec3b"
+    },
+    "producer": {
+      "bytes_used": 174,
+      "owned_limit_exclusive": "0x0201e254",
+      "range": "0x0201e1a2..0x0201e250",
+      "reported_spare_bytes": 4,
+      "sha256": "48abedfe48368aed6528900725404a4c8f41c0957f25196cc91b246a9b7a8607",
+      "window_bytes": 178
+    },
+    "selector": {
+      "live_code_bytes": 72,
+      "padding_bytes": 24,
+      "range": "0x0201e13e..0x0201e19e",
+      "sha256": "ea2c76595a93cf2cf6a39236e09b749781e2721e3575d0c1b40194855cd4e915",
+      "window_bytes": 96
+    },
+    "tail_bytes": {
+      "bytes": 4,
+      "hex": "22805604",
+      "range": "0x0201e250..0x0201e254",
+      "sha256": "2f036cb5bd4d494a573be9e7dc42788bda030c1196477ce22ba737d9428de317"
+    }
+  },
+  "current_ram_layout": {
+    "boot_bss_zero_end_exclusive": "0x01c46fb0",
+    "boot_bss_zero_size": "0x0003d5dc",
+    "boot_bss_zero_start": "0x01c099d4",
+    "header_map_area": {
+      "range": "0x01c46f20..0x01c46fb0",
+      "size": "0x90",
+      "status": "reserved by S1-C3 boundary but not consumed by current r3 selector/producer"
+    },
+    "heap_begin": "0x01c46fb0",
+    "heap_end": "0x01c7fd30",
+    "owned_reservation": {
+      "range": "0x01c46520..0x01c46fb0",
+      "size": "0x0a90"
+    },
+    "ram_boundary_expansion_reason": "The 0x90 header/map area already exists inside the r3 reservation; no new RAM boundary is needed for a 16-note control map or a derived 128-entry note_to_slot table.",
+    "ram_boundary_expansion_required_for_protocol": false,
+    "slots": {
+      "count": 16,
+      "global_lock": "0x01c465bd",
+      "range": "0x01c46520..0x01c46f20",
+      "slot0_valid": "0x01c465bc",
+      "state_byte": "0x01c465bf",
+      "stride": "0xa0",
+      "voice_size": "0x9c"
+    }
+  },
+  "direct_product_dispatch_gates": {
+    "direct_complete": {
+      "acceptance_rows": [
+        "0x0201e410 F0 gate",
+        "0x0201e416 0x43 gate",
+        "0x0201e432 0x00 gate",
+        "0x0201e438 0x00 gate",
+        "0x0201e43e 0x01 gate",
+        "0x0201e444 0x1b gate",
+        "0x0201e462 final F7 gate"
+      ],
+      "host_shape": "F0 43 00 00 01 1B + 0x9c staged bytes + F7",
+      "r3_callsite": {
+        "address": "0x0201e468",
+        "bytes": "bfeaddfe",
+        "target": "0x0201e226"
+      },
+      "reload_after_call_preserved": {
+        "address": "0x0201e46c",
+        "bytes": "bfeaf838"
+      },
+      "stage": "0x01c37fd0",
+      "total_bytes": 163
+    },
+    "segmented_final": {
+      "r3_callsite": {
+        "address": "0x0201e49c",
+        "bytes": "bfeac1fe",
+        "target": "0x0201e222"
+      },
+      "reason": "r3 segmented entry is a no-mutation stub; allowing segmented map updates would add state and parser budget with no safety benefit.",
+      "reload_after_call_preserved": {
+        "address": "0x0201e4a0",
+        "bytes": "bfeade38"
+      },
+      "status_for_map_protocol": "not used by the minimal map protocol"
+    }
+  },
+  "format": "smk37-v15-s1c3-r3-playback-note-protocol-audit-v1",
+  "ownership_abi_gate_summary": {
+    "default_original_behavior": "PASS by fallback to current r3 note-ordered selector until map_state is ARMED",
+    "direct_dispatch_reuse": "PASS for direct complete gate only",
+    "firmware_candidate_constructed": false,
+    "firmware_candidate_reason": "Ownership/RAM and protocol semantics pass, but executable byte-budget/placement gates do not. No app/FWSC/live package was built.",
+    "producer_byte_budget": "BLOCK",
+    "ram_boundary": "PASS, no expansion required",
+    "ram_owner": "PASS for already-reserved S1-C3 header/map area; not stock SysEx staging",
+    "selector_byte_budget": "BLOCK pending byte-exact map-aware selector"
+  },
+  "proposed_protocol": {
+    "decision": "protocol design PASS, firmware implementation BLOCK until byte-exact producer and selector bodies pass review",
+    "exact_frame": "F0 43 00 00 01 1B + 156-byte SMKPN1 control payload + F7",
+    "name": "SMKPN1 direct-product Playback Note map control frame",
+    "original_semantics": {
+      "all_original_frame_hex": "f0430000011b534d4b504e31011000107f7f03000000000000000000000000000000006f0c0300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f7",
+      "all_original_frame_sha256": "8cb30d74656a28a2386f51fca7ba90ce190d377bb197ffe3a84824293c75606c",
+      "all_original_mask": "0xffff",
+      "default_without_map_frame": "Original, preserving current r3 behavior: Ch10 notes 36..51 select slots 0..15 as slot = note - 36; everything else follows existing fallback.",
+      "entry_original_effective_note": "for slot i, Original resolves to MIDI note 36+i in resident S1-C3 slot order"
+    },
+    "payload_layout": [
+      {
+        "meaning": "ASCII SMKPN1",
+        "name": "magic",
+        "offset": 0,
+        "size": 6,
+        "value_hex": "53 4d 4b 50 4e 31"
+      },
+      {
+        "name": "protocol_version",
+        "offset": 6,
+        "size": 1,
+        "value": 1
+      },
+      {
+        "meaning": "PLAYBACK_NOTE_MAP",
+        "name": "command",
+        "offset": 7,
+        "size": 1,
+        "value_hex": "10"
+      },
+      {
+        "name": "flags",
+        "offset": 8,
+        "size": 1,
+        "value": 0
+      },
+      {
+        "name": "entry_count",
+        "offset": 9,
+        "size": 1,
+        "value": 16
+      },
+      {
+        "encoding": "little-endian 16-bit value in three 7-bit chunks; bit i means slot i uses Original",
+        "name": "original_mask16",
+        "offset": 10,
+        "size": 3
+      },
+      {
+        "encoding": "one byte per resident slot; 0..127 when original bit is 0; must be 0 when original bit is 1",
+        "name": "playback_note",
+        "offset": 13,
+        "size": 16
+      },
+      {
+        "encoding": "CRC over payload bytes 0..28, encoded in three 7-bit chunks",
+        "name": "crc16_ccitt_false",
+        "offset": 29,
+        "size": 3
+      },
+      {
+        "name": "zero_padding",
+        "offset": 32,
+        "size": 124,
+        "value": 0
+      }
+    ],
+    "publication_ram_candidate": {
+      "format_version": "0x01c46f20",
+      "header_base": "0x01c46f20",
+      "last_error": "0x01c46f23",
+      "map_generation": "0x01c46f22",
+      "map_state": "0x01c46f21 (0 EMPTY/default Original, 1 LOADING, 2 ARMED)",
+      "note_to_slot": "0x01c46f28..0x01c46fa8 (128 bytes, 0..15 or 0xff fallback)",
+      "original_mask_cache": "0x01c46f24..0x01c46f26 optional diagnostic copy",
+      "publish_order": "validate in stage first; take lock; write map_state=LOADING; clear/fill note_to_slot; csync; write metadata; csync; write map_state=ARMED last; release lock",
+      "reserved": "0x01c46f27",
+      "tail_reserved": "0x01c46fa8..0x01c46fb0"
+    },
+    "total_bytes": 163,
+    "validation_semantics": [
+      "Require exact 163-byte direct message, exact six-byte outer header, exact terminal F7, and every payload byte < 0x80.",
+      "Require magic SMKPN1, version 1, command 0x10, flags 0, entry_count 16, zero padding, and CRC-16/CCITT-FALSE match before any RAM mutation.",
+      "Decode effective note for each resident slot: Original bit set -> 36+i; otherwise playback_note[i] must be 0..127.",
+      "Require all 16 effective notes are distinct; reject duplicates to avoid ambiguous note_to_slot ownership.",
+      "Require patch-set slot state is already ARMED and all 16 slot valid bytes are 1 before accepting the map.",
+      "Reject if the map header is already ARMED; v1 is one-shot after patches and immutable until reboot.",
+      "Use nonblocking producer lock 0x01c465bd; if busy, return without mutation.",
+      "On success, build RAM note_to_slot[128] as 0xff fallback, then set note_to_slot[effective_note[i]] = i for all slots, csync, and publish map_state=ARMED last."
+    ],
+    "wire_transport": "USB-MIDI SysEx bytes carried as the existing direct complete Yamaha single-voice product envelope, so the current stock final-F7 direct-product gate is reused."
+  },
+  "scope": {
+    "artifact_directory_only": "baselines/v15/analysis/playback-note/protocol/",
+    "device_accessed": false,
+    "firmware_package_built": false,
+    "flash_performed": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "ota_performed": false,
+    "reset_performed": false
+  }
+}

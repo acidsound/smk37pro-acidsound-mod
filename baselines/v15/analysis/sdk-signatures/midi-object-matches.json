@@ -1,0 +1,80 @@
+{
+  "accepted": [],
+  "app": {
+    "runtime_base": 33554432,
+    "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "size": 617012
+  },
+  "criterion": "all fixed islands, or >=2 aligned unique 16-byte windows covering >=24 fixed bytes",
+  "format": "smk37-v15-relocation-aware-object-matches-v1",
+  "objects": [
+    {
+      "code_signature_sha256": "7d8c6f195cb0cb30a85aa0fdc895596121216f3c17aac2a69ceee4ffa8bb5edf",
+      "function_count": 6,
+      "functions_with_hits": [
+        {
+          "accepted_by_threshold": false,
+          "best_window_cluster": {
+            "app_address": 33819740,
+            "app_offset": 265308,
+            "covered_fixed_bytes": 16,
+            "unique_windows": 1
+          },
+          "body_sha256": "23e66a217fccf6f98bff05aa7db5f1b2bcb96038f3870b4a43f35dd40807177f",
+          "fixed_bytes": 86,
+          "masked_ranges": [
+            [
+              44,
+              50
+            ],
+            [
+              68,
+              74
+            ]
+          ],
+          "name": "__midi_ctrl_output",
+          "relocation_count": 2,
+          "size": 98,
+          "strict_masked_matches": []
+        }
+      ],
+      "path": "midi_ctrl_decoder.pi32.o"
+    },
+    {
+      "code_signature_sha256": "8ebd9baf882a06fcfe34e601d3e6d49cc2849e9debd0faf32ffcb86999369bc3",
+      "function_count": 18,
+      "functions_with_hits": [],
+      "path": "midi_dec.pi32.o"
+    },
+    {
+      "code_signature_sha256": "0fd4d05bb32392b6eb35466267c0fa53fa798d585c9353d02342da333d12ccb3",
+      "function_count": 9,
+      "functions_with_hits": [],
+      "path": "midi_event.pi32.o"
+    },
+    {
+      "code_signature_sha256": "5e941d8e85ef0da83eb4ea2b62c61850de50bbbf38a51fb4f53e42c85a533285",
+      "function_count": 3,
+      "functions_with_hits": [],
+      "path": "midi_fread_tone.pi32.o"
+    },
+    {
+      "code_signature_sha256": "2fc512abc158eff6b45c7b7434efb150be3876ddb991c562450bc06b11b580b2",
+      "function_count": 12,
+      "functions_with_hits": [],
+      "path": "midi_play.pi32.o"
+    },
+    {
+      "code_signature_sha256": "542ad95c5f8c9a93b56a64f784a24171f92de97ea301fb2f230f3c61e6c0a846",
+      "function_count": 9,
+      "functions_with_hits": [],
+      "path": "midi_synth.pi32.o"
+    },
+    {
+      "code_signature_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "function_count": 0,
+      "functions_with_hits": [],
+      "path": "midi_tabs.pi32.o"
+    }
+  ]
+}

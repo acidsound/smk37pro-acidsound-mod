@@ -1,0 +1,349 @@
+{
+  "changed_sectors": [
+    "0x04000",
+    "0x20000",
+    "0x22000",
+    "0x2a000",
+    "0x62000"
+  ],
+  "decision": "PASS",
+  "deterministic_rebuild": {
+    "app_byte_identical": true,
+    "package_byte_identical": true
+  },
+  "hashes": {
+    "candidate_app": "7c672938023beee74d599f43ccd5c7642396b89819e929501274239aed5e5d4b",
+    "candidate_flash": "ee72dd53448f917d3b3c86b09ada7a79abf0cee1326cc1780c6bdd0e97bcd19b",
+    "candidate_package": "0f1c4bf42329a0ca184ac38bb228195b239ed07820fcc0d39be352c2f15982b9",
+    "official_app": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "official_flash": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+    "official_fwsc": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "producer": "48abedfe48368aed6528900725404a4c8f41c0957f25196cc91b246a9b7a8607",
+    "selector": "ea2c76595a93cf2cf6a39236e09b749781e2721e3575d0c1b40194855cd4e915"
+  },
+  "ledgers": {
+    "candidate": {
+      "all_match": true,
+      "entry_count": 50
+    },
+    "nested_producer": {
+      "all_match": true,
+      "entry_count": 9
+    },
+    "producer": {
+      "all_match": true,
+      "entry_count": 10
+    }
+  },
+  "offline_tools": {
+    "candidate_validate_tail": [
+      "app_sha256=7c672938023beee74d599f43ccd5c7642396b89819e929501274239aed5e5d4b",
+      "package_sha256=0f1c4bf42329a0ca184ac38bb228195b239ed07820fcc0d39be352c2f15982b9",
+      "ota_confirmation_token=INSTALL-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-0F1C4BF4",
+      "sender_confirmation_token=SEND-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-1C923962-AFA89570-8A87A409-A5C086A7",
+      "BLOCK device access, flash/upload, reset, MIDI transport, and live send during validation"
+    ],
+    "dry_run_validate": {
+      "device_accessed": false,
+      "packet_order_basis": "note_order_36_51",
+      "packets_in_order": [
+        {
+          "file": "slot00-note36-direct-product-163.bin",
+          "name": "BUZZ BASS",
+          "note": 36,
+          "order": 1,
+          "packet_sha256": "1c9239621563722eaac0a85db411571963f9ebbd0dbbb00b21044b76b1581427",
+          "slot": 0
+        },
+        {
+          "file": "slot01-note37-direct-product-163.bin",
+          "name": "Bang ?????",
+          "note": 37,
+          "order": 2,
+          "packet_sha256": "afa8957005341e6144962ce3120bb1d829475714077617ea8da2c3fee4a0aa21",
+          "slot": 1
+        },
+        {
+          "file": "slot02-note38-direct-product-163.bin",
+          "name": "BASSE BIEN",
+          "note": 38,
+          "order": 3,
+          "packet_sha256": "8a87a409056457e61944d01bf4bbc0266414b8385c3a848125700da9e8417de3",
+          "slot": 2
+        },
+        {
+          "file": "slot03-note39-direct-product-163.bin",
+          "name": "BASS-THING",
+          "note": 39,
+          "order": 4,
+          "packet_sha256": "a5c086a77b4de1ce9546e747b72f79d8f6ad7b0dbd7c3b6e1665ef7edf83ff58",
+          "slot": 3
+        },
+        {
+          "file": "slot04-note40-direct-product-163.bin",
+          "name": "BASS SLAP",
+          "note": 40,
+          "order": 5,
+          "packet_sha256": "ffd1bcc6c7a7c5d8a1bb35f5bf7e39bf63058e62ac574e1e308ba53edc6670ff",
+          "slot": 4
+        },
+        {
+          "file": "slot05-note41-direct-product-163.bin",
+          "name": "BEAMER 2",
+          "note": 41,
+          "order": 6,
+          "packet_sha256": "57136706fa633b5b47008ed2616471f72ae629d69e601e33c66daad991df94e9",
+          "slot": 5
+        },
+        {
+          "file": "slot06-note42-direct-product-163.bin",
+          "name": "Onglon",
+          "note": 42,
+          "order": 7,
+          "packet_sha256": "0f202d88578152ca024b3822f56a7c74c485c42996695033a4c239449d30f366",
+          "slot": 6
+        },
+        {
+          "file": "slot07-note43-direct-product-163.bin",
+          "name": "SOFTSTEEL",
+          "note": 43,
+          "order": 8,
+          "packet_sha256": "d4ee6f2ccfce2d0c548917bb58ead4988dc3038c2b84edaaa37f047d2e006ea2",
+          "slot": 7
+        },
+        {
+          "file": "slot08-note44-direct-product-163.bin",
+          "name": "BASS-ROADS",
+          "note": 44,
+          "order": 9,
+          "packet_sha256": "c8c489b72b195dfe5f373b6a860b32f0d07a29a83a9f2c070299df5af88a9cb3",
+          "slot": 8
+        },
+        {
+          "file": "slot09-note45-direct-product-163.bin",
+          "name": "E.ORGAN 1",
+          "note": 45,
+          "order": 10,
+          "packet_sha256": "9c895d925a6cb79c4dff9f9f27727cce02f6dd0ed86467c994d7f459f1036258",
+          "slot": 9
+        },
+        {
+          "file": "slot10-note46-direct-product-163.bin",
+          "name": "YEAAAHH",
+          "note": 46,
+          "order": 11,
+          "packet_sha256": "802944d0e1a8f4e85f1a3a694e2a0dbbfe9bb55972814f11ed4c7be7575b6704",
+          "slot": 10
+        },
+        {
+          "file": "slot11-note47-direct-product-163.bin",
+          "name": "HAND DRUM",
+          "note": 47,
+          "order": 12,
+          "packet_sha256": "c4e8458edeb04d8106ca60a35243525e6b5f3f5de272091492409a440e3a9a8d",
+          "slot": 11
+        },
+        {
+          "file": "slot12-note48-direct-product-163.bin",
+          "name": "HAND CLAP1",
+          "note": 48,
+          "order": 13,
+          "packet_sha256": "622a06870f189b6e4582f0093255f450403d4112836f09563c0b4623c1b287cd",
+          "slot": 12
+        },
+        {
+          "file": "slot13-note49-direct-product-163.bin",
+          "name": "Mooger #1",
+          "note": 49,
+          "order": 14,
+          "packet_sha256": "6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27",
+          "slot": 13
+        },
+        {
+          "file": "slot14-note50-direct-product-163.bin",
+          "name": "Moog Solo2",
+          "note": 50,
+          "order": 15,
+          "packet_sha256": "b159db617616621759bb9990991a8214c585d1f7ecd1be0f36d53a0b71b160c8",
+          "slot": 14
+        },
+        {
+          "file": "slot15-note51-direct-product-163.bin",
+          "name": "Mooger Low",
+          "note": 51,
+          "order": 16,
+          "packet_sha256": "39a3e4eca1c740f719b3495f2a88c63e3b5d575a16a98c7b05fbc211fbfa4775",
+          "slot": 15
+        }
+      ],
+      "physical_pad_permutation_scope": "UI_ONLY",
+      "send_enabled": false,
+      "status": "DRY_RUN_PASS"
+    },
+    "exact_ota": {
+      "app_bin_reject_returncode": 1,
+      "candidate_check": "exact v15 S1-C3 16-slot functional package: PASS (701120-byte OTA payload)",
+      "compiled": true,
+      "official_reject": "offline check rejected: not exact S1-C3 16-slot functional package"
+    },
+    "sender": {
+      "compiled": true,
+      "corrupt_reject": "S1-C3 order 1 slot 0 note 36 packet SHA-256 mismatch\nusage:\n  /Users/spectrum/.jcode/scratch/s1c3-review-tools-oofli221/sender dry-run <packet-dir>\n  /Users/spectrum/.jcode/scratch/s1c3-review-tools-oofli221/sender send <packet-dir> --confirm SEND-SMK37PRO-V15-S1C3-16SLOT-FUNCTIONAL-1C923962-AFA89570-8A87A409-A5C086A7",
+      "dry_run": "S1-C3 16-slot sender dry-run PASS: note order slots 0..15 -> notes 36..51, 16 exact packets, no USB/MIDI opened",
+      "send_block": "send BLOCK: live USB sender is disabled in the offline validation build; compile with S1C3_ENABLE_LIVE_USB only after explicit authorization"
+    }
+  },
+  "packets_and_sender": {
+    "c_sender_order_matches_manifest": true,
+    "order_basis": "note_order_36_51",
+    "packet_count": 16,
+    "physical_pad_permutation_scope": "UI_ONLY"
+  },
+  "parent_boundary": {
+    "basis_app_sha256": "c18ed6f4e8ba2c16b99c41e6264cc36804fb38d8800d03ec518ab6bd838a8d14",
+    "changed_byte_count": 221,
+    "changed_ranges": [
+      {
+        "end_exclusive": 123213,
+        "start": 123212
+      },
+      {
+        "end_exclusive": 123253,
+        "start": 123214
+      },
+      {
+        "end_exclusive": 123257,
+        "start": 123256
+      },
+      {
+        "end_exclusive": 123259,
+        "start": 123258
+      },
+      {
+        "end_exclusive": 123292,
+        "start": 123260
+      },
+      {
+        "end_exclusive": 123311,
+        "start": 123310
+      },
+      {
+        "end_exclusive": 123325,
+        "start": 123324
+      },
+      {
+        "end_exclusive": 123393,
+        "start": 123328
+      },
+      {
+        "end_exclusive": 123472,
+        "start": 123394
+      },
+      {
+        "end_exclusive": 124011,
+        "start": 124010
+      },
+      {
+        "end_exclusive": 124063,
+        "start": 124062
+      }
+    ]
+  },
+  "producer": {
+    "branch_targets": {
+      "0x0201e1ac": {
+        "op": "jne_imm7",
+        "target": "0x0201e220"
+      },
+      "0x0201e1ba": {
+        "op": "ifeq",
+        "target": "0x0201e220"
+      },
+      "0x0201e1c4": {
+        "op": "jne_imm7",
+        "target": "0x0201e1d6"
+      },
+      "0x0201e1ca": {
+        "op": "jne_imm7",
+        "target": "0x0201e218"
+      },
+      "0x0201e1d4": {
+        "op": "goto",
+        "target": "0x0201e1dc"
+      },
+      "0x0201e1d6": {
+        "op": "jne_imm7",
+        "target": "0x0201e218"
+      },
+      "0x0201e1dc": {
+        "op": "jge_imm7",
+        "target": "0x0201e218"
+      },
+      "0x0201e1fc": {
+        "op": "call32",
+        "target": "0x02048cce"
+      },
+      "0x0201e20e": {
+        "op": "jne_imm7",
+        "target": "0x0201e218"
+      },
+      "0x0201e22c": {
+        "op": "jne_imm7",
+        "target": "0x0201e246"
+      },
+      "0x0201e232": {
+        "op": "jne_imm7",
+        "target": "0x0201e246"
+      },
+      "0x0201e248": {
+        "op": "call32",
+        "target": "0x0201e1a2"
+      }
+    },
+    "bytes": 174,
+    "post_memcpy_order": [
+      "0x0201e206",
+      "0x0201e208",
+      "0x0201e20a",
+      "0x0201e20c"
+    ],
+    "sha256": "48abedfe48368aed6528900725404a4c8f41c0957f25196cc91b246a9b7a8607",
+    "window": {
+      "end_exclusive": "0x0201e250",
+      "limit_exclusive": "0x0201e254",
+      "spare_bytes": 4,
+      "start": "0x0201e1a2"
+    }
+  },
+  "reviewed_head": "0a29a3ac15c4392d4397ae47a7ce3bfa663f01ee",
+  "rollback_reconstructs_official": true,
+  "scope": "offline only; no USB, MIDI, OTA upload, flash, reset, or live send",
+  "selector_and_routes": {
+    "reload_callsites": {
+      "direct": "bfeaf838",
+      "segmented": "bfeade38"
+    },
+    "routes": {
+      "direct_product": "0x0201e226",
+      "note_off": "0x0201e13e",
+      "note_on": "0x0201e142",
+      "segmented_product": "0x0201e222"
+    },
+    "selector_live_code_sha256": "894f61ee4eedb942b6653bd36dc72934d3719b54a9a413f6c94f29d0084f8ffc",
+    "selector_sha256": "ea2c76595a93cf2cf6a39236e09b749781e2721e3575d0c1b40194855cd4e915"
+  },
+  "stock_memcpy": {
+    "conclusion": "r3 clobbered; only r6/r5/r4 preserved",
+    "entry": "02048cce\t7604\t2\tpush\tpush {rets,r6,r5,r4}\tFALL_THROUGH\tFUN_02048cce@02048cce",
+    "r3_mutating_rows": [
+      "02048cd4\t931c\t2\tadd\tadd r3,r1,r2\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048cd6\t00ec2930\t4\tja\tja r3,r0,0x02048d2c\tCONDITIONAL_JUMP\tFUN_02048cce@02048cce",
+      "02048cda\t0316\t2\tmov\tmov r3,r0\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048ce4\t64e10330\t4\tand\tand r4,r3,#0x3\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048cf4\tb607\t2\tsb\tsb r6,[r3 ++= 1]\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048d00\tb605\t2\tsw\tsw r6,[r3 ++= 4]\tFALL_THROUGH\tFUN_02048cce@02048cce",
+      "02048d0c\tb207\t2\tsb\tsb r2,[r3 ++= 1]\tFALL_THROUGH\tFUN_02048cce@02048cce"
+    ],
+    "return": "02048d0e\t5604\t2\tpop\tpop {pc,r6,r5,r4}\tTERMINATOR\tFUN_02048cce@02048cce"
+  }
+}

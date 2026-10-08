@@ -1,0 +1,47 @@
+address	size	bytes	op	asm
+0x0201e1a2	2	7904	push	push {rets,r9..r4}
+0x0201e1a4	2	0416	mov_reg	mov r4,r0
+0x0201e1a6	6	c0ffbd65c401	mov_imm32	mov r0,#0x01c465bd
+0x0201e1ac	4	2000b000	trylock	csync; testset b[r0]
+0x0201e1b0	4	40e83900	ifeq	ifeq goto 0x0201e226
+0x0201e1b4	2	2000	csync	csync
+0x0201e1b6	6	c5ffbc65c401	mov_imm32	mov r5,#0x01c465bc
+0x0201e1bc	2	5843	load_byte	lb.z r0,[r5+3]
+0x0201e1be	4	80f81100	jne_imm7	jne r0,#0x0,0x0201e1e4
+0x0201e1c2	2	4021	mov_imm8	mov r0,#0x1
+0x0201e1c4	2	d843	store_byte	sb r0,[r5+3]
+0x0201e1c6	2	2000	csync	csync
+0x0201e1c8	2	4824	mov_imm8	mov r0,#0x24
+0x0201e1ca	2	d842	store_byte	sb r0,[r5+2]
+0x0201e1cc	6	c0ff2065c401	mov_imm32	mov r0,#0x01c46520
+0x0201e1d2	2	4116	mov_reg	mov r1,r4
+0x0201e1d4	2	623c	mov_imm8	mov r2,#0x9c
+0x0201e1d6	6	80fff2aa0200	call32	call 0x02048cce
+0x0201e1dc	2	2000	csync	csync
+0x0201e1de	2	4021	mov_imm8	mov r0,#0x1
+0x0201e1e0	2	d840	store_byte	sb r0,[r5+0]
+0x0201e1e2	2	049a	goto	goto 0x0201e218
+0x0201e1e4	4	80f81802	jne_imm7	jne r0,#0x1,0x0201e218
+0x0201e1e8	2	5840	load_byte	lb.z r0,[r5+0]
+0x0201e1ea	4	80f81502	jne_imm7	jne r0,#0x1,0x0201e218
+0x0201e1ee	4	06e1a050	add_imm12	add r6,r5,#0xa0
+0x0201e1f2	2	6840	load_byte	lb.z r0,[r6+0]
+0x0201e1f4	4	80f81000	jne_imm7	jne r0,#0x0,0x0201e218
+0x0201e1f8	2	482d	mov_imm8	mov r0,#0x2d
+0x0201e1fa	2	e842	store_byte	sb r0,[r6+2]
+0x0201e1fc	6	c0ffc065c401	mov_imm32	mov r0,#0x01c465c0
+0x0201e202	2	4116	mov_reg	mov r1,r4
+0x0201e204	2	623c	mov_imm8	mov r2,#0x9c
+0x0201e206	6	80ffc2aa0200	call32	call 0x02048cce
+0x0201e20c	2	2000	csync	csync
+0x0201e20e	2	4021	mov_imm8	mov r0,#0x1
+0x0201e210	2	e840	store_byte	sb r0,[r6+0]
+0x0201e212	2	2000	csync	csync
+0x0201e214	2	4022	mov_imm8	mov r0,#0x2
+0x0201e216	2	d843	store_byte	sb r0,[r5+3]
+0x0201e218	6	c0ffbd65c401	mov_imm32	mov r0,#0x01c465bd
+0x0201e21e	2	2000	csync	csync
+0x0201e220	2	4120	mov_imm8	mov r1,#0x0
+0x0201e222	2	8940	store_byte	sb r1,[r0+0]
+0x0201e224	2	2000	csync	csync
+0x0201e226	2	5904	pop_pc	pop {pc,r9..r4}

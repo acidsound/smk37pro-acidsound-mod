@@ -1,0 +1,94 @@
+{
+  "changes": {
+    "app_byte_count": 202,
+    "app_ranges": [
+      {
+        "end_exclusive": 116353,
+        "start": 116350
+      },
+      {
+        "end_exclusive": 123199,
+        "start": 123198
+      },
+      {
+        "end_exclusive": 123390,
+        "start": 123200
+      },
+      {
+        "end_exclusive": 124012,
+        "start": 124008
+      },
+      {
+        "end_exclusive": 124064,
+        "start": 124060
+      }
+    ],
+    "flash_byte_count_including_crc_fields": 210,
+    "flash_ranges": [
+      {
+        "end_exclusive": 16388,
+        "start": 16384
+      },
+      {
+        "end_exclusive": 16420,
+        "start": 16416
+      },
+      {
+        "end_exclusive": 133025,
+        "start": 133022
+      },
+      {
+        "end_exclusive": 139871,
+        "start": 139870
+      },
+      {
+        "end_exclusive": 140062,
+        "start": 139872
+      },
+      {
+        "end_exclusive": 140684,
+        "start": 140680
+      },
+      {
+        "end_exclusive": 140736,
+        "start": 140732
+      }
+    ],
+    "fwsc_byte_count": 216,
+    "ota_payload_byte_count_including_wrapper_crc_fields": 216
+  },
+  "format": "smk37-v15-application-only-patch-v1",
+  "input": {
+    "app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "payload_sha256": "141f8b1780b18c0cddc4bdcfbe13690029804a5b0021f92869ec756c2f2d3ad9",
+    "sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "size": 701140
+  },
+  "layout": {
+    "app_area_end_exclusive": 634067,
+    "app_area_start": 16384,
+    "app_data_size": 617012,
+    "app_data_start": 16672,
+    "ufw_flash_offset": 1024,
+    "ufw_flash_size": 638976
+  },
+  "output": {
+    "app_sha256": "e12ac71df2be155a977b6135eedee2bda821226bf354cf8062d3a9624df474c7",
+    "payload_sha256": "af07bf1cb690a8227fb1ce952eba6d7ca62e81c1265f5cb1b5c33b58e2b786f1",
+    "sha256": "292809383e89ba7032619ae338dfb5bd195409600f417de5e8edb98149f66462",
+    "size": 701140
+  },
+  "protected_flash_hashes_after": {
+    "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+    "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+    "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+    "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+  },
+  "protected_flash_hashes_before": {
+    "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+    "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+    "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+    "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+  },
+  "safety_gate": "PASS"
+}

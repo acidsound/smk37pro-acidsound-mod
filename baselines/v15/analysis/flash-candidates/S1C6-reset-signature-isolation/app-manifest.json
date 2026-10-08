@@ -1,0 +1,132 @@
+{
+  "basis_app": "S1C5-playback-register-return-S1C5-marked/app.bin",
+  "basis_app_sha256": "c8dd9e9e19369a65fd46fb48aabc69a2af7977a456f4152e77cd90a742f7cfe5",
+  "display_version": {
+    "address": "0x020572a2",
+    "byte_count": 5,
+    "new": "S16",
+    "old": "S1C5",
+    "status": "same-length visible 3-char marker"
+  },
+  "format": "smk37-v15-s1c6-reset-signature-isolation.app-manifest-v1",
+  "input_gates": [
+    {
+      "name": "official-v15-basis",
+      "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "official_fwsc_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+      "status": "PASS"
+    },
+    {
+      "name": "exact-s1c5-marked-parent",
+      "parent_app_sha256": "c8dd9e9e19369a65fd46fb48aabc69a2af7977a456f4152e77cd90a742f7cfe5",
+      "parent_candidate": "baselines/v15/analysis/flash-candidates/S1C5-playback-register-return-S1C5-marked",
+      "parent_fwsc_sha256": "cfafa3273ca0ba741616e5f3aa87f262a45ecd84445bdefd969900dad256b480",
+      "status": "PASS"
+    },
+    {
+      "core_combined_sha256": "1f5ac42f0fd34c725193d308e2a608e1a0f8a9c70c60c29f58d38bcd68804744",
+      "core_range": "0x0201e13e..0x0201e228",
+      "name": "s1c5-core-preserved",
+      "producer_core_sha256": "b740203d7c709aaa74dd506cc39739191caac790890056e2aee6ad627377baa5",
+      "reset_wrapper_old_hex": "79040416494081f80bc4494181f808c6c5ffbd65c4014020d840d841d8422000401680ff46ffffff59040016",
+      "selector_sha256": "900e8f05c8157737e89a22338b9a4575aa3ff124bd70ff132de0226654fce29f",
+      "status": "PASS"
+    },
+    {
+      "direct_call": "bfeadefe",
+      "direct_target": "0x0201e228",
+      "name": "callsites-unchanged",
+      "segmented_call": "bfeac4fe",
+      "segmented_target": "0x0201e228",
+      "status": "PASS"
+    },
+    {
+      "device_accessed": false,
+      "flash_performed": false,
+      "midi_transport_opened": false,
+      "name": "offline-scope",
+      "reset_performed": false,
+      "status": "PASS"
+    }
+  ],
+  "output_app_sha256": "312790c080f6fcead69eccd84edf2c608ef3fa7e772455d781ab086dafed44b1",
+  "parent_relative_changed_byte_count": 38,
+  "parent_relative_changed_ranges": [
+    {
+      "end_exclusive": 123456,
+      "start": 123434
+    },
+    {
+      "end_exclusive": 123458,
+      "start": 123457
+    },
+    {
+      "end_exclusive": 123467,
+      "start": 123459
+    },
+    {
+      "end_exclusive": 123469,
+      "start": 123468
+    },
+    {
+      "end_exclusive": 123474,
+      "start": 123470
+    },
+    {
+      "end_exclusive": 357030,
+      "start": 357028
+    }
+  ],
+  "patches": [
+    {
+      "address": "0x0201e228",
+      "byte_count": 44,
+      "end_exclusive": "0x0201e254",
+      "new_hex": "7904094081f80cc8094181f809cac5ffbd65c4014020d840d841d8422000590480ff48ffffff590400160016",
+      "new_sha256": "221779e53fe86fcbc8d92bd1d17a1ddf90e7ed0bc31e2b80bd0fb6416f034c12",
+      "old_hex": "79040416494081f80bc4494181f808c6c5ffbd65c4014020d840d841d8422000401680ff46ffffff59040016",
+      "old_sha256": "c77a4a71c9facca3a4562fca9e38ce5086090762e47eb6d16b7e3b88f2009db7",
+      "purpose": "replace S1-C5 reset wrapper (0x62 0x63 + load-as-voice) with impossible-signature reset wrapper (0x64 0x65, reset packet not a voice)"
+    },
+    {
+      "address": "0x020572a2",
+      "byte_count": 5,
+      "end_exclusive": "0x020572a7",
+      "new_hex": "5331360000",
+      "new_sha256": "bd172904fd8a47f4eddd01a544cd8c29ff3d284a5ace2171437a683bd1cffdae",
+      "old_hex": "5331433500",
+      "old_sha256": "353ab82228c569633a22af3072b3e7c10f747c429cd34330c7120a0da9c2b22c",
+      "purpose": "Visible 3-character firmware marker S16 per versioning rule"
+    }
+  ],
+  "reset_contract": {
+    "callsites": {
+      "direct": {
+        "address": "0x0201e468",
+        "bytes": "bfeadefe",
+        "status": "unchanged"
+      },
+      "segmented": {
+        "address": "0x0201e49c",
+        "bytes": "bfeac4fe",
+        "status": "unchanged"
+      }
+    },
+    "entry": "0x0201e228",
+    "on_match": "clear lock/count/state, csync, return without calling producer (reset packet is not a voice)",
+    "on_mismatch": "r0 = stage preserved, call producer 0x0201e196",
+    "preserved_core": {
+      "range": "0x0201e13e..0x0201e228",
+      "sha256": "1f5ac42f0fd34c725193d308e2a608e1a0f8a9c70c60c29f58d38bcd68804744",
+      "status": "byte-for-byte"
+    },
+    "signature": {
+      "structural_impossibility": "payload bytes 0..1 = OP1 EG rates 1..2, DX7 range 0..99 (0x00..0x63); 0x64/0x65 impossible in any valid voice",
+      "wire_bytes_6_7": [
+        100,
+        101
+      ]
+    }
+  },
+  "runtime_base": "0x02000000"
+}

@@ -1,0 +1,14 @@
+run_id=20261001T031441Z
+image=/Users/spectrum/Documents/SMK37ProMod/build/v16-analysis/app-016-decoded.bin
+image_sha256=0f64fbf6ffc454eea686d78cf89f35e593229765bdcf166f10a8bd714abcb09a
+runtime_mapped_base=0x02000000
+processor=pi32v2:LE:32:default
+ghidra_home=/opt/homebrew/Cellar/ghidra/12.1.2/libexec
+ghidra_version=12.1.2
+jdk=Picked up JAVA_TOOL_OPTIONS: -Duser.home=/Users/spectrum/jcode-v16-analysis/home-20261001T031441Z
+quarkslab_url=https://github.com/quarkslab/ghidra-jieli.git
+quarkslab_commit=e1bd0707874b77b759401555d24839ad43af1267
+quarkslab_tree=a4efeb0a0afb74224e561ef59dc9b6cdabff243f
+quarkslab_sla_sha256=6d774eacaa7f5769ebb536699c6c13500dbb806a265740094464c64951a906d4
+script=V16DecoderAnalysis.java
+script_sha256=25595c2ebd036a8362853684f62d9cb4416adede16d79c4b7f932626c0eee7d7

@@ -1,0 +1,11 @@
+S1-C3 16-slot boundary-only build validation PASS
+app_sha256=c18ed6f4e8ba2c16b99c41e6264cc36804fb38d8800d03ec518ab6bd838a8d14
+package_sha256=2345102aadded732b13e22d1410d3f7b05f104ffc408bd1d6eba03ea2afc058c
+required_reservation=0x0a90
+bss_zero_size=0x0003d5dc
+candidate_heap_begin=0x01c46fb0
+parent_relative_changed_app_bytes=4
+changed_flash_sectors_vs_official=0x04000,0x20000,0x22000,0x2a000,0x62000
+changed_flash_sectors_vs_s1c2_parent=0x04000,0x62000
+rollback_restores_official_flash=True
+confirmation_token=INSTALL-SMK37PRO-V15-S1C3-16SLOT-BOUNDARY-2345102A

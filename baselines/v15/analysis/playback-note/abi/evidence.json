@@ -1,0 +1,149 @@
+{
+  "format": "smk37-v15-s1c3-r3-reload-playback-note-abi-evidence-v1",
+  "decision": "BLOCKERS_FOR_PATCH_READY_PLAYBACK_NOTE",
+  "trace_status": "PASS",
+  "scope": {
+    "offline_only": true,
+    "device_accessed": false,
+    "flash_performed": false,
+    "ota_performed": false,
+    "reset_performed": false,
+    "midi_transport_opened": false,
+    "v12_assumptions_used": false
+  },
+  "candidate": {
+    "path": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/app.bin",
+    "sha256": "7c672938023beee74d599f43ccd5c7642396b89819e929501274239aed5e5d4b",
+    "proven_parent": "S1-C3 16-slot functional v2 r3-reload",
+    "selector": {
+      "start": "0x0201e13e",
+      "end_exclusive": "0x0201e19e",
+      "sha256": "ea2c76595a93cf2cf6a39236e09b749781e2721e3575d0c1b40194855cd4e915"
+    },
+    "producer": {
+      "start": "0x0201e1a2",
+      "end_exclusive": "0x0201e250",
+      "sha256": "48abedfe48368aed6528900725404a4c8f41c0957f25196cc91b246a9b7a8607"
+    }
+  },
+  "exact_candidate_calls": {
+    "note_off_hook": {
+      "address": "0x0201c63e",
+      "bytes": "80fffa1a0000",
+      "call32_target": "0x0201e13e",
+      "selector_entry_role": "Note Off adapter"
+    },
+    "note_on_hook": {
+      "address": "0x0201c67c",
+      "bytes": "80ffc01a0000",
+      "call32_target": "0x0201e142",
+      "selector_entry_role": "Note On adapter"
+    },
+    "direct_product_reset_wrapper_call": {
+      "address": "0x0201e468",
+      "bytes": "bfeaddfe",
+      "short_call_target": "0x0201e226"
+    },
+    "direct_reload_preserved": {
+      "address": "0x0201e46c",
+      "bytes": "bfeaf838",
+      "short_call_target": "0x02015660"
+    },
+    "segmented_product_stub_call": {
+      "address": "0x0201e49c",
+      "bytes": "bfeac1fe",
+      "short_call_target": "0x0201e222"
+    },
+    "segmented_reload_preserved": {
+      "address": "0x0201e4a0",
+      "bytes": "bfeade38",
+      "short_call_target": "0x02015660"
+    }
+  },
+  "stock_v15_dispatcher_rows": {
+    "note_off": [
+      {"address": "0x0201c62e", "bytes": "1d41", "asm": "lb.z r5,[r1 + 0x1]", "meaning": "r5 = msg[1] trigger note"},
+      {"address": "0x0201c636", "bytes": "00e1a260", "asm": "add r0,r6,#0xa2", "meaning": "r0 = per-voice synth destination payload"},
+      {"address": "0x0201c63a", "bytes": "623c", "asm": "mov r2,#0x9c", "meaning": "copy exactly 156 voice bytes"},
+      {"address": "0x0201c63c", "bytes": "8116", "asm": "mov r1,r8", "meaning": "stock source r8 = 0x01c34c74 before S1-C3 redirection"},
+      {"address": "0x0201c63e", "stock_bytes": "80ff8ac60200", "candidate_bytes": "80fffa1a0000", "asm": "call selector", "meaning": "candidate routes copy through Note Off selector"},
+      {"address": "0x0201c644", "bytes": "00e13e61", "asm": "add r0,r6,#0x13e", "meaning": "metadata area for this voice record"},
+      {"address": "0x0201c648", "bytes": "8d40", "asm": "sb r5,[r0 + 0x0]", "meaning": "stock synth Note Off metadata consumes r5"}
+    ],
+    "note_on": [
+      {"address": "0x0201c66a", "bytes": "1d42", "asm": "lb.z r5,[r1 + 0x2]", "meaning": "r5 = msg[2] velocity"},
+      {"address": "0x0201c670", "bytes": "1e41", "asm": "lb.z r6,[r1 + 0x1]", "meaning": "r6 = msg[1] trigger note"},
+      {"address": "0x0201c674", "bytes": "00e1a270", "asm": "add r0,r7,#0xa2", "meaning": "r0 = per-voice synth destination payload"},
+      {"address": "0x0201c678", "bytes": "623c", "asm": "mov r2,#0x9c", "meaning": "copy exactly 156 voice bytes"},
+      {"address": "0x0201c67a", "bytes": "8116", "asm": "mov r1,r8", "meaning": "stock source r8 = 0x01c34c74 before S1-C3 redirection"},
+      {"address": "0x0201c67c", "stock_bytes": "80ff4cc60200", "candidate_bytes": "80ffc01a0000", "asm": "call selector", "meaning": "candidate routes copy through Note On selector"},
+      {"address": "0x0201c682", "bytes": "00e13e71", "asm": "add r0,r7,#0x13e", "meaning": "metadata area for this voice record"},
+      {"address": "0x0201c686", "bytes": "8e40", "asm": "sb r6,[r0 + 0x0]", "meaning": "stock synth Note On metadata consumes r6"},
+      {"address": "0x0201c68c", "bytes": "8d42", "asm": "sb r5,[r0 + 0x2]", "meaning": "stock synth Note On velocity consumes r5"}
+    ]
+  },
+  "current_selector_abi": {
+    "note_off_entry": {"address": "0x0201e13e", "bytes": "5316", "asm": "mov r3,r5", "meaning": "normalize Note Off trigger note into r3"},
+    "note_off_goto_core": {"address": "0x0201e140", "bytes": "0481", "asm": "goto 0x0201e144"},
+    "note_on_entry": {"address": "0x0201e142", "bytes": "6316", "asm": "mov r3,r6", "meaning": "normalize Note On trigger note into r3"},
+    "core_push": {"address": "0x0201e144", "bytes": "7904", "asm": "push {rets,r9..r4}", "consequence": "current selector restores r5 and r6 before stock metadata stores"},
+    "channel_gate": {"address": "0x0201e14a", "bytes": "85f81712", "asm": "jne r5,#9,copy_tail", "channel_nibble": 9},
+    "range_low_gate": {"address": "0x0201e14e", "bytes": "83fd1548", "asm": "jl r3,#36,copy_tail"},
+    "range_high_gate": {"address": "0x0201e152", "bytes": "03fd1368", "asm": "jge r3,#52,copy_tail"},
+    "state_gate": {"address": "0x0201e164", "bytes": "80f80a04", "asm": "jne r0,#2,copy_tail", "state": "ARMED"},
+    "valid_gate": {"address": "0x0201e176", "bytes": "80f80102", "asm": "jne r0,#1,copy_tail", "slot_valid": 1},
+    "copy_tail": {"address": "0x0201e17c", "role": "restores r0 then calls memcpy 0x02048cce with original r2=0x9c"},
+    "core_pop": {"address": "0x0201e19c", "bytes": "5904", "asm": "pop {pc,r9..r4}"}
+  },
+  "current_selector_semantics": {
+    "source_mapping": "source_slot = trigger_note - 36 for Ch10 trigger notes 36..51 when S1-C3 state is ARMED and selected slot valid == 1",
+    "source_formula": "0x01c46520 + (trigger_note - 36) * 0xa0",
+    "fallback": "all non-Ch10, out-of-range, non-ARMED, and invalid selected slots keep original source r1",
+    "trigger_note_metadata": "unchanged in current candidate because r5/r6 are restored before stock sb note stores",
+    "synth_consumer": "stock post-copy metadata consumes r5 for Note Off note and r6 for Note On note"
+  },
+  "playback_note_design": {
+    "required_semantics": "trigger_note remains the incoming Pad/MIDI note and MIDI OUT argument; playback_note is the local synth note stored into the voice metadata and used symmetrically for Note On and Note Off",
+    "selector_side_lookup": "playback_note = playback_map[trigger_note - 36] when Ch10 and trigger_note in 36..51; Original/null maps to trigger_note",
+    "source_substitution": "source_slot = playback_note - 36 if playback_note is within the resident 36..51 S1-C3 slot set and valid; otherwise fail closed to trigger_note/current fallback per chosen policy",
+    "metadata_substitution": "after the playback lookup, Note Off must make stock 0x0201c648 store playback_note instead of trigger_note in r5; Note On must make stock 0x0201c686 store playback_note instead of trigger_note in r6 while preserving velocity r5",
+    "midi_out_preservation": "do not mutate the incoming message buffer or pad/MIDI OUT caller argument; only alter the local synth consumer metadata after MIDI OUT routing and inside the local note dispatcher wrapper",
+    "note_off_symmetry": "the Note Off entry must run the identical trigger_slot -> playback_note lookup as Note On. Any separate Note On-only substitution repeats the known stuck-note class.",
+    "fail_closed_rule": "if mapping metadata is absent, unpublished, out of 0..127, or unsupported by resident-slot source constraints, leave current S1-C3 behavior unchanged"
+  },
+  "blockers": [
+    {
+      "id": "B1-map-transport-persistence",
+      "severity": "patch-ready blocker",
+      "evidence": "Current web tool carries playbackNotes through the document and transmission queue, but sendAll warns that before a corresponding firmware protocol is installed only patch data is transmitted. Current S1-C3 runtime packets/proven producer have no validated playback-note metadata writer.",
+      "required_resolution": "Define and validate exact v15 offline transport, storage, publication, and hash gates for 16 playback-note values before firmware can consume them."
+    },
+    {
+      "id": "B2-native-register-return",
+      "severity": "patch-ready blocker",
+      "evidence": "Current selector push/pop 7904/5904 restores r5 and r6, while stock synth metadata stores happen after wrapper return at 0x0201c648 and 0x0201c686.",
+      "required_resolution": "Prove exact PI32 code that returns with r5 substituted on Note Off and r6 substituted on Note On while preserving Note On velocity r5, r7/r6 destination context as needed, r9 channel, r2=0x9c, and all stock fallbacks."
+    },
+    {
+      "id": "B3-source-range-versus-playback-range",
+      "severity": "design-policy blocker",
+      "evidence": "Resident S1-C3 source slots are proven only for notes 36..51; UI validation currently accepts Playback Note 0..127.",
+      "required_resolution": "Either constrain firmware-consumed playback notes to resident 36..51 for source substitution, or separately prove a source for notes outside that range."
+    }
+  ],
+  "repeated_hit_polyphony_assessment": {
+    "same_trigger_same_playback": "Equivalent to repeated hits of one MIDI note after substitution. It depends on stock voice allocation and stealing, which this offline analysis does not extend.",
+    "different_triggers_same_playback": "Ambiguous if stock release matching keys only on stored synth note. Since exact rows prove the stored note is the consumer-visible identity and no trigger-pad identity store is proven here, many-to-one playback mappings can cross-release or steal each other. Treat as unsupported until a trigger identity field or active-note map is proven.",
+    "different_triggers_different_playback": "Expected to behave like independent stock notes, subject to stock polyphony limits, because Note On and Note Off store and match distinct playback notes.",
+    "note_off_requirement": "For every Note On mapping T -> P, the corresponding Note Off for T must compute the same P and store/consume P. This is mandatory for stuck-note safety."
+  },
+  "source_evidence_files": [
+    "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/report.md",
+    "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/evidence.json",
+    "baselines/v15/analysis/patch-set-ui/s1c3/selector/evidence.json",
+    "baselines/v15/analysis/patch-set-ui/s1c1/code/report.md",
+    "baselines/v15/analysis/channel-separation-reanalysis/runtime-source/writer_inventory.tsv",
+    "apps/smk37-patch-set-editor/public/sysex.mjs",
+    "apps/smk37-patch-set-editor/public/app.js"
+  ]
+}

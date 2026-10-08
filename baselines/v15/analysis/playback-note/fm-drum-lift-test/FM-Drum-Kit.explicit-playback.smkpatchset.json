@@ -1,0 +1,171 @@
+{
+  "format": "smk37-v15-s1c3-web-patch-set-v2",
+  "title": "FM Drum Kit · explicit playback (lift-test)",
+  "createdAt": "2026-08-12T18:04:04.750Z",
+  "physicalPadNoteSequence": [
+    40,
+    41,
+    42,
+    43,
+    48,
+    49,
+    50,
+    51,
+    36,
+    37,
+    38,
+    39,
+    44,
+    45,
+    46,
+    47
+  ],
+  "playbackNotes": [
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "patches": [
+    {
+      "pad": 1,
+      "note": 40,
+      "playbackNote": 36,
+      "name": "KICK DRUM",
+      "sourceFile": "pad01-trigger40-playback36-kick_a.syx",
+      "syxBase64": "8EMAAAEbY2NjAGNjYwAAAAAAAAAAA2MBAjwHYzg8MmNZAAAAAAAAAAcABjwBFkMHY0IqLWNQAAA4ABoAAwMABSkBCmMHY1AjOWNaAAAAAAAAAAAABUsBEFMEXzkAAGMAAAAAAAAAAAAAA2IBAGIKYzUhPmMAAABjYmIDAAMAA2MBGUYHY2NjYzIyMjIPAAE3AAAAAAMAGEtJQ0sgRFJVTSB09w=="
+    },
+    {
+      "pad": 2,
+      "note": 41,
+      "playbackNote": 37,
+      "name": "Kick",
+      "sourceFile": "pad02-trigger41-playback37-kick_b.syx",
+      "syxBase64": "8EMAAAEbY2NjY2NjYwAAAAAAAAAAAAAAAAAHU1BjY2MAAAAAAAAAAAAAAE4AAAAFY2NjY2NjYwAAAAAAAAAAACEAAQAHYyFjY2MAAAAAAAAAAAcAAGEAAAAJWUo8Y2MyAAAiADwAAQAAAE4AAgAHYzxjY2MAAAAAAAAAAAAAAmMAAAAHU1BjYzIyMjIQBwEjAAAAAQADGEtpY2sgICAgICAe9w=="
+    },
+    {
+      "pad": 3,
+      "note": 42,
+      "playbackNote": 38,
+      "name": "SNARE",
+      "sourceFile": "pad03-trigger42-playback38-snare_a.syx",
+      "syxBase64": "8EMAAAEbYwdjAGM5YwAAAAAAAAAAAGMBG0kHY2NjMgBHAAAAAAAAAAAAB1oBAGIHWT1jPWMAAAA4YgACAAAAB10BGikHY2MjOWNaAAAAAAAAAAAAAz8BFhwEY04AAGMAAAAAAAAAAAAAA2MBDTUKWjAhMGMAAABjYmIDAAMAA2MBGh8HY2NjYzIyMjIKBwE3AAAAAAMAMFNOQVJFICAgICB69w=="
+    },
+    {
+      "pad": 4,
+      "note": 43,
+      "playbackNote": 39,
+      "name": "Swissnare",
+      "sourceFile": "pad04-trigger43-playback39-snare_b.syx",
+      "syxBase64": "8EMAAAEbY2MYIGNjYwAAAAAAAAAAAGMAAQAHY2NjGWMAYwAZAAAAAAAAAGMAAjwHY2M5MWNjAAAbHAAAAAEABmMAAQAHY2NJPGNjSwAAAAAAAAAAA0sAAxcHY2NMMWNjYwAcAAAAAAAAB1QAACMHY2M2NGNjAAAbAAAAAAYABmMAAR0HY2NjYDIyMjIDBwFjAAAAAQAHDFN3aXNzbmFyZSBX9w=="
+    },
+    {
+      "pad": 5,
+      "note": 48,
+      "playbackNote": 40,
+      "name": "HAND CLAPS",
+      "sourceFile": "pad05-trigger48-playback40-clap.syx",
+      "syxBase64": "8EMAAAEbYzZjY2MAAAAxAAAAAAAAACoABB0HYydjOmMAAAAxAAAAAAAAAGMBHgwHVGM+G2NjAAAxAAAAAAAAAFwBFg4HYzdIVWMAAAAxAAAAAAMAAGMBFhgHYzw5GmMAAAAxAAAAAAAAAFUBHWAHY2BTP2NgAAAxAAAAAAAAAGMBBwADY2NjYzIyMjIGBwAjAAAAAQADMEhBTkQgQ0xBUFN49w=="
+    },
+    {
+      "pad": 6,
+      "note": 49,
+      "playbackNote": 41,
+      "name": "HITUN RIMS",
+      "sourceFile": "pad06-trigger49-playback41-rim.syx",
+      "syxBase64": "8EMAAAEbYmMaG2IAAAADAAAAAgMAAUkAADgHY14aE2MAAABQAAADAQAAAUkAAAAHYx8RHmMAAABQAAADAQQAA1cAAEsHY00aF2MAAAAAAAAAAQMAAFUAACQEY0oAAGMAAAApAAAAAQEAAVYAAAAKYzliJ2MAAAAAAAAAAwQAAWMAAAAHY2JLPDIzMjIPBwELABAAAAACJEhJVFVOIFJJTVNa9w=="
+    },
+    {
+      "pad": 7,
+      "note": 50,
+      "playbackNote": 42,
+      "name": "**tom 1**",
+      "sourceFile": "pad07-trigger50-playback42-high_tom.syx",
+      "syxBase64": "8EMAAAEbY0UPY0w9YCwaDwAAAwQDAWMBAiwHYz5jFmMAACgaY2MAAAEDBGMBAgoHY0sZNF8nAAAoAAAAAAAAAGMBBkQHYy02LmNaAFYpAAAAAAQCAE0AAAAHVTIZAFMnAD4oAAAAAAMDAGMBAGMHUCoyO2NaAAApAAAAAAIAAGMAAFsHMjJPADIyFTIQBwFiAABjAQEHDCoqdG9tIDEqKiB39w=="
+    },
+    {
+      "pad": 8,
+      "note": 51,
+      "playbackNote": 43,
+      "name": "**tom 2**",
+      "sourceFile": "pad08-trigger51-playback43-mid_tom.syx",
+      "syxBase64": "8EMAAAEbXUgZR2AnAAAoAAAAAAAAAGMBEkUHWio2LWNaAAApAAAAAAMAAGMAAAAHXUgZQGAnAAAoAAAAAAAAAGMBBkUHWio2LWNaAAApAAAAAAMAAGMAAAAHXUgZR2AnAAAoAAAAAAAAAGMBGk4HWio2LWNaAAApAAAAAAMAAGMAAAAHYmJiYjIyMjIFAwEPACYAAQEHGCoqdG9tIDIqKiBZ9w=="
+    },
+    {
+      "pad": 9,
+      "note": 36,
+      "playbackNote": 44,
+      "name": "LONG TOM",
+      "sourceFile": "pad09-trigger36-playback44-low_tom.syx",
+      "syxBase64": "8EMAAAEbY2NjE2NjYwAAAAAAAAAAAUcAFgAHY2NjJWNjYwA1AAAAAAAAAlsAAwEHY1djKmNLPAAQAAAAAAAAAkcAAwAHYyVjLmMAAABjAAADAAMAAWMAAwAHYzVjK2MAAAAAAAAAAAAAAWMBBAAHYzVjPWMoAAAAAAAAAAIAAWMAAgAHYmJiYjIyMjIABAEIAGMAAQEGAExPTkcgVE9NICBI9w=="
+    },
+    {
+      "pad": 10,
+      "note": 37,
+      "playbackNote": 45,
+      "name": "TOM TOMS",
+      "sourceFile": "pad10-trigger37-playback45-floor_tom.syx",
+      "syxBase64": "8EMAAAEbXzERNmNfAGMAAAAAAQIAAUEABAALXyESOGNfAFIAAAAAAQQAAlIAAAAHXzIVNWNfAAAAAAAAAQQABGMAAQAFXxERR2NfAGMmYywCAQAAA0YABwANYycVQWNVAGMAAAAAAQAAA1QAAAAJUCASOGNfAAAAAAAAAAQABGMAAAAHY2JLPDIyMjIDBQAlAAAAAAAADFRPTSBUT01TICA39w=="
+    },
+    {
+      "pad": 11,
+      "note": 38,
+      "playbackNote": 46,
+      "name": "CL.HI-HAT",
+      "sourceFile": "pad11-trigger38-playback46-closed_hh.syx",
+      "syxBase64": "8EMAAAEbY2NjY2NjYwAxAAAAAAAAAF4BF1YHY2MgY2NjAAAxAAAAAAAAAGMBHyQHY2NVJ2NjPGMxAAAAAAAAAGMBB0IHYzQtR2NSBgAxAAAAAAAABGMBH1IHY1VjSFJSAGMxAAAAAAAAAGMBH2MHXEI6Q2MRYwAxAAAAAAAAAWMBEAAHY2NjYzIyMjIIBwEjAAAAAQADGENMLkhJLUhBVCA09w=="
+    },
+    {
+      "pad": 12,
+      "note": 39,
+      "playbackNote": 47,
+      "name": "Open HiHat",
+      "sourceFile": "pad12-trigger39-playback47-open_hh.syx",
+      "syxBase64": "8EMAAAEbYVkUC2NjYwAAAAAAAAIAAE8BB1cHYFJjFGNjYwAAAAAAAAIAAF4BHmMHTUBgPGMAAAAAAAAAAAIAA2MBHCsHXxxjDmMAYwAAAAAAAAAAAGMBHwQHYBwVFGNjYwAAAAAAAAAAAFsBDjkHTDBgPGMAAAAAAAAAAAIAAmMBGC4HYmJiYjIyMjIKAAEAADIAAQMDGE9wZW4gSGlIYXQ19w=="
+    },
+    {
+      "pad": 13,
+      "note": 44,
+      "playbackNote": 48,
+      "name": "CRASH CYMB",
+      "sourceFile": "pad13-trigger44-playback48-crash.syx",
+      "syxBase64": "8EMAAAEbY2NjE2NjYwAAAAAAAAAAAFQBElAHY2MyE2NPVgAAAAAAAAAAAGMBB0gHY2MeI2NcIQAAAAAAAAAABGMBEzgHY2MLE2NjAAAAAAAAAAAAAGMBB1sHY2MNDV5cAAAAAAAAAAAAAGMBA2MHXlIeI2NSAAAAAAAAAAAABWMBHzMMY2NjYzIyMjICAgEAAAAAAAAAGENSQVNIIENZTUJz9w=="
+    },
+    {
+      "pad": 14,
+      "note": 45,
+      "playbackNote": 49,
+      "name": "R.CYMBAL",
+      "sourceFile": "pad14-trigger45-playback49-ride.syx",
+      "syxBase64": "8EMAAAEbY2NjAGNjYwAAAAAAAAAAA1gBFzUHY2NjAGMwYwAAAAAAAAAAAFYBHmAHY2NVACBaPGMAAAAAAAAAA2MBBgYHYzctJ2MABgAAAAAAAAAAB1oBH1IHY2MqAGNPAE8AAAAAAAAAAFsBAmMHY1wOKGMAAAAAAAAAAAAAAGMBE04HY2NjYzIyMjIGBwEjAAAAAQADGFIuQ1lNQkFMICAv9w=="
+    },
+    {
+      "pad": 15,
+      "note": 46,
+      "playbackNote": 50,
+      "name": "COW BELL",
+      "sourceFile": "pad15-trigger46-playback50-cowbell.syx",
+      "syxBase64": "8EMAAAEbYEJjIWNgWQAAAAYAAAEAAEoACAAHYEwyLmNaAAAAAAAAAAQAAGMAAQAHYGIsIWNgYQAAAAYAAAQAAFAABAAHYEFBMmMAAAAAAAAAAAMAAGMBAkgHYFAyIU5LAAAAAAAAAAMAAGMABwAHYC0yMmNaAAAAAAAAAAIAAWMAAQAHY0NfPDIyMjIFAAEiIQAAAAQBGENPVyBCRUxMICBc9w=="
+    },
+    {
+      "pad": 16,
+      "note": 47,
+      "playbackNote": 51,
+      "name": "Shaker",
+      "sourceFile": "pad16-trigger47-playback51-shaker.syx",
+      "syxBase64": "8EMAAAEbYycVC2NjYwAAAAAAAAAAAEMBFmMHYyoWDWNjAAAAAAAAAAAAADsBHlwHYywXFGNjYwAAAAAAAAAAADYBAycHLWMjIFVjY2MAAAAAAAEAAEIBClIHYywVFWNjAAAAAAAAAAAAAGMBHjkHLmM0Y2BjAAAAAAAAAAQAA2MBD2MHY0tAYzIyMjIRBwFXAGMAAAECGFNoYWtlciAgICB+9w=="
+    }
+  ]
+}

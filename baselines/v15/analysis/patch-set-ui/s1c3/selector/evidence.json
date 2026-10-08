@@ -1,0 +1,178 @@
+{
+  "abi": {
+    "copy_count": "r2 is never modified by the selector and remains 0x9c from the official callsites",
+    "note_off": {
+      "adapter": "mov r3,r5; goto core",
+      "entry": "0x0201e13e",
+      "hook_callsite": "0x0201c63e",
+      "note_register": "r5"
+    },
+    "note_on": {
+      "adapter": "mov r3,r6; fall through",
+      "entry": "0x0201e142",
+      "hook_callsite": "0x0201c67c",
+      "note_register": "r6",
+      "velocity_register": "r5"
+    },
+    "preserved_by_push_pop": [
+      "r9",
+      "r8",
+      "r7",
+      "r6",
+      "r5",
+      "r4",
+      "rets/pc"
+    ],
+    "restored_destination": "r0 is restored from r4 immediately before memcpy on selected and fallback paths",
+    "source_register": "r1 remains original fallback source until after state/range/valid pass; selected path then assigns r1=slot base"
+  },
+  "behavior_validation": {
+    "armed_all_valid_fallback_cases": 2032,
+    "armed_all_valid_selected_cases": 16,
+    "matrix_cases": 2048
+  },
+  "bounds": {
+    "max_slot": 15,
+    "max_source": "0x01c46e80",
+    "max_voice_end_exclusive": "0x01c46f1c",
+    "min_slot": 0,
+    "min_source": "0x01c46520",
+    "slot_region_end_exclusive": "0x01c46f20"
+  },
+  "branch_reach": [
+    {
+      "address": "0x0201e140",
+      "bytes": "0481",
+      "op": "goto",
+      "target": "0x0201e144"
+    },
+    {
+      "address": "0x0201e14a",
+      "bytes": "85f81712",
+      "imm": "0x00000009",
+      "op": "jne_imm7",
+      "reg": "0x00000005",
+      "target": "0x0201e17c"
+    },
+    {
+      "address": "0x0201e14e",
+      "bytes": "83fd1548",
+      "imm": "0x00000024",
+      "op": "jl_imm7",
+      "reg": "0x00000003",
+      "target": "0x0201e17c"
+    },
+    {
+      "address": "0x0201e152",
+      "bytes": "03fd1368",
+      "imm": "0x00000034",
+      "op": "jge_imm7",
+      "reg": "0x00000003",
+      "target": "0x0201e17c"
+    },
+    {
+      "address": "0x0201e164",
+      "bytes": "80f80a04",
+      "imm": "0x00000002",
+      "op": "jne_imm7",
+      "reg": "0x00000000",
+      "target": "0x0201e17c"
+    },
+    {
+      "address": "0x0201e176",
+      "bytes": "80f80102",
+      "imm": "0x00000001",
+      "op": "jne_imm7",
+      "reg": "0x00000000",
+      "target": "0x0201e17c"
+    }
+  ],
+  "current_s1c2_live_pass_basis": {
+    "app_sha256": "4afd13d7301c2ae209c11d3fe932d019faa770b551f2d8a38cf4c018c7aafa8a",
+    "independent_selector_verification_status": "PASS",
+    "live_validation": "LIVE PASS in flash-candidates/S1C2-two-slot-selector-live-v2/live-validation-20260803.md",
+    "selector_bytes": 96,
+    "selector_sha256": "adb8774971811f6dbdce8b7338f2265f18b8bb22544ccab746e74610366d4e35"
+  },
+  "format": "smk37-v15-s1c3-contiguous-selector-evidence-v1",
+  "mapping": {
+    "channel_nibble": 9,
+    "complexity": "O(1)",
+    "fallback": "all non-Ch10, notes outside 36..51, non-ARMED, or invalid selected slots use original H2-correct source in r1",
+    "note_first_inclusive": 36,
+    "note_last_inclusive": 51,
+    "slot_formula": "slot = note - 36",
+    "source_formula": "0x01c46520 + (note - 36) * 0xa0"
+  },
+  "official_encoding_examples": {
+    "add r0,r6": {
+      "address": "0x0201e522",
+      "bytes": "6018"
+    },
+    "add r1,r2": {
+      "address": "0x020056aa",
+      "bytes": "2118"
+    },
+    "jge r1,#1": {
+      "address": "0x02055b0a",
+      "bytes": "01fd2403"
+    },
+    "jge r3,#0x3a": {
+      "address": "0x02039276",
+      "bytes": "03fde975"
+    },
+    "jl r2,#3": {
+      "address": "0x0201c616",
+      "bytes": "82fd7b06"
+    },
+    "mul r0,r0,#0xa3": {
+      "address": "0x0200568a",
+      "bytes": "e0e1a300"
+    },
+    "mul r1,r2,#0xa0": {
+      "address": "0x0201c630",
+      "bytes": "e1e1a020"
+    }
+  },
+  "safety_contract": {
+    "consumer_locking": "none; selector reads only after state==ARMED and then checks selected slot valid",
+    "global_lock": "0x01c465bd",
+    "producer_required_order": [
+      "take global nonblocking PI32 testset lock at 0x01c465bd before mutation",
+      "for each slot: valid=0 before copy, copy 0x9c voice bytes, csync, valid=1 last",
+      "after all 16 slots are valid and bounds/checks pass: csync then state=ARMED last",
+      "after ARMED: no in-place mutation until reboot or a separately reviewed inactive replacement protocol"
+    ],
+    "publication_state": "0x01c465bf",
+    "slot_base": "0x01c46520",
+    "slot_stride": "0xa0",
+    "slot_valid_offset": "0x9c",
+    "state_values": {
+      "ARMED": 2,
+      "EMPTY": 0,
+      "LOADING": 1
+    },
+    "voice_bytes": "0x9c"
+  },
+  "scope": "offline files only; no build/flash/device/USB/MIDI/OTA/reset path",
+  "selector": {
+    "copy_tail": "0x0201e17c",
+    "core": "0x0201e144",
+    "end_exclusive": "0x0201e19e",
+    "hex": "53160481631679040416951685f8171283fd154803fd1368f33cc8ff2065c40105e19c80584380f80a04e3e1a0308516351806e19c50684080f801025116401680ff4aab02005904590459045904590459045904590459045904590459045904",
+    "live_code_bytes": 72,
+    "memcpy": "0x02048cce",
+    "note_off_entry": "0x0201e13e",
+    "note_on_entry": "0x0201e142",
+    "padding_bytes": 24,
+    "sha256_live_code": "894f61ee4eedb942b6653bd36dc72934d3719b54a9a413f6c94f29d0084f8ffc",
+    "sha256_selector_bin": "ea2c76595a93cf2cf6a39236e09b749781e2721e3575d0c1b40194855cd4e915",
+    "start": "0x0201e13e",
+    "window_bytes": 96
+  },
+  "status": {
+    "firmware_candidate": "BLOCK",
+    "raw_selector_design": "PASS",
+    "reason": "Only a raw reviewed selector blob was produced. No app, FWSC, producer/parser, device, flash, OTA, or live MIDI action was created or performed."
+  }
+}

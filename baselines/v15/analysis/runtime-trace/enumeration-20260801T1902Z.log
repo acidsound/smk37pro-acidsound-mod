@@ -1,0 +1,6 @@
+command: build/runtime-trace/v15-usb-midi-observer --enumerate --expect-serial 1120041B00020312
+cwd: /Users/spectrum/Documents/SMK37ProMod
+started_utc: 2026-08-01T19:02:20Z
+refusing: expected exactly one official-v15 4353:cf4d, found 0
+exit: 3
+finished_utc: 2026-08-01T19:02:21Z

@@ -1,0 +1,9 @@
+Validation date: 2026-08-02 UTC
+Scope: host-read-only validation of ui-runtime-plan artifacts only
+JSON parse: ok
+Official v15 SHA gate present: ok
+Pending range 0x01c33569..0x01c3356f present: ok
+Static negative conclusions preserved from ui-preflash evidence: ok
+Host-read-only vs external debug vs firmware instrumentation distinction: ok
+Rollback and STOP conditions present: ok
+No patch/flash/device access performed by validation: ok

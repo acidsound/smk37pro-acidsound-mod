@@ -1,0 +1,2 @@
+PASS fixed-selector checkpoint validation
+Validated: 2 offline objects, exact notes 36/45, PI32 budget, hook ABIs, BLOCK placement, no candidate artifacts

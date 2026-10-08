@@ -1,0 +1,205 @@
+{
+  "current_candidate_hashes": {
+    "SMK37Pro-v15-S1C3-16slot-functional.fwsc": "974c1675426e5d43f6b48e7ac7a1142f40062fca945dc6ba1b3ace8b0d144496",
+    "app.bin": "a6f99cf6672ae3bd5b00312876a77ce1ed0e8a909ef56df7af0db34a2f726e05",
+    "exact_16_packet_sender.c": "a4aeaeb19b25f6390f99d758ba0d7755ae4e2daa2594a8c013475b8093d4a971",
+    "exact_ota.c": "5a94a9537d9722ed2ad52769be247011a708667914535d67401e8e4b4c074f3e",
+    "inputs/producer/evidence.json": "a8da03069c10e3b202269a21a4f428acc6f00b04cb37889e15e2332d6ba8823c",
+    "inputs/producer/producer.bin": "5c0ec6675c29b8f20d055938425ceb12c356513c29b79b761f1a469eaa068a75",
+    "validate.py": "f83131c7ee2995de8d7c527a2e37053ee3a39ba2d56fefce124d64f0bd74eba9"
+  },
+  "format": "s1c3-16slot-functional-live-failure-independent-static-review-v1",
+  "independent_assessment": {
+    "defensible_root_cause_class": "producer publication did not reach selector-consumable ARMED state, or selector observed it as not ARMED; static bytes do not support a missed hook, wrong call target, wrong r9 direct gate, metadata overlap, or reset-signature mismatch as the primary explanation",
+    "most_likely_live_mechanism": "fewer than all sixteen exact direct products were accepted by the producer after slot0 reset, leaving state LOADING (1) rather than ARMED (2); host-side successful bulk sends alone do not prove firmware-side producer acceptance/count advancement",
+    "why_all_stock_matters": "selected path would assign r1 to 0x01c46520 + (note-36)*0xa0; stock on every Ch10 pad is compatible with state != 2 or selected valid != 1 before that assignment"
+  },
+  "installed_code_bytes": {
+    "direct_product_call_0x0201e468_4": "bfeadcfe",
+    "note_off_hook_0x0201c63e_6": "80fffa1a0000",
+    "note_on_hook_0x0201c67c_6": "80ffc01a0000",
+    "producer_0x0201e1a2_172_hex": "790404169016e020f03d80f83700c0ffbd65c4012000b00040e8300020000516584280f807005b4183f824004021d8422000048380f81e025b4103fd1b203616e6e1a060c7ff2065c401671806e19c704020e84070164116623c80ffccaa020020004021e840c321db4183f8032020004022d84220004020d840200059047904590479040416494081f80bc4494181f808c6c5ffbd65c4014020d840d841d8422000401680ff56ffffff5904",
+    "producer_0x0201e1a2_172_sha256": "5c0ec6675c29b8f20d055938425ceb12c356513c29b79b761f1a469eaa068a75",
+    "segmented_product_call_0x0201e49c_4": "bfeac0fe",
+    "selector_0x0201e13e_96_hex": "53160481631679040416951685f8171283fd154803fd1368f33cc8ff2065c40105e19c80584380f80a04e3e1a0308516351806e19c50684080f801025116401680ff4aab02005904590459045904590459045904590459045904590459045904",
+    "selector_0x0201e13e_96_sha256": "ea2c76595a93cf2cf6a39236e09b749781e2721e3575d0c1b40194855cd4e915"
+  },
+  "observed_live_failure_from_user": "after exact installed reset-aware S1-C3 functional candidate and successful 16 packet send, all Ch10 pads sound stock Ch1",
+  "packet_runtime_prefixes": [
+    {
+      "file": "slot00-note36-direct-product-163.bin",
+      "packet_len": 163,
+      "packet_sha256": "1c9239621563722eaac0a85db411571963f9ebbd0dbbb00b21044b76b1581427",
+      "reset_signature_match_6263": true,
+      "runtime_first8_hex": "6263620063426200",
+      "runtime_len": 156,
+      "runtime_sha256": "e2beb705a28e83940b2708f8ba0976e8c093ca12f45d0045f290b1589760d76b"
+    },
+    {
+      "file": "slot01-note37-direct-product-163.bin",
+      "packet_len": 163,
+      "packet_sha256": "afa8957005341e6144962ce3120bb1d829475714077617ea8da2c3fee4a0aa21",
+      "reset_signature_match_6263": false,
+      "runtime_first8_hex": "6363636300636363",
+      "runtime_len": 156,
+      "runtime_sha256": "5dab954752769609d64dd162360182138c8bc399030b88cf8d61b76fb7208f97"
+    },
+    {
+      "file": "slot02-note38-direct-product-163.bin",
+      "packet_len": 163,
+      "packet_sha256": "8a87a409056457e61944d01bf4bbc0266414b8385c3a848125700da9e8417de3",
+      "reset_signature_match_6263": false,
+      "runtime_first8_hex": "632d16316300000f",
+      "runtime_len": 156,
+      "runtime_sha256": "3e140cc8613ec555fcae2109d216c5e838d3193b305352992dc4062556af8b60"
+    },
+    {
+      "file": "slot03-note39-direct-product-163.bin",
+      "packet_len": 163,
+      "packet_sha256": "a5c086a77b4de1ce9546e747b72f79d8f6ad7b0dbd7c3b6e1665ef7edf83ff58",
+      "reset_signature_match_6263": false,
+      "runtime_first8_hex": "63524b0063570000",
+      "runtime_len": 156,
+      "runtime_sha256": "5f60dc8f39b4ec43dc4368050701550ca56581948451f0c8083ace61e9d98dc7"
+    },
+    {
+      "file": "slot04-note40-direct-product-163.bin",
+      "packet_len": 163,
+      "packet_sha256": "ffd1bcc6c7a7c5d8a1bb35f5bf7e39bf63058e62ac574e1e308ba53edc6670ff",
+      "reset_signature_match_6263": false,
+      "runtime_first8_hex": "63633e6363630000",
+      "runtime_len": 156,
+      "runtime_sha256": "5da8be28b3468a534aa488b02d47522df36e6b5b02b14f992bcb869fc4bb9ecc"
+    },
+    {
+      "file": "slot05-note41-direct-product-163.bin",
+      "packet_len": 163,
+      "packet_sha256": "57136706fa633b5b47008ed2616471f72ae629d69e601e33c66daad991df94e9",
+      "reset_signature_match_6263": false,
+      "runtime_first8_hex": "6363632263636300",
+      "runtime_len": 156,
+      "runtime_sha256": "d38dfdac699a0fadbf7c99c98103a5f2bf7297a6746e94525d7eca3472223d40"
+    },
+    {
+      "file": "slot06-note42-direct-product-163.bin",
+      "packet_len": 163,
+      "packet_sha256": "0f202d88578152ca024b3822f56a7c74c485c42996695033a4c239449d30f366",
+      "reset_signature_match_6263": false,
+      "runtime_first8_hex": "2463392e32630000",
+      "runtime_len": 156,
+      "runtime_sha256": "7727f3b7856a73b3c32bca1b6e15ed74672d6dc97e00641761ef14237b0d8a44"
+    },
+    {
+      "file": "slot07-note43-direct-product-163.bin",
+      "packet_len": 163,
+      "packet_sha256": "d4ee6f2ccfce2d0c548917bb58ead4988dc3038c2b84edaaa37f047d2e006ea2",
+      "reset_signature_match_6263": false,
+      "runtime_first8_hex": "5f1c1b2b63633200",
+      "runtime_len": 156,
+      "runtime_sha256": "8b0463a7b52857203105525af3456636b3a427e5db5f1eb75ea687bd6677bbbb"
+    },
+    {
+      "file": "slot08-note44-direct-product-163.bin",
+      "packet_len": 163,
+      "packet_sha256": "c8c489b72b195dfe5f373b6a860b32f0d07a29a83a9f2c070299df5af88a9cb3",
+      "reset_signature_match_6263": false,
+      "runtime_first8_hex": "634a271a635e0000",
+      "runtime_len": 156,
+      "runtime_sha256": "1602db2d94930482f631d087bf4b645d626f12b88da1e8deee21202210b7177c"
+    },
+    {
+      "file": "slot09-note45-direct-product-163.bin",
+      "packet_len": 163,
+      "packet_sha256": "9c895d925a6cb79c4dff9f9f27727cce02f6dd0ed86467c994d7f459f1036258",
+      "reset_signature_match_6263": false,
+      "runtime_first8_hex": "5c36165a63000000",
+      "runtime_len": 156,
+      "runtime_sha256": "33dd55bbc6ebc2361260b9a581203f682b49388f9e4284b95de15136b630a178"
+    },
+    {
+      "file": "slot10-note46-direct-product-163.bin",
+      "packet_len": 163,
+      "packet_sha256": "802944d0e1a8f4e85f1a3a694e2a0dbbfe9bb55972814f11ed4c7be7575b6704",
+      "reset_signature_match_6263": false,
+      "runtime_first8_hex": "6323163c1b565600",
+      "runtime_len": 156,
+      "runtime_sha256": "9c5abf35d8c039be1c8603f4fb5296f7b7d3e28503b330b5d3dd33c1b5a6dff9"
+    },
+    {
+      "file": "slot11-note47-direct-product-163.bin",
+      "packet_len": 163,
+      "packet_sha256": "c4e8458edeb04d8106ca60a35243525e6b5f3f5de272091492409a440e3a9a8d",
+      "reset_signature_match_6263": false,
+      "runtime_first8_hex": "63312d5552413900",
+      "runtime_len": 156,
+      "runtime_sha256": "98bc86e7d9625c837ee6c07fa3f01cbd6079960c9d1071017cf51194aa48c1bf"
+    },
+    {
+      "file": "slot12-note48-direct-product-163.bin",
+      "packet_len": 163,
+      "packet_sha256": "622a06870f189b6e4582f0093255f450403d4112836f09563c0b4623c1b287cd",
+      "reset_signature_match_6263": false,
+      "runtime_first8_hex": "6334234063450000",
+      "runtime_len": 156,
+      "runtime_sha256": "452efa8d41eecc7a5c57f1dfdecc072e1bc4266020cfe824edbc1b87415c2e38"
+    },
+    {
+      "file": "slot13-note49-direct-product-163.bin",
+      "packet_len": 163,
+      "packet_sha256": "6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27",
+      "reset_signature_match_6263": false,
+      "runtime_first8_hex": "4b32634163000000",
+      "runtime_len": 156,
+      "runtime_sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275"
+    },
+    {
+      "file": "slot14-note50-direct-product-163.bin",
+      "packet_len": 163,
+      "packet_sha256": "b159db617616621759bb9990991a8214c585d1f7ecd1be0f36d53a0b71b160c8",
+      "reset_signature_match_6263": false,
+      "runtime_first8_hex": "6363634663636300",
+      "runtime_len": 156,
+      "runtime_sha256": "cfa79fc5ba72bcd50b0465a116e109da90ca5dcdcdc40bc89cdad218ee468417"
+    },
+    {
+      "file": "slot15-note51-direct-product-163.bin",
+      "packet_len": 163,
+      "packet_sha256": "39a3e4eca1c740f719b3495f2a88c63e3b5d575a16a98c7b05fbc211fbfa4775",
+      "reset_signature_match_6263": false,
+      "runtime_first8_hex": "5537374163000000",
+      "runtime_len": 156,
+      "runtime_sha256": "a28849a192d5dad000622c8aa749baa6508ad73e2c1cc6659b33a0419b6a0e88"
+    }
+  ],
+  "producer_publication_contract_checked_static": {
+    "direct_entry": "0x0201e224 reset wrapper via call bytes bfeadcfe",
+    "metadata_overlap": "slot0 voice uses 0x01c46520..0x01c465bb; slot0 valid/lock/count/state are 0x01c465bc..bf; slot1 starts at 0x01c465c0, so metadata is in the four padding bytes not copied by the 0x9c voice memcpy",
+    "original_sequential_entry": "0x0201e1a2",
+    "publication": "valid clear, memcpy 0x9c, csync, valid=1, loaded_count=i+1, and only slot15 stores state=2 ARMED",
+    "r9_gate": "0x0201e1a6..0x0201e1ac copies r9, subtracts 0xa3, and returns before lock/testset/stores unless exact direct length is present",
+    "reset_signature": "0x0201e228..0x0201e230 checks accepted staging bytes [0..1] == 62 63, then clears lock/count/state at 0x01c465bd..bf before calling 0x0201e1a2",
+    "segmented_entry": "0x0201e220 push/pop no mutation"
+  },
+  "scope": {
+    "device_accessed": false,
+    "flash_performed": false,
+    "midi_transport_opened": false,
+    "new_files_only_under": "baselines/v15/analysis/flash-candidates/S1C3-16slot-functional/live-failure-review/agent-independent/",
+    "ota_performed": false,
+    "reset_performed": false
+  },
+  "selector_fallback_contract_checked_static": {
+    "fallback_effect": "r1 remains the original stock/H2 fallback source unless both state and valid pass, so every Ch10 pad sounding stock is exactly the selector fallback symptom",
+    "state_gate": "0x0201e162 loads 0x01c465bf via slot0-valid+3; 0x0201e164 requires state == 2",
+    "valid_gate": "0x0201e174 loads selected slot valid; 0x0201e176 requires valid == 1"
+  },
+  "single_discriminator_minimal_checkpoint": {
+    "intended_future_live_protocol": "with explicit future authorization, install diagnostic, send only exact slot00 note36 packet once, then press the physical pad that emits Ch10 note36; do not send the remaining 15 packets for this checkpoint",
+    "interpretation_if_note36_changes_from_stock": "producer ingress, reset signature, r9 gate, staging pointer, memcpy, slot0 valid publication, and selector hook/source selection are live; current failure is completion/final publication to ARMED, such as dropped/rejected later packets or count progression",
+    "interpretation_if_note36_remains_stock": "failure is before or at slot0 publication/selector reach, such as producer not invoked, r9 gate not passing, staging signature mismatch in live route, lock/testset issue, or hook/channel gate not reaching selected path",
+    "name": "S1C3-PUB1 state-gate discriminator",
+    "one_code_discriminator": "temporarily change only the selector state comparison immediate at 0x0201e164 from state == 2 to state == 1; keep the selected-slot valid gate unchanged",
+    "static_byte_target": "selector branch bytes at 0x0201e164 are 80f80a04 for jne r0,#2,copy; discriminator changes the encoded immediate from 02 to 01 only after independent encoding validation",
+    "why_minimal": "one selector predicate discriminates LOADING-with-valid0 from no-publication while preserving the producer and valid byte ABI"
+  }
+}

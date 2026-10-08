@@ -1,0 +1,162 @@
+safety gate: PASS; manifest: /Users/spectrum/.jcode/scratch/s1c1-boundary-review-c48o9r1a/candidate/package-manifest.json
+PASS	evidence-verdict	PASS
+PASS	review-scope	offline; no device; no flash
+PASS	report-verdict-and-scope	PASS/offline
+PASS	artifact-exists	build/v15-official-app.bin
+PASS	exact-sha256	official_app 36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS	evidence-sha256	official_app
+PASS	artifact-exists	build/SMK-37_Pro_015.fwsc
+PASS	exact-sha256	official_package f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff
+PASS	evidence-sha256	official_package
+PASS	artifact-exists	build/SMK37Pro-v15-H2-owned-source-corrected-fallback/app.bin
+PASS	exact-sha256	h2_app d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59
+PASS	evidence-sha256	h2_app
+PASS	artifact-exists	build/SMK37Pro-v15-H2-owned-source-corrected-fallback/SMK37Pro-v15-H2-owned-source-corrected-fallback.fwsc
+PASS	exact-sha256	h2_package c1752a69ed8f905af58db0de7c3def29c416b71e832e2834e664cd5d17b85011
+PASS	evidence-sha256	h2_package
+PASS	artifact-exists	build/SMK37Pro-v15-S1C1-boundary-only/app.bin
+PASS	exact-sha256	candidate_app 16023c9006f2d4d6467ef2d72d6165c14ffeb6cb758d074f7d8163a68146fb2e
+PASS	evidence-sha256	candidate_app
+PASS	artifact-exists	build/SMK37Pro-v15-S1C1-boundary-only/SMK37Pro-v15-S1C1-boundary-only.fwsc
+PASS	exact-sha256	candidate_package ae8c44a493e83d0b41ee422f21bdc115c4e1ff232376fd8a8abf609c96a3765d
+PASS	evidence-sha256	candidate_package
+PASS	artifact-exists	build/SMK37Pro-WL82-v15-S1C1B-rollback-20260802-v1.zip
+PASS	exact-sha256	rollback_zip 9cf3a7ec8a24e09d2d2bef9d55d73363c01f8461a3800ad37ba30abb72d332f1
+PASS	evidence-sha256	rollback_zip
+PASS	app-length	617012
+PASS	h2-rebuild-byte-identical	d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59
+PASS	h2-relative-exact-four-byte-delta	0x20,0x21,0x5e9fa,0x5e9fb
+PASS	evidence-delta-offsets	4
+PASS	h2-bss-instruction	c2ffeccb0300
+PASS	candidate-bss-instruction	c2ff8ccc0300
+PASS	h2-heap-instruction	c5ffc065c401
+PASS	candidate-heap-instruction	c5ff6066c401
+PASS	paired-boundary-increment	BSS +0xa0; HEAP_BEGIN +0xa0
+PASS	paired-bss-base	0x01c099d4
+PASS	candidate-boundary-values	BSS=0x3cc8c HEAP_BEGIN=0x01c46660
+PASS	evidence-paired-boundaries	exact values
+PASS	h2-code-cave-byte-identical	0x0201e13e..0x0201e1ec
+PASS	only-boundary-immediate-operands-changed	4
+PASS	no-literal-slot1-base-reference	0x01c465c0 absent after heap immediate moved
+PASS	no-literal-selector-address	0x01c465be
+PASS	no-literal-selector-address	0x01c465bf
+PASS	evidence-behavior-scope	H2 behavior retained
+PASS	protected-flash-hashes	before == after == locked values
+PASS	evidence-protected-flash-hashes	exact
+PASS	package-manifest-protected-before	exact
+PASS	package-manifest-protected-after	exact
+PASS	package-safety-gate	PASS
+PASS	candidate-deterministic-rebuild	app.bin
+PASS	candidate-deterministic-rebuild	SMK37Pro-v15-S1C1-boundary-only.fwsc
+PASS	candidate-deterministic-rebuild	app-manifest.json
+PASS	candidate-deterministic-rebuild	package-manifest.json
+PASS	candidate-deterministic-rebuild	SHA256SUMS
+PASS	candidate-rebuild-summary	exact locked hashes
+PASS	ota-compile	clean
+PASS	ota-exact-check	candidate rc=0
+PASS	ota-exact-check	official rc=1
+PASS	ota-exact-check	h2 rc=1
+PASS	ota-exact-check	malformed rc=1
+PASS	ota-confirmation-token	exact
+PASS	ota-embedded-package-hash	ae8c44a493e83d0b41ee422f21bdc115c4e1ff232376fd8a8abf609c96a3765d
+PASS	rollback-rebuild	PASS
+PASS	rollback-directory-deterministic	13
+PASS	rollback-zip-deterministic	9cf3a7ec8a24e09d2d2bef9d55d73363c01f8461a3800ad37ba30abb72d332f1
+PASS	evidence-determinism	candidate and rollback
+PASS	rollback-exact-five-sector-set	0x04000,0x20000,0x22000,0x2a000,0x62000
+PASS	rollback-manifest-confirmations	3
+PASS	evidence-rollback-confirmations	3
+PASS	rollback-manifest-package-hashes	official and candidate
+PASS	rollback-stock-sector-hash	0x04000
+PASS	rollback-target-sector-hash	0x04000
+PASS	rollback-sector-changed-count	0x04000 10
+PASS	rollback-stock-sector-bytes	stock-sector-04000.bin
+PASS	rollback-stock-sector-hash	0x20000
+PASS	rollback-target-sector-hash	0x20000
+PASS	rollback-sector-changed-count	0x20000 6
+PASS	rollback-stock-sector-bytes	stock-sector-20000.bin
+PASS	rollback-stock-sector-hash	0x22000
+PASS	rollback-target-sector-hash	0x22000
+PASS	rollback-sector-changed-count	0x22000 175
+PASS	rollback-stock-sector-bytes	stock-sector-22000.bin
+PASS	rollback-stock-sector-hash	0x2a000
+PASS	rollback-target-sector-hash	0x2a000
+PASS	rollback-sector-changed-count	0x2a000 8
+PASS	rollback-stock-sector-bytes	stock-sector-2a000.bin
+PASS	rollback-stock-sector-hash	0x62000
+PASS	rollback-target-sector-hash	0x62000
+PASS	rollback-sector-changed-count	0x62000 2
+PASS	rollback-stock-sector-bytes	stock-sector-62000.bin
+PASS	evidence-rollback-sector-records	5
+PASS	rollback-guard-token	I_UNDERSTAND_THIS_ERASES_EXACTLY_FIVE_S1C1B_SECTORS
+PASS	rollback-wrapper-token	I_UNDERSTAND_THIS_ERASES_EXACTLY_FIVE_S1C1B_SECTORS
+PASS	rollback-guard-token	I_HAVE_TWO_IDENTICAL_1MIB_DUMPS_AND_S1C1B_TARGET_HASHES
+PASS	rollback-wrapper-token	I_HAVE_TWO_IDENTICAL_1MIB_DUMPS_AND_S1C1B_TARGET_HASHES
+PASS	rollback-guard-token	RESTORE_OFFICIAL_V15_SECTORS_NOW
+PASS	rollback-wrapper-token	RESTORE_OFFICIAL_V15_SECTORS_NOW
+PASS	rollback-no-stale-h2-token	THIRD-PARTY-NOTICES.md
+PASS	rollback-no-stale-h2-token	README.md
+PASS	rollback-no-stale-h2-token	SHA256SUMS.txt
+PASS	rollback-no-stale-h2-token	tools/windows_scsi_transport.py
+PASS	rollback-no-stale-h2-token	recovery-sectors/manifest.json
+PASS	rollback-no-stale-h2-token	restore/run-restore-elevated.ps1
+PASS	rollback-no-stale-h2-token	restore/smk37_wl82_guarded_restore.py
+PASS	rollback-guard-self-test	FakeTransport and failure cases
+PASS	rollback-hash-inventory-unique	README.md
+PASS	rollback-hash-inventory-unique	THIRD-PARTY-NOTICES.md
+PASS	rollback-hash-inventory-unique	assets/wl82loader.bin
+PASS	rollback-hash-inventory-unique	recovery-sectors/manifest.json
+PASS	rollback-hash-inventory-unique	recovery-sectors/stock-sector-04000.bin
+PASS	rollback-hash-inventory-unique	recovery-sectors/stock-sector-20000.bin
+PASS	rollback-hash-inventory-unique	recovery-sectors/stock-sector-22000.bin
+PASS	rollback-hash-inventory-unique	recovery-sectors/stock-sector-2a000.bin
+PASS	rollback-hash-inventory-unique	recovery-sectors/stock-sector-62000.bin
+PASS	rollback-hash-inventory-unique	restore/run-restore-elevated.ps1
+PASS	rollback-hash-inventory-unique	restore/smk37_wl82_guarded_restore.py
+PASS	rollback-hash-inventory-unique	tools/windows_scsi_transport.py
+PASS	rollback-hash-inventory-complete	12
+PASS	rollback-member-sha256	README.md
+PASS	rollback-member-sha256	THIRD-PARTY-NOTICES.md
+PASS	rollback-member-sha256	assets/wl82loader.bin
+PASS	rollback-member-sha256	recovery-sectors/manifest.json
+PASS	rollback-member-sha256	recovery-sectors/stock-sector-04000.bin
+PASS	rollback-member-sha256	recovery-sectors/stock-sector-20000.bin
+PASS	rollback-member-sha256	recovery-sectors/stock-sector-22000.bin
+PASS	rollback-member-sha256	recovery-sectors/stock-sector-2a000.bin
+PASS	rollback-member-sha256	recovery-sectors/stock-sector-62000.bin
+PASS	rollback-member-sha256	restore/run-restore-elevated.ps1
+PASS	rollback-member-sha256	restore/smk37_wl82_guarded_restore.py
+PASS	rollback-member-sha256	tools/windows_scsi_transport.py
+PASS	rollback-zip-no-duplicates	17
+PASS	rollback-zip-file-set	13
+PASS	rollback-zip-crc	all members
+PASS	rollback-zip-member-bytes	README.md
+PASS	rollback-zip-fixed-time	README.md
+PASS	rollback-zip-member-bytes	SHA256SUMS.txt
+PASS	rollback-zip-fixed-time	SHA256SUMS.txt
+PASS	rollback-zip-member-bytes	THIRD-PARTY-NOTICES.md
+PASS	rollback-zip-fixed-time	THIRD-PARTY-NOTICES.md
+PASS	rollback-zip-member-bytes	assets/wl82loader.bin
+PASS	rollback-zip-fixed-time	assets/wl82loader.bin
+PASS	rollback-zip-member-bytes	recovery-sectors/manifest.json
+PASS	rollback-zip-fixed-time	recovery-sectors/manifest.json
+PASS	rollback-zip-member-bytes	recovery-sectors/stock-sector-04000.bin
+PASS	rollback-zip-fixed-time	recovery-sectors/stock-sector-04000.bin
+PASS	rollback-zip-member-bytes	recovery-sectors/stock-sector-20000.bin
+PASS	rollback-zip-fixed-time	recovery-sectors/stock-sector-20000.bin
+PASS	rollback-zip-member-bytes	recovery-sectors/stock-sector-22000.bin
+PASS	rollback-zip-fixed-time	recovery-sectors/stock-sector-22000.bin
+PASS	rollback-zip-member-bytes	recovery-sectors/stock-sector-2a000.bin
+PASS	rollback-zip-fixed-time	recovery-sectors/stock-sector-2a000.bin
+PASS	rollback-zip-member-bytes	recovery-sectors/stock-sector-62000.bin
+PASS	rollback-zip-fixed-time	recovery-sectors/stock-sector-62000.bin
+PASS	rollback-zip-member-bytes	restore/run-restore-elevated.ps1
+PASS	rollback-zip-fixed-time	restore/run-restore-elevated.ps1
+PASS	rollback-zip-member-bytes	restore/smk37_wl82_guarded_restore.py
+PASS	rollback-zip-fixed-time	restore/smk37_wl82_guarded_restore.py
+PASS	rollback-zip-member-bytes	tools/windows_scsi_transport.py
+PASS	rollback-zip-fixed-time	tools/windows_scsi_transport.py
+PASS	evidence-rollback-sectors	5
+PASS	evidence-ota-matrix	exact accept/reject
+PASS	evidence-ota-confirmation	exact
+PASS	final-verdict	160 independent offline checks

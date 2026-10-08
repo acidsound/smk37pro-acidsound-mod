@@ -1,0 +1,203 @@
+{
+  "boot_and_ranges": {
+    "bss": "0x01c099d4..0x01c4651c",
+    "heap_loss": "0x000000c0",
+    "heap_loss_percent": 0.08151620134501732,
+    "new_heap_span": "0x00039750",
+    "old_bss_zero_size": "0x0003cb48",
+    "old_heap_span": "0x00039810",
+    "option_a_bss_zero_size": "0x0003cb4c",
+    "option_b_bss_extension": "0x000000c4",
+    "option_b_bss_zero_size": "0x0003cc0c",
+    "pointer_padding": "0x01c4651c..0x01c46520",
+    "reserved_prefix": "0x01c46520..0x01c465e0"
+  },
+  "decisions": {
+    "option_a_anchor": "PASS",
+    "option_a_complete_candidate": "BLOCK",
+    "option_a_exception": "NOT JUSTIFIED",
+    "option_b_checkpoint_exception": "JUSTIFIABLE FOR OFFLINE CHECKPOINT WORK ONLY; NOT A FLASH PASS",
+    "option_b_current_requirements": "BLOCK",
+    "option_b_gate_a_static_ownership": "PASS IF BOTH EXACT PATCHES ARE APPLIED",
+    "r03_overall": "BLOCK"
+  },
+  "format": "smk37-v15-r03-independent-ram-review-v1",
+  "inputs": {
+    "app": "build/v15-official-app.bin",
+    "app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "mem_heap_object": "baselines/v15/analysis/r03-owned-ram/heap-prefix-reservation/mem_heap.pi32.o",
+    "mem_heap_object_sha256": "82fb6c5a2546861c6114442f556b573da739717c5f53cfbc31853337e36e5fb6",
+    "requirements": "baselines/v15/analysis/r03-owned-ram/requirements.md",
+    "requirements_sha256": "0cce1eccb7803be71c91489ee9ce4e2af2358f656bf0124ab877f6604d02653a",
+    "sdk_mem_heap_source_sha256_expected": "411cb79e74853a5b7ce9135514f59d8eafb5b098ced2f8acde08201fdfcf380c"
+  },
+  "sbrk": {
+    "address": "0x0205e9da",
+    "differing_offsets": [
+      16,
+      17,
+      18,
+      19,
+      32,
+      33,
+      34,
+      35,
+      40,
+      41,
+      42,
+      43
+    ],
+    "fixed_bytes_exact": 80,
+    "fixed_bytes_total": 80,
+    "recovered_symbols": {
+      "HEAP_BEGIN": "0x01c46520",
+      "HEAP_END": "0x01c7fd30",
+      "sbrk.__init_addr": "0x01c32d94"
+    },
+    "relocations": [
+      {
+        "relative_offset": "0x0000000e",
+        "symbol": "sbrk.__init_addr",
+        "v15_value": "0x01c32d94"
+      },
+      {
+        "relative_offset": "0x0000001e",
+        "symbol": "HEAP_BEGIN",
+        "v15_value": "0x01c46520"
+      },
+      {
+        "relative_offset": "0x00000026",
+        "symbol": "HEAP_END",
+        "v15_value": "0x01c7fd30"
+      }
+    ],
+    "size": "0x00000062"
+  },
+  "validation": [
+    {
+      "check": "official-v15-app-sha256",
+      "detail": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "status": "PASS"
+    },
+    {
+      "check": "pinned-mem-heap-object-sha256",
+      "detail": "82fb6c5a2546861c6114442f556b573da739717c5f53cfbc31853337e36e5fb6",
+      "status": "PASS"
+    },
+    {
+      "check": "sbrk-address-and-size",
+      "detail": "0x0205e9da size=0x00000062",
+      "status": "PASS"
+    },
+    {
+      "check": "sbrk-three-relocated-instructions",
+      "detail": "[{'relative_offset': '0x0000000e', 'symbol': 'sbrk.__init_addr', 'v15_value': '0x01c32d94'}, {'relative_offset': '0x0000001e', 'symbol': 'HEAP_BEGIN', 'v15_value': '0x01c46520'}, {'relative_offset': '0x00000026', 'symbol': 'HEAP_END', 'v15_value': '0x01c7fd30'}]",
+      "status": "PASS"
+    },
+    {
+      "check": "sbrk-all-80-non-relocated-bytes-exact",
+      "detail": "80/80",
+      "status": "PASS"
+    },
+    {
+      "check": "sbrk-only-relocation-payload-differs",
+      "detail": "[16, 17, 18, 19, 32, 33, 34, 35, 40, 41, 42, 43]",
+      "status": "PASS"
+    },
+    {
+      "check": "sbrk-init-address",
+      "detail": "0x01c32d94",
+      "status": "PASS"
+    },
+    {
+      "check": "heap-begin",
+      "detail": "0x01c46520",
+      "status": "PASS"
+    },
+    {
+      "check": "heap-end",
+      "detail": "0x01c7fd30",
+      "status": "PASS"
+    },
+    {
+      "check": "boot-bss-start-instruction",
+      "detail": "c3ffd499c001",
+      "status": "PASS"
+    },
+    {
+      "check": "boot-bss-size-instruction",
+      "detail": "c2ff48cb0300",
+      "status": "PASS"
+    },
+    {
+      "check": "boot-zero-loop-is-word-granular",
+      "detail": "a2a20203b105f25d",
+      "status": "PASS"
+    },
+    {
+      "check": "bss-end-arithmetic",
+      "detail": "0x01c4651c",
+      "status": "PASS"
+    },
+    {
+      "check": "pointer-slot-is-four-byte-padding",
+      "detail": "0x01c4651c..0x01c46520",
+      "status": "PASS"
+    },
+    {
+      "check": "pointer-slot-has-no-raw-absolute-reference",
+      "detail": "[]",
+      "status": "PASS"
+    },
+    {
+      "check": "option-a-zero-stops-at-old-heap",
+      "detail": "0x01c46520",
+      "status": "PASS"
+    },
+    {
+      "check": "option-b-zero-stops-at-new-heap",
+      "detail": "0x01c465e0",
+      "status": "PASS"
+    },
+    {
+      "check": "option-b-zero-size-word-aligned",
+      "detail": "0x0003cc0c",
+      "status": "PASS"
+    },
+    {
+      "check": "option-b-prefix-size",
+      "detail": "0x000000c0",
+      "status": "PASS"
+    },
+    {
+      "check": "option-b-voice-plus-metadata-fit",
+      "detail": "needed=0x000000a4 available=0x000000c0",
+      "status": "PASS"
+    },
+    {
+      "check": "old-and-new-heap-bounds-aligned-32",
+      "detail": "old=0x01c46520 new=0x01c465e0",
+      "status": "PASS"
+    },
+    {
+      "check": "only-old-heap-begin-mov-in-prefix",
+      "detail": "[{'instruction': '0x0205e9f8', 'value': '0x01c46520', 'bytes': 'c5ff2065c401'}]",
+      "status": "PASS"
+    },
+    {
+      "check": "heap-loss-exactly-0xc0",
+      "detail": "old=0x00039810 new=0x00039750 loss=0x000000c0",
+      "status": "PASS"
+    },
+    {
+      "check": "current-requirement-forbids-allocator-change",
+      "detail": "requirements.md Gate C",
+      "status": "PASS"
+    },
+    {
+      "check": "current-requirement-forbids-absence-only-claim",
+      "detail": "requirements.md Gate A.8",
+      "status": "PASS"
+    }
+  ]
+}

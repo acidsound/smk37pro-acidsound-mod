@@ -1,0 +1,31 @@
+PASS	required-text	S1-C4 must be withdrawn
+PASS	required-text	DESIGN ONLY, NO FIRMWARE CANDIDATE
+PASS	required-text	wire byte `161 == trigger note 36..51`
+PASS	required-text	wire byte `161 == 60` repeated
+PASS	required-text	Physical Trigger Note / slot publication identity
+PASS	required-text	Playback Note metadata
+PASS	required-text	allowed to duplicate arbitrarily
+PASS	required-text	including all slots equal to `60`
+PASS	required-text	existing 16 resident patch slots
+PASS	required-text	No use outside `0x01c46520..0x01c46fb0`
+PASS	required-text	`0x0201e13e..0x0201e254`
+PASS	required-text	Note On and Note Off return the same effective Playback Note
+PASS	required-text	Rollback sector scope
+PASS	required-text	Live test matrix
+PASS	required-text	`L1 all C4 arm`
+PASS	required-text	no firmware candidate
+PASS	evidence-path	baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/live-validation-20260802.md
+PASS	evidence-path	baselines/v15/analysis/flash-candidates/S1C3-16slot-boundary-only/live-validation-20260803.md
+PASS	evidence-path	baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/report.md
+PASS	evidence-path	baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/inputs/producer/report.md
+PASS	evidence-path	baselines/v15/analysis/playback-note/candidate-v3-segmented-final/evidence.json
+PASS	evidence-path	baselines/v15/analysis/playback-note/candidate-v3-segmented-final/decode.tsv
+PASS	evidence-path	baselines/v15/analysis/playback-note/segmented-abi/report.md
+PASS	evidence-path	baselines/v15/analysis/playback-note/v3-segmented-review/review.md
+PASS	sha256	build/v15-official-app.bin	36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS	sha256	baselines/v15/analysis/flash-candidates/S1C3-16slot-functional-v2-r3-reload/app.bin	7c672938023beee74d599f43ccd5c7642396b89819e929501274239aed5e5d4b
+PASS	sha256	baselines/v15/analysis/playback-note/candidate-v3-segmented-final/selector.bin	900e8f05c8157737e89a22338b9a4575aa3ff124bd70ff132de0226654fce29f
+PASS	sha256	baselines/v15/analysis/playback-note/candidate-v3-segmented-final/producer.bin	a7627984549f62592384189a707ef04512921ad693b18409eb483dcccb53c438
+PASS	s1c4-code-cave-basis	selector 0x0201e13e, producer end 0x0201e252
+PASS	no-firmware-artifacts-in-design-dir
+S1-C4 withdrawal successor design validation PASS

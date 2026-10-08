@@ -1,0 +1,40 @@
+target=0201c16a
+  from=0201e11e type=UNCONDITIONAL_CALL instruction=call 0x0201c16a function=FUN_0201dd3c@0201dd3c
+  from=0201c286 type=UNCONDITIONAL_CALL instruction=call 0x0201c16a function=FUN_0201c272@0201c272
+count=2
+
+target=0201c09c
+  from=0201c226 type=UNCONDITIONAL_CALL instruction=call 0x0201c09c function=FUN_0201c16a@0201c16a
+count=1
+
+target=0201dd3c
+  from=0202ca2e type=UNCONDITIONAL_CALL instruction=call 0x0201dd3c function=midi_route_receive_loop@0202c876
+  from=0202ca36 type=UNCONDITIONAL_CALL instruction=call 0x0201dd3c function=midi_route_receive_loop@0202c876
+count=2
+
+target=01c35104
+count=0
+
+target=02061612
+  from=0202bbfe type=UNCONDITIONAL_CALL instruction=call 0x02061612 function=FUN_0202ba6c@0202ba6c
+  from=0201d1e0 type=UNCONDITIONAL_CALL instruction=call 0x02061612 function=midi_route_ref_group_6@0201d1a4
+  from=02000954 type=UNCONDITIONAL_CALL instruction=call 0x02061612 function=midi_route_ref_group_0@02000932
+  from=02000a12 type=UNCONDITIONAL_CALL instruction=call 0x02061612 function=midi_route_ref_group_1@020009a6
+  from=02001574 type=UNCONDITIONAL_CALL instruction=call 0x02061612 function=midi_route_ref_group_2@0200149e
+  from=020012ec type=UNCONDITIONAL_CALL instruction=call 0x02061612 function=FUN_02001164@02001164
+  from=020013d6 type=UNCONDITIONAL_CALL instruction=call 0x02061612 function=FUN_02001164@02001164
+  from=02001492 type=UNCONDITIONAL_CALL instruction=call 0x02061612 function=FUN_02001164@02001164
+  from=020077ac type=UNCONDITIONAL_CALL instruction=call 0x02061612 function=midi_route_ref_group_3@0200777c
+  from=02007cae type=UNCONDITIONAL_CALL instruction=call 0x02061612 function=midi_route_ref_group_4@02007ca2
+  from=0201c094 type=UNCONDITIONAL_CALL instruction=call 0x02061612 function=midi_route_ref_group_5@0201c01c
+  from=0202cb24 type=UNCONDITIONAL_CALL instruction=call 0x02061612 function=midi_route_ref_group_7@0202cac0
+  from=0202cbd0 type=UNCONDITIONAL_CALL instruction=call 0x02061612 function=FUN_0202ba6c@0202ba6c
+  from=02007ffc type=UNCONDITIONAL_CALL instruction=call 0x02061612 function=FUN_02007fb2@02007fb2
+  from=020080ec type=UNCONDITIONAL_CALL instruction=call 0x02061612 function=FUN_02007fb2@02007fb2
+  from=02008204 type=UNCONDITIONAL_CALL instruction=call 0x02061612 function=FUN_02007fb2@02007fb2
+  from=02023054 type=UNCONDITIONAL_CALL instruction=call 0x02061612 function=FUN_02022f46@02022f46
+count=17
+
+target=020051e2
+  from=0201dd34 type=UNCONDITIONAL_CALL instruction=call 0x020051e2 function=FUN_0201dc14@0201dc14
+count=1

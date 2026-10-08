@@ -1,0 +1,171 @@
+range=0201c250..0201c3df
+0201c250  6018  add r0,r6
+0201c252  8c5b  sb r4,[r0 + -0x5]
+0201c254  06e1b061  add r6,r6,#0x1b0
+0201c258  c721  add r7,#0x1
+0201c25a  5840  lb.z r0,[r5 + 0x0]
+0201c25c  80edef71  jl r7,r0,0x0201c23e
+0201c260  5904  pop {pc,r9,r8,r7,r6,r5,r4}
+0201c262  b164  sw r1,[r3 + 0x10]
+0201c264  bfea5aff  call 0x0201c11c
+0201c268  5904  pop {pc,r9,r8,r7,r6,r5,r4}
+0201c26a  b165  sw r1,[r3 + 0x14]
+0201c26c  bfea56ff  call 0x0201c11c
+0201c270  5904  pop {pc,r9,r8,r7,r6,r5,r4}
+0201c272  1004  push rets
+0201c274  c1ff0037c301  mov r1,#0x1c33700
+0201c27a  d1ec1815  ldw r1,r1,#0x158
+0201c27e  0316  mov r3,r0
+0201c280  4223  mov r2,#0x3
+0201c282  1016  mov r0,r1
+0201c284  3116  mov r1,r3
+0201c286  bfea70ff  call 0x0201c16a
+0201c28a  0004  pop pc
+0201c28c  7404  push {rets,r4}
+0201c28e  e29f  add sp,#-0x4
+0201c290  3227  bitset r2,0x7
+0201c292  dee90120  sb r2,[sp+0x1]
+0201c296  30e97f00  if (r0 >= 0x7f) {
+0201c29a  583f  mov r0,#0x7f
+0201c29c  dee90200  }  sb r0, [sp+0x2]
+0201c2a0  dee90310  sb r1,[sp+0x3]
+0201c2a4  8881  add r0,sp,#0x1
+0201c2a6  4123  mov r1,#0x3
+0201c2a8  bfeab8fe  call 0x0201c01c
+0201c2ac  c4ff0037c301  mov r4,#0x1c33700
+0201c2b2  50ee4602  lb.z r0,[r4 + 0x206]
+0201c2b6  0046  jz r0,0x0201c2c4
+0201c2b8  8881  add r0,sp,#0x1
+0201c2ba  619b  call 0x0201c272
+0201c2bc  40e02c01  movz r0,#0x12c
+0201c2c0  50ed4b0a  sh r0,[r4 + 0xaa]
+0201c2c4  0281  add sp,#0x4
+0201c2c6  5404  pop {pc,r4}
+0201c2c8  7d04  .raw
+0201c2ca  e29c  .raw
+0201c2cc  4020  .raw
+0201c2ce  ccff  .raw
+0201c2d0  0037  .raw
+0201c2d2  c301  .raw
+0201c2d4  41e0  .raw
+0201c2d6  2005  .raw
+0201c2d8  4220  .raw
+0201c2da  4520  .raw
+0201c2dc  048d  .raw
+0201c2de  b4e0  .raw
+0201c2e0  203c  .raw
+0201c2e2  d8ee  .raw
+0201c2e4  3031  .raw
+0201c2e6  33ea  .raw
+0201c2e8  7fc0  .raw
+0201c2ea  5317  .raw
+0201c2ec  8e80  .raw
+0201c2ee  d8ee  .raw
+0201c2f0  6103  .raw
+0201c2f2  c521  .raw
+0201c2f4  c021  .raw
+0201c2f6  c221  .raw
+0201c2f8  82f8  .raw
+0201c2fa  f121  .raw
+0201c2fc  52ee  .raw
+0201c2fe  ca54  .raw
+0201c300  60ff  .raw
+0201c302  ff50  .raw
+0201c304  3a00  .raw
+0201c306  00e1  .raw
+0201c308  3cca  .raw
+0201c30a  793f  .raw
+0201c30c  5220  .raw
+0201c30e  80ff  .raw
+0201c310  c0d0  .raw
+0201c312  0200  .raw
+0201c314  40e0  .raw
+0201c316  1216  .raw
+0201c318  d8ee  .raw
+0201c31a  c000  .raw
+0201c31c  41e0  .raw
+0201c31e  0c16  .raw
+0201c320  d8ee  .raw
+0201c322  c061  .raw
+0201c324  c0e1  .raw
+0201c326  04d0  .raw
+0201c328  01e1  .raw
+0201c32a  3fca  .raw
+0201c32c  5217  .raw
+0201c32e  8b80  .raw
+0201c330  48e0  .raw
+0201c332  2005  .raw
+0201c334  47e0  .raw
+0201c336  e349  .raw
+0201c338  671b  .raw
+0201c33a  c9ff  .raw
+0201c33c  c0e2  .raw
+0201c33e  c001  .raw
+0201c340  4ae0  .raw
+0201c342  1701  .raw
+0201c344  4be0  .raw
+0201c346  1801  .raw
+0201c348  0495  .raw
+0201c34a  3607  .raw
+0201c34c  b4f0  .raw
+0201c34e  604c  .raw
+0201c350  9e40  .raw
+0201c352  d8ee  .raw
+0201c354  4048  .raw
+0201c356  d618  .raw
+0201c358  e6e1  .raw
+0201c35a  4a60  .raw
+0201c35c  7618  .raw
+0201c35e  9618  .raw
+0201c360  d8ee  .raw
+0201c362  600a  .raw
+0201c364  d8ee  .raw
+0201c366  606b  .raw
+0201c368  bc27  .raw
+0201c36a  9c5f  .raw
+0201c36c  985d  .raw
+0201c36e  9e5e  .raw
+0201c370  fa3f  .raw
+0201c372  c124  .raw
+0201c374  f24a  .raw
+0201c376  52ee  .raw
+0201c378  c155  .raw
+0201c37a  0284  .raw
+0201c37c  5d04  .raw
+0201c37e  7404  push {rets,r4}
+0201c380  e29f  add sp,#-0x4
+0201c382  42e19020  or r2,r2,#0x90
+0201c386  dee90120  sb r2,[sp+0x1]
+0201c38a  30e97f00  if (r0 >= 0x7f) {
+0201c38e  583f  mov r0,#0x7f
+0201c390  dee90200  }  sb r0, [sp+0x2]
+0201c394  dee90310  sb r1,[sp+0x3]
+0201c398  8881  add r0,sp,#0x1
+0201c39a  4123  mov r1,#0x3
+0201c39c  bfea3efe  call 0x0201c01c
+0201c3a0  c4ff0037c301  mov r4,#0x1c33700
+0201c3a6  50ee4602  lb.z r0,[r4 + 0x206]
+0201c3aa  0047  jz r0,0x0201c3ba
+0201c3ac  8881  add r0,sp,#0x1
+0201c3ae  bfea60ff  call 0x0201c272
+0201c3b2  40e02c01  movz r0,#0x12c
+0201c3b6  50ed4b0a  sh r0,[r4 + 0xaa]
+0201c3ba  0281  add sp,#0x4
+0201c3bc  5404  pop {pc,r4}
+0201c3be  70e1  .raw
+0201c3c0  f000  .raw
+0201c3c2  c1ff  .raw
+0201c3c4  0037  .raw
+0201c3c6  c301  .raw
+0201c3c8  1018  .raw
+0201c3ca  41e0  .raw
+0201c3cc  3005  .raw
+0201c3ce  4221  .raw
+0201c3d0  d8ee  .raw
+0201c3d2  0121  .raw
+0201c3d4  8000  .raw
+0201c3d6  7f04  .raw
+0201c3d8  c4ff  .raw
+0201c3da  0037  .raw
+0201c3dc  c301  .raw
+0201c3de  0ee1  .raw

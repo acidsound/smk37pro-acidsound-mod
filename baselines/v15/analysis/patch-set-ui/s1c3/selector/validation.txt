@@ -1,0 +1,6 @@
+S1-C3 contiguous selector validation: PASS
+selector.bin bytes=96 sha256=ea2c76595a93cf2cf6a39236e09b749781e2721e3575d0c1b40194855cd4e915
+selector-live-code.bin bytes=72 sha256=894f61ee4eedb942b6653bd36dc72934d3719b54a9a413f6c94f29d0084f8ffc
+decode_instructions=24
+behavior_matrix_cases=2048
+firmware_candidate=BLOCK (raw selector blob only; no app/FWSC/device/flash/OTA/MIDI)

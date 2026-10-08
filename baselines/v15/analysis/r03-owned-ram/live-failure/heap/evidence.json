@@ -1,0 +1,699 @@
+{
+  "format": "smk37-v15-r03-live-failure-heap-evidence-v1",
+  "heap_and_bss": {
+    "official_bss": {
+      "end_exclusive": "0x01c4651c",
+      "size": "0x0003cb48",
+      "start": "0x01c099d4"
+    },
+    "official_heap": {
+      "HEAP_BEGIN": "0x01c46520",
+      "HEAP_END": "0x01c7fd30",
+      "sbrk.__init_addr": "0x01c32d94"
+    },
+    "prior_heap_prefix_option_b_was_not_exact_r03": {
+      "boot_zero_size_patch": "0x0003cb48 -> 0x0003cc0c",
+      "heap_begin_patch": "0x01c46520 -> 0x01c465e0",
+      "layout": {
+        "active_count": "0x01c465bd",
+        "generation": "0x01c465c0",
+        "guard_start": "0x01c465c4",
+        "valid": "0x01c465bc",
+        "voice": "0x01c46520..0x01c465bc"
+      },
+      "ownership": "PASS if both exact patches are applied; allocator cannot address below its patched HEAP_BEGIN",
+      "range": "0x01c46520..0x01c465e0",
+      "requirement_status": "EXCEPTION REQUIRED because heap capacity is reduced by 0xc0 despite unchanged allocator ABI",
+      "size": "0x000000c0"
+    },
+    "prior_reports": {
+      "heap_boundary_block": "baselines/v15/analysis/r03-owned-ram/heap-boundary/report.md",
+      "heap_prefix": "baselines/v15/analysis/r03-owned-ram/heap-prefix-reservation/report.md",
+      "ram_ownership_block": "baselines/v15/analysis/r03-owned-ram/ram-ownership/report.md"
+    },
+    "r03_patch": {
+      "heap_capacity_reduction": 160,
+      "initialization": "boot BSS zero extension, ending exactly at shifted HEAP_BEGIN",
+      "lock": "0x01c465bd",
+      "range": "0x01c46520..0x01c465c0",
+      "size": 160,
+      "valid": "0x01c465bc",
+      "voice": "0x01c46520..0x01c465bc"
+    }
+  },
+  "inputs": {
+    "official_app": "build/v15-official-app.bin",
+    "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "r02_app": "build/v15-R02-sysex-staging-app.bin",
+    "r02_app_sha256": "eebc5190b2e19dedbba68becb27851e9a26cf35f8356319f75bd9f6c20714948",
+    "r02_manifest": "baselines/v15/analysis/flash-candidates/R02/app-manifest.json",
+    "r03_app": "build/v15-R03-fixed-prefix-app.bin",
+    "r03_app_sha256": "3ff9c46b9686c0cea1348a11bed553ebd2d677e2d3452a0f436ce14f3ba5c788",
+    "r03_manifest": "baselines/v15/analysis/flash-candidates/R03/app-manifest.json",
+    "r03_trace": "baselines/v15/analysis/flash-candidates/R03/decoder-trace.tsv"
+  },
+  "literal_and_mov_scans": {
+    "official_control_literals_raw_4le": {
+      "BSS_SIZE_0x3cb48": [
+        "0x00000020"
+      ],
+      "HEAP_BEGIN_0x01c46520": [
+        "0x0005e9fa"
+      ],
+      "HEAP_END_0x01c7fd30": [
+        "0x0005ea02"
+      ]
+    },
+    "official_mov_payload_hits_owned_0x01c46520_0x01c465c0": [
+      {
+        "bytes": "c5ff2065c401",
+        "file_offset": "0x0005e9f8",
+        "va": "0x0205e9f8",
+        "value": "0x01c46520"
+      }
+    ],
+    "official_mov_payload_hits_owned_plus_prior_c0_0x01c46520_0x01c465e0": [
+      {
+        "bytes": "c5ff2065c401",
+        "file_offset": "0x0005e9f8",
+        "va": "0x0205e9f8",
+        "value": "0x01c46520"
+      }
+    ],
+    "r03_control_literals_raw_4le": {
+      "BSS_SIZE_0x3cbec": [
+        "0x00000020"
+      ],
+      "HEAP_BEGIN_NEW_0x01c465c0": [
+        "0x0005e9fa"
+      ],
+      "HEAP_BEGIN_OLD_0x01c46520": [
+        "0x0001e158",
+        "0x0001e188",
+        "0x0001e1c0"
+      ],
+      "HEAP_END_0x01c7fd30": [
+        "0x0005ea02"
+      ],
+      "LOCK_0x01c465bd": [
+        "0x0001e1a4",
+        "0x0001e1da"
+      ],
+      "VALID_0x01c465bc": [
+        "0x0001e14a",
+        "0x0001e17a",
+        "0x0001e1b4",
+        "0x0001e1d0"
+      ]
+    },
+    "r03_mov_payload_hits_owned_and_heap_0x01c46520_0x01c465e0": [
+      {
+        "bytes": "c4ffbc65c401",
+        "file_offset": "0x0001e148",
+        "va": "0x0201e148",
+        "value": "0x01c465bc"
+      },
+      {
+        "bytes": "c1ff2065c401",
+        "file_offset": "0x0001e156",
+        "va": "0x0201e156",
+        "value": "0x01c46520"
+      },
+      {
+        "bytes": "c4ffbc65c401",
+        "file_offset": "0x0001e178",
+        "va": "0x0201e178",
+        "value": "0x01c465bc"
+      },
+      {
+        "bytes": "c1ff2065c401",
+        "file_offset": "0x0001e186",
+        "va": "0x0201e186",
+        "value": "0x01c46520"
+      },
+      {
+        "bytes": "c0ffbd65c401",
+        "file_offset": "0x0001e1a2",
+        "va": "0x0201e1a2",
+        "value": "0x01c465bd"
+      },
+      {
+        "bytes": "c5ffbc65c401",
+        "file_offset": "0x0001e1b2",
+        "va": "0x0201e1b2",
+        "value": "0x01c465bc"
+      },
+      {
+        "bytes": "c0ff2065c401",
+        "file_offset": "0x0001e1be",
+        "va": "0x0201e1be",
+        "value": "0x01c46520"
+      },
+      {
+        "bytes": "c5ffbc65c401",
+        "file_offset": "0x0001e1ce",
+        "va": "0x0201e1ce",
+        "value": "0x01c465bc"
+      },
+      {
+        "bytes": "c0ffbd65c401",
+        "file_offset": "0x0001e1d8",
+        "va": "0x0201e1d8",
+        "value": "0x01c465bd"
+      },
+      {
+        "bytes": "c5ffc065c401",
+        "file_offset": "0x0005e9f8",
+        "va": "0x0205e9f8",
+        "value": "0x01c465c0"
+      }
+    ]
+  },
+  "live_failure": {
+    "mooger_packet_sha256": "6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27",
+    "observed": "first physical Pad Ch10 input after staging rebooted; official v15 restored",
+    "r03_app_sha256": "3ff9c46b9686c0cea1348a11bed553ebd2d677e2d3452a0f436ce14f3ba5c788"
+  },
+  "pinned_sdk_status": {
+    "desktop_symlink": "/Users/spectrum/Desktop/PatcherSDK",
+    "exists": false,
+    "heap_mem_heap_source_sha256_from_prior_evidence": "411cb79e74853a5b7ce9135514f59d8eafb5b098ced2f8acde08201fdfcf380c",
+    "is_symlink": true,
+    "repo_pinned_contract_sha256": "cc2d19dd8d71b015aae3ecaea222013927f269a98904165873b88e6e303a5245",
+    "repo_trylock_objdump_sha256": "faaf49e7fdd8a85c6cf79246a00c48678e3a96688d452a545fbc137200c6fb04",
+    "repo_trylock_source_sha256": "2e82edb679ceb2e2c4e66903ceb96310ad4eb3f18aa24dd0b802fddd1bd8b3be",
+    "sdk_commit_from_prior_evidence": "e30b1ee375d1f2993fc23bf92c8b99006a6e5f9d",
+    "target": "/Volumes/Res/NTE_Data/PatcherSDK"
+  },
+  "producer_uncertainties": {
+    "official_trylock_objdump": "baselines/v15/analysis/r03-owned-ram/atomic-publish/official-objdump.txt",
+    "official_trylock_source_lines": "baselines/v15/analysis/r03-owned-ram/atomic-publish/r03-trylock.c",
+    "try_fail_branch": {
+      "address": "0x0201e1ac",
+      "bytes": "40e81b00",
+      "target": "0x0201e1e6"
+    },
+    "uncertainty": "objdump proves syntax and bytes, but the live state of handler acceptance and testset condition flags was not observed offline."
+  },
+  "r02_vs_r03": {
+    "r02": {
+      "heap_patches": "none",
+      "live_result": "PASS as controlled checkpoint",
+      "runtime_source": "0x01c37fd0"
+    },
+    "r03": {
+      "live_result": "FAIL first Pad Ch10 reboot",
+      "owned_ram": {
+        "heap_capacity_reduction": 160,
+        "initialization": "boot BSS zero extension, ending exactly at shifted HEAP_BEGIN",
+        "lock": "0x01c465bd",
+        "range": "0x01c46520..0x01c465c0",
+        "size": 160,
+        "valid": "0x01c465bc",
+        "voice": "0x01c46520..0x01c465bc"
+      },
+      "runtime_source": "0x01c37fd0"
+    }
+  },
+  "r03_invalid_fallback_bug": {
+    "mechanism": "For Ch10 invalid fallback, r0 is overwritten by lb.z valid before the branch to stock memcpy. The only mov r0,r5 restore is after the jne, so branch-taken fallback does not restore destination.",
+    "off_path_rows": [
+      {
+        "address": "0x0201e146",
+        "bytes": "0516",
+        "display": "mov r5,r0",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "mov",
+        "size": "2"
+      },
+      {
+        "address": "0x0201e148",
+        "bytes": "c4ffbc65c401",
+        "display": "mov r4,#0x1c465bc",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "mov",
+        "size": "6"
+      },
+      {
+        "address": "0x0201e14e",
+        "bytes": "4840",
+        "display": "lb.z r0,[r4 + 0x0]",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "lb.z",
+        "size": "2"
+      },
+      {
+        "address": "0x0201e150",
+        "bytes": "80f80902",
+        "display": "jne r0,#0x1,0x0201e166",
+        "flow": "CONDITIONAL_JUMP",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "jne",
+        "size": "4"
+      },
+      {
+        "address": "0x0201e154",
+        "bytes": "5016",
+        "display": "mov r0,r5",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "mov",
+        "size": "2"
+      },
+      {
+        "address": "0x0201e166",
+        "bytes": "80ff62ab0200",
+        "display": "call 0x02048cce",
+        "flow": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "call",
+        "size": "6"
+      }
+    ],
+    "on_path_rows": [
+      {
+        "address": "0x0201e176",
+        "bytes": "0516",
+        "display": "mov r5,r0",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "mov",
+        "size": "2"
+      },
+      {
+        "address": "0x0201e178",
+        "bytes": "c4ffbc65c401",
+        "display": "mov r4,#0x1c465bc",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "mov",
+        "size": "6"
+      },
+      {
+        "address": "0x0201e17e",
+        "bytes": "4840",
+        "display": "lb.z r0,[r4 + 0x0]",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "lb.z",
+        "size": "2"
+      },
+      {
+        "address": "0x0201e180",
+        "bytes": "80f80902",
+        "display": "jne r0,#0x1,0x0201e196",
+        "flow": "CONDITIONAL_JUMP",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "jne",
+        "size": "4"
+      },
+      {
+        "address": "0x0201e184",
+        "bytes": "5016",
+        "display": "mov r0,r5",
+        "flow": "FALL_THROUGH",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "mov",
+        "size": "2"
+      },
+      {
+        "address": "0x0201e196",
+        "bytes": "80ff32ab0200",
+        "display": "call 0x02048cce",
+        "flow": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "call",
+        "size": "6"
+      }
+    ]
+  },
+  "root_cause_ranking": [
+    {
+      "cause": "R03 invalid Ch10 fallback calls stock memcpy with r0 clobbered by the valid-byte load if valid != 1",
+      "falsifier": "Prove valid byte was 1 immediately before first Pad Ch10, or prove this branch could not be reached in the live sequence.",
+      "rank": 1,
+      "status": "strongly supported exact-code bug; requires producer-not-published precondition"
+    },
+    {
+      "cause": "Producer did not publish valid before first pad, due to handler gate rejection or testset/ifeq polarity misunderstanding",
+      "falsifier": "Independent PI32 ISA/testset flag proof and a non-live trace showing R03 producer sets 0x01c465bc=1 for the exact packet.",
+      "rank": 2,
+      "status": "plausible trigger for rank-1 bug; static artifacts prove branch bytes but not live acceptance or testset condition flags"
+    },
+    {
+      "cause": "Exact R03 heap-prefix ownership is not fully proven by prior 0xc0 audit because live R03 reserves 0xa0 and changes allocator capacity",
+      "falsifier": "Complete allocator/sbrk caller proof plus heap high-water margin showing 0xa0 shrink is harmless under boot, SysEx, and first pad.",
+      "rank": 3,
+      "status": "possible safety gap, but less consistent with first-pad-only failure than ranks 1-2"
+    },
+    {
+      "cause": "Patching only sbrk HEAP_BEGIN is insufficient because another allocator bound/cache exists elsewhere",
+      "falsifier": "Full allocator initialization graph proving all allocation paths derive lower bound solely from the matched sbrk relocation.",
+      "rank": 4,
+      "status": "weighed down by official-v15 literal scan and exact SDK sbrk match, not fully impossible for computed/indirect state"
+    },
+    {
+      "cause": "Cache/MMU/MPU/DMA incoherence on the owned-RAM buffer",
+      "falsifier": "Pinned SDK/manual evidence requiring cache maintenance or MPU mapping changes for normal RAM writes consumed by the synth path.",
+      "rank": 5,
+      "status": "not supported by current local evidence for this CPU-to-CPU memcpy path; no checked pinned SDK constraint found in repo evidence"
+    }
+  ],
+  "scope": "offline only; exact official v15, exact R02, exact R03 3ff9c4; no device access, patch, flash, or v12 assumptions",
+  "validation": [
+    {
+      "check": "official-app-sha256",
+      "detail": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "status": "PASS"
+    },
+    {
+      "check": "r02-app-sha256",
+      "detail": "eebc5190b2e19dedbba68becb27851e9a26cf35f8356319f75bd9f6c20714948",
+      "status": "PASS"
+    },
+    {
+      "check": "r03-app-sha256",
+      "detail": "3ff9c46b9686c0cea1348a11bed553ebd2d677e2d3452a0f436ce14f3ba5c788",
+      "status": "PASS"
+    },
+    {
+      "check": "r03-owned-range-manifest",
+      "detail": {
+        "heap_capacity_reduction": 160,
+        "initialization": "boot BSS zero extension, ending exactly at shifted HEAP_BEGIN",
+        "lock": "0x01c465bd",
+        "range": "0x01c46520..0x01c465c0",
+        "size": 160,
+        "valid": "0x01c465bc",
+        "voice": "0x01c46520..0x01c465bc"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "heap-sbrk-match",
+      "detail": {
+        "differing_offsets": [
+          16,
+          17,
+          18,
+          19,
+          32,
+          33,
+          34,
+          35,
+          40,
+          41,
+          42,
+          43
+        ],
+        "fixed_bytes_exact": 80,
+        "fixed_bytes_total": 80,
+        "recovered_symbols": {
+          "HEAP_BEGIN": "0x01c46520",
+          "HEAP_END": "0x01c7fd30",
+          "sbrk.__init_addr": "0x01c32d94"
+        },
+        "relocations": [
+          {
+            "relative_offset": "0x0000000e",
+            "symbol": "sbrk.__init_addr",
+            "v15_value": "0x01c32d94"
+          },
+          {
+            "relative_offset": "0x0000001e",
+            "symbol": "HEAP_BEGIN",
+            "v15_value": "0x01c46520"
+          },
+          {
+            "relative_offset": "0x00000026",
+            "symbol": "HEAP_END",
+            "v15_value": "0x01c7fd30"
+          }
+        ],
+        "size": "0x00000062",
+        "v15_address": "0x0205e9da"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "heap-symbols",
+      "detail": {
+        "HEAP_BEGIN": "0x01c46520",
+        "HEAP_END": "0x01c7fd30",
+        "sbrk.__init_addr": "0x01c32d94"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "r03-bss-size-patch-bytes",
+      "detail": "c2ffeccb0300",
+      "status": "PASS"
+    },
+    {
+      "check": "r03-heap-begin-patch-bytes",
+      "detail": "c5ffc065c401",
+      "status": "PASS"
+    },
+    {
+      "check": "r03-valid-branch-0x0201e150",
+      "detail": {
+        "address": "0x0201e150",
+        "bytes": "80f80902",
+        "display": "jne r0,#0x1,0x0201e166",
+        "flow": "CONDITIONAL_JUMP",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "jne",
+        "size": "4"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "r03-valid-branch-0x0201e180",
+      "detail": {
+        "address": "0x0201e180",
+        "bytes": "80f80902",
+        "display": "jne r0,#0x1,0x0201e196",
+        "flow": "CONDITIONAL_JUMP",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "jne",
+        "size": "4"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "r03-invalid-fallback-calls-memcpy-0x0201e166",
+      "detail": {
+        "address": "0x0201e166",
+        "bytes": "80ff62ab0200",
+        "display": "call 0x02048cce",
+        "flow": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201e13e@0201e13e",
+        "mnemonic": "call",
+        "size": "6"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "r03-invalid-fallback-calls-memcpy-0x0201e196",
+      "detail": {
+        "address": "0x0201e196",
+        "bytes": "80ff32ab0200",
+        "display": "call 0x02048cce",
+        "flow": "UNCONDITIONAL_CALL",
+        "function": "FUN_0201e16e@0201e16e",
+        "mnemonic": "call",
+        "size": "6"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "r03-invalid-fallback-destination-not-restored-off",
+      "detail": [
+        {
+          "address": "0x0201e146",
+          "bytes": "0516",
+          "display": "mov r5,r0",
+          "flow": "FALL_THROUGH",
+          "function": "FUN_0201e13e@0201e13e",
+          "mnemonic": "mov",
+          "size": "2"
+        },
+        {
+          "address": "0x0201e14e",
+          "bytes": "4840",
+          "display": "lb.z r0,[r4 + 0x0]",
+          "flow": "FALL_THROUGH",
+          "function": "FUN_0201e13e@0201e13e",
+          "mnemonic": "lb.z",
+          "size": "2"
+        },
+        {
+          "address": "0x0201e150",
+          "bytes": "80f80902",
+          "display": "jne r0,#0x1,0x0201e166",
+          "flow": "CONDITIONAL_JUMP",
+          "function": "FUN_0201e13e@0201e13e",
+          "mnemonic": "jne",
+          "size": "4"
+        },
+        {
+          "address": "0x0201e154",
+          "bytes": "5016",
+          "display": "mov r0,r5",
+          "flow": "FALL_THROUGH",
+          "function": "FUN_0201e13e@0201e13e",
+          "mnemonic": "mov",
+          "size": "2"
+        },
+        {
+          "address": "0x0201e166",
+          "bytes": "80ff62ab0200",
+          "display": "call 0x02048cce",
+          "flow": "UNCONDITIONAL_CALL",
+          "function": "FUN_0201e13e@0201e13e",
+          "mnemonic": "call",
+          "size": "6"
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "r03-invalid-fallback-destination-not-restored-on",
+      "detail": [
+        {
+          "address": "0x0201e176",
+          "bytes": "0516",
+          "display": "mov r5,r0",
+          "flow": "FALL_THROUGH",
+          "function": "FUN_0201e16e@0201e16e",
+          "mnemonic": "mov",
+          "size": "2"
+        },
+        {
+          "address": "0x0201e17e",
+          "bytes": "4840",
+          "display": "lb.z r0,[r4 + 0x0]",
+          "flow": "FALL_THROUGH",
+          "function": "FUN_0201e16e@0201e16e",
+          "mnemonic": "lb.z",
+          "size": "2"
+        },
+        {
+          "address": "0x0201e180",
+          "bytes": "80f80902",
+          "display": "jne r0,#0x1,0x0201e196",
+          "flow": "CONDITIONAL_JUMP",
+          "function": "FUN_0201e16e@0201e16e",
+          "mnemonic": "jne",
+          "size": "4"
+        },
+        {
+          "address": "0x0201e184",
+          "bytes": "5016",
+          "display": "mov r0,r5",
+          "flow": "FALL_THROUGH",
+          "function": "FUN_0201e16e@0201e16e",
+          "mnemonic": "mov",
+          "size": "2"
+        },
+        {
+          "address": "0x0201e196",
+          "bytes": "80ff32ab0200",
+          "display": "call 0x02048cce",
+          "flow": "UNCONDITIONAL_CALL",
+          "function": "FUN_0201e16e@0201e16e",
+          "mnemonic": "call",
+          "size": "6"
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "r03-try-fail-gap-bytes",
+      "detail": {
+        "bytes": "40e81b00",
+        "target": "0x0201e1e6"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "r02-no-bss-patch",
+      "detail": "c2ff48cb0300",
+      "status": "PASS"
+    },
+    {
+      "check": "r02-no-heap-begin-patch",
+      "detail": "c5ff2065c401",
+      "status": "PASS"
+    },
+    {
+      "check": "r02-staging-source",
+      "detail": {
+        "boot_time_hook": null,
+        "channel_10_nibble": 9,
+        "channel_register": "r9",
+        "disabled_packer_callers": [
+          "0x0201e468",
+          "0x0201e49c",
+          "0x02026dac"
+        ],
+        "embedded_voice": false,
+        "note_off_memcpy": "0x0201c63e",
+        "note_on_memcpy": "0x0201c67c",
+        "one_shot_handler_copy": "message+6 to 0x01c37030+0xfa0",
+        "runtime_source": "0x01c37fd0",
+        "save_behavior": "disabled while R02 is installed",
+        "source_length": 156
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "official-single-heap-begin-literal",
+      "detail": {
+        "BSS_SIZE_0x3cb48": [
+          "0x00000020"
+        ],
+        "HEAP_BEGIN_0x01c46520": [
+          "0x0005e9fa"
+        ],
+        "HEAP_END_0x01c7fd30": [
+          "0x0005ea02"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "official-single-heap-end-literal",
+      "detail": {
+        "BSS_SIZE_0x3cb48": [
+          "0x00000020"
+        ],
+        "HEAP_BEGIN_0x01c46520": [
+          "0x0005e9fa"
+        ],
+        "HEAP_END_0x01c7fd30": [
+          "0x0005ea02"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "official-single-bss-size-literal",
+      "detail": {
+        "BSS_SIZE_0x3cb48": [
+          "0x00000020"
+        ],
+        "HEAP_BEGIN_0x01c46520": [
+          "0x0005e9fa"
+        ],
+        "HEAP_END_0x01c7fd30": [
+          "0x0005ea02"
+        ]
+      },
+      "status": "PASS"
+    }
+  ]
+}

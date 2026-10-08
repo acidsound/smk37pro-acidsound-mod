@@ -1,0 +1,19 @@
+target=0201c272
+  from=0201c2ba type=UNCONDITIONAL_CALL instruction=call 0x0201c272 function=FUN_0201c28c@0201c28c
+  from=02023714 type=UNCONDITIONAL_CALL instruction=call 0x0201c272 function=FUN_020236e4@020236e4
+  from=0201c3ae type=UNCONDITIONAL_CALL instruction=call 0x0201c272 function=FUN_0201c37e@0201c37e
+count=3
+
+target=0202ba6c
+  from=0202c8f8 type=UNCONDITIONAL_CALL instruction=call 0x0202ba6c function=midi_route_receive_loop@0202c876
+  from=0202ca94 type=UNCONDITIONAL_CALL instruction=call 0x0202ba6c function=midi_route_receive_loop@0202c876
+count=2
+
+target=02022f46
+  from=0202307e type=UNCONDITIONAL_CALL instruction=call 0x02022f46 function=FUN_0202305e@0202305e
+  from=0202389a type=UNCONDITIONAL_CALL instruction=call 0x02022f46 function=FUN_02023894@02023894
+count=2
+
+target=02007fb2
+  from=02008224 type=UNCONDITIONAL_CALL instruction=call 0x02007fb2
+count=1

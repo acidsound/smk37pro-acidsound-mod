@@ -1,0 +1,96 @@
+PASS	sha256-app	36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS	sha256-fwsc	f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff
+PASS	sha256-quark	f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347
+PASS	sha256-kaga	814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013
+PASS	manifest-app	36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055
+PASS	manifest-package	f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff
+PASS	official-v15-only	["build/v15-official-app.bin", "build/SMK-37_Pro_015.fwsc", "baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz", "baselines/v15/analysis/quarkslab/results/kagaimiq-patched-exhaustive-listing.tsv.gz"]
+PASS	stage-arithmetic	0x01c37030+0xfa0=0x01c37fd0
+PASS	current-arithmetic	0x01c33260+0x1a14=0x01c34c74
+PASS	row-0x0201e3ee	lb.z r0,[r7 + 0x206]
+PASS	row-0x0201e3f2	je r0,#0x0,0x0201e648
+PASS	row-0x0201e3f8	lb.z r0,[r7 + 0x104]
+PASS	row-0x0201e3fc	mov r6,#0x1c37030
+PASS	row-0x0201e402	je r0,0x2,0x0201e472
+PASS	row-0x0201e406	je r0,0x1,0x0201e4a6
+PASS	row-0x0201e40a	jne r0,#0x0,0x0201e606
+PASS	row-0x0201e410	jne r0,#0xf0
+PASS	row-0x0201e416	jne r0,#0x43,0x0201e606
+PASS	row-0x0201e432	jne r0,#0x0,0x0201e606
+PASS	row-0x0201e438	jne r0,#0x0,0x0201e606
+PASS	row-0x0201e43e	jne r0,#0x1,0x0201e606
+PASS	row-0x0201e444	jne r0,#0x1b,0x0201e606
+PASS	row-0x0201e448	add r8,r6,#0xfa0
+PASS	row-0x0201e44c	add r1,r4,#0x6
+PASS	row-0x0201e44e	add r6,r9,#-0x6
+PASS	row-0x0201e452	mov r0,r8
+PASS	row-0x0201e454	mov r2,r6
+PASS	row-0x0201e456	call 0x02048cce
+PASS	row-0x0201e45c	add r0,r4,r9
+PASS	row-0x0201e462	jne r0,#0xf7
+PASS	row-0x0201e466	mov r0,r8
+PASS	row-0x0201e468	call 0x0201e13e
+PASS	row-0x0201e46c	call 0x02005660
+PASS	row-0x0201e470	pop {pc,r9,r8,r7,r6,r5,r4}
+PASS	row-0x0201e472	lh.z r0,[r7 + 0x9c]
+PASS	row-0x0201e480	jne r1,#0xf7
+PASS	row-0x0201e484	jne r5,#0x9e
+PASS	row-0x0201e488	add r6,r6,#0xfa0
+PASS	row-0x0201e48c	add r0,r6
+PASS	row-0x0201e48e	add r2,r9,#-0x2
+PASS	row-0x0201e492	mov r1,r4
+PASS	row-0x0201e494	call 0x02048cce
+PASS	row-0x0201e49a	mov r0,r6
+PASS	row-0x0201e49c	call 0x0201e13e
+PASS	row-0x0201e4a0	call 0x02005660
+PASS	row-0x0201e4a4	goto 0x0201e538
+PASS	row-0x0201e4ce	call 0x02048cce
+PASS	row-0x0201e52c	call 0x02048cce
+PASS	row-0x0201e580	add r0,r6,#0xfa0
+PASS	row-0x0201e58c	call 0x02048cce
+PASS	row-0x0201e592	sh r4,[r7 + 0x9c]
+PASS	row-0x0201e13e	push {rets,r6,r5,r4}
+PASS	row-0x0201e140	add sp,#-0x80
+PASS	row-0x0201e216	mov r4,#0x1c33260
+PASS	row-0x0201e232	mov r2,#0x80
+PASS	row-0x0201e234	mov r0,r3
+PASS	row-0x0201e236	call 0x02004b02
+PASS	row-0x0201e250	add sp,#0x80
+PASS	row-0x0201e252	pop {pc,r6,r5,r4}
+PASS	row-0x02026d9e	add r4,r8,0x1a14
+PASS	row-0x02026da2	mov r2,#0xa3
+PASS	row-0x02026da4	mov r0,r4
+PASS	row-0x02026da6	call 0x02004b02
+PASS	row-0x02026daa	mov r0,r4
+PASS	row-0x02026dac	call 0x0201e13e
+PASS	row-0x0201c5ec	push {rets,r10,r9,r8,r7,r6,r5,r4}
+PASS	row-0x0201c5ee	lb.z r3,[r1 + 0x0]
+PASS	row-0x0201c5f0	lsr r4,r3,0x4
+PASS	row-0x0201c5fe	and r9,r3,#0xffffff0f
+PASS	row-0x0201c602	mov r8,#0x1c34c74
+PASS	row-0x0201c616	jl r2,#0x3,0x0201c710
+PASS	row-0x0201c62a	and r2,r4,#0xffffff0f
+PASS	row-0x0201c630	mul r1,r2,#0xa0
+PASS	row-0x0201c636	add r0,r6,#0xa2
+PASS	row-0x0201c63a	mov r2,#0x9c
+PASS	row-0x0201c63c	mov r1,r8
+PASS	row-0x0201c63e	call 0x02048cce
+PASS	row-0x0201c644	add r0,r6,#0x13e
+PASS	row-0x0201c652	jl r2,#0x3,0x0201c710
+PASS	row-0x0201c666	and r2,r4,#0xffffff0f
+PASS	row-0x0201c66c	mul r1,r2,#0xa0
+PASS	row-0x0201c674	add r0,r7,#0xa2
+PASS	row-0x0201c678	mov r2,#0x9c
+PASS	row-0x0201c67a	mov r1,r8
+PASS	row-0x0201c67c	call 0x02048cce
+PASS	row-0x0201c682	add r0,r7,#0x13e
+PASS	row-0x0201c698	pop {pc,r10,r9,r8,r7,r6,r5,r4}
+PASS	packer-callers-exact	0x0201e468,0x0201e49c,0x02026dac
+PASS	loader-post-packer-calls	0x02005f9c,0x0201e46c,0x0201e4a0,0x0202422e,0x020255a6
+PASS	dispatcher-callers-exact	0x0201c736,0x0201e644
+PASS	note-copy-memcpy-sites	0x0201c63e,0x0201c67c
+PASS	sysex-callsite-budgets	{"0x0201c63e": {"bytes": "80ff8ac60200", "size": 6, "text": "call 0x02048cce"}, "0x0201c67c": {"bytes": "80ff4cc60200", "size": 6, "text": "call 0x02048cce"}, "0x0201e468": {"bytes": "bfea69fe", "size": 4, "text": "call 0x0201e13e"}, "0x0201e49c": {"bytes": "bfea4ffe", "size": 4, "text": "call 0x0201e13e"}}
+PASS	note-callsite-budgets	{"0x0201c63e": {"bytes": "80ff8ac60200", "size": 6, "text": "call 0x02048cce"}, "0x0201c67c": {"bytes": "80ff4cc60200", "size": 6, "text": "call 0x02048cce"}, "0x0201e468": {"bytes": "bfea69fe", "size": 4, "text": "call 0x0201e13e"}, "0x0201e49c": {"bytes": "bfea4ffe", "size": 4, "text": "call 0x0201e13e"}}
+PASS	stock-packer-not-cave	SAVE path calls stock packer
+PASS	block-owned-ram-recorded	No owned RAM destination proven
+PASS	check-count	95

@@ -1,0 +1,38 @@
+{
+  "binary_decodes": {
+    "helper_memcpy_call": "0x02026db4 -> 0x02048cce",
+    "helper_read_call": "0x02026d92 -> 0x02004870",
+    "read_failure_fallback": "restore r1 from r7 then goto stock-copy helper at 0x02026db2",
+    "save_skip": "0x02026d7a bytes 04ac00160016 -> goto 0x02026dd4",
+    "selector_persistent_call": "0x0201e18c -> 0x02026d80",
+    "selector_stock_call": "0x0201e186 -> 0x02026db2"
+  },
+  "blocked_scope": "full normal-firmware persistence writer remains BLOCKED",
+  "decision": "PASS_GATED_CURRENT_SET_CHECKPOINT",
+  "format": "smk37-v15-s1c7-jcode-independent-review-v1",
+  "hashes": {
+    "app_bin": "71cfc1fcbeecd1a9277f88272be6b122a96f33fbd741d7486c670ffab6e58646",
+    "exact_ota_c": "2c986e11ddfa8ed7e1e49e5faf8e1ef2014083c5416be24372aea1103e39ed31",
+    "fwsc": "3dfb7e23debbd3a3055945b121991cf7a58b5f1cb59ff98f6dfba7dd084f2593",
+    "helper": "e9ea13c277736c000e5b7f275f97d319b725b2376e9ac15aac97209a8b0f4396",
+    "producer": "53bc57acd7e787320400d0d945ec6b3f2e59f2074ae81c9053eb2c11f72560d4",
+    "selector": "b77f2787874ad37d724e1c6305e74f97c8a6eb9fe6b51627c8fce35dd257daeb"
+  },
+  "host_seed_requirements": "No committed S1C7 host writer. Separate RMW artifact builder is regular-file-only and requires dual identical pre-dumps, dual identical post/readback dumps, and exact rollback readback equality.",
+  "offline_checks": [
+    "make clean && make all && build/smk37-fw self-test",
+    "python3 validate.py",
+    "python3 build_s1c7_current_set_helper_checkpoint.py with byte-identical app/FWSC/exact_ota/manifests",
+    "cc exact_ota.c plus support sources, then exact_ota check accepts candidate and rejects S1C5/official controls",
+    "python3 validate_rollback.py",
+    "python3 baselines/v15/analysis/persistence-s2/host-prefix-seed/prepare_s1c5_raw_prefix_seed.py self-test"
+  ],
+  "scope": {
+    "device_accessed": false,
+    "flash_performed": false,
+    "midi_transport_opened": false,
+    "ota_upload_performed": false,
+    "reset_performed": false
+  },
+  "target_commit": "d83b0b1fb2ad6636bc90b9d5d03afb15d7682e5d"
+}

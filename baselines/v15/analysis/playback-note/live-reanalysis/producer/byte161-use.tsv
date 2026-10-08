@@ -1,0 +1,6 @@
+area	address	instructions	conclusion
+slot/order	0x0201e1c4/0x0201e1c6/0x0201e1ca	lb.z r3,[r5+1]; jge r3,#16; mov r6,r3	slot is the accepted packet count, not byte161
+slot/order	0x0201e1e0/0x0201e1e6/0x0201e1ee	mov r0,#0x1c46f20; add r0,r3; sb [r0],r2	byte161 is written to playback_note[count]
+uniqueness	0x0201e1ec..0x0201e1ee	lb.z r2,[r1]; sb [r0],r2	no compare, scan, or duplicate reject exists
+publication	0x0201e204..0x0201e218	csync; valid=1; count++; if count==16 csync; state=2	map is published only by ARMED last after the 16th valid slot
+selector consumption	0x0201e164..0x0201e182/0x0201e192	state==2; selected valid==1; lb.z r5,[map+trigger_slot]; sb [dest+0x9c],r5	playback note becomes the local synth metadata note

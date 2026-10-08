@@ -1,0 +1,6 @@
+S1C5 SAVE cave helper feasibility: BLOCK full helper
+PASS input hashes
+PASS exact S1C5 SAVE bytes
+PASS UI branch patch and call reach math
+PASS wrapper ABI and fit lower-bound accounting
+BLOCK segmented/reset plus manifest/readback fit

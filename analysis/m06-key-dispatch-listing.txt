@@ -1,0 +1,118 @@
+range=0201cbcc..0201cd1b
+0201cbcc  7e04  push {rets,r14,r13,r12,r11,r10,r9,r8,r7,r6,r5,r4}
+0201cbce  c5ff0037c301  mov r5,#0x1c33700
+0201cbd4  50ee5262  lb.z r6,[r5 + 0x202]
+0201cbd8  50ee5142  lb.z r4,[r5 + 0x201]
+0201cbdc  2815  mov r8_r9,r2_r3
+0201cbde  1716  mov r7,r1
+0201cbe0  0b16  mov r11,r0
+0201cbe2  2645  jz r6,0x0201cc6e
+0201cbe4  ccff70690502  mov r12,#0x2056970
+0201cbea  2456  jz r4,0x0201cc98
+0201cbec  4ae00c00  movz r10,#0xc
+0201cbf0  f4e1700a  div r0,r7,r10
+0201cbf4  e0e10c00  mul r0,r0,#0xc
+0201cbf8  711e  sub r1,r7,r0
+0201cbfa  7016  mov r0,r7
+0201cbfc  bfea0dfd  call 0x0201c61a
+0201cc00  0716  mov r7,r0
+0201cc02  07fc7bf0  ja r7,0x78,0x0201ccfc
+0201cc06  40e02716  movz r0,#0x1627
+0201cc0a  d8ee5000  lb.z r0,[r5 + r0]
+0201cc0e  c018  add r0,r12
+0201cc10  41e05f01  movz r1,#0x15f
+0201cc14  d8ee0061  lb.z r6,[r0 + r1]
+0201cc18  4420  mov r4,#0x0
+0201cc1a  4de02616  movz r13,#0x1626
+0201cc1e  4ee0100d  movz r14,#0xd10
+0201cc22  1482  goto 0x0201cc68
+0201cc24  94e16204  bit.and r0,r6,r4
+0201cc28  005e  jz r0,0x0201cc66
+0201cc2a  d8ee500d  lb.z r0,[r5 + r13]
+0201cc2e  e0e10700  mul r0,r0,#0x7
+0201cc32  4018  add r0,r4
+0201cc34  c018  add r0,r12
+0201cc36  d8ee000e  lb.z r0,[r0 + r14]
+0201cc3a  7018  add r0,r7
+0201cc3c  0017  uxtb r0,r0
+0201cc3e  f4e1001a  div r1,r0,r10
+0201cc42  e1e10c10  mul r1,r1,#0xc
+0201cc46  091e  sub r1,r0,r1
+0201cc48  bfeae7fc  call 0x0201c61a
+0201cc4c  00fc0bf0  ja r0,0x78,0x0201cc66
+0201cc50  0bf80500  je r11,0x0,0x0201cc5e
+0201cc54  8116  mov r1,r8
+0201cc56  9216  mov r2,r9
+0201cc58  bfea91fb  call 0x0201c37e
+0201cc5c  0484  goto 0x0201cc66
+0201cc5e  5120  mov r1,#0x40
+0201cc60  9216  mov r2,r9
+0201cc62  bfea13fb  call 0x0201c28c
+0201cc66  c421  add r4,#0x1
+0201cc68  84f8dc0f  jne r4,#0x7,0x0201cc24
+0201cc6c  5e04  pop {pc,r14,r13,r12,r11,r10,r9,r8,r7,r6,r5,r4}
+0201cc6e  044c  jz r4,0x0201cc88
+0201cc70  402c  mov r0,#0xc
+0201cc72  f4e17000  div r0,r7,r0
+0201cc76  e0e10c00  mul r0,r0,#0xc
+0201cc7a  711e  sub r1,r7,r0
+0201cc7c  7016  mov r0,r7
+0201cc7e  bfeaccfc  call 0x0201c61a
+0201cc82  0716  mov r7,r0
+0201cc84  07fc3af0  ja r7,0x78,0x0201ccfc
+0201cc88  0bf83300  je r11,0x0,0x0201ccf2
+0201cc8c  7016  mov r0,r7
+0201cc8e  8116  mov r1,r8
+0201cc90  9216  mov r2,r9
+0201cc92  bfea74fb  call 0x0201c37e
+0201cc96  5e04  pop {pc,r14,r13,r12,r11,r10,r9,r8,r7,r6,r5,r4}
+0201cc98  40e02716  movz r0,#0x1627
+0201cc9c  d8ee5000  lb.z r0,[r5 + r0]
+0201cca0  c018  add r0,r12
+0201cca2  41e05f01  movz r1,#0x15f
+0201cca6  d8ee0041  lb.z r4,[r0 + r1]
+0201ccaa  4620  mov r6,#0x0
+0201ccac  4ae02616  movz r10,#0x1626
+0201ccb0  4de0100d  movz r13,#0xd10
+0201ccb4  049b  goto 0x0201ccec
+0201ccb6  94e14206  bit.and r0,r4,r6
+0201ccba  0057  jz r0,0x0201ccea
+0201ccbc  d8ee500a  lb.z r0,[r5 + r10]
+0201ccc0  e0e10700  mul r0,r0,#0x7
+0201ccc4  6018  add r0,r6
+0201ccc6  c018  add r0,r12
+0201ccc8  d8ee000d  lb.z r0,[r0 + r13]
+0201cccc  7018  add r0,r7
+0201ccce  0017  uxtb r0,r0
+0201ccd0  00fc0bf0  ja r0,0x78,0x0201ccea
+0201ccd4  0bf80500  je r11,0x0,0x0201cce2
+0201ccd8  8116  mov r1,r8
+0201ccda  9216  mov r2,r9
+0201ccdc  bfea4ffb  call 0x0201c37e
+0201cce0  0484  goto 0x0201ccea
+0201cce2  5120  mov r1,#0x40
+0201cce4  9216  mov r2,r9
+0201cce6  bfead1fa  call 0x0201c28c
+0201ccea  c621  add r6,#0x1
+0201ccec  86f8e30f  jne r6,#0x7,0x0201ccb6
+0201ccf0  5e04  pop {pc,r14,r13,r12,r11,r10,r9,r8,r7,r6,r5,r4}
+0201ccf2  5120  mov r1,#0x40
+0201ccf4  7016  mov r0,r7
+0201ccf6  9216  mov r2,r9
+0201ccf8  bfeac8fa  call 0x0201c28c
+0201ccfc  5e04  pop {pc,r14,r13,r12,r11,r10,r9,r8,r7,r6,r5,r4}
+0201ccfe  7f04  .raw
+0201cd00  cfff  .raw
+0201cd02  0037  .raw
+0201cd04  c301  .raw
+0201cd06  f016  .raw
+0201cd08  d1ec  .raw
+0201cd0a  0e19  .raw
+0201cd0c  0267  .raw
+0201cd0e  3fe5  .raw
+0201cd10  2011  .raw
+0201cd12  60f0  .raw
+0201cd14  7e25  .raw
+0201cd16  8160  .raw
+0201cd18  4dff  .raw
+0201cd1a  8012  .raw

@@ -1,0 +1,6 @@
+S1-C5 Playback Register Return build validation: PASS
+PASS	note_off	0x0201c644	001600160016->0d4000160016	lb.z r5,[r0]; mov r0,r0; mov r0,r0
+PASS	note_on	0x0201c682	001600160016->0e4000160016	lb.z r6,[r0]; mov r0,r0; mov r0,r0
+PASS	preserved	producer/selector combined bytes unchanged
+PASS	preserved	Note On velocity store 0x0201c68c remains stock
+PASS	duplicates	Playback Note values 0..127 accepted by metadata byte policy, including all sixteen slots mapped to C4 (60)

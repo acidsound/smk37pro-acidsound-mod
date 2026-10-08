@@ -1,0 +1,450 @@
+{
+  "format": "smk37-v15-h2-per-note-patch-set-data-model-v1",
+  "date_utc": "2026-08-02",
+  "repository_commit_at_analysis_start": "6d9430e7b91feed2bebb5140fbb056865e3bf347",
+  "scope": {
+    "firmware": "exact official v15 static evidence plus recorded live-proven H2",
+    "v12_assumptions": false,
+    "firmware_candidate_created": false,
+    "flash_performed": false,
+    "device_accessed": false
+  },
+  "decision": {
+    "data_model": "PASS",
+    "firmware_candidate": "BLOCK",
+    "reason": "The RAM model, lookup, immutable publication protocol, packet contract, and bounds are internally closed, but Pad enumeration, note-register release proof, heap headroom, executable/parser placement, and live stress remain open."
+  },
+  "inputs": [
+    {
+      "id": "official_app",
+      "path": "build/v15-official-app.bin",
+      "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "role": "exact official-v15 app bytes"
+    },
+    {
+      "id": "official_package",
+      "path": "build/SMK-37_Pro_015.fwsc",
+      "sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+      "role": "exact official-v15 package"
+    },
+    {
+      "id": "quarkslab_listing",
+      "path": "baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz",
+      "sha256": "f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347",
+      "role": "primary official-v15 dispatcher and loader listing"
+    },
+    {
+      "id": "kagaimiq_listing",
+      "path": "baselines/v15/analysis/quarkslab/results/kagaimiq-patched-exhaustive-listing.tsv.gz",
+      "sha256": "814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013",
+      "role": "independent decoder comparison for note-byte rows"
+    },
+    {
+      "id": "h2_app",
+      "path": "build/SMK37Pro-v15-H2-owned-source-corrected-fallback/app.bin",
+      "sha256": "d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59",
+      "role": "existing H2 artifact, read only"
+    },
+    {
+      "id": "h2_manifest",
+      "path": "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/app-manifest.json",
+      "sha256": "dc6fba4ddb887424d6bd76b6d1477f66f97096e2d6656f203eec423680572cf3",
+      "role": "H2 producer/consumer addresses and policy"
+    },
+    {
+      "id": "h2_live",
+      "path": "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/live-validation-20260802.md",
+      "sha256": "b2aca5903390cffe573f42c89aa6407a52c28f967124a07b407887959d1c8fd7",
+      "role": "recorded live H2 success"
+    },
+    {
+      "id": "h2_report",
+      "path": "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/report.md",
+      "sha256": "0f3bcde9c1fe64065213a62bd9eef49eda9dd57f8c487789631c9c90c2bb0ac0",
+      "role": "H2 discriminator contract"
+    },
+    {
+      "id": "h1_producer_source",
+      "path": "tools/build_v15_h1_producer_unconsumed.py",
+      "sha256": "a4327e46d9267e2a05b683ca2b9d8f6b201aa1d137a4d13431cc8c03292c2011",
+      "role": "exact nonblocking producer and valid-last source"
+    },
+    {
+      "id": "h2_builder_source",
+      "path": "tools/build_v15_h2_owned_source_corrected_fallback.py",
+      "sha256": "e993baeb9d32e38dfc602b8b13e1832ea15290a223b1db4da7caa3900a18b3a6",
+      "role": "exact corrected consumer wrapper source"
+    },
+    {
+      "id": "runtime_source_report",
+      "path": "baselines/v15/analysis/channel-separation-reanalysis/runtime-source/report.md",
+      "sha256": "cafbbf22c4f9751a0134ecb0ab9734d6c62be4e5f06cbcb34448e70d8c308932",
+      "role": "official-v15 runtime producer/consumer trace"
+    },
+    {
+      "id": "factory_loader_report",
+      "path": "baselines/v15/analysis/channel-separation-reanalysis/factory-loader/report.md",
+      "sha256": "1cd72971bf4db3bdf1dcdf113d5c795e0bb54f27af735b4ecda1319ef6b90d0d",
+      "role": "official-v15 0x02005660 lifecycle"
+    },
+    {
+      "id": "sysex_staging_report",
+      "path": "baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md",
+      "sha256": "cfabba55680bbee2f699316547ef28ec496434d886a3b2edf4d7e3a421c8d6f8",
+      "role": "official-v15 staging bounds and packet acceptance"
+    },
+    {
+      "id": "ram_layout_report",
+      "path": "baselines/v15/analysis/r03-owned-ram/producer-consumer-layout/report.md",
+      "sha256": "e07b19b1d15610e6f070fa8aef537eb1f9dd5c6670c346d7282a66b40aeac666",
+      "role": "official BSS and heap boundary proof"
+    },
+    {
+      "id": "atomic_publish_report",
+      "path": "baselines/v15/analysis/r03-owned-ram/atomic-publish/report.md",
+      "sha256": "05e75cec0f9e9ee8d4d05caf6321eaa19178d8d72c7516822d7eff3da10df9c6",
+      "role": "nonblocking testset and publication ordering"
+    },
+    {
+      "id": "roadmap",
+      "path": "baselines/v15/analysis/channel-separation-reanalysis/post-r02-roadmap.md",
+      "sha256": "2dd1879a6020096804bb21fe538dabb81bf3c1b71cd1a225c69b9cbf34facb12",
+      "role": "16-Pad target and unresolved mapping/generation requirements"
+    },
+    {
+      "id": "midi_report",
+      "path": "baselines/v15/analysis/subsystem-feasibility/midi.md",
+      "sha256": "0dfb1092165642cac23a2d46599fb8ee7e14f62005bdc7109790ca8ab01c8a8c",
+      "role": "official-v15 channel dispatcher and MIDI evidence classification"
+    },
+    {
+      "id": "live_runtime_packet",
+      "path": "build/v15-R02-mooger1-runtime.syx",
+      "sha256": "6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27",
+      "role": "live-proven 163-byte packet containing 156-byte seven-bit payload"
+    }
+  ],
+  "proved_facts": {
+    "h2": {
+      "voice": "0x01c46520..0x01c465bc",
+      "valid": "0x01c465bc",
+      "lock": "0x01c465bd",
+      "copy_size": 156,
+      "producer_source": "accepted official product-packet staging pointer in r0",
+      "publication_order": [
+        "nonblocking try-lock",
+        "copy 156 bytes",
+        "valid=1 last",
+        "unlock"
+      ],
+      "consumer_gate": "channel nibble == 9 and valid == 1",
+      "fallback": "restore original r0 immediately before stock memcpy; preserve original r1/r2",
+      "live_result": "intended Mooger #1 on physical Pad Ch10, normal Note Off, no reboot"
+    },
+    "factory_loader": {
+      "address": "0x02005660",
+      "destination": "0x01c33260+0x1a14 == 0x01c34c74",
+      "raw_record_size": 163,
+      "packed_record_size": 128,
+      "dispatcher_prefix_size": 156,
+      "tail": "0x9c..0xa2",
+      "global_side_effects": true,
+      "caller_supplied_destination": false
+    },
+    "dispatcher": {
+      "address": "0x0201c5ec",
+      "channel_extract": {
+        "address": "0x0201c5fe",
+        "register": "r9",
+        "expression": "status & 0x0f"
+      },
+      "note_off": {
+        "message_length_gate": "len >= 3",
+        "note_load": "0x0201c62e: r5 = msg[1]",
+        "note_metadata_store": "0x0201c648: slot metadata = r5",
+        "copy_call": "0x0201c63e",
+        "note_register_confidence": "strong static, not live-register-proven"
+      },
+      "note_on": {
+        "message_length_gate": "len >= 3",
+        "velocity_load": "0x0201c66a: r5 = msg[2]",
+        "note_load": "0x0201c670: r6 = msg[1]",
+        "note_metadata_store": "0x0201c686: slot metadata = r6",
+        "copy_call": "0x0201c67c",
+        "note_register_confidence": "strong static, not live-register-proven"
+      },
+      "copy_size": 156,
+      "destination": "engine + voice_index*0xa0 + 0xa2",
+      "record_stride": 160,
+      "indexed_record_bound": "0..15",
+      "polyphony_proof": false
+    },
+    "sysex": {
+      "staging": "0x01c37fd0..0x01c38fd0",
+      "durable_owner": false,
+      "official_voice_packet": {
+        "header_hex": "f0430000011b",
+        "payload_length": 156,
+        "total_length": 163,
+        "terminator": "f7",
+        "recorded_payload_max": 114,
+        "recorded_payload_high_bit_count": 0
+      },
+      "official_format_has_slot_index": false
+    },
+    "midi_and_pads": {
+      "safe_note_domain": [0, 127],
+      "map_entries": 128,
+      "observed_physical_message_hex": "992466",
+      "observed_note_decimal": 36,
+      "observed_velocity_decimal": 102,
+      "known_physical_pad_note_count": 1,
+      "all_16_pad_notes_enumerated": false,
+      "contiguous_36_to_51_assumption_allowed": false
+    },
+    "official_memory": {
+      "bss_start": "0x01c099d4",
+      "official_bss_end_exclusive": "0x01c4651c",
+      "official_heap_begin": "0x01c46520",
+      "h2_heap_begin": "0x01c465c0",
+      "heap_end": "0x01c7fd30",
+      "official_heap_arena_size": 235536
+    }
+  },
+  "design": {
+    "name": "volatile immutable 16-slot per-note Ch10 patch set",
+    "version": 1,
+    "slot_counts": {
+      "midi_note_keys": 128,
+      "resident_patch_slots": 16,
+      "runtime_bytes_per_slot": 156,
+      "payload_bytes_total": 2496,
+      "why_not_128_payloads": "19968 payload bytes before metadata is not minimal for the 16-Pad target"
+    },
+    "ram_layout": {
+      "base": "0x01c46520",
+      "end_exclusive": "0x01c46fb0",
+      "size": 2704,
+      "size_hex": "0x0a90",
+      "functional_floor": 2644,
+      "functional_floor_hex": "0x0a54",
+      "aligned_overhead_over_floor": 60,
+      "slot_region": {
+        "start": "0x01c46520",
+        "end_exclusive": "0x01c46f20",
+        "size": 2560,
+        "count": 16,
+        "stride": 160,
+        "stride_hex": "0x00a0"
+      },
+      "slot_record": {
+        "voice_offset": "0x00",
+        "voice_size": 156,
+        "valid_offset": "0x9c",
+        "control_offset": "0x9d",
+        "generation_offset": "0x9e",
+        "flags_offset": "0x9f",
+        "slot0_control_semantics": "global H2-compatible producer lock",
+        "other_control_semantics": "reserved zero"
+      },
+      "header_region": {
+        "start": "0x01c46f20",
+        "end_exclusive": "0x01c46fb0",
+        "size": 144,
+        "format_version_offset": "0x00",
+        "state_offset": "0x01",
+        "set_id_offset": "0x02",
+        "set_generation_offset": "0x03",
+        "loaded_count_offset": "0x04",
+        "last_error_offset": "0x05",
+        "note_to_slot_offset": "0x08",
+        "note_to_slot_size": 128,
+        "wire_fallback_sentinel": 127,
+        "ram_fallback_sentinel": 255
+      },
+      "h2_compatibility": {
+        "slot0_voice_unchanged": "0x01c46520..0x01c465bc",
+        "slot0_valid_unchanged": "0x01c465bc",
+        "global_lock_unchanged": "0x01c465bd"
+      },
+      "proposed_heap_begin": "0x01c46fb0",
+      "remaining_heap_arena_size": 232832,
+      "remaining_heap_arena_hex": "0x038d80",
+      "additional_reservation_beyond_h2": 2544,
+      "additional_reservation_beyond_h2_hex": "0x09f0",
+      "heap_headroom_proven": false
+    },
+    "lookup": {
+      "complexity": "O(1)",
+      "channel": 9,
+      "note_off_register_candidate": "r5",
+      "note_on_register_candidate": "r6",
+      "steps": [
+        "if channel != 9 use stock",
+        "if state != ARMED use stock",
+        "if note > 127 use stock",
+        "slot = note_to_slot[note]",
+        "if slot >= 16 use stock",
+        "source = base + slot*0xa0",
+        "if source.valid != 1 use stock",
+        "copy exactly 156 bytes from source.voice"
+      ],
+      "unknown_note_policy": "stock fallback",
+      "aliases_allowed": true,
+      "contiguous_pad_range_assumed": false
+    },
+    "state_machine": {
+      "states": {
+        "EMPTY": 0,
+        "LOADING": 1,
+        "ARMED": 2
+      },
+      "transitions": [
+        "BSS zero -> EMPTY",
+        "BEGIN: EMPTY -> LOADING",
+        "PUT_SLOT and PUT_MAP remain LOADING",
+        "COMMIT writes ARMED last",
+        "reboot/BSS zero -> EMPTY"
+      ],
+      "mutation_after_armed": "reject",
+      "reset_after_armed": "reboot only",
+      "hot_edit_supported": false
+    },
+    "concurrency": {
+      "producer_lock": "single global nonblocking H2 csync/testset byte at 0x01c465bd",
+      "consumer_lock": "none",
+      "producer_on_busy": "immediate BUSY, no spin and no mutation",
+      "slot_publication": "valid=0, copy 156, metadata, csync, valid=1",
+      "set_publication": "validate all slots/map/checksum, csync, state=ARMED last",
+      "partial_read_prevention": "consumers use stock until ARMED and no writes occur after ARMED",
+      "active_count_required": false,
+      "per_active_note_generation_required": false,
+      "reason": "v1 prohibits all replacement after set publication"
+    },
+    "update_protocol": {
+      "status": "design contract only; parser ingress not implemented",
+      "transport": "private development SysEx envelope",
+      "prefix_hex": "f07d534d4b0f01",
+      "suffix_hex": "f7",
+      "fixed_overhead_bytes_excluding_body": 16,
+      "flags": "zero in protocol v1; nonzero rejected",
+      "length_encoding": "14-bit little-endian as two seven-bit bytes",
+      "crc": {
+        "algorithm": "CRC-16/CCITT-FALSE",
+        "range": "bytes 0x53 through final body byte",
+        "wire_encoding": "three little-endian seven-bit chunks"
+      },
+      "commands": [
+        {
+          "id": 1,
+          "name": "BEGIN",
+          "body_length": 2,
+          "total_length": 18,
+          "body": "slot_count=16, note_domain_code=0 where zero means all 128 notes",
+          "allowed_state": "EMPTY"
+        },
+        {
+          "id": 2,
+          "name": "PUT_SLOT",
+          "body_length": 157,
+          "total_length": 173,
+          "body": "slot_index plus exact 156-byte runtime payload",
+          "allowed_state": "LOADING"
+        },
+        {
+          "id": 3,
+          "name": "PUT_MAP",
+          "body_length": 128,
+          "total_length": 144,
+          "body": "128 values in 0..15 or 0x7f fallback",
+          "allowed_state": "LOADING"
+        },
+        {
+          "id": 4,
+          "name": "COMMIT",
+          "body_length": 3,
+          "total_length": 19,
+          "body": "canonical set CRC-16 in three seven-bit chunks",
+          "allowed_state": "LOADING"
+        }
+      ],
+      "canonical_set_checksum_input": "128 wire map bytes followed by 16 slot payloads in slot order",
+      "official_packet_reused_as_payload_semantics": true,
+      "official_packet_reused_as_outer_framing": false,
+      "stateful_selector_plus_stock_packet_rejected": "cross-packet race"
+    },
+    "polyphony": {
+      "shared_source_reads_after_armed": "safe at source-data level because immutable",
+      "per_voice_copy_preserved": true,
+      "dispatcher_record_bound": 16,
+      "proven_audio_polyphony": null,
+      "sixteen_records_imply_sixteen_note_polyphony": false,
+      "required_future_stress": [
+        "overlapping Ch1/Ch10 chords",
+        "reversed release order",
+        "repeated hits",
+        "voice stealing",
+        "CC64",
+        "CC120",
+        "CC123"
+      ]
+    },
+    "bounds": {
+      "message_length_minimum": 3,
+      "note_min": 0,
+      "note_max": 127,
+      "slot_min": 0,
+      "slot_max": 15,
+      "copy_size": 156,
+      "slot_source_formula": "0x01c46520 + slot*0xa0",
+      "maximum_slot_source": "0x01c46e80",
+      "maximum_slot_voice_end_exclusive": "0x01c46f1c",
+      "slot_region_end_exclusive": "0x01c46f20",
+      "invalid_behavior": "H2-correct stock fallback",
+      "packet_all_data_bytes_7bit": true,
+      "mutation_before_full_validation": false
+    }
+  },
+  "implementation_gates": [
+    {
+      "id": "pad-enumeration",
+      "status": "BLOCK",
+      "requirement": "Enumerate Note On and Note Off numbers for all 16 physical Pads; do not assume 36..51."
+    },
+    {
+      "id": "note-register-abi",
+      "status": "BLOCK",
+      "requirement": "Independently confirm Note Off r5 and Note On r6 at the two memcpy hooks and preserve them in wrappers."
+    },
+    {
+      "id": "heap-headroom",
+      "status": "BLOCK",
+      "requirement": "Prove worst-case allocator headroom after an additional 0x09f0-byte reduction beyond H2."
+    },
+    {
+      "id": "code-placement",
+      "status": "BLOCK",
+      "requirement": "Prove executable placement and branch reach for two lookup wrappers and producers without an unproved cave."
+    },
+    {
+      "id": "sysex-ingress",
+      "status": "BLOCK",
+      "requirement": "Prove bounded parser ingress and coexistence with stock Yamaha SysEx; staging is not durable storage."
+    },
+    {
+      "id": "memory-ordering",
+      "status": "BLOCK",
+      "requirement": "Byte-validate PI32 testset, csync, valid-last, and ARMED-last ordering."
+    },
+    {
+      "id": "polyphony-stress",
+      "status": "BLOCK",
+      "requirement": "Run separately authorized overlap/release/repeat/CC stress with rollback; no such test is performed here."
+    },
+    {
+      "id": "persistence",
+      "status": "OUT_OF_SCOPE",
+      "requirement": "Keep v1 volatile and do not redefine stock Patch SAVE."
+    }
+  ]
+}

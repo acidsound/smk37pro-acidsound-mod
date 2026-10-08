@@ -1,0 +1,58 @@
+range=0201dc14..0201dcb3
+0201dc14  8316  mov r3,r8
+0201dc16  0481  goto 0x0201dc1a
+0201dc18  9316  .raw
+0201dc1a  7604  push {rets,r6,r5,r4}
+0201dc1c  83f82b12  jne r3,#0x9,0x0201dc76
+0201dc20  0416  mov r4,r0
+0201dc22  40e09403  movz r0,#0x394
+0201dc26  c6ff0037c301  mov r6,#0x1c33700
+0201dc2c  d8ee6000  lb.z r0,[r6 + r0]
+0201dc30  0618  add r6,r0
+0201dc32  40e09003  movz r0,#0x390
+0201dc36  0618  add r6,r0
+0201dc38  6d40  lb.z r5,[r6 + 0x0]
+0201dc3a  5881  add r0,r5,#0x1
+0201dc3c  60e11f00  and r0,r0,#0x1f
+0201dc40  e840  sb r0,[r6 + 0x0]
+0201dc42  80ff9a75feff  call 0x020051e2
+0201dc48  c0ff6084c301  mov r0,#0x1c38460
+0201dc4e  c1ff0451c301  mov r1,#0x1c35104
+0201dc54  623c  mov r2,#0x9c
+0201dc56  80ffb0a80200  call 0x0204850c
+0201dc5c  ed40  sb r5,[r6 + 0x0]
+0201dc5e  80ff7e75feff  call 0x020051e2
+0201dc64  4016  mov r0,r4
+0201dc66  c1ff6084c301  mov r1,#0x1c38460
+0201dc6c  623c  mov r2,#0x9c
+0201dc6e  80ff98a80200  call 0x0204850c
+0201dc74  5604  pop {pc,r6,r5,r4}
+0201dc76  80ff90a80200  call 0x0204850c
+0201dc7c  5604  pop {pc,r6,r5,r4}
+0201dc7e  8c5e  .raw
+0201dc80  7604  .raw
+0201dc82  0416  .raw
+0201dc84  1516  .raw
+0201dc86  85f8  .raw
+0201dc88  0100  .raw
+0201dc8a  5604  .raw
+0201dc8c  4016  .raw
+0201dc8e  5116  .raw
+0201dc90  80ff  .raw
+0201dc92  86e3  .raw
+0201dc94  ffff  .raw
+0201dc96  85f8  .raw
+0201dc98  0906  .raw
+0201dc9a  4840  .raw
+0201dc9c  60e1  .raw
+0201dc9e  0f00  .raw
+0201dca0  80f8  .raw
+0201dca2  0412  .raw
+0201dca4  4016  .raw
+0201dca6  80ff  .raw
+0201dca8  c6e5  .raw
+0201dcaa  ffff  .raw
+0201dcac  5604  .raw
+0201dcae  2c4a  .raw
+0201dcb0  44a3  .raw
+0201dcb2  64e1  .raw

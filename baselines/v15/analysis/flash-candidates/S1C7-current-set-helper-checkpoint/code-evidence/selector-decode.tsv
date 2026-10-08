@@ -1,0 +1,28 @@
+address	size	bytes	name	asm	meaning	target
+0x0201e13e	2	5316	selector.note_off_adapter	mov r3,r5	normalize Note Off trigger note	
+0x0201e140	2	0481	selector.note_off_goto_core	goto core	skip Note On adapter	0x0201e144
+0x0201e142	2	6316	selector.note_on_adapter	mov r3,r6	normalize Note On trigger note	
+0x0201e144	2	7904	selector.push_saved	push {rets,r9..r4}	preserve trigger registers and velocity	
+0x0201e146	2	0416	selector.save_dest	mov r4,r0	save payload destination	
+0x0201e148	2	3516	selector.default_note	mov r5,r3	default metadata note	
+0x0201e14a	2	9616	selector.channel_tmp	mov r6,r9	channel temp	
+0x0201e14c	4	86f81b12	selector.gate_channel	jne r6,#9,stock_copy	non-Ch10 uses original stock source	0x0201e186
+0x0201e150	4	83fd1948	selector.gate_low	jl r3,#36,stock_copy	below pad range uses original stock source	0x0201e186
+0x0201e154	4	03fd1768	selector.gate_high	jge r3,#52,stock_copy	above pad range uses original stock source	0x0201e186
+0x0201e158	2	f33c	selector.slot_index	add r3,#-36	slot = trigger - 36	
+0x0201e15a	6	c8ff2065c401	selector.patch_base	mov r8,#0x1c46520	resident slot base	
+0x0201e160	4	06e19c80	selector.state_base	add r6,r8,#0x9c	slot0 control base	
+0x0201e164	2	6843	selector.state_load	lb.z r0,[r6+3]	load ARMED state	
+0x0201e166	4	80f81104	selector.gate_state	jne r0,#2,persistent_fallback	not ARMED reads host-seeded raw record	0x0201e18c
+0x0201e16a	2	3616	selector.slot_offset_seed	mov r6,r3	copy slot	
+0x0201e16c	4	e6e1a060	selector.slot_offset	mul r6,r6,#0xa0	resident slot offset	
+0x0201e170	2	8618	selector.slot_base_add	add r6,r8	resident source pointer	
+0x0201e172	4	07e19c60	selector.valid_pointer	add r7,r6,#0x9c	valid pointer	
+0x0201e176	2	7840	selector.valid_load	lb.z r0,[r7]	selected slot valid	
+0x0201e178	4	80f80802	selector.gate_valid	jne r0,#1,persistent_fallback	invalid resident source reads host-seeded raw record	0x0201e18c
+0x0201e17c	4	07e1008a	selector.map_base	add r7,r8,#0xa00	Playback Note map base	
+0x0201e180	2	3718	selector.map_slot	add r7,r3	Playback Note map slot	
+0x0201e182	2	7d40	selector.load_playback_note	lb.z r5,[r7]	mapped Playback Note	
+0x0201e184	2	6116	selector.select_source	mov r1,r6	resident source pointer	
+0x0201e186	6	80ff268c0000	selector.call_ram_copy_helper	call 0x2026db2	tail-call helper stock-copy return	
+0x0201e18c	6	80ffee8b0000	selector.call_persistent_helper	call 0x2026d80	tail-call helper persistent raw-record return	

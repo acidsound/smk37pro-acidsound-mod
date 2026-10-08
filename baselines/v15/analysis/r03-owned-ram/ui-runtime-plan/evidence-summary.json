@@ -1,0 +1,146 @@
+{
+  "date_utc": "2026-08-02",
+  "no_actions_performed": [
+    "no firmware patch",
+    "no flash",
+    "no device access",
+    "no debugger",
+    "no uploader",
+    "no product SysEx traffic"
+  ],
+  "official_v15_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+  "runtime_base": "0x02000000",
+  "scope": "official v15 host-read-only plan only; no patch, flash, or device access performed",
+  "source_artifacts": [
+    {
+      "path": "baselines/v15/analysis/ui-preflash/README.md",
+      "sha256": "1f6209fbd5fb41f2ec60b25c2e28daa3a8487d11d9275f27368acbb98c15ad7f"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/events/report.md",
+      "sha256": "25ba91225404b8e04ee834788eaa7099c4345089d329fef2a5c13e7df7549284"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/followup/event-dispatcher.md",
+      "sha256": "ec51c6f73767fb9ca0d7dc675ee64d9d9eb36117dc209054302c481a7ca48876"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/followup/event-dispatcher.json",
+      "sha256": "7e8d7e401a23bc65633465596590330de07169df2fee657568333f63aebfa000"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/followup/renderer-xref.md",
+      "sha256": "43556648ff38d1030e64917bd886058fc3910e682ce9b7a7ddf66659baefa6e4"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/followup/renderer-xref.json",
+      "sha256": "3317860fbf5110d5decd1b3c5559074edd1aefc38230dae67fba383eafa7dd32"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/final-pass/events/report.md",
+      "sha256": "1db782f6cc39b85b109af39999915bb8a4d7cf7233cb0bff77227d8f41b0537d"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/final-pass/events/final-pass-events.json",
+      "sha256": "f1d2b68448ad426e3a4f915efc7b9c9fb446261d7974693a466ced8a68955f78"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/final-pass/renderer/report.md",
+      "sha256": "c1e9c67b0fa426fbaae9632620415ac2f65aead94d31de77ea9cd6635819138d"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/final-pass/renderer/renderer-trace.json",
+      "sha256": "67f34101416a0a3587205bb316360ecd02b67d6606495f6fae952b186cb7d43f"
+    },
+    {
+      "path": "baselines/v15/analysis/r03-owned-ram/requirements.md",
+      "sha256": "0cce1eccb7803be71c91489ee9ce4e2af2358f656bf0124ab877f6604d02653a"
+    }
+  ],
+  "static_boundaries": {
+    "callback_vector_candidate": "0x02058248 slots 0..10, ordinal only",
+    "computed_renderer_call_sites": [
+      "0x0200f71e",
+      "0x0200f746",
+      "0x0200f770",
+      "0x0201ea90",
+      "0x0201eaae",
+      "0x020233e6"
+    ],
+    "dirty_redraw_candidate": "0x0201e06c",
+    "grid_submode_dispatch": "0x02029528",
+    "pending_consumers": [
+      "0x02028f0c",
+      "0x02029152",
+      "0x02029612"
+    ],
+    "render_traversal_candidate": "0x0200f74c",
+    "renderer_partial_chain": "0x02020376 -> 0x0201a67c with r1=0x02058314 Keys Channel- descriptor",
+    "state_frame": "0x02029290",
+    "vector_targets": [
+      "0x02029912",
+      "0x02029936",
+      "0x02029974",
+      "0x020299ce",
+      "0x020299f2",
+      "0x02029a16",
+      "0x02029a2e",
+      "0x02029a46",
+      "0x02029a78",
+      "0x02029aaa",
+      "0x0202439e"
+    ]
+  },
+  "static_conclusions": {
+    "lcd_or_final_pixel_write_status": "not recovered",
+    "physical_event_ids_promoted": false,
+    "physical_input_dispatcher_or_id_proven": false,
+    "producer_to_pending_fields_proven": false,
+    "renderer_path_from_0201a67c_to_0200f74c_or_0201e06c": false,
+    "renderer_path_from_02020376_to_0200f74c_or_0201e06c": false,
+    "renderer_xref_direct_chain_found": false
+  },
+  "target_live_offsets": [
+    "+0x39",
+    "+0x3a",
+    "+0x3b",
+    "+0x3c",
+    "+0x3d",
+    "+0x3e",
+    "+0x3f"
+  ],
+  "target_pending_absolute_range": "0x01c33569..0x01c3356f",
+  "target_pending_offsets": [
+    "+0x309",
+    "+0x30a",
+    "+0x30b",
+    "+0x30c",
+    "+0x30d",
+    "+0x30e",
+    "+0x30f"
+  ],
+  "ui_ram_base": "0x01c33260",
+  "observation_boundaries": {
+    "truly_read_only_host_observation": [
+      "Offline static inspection of the official v15 app SHA and existing analysis artifacts",
+      "USB descriptor enumeration of exact v15 VID/PID/serial/interface endpoints without endpoint writes",
+      "Passive USB-MIDI IN observation only",
+      "Human/camera observation of display state while official firmware runs unchanged"
+    ],
+    "active_but_not_firmware_patch": [
+      "Manual physical button presses, holds, and encoder turns, which can change volatile UI state",
+      "A fixed reviewed USB-MIDI OUT matrix, only if separately authorized, which is active host stimulation and not read-only observation"
+    ],
+    "requires_firmware_patch_or_equivalent_in_firmware_instrumentation": [
+      "Logging writes or transition brackets for RAM 0x01c33569..0x01c3356f from firmware execution",
+      "Capturing PC/LR/register context at pending-byte transitions, callback dispatches, and dirty/redraw calls",
+      "Resolving computed callback target for 0x0200f74c or related object callbacks"
+    ],
+    "not_claimed": [
+      "Hardware watchpoints on WL82/PI32 without a proven debug interface",
+      "Physical event IDs from static vector slot order alone",
+      "LCD ABI or final pixel write from ST7789-like byte pattern alone",
+      "Producer PC from pending/live consumer snapshots alone"
+    ]
+  }
+}

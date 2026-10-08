@@ -1,0 +1,22 @@
+captured_utc: 2026-08-01T15:44:29Z
+SMK-37 Pro USB device
+  VID:PID: 4353:cf4d
+  bus/address: 0/1
+  speed: full (12 Mbit/s)
+  USB version: 2.00
+  device version: 1.00
+  manufacturer: SMK-37 Pro Midi
+  product:  
+  serial: 1120041B00020312
+  configuration 1: 5 interfaces
+    interface 0 alt 0: class 0x01 subclass 0x01, 0 endpoints
+    interface 1 alt 0: class 0x01 subclass 0x02, 0 endpoints
+    interface 1 alt 1: class 0x01 subclass 0x02, 1 endpoints
+      endpoint 0x02 OUT isochronous max-packet 288 interval 1
+    interface 2 alt 0: class 0x01 subclass 0x02, 0 endpoints
+    interface 2 alt 1: class 0x01 subclass 0x02, 1 endpoints
+      endpoint 0x83 IN isochronous max-packet 288 interval 1
+    interface 3 alt 0: class 0x01 subclass 0x01, 0 endpoints
+    interface 4 alt 0: class 0x01 subclass 0x03, 2 endpoints
+      endpoint 0x84 IN bulk        max-packet 64 interval 0
+      endpoint 0x04 OUT bulk        max-packet 64 interval 0

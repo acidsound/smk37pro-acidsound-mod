@@ -1,0 +1,4 @@
+PASS exact 504-byte gap bytes and S1C5 selector/producer hashes
+PASS Quarkslab recursive decodes 164 target rows inside FUN_0202bc22
+PASS Kagaimiq patched decodes 126 target rows and branch xrefs
+REFUTE 0x0202bc62..0x0202be5a as owned/free restore placement

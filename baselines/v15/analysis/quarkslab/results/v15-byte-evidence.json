@@ -1,0 +1,353 @@
+{
+  "derived_aligned_base_candidates": [
+    {
+      "base": 33554432,
+      "hits": [
+        {
+          "reference_offsets": [
+            19042
+          ],
+          "target_offset": 358740,
+          "target_va": 33913172,
+          "text": "app_area_head"
+        },
+        {
+          "reference_offsets": [
+            122948
+          ],
+          "target_offset": 359200,
+          "target_va": 33913632,
+          "text": "Enable SEQ first"
+        },
+        {
+          "reference_offsets": [
+            361220
+          ],
+          "target_offset": 383429,
+          "target_va": 33937861,
+          "text": "Pad Bank-"
+        },
+        {
+          "reference_offsets": [
+            361236
+          ],
+          "target_offset": 383465,
+          "target_va": 33937897,
+          "text": "Keys Channel-"
+        },
+        {
+          "reference_offsets": [
+            359040,
+            359056,
+            360820
+          ],
+          "target_offset": 383553,
+          "target_va": 33937985,
+          "text": "sdfile_fat"
+        }
+      ],
+      "reference_count": 7,
+      "unique_long_string_targets": 5
+    },
+    {
+      "base": 36241408,
+      "hits": [
+        {
+          "reference_offsets": [
+            94614,
+            94956
+          ],
+          "target_offset": 458122,
+          "target_va": 36699530,
+          "text": "hBiCjEkDD!\""
+        }
+      ],
+      "reference_count": 2,
+      "unique_long_string_targets": 1
+    },
+    {
+      "base": 17760256,
+      "hits": [
+        {
+          "reference_offsets": [
+            55468
+          ],
+          "target_offset": 311324,
+          "target_va": 18071580,
+          "text": "?!?#?%?-?.?/?0?2?3?6?7?:?>@%@*A"
+        }
+      ],
+      "reference_count": 1,
+      "unique_long_string_targets": 1
+    },
+    {
+      "base": 23265280,
+      "hits": [
+        {
+          "reference_offsets": [
+            4266
+          ],
+          "target_offset": 542208,
+          "target_va": 23807488,
+          "text": "L`A!B!A!B\""
+        }
+      ],
+      "reference_count": 1,
+      "unique_long_string_targets": 1
+    },
+    {
+      "base": 29360128,
+      "hits": [
+        {
+          "reference_offsets": [
+            411738
+          ],
+          "target_offset": 285024,
+          "target_va": 29645152,
+          "text": "%`iWq[hV"
+        }
+      ],
+      "reference_count": 1,
+      "unique_long_string_targets": 1
+    },
+    {
+      "base": 33357824,
+      "hits": [
+        {
+          "reference_offsets": [
+            361948
+          ],
+          "target_offset": 370838,
+          "target_va": 33728662,
+          "text": "e?.3f?Ozf?Z"
+        }
+      ],
+      "reference_count": 1,
+      "unique_long_string_targets": 1
+    },
+    {
+      "base": 33488896,
+      "hits": [
+        {
+          "reference_offsets": [
+            310428
+          ],
+          "target_offset": 377745,
+          "target_va": 33866641,
+          "text": "Q`?S<a?~ b?t"
+        }
+      ],
+      "reference_count": 1,
+      "unique_long_string_targets": 1
+    },
+    {
+      "base": 33882112,
+      "hits": [
+        {
+          "reference_offsets": [
+            571142
+          ],
+          "target_offset": 27908,
+          "target_va": 33910020,
+          "text": "@%A B#C'"
+        }
+      ],
+      "reference_count": 1,
+      "unique_long_string_targets": 1
+    },
+    {
+      "base": 34799616,
+      "hits": [
+        {
+          "reference_offsets": [
+            600896
+          ],
+          "target_offset": 197139,
+          "target_va": 34996755,
+          "text": " B C!G a"
+        }
+      ],
+      "reference_count": 1,
+      "unique_long_string_targets": 1
+    },
+    {
+      "base": 35454976,
+      "hits": [
+        {
+          "reference_offsets": [
+            387896
+          ],
+          "target_offset": 542208,
+          "target_va": 35997184,
+          "text": "L`A!B!A!B\""
+        }
+      ],
+      "reference_count": 1,
+      "unique_long_string_targets": 1
+    }
+  ],
+  "device_descriptor": {
+    "bcdDevice": 256,
+    "bcdUSB": 512,
+    "configuration_count": 1,
+    "device_class": 0,
+    "ep0_max_packet": 64,
+    "manufacturer_string_index": 1,
+    "product_id": 19277,
+    "product_string_index": 2,
+    "serial_string_index": 3,
+    "vendor_id": 17235
+  },
+  "entry_point_result": {
+    "reason": "No direct literal or upstream-Ghidra data/code xref connected the MIDI strings, descriptors, jack graph, endpoint descriptors, or CIN table to a unique PI32 receive or dispatch function.",
+    "status": "not_identified"
+  },
+  "input": {
+    "path": "build/v15-official-app.bin",
+    "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "size": 617012
+  },
+  "package_layout": {
+    "app_data_size": 617012,
+    "app_data_start": 16672,
+    "app_data_start_hex": "0x4120",
+    "interpretation": "package/flash storage offset, not the runtime virtual base"
+  },
+  "patterns": {
+    "midi_in_cs_endpoint": [
+      {
+        "file_offset": 360399,
+        "flash_offset": 377071,
+        "runtime_va": 33914831
+      }
+    ],
+    "midi_in_endpoint": [
+      {
+        "file_offset": 360390,
+        "flash_offset": 377062,
+        "runtime_va": 33914822
+      }
+    ],
+    "midi_jack_graph": [
+      {
+        "file_offset": 361076,
+        "flash_offset": 377748,
+        "runtime_va": 33915508
+      }
+    ],
+    "midi_out_cs_endpoint": [
+      {
+        "file_offset": 360415,
+        "flash_offset": 377087,
+        "runtime_va": 33914847
+      }
+    ],
+    "midi_out_endpoint": [
+      {
+        "file_offset": 360406,
+        "flash_offset": 377078,
+        "runtime_va": 33914838
+      }
+    ],
+    "midi_product_utf16le": [
+      {
+        "file_offset": 360360,
+        "flash_offset": 377032,
+        "runtime_va": 33914792
+      }
+    ],
+    "midi_route_ascii": [
+      {
+        "file_offset": 358203,
+        "flash_offset": 374875,
+        "runtime_va": 33912635
+      }
+    ],
+    "midi_streaming_header": [
+      {
+        "file_offset": 358839,
+        "flash_offset": 375511,
+        "runtime_va": 33913271
+      }
+    ],
+    "midi_streaming_interface": [
+      {
+        "file_offset": 358830,
+        "flash_offset": 375502,
+        "runtime_va": 33913262
+      }
+    ],
+    "usb_device_descriptor": [
+      {
+        "file_offset": 359251,
+        "flash_offset": 375923,
+        "runtime_va": 33913683
+      }
+    ],
+    "usb_midi_cin_payload_lengths": [
+      {
+        "file_offset": 359088,
+        "flash_offset": 375760,
+        "runtime_va": 33913520
+      }
+    ]
+  },
+  "runtime_base_tests": [
+    {
+      "base": 33554432,
+      "hits": [
+        {
+          "reference_offsets": [
+            19042
+          ],
+          "target_offset": 358740,
+          "target_va": 33913172,
+          "text": "app_area_head"
+        },
+        {
+          "reference_offsets": [
+            122948
+          ],
+          "target_offset": 359200,
+          "target_va": 33913632,
+          "text": "Enable SEQ first"
+        },
+        {
+          "reference_offsets": [
+            361220
+          ],
+          "target_offset": 383429,
+          "target_va": 33937861,
+          "text": "Pad Bank-"
+        },
+        {
+          "reference_offsets": [
+            361236
+          ],
+          "target_offset": 383465,
+          "target_va": 33937897,
+          "text": "Keys Channel-"
+        },
+        {
+          "reference_offsets": [
+            359040,
+            359056,
+            360820
+          ],
+          "target_offset": 383553,
+          "target_va": 33937985,
+          "text": "sdfile_fat"
+        }
+      ],
+      "reference_count": 7,
+      "unique_long_string_targets": 5
+    },
+    {
+      "base": 33571104,
+      "hits": [],
+      "reference_count": 0,
+      "unique_long_string_targets": 0
+    }
+  ],
+  "selected_runtime_base": 33554432
+}

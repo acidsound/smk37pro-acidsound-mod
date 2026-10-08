@@ -1,0 +1,124 @@
+{
+  "format": "smk37-v15-s1c1-boundary-independent-review-v1",
+  "date_utc": "2026-08-02",
+  "verdict": "PASS",
+  "scope": {
+    "review_type": "independent offline exact-artifact review",
+    "device_accessed": false,
+    "flash_performed": false
+  },
+  "hashes": {
+    "official_app": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "official_package": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "h2_app": "d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59",
+    "h2_package": "c1752a69ed8f905af58db0de7c3def29c416b71e832e2834e664cd5d17b85011",
+    "candidate_app": "16023c9006f2d4d6467ef2d72d6165c14ffeb6cb758d074f7d8163a68146fb2e",
+    "candidate_package": "ae8c44a493e83d0b41ee422f21bdc115c4e1ff232376fd8a8abf609c96a3765d",
+    "rollback_zip": "9cf3a7ec8a24e09d2d2bef9d55d73363c01f8461a3800ad37ba30abb72d332f1"
+  },
+  "h2_relative_delta": {
+    "changed_byte_count": 4,
+    "offsets": [
+      "0x20",
+      "0x21",
+      "0x5e9fa",
+      "0x5e9fb"
+    ],
+    "ranges": [
+      "0x20..0x22",
+      "0x5e9fa..0x5e9fc"
+    ],
+    "classification": "two immediate operands only"
+  },
+  "paired_boundaries": {
+    "bss_start": "0x01c099d4",
+    "h2_bss_size": "0x0003cbec",
+    "candidate_bss_size": "0x0003cc8c",
+    "bss_increment": "0x000000a0",
+    "h2_heap_begin": "0x01c465c0",
+    "candidate_heap_begin": "0x01c46660",
+    "heap_begin_increment": "0x000000a0",
+    "candidate_heap_span_to_0x01c7fd30": "0x000396d0"
+  },
+  "behavior_scope": {
+    "h2_code_cave_byte_identical": true,
+    "only_boundary_immediate_operands_changed": true,
+    "new_second_slot_access": false,
+    "new_selector_behavior": false
+  },
+  "protected_flash_hashes": {
+    "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+    "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+    "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+    "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+  },
+  "determinism": {
+    "candidate_files_byte_identical": [
+      "app.bin",
+      "SMK37Pro-v15-S1C1-boundary-only.fwsc",
+      "app-manifest.json",
+      "package-manifest.json",
+      "SHA256SUMS"
+    ],
+    "rollback_directory_byte_identical": true,
+    "rollback_zip_byte_identical": true
+  },
+  "ota_check_matrix": {
+    "candidate": 0,
+    "official_v15": 1,
+    "h2_parent": 1,
+    "malformed": 1
+  },
+  "ota_confirmation": "INSTALL-SMK37PRO-V15-S1C1-BOUNDARY-AE8C44A4",
+  "rollback": {
+    "bundle": "SMK37Pro-WL82-v15-S1C1B-rollback-20260802-v1",
+    "sectors": [
+      "0x04000",
+      "0x20000",
+      "0x22000",
+      "0x2a000",
+      "0x62000"
+    ],
+    "confirmations": [
+      "I_UNDERSTAND_THIS_ERASES_EXACTLY_FIVE_S1C1B_SECTORS",
+      "I_HAVE_TWO_IDENTICAL_1MIB_DUMPS_AND_S1C1B_TARGET_HASHES",
+      "RESTORE_OFFICIAL_V15_SECTORS_NOW"
+    ],
+    "sector_records": [
+      {
+        "address": "0x04000",
+        "stock_sha256": "f0dbdd1756fdb0fbf31def403c74c4f4c69ec30bfc6a405f88d9bd540a9cf8e9",
+        "target_sha256": "a4b8f46cf49e3fad9aa281ce0f45fcde803cf0e821e30454acf89d8bd9473143",
+        "changed_byte_count": 10
+      },
+      {
+        "address": "0x20000",
+        "stock_sha256": "1dc90a318976cead8c55bb071b4096b242c354329eaf0cba74204866c0011f64",
+        "target_sha256": "aae02584dd183936956c478a472e6e21d66c9ebd853af8bdf540259a61a4f26e",
+        "changed_byte_count": 6
+      },
+      {
+        "address": "0x22000",
+        "stock_sha256": "dd533edf9d53f120d66c54b0e40769b5a8774b4de9e114c1f1865f7d470f1dcc",
+        "target_sha256": "5d0b47eb018d90ebb90864890e121cd79eb38d765f45a73a688d48a43ad71e64",
+        "changed_byte_count": 175
+      },
+      {
+        "address": "0x2a000",
+        "stock_sha256": "630e50034f661f0a2d1d94e56f25b056ae99c8d1d379d6e7b082bd868d619409",
+        "target_sha256": "a58c41f00acf8dab7c326c49ae7d24c97f900b0efabc7a25905886f702b56fc2",
+        "changed_byte_count": 8
+      },
+      {
+        "address": "0x62000",
+        "stock_sha256": "7fbd04123b6ffecd937f5b9896e385c62a12a1ef16a316888dd071fa43649f6d",
+        "target_sha256": "6b16fe66773d7c5d6bf8dfa692813d55bf67e5e70b2765ba56601a9c40054790",
+        "changed_byte_count": 2
+      }
+    ],
+    "guard_self_test": "PASS",
+    "hash_inventory": "PASS",
+    "zip_crc_and_member_bytes": "PASS",
+    "stale_h2_tokens": 0
+  }
+}

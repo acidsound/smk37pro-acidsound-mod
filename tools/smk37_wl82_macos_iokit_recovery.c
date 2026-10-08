@@ -4,6 +4,7 @@
 #include <IOKit/usb/IOUSBLib.h>
 
 #include <errno.h>
+#include <signal.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -13,6 +14,18 @@
 #include <unistd.h>
 
 #include "sha256.h"
+
+static const char *g_phase = "init";
+static void crash_handler(int sig) {
+    char msg[128];
+    int n = snprintf(msg, sizeof(msg),
+                     "\n*** SMK37 RECOVERY CRASH: signal %d at phase '%s' ***\n",
+                     sig, g_phase);
+    if (n > 0) {
+        (void)write(STDERR_FILENO, msg, (size_t)n);
+    }
+    _exit(128 + sig);
+}
 
 enum {
     JIELI_VID = 0x4c4a,
@@ -234,19 +247,18 @@ static void trim_ascii(char *output, size_t output_size,
     output[length] = '\0';
 }
 
-static int find_interface(io_service_t *service_out) {
+static io_service_t find_interface_service(void) {
     CFMutableDictionaryRef matching = IOServiceMatching("IOUSBHostInterface");
     if (matching == NULL) {
-        return kIOReturnError;
+        return IO_OBJECT_NULL;
     }
     io_iterator_t iterator = IO_OBJECT_NULL;
     IOReturn result = IOServiceGetMatchingServices(
         kIOMainPortDefault, matching, &iterator);
-    if (result != kIOReturnSuccess) {
-        return result;
+    if (result != kIOReturnSuccess || iterator == IO_OBJECT_NULL) {
+        return IO_OBJECT_NULL;
     }
-
-    io_service_t service;
+    io_service_t service = IO_OBJECT_NULL;
     while ((service = IOIteratorNext(iterator)) != IO_OBJECT_NULL) {
         uint32_t vid = 0;
         uint32_t pid = 0;
@@ -262,14 +274,22 @@ static int find_interface(io_service_t *service_out) {
                      class == MASS_STORAGE_CLASS && subclass == SCSI_SUBCLASS &&
                      protocol == BULK_ONLY_PROTOCOL;
         if (match) {
-            *service_out = service;
             IOObjectRelease(iterator);
-            return kIOReturnSuccess;
+            return service;
         }
         IOObjectRelease(service);
     }
     IOObjectRelease(iterator);
-    return kIOReturnNotFound;
+    return IO_OBJECT_NULL;
+}
+
+static int find_interface(io_service_t *service_out) {
+    io_service_t service = find_interface_service();
+    if (service == IO_OBJECT_NULL) {
+        return kIOReturnNotFound;
+    }
+    *service_out = service;
+    return kIOReturnSuccess;
 }
 
 static int find_parent_usb_device(io_service_t interface_service,
@@ -372,16 +392,25 @@ static int open_bot_interface(io_service_t service, BotInterface *bot) {
     }
 
     UInt8 endpoint_count = 0;
+    g_phase = "USBInterfaceOpenSeize";
     result = (*interface)->USBInterfaceOpenSeize(interface);
     if (result != kIOReturnSuccess) {
         fprintf(stderr, "USBInterfaceOpenSeize failed: 0x%08x\n", result);
 
+        g_phase = "find_parent_usb_device";
         io_service_t device_service = IO_OBJECT_NULL;
-        if (find_parent_usb_device(service, &device_service) == kIOReturnSuccess) {
+        IOReturn parent_result = find_parent_usb_device(service, &device_service);
+        fprintf(stderr, "[diag] find_parent_usb_device: 0x%08x\n",
+                (unsigned)parent_result);
+        if (parent_result == kIOReturnSuccess) {
+            g_phase = "open_usb_device_seize";
             IOReturn device_result = open_usb_device_seize(
                 device_service, &bot->device);
             IOObjectRelease(device_service);
+            fprintf(stderr, "[diag] open_usb_device_seize: 0x%08x\n",
+                    (unsigned)device_result);
             if (device_result == kIOReturnSuccess) {
+                g_phase = "USBInterfaceOpenSeize (after device seize)";
                 result = (*interface)->USBInterfaceOpenSeize(interface);
                 if (result == kIOReturnSuccess) {
                     puts("interface seized after device seize");
@@ -398,12 +427,10 @@ static int open_bot_interface(io_service_t service, BotInterface *bot) {
             goto interface_opened;
         }
 
-        /*
-         * A normal open is still read-only from this tool's perspective and
-         * is useful when the existing owner permits shared access.  Do not
-         * send any BOT command unless one of the two opens succeeds.
-         */
+        g_phase = "USBInterfaceOpen (shared)";
         IOReturn shared_result = (*interface)->USBInterfaceOpen(interface);
+        fprintf(stderr, "[diag] USBInterfaceOpen (shared): 0x%08x\n",
+                (unsigned)shared_result);
         if (shared_result != kIOReturnSuccess) {
             fprintf(stderr, "USBInterfaceOpen fallback failed: 0x%08x\n",
                     shared_result);
@@ -896,19 +923,37 @@ static int write_report(const char *directory, const char *dump_a,
 static int bot_open(BotInterface *bot, unsigned wait_seconds) {
     io_service_t service = IO_OBJECT_NULL;
     unsigned waited_ms = 0;
+    unsigned attempts = 0;
     for (;;) {
+        g_phase = "find_interface";
         IOReturn result = find_interface(&service);
         if (result == kIOReturnSuccess) {
+            g_phase = "open_bot_interface";
             result = open_bot_interface(service, bot);
             IOObjectRelease(service);
             if (result == kIOReturnSuccess) {
+                g_phase = "open_success";
                 return 0;
             }
+            attempts++;
+            fprintf(stderr,
+                "[diag] attempt %u: open_bot_interface failed with 0x%08x\n",
+                attempts, (unsigned)result);
+            /*
+             * 0xe00002c5 = kIOReturnNoDevice: the interface service exists in
+             * the registry but the kernel cannot create a user client.  This
+             * usually means the V4 is still transitioning its USB handoff.
+             * Wait for the next enumeration cycle rather than retrying
+             * immediately against the same dead service.
+             */
             if (wait_seconds == 0 || waited_ms >= wait_seconds * 1000U) {
                 return 1;
             }
-            puts("WL80 UBOOT interface was busy; waiting for the next enumeration");
-            fflush(stdout);
+            fprintf(stderr,
+                "[diag] waiting for re-enumeration (attempt %u, "
+                "%u ms elapsed / %u ms max)...\n",
+                attempts, waited_ms, wait_seconds * 1000U);
+            fflush(stderr);
         }
         if (wait_seconds == 0 || waited_ms >= wait_seconds * 1000U) {
             puts("WL80 UBOOT USB interface not found");
@@ -919,8 +964,13 @@ static int bot_open(BotInterface *bot, unsigned wait_seconds) {
                    wait_seconds);
             fflush(stdout);
         }
-        usleep(100000);
-        waited_ms += 100;
+        /*
+         * Use a longer poll interval when the interface is present but
+         * unopenable, to avoid hammering the IOKit registry while the V4
+         * settles.  500 ms is a good balance.
+         */
+        usleep(500000);
+        waited_ms += 500;
     }
 }
 
@@ -943,12 +993,15 @@ static int run_dump(const char *loader_path, const char *directory,
         return result;
     }
     char vendor[9], product[17], revision[5];
+    g_phase = "bot_inquiry";
     result = bot_inquiry(&bot, vendor, product, revision);
     if (result == kIOReturnSuccess) {
+        g_phase = "upload_loader";
         result = upload_loader(&bot, loader, loader_length);
     }
     uint32_t loader_buffer = 0;
     if (result == kIOReturnSuccess) {
+        g_phase = "loader_info";
         result = loader_info(&bot, &loader_buffer);
     }
     uint32_t chunk = requested_chunk == 0 ? loader_buffer : requested_chunk;
@@ -967,11 +1020,14 @@ static int run_dump(const char *loader_path, const char *directory,
     }
     if (result == kIOReturnSuccess) {
         printf("single-session dump: chunk=%u\n", chunk);
+        g_phase = "dump_flash_a";
         result = dump_flash(&bot, chunk, dump_a, hash_a);
     }
     if (result == kIOReturnSuccess) {
+        g_phase = "dump_flash_b";
         result = dump_flash(&bot, chunk, dump_b, hash_b);
     }
+    g_phase = "close_bot_interface";
     close_bot_interface(&bot);
     free(loader);
     if (result != kIOReturnSuccess) {
@@ -1290,6 +1346,10 @@ static void usage(const char *program) {
 }
 
 int main(int argc, char **argv) {
+    signal(SIGSEGV, crash_handler);
+    signal(SIGBUS, crash_handler);
+    signal(SIGABRT, crash_handler);
+    g_phase = "main";
     if (argc == 2 && strcmp(argv[1], "self-test") == 0) return self_test();
     if (argc == 2 && strcmp(argv[1], "bot-probe") == 0) {
         BotInterface bot = {0};

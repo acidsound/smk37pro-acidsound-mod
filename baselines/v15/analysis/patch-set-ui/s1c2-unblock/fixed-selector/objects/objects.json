@@ -1,0 +1,29 @@
+{
+  "format": "smk37-fixed-selector-runtime-objects-v1",
+  "source_dump": "baselines/v15/device-dumps/v15-clean-baseline-a.bin",
+  "source_dump_sha256": "1c202201a81ed6d956ec5398adff75ffcd805594a27370a56caafaf18223383b",
+  "objects": [
+    {
+      "note": 36,
+      "bank": 4,
+      "patch": 12,
+      "slug": "note36-bankD12-HAND_DRUM",
+      "name": "HAND DRUM",
+      "packed_dump_offset": "0x000f7580",
+      "packed_sha256": "a64fc8623c877b16ecc8eb0259f14eb2b58e46e92fcd073849bbddf16b060452",
+      "runtime_sha256": "98bc86e7d9625c837ee6c07fa3f01cbd6079960c9d1071017cf51194aa48c1bf",
+      "object_path": "baselines/v15/analysis/patch-set-ui/s1c2-unblock/fixed-selector/objects/note36-bankD12-HAND_DRUM.runtime156.bin"
+    },
+    {
+      "note": 45,
+      "bank": 4,
+      "patch": 14,
+      "slug": "note45-bankD14-Mooger_1",
+      "name": "Mooger #1",
+      "packed_dump_offset": "0x000f7680",
+      "packed_sha256": "cf44a49e6157945f70bb144e42d7add0d88ee8ef1f2658ef8ab4a657e6e6a77c",
+      "runtime_sha256": "e0bf5adb328b25de2c64d24cf8f6fe8f8e293e968dd56dbbfbf771ad92fe8275",
+      "object_path": "baselines/v15/analysis/patch-set-ui/s1c2-unblock/fixed-selector/objects/note45-bankD14-Mooger_1.runtime156.bin"
+    }
+  ]
+}

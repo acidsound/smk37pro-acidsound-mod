@@ -1,0 +1,148 @@
+{
+  "kagaimiq-patched": {
+    "compiled_sla_sha256": "8499de8322988e0e762c4f4fda72ed36715327c8edd1945e4eba867a3d750fba",
+    "constructors": 109,
+    "files": [
+      {
+        "constructors": 24,
+        "file": "pi32v2.slaspec",
+        "lines": 435,
+        "sha256": "be3d9ef75d7c0a8b3e3d4db0ad6a6db3b4b06455770d762f9e55fc6b1691847a"
+      },
+      {
+        "constructors": 8,
+        "file": "pi32v2_ins_arithops.sinc",
+        "lines": 92,
+        "sha256": "c9f9c039a5d575ee60b737b0bf44538052713fe577ca9b7fe1aacb12bd60fda1"
+      },
+      {
+        "constructors": 3,
+        "file": "pi32v2_ins_bitops.sinc",
+        "lines": 44,
+        "sha256": "6ca6f09c0397a7572f23ab8df0c95b16380797ffc3c4597fce62a8f8fadbde6d"
+      },
+      {
+        "constructors": 7,
+        "file": "pi32v2_ins_loadimm.sinc",
+        "lines": 85,
+        "sha256": "0f7150fe98abe3259b17ddbbee3f4cbe3d3c74bdbc792c943c0d1e4119d7537b"
+      },
+      {
+        "constructors": 19,
+        "file": "pi32v2_ins_loadstore.sinc",
+        "lines": 228,
+        "sha256": "b402a525dd0ba8a99328756d0f411cca659351779e03e2e222e65aedaa7e29a3"
+      },
+      {
+        "constructors": 4,
+        "file": "pi32v2_ins_logicops.sinc",
+        "lines": 57,
+        "sha256": "9fe576e188f7ba236fb73fe3489e6a1160212593e1f2ff42e42423c6f8c06238"
+      },
+      {
+        "constructors": 11,
+        "file": "pi32v2_ins_move.sinc",
+        "lines": 123,
+        "sha256": "472545cf0e636adb8da243d956424f070486ee40f12145652c632e579a022315"
+      },
+      {
+        "constructors": 18,
+        "file": "pi32v2_ins_progflow.sinc",
+        "lines": 191,
+        "sha256": "652a56dcf3fe7e027d647813e41b123ca3163262d17179e7a5d6f9ef4fafc2d6"
+      },
+      {
+        "constructors": 8,
+        "file": "pi32v2_ins_shiftrot.sinc",
+        "lines": 97,
+        "sha256": "c1bedc00bd29113038e8eb8e325ae476c01904a6a88bfe47f141738b2c62d29b"
+      },
+      {
+        "constructors": 7,
+        "file": "pi32v2_ins_stack.sinc",
+        "lines": 70,
+        "sha256": "13b4adb834e258e89c7b07324f839091d61ea87d156cd1cd3a98155d28893e93"
+      }
+    ],
+    "source_lines": 1422
+  },
+  "quarkslab": {
+    "compiled_sla_sha256": "6d774eacaa7f5769ebb536699c6c13500dbb806a265740094464c64951a906d4",
+    "constructors": 326,
+    "files": [
+      {
+        "constructors": 28,
+        "file": "pi32v2.slaspec",
+        "lines": 811,
+        "sha256": "4de05ac1a426d3ef83d3157ce7166664af10e5a739651ec0db588eab36e16801"
+      },
+      {
+        "constructors": 34,
+        "file": "pi32v2_ins_arithops.sinc",
+        "lines": 381,
+        "sha256": "c72ed438aeec84277d10d2913fbcaf67dab58526b726cbd25c67457a1e6bc26c"
+      },
+      {
+        "constructors": 6,
+        "file": "pi32v2_ins_bitops.sinc",
+        "lines": 88,
+        "sha256": "2034d217913723307988e8806e9678de5e59fbc5f0e9c07b00fb7d329973936a"
+      },
+      {
+        "constructors": 25,
+        "file": "pi32v2_ins_ifthenelse.sinc",
+        "lines": 530,
+        "sha256": "dc6b1f64edea857fad9c9fd1e676ff7259973f62692fe038ce5a4de0d9537862"
+      },
+      {
+        "constructors": 7,
+        "file": "pi32v2_ins_loadimm.sinc",
+        "lines": 89,
+        "sha256": "18aa5346508c55130ee77dfd26359369971590488bf288a736ac998587a6acd0"
+      },
+      {
+        "constructors": 61,
+        "file": "pi32v2_ins_loadstore.sinc",
+        "lines": 749,
+        "sha256": "f86d142289f1f0412d77dc567258d370cf5578693c102cacc5155e7cf29dea91"
+      },
+      {
+        "constructors": 32,
+        "file": "pi32v2_ins_logicops.sinc",
+        "lines": 349,
+        "sha256": "6de1e1d9884ef658e048fe8797299a25e0bd3e881e285785354e10638f7bd76b"
+      },
+      {
+        "constructors": 15,
+        "file": "pi32v2_ins_move.sinc",
+        "lines": 165,
+        "sha256": "199540961a0fdfa3482c5e8d44b4eced363abe1f16bb772a4b8774ef5cec89af"
+      },
+      {
+        "constructors": 1,
+        "file": "pi32v2_ins_para_arithops.sinc",
+        "lines": 16,
+        "sha256": "f686b642afa4e97d9a9b3f55f48cc4dd9b416bf09ac56ae7226b1a34d5238e42"
+      },
+      {
+        "constructors": 71,
+        "file": "pi32v2_ins_progflow.sinc",
+        "lines": 777,
+        "sha256": "007db1e2092586ce8cf3e8d9dcc785d3fa2f253cf004c49283df8e11f01ed580"
+      },
+      {
+        "constructors": 19,
+        "file": "pi32v2_ins_shiftrot.sinc",
+        "lines": 197,
+        "sha256": "23e1aecc3e8f0a49480e21a90deb7c988aedcdecf69743596fcedc9589446c2d"
+      },
+      {
+        "constructors": 27,
+        "file": "pi32v2_ins_stack.sinc",
+        "lines": 478,
+        "sha256": "a3db7c214948f6a8d8e7984a05904f1c9734b1c52e1235155d778729927837d3"
+      }
+    ],
+    "source_lines": 4630
+  }
+}

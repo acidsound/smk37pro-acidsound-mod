@@ -1,0 +1,438 @@
+{
+  "boot_load_lifecycle": [
+    {
+      "action": "Stock storage and UI initialization complete. Do not add an early boot hook.",
+      "stage": 0
+    },
+    {
+      "action": "At a separately proven post-storage hook, read only the small A/B headers with 0x02004870.",
+      "stage": 1
+    },
+    {
+      "action": "Validate bounds, magic, version, committed state, sequence, payload length, and CRC before touching owned Ch10 RAM.",
+      "stage": 2
+    },
+    {
+      "action": "Read the selected payload into scratch or inactive owned RAM, verify again, then publish valid and generation last.",
+      "stage": 3
+    },
+    {
+      "action": "Note On and Note Off select the same immutable slot and generation. No loader, storage I/O, or global bank switch occurs in the Note path.",
+      "stage": 4
+    },
+    {
+      "action": "Missing or corrupt records leave valid clear and fall back safely to stock or explicit host-loaded volatile data.",
+      "stage": 5
+    }
+  ],
+  "crc_and_repack": {
+    "fixed_size_app_patch": [
+      "update app.bin JLFS data CRC and header CRC",
+      "update app_area_head data CRC and header CRC",
+      "SFC re-encrypt the fixed app area",
+      "update UFW flash.bin data CRC",
+      "update encrypted UFW entry-list CRC and UFW header CRC",
+      "repack FWSC at unchanged size and preserve metadata slots"
+    ],
+    "layout_change": "Changing app.bin size, JLFS VM/USRFLASH offsets or sizes, or UFW flash.bin size is outside the validated fixed-layout packer and is blocked.",
+    "runtime_persistence": "No FWSC, UFW, SFC, app.bin, or JLFS-directory CRC changes when firmware writes an already allocated VM or USRFLASH range at runtime. The custom record still needs its own integrity and commit checks."
+  },
+  "format": "smk37-v15-h2-patch-set-persistence-analysis-v1",
+  "official_layout": {
+    "app_tail": {
+      "app_area_end": "0x9acd3",
+      "app_end": "0x9ab54",
+      "bytes": 383,
+      "owner": "cfg_tool.bin",
+      "safe_append_bytes": 0
+    },
+    "jlfs_entries": [
+      {
+        "data_crc16": "0xfee9",
+        "entry_offset": "0x00120",
+        "flags": "0x82",
+        "header_crc16": "0xf93f",
+        "header_offset": "0x04020",
+        "index": 0,
+        "name": "app.bin",
+        "physical_data_start": "0x04120",
+        "physical_end_exclusive": "0x9ab54",
+        "size": 617012,
+        "size_hex": "0x96a34"
+      },
+      {
+        "data_crc16": "0x2e75",
+        "entry_offset": "0x96b54",
+        "flags": "0x82",
+        "header_crc16": "0x93af",
+        "header_offset": "0x04040",
+        "index": 0,
+        "name": "cfg_tool.bin",
+        "physical_data_start": "0x9ab54",
+        "physical_end_exclusive": "0x9acd3",
+        "size": 383,
+        "size_hex": "0x17f"
+      },
+      {
+        "data_crc16": "0xffff",
+        "entry_offset": "0x9c000",
+        "flags": "0x12",
+        "header_crc16": "0xdbbc",
+        "header_offset": "0x04060",
+        "index": 0,
+        "name": "VM",
+        "physical_data_start": "0xa0000",
+        "physical_end_exclusive": "0xc4000",
+        "size": 147456,
+        "size_hex": "0x24000"
+      },
+      {
+        "data_crc16": "0xffff",
+        "entry_offset": "0x00000",
+        "flags": "0x92",
+        "header_crc16": "0x0c6b",
+        "header_offset": "0x04080",
+        "index": 0,
+        "name": "PRCT",
+        "physical_data_start": "0x04000",
+        "physical_end_exclusive": "0xa0000",
+        "size": 638976,
+        "size_hex": "0x9c000"
+      },
+      {
+        "data_crc16": "0xffff",
+        "entry_offset": "0xc0000",
+        "flags": "0x92",
+        "header_crc16": "0x0064",
+        "header_offset": "0x040a0",
+        "index": 0,
+        "name": "BTIF",
+        "physical_data_start": "0xc4000",
+        "physical_end_exclusive": "0xc5000",
+        "size": 4096,
+        "size_hex": "0x1000"
+      },
+      {
+        "data_crc16": "0xffff",
+        "entry_offset": "0xc1000",
+        "flags": "0x92",
+        "header_crc16": "0x0418",
+        "header_offset": "0x040c0",
+        "index": 0,
+        "name": "USRTRIM",
+        "physical_data_start": "0xc5000",
+        "physical_end_exclusive": "0xc6000",
+        "size": 4096,
+        "size_hex": "0x1000"
+      },
+      {
+        "data_crc16": "0xffff",
+        "entry_offset": "0xc2000",
+        "flags": "0x92",
+        "header_crc16": "0xd0cb",
+        "header_offset": "0x040e0",
+        "index": 0,
+        "name": "USRFLASH",
+        "physical_data_start": "0xc6000",
+        "physical_end_exclusive": "0xef000",
+        "size": 167936,
+        "size_hex": "0x29000"
+      },
+      {
+        "data_crc16": "0xffff",
+        "entry_offset": "0xf4000",
+        "flags": "0x92",
+        "header_crc16": "0x9804",
+        "header_offset": "0x04100",
+        "index": 1,
+        "name": "USR",
+        "physical_data_start": "0xf8000",
+        "physical_end_exclusive": "0x102000",
+        "size": 40960,
+        "size_hex": "0xa000"
+      }
+    ],
+    "persistence_regions_outside_ufw_flash_bin": {
+      "USRFLASH": {
+        "end_exclusive": "0xef000",
+        "size": 167936,
+        "start": "0xc6000"
+      },
+      "VM": {
+        "end_exclusive": "0xc4000",
+        "size": 147456,
+        "start": "0xa0000"
+      },
+      "implication": "Runtime writes there do not alter the v15 FWSC flash.bin entry. The directory capacity alone does not prove unused allocation space or identify which region backs obj+0x160."
+    },
+    "ufw_flash_entry": {
+      "end_exclusive_in_physical_flash_model": "0x9c000",
+      "payload_offset": "0x400",
+      "size": 638976,
+      "size_hex": "0x9c000"
+    }
+  },
+  "patch_set_budgets": {
+    "full_stock_0xa3": {
+      "128_notes_payload_bytes": 20864,
+      "16_slots_payload_bytes": 2608,
+      "warning": "Do not change the stock 0xa3 schema or overwrite the existing 128-record library for custom mapping metadata."
+    },
+    "reference_only": {
+      "128_notes_bank_preset_bytes": 256,
+      "16_slots_bank_preset_bytes": 32,
+      "status": "smallest format, but deterministic boot materialization and lifecycle side effects are not yet proven"
+    },
+    "runtime_voice_0x9c": {
+      "128_notes": {
+        "a_b_bytes_rounded_to_0x1000_domains": 40960,
+        "fits_one_0x1000_erase_domain": false,
+        "header_bytes_example": 64,
+        "payload_bytes": 19968,
+        "record_bytes_example": 20032,
+        "slot_count": 128,
+        "voice_bytes_per_slot": 156
+      },
+      "16_slots": {
+        "a_b_bytes_rounded_to_0x1000_domains": 8192,
+        "fits_one_0x1000_erase_domain": true,
+        "header_bytes_example": 64,
+        "payload_bytes": 2496,
+        "record_bytes_example": 2560,
+        "slot_count": 16,
+        "voice_bytes_per_slot": 156
+      },
+      "preferred_first_persistent_payload": "16 exact H2-proven runtime voices, after a storage allocation is proven"
+    }
+  },
+  "recommended_persistent_design_after_gates": {
+    "format": {
+      "atomicity": "two 0x1000-aligned copies for the 16-slot set, payload first and commit header last, then readback verification",
+      "fields": [
+        "header length",
+        "payload length",
+        "slot count",
+        "sequence",
+        "payload CRC16 or CRC32",
+        "header CRC",
+        "commit state"
+      ],
+      "magic": "fixed custom magic",
+      "payload_kind": "16 exact 0x9c runtime voices first, not a modified stock 0xa3 record",
+      "version": "v1"
+    },
+    "power_loss": "On any short write, invalid CRC, torn header, or ambiguous sequence, retain the previous valid copy and expose volatile fallback rather than SAVED.",
+    "read_contract": "Use 0x02004870 only after storage initialization. Accept only exact magic/version/length/slot count/CRC and a fully committed newest sequence.",
+    "storage": "a separately proven allocation in the runtime storage region, outside every stock allocation and journal range",
+    "write_contract": "Treat 0x02004b02 success only when return equals requested length. Never copy stock SAVE behavior that ignores failure."
+  },
+  "residual_unknowns": [
+    "Which JLFS region and suballocation obj+0x160 actually names at runtime",
+    "The runtime value of the storage bound at 0x01c454b0+0x18",
+    "All allocations and journal ranges after stock patch offset +0x9209",
+    "Exact erase, open, and commit semantics of 0x02004a54 modes",
+    "Power-loss and media-error behavior below 0x02063260",
+    "A proven post-storage boot hook that is safe on every boot path"
+  ],
+  "rollback_boundaries": {
+    "firmware": "H2 itself changes exact app sectors 0x04000, 0x20000, 0x22000, 0x2a000, and 0x62000. Any future persistence implementation needs a new exact changed-sector inventory and rollback bundle.",
+    "persistent_data": "The official UFW flash.bin stops at 0x9c000, before VM and USRFLASH. Restoring official app sectors does not prove deletion of a custom persistent record.",
+    "safe_rollback_rule": "Official firmware must ignore the custom namespace after app rollback. Prefer version rejection or a separately guarded tombstone operation. Never erase a broad VM or USRFLASH region without a proven allocation map.",
+    "stock_save": "Restore stock packer and SAVE bytes before claiming stock Patch SAVE compatibility. A rollback from a custom build must restore both code and any modified stock data records independently."
+  },
+  "safe_options_now": [
+    {
+      "decision": "PASS NOW",
+      "option": "volatile host-loaded 16-slot set",
+      "reason": "Extends H2/R04 without touching persistent storage. Boot fallback is stock or invalid-until-loaded."
+    },
+    {
+      "decision": "PASS NOW",
+      "option": "reuse stock 128 patch records as the patch library and keep a volatile note-to-record map",
+      "reason": "No new persistent bytes. It preserves stock record format and avoids loader calls in the Note hot path after slots are preloaded."
+    },
+    {
+      "decision": "BLOCK",
+      "option": "persist custom data after +0x9209",
+      "reason": "Large apparent headroom exists, but allocation ownership and backing-region identity are unproven."
+    },
+    {
+      "decision": "BLOCK",
+      "option": "overwrite cfg_tool.bin or append to app.bin",
+      "reason": "The app-area tail has zero free bytes and is a named JLFS file."
+    },
+    {
+      "decision": "BLOCK",
+      "option": "preseed VM or USRFLASH by FWSC repack",
+      "reason": "The FWSC flash.bin entry ends before both regions. The package provides layout metadata, not a validated preseed/update path for their live contents."
+    },
+    {
+      "decision": "BLOCK",
+      "option": "piggyback custom data into stock SAVE records, flags, or selection bytes",
+      "reason": "Those bytes have exact stock meanings and failure behavior. Repurposing them corrupts stock compatibility and rollback."
+    }
+  ],
+  "save_interception": {
+    "h2_flow": "branch to stock local exit before the first persistent write, with the later packer call neutralized",
+    "official_and_h2_bytes": {
+      "h2_first_write_site": "04960000",
+      "h2_packer_call_site": "00000000",
+      "h2_surrounding": "049600004016000000005844",
+      "official_first_write_call": "beeaacee",
+      "official_packer_call": "bfeac7b9"
+    },
+    "official_flow": [
+      "write current 0xa3 snapshot to +0x4000+index*0xa3",
+      "call stock packer to update packed 0x80 record",
+      "set saved flag",
+      "flush 0x80 flag table"
+    ],
+    "production_requirement": "Do not attach custom persistence to the stock SAVE writer while H2 replaces the stock packer body. First relocate H2 producer code, restore the official packer and stock SAVE path, then dispatch a separate custom commit only from a proven Drum Set context."
+  },
+  "scope": {
+    "firmware_basis": "official v15 only, with H2 as the current volatile owned-RAM checkpoint",
+    "operations": [
+      "static repository analysis",
+      "local binary parsing",
+      "deterministic arithmetic"
+    ],
+    "prohibited_and_not_performed": [
+      "firmware patch",
+      "OTA or flash",
+      "device access"
+    ]
+  },
+  "sha_gates": {
+    "h2_app": {
+      "actual": "d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59",
+      "expected": "d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59",
+      "status": "PASS"
+    },
+    "listing": {
+      "actual": "f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347",
+      "expected": "f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347",
+      "status": "PASS"
+    },
+    "official_app": {
+      "actual": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "expected": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "status": "PASS"
+    },
+    "official_fwsc": {
+      "actual": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+      "expected": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+      "status": "PASS"
+    }
+  },
+  "source_bindings": {
+    "app_patch_tool": {
+      "path": "tools/smk37_v15_app_patch.py",
+      "sha256": "2a355a5d2da789a085ca6d1b196ed42f36400ad5115fc23c9af79c3d454eff33"
+    },
+    "app_tail": {
+      "path": "baselines/v15/analysis/r03-owned-ram/app-tail-placement/evidence.json",
+      "sha256": "19633d28c7060f578ee78dbb809ed31e74e0baec9b1b8af608a56c2c85ba1846"
+    },
+    "factory_loader": {
+      "path": "baselines/v15/analysis/channel-separation-reanalysis/factory-loader/factory_loader_evidence.json",
+      "sha256": "efdda52181e3736221354acfe36633a1fd55cc3f7b83918a03e073bab3ebcd09"
+    },
+    "h2_live_validation": {
+      "path": "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/live-validation-20260802.md",
+      "sha256": "b2aca5903390cffe573f42c89aa6407a52c28f967124a07b407887959d1c8fd7"
+    },
+    "h2_manifest": {
+      "path": "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/app-manifest.json",
+      "sha256": "dc6fba4ddb887424d6bd76b6d1477f66f97096e2d6656f203eec423680572cf3"
+    },
+    "official_manifest": {
+      "path": "baselines/v15/official/package-manifest.json",
+      "sha256": "21041cf36426923c81e1d5c583af928b74aed43b4661dadb81a26ad9349e00a8"
+    },
+    "persistence_direction": {
+      "path": "baselines/v15/analysis/ui-preflash/followup/persistence-direction.json",
+      "sha256": "dba3091b3344efe29d0fe58af01d2e03ed07f567103caa85d0a96ddd0c421c1d"
+    },
+    "roadmap": {
+      "path": "baselines/v15/analysis/channel-separation-reanalysis/post-r02-roadmap.md",
+      "sha256": "2dd1879a6020096804bb21fe538dabb81bf3c1b71cd1a225c69b9cbf34facb12"
+    },
+    "runtime_source": {
+      "path": "baselines/v15/analysis/channel-separation-reanalysis/runtime-source/runtime_source_trace.json",
+      "sha256": "bc619891389c9f1183b36686b706a67136a8852a0de3e8b0fdd6c21d75022d4c"
+    },
+    "state_persistence": {
+      "path": "baselines/v15/analysis/ui-preflash/state-persistence/state_persistence_evidence.json",
+      "sha256": "f48f66963681071217e9eed10e9247f93ff87e303ed9442165cc695b4fe06afa"
+    }
+  },
+  "staged_path": [
+    {
+      "gate": "owned RAM and matched Note On/Off already proven for one voice",
+      "persistence": "none",
+      "phase": "P0 volatile single voice",
+      "state": "H2 LIVE PASS"
+    },
+    {
+      "gate": "note map, generation, active-note identity, overlap and release stress",
+      "persistence": "none",
+      "phase": "P1 volatile 16-slot set",
+      "state": "next"
+    },
+    {
+      "gate": "prove storage base, total bound, allocation map, post-storage hook, and no stock overlap",
+      "persistence": "read headers only",
+      "phase": "P2 read-only storage probe",
+      "state": "blocked on code proof"
+    },
+    {
+      "gate": "short-write, corrupt-record, readback, reboot, and power-loss tests",
+      "persistence": "A/B 4 KiB records via separate host command",
+      "phase": "P3 guarded custom commit",
+      "state": "blocked on P2"
+    },
+    {
+      "gate": "restore stock packer/SAVE, prove event context and SAVED only after verified commit",
+      "persistence": "custom SAVE only in proven Drum Set page",
+      "phase": "P4 UI SAVE integration",
+      "state": "last"
+    }
+  ],
+  "stock_patch_store": {
+    "apparent_capacity_if_region_were_USRFLASH": 130551,
+    "apparent_capacity_if_region_were_VM": 110071,
+    "base": "*(0x01c33260+0x160)",
+    "known_extent_bytes": 37385,
+    "known_extent_hex": "0x9209",
+    "safe_unallocated_budget": 0,
+    "segments": [
+      {
+        "bytes": 16384,
+        "end_exclusive": "0x4000",
+        "formula": "4 banks * 0x1000",
+        "name": "packed_bank_records",
+        "start": "0x0"
+      },
+      {
+        "bytes": 20864,
+        "end_exclusive": "0x9180",
+        "formula": "4 * 32 * 0xa3",
+        "name": "expanded_or_current_saved_records",
+        "start": "0x4000"
+      },
+      {
+        "bytes": 128,
+        "end_exclusive": "0x9200",
+        "name": "saved_flag_table",
+        "start": "0x9180"
+      },
+      {
+        "bytes": 9,
+        "end_exclusive": "0x9209",
+        "name": "selected_bank_preset_block",
+        "start": "0x9200"
+      }
+    ],
+    "why_zero": "No official-v15 evidence proves that bytes after +0x9209 are unallocated, that obj+0x160 equals the start of VM or USRFLASH, or that no stock allocator/journal uses the remainder."
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "changed_flash_bytes": 270,
+  "changed_sectors": [
+    "0x04000",
+    "0x20000",
+    "0x22000",
+    "0x2a000",
+    "0x62000"
+  ],
+  "hashes": {
+    "candidate_app": "4afd13d7301c2ae209c11d3fe932d019faa770b551f2d8a38cf4c018c7aafa8a",
+    "candidate_flash": "2592990c071fcd7654f3ea913d70f341553d19f79801e693f74801fe160021ad",
+    "candidate_fwsc": "63e3cfa39473df08bd225df2c8ae81dbfe7aafbd31da6cc6dcf64ca03453681e",
+    "official_app": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "official_flash": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+    "official_fwsc": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff"
+  },
+  "ledger": {
+    "all_match": true,
+    "entry_count": 31
+  },
+  "producer": {
+    "bytes": 148,
+    "first_mutation": "0x0201e1b6",
+    "instruction_count": 52,
+    "segmented_stub": "0x0201e232"
+  },
+  "protected_prefix_0x0000_0x3fff_unchanged": true,
+  "reloads_and_official_handler_preserved": true,
+  "reviewed_commit": "0f2c1f4acd76504b31b6fb624ec619110d0d611d",
+  "rollback_reconstructs_exact_official_v15": true,
+  "routes": {
+    "direct_product": "0x0201e1a2",
+    "note_off": "0x0201e13e",
+    "note_on": "0x0201e142",
+    "segmented_product": "0x0201e232"
+  },
+  "scope": "offline files only; no USB, MIDI, OTA, flash, reset, or device interface opened",
+  "selector": {
+    "bytes": 96,
+    "fallback_copy": "0x0201e194",
+    "instruction_count": 33,
+    "memcpy": "0x02048cce"
+  },
+  "status": "PASS"
+}

@@ -1,0 +1,149 @@
+{
+  "decision": "Gate A has a concrete fixed-prefix ownership construction, but R03 remains BLOCKED by the no-allocator-change rule and unproven producer/consumer code placement.",
+  "format": "smk37-v15-r03-heap-prefix-reservation-v1",
+  "inputs": {
+    "app": "build/v15-official-app.bin",
+    "app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "clang_sha256": "42b94f9e11140b0fcab8f807b2872ad245b8eeca03a2d792f8706c5a3a35d34c",
+    "object": "baselines/v15/analysis/r03-owned-ram/heap-prefix-reservation/mem_heap.pi32.o",
+    "object_sha256": "82fb6c5a2546861c6114442f556b573da739717c5f53cfbc31853337e36e5fb6",
+    "sdk_commit": "e30b1ee375d1f2993fc23bf92c8b99006a6e5f9d",
+    "sdk_mem_heap_source_sha256": "411cb79e74853a5b7ce9135514f59d8eafb5b098ced2f8acde08201fdfcf380c",
+    "toolchain_archive_sha256": "f686586bcfb45e0f0bb27fd2b39c7a7f313cb4f0e88a66a14da621ffa8225958"
+  },
+  "option_a_pointer_anchor": {
+    "allocation": "BLOCK until a thread-safe v15 allocator entry and producer code placement are independently proven",
+    "boot_zero_size_patch": "0x0003cb48 -> 0x0003cb4c",
+    "ownership": "PASS for the four-byte zeroed pointer slot",
+    "pointer_slot": "0x01c4651c..0x01c46520"
+  },
+  "option_b_fixed_prefix": {
+    "boot_zero_size_patch": "0x0003cb48 -> 0x0003cc0c",
+    "heap_begin_patch": "0x01c46520 -> 0x01c465e0",
+    "layout": {
+      "active_count": "0x01c465bd",
+      "generation": "0x01c465c0",
+      "guard_start": "0x01c465c4",
+      "valid": "0x01c465bc",
+      "voice": "0x01c46520..0x01c465bc"
+    },
+    "ownership": "PASS if both exact patches are applied; allocator cannot address below its patched HEAP_BEGIN",
+    "range": "0x01c46520..0x01c465e0",
+    "requirement_status": "EXCEPTION REQUIRED because heap capacity is reduced by 0xc0 despite unchanged allocator ABI",
+    "size": "0x000000c0"
+  },
+  "sbrk_match": {
+    "differing_offsets": [
+      16,
+      17,
+      18,
+      19,
+      32,
+      33,
+      34,
+      35,
+      40,
+      41,
+      42,
+      43
+    ],
+    "fixed_bytes_exact": 80,
+    "fixed_bytes_total": 80,
+    "recovered_symbols": {
+      "HEAP_BEGIN": "0x01c46520",
+      "HEAP_END": "0x01c7fd30",
+      "sbrk.__init_addr": "0x01c32d94"
+    },
+    "relocations": [
+      {
+        "relative_offset": "0x0000000e",
+        "symbol": "sbrk.__init_addr",
+        "v15_value": "0x01c32d94"
+      },
+      {
+        "relative_offset": "0x0000001e",
+        "symbol": "HEAP_BEGIN",
+        "v15_value": "0x01c46520"
+      },
+      {
+        "relative_offset": "0x00000026",
+        "symbol": "HEAP_END",
+        "v15_value": "0x01c7fd30"
+      }
+    ],
+    "size": "0x00000062",
+    "v15_address": "0x0205e9da"
+  },
+  "validation": [
+    {
+      "check": "official-v15-app",
+      "detail": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "status": "PASS"
+    },
+    {
+      "check": "pinned-mem-heap-object",
+      "detail": "82fb6c5a2546861c6114442f556b573da739717c5f53cfbc31853337e36e5fb6",
+      "status": "PASS"
+    },
+    {
+      "check": "sbrk-symbol-size",
+      "detail": "0x00000062",
+      "status": "PASS"
+    },
+    {
+      "check": "sbrk-all-fixed-bytes-exact",
+      "detail": "80/80",
+      "status": "PASS"
+    },
+    {
+      "check": "sbrk-only-relocation-payload-differs",
+      "detail": "[16, 17, 18, 19, 32, 33, 34, 35, 40, 41, 42, 43]",
+      "status": "PASS"
+    },
+    {
+      "check": "sbrk-init-address",
+      "detail": "0x01c32d94",
+      "status": "PASS"
+    },
+    {
+      "check": "heap-begin",
+      "detail": "0x01c46520",
+      "status": "PASS"
+    },
+    {
+      "check": "heap-end",
+      "detail": "0x01c7fd30",
+      "status": "PASS"
+    },
+    {
+      "check": "pointer-slot-is-linker-padding",
+      "detail": "0x01c4651c..0x01c46520",
+      "status": "PASS"
+    },
+    {
+      "check": "pointer-slot-no-absolute-reference",
+      "detail": "[]",
+      "status": "PASS"
+    },
+    {
+      "check": "fixed-prefix-capacity",
+      "detail": "0x000000c0",
+      "status": "PASS"
+    },
+    {
+      "check": "fixed-prefix-no-reference-except-heap-begin",
+      "detail": "[{'instruction': '0x0205e9f8', 'value': '0x01c46520', 'bytes': 'c5ff2065c401'}]",
+      "status": "PASS"
+    },
+    {
+      "check": "pointer-zero-extension-stops-at-heap",
+      "detail": "0x01c46520",
+      "status": "PASS"
+    },
+    {
+      "check": "fixed-zero-extension-stops-at-new-heap",
+      "detail": "0x01c465e0",
+      "status": "PASS"
+    }
+  ]
+}

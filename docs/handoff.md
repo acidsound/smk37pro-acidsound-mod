@@ -1,13 +1,73 @@
 # SMK-37 Pro Mod — 핸드오프 문서
 
-작성: 2026-08-14 · 이 문서는 이 저장소의 **진입점**입니다. 각 주제의 상세는 하단
-"문서 맵"의 링크를 따라가세요.
+작성: 2026-08-14 · 갱신: 2026-10-03 · 이 문서는 이 저장소의 **진입점**입니다.
+각 주제의 상세는 하단 "문서 맵"의 링크를 따라가세요.
+
+> ### ⚠️ 2026-10-03 갱신 — 새 세션은 먼저 아래를 읽으세요
+>
+> - **세션 핸드오프: [`docs/handoff-2026-10-03.md`](handoff-2026-10-03.md)**
+>   (이전: [`handoff-2026-10-01.md`](handoff-2026-10-01.md))
+> - **트랙 전환: 공간 찾기 → 저장 경로.** 실기에서 성공한 것(PAD/건반 채널 분리, 개별 음원 패치)은
+>   전부 **휘발성**이다. 영구 경로가 없던 게 아니라 (1) S1C5가 stock SAVE를 스스로 무력화했고
+>   (2) 커밋 루틴 실행 공간이 없어서 못 썼다. 그런데 **UI가 이미 트리거하는 기존 쓰기 경로**
+>   (`0x020295c8` → `FUN_02005512` → flag 테이블 128 B 영속화)를 발견 → 실행 공간 블로커 소멸.
+>   [스토리지 ABI](../baselines/v15/analysis/persistence-s2/storage/report.md)
+> - **브릭 vs 케이브 확정**: M09 브릭은 `0x020958CE..0x02095EDE`(789 B, 템플릿 tail).
+>   M08 실기 생존 케이브 `0x0201DAFA..0x0201DBB0`(162 B)와 **약 480 KB 격리** — 브릭은 케이브 탓이 아님.
+>   단 **v15에서 그 주소는 코드이므로 재사용 불가**.
+> - **"미디코드 = 빈 공간" 추론 금지**: gap 스캔 2위 후보 `0x02016A88..0x02016CE2`가 이미 감사에서 REFUTED.
+> - 2026-08-15 **SDK 앱 플래시로 브릭** 발생 → 강제 도구로 복원 → 08-16 S16 재설치.
+>   원인 특정 완료(링크 맵 SDRAM 배치). 재발 방지 게이트:
+>   [`tools/check_sdk_app_layout.py`](../tools/check_sdk_app_layout.py) ·
+>   [`docs/usb-flash-safety-case.md`](usb-flash-safety-case.md)
+> - 확장 메모리 맵: [`baselines/v15/analysis/usb-flash-readiness/`](../baselines/v15/analysis/usb-flash-readiness/README.md)
+> - **펌웨어 16(1.16)이 2026-08-12 출시** — v15 고정 자산 무효화 위험.
+>   [`external-refresh-2026-10-01`](../baselines/v15/analysis/external-refresh-2026-10-01/README.md) ·
+>   [`v15↔v16 diff`](../baselines/v15/analysis/v15-vs-v16-app-diff-2026-10-01/README.md)
+> - **v15↔v16 함수 단위 diff 완료(오프라인, 실기기 미사용).** 651/684 함수가
+>   바이트 검증으로 짝지어졌고, 그중 518개는 로직 무변경(이미지 이동 + RAM 이동).
+>   - **Note On/Off 디스패처 `0x0201C5EC`**: 1.16에서 로직 무변경(107 명령 동일,
+>     RAM 주소만 +0x88). 벤더가 `Local-`/`USB Rec-`를 이 디스패처에 넣지 않았다.
+>   - **S1C producer `0x0201E13E`**: 1.16 위치 `0x0201E340`, **코드 바이트 동일**
+>     (v15 70 명령 = v16 앞 70 명령, 일치율 1.000). 함수 경계와 RAM 주소만 이동.
+>   - **1.16은 RAM 배치를 +0x40 이상 밀었다** (`0x01C33260` → `0x01C332A0`).
+>     v15 기준 RAM 주소를 1.16에 그대로 쓰면 안 된다.
+>   - **정정(2026-10-01): 1.16에 신규 코드는 없다.** **코드 영역 삽입 0 B.**
+>   - **정정(2026-10-02): 삽입 총계 102 B는 하한이다.** 전역 정렬은 16 B 앵커가 없는
+>     문자열 풀 구간에서 `insert` 대신 `complex`(동일 길이 교체)를 고른다. 문자열 단위
+>     분석으로 추가 확인: `b9`/`#9`/`#11`/`b13` 14 B, `Local-` 6 B, `USB Rec-` 8 B 삽입,
+>     `7th`/`Maj`/`Min`/`Dim`/`Aug`/`Dom` 24 B는 삭제가 아니라 데이터 테이블 `0x02057B5E`로 **이동**.
+>     전부 데이터이며 코드는 아니다.
+>   - **문자열 풀 실제 시작 확정**: v15 `0x0205D7B5` / v16 `0x0205E1F5` (**+0xA40**).
+>     양쪽 모두 136개 문자열, 추가 6 / 삭제 6 / 동일 124. `SU2`·`SU4`·`AD9`는 v15에도 있었다.
+>   - **미해결**: 같은 명령의 상수 3곳(`0x0200EB12`, `0x0200F772`, `0x0201A78E`)은 풀 기준
+>     오프셋이 v15/v16에서 **동일**(0x133/0x127/0x13B)한데 가리키는 문자열은 다르다.
+>     다른 2곳은 문자열을 따라 이동한다. 두 참조 방식이 섞여 있음 — 원인 미규명.
+>     이전에 적었던 "`0x02039000..0x02041000` 신규 코드 대역"은 **철회**한다 — 그 대역의
+>     함수들은 바이트 정렬상 신규 바이트가 0이며 v15 코드의 경계 재배정이다.
+>     **2026-10-02 추가**: 임의 정렬 스캔·상위 바이트 무시(별칭) 스캔까지 0건.
+>     `Local-`/`USB Rec-`의 **구현 코드는 여전히 특정하지 못했다.**
+>   - 신규 데이터 4곳(`0x02057DCD` `MinMaj`+7 B, `0x0205818C` `mk4_ui_task`,
+>     `0x02058730` 6×u32, `0x02058E94` 13×u32)은 recursive/exhaustive 리스팅 어디에서도
+>     **즉치값으로 참조되지 않는다**(양쪽 0건).
+>   - `structural` 12개(명령 열이 다른 함수)를 바이트 기준으로 재검증했다.
+>     **로직 변경은 사실상 0건.** `0x0200FC34`(350→344)는 변경 2 B(상수 재배치),
+>     `0x0202E52A`(141→135)는 변경 7 B(콜 대상 1개)뿐이다.
+>     유일한 후보는 `0x0201B570` — 슬롯 0-클리어 스토어 1개가 사라졌다(미확정).
+>   - `Local-`(@`0x0205E2D3`)와 `USB Rec-`(@`0x0205E32A`)는 **1.16에서 풀에 새로 삽입된
+>     표시 문자열**이다. 오프셋 테이블 가설(u8/u16/u32 × 기저 6종)도 **기각**(후보 0).
+>     `Key Chn-`/`Pad Chn-`는 **1.15에도 있었다**(정정).
+>   - 설정 메뉴 라벨은 **절대 포인터로 참조되지 않는다** — "문자열 xref로 파라미터
+>     테이블 찾기" 경로는 부정 결과. 라벨 참조 메커니즘은 **미확정**.
+>   상세: [`v15↔v16 diff README`](../baselines/v15/analysis/v15-vs-v16-app-diff-2026-10-01/README.md) ·
+>   [`structural-and-newbytes-2026-10-01.md`](../baselines/v15/analysis/v15-vs-v16-app-diff-2026-10-01/structural-and-newbytes-2026-10-01.md)
+> - **장치 상태는 2026-08-16 이후 미확인.** 무엇보다 먼저 read-only `device-info`로 확인.
 
 ## 1. 현재 상태 (한눈에)
 
 | 항목 | 상태 |
 |---|---|
-| 장치 펌웨어 | **S1C6 (표시 마커 `S16`)** — flash + 실기기 live 검증 완료 (2026-08-14) |
+| 장치 펌웨어 | **S1C6 (표시 마커 `S16`)** — 2026-08-16 재설치 성공 기록. **그 이후 미확인** |
 | FM Drum Preset | **identity-safe 해제 완료** — requested map(36..51)을 explicit Playback Note로 전송 |
 | 에디터 | GitHub Pages 배포 완료 — **실기기 Pad 연주까지 확인됨** |
 | Release | `v15-s1c6-reset-signature-isolation` (공개) |
@@ -89,11 +149,11 @@ S1C5의 reset wrapper(`0x0201e228`)는 **모든 패킷**의 `stage[0..1] == 0x62
 | 문서 | 내용 |
 |---|---|
 | [`docs/playback-note-safety-plan.md`](playback-note-safety-plan.md) | 연구·계획·Phase 0~3 전체 기록 (루트 원인, 설계, 검증) |
-| [`docs/v15-s1c-status.md`](v15-s1c-status.md) | S1C 시리즈 펌웨어 타임라인·현재 설치 |
+| [`v15-s1c-status.md`](../handoff/smk37pro-acidsound-mod/docs/v15-s1c-status.md) | S1C 시리즈 펌웨어 타임라인·현재 설치 (공개 핸드오프 저장소 사본) |
 | [`docs/firmware-versioning.md`](firmware-versioning.md) | 버저닝 규칙 (3자 체계) |
-| [`patch-set-editor/docs/HANDOFF.md`](../patch-set-editor/docs/HANDOFF.md) | 에디터 핸드오프 |
-| [`patch-set-editor/docs/PROTOCOL.md`](../patch-set-editor/docs/PROTOCOL.md) | SysEx/전송 프로토콜 |
-| [`patch-set-editor/docs/DEPLOY.md`](../patch-set-editor/docs/DEPLOY.md) | Pages 배포 |
+| [`patch-set-editor/docs/HANDOFF.md`](../handoff/smk37pro-acidsound-mod/patch-set-editor/docs/HANDOFF.md) | 에디터 핸드오프 |
+| [`patch-set-editor/docs/PROTOCOL.md`](../handoff/smk37pro-acidsound-mod/patch-set-editor/docs/PROTOCOL.md) | SysEx/전송 프로토콜 |
+| [`patch-set-editor/docs/DEPLOY.md`](../handoff/smk37pro-acidsound-mod/patch-set-editor/docs/DEPLOY.md) | Pages 배포 |
 | [`README.md`](../README.md) | 저장소 개요 |
 
 ## 5. 산출물 위치
@@ -164,3 +224,5 @@ exact_ota upload <fwsc> <transcript.log> --confirm <token>  # 플래시 중 USB 
 | 2026-08-14 | S1C6(S16) 구현·OTA·재로드 회귀 live PASS |
 | 2026-08-14 | Phase 2 에디터 explicit playback 배포 + 실기기 Pad 확인 |
 | 2026-08-14 | Release `v15-s1c6-reset-signature-isolation` |
+| 2026-10-01 | v15↔v16 오프라인 diff — **신규 코드 0**, structural 12개 로직 무변경(`0x0201B570` 후보 1) |
+| 2026-10-02 | 문자열 풀 정밀 분석 — 풀 시작 +0xA40, 추가 6/삭제 6, 신규 데이터 4곳 참조 0건 |

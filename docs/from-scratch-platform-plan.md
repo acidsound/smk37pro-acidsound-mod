@@ -1,6 +1,6 @@
 # 바닥부터 플랫폼 재구축 계획 (SDK 기반)
 
-작성: 2026-08-14 · 상태: **P0a PASS (SDK 빌드 완료, macOS+container+qemu)** — P0b(플래시)는 USB 접근 대기
+작성: 2026-08-14 · 갱신: 2026-10-01 · 상태: **P0a PASS (SDK 빌드)** · **P0c 시도 → 브릭 (2026-08-15)** · 원인 특정 및 재발 방지 게이트 구축 완료, 플래시는 게이트 통과 전까지 보류
 
 ## 1. 배경과 동기
 
@@ -162,7 +162,46 @@ LTO gold plugin→clang). 해결:
   불필요해짐. `isd_download`/`fw_add`/`ufw_maker`는 SDK 앱의 표준 업데이트
   패키징(update.ufw)이 필요해질 때(2차) 참고용으로 유지.
 
+### P0c 결과 — **브릭 (2026-08-15), 원인 특정 완료 (2026-10-01)**
+
+자체 복구 SDK 앱(SDK-DEMO-OTA, fwsc SHA-256
+`673da1d518eff494d0cf63c549d0ccffd63f5a8764f49ffa60d0d4d283af33bb`)을
+exact_ota로 플래시했다. **쓰기는 성공**(stage-1 `0xE0000000`·stage-2 `0xF0000000`
+ACK)했지만 부팅 후 장치가 USB에 전혀 나타나지 않았다. Jieli Forced Upgrade Tool
+4.0으로 스톡 v15 복원 후, 2026-08-16에 S1C6(S16)을 재설치해 브릭 직전 상태로
+되돌렸다.
+
+**원인 (RC-1)**: 플래시된 앱은 `-DCONFIG_NO_SDRAM_ENABLE`이 빠진 채 빌드되어
+`.data`/`.bss`/malloc 힙이 **SDRAM 창 `0x04000000`** 에 배치됐다
+(`sdk.map`: `.data @ 0x04000000`, `.bss @ 0x040009a0`, `_HEAP_END = 0x041fffe0`).
+정상 v15 앱은 `0x04000000`을 전혀 쓰지 않는 SFC/XIP 빌드이고, 이 보드의 SDRAM
+실장·초기화 여부는 미입증이다. 즉 앱이 USB를 초기화하기 전에 존재하지 않는
+메모리를 건드렸다. 부수 요인: `__FLASH_SIZE__`/`FLASH_SIZE=4M` 가정(실제 1 MiB),
+SMK에 없는 SDK `BOOT_INFO`/`UPDATA_BEG` 규약.
+
+**프로세스 원인**: 오프라인 게이트를 통과한 산출물(`SDK-DEMO-HELLO`, NO_SDRAM
+포함 빌드)과 실제로 플래시한 산출물(`SDK-DEMO-OTA`, 누락 빌드)이 달랐고,
+**링크 맵을 검사하는 게이트가 하나도 없었다.**
+
+**재발 방지 (신규)**:
+
+- `tools/check_sdk_app_layout.py` — 링크 맵의 모든 섹션이 확정 메모리 창
+  (`0x01c00000..`, XIP 슬롯) 안에 있는지 기계 검사. `0x04000000`이 나오면
+  REFUSE. `--self-test` 내장. 2026-08-15의 `sdk.map`을 넣으면 정확히
+  `.data`/`.bss`를 지목하고 거부한다.
+- `docs/usb-flash-safety-case.md` — 쓰기 경로 분류(A/B/C/D)와 pre-flight
+  게이트 P1~P9, 중단 조건.
+- `baselines/v15/analysis/usb-flash-readiness/` — 확장 메모리 맵 v2
+  (물리 플래시 1 MiB 타일링, UI→Synth 소유권, 미해독 256 KiB, SDRAM 창 BLOCKED).
+
+**다음 재개 조건**: G-01(SDRAM 실장 여부), G-03/G-04(v15 USB 초기화·클럭
+시퀀스)가 닫히고, P4 레이아웃 게이트를 통과하는 앱 + 관측 가능한 출력 + 폴백
+독립성이 확보될 때까지 SDK 앱 실험을 재개하지 않는다.
+
 ## 8. 관련 문서
+
+- `docs/usb-flash-safety-case.md` — 비-SMK 앱 플래시 pre-flight 게이트 (신규)
+- `baselines/v15/analysis/usb-flash-readiness/README.md` — 확장 메모리 맵 v2 (신규)
 
 - `baselines/v15/analysis/public-research.md` — SoC/SDK/USB/합성 리서치 베이스라인
 - `docs/research-notes.md` — LCD/오디오/보드 미지 사항 체크리스트

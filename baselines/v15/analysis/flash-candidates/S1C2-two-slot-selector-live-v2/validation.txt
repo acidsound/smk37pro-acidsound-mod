@@ -1,0 +1,12 @@
+S1-C2 live v2 validation: PASS
+app 4afd13d7301c2ae209c11d3fe932d019faa770b551f2d8a38cf4c018c7aafa8a
+package 63e3cfa39473df08bd225df2c8ae81dbfe7aafbd31da6cc6dcf64ca03453681e
+selector adb8774971811f6dbdce8b7338f2265f18b8bb22544ccab746e74610366d4e35 96 bytes
+producer a05e79c0b46e1e12b1244af3f49866c911fcc41937bc14196825d3080d780784 148 bytes
+direct 0x0201e468 -> 0x0201e1a2
+segmented 0x0201e49c -> 0x0201e232 immediate-return stub 79045904
+direct r9 == 0xa3 pre-mutation gate verified before testset/state/slot mutation
+packets ['6a9b4097cce1d28780ef3a507f42999743cc10e09770c17c5c78d185e9abff27', 'c4e8458edeb04d8106ca60a35243525e6b5f3f5de272091492409a440e3a9a8d']
+rollback reconstructs official flash f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a
+host dry-run schema PASS
+No device, OTA, flash, reset, MIDI, or USB transport opened.

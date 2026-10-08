@@ -1,0 +1,93 @@
+{
+  "app_sha256": "ab2d4d210605f20e35b96a8471c9f2e1102c24e18f3b062d6eabd4970f9794ce",
+  "changed_app_byte_count": 2,
+  "changed_app_ranges": [
+    {
+      "end_exclusive": 33,
+      "start": 32
+    },
+    {
+      "end_exclusive": 387579,
+      "start": 387578
+    }
+  ],
+  "changed_flash_byte_count": 10,
+  "changed_flash_offsets": [
+    "0x04000",
+    "0x04001",
+    "0x04002",
+    "0x04003",
+    "0x04020",
+    "0x04021",
+    "0x04022",
+    "0x04023",
+    "0x04140",
+    "0x62b1a"
+  ],
+  "changed_flash_sectors": [
+    "0x04000",
+    "0x62000"
+  ],
+  "changed_package_byte_count": 16,
+  "changed_package_ranges": [
+    {
+      "end_exclusive": 4,
+      "start": 0
+    },
+    {
+      "end_exclusive": 71,
+      "start": 69
+    },
+    {
+      "end_exclusive": 17432,
+      "start": 17428
+    },
+    {
+      "end_exclusive": 17464,
+      "start": 17460
+    },
+    {
+      "end_exclusive": 17749,
+      "start": 17748
+    },
+    {
+      "end_exclusive": 405295,
+      "start": 405294
+    }
+  ],
+  "expected_app_flash_offsets": [
+    "0x04140",
+    "0x62b1a"
+  ],
+  "flash_sha256": "458d1c0a1e08e5f74ad07ab3dd04cf7d7b591a421668f5ff822a15b250746998",
+  "input_package_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+  "package_sha256": "114d814b5def641c979a5f0fbd2e5dc06d982c807662d5221dc2e0e936e5e566",
+  "package_size": 701140,
+  "protected_hashes_h0": {
+    "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+    "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+    "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+    "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+  },
+  "protected_hashes_stock": {
+    "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+    "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+    "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+    "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861"
+  },
+  "protected_prefix_0x0000_0x3fff_unchanged": true,
+  "repacker_metadata_flash_offsets": [
+    "0x04000",
+    "0x04001",
+    "0x04002",
+    "0x04003",
+    "0x04020",
+    "0x04021",
+    "0x04022",
+    "0x04023"
+  ],
+  "rollback_manifest": "rollback/recovery-sectors/manifest.json",
+  "rollback_restores_changed_offsets": true,
+  "rollback_restores_stock_flash": true,
+  "validation_gate": "PASS"
+}

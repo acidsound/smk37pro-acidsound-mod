@@ -1,0 +1,14 @@
+S1C5 independent review decision: FAIL
+reviewed_commit=90080a59564e6255a30aa08dcf05d3ae4d8831df
+reviewed_tree=ae88bd64345e29fe542984307f49d372f52ab675
+PASS	deterministic-app-fwsc-rebuild
+PASS	parent-relative-four-changed-bytes
+PASS	pi32-lb-z-decode-and-semantics
+PASS	selector-r0-return-contract
+PASS	note-on-velocity-and-note-off-symmetry
+PASS	repeated-playback-note-60-no-slot-collapse
+PASS	protected-regions
+PASS	rollback-reconstructs-official-v15
+FAIL	exact-ota-current-src-api-compilation
+BLOCKED	exact-ota-candidate-accept-parent-official-reject
+BLOCKER	B-EXACT-OTA-API	Committed exact_ota.c does not compile against src/ota.c at exact commit 90080a5.

@@ -1,0 +1,181 @@
+address=0201cbcc
+function=FUN_0201cbcc entry=0201cbcc
+
+void FUN_0201cbcc(int param_1,uint param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  byte bVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+
+  if (DAT_01c33902 == '\0') {
+    if ((DAT_01c33901 == '\0') || (param_2 = FUN_0201c61a(param_2,param_2 % 0xc), param_2 < 0x79)) {
+      if (param_1 != 0) {
+        FUN_0201c37e(param_2,param_3,param_4);
+        return;
+      }
+      FUN_0201c28c(param_2,0x40,param_4);
+    }
+  }
+  else {
+    if (DAT_01c33901 == '\0') {
+      bVar1 = (&DAT_02056acf)[DAT_01c34d27];
+      for (iVar4 = 0; iVar4 != 7; iVar4 = iVar4 + 1) {
+        if ((((uint)bVar1 & 1 << iVar4) != 0) &&
+           (((byte)(&DAT_02057680)[(uint)DAT_01c34d26 * 7 + iVar4] + param_2 & 0xff) < 0x79)) {
+          if (param_1 == 0) {
+            FUN_0201c28c(0x40,param_4);
+          }
+          else {
+            FUN_0201c37e(param_3,param_4);
+          }
+        }
+      }
+      return;
+    }
+    uVar2 = FUN_0201c61a(param_2,param_2 % 0xc);
+    if (uVar2 < 0x79) {
+      bVar1 = (&DAT_02056acf)[DAT_01c34d27];
+      for (iVar4 = 0; iVar4 != 7; iVar4 = iVar4 + 1) {
+        if ((((uint)bVar1 & 1 << iVar4) != 0) &&
+           (uVar3 = FUN_0201c61a(((byte)(&DAT_02057680)[(uint)DAT_01c34d26 * 7 + iVar4] + uVar2 &
+                                 0xff) % 0xc), uVar3 < 0x79)) {
+          if (param_1 == 0) {
+            FUN_0201c28c(0x40,param_4);
+          }
+          else {
+            FUN_0201c37e(param_3,param_4);
+          }
+        }
+      }
+      return;
+    }
+  }
+  return;
+}
+
+
+
+address=0202ac0a
+function=FUN_0202ac0a entry=0202ac0a
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void FUN_0202ac0a(void)
+
+{
+  ushort uVar1;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
+  char cVar5;
+  int iVar6;
+  int iVar7;
+
+  _DAT_01c337d0 = 0;
+  if (_DAT_01c337d4 != 0) {
+    uVar3 = (uint)DAT_01c34d29;
+    uVar1 = *(ushort *)(uVar3 + 0x1c34d7a);
+    _DAT_01c337d4 = 0;
+    if (*(char *)(uVar3 + 0x1c34d2a) == '\0') {
+      iVar7 = uVar3 * 0x49e3 + 0x1c0e2c0;
+      iVar6 = 0;
+      for (iVar4 = 0; iVar4 != 0x420; iVar4 = iVar4 + 0x42) {
+        if ((((uint)uVar1 & 1 << iVar6) != 0) &&
+           (cVar5 = *(char *)((uint)DAT_01c33c04 + iVar4 + iVar7 + 0xa84), '\0' < cVar5)) {
+          iVar2 = iVar7 + iVar4;
+          FUN_0201c28c(*(undefined1 *)(iVar2 + 0xa83),cVar5,*(undefined1 *)(iVar2 + 0xac4));
+        }
+        iVar6 = iVar6 + 1;
+      }
+    }
+  }
+  if ((byte)(*(char *)(DAT_01c34d29 + 0x1c34d2a) - 1U) < 2) {
+    cVar5 = '\f';
+    for (iVar4 = 0; iVar4 != 0x6d; iVar4 = iVar4 + 1) {
+      if (*(char *)(iVar4 + 0x1c34744) != '\0') {
+        FUN_0201cbcc(0,cVar5,0x40,*(undefined1 *)((uint)DAT_01c34d0c * 0x49e3 + 0x1c0e2c0));
+        *(undefined1 *)(iVar4 + 0x1c34744) = 0;
+      }
+      cVar5 = cVar5 + '\x01';
+    }
+    FUN_020493d4(0x1c34da1,0xff,0x25);
+  }
+  return;
+}
+
+
+
+address=0202976a
+function=FUN_0202976a entry=0202976a
+
+void FUN_0202976a(void)
+
+{
+  undefined1 *puVar1;
+  byte bVar2;
+  int iVar3;
+
+  for (bVar2 = 0; bVar2 < DAT_01c33b09; bVar2 = bVar2 + 1) {
+    iVar3 = (uint)bVar2 * 4;
+    FUN_020236e4(*(undefined1 *)(iVar3 + 0x1c3413d),*(undefined1 *)(iVar3 + 0x1c3413c));
+    *(undefined1 *)(*(byte *)(iVar3 + 0x1c3413f) + 0x1c33b90) = 0;
+  }
+  DAT_01c33749 = 0;
+  DAT_01c3374a = 0;
+  DAT_01c3374b = 0;
+  DAT_01c3374c = 0;
+  DAT_01c3374d = 0;
+  DAT_01c3374e = 0;
+  puVar1 = &DAT_01c33c20;
+  iVar3 = 0x10;
+  do {
+    *puVar1 = 0;
+    puVar1 = puVar1 + 1;
+    iVar3 = iVar3 + -1;
+  } while (iVar3 != 0);
+  puVar1 = (undefined1 *)0x1c33c30;
+  iVar3 = 0x10;
+  do {
+    *puVar1 = 0;
+    puVar1 = puVar1 + 1;
+    iVar3 = iVar3 + -1;
+  } while (iVar3 != 0);
+  return;
+}
+
+
+
+address=0202a4b8
+no function
+
+address=02023714
+function=FUN_020236e4 entry=020236e4
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void FUN_020236e4(uint param_1,byte param_2)
+
+{
+  BADSPACEBASE *in_sp;
+  undefined1 *puVar1;
+  undefined1 uStack_c;
+  byte bStack_b;
+  undefined1 local_a;
+  undefined1 uStack_9;
+
+  puVar1 = &uStack_c;
+  bStack_b = param_2 | 0x80;
+  if (0x7e < param_1) {
+    param_1 = 0x7f;
+  }
+  local_a = (undefined1)param_1;
+  uStack_9 = 0x40;
+  midi_route_ref_group_5(&bStack_b,3);
+  if (DAT_01c33906 != '\0') {
+    FUN_0201c272(puVar1 + 1);
+    _DAT_01c337aa = 300;
+  }
+  return;
+}

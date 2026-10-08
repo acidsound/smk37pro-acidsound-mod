@@ -1,0 +1,1377 @@
+{
+  "format": "smk37-v15-runtime-coverage-v1",
+  "scope": "official v15 application image only; offline static decode accounting",
+  "inputs": {
+    "app_image": "build/v15-official-app.bin",
+    "app_image_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "app_image_size": 617012,
+    "runtime_base": "0x02000000",
+    "runtime_end_exclusive": "0x02096a34",
+    "recursive_listing": "baselines/v15/analysis/quarkslab/results/quarkslab-recursive-listing.tsv.gz",
+    "exhaustive_listing": "baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz",
+    "decoder": "quarkslab/ghidra-jieli e1bd0707874b77b759401555d24839ad43af1267 (Ghidra 12.1.2)"
+  },
+  "summary": {
+    "page_size": 4096,
+    "pages": 151,
+    "pages_with_recursive_decode": 84,
+    "pages_without_recursive_decode": 67,
+    "recursive_decoded_bytes": 149332,
+    "exhaustive_decoded_bytes": 325010,
+    "coverage_denominator_bytes": 617012,
+    "recursive_coverage_ratio": 0.242024,
+    "exhaustive_coverage_ratio": 0.526748,
+    "pages_without_recursive_decode_list": [
+      "0x02026000",
+      "0x02051000",
+      "0x02052000",
+      "0x02057000",
+      "0x02058000",
+      "0x02059000",
+      "0x0205a000",
+      "0x0205b000",
+      "0x0205c000",
+      "0x0205d000",
+      "0x0205e000",
+      "0x0205f000",
+      "0x02060000",
+      "0x02061000",
+      "0x02062000",
+      "0x02063000",
+      "0x02064000",
+      "0x02065000",
+      "0x02066000",
+      "0x02067000",
+      "0x02068000",
+      "0x02069000",
+      "0x0206a000",
+      "0x0206b000",
+      "0x0206c000",
+      "0x0206d000",
+      "0x0206e000",
+      "0x0206f000",
+      "0x02070000",
+      "0x02071000",
+      "0x02072000",
+      "0x02073000",
+      "0x02074000",
+      "0x02075000",
+      "0x02076000",
+      "0x02077000",
+      "0x02078000",
+      "0x02079000",
+      "0x0207a000",
+      "0x0207b000",
+      "0x0207c000",
+      "0x0207d000",
+      "0x0207e000",
+      "0x0207f000",
+      "0x02080000",
+      "0x02081000",
+      "0x02082000",
+      "0x02083000",
+      "0x02084000",
+      "0x02085000",
+      "0x02086000",
+      "0x02087000",
+      "0x02088000",
+      "0x02089000",
+      "0x0208a000",
+      "0x0208b000",
+      "0x0208c000",
+      "0x0208d000",
+      "0x0208e000",
+      "0x0208f000",
+      "0x02090000",
+      "0x02091000",
+      "0x02092000",
+      "0x02093000",
+      "0x02094000",
+      "0x02095000",
+      "0x02096000"
+    ],
+    "pages_without_recursive_and_mostly_undecoded_in_exhaustive": [
+      "0x02057000",
+      "0x02058000",
+      "0x02059000",
+      "0x0205a000",
+      "0x0205b000",
+      "0x0205c000",
+      "0x0205d000",
+      "0x0205e000",
+      "0x0205f000",
+      "0x02060000",
+      "0x02061000",
+      "0x02062000",
+      "0x02063000",
+      "0x02064000",
+      "0x02065000",
+      "0x02066000",
+      "0x02067000",
+      "0x02068000",
+      "0x02069000",
+      "0x0206a000",
+      "0x0206b000",
+      "0x0206c000",
+      "0x0206d000",
+      "0x0206e000",
+      "0x0206f000",
+      "0x02070000",
+      "0x02071000",
+      "0x02072000",
+      "0x02073000",
+      "0x02074000",
+      "0x02075000",
+      "0x02076000",
+      "0x02077000",
+      "0x02078000",
+      "0x02079000",
+      "0x0207a000",
+      "0x0207b000",
+      "0x0207c000",
+      "0x0207d000",
+      "0x0207e000",
+      "0x0207f000",
+      "0x02080000",
+      "0x02081000",
+      "0x02082000",
+      "0x02083000",
+      "0x02084000",
+      "0x02085000",
+      "0x02086000",
+      "0x02087000",
+      "0x02088000",
+      "0x02089000",
+      "0x0208a000",
+      "0x0208b000",
+      "0x0208c000",
+      "0x0208d000",
+      "0x0208e000",
+      "0x0208f000",
+      "0x02090000",
+      "0x02091000",
+      "0x02092000",
+      "0x02093000",
+      "0x02094000",
+      "0x02095000",
+      "0x02096000"
+    ],
+    "recursive_function_count": 684,
+    "exhaustive_function_count": 1243
+  },
+  "pages": [
+    {
+      "page_start": "0x02000000",
+      "recursive_instruction_bytes": 3342,
+      "recursive_instruction_count": 1111,
+      "exhaustive_instruction_bytes": 4048,
+      "exhaustive_instruction_count": 1351,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02001000",
+      "recursive_instruction_bytes": 1570,
+      "recursive_instruction_count": 515,
+      "exhaustive_instruction_bytes": 3790,
+      "exhaustive_instruction_count": 1254,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02002000",
+      "recursive_instruction_bytes": 2506,
+      "recursive_instruction_count": 835,
+      "exhaustive_instruction_bytes": 4014,
+      "exhaustive_instruction_count": 1291,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02003000",
+      "recursive_instruction_bytes": 3926,
+      "recursive_instruction_count": 1394,
+      "exhaustive_instruction_bytes": 3950,
+      "exhaustive_instruction_count": 1405,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02004000",
+      "recursive_instruction_bytes": 2176,
+      "recursive_instruction_count": 735,
+      "exhaustive_instruction_bytes": 3456,
+      "exhaustive_instruction_count": 1176,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02005000",
+      "recursive_instruction_bytes": 676,
+      "recursive_instruction_count": 221,
+      "exhaustive_instruction_bytes": 3446,
+      "exhaustive_instruction_count": 1102,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02006000",
+      "recursive_instruction_bytes": 1650,
+      "recursive_instruction_count": 500,
+      "exhaustive_instruction_bytes": 4034,
+      "exhaustive_instruction_count": 1290,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02007000",
+      "recursive_instruction_bytes": 2478,
+      "recursive_instruction_count": 855,
+      "exhaustive_instruction_bytes": 3766,
+      "exhaustive_instruction_count": 1277,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02008000",
+      "recursive_instruction_bytes": 1590,
+      "recursive_instruction_count": 523,
+      "exhaustive_instruction_bytes": 4082,
+      "exhaustive_instruction_count": 1361,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02009000",
+      "recursive_instruction_bytes": 1790,
+      "recursive_instruction_count": 637,
+      "exhaustive_instruction_bytes": 4050,
+      "exhaustive_instruction_count": 1465,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0200a000",
+      "recursive_instruction_bytes": 3110,
+      "recursive_instruction_count": 1109,
+      "exhaustive_instruction_bytes": 3974,
+      "exhaustive_instruction_count": 1441,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0200b000",
+      "recursive_instruction_bytes": 2664,
+      "recursive_instruction_count": 952,
+      "exhaustive_instruction_bytes": 3848,
+      "exhaustive_instruction_count": 1424,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0200c000",
+      "recursive_instruction_bytes": 778,
+      "recursive_instruction_count": 295,
+      "exhaustive_instruction_bytes": 3932,
+      "exhaustive_instruction_count": 1388,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0200d000",
+      "recursive_instruction_bytes": 1284,
+      "recursive_instruction_count": 434,
+      "exhaustive_instruction_bytes": 3908,
+      "exhaustive_instruction_count": 1328,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0200e000",
+      "recursive_instruction_bytes": 2342,
+      "recursive_instruction_count": 852,
+      "exhaustive_instruction_bytes": 3802,
+      "exhaustive_instruction_count": 1370,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0200f000",
+      "recursive_instruction_bytes": 2944,
+      "recursive_instruction_count": 1011,
+      "exhaustive_instruction_bytes": 3944,
+      "exhaustive_instruction_count": 1371,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02010000",
+      "recursive_instruction_bytes": 2518,
+      "recursive_instruction_count": 846,
+      "exhaustive_instruction_bytes": 3976,
+      "exhaustive_instruction_count": 1336,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02011000",
+      "recursive_instruction_bytes": 2410,
+      "recursive_instruction_count": 889,
+      "exhaustive_instruction_bytes": 3518,
+      "exhaustive_instruction_count": 1270,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02012000",
+      "recursive_instruction_bytes": 2950,
+      "recursive_instruction_count": 1014,
+      "exhaustive_instruction_bytes": 4046,
+      "exhaustive_instruction_count": 1415,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02013000",
+      "recursive_instruction_bytes": 2192,
+      "recursive_instruction_count": 796,
+      "exhaustive_instruction_bytes": 3826,
+      "exhaustive_instruction_count": 1395,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02014000",
+      "recursive_instruction_bytes": 396,
+      "recursive_instruction_count": 125,
+      "exhaustive_instruction_bytes": 3818,
+      "exhaustive_instruction_count": 1325,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02015000",
+      "recursive_instruction_bytes": 406,
+      "recursive_instruction_count": 136,
+      "exhaustive_instruction_bytes": 3580,
+      "exhaustive_instruction_count": 1253,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02016000",
+      "recursive_instruction_bytes": 110,
+      "recursive_instruction_count": 36,
+      "exhaustive_instruction_bytes": 3236,
+      "exhaustive_instruction_count": 1097,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02017000",
+      "recursive_instruction_bytes": 766,
+      "recursive_instruction_count": 281,
+      "exhaustive_instruction_bytes": 4002,
+      "exhaustive_instruction_count": 1421,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02018000",
+      "recursive_instruction_bytes": 644,
+      "recursive_instruction_count": 228,
+      "exhaustive_instruction_bytes": 3858,
+      "exhaustive_instruction_count": 1340,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02019000",
+      "recursive_instruction_bytes": 332,
+      "recursive_instruction_count": 119,
+      "exhaustive_instruction_bytes": 3936,
+      "exhaustive_instruction_count": 1361,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0201a000",
+      "recursive_instruction_bytes": 440,
+      "recursive_instruction_count": 151,
+      "exhaustive_instruction_bytes": 3812,
+      "exhaustive_instruction_count": 1300,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0201b000",
+      "recursive_instruction_bytes": 2326,
+      "recursive_instruction_count": 766,
+      "exhaustive_instruction_bytes": 3944,
+      "exhaustive_instruction_count": 1286,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0201c000",
+      "recursive_instruction_bytes": 1968,
+      "recursive_instruction_count": 656,
+      "exhaustive_instruction_bytes": 4026,
+      "exhaustive_instruction_count": 1314,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0201d000",
+      "recursive_instruction_bytes": 1496,
+      "recursive_instruction_count": 479,
+      "exhaustive_instruction_bytes": 3886,
+      "exhaustive_instruction_count": 1247,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0201e000",
+      "recursive_instruction_bytes": 3706,
+      "recursive_instruction_count": 1303,
+      "exhaustive_instruction_bytes": 3536,
+      "exhaustive_instruction_count": 1258,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0201f000",
+      "recursive_instruction_bytes": 2950,
+      "recursive_instruction_count": 1035,
+      "exhaustive_instruction_bytes": 4078,
+      "exhaustive_instruction_count": 1445,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02020000",
+      "recursive_instruction_bytes": 4018,
+      "recursive_instruction_count": 1446,
+      "exhaustive_instruction_bytes": 4038,
+      "exhaustive_instruction_count": 1452,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02021000",
+      "recursive_instruction_bytes": 4096,
+      "recursive_instruction_count": 1401,
+      "exhaustive_instruction_bytes": 4096,
+      "exhaustive_instruction_count": 1401,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02022000",
+      "recursive_instruction_bytes": 4096,
+      "recursive_instruction_count": 1375,
+      "exhaustive_instruction_bytes": 4096,
+      "exhaustive_instruction_count": 1375,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02023000",
+      "recursive_instruction_bytes": 1592,
+      "recursive_instruction_count": 529,
+      "exhaustive_instruction_bytes": 4082,
+      "exhaustive_instruction_count": 1342,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02024000",
+      "recursive_instruction_bytes": 1984,
+      "recursive_instruction_count": 625,
+      "exhaustive_instruction_bytes": 4090,
+      "exhaustive_instruction_count": 1312,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02025000",
+      "recursive_instruction_bytes": 1044,
+      "recursive_instruction_count": 354,
+      "exhaustive_instruction_bytes": 3892,
+      "exhaustive_instruction_count": 1167,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02026000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 4088,
+      "exhaustive_instruction_count": 1158,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02027000",
+      "recursive_instruction_bytes": 2726,
+      "recursive_instruction_count": 847,
+      "exhaustive_instruction_bytes": 4040,
+      "exhaustive_instruction_count": 1246,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02028000",
+      "recursive_instruction_bytes": 3380,
+      "recursive_instruction_count": 1087,
+      "exhaustive_instruction_bytes": 4070,
+      "exhaustive_instruction_count": 1302,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02029000",
+      "recursive_instruction_bytes": 1688,
+      "recursive_instruction_count": 550,
+      "exhaustive_instruction_bytes": 4058,
+      "exhaustive_instruction_count": 1318,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0202a000",
+      "recursive_instruction_bytes": 1510,
+      "recursive_instruction_count": 502,
+      "exhaustive_instruction_bytes": 4062,
+      "exhaustive_instruction_count": 1321,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0202b000",
+      "recursive_instruction_bytes": 1876,
+      "recursive_instruction_count": 631,
+      "exhaustive_instruction_bytes": 3496,
+      "exhaustive_instruction_count": 1149,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0202c000",
+      "recursive_instruction_bytes": 2972,
+      "recursive_instruction_count": 983,
+      "exhaustive_instruction_bytes": 3700,
+      "exhaustive_instruction_count": 1221,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0202d000",
+      "recursive_instruction_bytes": 2000,
+      "recursive_instruction_count": 698,
+      "exhaustive_instruction_bytes": 3918,
+      "exhaustive_instruction_count": 1428,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0202e000",
+      "recursive_instruction_bytes": 3096,
+      "recursive_instruction_count": 1062,
+      "exhaustive_instruction_bytes": 4080,
+      "exhaustive_instruction_count": 1392,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0202f000",
+      "recursive_instruction_bytes": 3966,
+      "recursive_instruction_count": 1408,
+      "exhaustive_instruction_bytes": 4076,
+      "exhaustive_instruction_count": 1456,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02030000",
+      "recursive_instruction_bytes": 3446,
+      "recursive_instruction_count": 1269,
+      "exhaustive_instruction_bytes": 4078,
+      "exhaustive_instruction_count": 1505,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02031000",
+      "recursive_instruction_bytes": 1594,
+      "recursive_instruction_count": 584,
+      "exhaustive_instruction_bytes": 4076,
+      "exhaustive_instruction_count": 1475,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02032000",
+      "recursive_instruction_bytes": 1562,
+      "recursive_instruction_count": 545,
+      "exhaustive_instruction_bytes": 4090,
+      "exhaustive_instruction_count": 1451,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02033000",
+      "recursive_instruction_bytes": 2018,
+      "recursive_instruction_count": 739,
+      "exhaustive_instruction_bytes": 4074,
+      "exhaustive_instruction_count": 1457,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02034000",
+      "recursive_instruction_bytes": 1432,
+      "recursive_instruction_count": 525,
+      "exhaustive_instruction_bytes": 4066,
+      "exhaustive_instruction_count": 1463,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02035000",
+      "recursive_instruction_bytes": 1856,
+      "recursive_instruction_count": 657,
+      "exhaustive_instruction_bytes": 4034,
+      "exhaustive_instruction_count": 1477,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02036000",
+      "recursive_instruction_bytes": 1232,
+      "recursive_instruction_count": 377,
+      "exhaustive_instruction_bytes": 4088,
+      "exhaustive_instruction_count": 1345,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02037000",
+      "recursive_instruction_bytes": 2598,
+      "recursive_instruction_count": 848,
+      "exhaustive_instruction_bytes": 3500,
+      "exhaustive_instruction_count": 1161,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02038000",
+      "recursive_instruction_bytes": 2560,
+      "recursive_instruction_count": 896,
+      "exhaustive_instruction_bytes": 3732,
+      "exhaustive_instruction_count": 1275,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02039000",
+      "recursive_instruction_bytes": 2798,
+      "recursive_instruction_count": 965,
+      "exhaustive_instruction_bytes": 2716,
+      "exhaustive_instruction_count": 986,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0203a000",
+      "recursive_instruction_bytes": 446,
+      "recursive_instruction_count": 140,
+      "exhaustive_instruction_bytes": 4084,
+      "exhaustive_instruction_count": 1278,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0203b000",
+      "recursive_instruction_bytes": 880,
+      "recursive_instruction_count": 291,
+      "exhaustive_instruction_bytes": 4040,
+      "exhaustive_instruction_count": 1290,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0203c000",
+      "recursive_instruction_bytes": 912,
+      "recursive_instruction_count": 316,
+      "exhaustive_instruction_bytes": 4088,
+      "exhaustive_instruction_count": 1426,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0203d000",
+      "recursive_instruction_bytes": 204,
+      "recursive_instruction_count": 82,
+      "exhaustive_instruction_bytes": 4036,
+      "exhaustive_instruction_count": 1428,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0203e000",
+      "recursive_instruction_bytes": 2250,
+      "recursive_instruction_count": 746,
+      "exhaustive_instruction_bytes": 3818,
+      "exhaustive_instruction_count": 1243,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0203f000",
+      "recursive_instruction_bytes": 1272,
+      "recursive_instruction_count": 453,
+      "exhaustive_instruction_bytes": 3856,
+      "exhaustive_instruction_count": 1282,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02040000",
+      "recursive_instruction_bytes": 2746,
+      "recursive_instruction_count": 978,
+      "exhaustive_instruction_bytes": 3690,
+      "exhaustive_instruction_count": 1311,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02041000",
+      "recursive_instruction_bytes": 958,
+      "recursive_instruction_count": 324,
+      "exhaustive_instruction_bytes": 3748,
+      "exhaustive_instruction_count": 1271,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02042000",
+      "recursive_instruction_bytes": 2160,
+      "recursive_instruction_count": 752,
+      "exhaustive_instruction_bytes": 3968,
+      "exhaustive_instruction_count": 1391,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02043000",
+      "recursive_instruction_bytes": 2264,
+      "recursive_instruction_count": 744,
+      "exhaustive_instruction_bytes": 4058,
+      "exhaustive_instruction_count": 1362,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02044000",
+      "recursive_instruction_bytes": 2116,
+      "recursive_instruction_count": 732,
+      "exhaustive_instruction_bytes": 4048,
+      "exhaustive_instruction_count": 1419,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02045000",
+      "recursive_instruction_bytes": 1826,
+      "recursive_instruction_count": 576,
+      "exhaustive_instruction_bytes": 3976,
+      "exhaustive_instruction_count": 1305,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02046000",
+      "recursive_instruction_bytes": 2150,
+      "recursive_instruction_count": 696,
+      "exhaustive_instruction_bytes": 4058,
+      "exhaustive_instruction_count": 1294,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02047000",
+      "recursive_instruction_bytes": 572,
+      "recursive_instruction_count": 193,
+      "exhaustive_instruction_bytes": 3998,
+      "exhaustive_instruction_count": 1290,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02048000",
+      "recursive_instruction_bytes": 3440,
+      "recursive_instruction_count": 1132,
+      "exhaustive_instruction_bytes": 4088,
+      "exhaustive_instruction_count": 1358,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02049000",
+      "recursive_instruction_bytes": 2760,
+      "recursive_instruction_count": 848,
+      "exhaustive_instruction_bytes": 4052,
+      "exhaustive_instruction_count": 1275,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0204a000",
+      "recursive_instruction_bytes": 112,
+      "recursive_instruction_count": 49,
+      "exhaustive_instruction_bytes": 2986,
+      "exhaustive_instruction_count": 1140,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0204b000",
+      "recursive_instruction_bytes": 44,
+      "recursive_instruction_count": 17,
+      "exhaustive_instruction_bytes": 2706,
+      "exhaustive_instruction_count": 1000,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0204c000",
+      "recursive_instruction_bytes": 52,
+      "recursive_instruction_count": 20,
+      "exhaustive_instruction_bytes": 2822,
+      "exhaustive_instruction_count": 1059,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0204d000",
+      "recursive_instruction_bytes": 12,
+      "recursive_instruction_count": 5,
+      "exhaustive_instruction_bytes": 2856,
+      "exhaustive_instruction_count": 1005,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0204e000",
+      "recursive_instruction_bytes": 102,
+      "recursive_instruction_count": 31,
+      "exhaustive_instruction_bytes": 2936,
+      "exhaustive_instruction_count": 1002,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0204f000",
+      "recursive_instruction_bytes": 160,
+      "recursive_instruction_count": 76,
+      "exhaustive_instruction_bytes": 2572,
+      "exhaustive_instruction_count": 1082,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02050000",
+      "recursive_instruction_bytes": 4,
+      "recursive_instruction_count": 2,
+      "exhaustive_instruction_bytes": 2562,
+      "exhaustive_instruction_count": 1011,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02051000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 2540,
+      "exhaustive_instruction_count": 954,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02052000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 2716,
+      "exhaustive_instruction_count": 1045,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02053000",
+      "recursive_instruction_bytes": 2,
+      "recursive_instruction_count": 1,
+      "exhaustive_instruction_bytes": 2712,
+      "exhaustive_instruction_count": 1007,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02054000",
+      "recursive_instruction_bytes": 8,
+      "recursive_instruction_count": 4,
+      "exhaustive_instruction_bytes": 2666,
+      "exhaustive_instruction_count": 1083,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02055000",
+      "recursive_instruction_bytes": 158,
+      "recursive_instruction_count": 67,
+      "exhaustive_instruction_bytes": 2934,
+      "exhaustive_instruction_count": 1186,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02056000",
+      "recursive_instruction_bytes": 146,
+      "recursive_instruction_count": 72,
+      "exhaustive_instruction_bytes": 2938,
+      "exhaustive_instruction_count": 1422,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02057000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02058000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02059000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0205a000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0205b000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0205c000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0205d000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0205e000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0205f000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02060000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02061000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02062000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02063000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02064000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02065000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02066000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02067000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02068000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02069000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0206a000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0206b000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0206c000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0206d000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0206e000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0206f000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02070000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02071000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02072000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02073000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02074000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02075000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02076000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02077000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02078000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02079000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0207a000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0207b000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0207c000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0207d000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0207e000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0207f000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02080000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02081000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02082000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02083000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02084000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02085000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02086000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02087000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02088000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02089000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0208a000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0208b000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0208c000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0208d000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0208e000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x0208f000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02090000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02091000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02092000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02093000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02094000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02095000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    },
+    {
+      "page_start": "0x02096000",
+      "recursive_instruction_bytes": 0,
+      "recursive_instruction_count": 0,
+      "exhaustive_instruction_bytes": 0,
+      "exhaustive_instruction_count": 0,
+      "page_size": 4096
+    }
+  ],
+  "interpretation_limits": [
+    "recursive_instruction_bytes counts decoded code only; a zero page is NOT proven data.",
+    "exhaustive decode may decode data as instructions; it is not proof of executability.",
+    "absence of decoded instructions is never evidence of free space."
+  ]
+}

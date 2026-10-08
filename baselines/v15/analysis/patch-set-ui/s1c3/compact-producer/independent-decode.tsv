@@ -1,0 +1,65 @@
+address	size	bytes	op	operands
+0x0201e1a2	2	7904	push	{}
+0x0201e1a4	2	0416	mov_reg	{"dst": 4, "src": 0}
+0x0201e1a6	2	9016	mov_reg	{"dst": 0, "src": 9}
+0x0201e1a8	2	e020	add_imm8	{"dst": 0, "imm_signed": -128}
+0x0201e1aa	2	f03d	add_imm8	{"dst": 0, "imm_signed": -35}
+0x0201e1ac	4	80f83700	jne_imm7	{"imm": 0, "reg": 0, "target": 33677854}
+0x0201e1b0	6	c0ffbd65c401	mov_imm32	{"dst": 0, "imm": 29648317}
+0x0201e1b6	4	2000b000	trylock	{"address_register": 0}
+0x0201e1ba	4	40e83000	ifeq	{"target": 33677854}
+0x0201e1be	2	2000	csync	{}
+0x0201e1c0	2	0516	mov_reg	{"dst": 5, "src": 0}
+0x0201e1c2	2	5842	load_byte	{"base": 5, "dst": 0, "offset": 2}
+0x0201e1c4	4	80f80700	jne_imm7	{"imm": 0, "reg": 0, "target": 33677782}
+0x0201e1c8	2	5b41	load_byte	{"base": 5, "dst": 3, "offset": 1}
+0x0201e1ca	4	83f82400	jne_imm7	{"imm": 0, "reg": 3, "target": 33677846}
+0x0201e1ce	2	4021	mov_imm8	{"dst": 0, "imm": 1}
+0x0201e1d0	2	d842	store_byte	{"base": 5, "offset": 2, "src": 0}
+0x0201e1d2	2	2000	csync	{}
+0x0201e1d4	2	0483	goto	{"target": 33677788}
+0x0201e1d6	4	80f81e02	jne_imm7	{"imm": 1, "reg": 0, "target": 33677846}
+0x0201e1da	2	5b41	load_byte	{"base": 5, "dst": 3, "offset": 1}
+0x0201e1dc	4	03fd1b20	jge_imm7	{"imm": 16, "reg": 3, "target": 33677846}
+0x0201e1e0	2	3616	mov_reg	{"dst": 6, "src": 3}
+0x0201e1e2	4	e6e1a060	mul_imm12	{"dst": 6, "imm": 160, "src": 6}
+0x0201e1e6	6	c7ff2065c401	mov_imm32	{"dst": 7, "imm": 29648160}
+0x0201e1ec	2	6718	add_reg	{"dst": 7, "src": 6}
+0x0201e1ee	4	06e19c70	add_imm12	{"dst": 6, "imm": 156, "src": 7}
+0x0201e1f2	2	4020	mov_imm8	{"dst": 0, "imm": 0}
+0x0201e1f4	2	e840	store_byte	{"base": 6, "offset": 0, "src": 0}
+0x0201e1f6	2	7016	mov_reg	{"dst": 0, "src": 7}
+0x0201e1f8	2	4116	mov_reg	{"dst": 1, "src": 4}
+0x0201e1fa	2	623c	mov_imm8	{"dst": 2, "imm": 156}
+0x0201e1fc	6	80ffccaa0200	call32	{"target": 33852622}
+0x0201e202	2	2000	csync	{}
+0x0201e204	2	4021	mov_imm8	{"dst": 0, "imm": 1}
+0x0201e206	2	e840	store_byte	{"base": 6, "offset": 0, "src": 0}
+0x0201e208	2	c321	add_imm8	{"dst": 3, "imm_signed": 1}
+0x0201e20a	2	db41	store_byte	{"base": 5, "offset": 1, "src": 3}
+0x0201e20c	4	83f80320	jne_imm7	{"imm": 16, "reg": 3, "target": 33677846}
+0x0201e210	2	2000	csync	{}
+0x0201e212	2	4022	mov_imm8	{"dst": 0, "imm": 2}
+0x0201e214	2	d842	store_byte	{"base": 5, "offset": 2, "src": 0}
+0x0201e216	2	2000	csync	{}
+0x0201e218	2	4020	mov_imm8	{"dst": 0, "imm": 0}
+0x0201e21a	2	d840	store_byte	{"base": 5, "offset": 0, "src": 0}
+0x0201e21c	2	2000	csync	{}
+0x0201e21e	2	5904	pop_pc	{}
+0x0201e220	2	7904	push	{}
+0x0201e222	2	5904	pop_pc	{}
+0x0201e224	2	7904	push	{}
+0x0201e226	2	0416	mov_reg	{"dst": 4, "src": 0}
+0x0201e228	2	4940	load_byte	{"base": 4, "dst": 1, "offset": 0}
+0x0201e22a	4	81f80bc4	jne_imm7	{"imm": 98, "reg": 1, "target": 33677892}
+0x0201e22e	2	4941	load_byte	{"base": 4, "dst": 1, "offset": 1}
+0x0201e230	4	81f808c6	jne_imm7	{"imm": 99, "reg": 1, "target": 33677892}
+0x0201e234	6	c5ffbd65c401	mov_imm32	{"dst": 5, "imm": 29648317}
+0x0201e23a	2	4020	mov_imm8	{"dst": 0, "imm": 0}
+0x0201e23c	2	d840	store_byte	{"base": 5, "offset": 0, "src": 0}
+0x0201e23e	2	d841	store_byte	{"base": 5, "offset": 1, "src": 0}
+0x0201e240	2	d842	store_byte	{"base": 5, "offset": 2, "src": 0}
+0x0201e242	2	2000	csync	{}
+0x0201e244	2	4016	mov_reg	{"dst": 0, "src": 4}
+0x0201e246	6	80ff56ffffff	call32	{"target": 33677730}
+0x0201e24c	2	5904	pop_pc	{}

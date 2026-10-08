@@ -1,0 +1,631 @@
+{
+  "byte_accounting": {
+    "app_bin": {
+      "physical_end_exclusive": "0x9ab54",
+      "physical_start": "0x04120",
+      "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "size": 617012,
+      "size_hex": "0x96a34"
+    },
+    "cfg_tool_bin": {
+      "physical_end_exclusive": "0x9acd3",
+      "physical_start": "0x9ab54",
+      "sha256_plain": "276579954f076886a6a7694f65dc71c034a63a2c204b76749065c0ac7b010d1b",
+      "size": 383
+    },
+    "naive_tail_after_app_inside_app_area": {
+      "owner": "cfg_tool.bin",
+      "physical_end_exclusive": "0x9acd3",
+      "physical_start": "0x9ab54",
+      "size": 383
+    },
+    "post_app_area_to_flash_bin_end": {
+      "ascii_strings_first_20": [
+        "650j",
+        "HXxA",
+        "8p7O",
+        "oaPn",
+        "=_C}",
+        "`a8?",
+        "5G|_",
+        "^{8t",
+        "=_ps",
+        ">YTf",
+        "sS-{",
+        "T}I[4GSt"
+      ],
+      "byte_counts": {
+        "00": 5,
+        "ff": 1996,
+        "other": 2908
+      },
+      "classification": "protected post-app resources/reserved bytes, outside app_area_head CRC envelope",
+      "first_32_hex": "3a25ec28260c18117a0d2d7b75c84ebf1d9abe93f8d0802041a2458b364c9933",
+      "last_32_hex": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "physical_end_exclusive": "0x9c000",
+      "physical_start": "0x9acd3",
+      "sha256": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+      "size": 4909
+    },
+    "ufw_flash_bin": {
+      "payload_end_exclusive": "0x9c400",
+      "payload_offset": "0x400",
+      "physical_size": 638976,
+      "physical_size_hex": "0x9c000"
+    }
+  },
+  "cache_mpu_notes": {
+    "blocker": "No exact official v15 boot/MPU/cache bounds were recovered that authorize instruction fetch beyond the JLFS app.bin logical file or into post-app protected bytes.",
+    "public_sdk": "AC79/WL82 docs/source identify I-cache, D-cache, MMU/TLB, and cache_ram. sdk_ld_sfc.c varies TLB_SIZE under CONFIG_MMU_ENABLE and sets FREE_IACHE_WAY/FREE_DACHE_WAY."
+  },
+  "crc_size_alignment_implications": {
+    "alignment": "Public ISD rule uses FORCE_4K_ALIGN=YES for reserved files. Official app.bin and cfg_tool.bin are not 4 KiB-aligned, and app_area_head end is not 4 KiB-aligned. This does not create an owned extension allocation.",
+    "extra_fields_if_size_or_relocation_changed": [
+      "app.bin size",
+      "cfg_tool.bin offset if preserved",
+      "cfg_tool.bin header CRC",
+      "app_area_head size if extended",
+      "app_area_head data CRC/header CRC",
+      "possibly UFW flash.bin size/offset list CRC/header CRC if grown"
+    ],
+    "fields_changed_by_fixed_size_app_patch": [
+      "app.bin data_crc16",
+      "app_area_head data_crc16",
+      "UFW flash.bin data_crc16",
+      "UFW encrypted entry-list CRC",
+      "UFW header CRC"
+    ],
+    "fixed_size_packer": "tools/smk37_v15_app_patch.py requires replacement app.bin length == 0x96a34 and repacked FWSC/UFW/flash sizes unchanged."
+  },
+  "entry_branch_reach": {
+    "branch_reach": "Not promoted. Because maximum safe extension is 0, no branch target exists. Prior S1-C2 executable-placement evidence requires exact overwritten range and branch/call bytes before promoting reach; app tail remains blocked.",
+    "entry": "Exact app_area_head entry is 0x02000120, inside current official app.bin range."
+  },
+  "exact_headers": {
+    "app_area_head": {
+      "data_crc16": "0x4327",
+      "entry_point_or_offset_field": "0x02000120",
+      "header_crc16": "0x724d",
+      "header_flash_offset": "0x04000",
+      "physical_end_exclusive": "0x9acd3",
+      "physical_start": "0x04000",
+      "size": 617683,
+      "size_hex": "0x96cd3"
+    },
+    "fwsc": {
+      "sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+      "size": 701140
+    },
+    "jlfs_directory_entries": [
+      {
+        "computed_data_crc16": "0xfee9",
+        "crc_valid": true,
+        "data_crc16": "0xfee9",
+        "data_crc_checkable_in_flash_bin": true,
+        "flags": "0x82",
+        "header_crc16": "0xf93f",
+        "header_flash_offset": "0x04020",
+        "index": 0,
+        "name": "app.bin",
+        "physical_end_exclusive": "0x9ab54",
+        "physical_start": "0x04120",
+        "relative_offset": "0x00120",
+        "reserved": "0xff",
+        "size": 617012,
+        "size_hex": "0x96a34"
+      },
+      {
+        "computed_data_crc16": "0x2e75",
+        "crc_valid": true,
+        "data_crc16": "0x2e75",
+        "data_crc_checkable_in_flash_bin": true,
+        "flags": "0x82",
+        "header_crc16": "0x93af",
+        "header_flash_offset": "0x04040",
+        "index": 1,
+        "name": "cfg_tool.bin",
+        "physical_end_exclusive": "0x9acd3",
+        "physical_start": "0x9ab54",
+        "relative_offset": "0x96b54",
+        "reserved": "0xff",
+        "size": 383,
+        "size_hex": "0x17f"
+      },
+      {
+        "computed_data_crc16": null,
+        "crc_valid": null,
+        "data_crc16": "0xffff",
+        "data_crc_checkable_in_flash_bin": false,
+        "flags": "0x12",
+        "header_crc16": "0xdbbc",
+        "header_flash_offset": "0x04060",
+        "index": 2,
+        "name": "VM",
+        "physical_end_exclusive": "0xc4000",
+        "physical_start": "0xa0000",
+        "relative_offset": "0x9c000",
+        "reserved": "0x81",
+        "size": 147456,
+        "size_hex": "0x24000"
+      },
+      {
+        "computed_data_crc16": null,
+        "crc_valid": null,
+        "data_crc16": "0xffff",
+        "data_crc_checkable_in_flash_bin": false,
+        "flags": "0x92",
+        "header_crc16": "0x0c6b",
+        "header_flash_offset": "0x04080",
+        "index": 3,
+        "name": "PRCT",
+        "physical_end_exclusive": "0xa0000",
+        "physical_start": "0x04000",
+        "relative_offset": "0x00000",
+        "reserved": "0x82",
+        "size": 638976,
+        "size_hex": "0x9c000"
+      },
+      {
+        "computed_data_crc16": null,
+        "crc_valid": null,
+        "data_crc16": "0xffff",
+        "data_crc_checkable_in_flash_bin": false,
+        "flags": "0x92",
+        "header_crc16": "0x0064",
+        "header_flash_offset": "0x040a0",
+        "index": 4,
+        "name": "BTIF",
+        "physical_end_exclusive": "0xc5000",
+        "physical_start": "0xc4000",
+        "relative_offset": "0xc0000",
+        "reserved": "0x82",
+        "size": 4096,
+        "size_hex": "0x1000"
+      },
+      {
+        "computed_data_crc16": null,
+        "crc_valid": null,
+        "data_crc16": "0xffff",
+        "data_crc_checkable_in_flash_bin": false,
+        "flags": "0x92",
+        "header_crc16": "0x0418",
+        "header_flash_offset": "0x040c0",
+        "index": 5,
+        "name": "USRTRIM",
+        "physical_end_exclusive": "0xc6000",
+        "physical_start": "0xc5000",
+        "relative_offset": "0xc1000",
+        "reserved": "0x81",
+        "size": 4096,
+        "size_hex": "0x1000"
+      },
+      {
+        "computed_data_crc16": null,
+        "crc_valid": null,
+        "data_crc16": "0xffff",
+        "data_crc_checkable_in_flash_bin": false,
+        "flags": "0x92",
+        "header_crc16": "0xd0cb",
+        "header_flash_offset": "0x040e0",
+        "index": 6,
+        "name": "USRFLASH",
+        "physical_end_exclusive": "0xef000",
+        "physical_start": "0xc6000",
+        "relative_offset": "0xc2000",
+        "reserved": "0x81",
+        "size": 167936,
+        "size_hex": "0x29000"
+      },
+      {
+        "computed_data_crc16": null,
+        "crc_valid": null,
+        "data_crc16": "0xffff",
+        "data_crc_checkable_in_flash_bin": false,
+        "flags": "0x92",
+        "header_crc16": "0x9804",
+        "header_flash_offset": "0x04100",
+        "index": 7,
+        "name": "USR",
+        "physical_end_exclusive": "0x102000",
+        "physical_start": "0xf8000",
+        "relative_offset": "0xf4000",
+        "reserved": "0x81",
+        "size": 40960,
+        "size_hex": "0xa000"
+      }
+    ],
+    "ufw_aligned_gaps": [
+      {
+        "after": "flash.bin",
+        "before": "info.log",
+        "gap_bytes": 0,
+        "gap_end_exclusive": "0x9c400",
+        "gap_start": "0x9c400"
+      },
+      {
+        "after": "info.log",
+        "before": "USR",
+        "gap_bytes": 0,
+        "gap_end_exclusive": "0x9c400",
+        "gap_start": "0x9c400"
+      },
+      {
+        "after": "USR",
+        "before": "isd_config.ini",
+        "gap_bytes": 0,
+        "gap_end_exclusive": "0xa5620",
+        "gap_start": "0xa5620"
+      },
+      {
+        "after": "isd_config.ini",
+        "before": "ota.bin",
+        "gap_bytes": 0,
+        "gap_end_exclusive": "0xa63a0",
+        "gap_start": "0xa63a0"
+      },
+      {
+        "after": "ota.bin",
+        "before": "script.ver",
+        "gap_bytes": 0,
+        "gap_end_exclusive": "0xab1c0",
+        "gap_start": "0xab1c0"
+      },
+      {
+        "after": "script.ver",
+        "before": "blimit.bin",
+        "gap_bytes": 0,
+        "gap_end_exclusive": "0xab1e0",
+        "gap_start": "0xab1e0"
+      },
+      {
+        "after": "blimit.bin",
+        "before": "tail.bin",
+        "gap_bytes": 0,
+        "gap_end_exclusive": "0xab280",
+        "gap_start": "0xab280"
+      }
+    ],
+    "ufw_entries": [
+      {
+        "aligned_end_exclusive": "0x9c400",
+        "aligned_size": 638976,
+        "aligned_size_hex": "0x9c000",
+        "data_crc16": "0x54e8",
+        "end_exclusive": "0x9c400",
+        "index": 0,
+        "name": "flash.bin",
+        "offset": "0x400",
+        "size": 638976,
+        "size_hex": "0x9c000",
+        "type": 0
+      },
+      {
+        "aligned_end_exclusive": "0x9c400",
+        "aligned_size": 0,
+        "aligned_size_hex": "0x0",
+        "data_crc16": "0x0000",
+        "end_exclusive": "0x9c400",
+        "index": 1,
+        "name": "info.log",
+        "offset": "0x9c400",
+        "size": 0,
+        "size_hex": "0x0",
+        "type": 2
+      },
+      {
+        "aligned_end_exclusive": "0xa5620",
+        "aligned_size": 37408,
+        "aligned_size_hex": "0x9220",
+        "data_crc16": "0x0fbf",
+        "end_exclusive": "0xa5606",
+        "index": 2,
+        "name": "USR",
+        "offset": "0x9c400",
+        "size": 37382,
+        "size_hex": "0x9206",
+        "type": 50
+      },
+      {
+        "aligned_end_exclusive": "0xa63a0",
+        "aligned_size": 3456,
+        "aligned_size_hex": "0xd80",
+        "data_crc16": "0x6a1b",
+        "end_exclusive": "0xa6383",
+        "index": 3,
+        "name": "isd_config.ini",
+        "offset": "0xa5620",
+        "size": 3427,
+        "size_hex": "0xd63",
+        "type": 52
+      },
+      {
+        "aligned_end_exclusive": "0xab1c0",
+        "aligned_size": 20000,
+        "aligned_size_hex": "0x4e20",
+        "data_crc16": "0xa1c9",
+        "end_exclusive": "0xab1a1",
+        "index": 4,
+        "name": "ota.bin",
+        "offset": "0xa63a0",
+        "size": 19969,
+        "size_hex": "0x4e01",
+        "type": 100
+      },
+      {
+        "aligned_end_exclusive": "0xab1e0",
+        "aligned_size": 32,
+        "aligned_size_hex": "0x20",
+        "data_crc16": "0xaab7",
+        "end_exclusive": "0xab1db",
+        "index": 5,
+        "name": "script.ver",
+        "offset": "0xab1c0",
+        "size": 27,
+        "size_hex": "0x1b",
+        "type": 251
+      },
+      {
+        "aligned_end_exclusive": "0xab280",
+        "aligned_size": 160,
+        "aligned_size_hex": "0xa0",
+        "data_crc16": "0x7662",
+        "end_exclusive": "0xab270",
+        "index": 6,
+        "name": "blimit.bin",
+        "offset": "0xab1e0",
+        "size": 144,
+        "size_hex": "0x90",
+        "type": 161
+      },
+      {
+        "aligned_end_exclusive": "0xab2c0",
+        "aligned_size": 64,
+        "aligned_size_hex": "0x40",
+        "data_crc16": "0x8936",
+        "end_exclusive": "0xab2c0",
+        "index": 7,
+        "name": "tail.bin",
+        "offset": "0xab280",
+        "size": 64,
+        "size_hex": "0x40",
+        "type": 255
+      }
+    ],
+    "ufw_header": {
+      "chip_name": "AC791N",
+      "entry_count": 8,
+      "flash_entry_offset": "0x400",
+      "flash_entry_size": "0x9c000",
+      "image_size": 701120
+    }
+  },
+  "extension_decisions": [
+    {
+      "claim": "Extend exact official app.bin while leaving every stock flash byte at its official physical offset",
+      "decision": "BLOCK",
+      "maximum_extension_bytes": 0,
+      "reason": "The first byte after app.bin is the first byte of named JLFS file cfg_tool.bin. Any positive extension changes stock flash bytes at or after 0x9ab54."
+    },
+    {
+      "claim": "Extend app.bin by only increasing app.bin.size inside current app_area_head envelope",
+      "decision": "BLOCK",
+      "maximum_extension_bytes_before_stock_overlap": 0,
+      "reason": "app.bin end 0x9ab54 equals cfg_tool.bin start 0x9ab54; the 383-byte apparent tail is fully occupied by cfg_tool.bin."
+    },
+    {
+      "claim": "Preserve cfg_tool.bin logical bytes by relocating it toward flash.bin end and growing app_area_head",
+      "decision": "BLOCK",
+      "hypothetical_max_app_size": 621921,
+      "hypothetical_max_app_size_hex": "0x97d61",
+      "nominal_extra_bytes_before_flash_bin_end": 4909,
+      "reason": "This moves a named stock JLFS file, changes app.bin/cfg_tool/app_area_head CRC/size/offset headers, consumes protected post-app bytes, and lacks boot/loader/runtime consumer proof."
+    },
+    {
+      "claim": "Grow UFW flash.bin past 0x9c000",
+      "decision": "BLOCK",
+      "maximum_extension_bytes_before_next_ufw_entry": 0,
+      "reason": "The next UFW payload entry starts immediately at flash.bin end 0x9c400, and the UFW payload has no trailing gap after tail.bin."
+    },
+    {
+      "claim": "Appended bytes beyond official app.bin are positively proven readable/executable at runtime",
+      "decision": "BLOCK",
+      "positive_evidence_for_current_app_only": true,
+      "reason": "Official and public evidence support SFC/XIP execution for the current app image, but no exact v15 loader/MPU/cache proof promotes cfg_tool.bin or post-app protected bytes as app-owned executable targets."
+    }
+  ],
+  "format": "smk37-v15-app-extension-audit-v1",
+  "inputs": {
+    "baselines/v15/analysis/patch-set-ui/persistence/report.md": "88309843407600fdbc9f9ac89e9e276103baf9b508cd310848f019f997440a9b",
+    "baselines/v15/analysis/patch-set-ui/s1c2-unblock/executable-placement/report.md": "9420aac5108549d10fb0a39dc8ce894eedb233e0cb96113e2756621f433050d0",
+    "baselines/v15/analysis/public-research.md": "d3feb02466f7e6a3578f2f24fca51e893cccc6ec3175dd5980f79a4465a30d38",
+    "baselines/v15/analysis/r03-owned-ram/app-tail-placement/report.md": "036eca79c6258a9ffff9f493874058a1876cbbe92f2cd76c27d06efe2f2c105c",
+    "baselines/v15/official/package-manifest.json": "21041cf36426923c81e1d5c583af928b74aed43b4661dadb81a26ad9349e00a8",
+    "build/SMK-37_Pro_015.fwsc": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "build/v15-official-app.bin": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "tools/smk37_v15_app_patch.py": "2a355a5d2da789a085ca6d1b196ed42f36400ad5115fc23c9af79c3d454eff33"
+  },
+  "maximum_safe_extension_bytes": 0,
+  "overall_decision": "BLOCK",
+  "protected_regions": {
+    "boot_and_flash_layout_0x0000_0x3fff": "d9f43191777656de01c7bed4f9e9ba2e34e94832c5d2ed02c3fc7ab7a6d9bd67",
+    "isd_config_raw_0x38d0_0x3b8a": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+    "isd_config_raw_0x38d0_0x3b8a_detail": {
+      "ascii_strings_first_20": [
+        ".oAv",
+        "4_1_0_0",
+        "OSC0",
+        "OSC_FREQ",
+        "OSC_HC_EN",
+        "OSC_1PIN_EN",
+        "SYS_CLK",
+        "HSB_DIV",
+        "LSB_DIV",
+        "UTBD",
+        "RESET",
+        "PB01_08_0",
+        "UPDATE_JUMP",
+        "VLVD",
+        "ENABLE_SDRAM",
+        "SDRAM_REFRESH_TIME",
+        "SDRAM_REFRESH_CYCLES",
+        "SDRAM_MODE",
+        "SDRAM_COLUM",
+        "SDRAM_SIZE"
+      ],
+      "byte_counts": {
+        "00": 152,
+        "ff": 0,
+        "other": 547
+      },
+      "first_32_hex": "203413d65997fa2e6f41768928f01eb81c4bb54a24a58a869e094c5757a3f822",
+      "last_32_hex": "0a00000004534452414d5f44515f444c595f494e4e45525f54524d0000000000",
+      "sha256": "0952afd96f533dd0fba72a8fab9cb4a4336f55424a1a89eecb13ff8a51a0eff0",
+      "size": 699
+    },
+    "post_app_resources_and_reserved": "53718db6501441b091aeb48e21eedd480faebcae4743add53d1ae36d57b327e7",
+    "uboot_boot_raw_0x00a0_0x38cf": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861",
+    "uboot_boot_raw_0x00a0_0x38cf_detail": {
+      "ascii_strings_first_20": [
+        "}8;H",
+        "8W'9",
+        "L!_$<",
+        "/yE&",
+        "]ju3",
+        "X8ue",
+        "1B*-",
+        "6]=@.t",
+        "[5y.Fp?E",
+        "B5\"iQ1)'3",
+        "44ry",
+        "\\>]J",
+        "|U!qm",
+        "13]%AW]",
+        "4@Qf",
+        "4$Dy",
+        "-(Cbt",
+        ".{-;",
+        "J?/W",
+        "Sd ja="
+      ],
+      "byte_counts": {
+        "00": 57,
+        "ff": 55,
+        "other": 14272
+      },
+      "first_32_hex": "fedfbf271f1ebcf9e0c1a3676c3cae2b2737981fdfc1f81886a5e347aa5ddb96",
+      "last_32_hex": "63c6a87bb6ecfcd3264c9d30a0e1e6e7efdf983a15ab518992042e566c78f7e4",
+      "sha256": "b5a0715940db344f951595e2d5a66050631c7721703cb06d33d8dc94eca3c861",
+      "size": 14384
+    }
+  },
+  "resources_and_rollback": {
+    "resource_overlap": "Immediate app extension overlaps cfg_tool.bin. Extension to flash.bin end overlaps protected post-app resources/reserved bytes. UFW flash.bin growth overlaps the UFW USR entry.",
+    "rollback_sectors": {
+      "post_app_gap_overlaps": [
+        "0x9a000",
+        "0x9b000"
+      ],
+      "relocate_cfg_tool_and_extend_to_flash_end_overlaps": [
+        "0x9a000",
+        "0x9b000"
+      ],
+      "rollback_implication": "Any hypothetical tail/post-app change touches sector 0x9a000 and/or 0x9b000; preserving stock rollback would require exact original sector backups and still would not prove runtime execution.",
+      "tail_payload_only_overlaps": [
+        "0x9a000"
+      ]
+    }
+  },
+  "runtime_mapping_and_execution": {
+    "cfg_tool_range_if_raw_contiguous_mapping": {
+      "end_exclusive": "0x02096bb3",
+      "start": "0x02096a34"
+    },
+    "entry_point_from_app_area_head": "0x02000120",
+    "limit": "These SDK facts prove the public SFC/XIP model, not that bytes outside official JLFS app.bin are admitted by the exact SMK-37 Pro v15 boot path as executable app bytes.",
+    "official_app_runtime_range": {
+      "end_exclusive": "0x02096a34",
+      "start": "0x02000000"
+    },
+    "post_app_gap_if_raw_contiguous_mapping": {
+      "end_exclusive": "0x02097ee0",
+      "start": "0x02096bb3"
+    },
+    "public_sdk_sfc_linker_evidence": {
+      "commit": "e30b1ee375d1f2993fc23bf92c8b99006a6e5f9d",
+      "isd_config_rule_c": {
+        "force_4k_align": "FORCE_4K_ALIGN=YES",
+        "sdram_entry": "ENTRY=0x4000120 otherwise",
+        "sfc_entry": "ENTRY=0x2000120 when CONFIG_SFC_ENABLE or CONFIG_NO_SDRAM_ENABLE"
+      },
+      "sdk_ld_sfc_c": {
+        "ram_copy_lma_symbols": [
+          "data_lma = text_begin + SIZEOF(.text)",
+          "_ram0_data_lma = text_begin + SIZEOF(.text) + SIZEOF(.data) + SIZEOF(.dynamic_data)"
+        ],
+        "rom_length_symbol": "__FLASH_SIZE__",
+        "rom_origin": "0x02000120",
+        "rom_permissions": "rx",
+        "text_sections": [
+          "startup.S.o(.text)",
+          "*(.boot_code)",
+          "*(.text*)",
+          "*(.rodata*)"
+        ]
+      }
+    },
+    "runtime_base_for_current_app_evidence": "0x02000000"
+  },
+  "scope": "read-only exact official v15 package/app evidence; no firmware candidate, flash, OTA, or device access",
+  "validation_checks": [
+    {
+      "check": "official-fwsc-sha",
+      "detail": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+      "status": true
+    },
+    {
+      "check": "official-app-sha",
+      "detail": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "status": true
+    },
+    {
+      "check": "app-file-equals-jlfs-app-bytes",
+      "detail": "617012 bytes",
+      "status": true
+    },
+    {
+      "check": "app-size-is-0x96a34",
+      "detail": "0x96a34",
+      "status": true
+    },
+    {
+      "check": "cfg-tool-starts-at-app-end",
+      "detail": "0x9ab54 == 0x9ab54",
+      "status": true
+    },
+    {
+      "check": "cfg-tool-consumes-naive-app-tail",
+      "detail": "0x9ab54..0x9acd3",
+      "status": true
+    },
+    {
+      "check": "flash-bin-has-no-gap-before-next-ufw-entry",
+      "detail": "flash.bin aligned end 0x9c400; USR starts 0x9c400",
+      "status": true
+    },
+    {
+      "check": "checkable-jlfs-data-crcs-valid",
+      "detail": "app.bin/cfg_tool.bin checkable in flash.bin; out-of-flash JLFS data entries have 0xffff CRC placeholders",
+      "status": true
+    },
+    {
+      "check": "app-area-entry-point",
+      "detail": "0x02000120",
+      "status": true
+    },
+    {
+      "check": "app-area-size",
+      "detail": "0x96cd3",
+      "status": true
+    }
+  ]
+}

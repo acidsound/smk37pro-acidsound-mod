@@ -1,0 +1,100 @@
+range=02022f46..02023075
+02022f46  7b04  push {rets,r11,r10,r9,r8,r7,r6,r5,r4}
+02022f48  e293  add sp,#-0x34
+02022f4a  4720  mov r7,#0x0
+02022f4c  c9ff70690502  mov r9,#0x2056970
+02022f52  cbffb08fc001  mov r11,#0x1c08fb0
+02022f58  4ae06c09  movz r10,#0x96c
+02022f5c  48e0984f  movz r8,#0x4f98
+02022f60  4220  mov r2,#0x0
+02022f62  2487  goto 0x02022ff2
+02022f64  54ee0050  lb.s r5,[r0+#0x0]
+02022f68  75fe1cfe  jg r5,#-0x1,0x02022fa4
+02022f6c  5617  uxtb r6,r5
+02022f6e  16fc19de  ja r6,0xef,0x02022fa4
+02022f72  65e17f50  and r5,r5,#0x7f
+02022f76  52eeb752  sb r5,[r11 + 0x27]
+02022f7a  0d41  lb.z r5,[r0 + 0x1]
+02022f7c  bd27  bitclr r5,0x7
+02022f7e  52eeb852  sb r5,[r11 + 0x28]
+02022f82  e5a4  lsr r5,r6,0x4
+02022f84  b4e05069  add r6,r5,r9
+02022f88  c8e18255  lsr r5,r8,r5
+02022f8c  4720  mov r7,#0x0
+02022f8e  35ea0140  if ((r5 & #0x1) != 0) {
+02022f92  0d42  lb.z r5,[r0 + 0x2]
+02022f94  77e18050  and r7,r5,#0xffffff7f
+02022f98  d8ee606a  }  lb.z r6, [r6 + r10]
+02022f9c  52eeb972  sb r7,[r11 + 0x29]
+02022fa0  0f40  lb.z r7,[r0 + 0x0]
+02022fa2  049a  goto 0x02022fd8
+02022fa4  60ffff702600  jmz r7,#0xff,0x02022ff6
+02022faa  65e17f70  and r5,r7,#0x7f
+02022fae  52eeb752  sb r5,[r11 + 0x27]
+02022fb2  b6f11072  uextra r6,r7,0x4,0x4
+02022fb6  0d40  _lb.z r5,[r0 + 0x0]
+02022fb8  9618  add r6,r9
+02022fba  d8ee606a  lb.z r6,[r6 + r10]
+02022fbe  bd27  bitclr r5,0x7
+02022fc0  52eeb852  sb r5,[r11 + 0x28]
+02022fc4  fe3f  add r6,#-0x1
+02022fc6  6417  uxtb r4,r6
+02022fc8  4520  mov r5,#0x0
+02022fca  34e80240  if (r4 == #0x2) {
+02022fce  0c41  lb.z r4,[r0 + 0x1]
+02022fd0  75e18040  and r5,r4,#0xffffff7f
+02022fd4  52eeb952  }  sb r5, [r11 + 0x29]
+02022fd8  8c83  add r4,sp,#0x3
+02022fda  2418  add r4,r2
+02022fdc  05e124b0  add r5,r11,#0x24
+02022fe0  1086  rep #0x4,#0x7
+02022fe2  5307  lb.z r3,[r5 ++= 1]
+02022fe4  c307  sb r3,[r4 ++= 1]
+02022fe6  c227  add r2,#0x7
+02022fe8  02fe0560  jg r2,#0x30,0x02022ff6
+02022fec  6317  uxtb r3,r6
+02022fee  3018  add r0,r3
+02022ff0  991e  sub r1,r1,r3
+02022ff2  01fdb703  jge r1,#0x1,0x02022f64
+02022ff6  40e05101  movz r0,#0x151
+02022ffa  c6ff0037c301  mov r6,#0x1c33700
+02023000  d8ec6a10  lw r1,[r6+r0<<2]
+02023004  114a  jz r1,0x0202305a
+02023006  f83f  add r0,#-0x1
+02023008  d8ec6a30  lw r3,[r6+r0<<2]
+0202300c  48e05201  movz r8,#0x152
+02023010  d8ec6a08  lw r0,[r6+r8<<2]
+02023014  35e41172  smin r7,r1,r2
+02023018  3018  add r0,r3
+0202301a  991e  sub r1,r1,r3
+0202301c  35e41147  smin r4,r1,r7
+02023020  8983  add r1,sp,#0x3
+02023022  4216  mov r2,r4
+02023024  80ffe2540200  call 0x0204850c
+0202302a  721f  sub r2,r7,r4
+0202302c  0247  jz r2,0x0202303c
+0202302e  d8ec6a08  lw r0,[r6+r8<<2]
+02023032  8983  add r1,sp,#0x3
+02023034  4118  add r1,r4
+02023036  80ffd0540200  call 0x0204850c
+0202303c  00e14065  add r0,r6,#0x540
+02023040  00eb0600  sw {r2,r1},[r0]
+02023044  7118  add r1,r7
+02023046  fa3f  add r2,#-0x1
+02023048  a119  not r1,r2
+0202304a  00f1f795  add r0,r9,#0x5f7
+0202304e  8160  _sw r1,[r0 + 0x0]
+02023050  4121  mov r1,#0x1
+02023052  6220  mov r2,#0x80
+02023054  80ffb8e50300  call 0x02061612
+0202305a  028d  add sp,#0x34
+0202305c  5b04  pop {pc,r11,r10,r9,r8,r7,r6,r5,r4}
+0202305e  7404  push {rets,r4}
+02023060  e29f  add sp,#-0x4
+02023062  6230  mov r2,#0x90
+02023064  dee90120  sb r2,[sp+0x1]
+02023068  74e18000  and r4,r0,#0xffffff7f
+0202306c  dee90240  sb r4,[sp+0x2]
+02023070  583f  mov r0,#0x7f
+02023072  8141  jnz r1,0x02023076
+02023074  1016  mov r0,r1

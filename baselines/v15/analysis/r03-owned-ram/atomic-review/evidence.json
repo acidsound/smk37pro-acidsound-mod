@@ -1,0 +1,235 @@
+{
+  "blockers": [
+    {
+      "finding": "R03 leaves 0x02026da6 unchanged as beeaacee, decoded as call 0x02004b02, before the neutralized packer call at 0x02026dac.",
+      "id": "save-first-persistent-write-not-blocked",
+      "impact": "SAVE is not fully blocked by the current atomic artifact, despite manifest protocol claiming disabled/rejected."
+    },
+    {
+      "finding": "The missing 0x0201e1a2 branch machine bytes are tied to the embedded object bytes, but the validator does not rerun official objdump and the pinned SDK cpu.h source is not preserved as a local checked artifact.",
+      "id": "quarkslab-gap-provenance-not-fully-reproducible",
+      "impact": "Machine-code semantics are strongly supported, but the combined pinned-SDK plus official-objdump provenance is not fully closed for an independent release gate."
+    }
+  ],
+  "commands": {
+    "deterministic_rebuild": "tools/build_v15_r03_fixed_prefix.py, tools/smk37_v15_app_patch.py repack-app, tools/build_v15_r03_rollback.py under /Users/spectrum/.jcode/scratch/r03-atomic-review-2685",
+    "validator": "python3 tools/validate_v15_r03.py"
+  },
+  "deterministic_rebuild_result": {
+    "app_cmp_identical": true,
+    "package_cmp_identical": true,
+    "rollback_zip_cmp_identical": true,
+    "scratch_rebuild_log": "/Users/spectrum/.jcode/scratch/r03-atomic-review-2685/rebuild.log",
+    "status": "PASS"
+  },
+  "format": "smk37-v15-r03-atomic-independent-review-v1",
+  "requested_gates": [
+    {
+      "decision": "PASS",
+      "evidence": {
+        "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+        "official_package_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff"
+      },
+      "gate": "official v15 exact SHA"
+    },
+    {
+      "decision": "PASS",
+      "evidence": {
+        "bss_patch": {
+          "address": "0x0200001e",
+          "file_offset": 30,
+          "new_hex": "c2ffeccb0300",
+          "old_hex": "c2ff48cb0300"
+        },
+        "heap_begin_patch": {
+          "address": "0x0205e9f8",
+          "file_offset": 387576,
+          "new_hex": "c5ffc065c401",
+          "old_hex": "c5ff2065c401"
+        },
+        "owned_ram": {
+          "heap_capacity_reduction": 160,
+          "initialization": "boot BSS zero extension, ending exactly at shifted HEAP_BEGIN",
+          "lock": "0x01c465bd",
+          "range": "0x01c46520..0x01c465c0",
+          "size": 160,
+          "valid": "0x01c465bc",
+          "voice": "0x01c46520..0x01c465bc"
+        }
+      },
+      "gate": "heap-prefix/BSS/HEAP_BEGIN ownership"
+    },
+    {
+      "decision": "PASS",
+      "evidence": {
+        "note_off_call": "call 0x0201e13e",
+        "note_on_call": "call 0x0201e16e",
+        "producer_calls": [
+          "call 0x0201e1b4",
+          "call 0x0201e1b4"
+        ],
+        "retained_trace_rows": 124,
+        "save_trace_rows": {
+          "02026da6": [
+            "02026da6",
+            "beeaacee",
+            "4",
+            "call",
+            "call 0x02004b02",
+            "UNCONDITIONAL_CALL",
+            "-"
+          ],
+          "02026dac": [
+            "02026dac",
+            "0000",
+            "2",
+            "nop",
+            "nop",
+            "FALL_THROUGH",
+            "-"
+          ]
+        }
+      },
+      "gate": "PI32 ABI and branch/call decode"
+    },
+    {
+      "decision": "BLOCK",
+      "evidence": {
+        "block_reason": "local artifacts verify bytes, but pinned SDK cpu.h source and a rerun official objdump transcript are not machine-checked by validator",
+        "embedded_branch_bytes_at_0x0201e1a2": "40e8fdff",
+        "object_contains_exact_lock_unlock_bodies_at_offset": 52,
+        "object_sha256": "754ae849bed042a05294bfa9d5cab2e2b7045b107e91da1cbee1b0e80adfdd32",
+        "source_sha256": "9a19e5b85b37c1b7c6e0efafbf86e6847791d4e38db1172fee5cb1e1be8b4b9b"
+      },
+      "gate": "official SDK arch_spin_lock and official-toolchain object exact bytes"
+    },
+    {
+      "decision": "PASS",
+      "evidence": {
+        "lock_body": "2000b00040e8fdff20008000",
+        "producer_lock_call": "call 0x0201e19e",
+        "producer_unlock_call": "call 0x0201e1aa",
+        "protocol": {
+          "copy_size": 156,
+          "invalid_ch10": "falls back to stock source",
+          "producer_serialization": "PI32v2 atomic testset spinlock with csync before and after critical section",
+          "publish_order": "voice, valid=1",
+          "reload_after_first_publish": "rejected until reboot",
+          "save": "disabled/rejected",
+          "segmented_and_one_shot_product_packets": "the first accepted post-F7 callsite publishes; later packets cannot replace the snapshot",
+          "source": "0x01c37fd0"
+        },
+        "unlock_body": "20004120894020008000"
+      },
+      "gate": "producer serialization and consumer partial-read prevention"
+    },
+    {
+      "decision": "BLOCK",
+      "evidence": {
+        "decoder_0x02026da6": "call 0x02004b02",
+        "decoder_0x02026dac": "nop",
+        "first_persistent_write_0x02026da6_official": "beeaacee",
+        "first_persistent_write_0x02026da6_r03": "beeaacee",
+        "neutralized_packer_0x02026dac_official": "bfeac7b9",
+        "neutralized_packer_0x02026dac_r03": "00000000"
+      },
+      "gate": "SAVE blocking"
+    },
+    {
+      "decision": "PASS",
+      "evidence": {
+        "app_byte_count": 199,
+        "changed_sectors": [
+          "0x04000",
+          "0x20000",
+          "0x22000",
+          "0x2a000",
+          "0x62000"
+        ],
+        "flash_byte_count_including_crc_fields": 207,
+        "protected_hashes_equal": true
+      },
+      "gate": "package protected hashes and changed sectors"
+    },
+    {
+      "decision": "PASS",
+      "evidence": {
+        "guard_self_test": "PASS in validator and deterministic rebuild logs",
+        "rollback_format": "smk37-v15-r03-forced-recovery-plan-v1",
+        "rollback_zip_sha256": "6396f253825d067986131d830bcca8cce16ff9ca39b21c4220369958e90344f1",
+        "sectors": [
+          {
+            "address": "0x04000",
+            "changed_byte_count": 9,
+            "expected_target_sha256": "f2305e2a99fe19c82b20b169fccfc62e1ea089aee7415f2fef6b0ec99486c108",
+            "length": 4096,
+            "stock_file": "stock-sector-04000.bin",
+            "stock_sha256": "f0dbdd1756fdb0fbf31def403c74c4f4c69ec30bfc6a405f88d9bd540a9cf8e9"
+          },
+          {
+            "address": "0x20000",
+            "changed_byte_count": 6,
+            "expected_target_sha256": "3d13c5a3c5ba7e9fd51c03732f9acce66d4a94f1e5fcd46b058811809731936e",
+            "length": 4096,
+            "stock_file": "stock-sector-20000.bin",
+            "stock_sha256": "1dc90a318976cead8c55bb071b4096b242c354329eaf0cba74204866c0011f64"
+          },
+          {
+            "address": "0x22000",
+            "changed_byte_count": 187,
+            "expected_target_sha256": "3506de312c46952f345f6e0630a026c305b638730db82fee2d0e933f55d62b89",
+            "length": 4096,
+            "stock_file": "stock-sector-22000.bin",
+            "stock_sha256": "dd533edf9d53f120d66c54b0e40769b5a8774b4de9e114c1f1865f7d470f1dcc"
+          },
+          {
+            "address": "0x2a000",
+            "changed_byte_count": 4,
+            "expected_target_sha256": "b0b8af257fd5b6d39a66adea8371fb809c183c503954d9b92f3707a2d866866d",
+            "length": 4096,
+            "stock_file": "stock-sector-2a000.bin",
+            "stock_sha256": "630e50034f661f0a2d1d94e56f25b056ae99c8d1d379d6e7b082bd868d619409"
+          },
+          {
+            "address": "0x62000",
+            "changed_byte_count": 1,
+            "expected_target_sha256": "bc70da294bd64036f9e3ea33fa62d026bae7694ef51729c949396303aaf7a6c2",
+            "length": 4096,
+            "stock_file": "stock-sector-62000.bin",
+            "stock_sha256": "7fbd04123b6ffecd937f5b9896e385c62a12a1ef16a316888dd071fa43649f6d"
+          }
+        ]
+      },
+      "gate": "rollback v2 exact target hash and deterministic restore guard"
+    },
+    {
+      "decision": "BLOCK",
+      "evidence": {
+        "embedded_bytes": "40e8fdff",
+        "judgement": "sufficient for machine-code byte identity, not sufficient as a closed independent provenance gate because SDK source and objdump are not reproduced by validator",
+        "known_decoder_gap": {
+          "address": "0x0201e1a2",
+          "bytes": "40e8fdff",
+          "official_objdump": "ifeq goto -6 <r03_lock+0x2>",
+          "validation": "exact source/object hashes and embedded atomic body are checked by tools/validate_v15_r03.py"
+        },
+        "trace_row_0x0201e1a2_present": false
+      },
+      "gate": "Quarkslab 0x0201e1a2 40e8fdff omission compensation"
+    }
+  ],
+  "scope": {
+    "flash_ota_device_access_performed": false,
+    "git_head_before_review_commit": "8049328837ca387a88a33ce9709e70d54ff6cc44",
+    "implementation_modified": false,
+    "review_target": "current R03 atomic artifacts only",
+    "reviewer": "Jcode independent reviewer"
+  },
+  "validator_result": {
+    "app_sha256": "1fff37674f4bb1d5b988dc1415ab29c7114bbcad9e12bfcd7cec9b687d1f6ecb",
+    "package_sha256": "0ed23e567a623db4b143fa30a6846626d746098ed126c149ac724c0fab6c1937",
+    "rollback_sha256": "6396f253825d067986131d830bcca8cce16ff9ca39b21c4220369958e90344f1",
+    "status": "PASS"
+  },
+  "verdict": "BLOCK"
+}

@@ -1,0 +1,98 @@
+{
+  "format": "smk37-v15-s1c2-protocol-alternatives-v1",
+  "date_utc": "2026-08-02",
+  "scope": "read-only analysis; no firmware build, no device access, no flash, no OTA, no MIDI/USB traffic",
+  "question": "Can S1-C2 avoid a new private parser by composing exact official v15 product SysEx acceptance with live-proven H2 producer semantics into an atomic two-slot scheme?",
+  "decision": "BLOCK",
+  "short_answer": "Not safely with the existing official complete-message handler and H2 producer ABI. A fixed-order two-product-packet state machine is atomic in the abstract only if additional firmware code proves exact accepted length/source identity and slot sequence before publication. Current official direct product handling does not expose those invariants to the H2 producer and does not carry note/slot identity.",
+  "source_hashes": {
+    "baselines/v15/analysis/flash-candidates/S1C2-two-slot-selector/report.md": "e06dc98dc0495b154ec50ec25b848b6a00a6a1e314117562ba8577e5d6997481",
+    "baselines/v15/analysis/flash-candidates/S1C2-two-slot-selector/evidence.json": "b0e60b37e05ffa8075aaa9b39acf0149f1cd5b822579d2e3535e6f217da1af60",
+    "baselines/v15/analysis/patch-set-ui/s1c1/ingress/report.md": "c6b5e86fc1a0e66912c54aa361f8309ba6e918914ac5ed254b094935ed64b76c",
+    "baselines/v15/analysis/patch-set-ui/architecture.md": "049732dc4eccc0b1e99fb7f1a6390a1e1bd774f560f461fd08cb4ccd3cd00993",
+    "baselines/v15/analysis/channel-separation-reanalysis/runtime-source/report.md": "cafbbf22c4f9751a0134ecb0ab9734d6c62be4e5f06cbcb34448e70d8c308932",
+    "baselines/v15/analysis/channel-separation-reanalysis/sysex-staging/report.md": "cfabba55680bbee2f699316547ef28ec496434d886a3b2edf4d7e3a421c8d6f8",
+    "baselines/v15/analysis/channel-separation-reanalysis/r02-review/report.md": "7efe6912d854b356c64daee4758b5442a07175b4a0c6d215f5fe4f9e4bae50f0",
+    "baselines/v15/analysis/flash-candidates/H1-producer-unconsumed/live-validation-20260802.md": "852cdc5287ae631a0d97d3e8a930696f3f9a34ad26b6cea4de0e4ff7f6c0e2dc",
+    "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/live-validation-20260802.md": "b2aca5903390cffe573f42c89aa6407a52c28f967124a07b407887959d1c8fd7",
+    "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/review/jcode-pass-review-75e7180-20260802T2154Z.md": "95e8100ca529a2af7868ddef43f549d2868c824550261cc8323946874d3b29d2",
+    "baselines/v15/analysis/patch-set-ui/s1c1/code/report.md": "a326c3ec72273530239b7c87963141f89ddde2879fba9eddeca4689c63786aa3",
+    "baselines/v15/analysis/patch-set-ui/s1c1/ram/report.md": "52a71a8b84f8d497586cf21668a3e44d391337fb6758e34f9c615d35505e0943"
+  },
+  "exact_addresses": {
+    "completed_message_callsite": "0x0202d202 calls 0x0201e254 with r0=assembled message and r1=accumulated length",
+    "official_handler_entry": "0x0201e254",
+    "direct_product_path": {
+      "header_gates": "0x0201e410..0x0201e444 require F0 43 00 00 01 1B",
+      "stage_compute": "0x0201e448 computes 0x01c37030+0x0fa0 = 0x01c37fd0",
+      "copy": "0x0201e456 memcpy(stage, message+6, r9-6)",
+      "terminal_f7_gate": "0x0201e462 checks message[r9-1] == F7 after copy",
+      "producer_call": "0x0201e468 calls replacement producer in H2",
+      "reload_call": "0x0201e46c calls 0x02005660"
+    },
+    "segmented_final_product_path": {
+      "final_f7_gate": "0x0201e480 checks final F7",
+      "accumulated_length_gate": "0x0201e484 checks offset+len == 0x9e",
+      "copy": "0x0201e494 appends into 0x01c37fd0",
+      "producer_call": "0x0201e49c calls replacement producer in H2",
+      "reload_call": "0x0201e4a0 calls 0x02005660"
+    },
+    "h2_producer": "0x0201e1a2..0x0201e1ec; receives only r0=accepted staging pointer, uses lock 0x01c465bd, copies to 0x01c46520, stores valid 0x01c465bc last",
+    "s1c1_selector_space": "0x0201e13e..0x0201e19e selector, 0x0201e19e..0x0201e1a2 4-byte gap, 0x0201e1a2..0x0201e1ec H2 producer",
+    "note_hooks": {
+      "note_off": "0x0201c63e, note identity r5=msg[1]",
+      "note_on": "0x0201c67c, note identity r6=msg[1]"
+    },
+    "two_slot_ram": "0x01c46520..0x01c46660, slot0 0x01c46520..0x01c465bc, slot1 0x01c465c0..0x01c4665c"
+  },
+  "alternatives": [
+    {
+      "id": "A",
+      "name": "two exact direct official product packets, first-to-slot0 second-to-slot1",
+      "status": "BLOCK",
+      "reason": "Direct official path does not prove r9==0xa3 and calls producer with only a stage pointer. A short or malformed final-F7 packet can enter the producer after partially refreshing stage, and the producer cannot distinguish it from the exact live packet without new length/message validation. Official product bytes also carry no note/slot identity. Host ordering alone is not a firmware invariant."
+    },
+    {
+      "id": "B",
+      "name": "two segmented/final official product packets only",
+      "status": "BLOCK pending discriminator",
+      "reason": "The segmented final path has a useful accumulated-length gate, but current H2 accepts both direct and segmented product paths and the producer cannot identify which caller invoked it. Making segmented-only safe would require proving direct path cannot mutate private state, or adding caller/length discrimination. That is new code and exact placement remains unproved."
+    },
+    {
+      "id": "C",
+      "name": "staging shadow copies with activation-last state",
+      "status": "PARTIAL PASS design, BLOCK implementation",
+      "reason": "LOADING can hide a first accepted copy and ARMED-last can prevent partial consumption after an interrupted first packet. It does not validate that the copied bytes came from two exact product messages, does not bind both messages as a set, and does not encode notes."
+    },
+    {
+      "id": "D",
+      "name": "generation counters on sequential official packets",
+      "status": "BLOCK / unnecessary for load-once",
+      "reason": "Generation counters can detect replacement races only if consumers compare active generations across Note On and Note Off. S1-C1/S1-C2 load-once immutability avoids that race without counters. Counters do not prove exact packet length, transaction binding, or slot identity."
+    },
+    {
+      "id": "E",
+      "name": "double buffering for active and staging two-slot sets",
+      "status": "BLOCK",
+      "reason": "True double buffering needs an inactive two-slot set in addition to the active set, at least another 0x140 bytes plus metadata. The admitted S1-C1/S1-C2 boundary reserves only 0x01c46520..0x01c46660. It also still needs a selector for which inactive buffer receives a packet."
+    }
+  ],
+  "strict_invariants_required_if_unblocked": [
+    "Before ARMED, no Ch10 consumer may read slot0 or slot1 for the private two-slot scheme.",
+    "STATE=LOADING must be stored before the first private copy can publish valid0.",
+    "valid0 must be stored after the complete slot0 0x9c copy, but valid0 alone must not make slot0 consumable while state is LOADING.",
+    "valid1 must be stored after the complete slot1 0x9c copy, and STATE=ARMED must be stored last after a csync/order barrier.",
+    "After ARMED, every official product producer entry must reject without mutation until reboot or an independently proven inactive double buffer exists.",
+    "The firmware, not only the host script, must distinguish exact accepted packets from partial, short, oversized, duplicate, replayed, or wrong-route packets before any consumable publication.",
+    "The same note-to-slot rule must be used by Note On and Note Off, with fallback restoring the H2-correct memcpy destination."
+  ],
+  "smallest_discriminator": {
+    "status": "required before any no-parser candidate",
+    "statement": "Prove, by static rows and exact bytes only, that a replacement producer at the accepted product callsites can know or enforce exact payload length and route (direct versus segmented) and can fit an EMPTY/LOADING/ARMED two-copy state machine in owned executable space while preserving H2 fallback/reload behavior. The smallest negative/positive test is an offline ABI/placement discriminator for 0x0201e468 and 0x0201e49c, not a firmware build or live packet.",
+    "minimum_evidence": [
+      "At producer entry, identify a reliable register or memory field containing exact accepted total/payload length, or prove direct 0x0201e468 is neutralized for private publication and only segmented 0x0201e49c can publish.",
+      "Identify how slot index and note identity are determined without corrupting the 156-byte official runtime voice payload. Fixed notes 36/45 are acceptable only for a narrow discriminator and must be stated as firmware constants.",
+      "Assemble/decode the producer state machine and prove it fits the remaining owned cave with all branch/call reach, unlock-on-reject paths, and unchanged nonprivate official/H2 behavior."
+    ]
+  }
+}

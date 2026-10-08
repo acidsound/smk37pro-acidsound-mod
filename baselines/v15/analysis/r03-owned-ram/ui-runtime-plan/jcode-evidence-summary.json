@@ -1,0 +1,139 @@
+{
+  "producer": "jcode",
+  "date_utc": "2026-08-02",
+  "scope": "official v15 only; plan/evidence review; no patch, flash, device access, or live instrumentation",
+  "official_v15_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+  "runtime_base": "0x02000000",
+  "ui_ram_base": "0x01c33260",
+  "target_pending_absolute_range": "0x01c33569..0x01c3356f",
+  "target_pending_offsets": [
+    "+0x309",
+    "+0x30a",
+    "+0x30b",
+    "+0x30c",
+    "+0x30d",
+    "+0x30e",
+    "+0x30f"
+  ],
+  "target_live_offsets": [
+    "+0x39",
+    "+0x3a",
+    "+0x3b",
+    "+0x3c",
+    "+0x3d",
+    "+0x3e",
+    "+0x3f"
+  ],
+  "source_artifacts": [
+    {
+      "path": "baselines/v15/analysis/ui-preflash/README.md",
+      "sha256": "1f6209fbd5fb41f2ec60b25c2e28daa3a8487d11d9275f27368acbb98c15ad7f"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/events/report.md",
+      "sha256": "25ba91225404b8e04ee834788eaa7099c4345089d329fef2a5c13e7df7549284"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/final-pass/events/report.md",
+      "sha256": "1db782f6cc39b85b109af39999915bb8a4d7cf7233cb0bff77227d8f41b0537d"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/final-pass/events/final-pass-events.json",
+      "sha256": "f1d2b68448ad426e3a4f915efc7b9c9fb446261d7974693a466ced8a68955f78"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/final-pass/renderer/report.md",
+      "sha256": "c1e9c67b0fa426fbaae9632620415ac2f65aead94d31de77ea9cd6635819138d"
+    },
+    {
+      "path": "baselines/v15/analysis/ui-preflash/final-pass/renderer/renderer-trace.json",
+      "sha256": "67f34101416a0a3587205bb316360ecd02b67d6606495f6fae952b186cb7d43f"
+    },
+    {
+      "path": "baselines/v15/analysis/runtime-trace/report.md",
+      "sha256": "dce53313fb31d08ff93430bc0c2db543e4be6393a688a872c3bc77460b7a7d2c"
+    }
+  ],
+  "static_boundaries": {
+    "pending_consumers": [
+      "0x02028f0c",
+      "0x02029152",
+      "0x02029612"
+    ],
+    "producer_to_pending_fields_proven": false,
+    "physical_input_dispatcher_or_id_proven": false,
+    "callback_vector": "0x02058248, 11 internal code-pointer entries, dispatcher unresolved",
+    "vector_targets": [
+      "0x02029912",
+      "0x02029936",
+      "0x02029974",
+      "0x020299ce",
+      "0x020299f2",
+      "0x02029a16",
+      "0x02029a2e",
+      "0x02029a46",
+      "0x02029a78",
+      "0x02029aaa",
+      "0x0202439e"
+    ],
+    "renderer_partial_chain": "0x02020376 -> 0x0201a67c with r1=0x02058314 Keys Channel- descriptor",
+    "renderer_path_from_02020376_to_0200f74c_or_0201e06c": false,
+    "lcd_or_final_pixel_write_status": "not recovered",
+    "computed_renderer_call_sites": [
+      "0x0200f71e",
+      "0x0200f746",
+      "0x0200f770",
+      "0x0201ea90",
+      "0x0201eaae"
+    ],
+    "dirty_redraw_candidate": "0x0201e06c"
+  },
+  "observation_boundaries": {
+    "truly_read_only_host_observation": [
+      "offline static inspection",
+      "USB descriptor enumeration with no endpoint writes",
+      "passive USB-MIDI IN observation",
+      "camera/human display observation with official firmware unchanged"
+    ],
+    "active_but_not_firmware_patch": [
+      "manual physical button/encoder stimuli",
+      "separately authorized fixed USB-MIDI OUT matrix, if ever used"
+    ],
+    "requires_firmware_patch_or_equivalent_in_firmware_instrumentation": [
+      "pending-byte transition logging/bracketing",
+      "PC/LR/register capture at firmware sites",
+      "computed renderer callback target logging",
+      "dirty/redraw argument and field transition logging"
+    ],
+    "not_claimed": [
+      "hardware watchpoints without proven debug interface",
+      "physical IDs from vector ordinal order",
+      "LCD ABI from ST7789-like bytes",
+      "producer PC from consumer snapshots"
+    ]
+  },
+  "minimal_checkpoints": [
+    "SHA/static evidence gate",
+    "read-only host and camera baseline",
+    "trace-only patch design gate",
+    "pending consumer bracketing",
+    "vector/physical action correlation",
+    "computed renderer callback and dirty/redraw trace",
+    "producer narrowing only after bracketing"
+  ],
+  "rollback_requirements": [
+    "hash-checked official v15 package available",
+    "documented restore path",
+    "no persistent storage writes in trace patch",
+    "volatile bounded trace buffer only",
+    "post-rollback USB/UI baseline verification"
+  ],
+  "stop_conditions": [
+    "SHA or device identity mismatch",
+    "unexpected recovery/update/error screen",
+    "trace changes UI behavior",
+    "dropped/out-of-order records",
+    "need for broad/global store instrumentation",
+    "unreviewed vendor/flash/OTA command required"
+  ]
+}

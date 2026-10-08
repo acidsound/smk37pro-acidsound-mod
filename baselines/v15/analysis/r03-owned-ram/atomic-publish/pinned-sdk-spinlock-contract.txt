@@ -1,0 +1,25 @@
+Pinned public AC79 SDK commit: e30b1ee375d1f2993fc23bf92c8b99006a6e5f9d
+Repository: https://gitee.com/Jieli-Tech/fw-AC79_AIoT_SDK
+
+include_lib/driver/cpu/wl82/asm/cpu.h lines 189-190:
+#define arch_spin_lock(lock) do{__asm_csync();__asm__ volatile ( "1:            \n\t" "testset b[%0] \n\t" "ifeq goto 1b  \n\t" :: "r"(&(lock)->rwlock));__asm_csync();}while(0)
+#define arch_spin_unlock(lock) do{__asm_csync();(lock)->rwlock = 0;}while(0)
+
+include_lib/system/spinlock.h lines 75-89:
+static inline void spin_lock(spinlock_t *lock)
+{
+    preempt_disable();
+    spin_acquire(lock);
+}
+
+static inline void spin_unlock(spinlock_t *lock)
+{
+    spin_release(lock);
+    preempt_enable();
+}
+
+R03 consequence:
+The SDK's blocking spin_lock wrapper disables preemption before arch_spin_lock.
+R03 therefore does not embed the blocking loop. It uses one atomic testset attempt
+and branches directly to its return path on failure, so interrupt or same-core
+reentry cannot spin while the current producer is preempted.

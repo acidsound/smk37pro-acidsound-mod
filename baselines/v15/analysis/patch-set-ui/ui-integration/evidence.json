@@ -1,0 +1,447 @@
+{
+  "schema": "smk37-v15-patch-set-ui-integration-evidence-v1",
+  "generated_utc": "2026-08-02T22:15:31Z",
+  "scope": {
+    "firmware_version": "official v15 only",
+    "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "runtime_base": "0x02000000",
+    "app_to_flash_delta": "0x00004120",
+    "h2_app_sha256": "d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59",
+    "h2_live_verdict": "PASS",
+    "actions_performed": [
+      "read-only artifact analysis",
+      "offline validation of this report package"
+    ],
+    "actions_not_performed": [
+      "firmware patch",
+      "package build",
+      "flash",
+      "OTA",
+      "device access"
+    ]
+  },
+  "source_registry": {
+    "official_app": {
+      "path": "build/v15-official-app.bin",
+      "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055"
+    },
+    "ui_checkpoint": {
+      "path": "baselines/v15/analysis/ui-preflash/README.md",
+      "sha256": "1f6209fbd5fb41f2ec60b25c2e28daa3a8487d11d9275f27368acbb98c15ad7f"
+    },
+    "event_report": {
+      "path": "baselines/v15/analysis/ui-preflash/events/report.md",
+      "sha256": "25ba91225404b8e04ee834788eaa7099c4345089d329fef2a5c13e7df7549284"
+    },
+    "event_final": {
+      "path": "baselines/v15/analysis/ui-preflash/final-pass/events/report.md",
+      "sha256": "1db782f6cc39b85b109af39999915bb8a4d7cf7233cb0bff77227d8f41b0537d"
+    },
+    "renderer_report": {
+      "path": "baselines/v15/analysis/ui-preflash/renderer/evidence-report.md",
+      "sha256": "cd375d616c6d8a3e8793d30d1842b9ba288608193ce7976e1f2ac30fefa7b4a0"
+    },
+    "renderer_final": {
+      "path": "baselines/v15/analysis/ui-preflash/final-pass/renderer/report.md",
+      "sha256": "c1e9c67b0fa426fbaae9632620415ac2f65aead94d31de77ea9cd6635819138d"
+    },
+    "sdk_report": {
+      "path": "baselines/v15/analysis/ui-preflash/final-pass/sdk-match/report.md",
+      "sha256": "0804eec90b8f3596011d31d1e9276268de49387c270830b13ced55eea41e622a"
+    },
+    "sdk_json": {
+      "path": "baselines/v15/analysis/ui-preflash/final-pass/sdk-match/ui-sdk-match.json",
+      "sha256": "52b85590772404dcfaa594f76f60aadc27a2adf1dc380c6dfe13832aca697fe5"
+    },
+    "state_report": {
+      "path": "baselines/v15/analysis/ui-preflash/state-persistence/report.md",
+      "sha256": "1364dc3d9b0b67cb0994b40f4985d30b48f24da0c22b8c65a3d3583a8ee6c260"
+    },
+    "persistence_report": {
+      "path": "baselines/v15/analysis/ui-preflash/followup/persistence-direction.md",
+      "sha256": "c7ef98a1e9305105c173d0ce5f820b438c6ffcda416ad7adb839c2785d64bf42"
+    },
+    "h2_report": {
+      "path": "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/report.md",
+      "sha256": "0f3bcde9c1fe64065213a62bd9eef49eda9dd57f8c487789631c9c90c2bb0ac0"
+    },
+    "h2_live": {
+      "path": "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/live-validation-20260802.md",
+      "sha256": "b2aca5903390cffe573f42c89aa6407a52c28f967124a07b407887959d1c8fd7"
+    },
+    "h2_manifest": {
+      "path": "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/app-manifest.json",
+      "sha256": "dc6fba4ddb887424d6bd76b6d1477f66f97096e2d6656f203eec423680572cf3"
+    },
+    "h2_review": {
+      "path": "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/review/jcode-pass-review-75e7180-20260802T2154Z.md",
+      "sha256": "95e8100ca529a2af7868ddef43f549d2868c824550261cc8323946874d3b29d2"
+    },
+    "h2_builder": {
+      "path": "tools/build_v15_h2_owned_source_corrected_fallback.py",
+      "sha256": "e993baeb9d32e38dfc602b8b13e1832ea15290a223b1db4da7caa3900a18b3a6"
+    },
+    "h2_validator": {
+      "path": "tools/validate_v15_h2.py",
+      "sha256": "bd3c63763dadaa3f1935bf0b3140ab62d7bb7d473987ba479a12434549864ef8"
+    }
+  },
+  "findings": [
+    {
+      "id": "PF-001",
+      "classification": "proven_fact",
+      "domain": "provenance",
+      "statement": "All official UI addresses use the official v15 app hash, runtime base 0x02000000, and app-to-flash delta 0x4120.",
+      "sources": [
+        {"ref": "ui_checkpoint", "locator": "Status and requirements REQ-01"},
+        {"ref": "official_app", "locator": "whole file SHA-256"}
+      ],
+      "addresses": []
+    },
+    {
+      "id": "PF-002",
+      "classification": "proven_fact",
+      "domain": "h2_data_plane",
+      "statement": "H2 publishes one accepted 0x9c-byte product snapshot to owned RAM 0x01c46520..0x01c465bb, sets valid at 0x01c465bc after the copy, and uses lock 0x01c465bd.",
+      "sources": [
+        {"ref": "h2_manifest", "locator": "h2_policy"},
+        {"ref": "h2_review", "locator": "Producer, try-lock, and publication ordering"}
+      ],
+      "addresses": [
+        {"kind": "ram_range", "start": "0x01c46520", "end_inclusive": "0x01c465bb", "role": "H2 owned snapshot"},
+        {"kind": "ram", "address": "0x01c465bc", "role": "H2 valid byte"},
+        {"kind": "ram", "address": "0x01c465bd", "role": "H2 publication lock"}
+      ]
+    },
+    {
+      "id": "PF-003",
+      "classification": "proven_fact",
+      "domain": "h2_data_plane",
+      "statement": "H2 routes official Ch10 Note Off and Note On memcpy callsites through corrected wrappers, while non-Ch10 and invalid states restore the stock destination and use stock source/count.",
+      "sources": [
+        {"ref": "h2_builder", "locator": "build_consumer and NOTE_OFF_CALL/NOTE_ON_CALL"},
+        {"ref": "h2_review", "locator": "Corrected fallback instruction-level review"},
+        {"ref": "h2_validator", "locator": "validate_consumer_bytes"}
+      ],
+      "addresses": [
+        {"kind": "app", "runtime_va": "0x0201c63e", "file_offset": "0x01c63e", "flash_offset": "0x02075e", "role": "Note Off wrapper callsite"},
+        {"kind": "app", "runtime_va": "0x0201e13e", "file_offset": "0x01e13e", "flash_offset": "0x02225e", "role": "H2 Note Off wrapper"},
+        {"kind": "app", "runtime_va": "0x0201c67c", "file_offset": "0x01c67c", "flash_offset": "0x02079c", "role": "Note On wrapper callsite"},
+        {"kind": "app", "runtime_va": "0x0201e170", "file_offset": "0x01e170", "flash_offset": "0x022290", "role": "H2 Note On wrapper"}
+      ]
+    },
+    {
+      "id": "PF-004",
+      "classification": "proven_fact",
+      "domain": "h2_live",
+      "statement": "Live H2 validation produced intended Bank D patch 14 Mooger #1 sound on Ch10, normal Note Off, no first-Pad reboot, and preserved Ch1/Ch10 separation for the tested sequence.",
+      "sources": [
+        {"ref": "h2_live", "locator": "Live observation and Confirmed capability checkpoint"}
+      ],
+      "addresses": [
+        {"kind": "ram", "address": "0x01c46520", "role": "live-consumed H2 source base"}
+      ]
+    },
+    {
+      "id": "PF-005",
+      "classification": "proven_fact",
+      "domain": "h2_safety",
+      "statement": "H2 blocks stock SAVE before the first persistent write and neutralizes the later packer call into the replaced code cave.",
+      "sources": [
+        {"ref": "h2_manifest", "locator": "changes at 0x02026da6 and 0x02026dac"},
+        {"ref": "h2_review", "locator": "SAVE no-write safety"}
+      ],
+      "addresses": [
+        {"kind": "app", "runtime_va": "0x02026da6", "file_offset": "0x026da6", "flash_offset": "0x02aec6", "role": "H2 branch before first persistent write"},
+        {"kind": "app", "runtime_va": "0x02026dac", "file_offset": "0x026dac", "flash_offset": "0x02aecc", "role": "neutralized packer call"}
+      ]
+    },
+    {
+      "id": "PF-006",
+      "classification": "proven_fact",
+      "domain": "patch_state",
+      "statement": "Official v15 selected factory patch state is bank at UI_RAM+0x3a4, per-bank preset at UI_RAM+0x3a0+bank, and loader 0x02005660 copies a 0xa3-byte record into UI_RAM+0x1a14.",
+      "sources": [
+        {"ref": "state_report", "locator": "factory-loader-current-selection and factory-loader-record-copy"}
+      ],
+      "addresses": [
+        {"kind": "app", "runtime_va": "0x02005660", "file_offset": "0x005660", "flash_offset": "0x009780", "role": "factory patch loader"},
+        {"kind": "ram", "address": "0x01c33604", "role": "selected bank, UI_RAM+0x3a4"},
+        {"kind": "ram_range", "start": "0x01c33600", "end_inclusive": "0x01c33603", "role": "selected preset per bank, UI_RAM+0x3a0..0x3a3"},
+        {"kind": "ram", "address": "0x01c34c74", "role": "current expanded patch snapshot, UI_RAM+0x1a14"}
+      ]
+    },
+    {
+      "id": "PF-007",
+      "classification": "proven_fact",
+      "domain": "patch_state",
+      "statement": "The official current-patch consumer copies 0x9c bytes from 0x01c34c74 into per-note/voice slots, establishing a v15 0x9c runtime voice-snapshot shape distinct from the 0xa3 stored record.",
+      "sources": [
+        {"ref": "ui_checkpoint", "locator": "Main UI/Patch state object"},
+        {"ref": "state_report", "locator": "current-patch-buffer-consumer"}
+      ],
+      "addresses": [
+        {"kind": "app", "runtime_va": "0x0201c5ec", "file_offset": "0x01c5ec", "flash_offset": "0x02070c", "role": "official 0x9c current-patch consumer"},
+        {"kind": "ram", "address": "0x01c34c74", "role": "official current-patch snapshot base"}
+      ]
+    },
+    {
+      "id": "PF-008",
+      "classification": "proven_fact",
+      "domain": "screen_state",
+      "statement": "The main v15 UI object base is 0x01c33260; +0x200 is a candidate page byte and +0x302 is a strong submode/grid-state field dispatched for values 2..6 by 0x02029528.",
+      "sources": [
+        {"ref": "ui_checkpoint", "locator": "Main UI/Patch state object"},
+        {"ref": "event_report", "locator": "screen state machine and event timing"}
+      ],
+      "addresses": [
+        {"kind": "ram", "address": "0x01c33260", "role": "main UI object base"},
+        {"kind": "ram", "address": "0x01c33460", "role": "UI_RAM+0x200 candidate page byte"},
+        {"kind": "ram", "address": "0x01c33562", "role": "UI_RAM+0x302 submode/grid-state byte"},
+        {"kind": "app", "runtime_va": "0x02029290", "file_offset": "0x029290", "flash_offset": "0x02d3b0", "role": "UI state-machine/render-update candidate"},
+        {"kind": "app", "runtime_va": "0x02029528", "file_offset": "0x029528", "flash_offset": "0x02d648", "role": "+0x302 grid/submode dispatch"}
+      ]
+    },
+    {
+      "id": "PF-009",
+      "classification": "proven_fact",
+      "domain": "screen_state",
+      "statement": "Submode values 3, 4, and 6 enter distinct 16-slot grid/render paths, but their physical screen names and field semantics are unresolved.",
+      "sources": [
+        {"ref": "event_report", "locator": "screen state machine table"}
+      ],
+      "addresses": [
+        {"kind": "app", "runtime_va": "0x02029642", "file_offset": "0x029642", "flash_offset": "0x02d762", "role": "submode 3 grid path"},
+        {"kind": "app", "runtime_va": "0x020296ea", "file_offset": "0x0296ea", "flash_offset": "0x02d80a", "role": "submode 4 grid path"},
+        {"kind": "app", "runtime_va": "0x0202974e", "file_offset": "0x02974e", "flash_offset": "0x02d86e", "role": "submode 6 grid path"}
+      ]
+    },
+    {
+      "id": "PF-010",
+      "classification": "proven_fact",
+      "domain": "button_event",
+      "statement": "One-shot pending input bytes UI_RAM+0x309..0x30f are consumed and copied/decremented into live bytes +0x39..0x3f; their upstream physical producer and IDs were not found statically.",
+      "sources": [
+        {"ref": "event_final", "locator": "Conclusion and Pending -> live field flow"}
+      ],
+      "addresses": [
+        {"kind": "ram_range", "start": "0x01c33569", "end_inclusive": "0x01c3356f", "role": "pending input bytes"},
+        {"kind": "ram_range", "start": "0x01c33299", "end_inclusive": "0x01c3329f", "role": "live input bytes"},
+        {"kind": "app", "runtime_va": "0x02028f0c", "file_offset": "0x028f0c", "flash_offset": "0x02d02c", "role": "pending consumer entry"},
+        {"kind": "app", "runtime_va": "0x02029152", "file_offset": "0x029152", "flash_offset": "0x02d272", "role": "pending-to-live consumer chain"},
+        {"kind": "app", "runtime_va": "0x02029612", "file_offset": "0x029612", "flash_offset": "0x02d732", "role": "+0x30f timeout/underflow consumer"}
+      ]
+    },
+    {
+      "id": "PF-011",
+      "classification": "proven_fact",
+      "domain": "button_event",
+      "statement": "0x02058248 is an 11-word internal code-pointer run; no table-base dispatcher/caller or physical event-code mapping is proven.",
+      "sources": [
+        {"ref": "event_report", "locator": "0x02058248 callback/vector candidate"},
+        {"ref": "event_final", "locator": "0x02058248 vector relocation check"}
+      ],
+      "addresses": [
+        {"kind": "app", "runtime_va": "0x02058248", "file_offset": "0x058248", "flash_offset": "0x05c368", "role": "11-word internal callback vector"}
+      ]
+    },
+    {
+      "id": "PF-012",
+      "classification": "constrained_inference",
+      "domain": "button_event",
+      "statement": "0x0202439e is the strongest encoder-update candidate because it interprets centered 0x3f deltas, clamps 0..0x7f, and raises dirty/timer fields; it must not be bound to a physical encoder until its enclosing caller and event source are observed live.",
+      "sources": [
+        {"ref": "event_report", "locator": "candidate encoder handler and slot 10"},
+        {"ref": "event_final", "locator": "encoder enclosing calls"}
+      ],
+      "addresses": [
+        {"kind": "app", "runtime_va": "0x0202439e", "file_offset": "0x02439e", "flash_offset": "0x0284be", "role": "mid-function centered-delta update candidate"},
+        {"kind": "ram", "address": "0x01c33326", "role": "UI_RAM+0xc6 candidate value"},
+        {"kind": "ram", "address": "0x01c33324", "role": "UI_RAM+0xc4 timer"},
+        {"kind": "ram", "address": "0x01c34947", "role": "UI_RAM+0x16e7 dirty byte"},
+        {"kind": "ram", "address": "0x01c34949", "role": "UI_RAM+0x16e9 dirty byte"}
+      ]
+    },
+    {
+      "id": "PF-013",
+      "classification": "proven_fact",
+      "domain": "renderer",
+      "statement": "A direct v15 partial text path computes the Keys Channel descriptor entry 0x02058314 and calls object string setter 0x0201a67c; the setter replaces object field +0x24.",
+      "sources": [
+        {"ref": "ui_checkpoint", "locator": "REQ-02 and Function map"},
+        {"ref": "renderer_report", "locator": "0x0201a67c object string setter candidate"},
+        {"ref": "renderer_final", "locator": "Result"}
+      ],
+      "addresses": [
+        {"kind": "app", "runtime_va": "0x0202038a", "file_offset": "0x02038a", "flash_offset": "0x0244aa", "role": "loads descriptor base 0x02057250"},
+        {"kind": "app", "runtime_va": "0x02022de0", "file_offset": "0x022de0", "flash_offset": "0x026f00", "role": "computes r1=0x02058314"},
+        {"kind": "app", "runtime_va": "0x02022de8", "file_offset": "0x022de8", "flash_offset": "0x026f08", "role": "calls string setter"},
+        {"kind": "app", "runtime_va": "0x0201a67c", "file_offset": "0x01a67c", "flash_offset": "0x01e79c", "role": "object C-string setter"},
+        {"kind": "app", "runtime_va": "0x02058314", "file_offset": "0x058314", "flash_offset": "0x05c434", "role": "Keys Channel descriptor entry"},
+        {"kind": "app", "runtime_va": "0x0205d9e9", "file_offset": "0x05d9e9", "flash_offset": "0x061b09", "role": "Keys Channel text"}
+      ]
+    },
+    {
+      "id": "PF-014",
+      "classification": "proven_fact",
+      "domain": "screen_text",
+      "statement": "Pad Bank, Keys Channel, SAVE, and SAVED bytes exist at fixed v15 addresses; only presence and specific pointer entries are proven, not arbitrary layout or new-page safety.",
+      "sources": [
+        {"ref": "renderer_report", "locator": "Seed strings and colors"},
+        {"ref": "event_report", "locator": "Patch/Para/Fx/Pad Bank/SAVE classification"}
+      ],
+      "addresses": [
+        {"kind": "app", "runtime_va": "0x02058304", "file_offset": "0x058304", "flash_offset": "0x05c424", "role": "Pad Bank descriptor entry"},
+        {"kind": "app", "runtime_va": "0x0205d9c5", "file_offset": "0x05d9c5", "flash_offset": "0x061ae5", "role": "Pad Bank text"},
+        {"kind": "app", "runtime_va": "0x02057298", "file_offset": "0x057298", "flash_offset": "0x05b3b8", "role": "SAVE text"},
+        {"kind": "app", "runtime_va": "0x0205d990", "file_offset": "0x05d990", "flash_offset": "0x061ab0", "role": "SAVED text"}
+      ]
+    },
+    {
+      "id": "PF-015",
+      "classification": "blocker",
+      "domain": "renderer",
+      "statement": "No evidence-backed path from the known setter chain to render traversal 0x0200f74c, redraw candidate 0x0201e06c, or final LCD/pixel write was recovered.",
+      "sources": [
+        {"ref": "renderer_final", "locator": "Result and LCD/final draw status"},
+        {"ref": "ui_checkpoint", "locator": "Static-analysis closure"}
+      ],
+      "addresses": [
+        {"kind": "app", "runtime_va": "0x0200f74c", "file_offset": "0x00f74c", "flash_offset": "0x01386c", "role": "unproven render traversal candidate"},
+        {"kind": "app", "runtime_va": "0x0201e06c", "file_offset": "0x01e06c", "flash_offset": "0x02218c", "role": "unproven redraw/event trigger candidate"}
+      ]
+    },
+    {
+      "id": "PF-016",
+      "classification": "blocker",
+      "domain": "lcd",
+      "statement": "The ST7789-like bytes at 0x02058aec are not a confirmed LCD table because no write path exists and 0x02030e50 independently treats overlapping 0x02058b50 as a halfword table.",
+      "sources": [
+        {"ref": "renderer_report", "locator": "ST7789-like byte sequence and contradiction"},
+        {"ref": "renderer_final", "locator": "LCD/final draw status"}
+      ],
+      "addresses": [
+        {"kind": "app", "runtime_va": "0x02058aec", "file_offset": "0x058aec", "flash_offset": "0x05cc0c", "role": "ST7789-like byte-pattern candidate"},
+        {"kind": "app", "runtime_va": "0x02030e50", "file_offset": "0x030e50", "flash_offset": "0x034f70", "role": "function using overlap as halfword table"},
+        {"kind": "app", "runtime_va": "0x02058b50", "file_offset": "0x058b50", "flash_offset": "0x05cc70", "role": "overlapping halfword-table address"}
+      ]
+    },
+    {
+      "id": "PF-017",
+      "classification": "blocker",
+      "domain": "led",
+      "statement": "No product-v15 LED function or RAM/register address is evidence-backed. The pinned SDK contains LED UI code, but accepted exact and relocation-aware UI/input/LCD/display/widget matches in v15 are both zero.",
+      "sources": [
+        {"ref": "sdk_report", "locator": "Result"},
+        {"ref": "sdk_json", "locator": "summary.accepted_count=0 and archives led_ui_server.a"}
+      ],
+      "addresses": [],
+      "machine_values": {
+        "sdk_exact_accepted_count": 0,
+        "sdk_relocation_aware_accepted_count": 0
+      }
+    },
+    {
+      "id": "PF-018",
+      "classification": "proven_fact",
+      "domain": "persistence",
+      "statement": "0x02004b02 is a bounded RAM-to-storage wrapper with count-style success, but decoded SAVE callers ignore its failure return; H2 therefore correctly keeps SAVE blocked for early UI checkpoints.",
+      "sources": [
+        {"ref": "persistence_report", "locator": "Conclusion and save failure path"},
+        {"ref": "h2_report", "locator": "Preserved and changed behavior"}
+      ],
+      "addresses": [
+        {"kind": "app", "runtime_va": "0x02004b02", "file_offset": "0x004b02", "flash_offset": "0x008c22", "role": "bounded RAM-to-storage wrapper"},
+        {"kind": "app", "runtime_va": "0x02063260", "file_offset": "0x063260", "flash_offset": "0x067380", "role": "undecoded primitive-level storage call"}
+      ]
+    },
+    {
+      "id": "CI-001",
+      "classification": "constrained_inference",
+      "domain": "ui_design",
+      "statement": "The safest visual selector should reuse one existing 16-slot grid path and existing widget graph, because custom graphics are blocked and three 16-slot cases are statically present.",
+      "sources": [
+        {"ref": "ui_checkpoint", "locator": "Proposed interaction model and Why existing grid reuse is preferred"},
+        {"ref": "event_report", "locator": "screen state machine table"}
+      ],
+      "addresses": [
+        {"kind": "ram", "address": "0x01c33562", "role": "submode/grid state to observe, not repurpose before live mapping"},
+        {"kind": "ram", "address": "0x01c34899", "role": "UI_RAM+0x1639 grid-related field candidate"},
+        {"kind": "ram", "address": "0x01c348a2", "role": "UI_RAM+0x1642 grid-related field candidate"},
+        {"kind": "ram", "address": "0x01c348ea", "role": "UI_RAM+0x168a grid-related field candidate"}
+      ]
+    },
+    {
+      "id": "BL-001",
+      "classification": "blocker",
+      "domain": "per_note_routing",
+      "statement": "H2's proven wrapper ABI exposes destination, stock source, copy size, and channel nibble, but no proven MIDI note number. Per-note source selection cannot be implemented safely until the note identity or destination-to-note mapping is recovered at both Note On and Note Off callsites.",
+      "sources": [
+        {"ref": "h2_builder", "locator": "build_consumer ABI contract"},
+        {"ref": "h2_review", "locator": "Corrected fallback instruction-level review"}
+      ],
+      "addresses": [
+        {"kind": "app", "runtime_va": "0x0201c63e", "file_offset": "0x01c63e", "flash_offset": "0x02075e", "role": "Note Off routing observation point"},
+        {"kind": "app", "runtime_va": "0x0201c67c", "file_offset": "0x01c67c", "flash_offset": "0x02079c", "role": "Note On routing observation point"}
+      ]
+    },
+    {
+      "id": "BL-002",
+      "classification": "blocker",
+      "domain": "memory_ownership",
+      "statement": "H2 extends BSS/heap only through 0x01c465c0 and owns one 0x9c snapshot plus two bytes. A 16-snapshot set needs at least 0x9c0 bytes before metadata, so no current H2 RAM range can be assumed large enough or free.",
+      "sources": [
+        {"ref": "h2_manifest", "locator": "h2_policy and BSS/HEAP changes"},
+        {"ref": "ui_checkpoint", "locator": "REQ-07 RAM ownership unresolved"}
+      ],
+      "addresses": [
+        {"kind": "ram_range", "start": "0x01c46520", "end_inclusive": "0x01c465bf", "role": "entire H2-owned extension payload area"}
+      ],
+      "machine_values": {
+        "single_snapshot_bytes": 156,
+        "sixteen_snapshot_bytes": 2496,
+        "sixteen_snapshot_hex": "0x09c0"
+      }
+    },
+    {
+      "id": "BL-003",
+      "classification": "blocker",
+      "domain": "note_lifecycle",
+      "statement": "Changing a note-to-patch mapping between Note On and Note Off could make the two H2 wrappers copy different snapshots. A safe implementation needs per-note/per-voice latching or a proven no-active-note edit gate.",
+      "sources": [
+        {"ref": "h2_review", "locator": "Note Off wrapper and Note On wrapper both select the owned source independently"}
+      ],
+      "addresses": [
+        {"kind": "app", "runtime_va": "0x0201e154", "file_offset": "0x01e154", "flash_offset": "0x022274", "role": "H2 Note Off owned-source selection"},
+        {"kind": "app", "runtime_va": "0x0201e186", "file_offset": "0x01e186", "flash_offset": "0x0222a6", "role": "H2 Note On owned-source selection"}
+      ]
+    },
+    {
+      "id": "BL-004",
+      "classification": "blocker",
+      "domain": "factory_patch_binding",
+      "statement": "The 0xa3 stored factory record, expanded UI snapshot, and H2 0x9c accepted-product snapshot are related by proven copy paths, but a side-effect-free factory-record-to-patch-set conversion ABI is not proven. Calling 0x02005660 directly would mutate global current patch/UI state.",
+      "sources": [
+        {"ref": "state_report", "locator": "factory loader and expanded UI fields"},
+        {"ref": "h2_manifest", "locator": "copy_size 156"}
+      ],
+      "addresses": [
+        {"kind": "app", "runtime_va": "0x02005660", "file_offset": "0x005660", "flash_offset": "0x009780", "role": "global factory patch loader with UI side effects"},
+        {"kind": "ram", "address": "0x01c34c74", "role": "global current patch snapshot"}
+      ]
+    }
+  ],
+  "design_decision": {
+    "status": "design_only_blocked_for_implementation",
+    "recommended_first_mutating_checkpoint": "U1 visual-only volatile selector after U0 runtime mapping",
+    "forbidden_in_U1": [
+      "H2 source or consumer changes",
+      "per-note audio routing",
+      "SAVE or any persistence",
+      "LED writes",
+      "custom LCD path",
+      "untraced physical button IDs",
+      "new claimed RAM ownership"
+    ]
+  }
+}

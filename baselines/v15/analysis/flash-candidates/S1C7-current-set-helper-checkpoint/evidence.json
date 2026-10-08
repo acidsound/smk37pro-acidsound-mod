@@ -1,0 +1,918 @@
+{
+  "app": {
+    "basis_app": "S1C5-playback-register-return/app.bin",
+    "basis_app_sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+    "candidate_kind": "current-set checkpoint: exact host-seeded records required; no on-device writer is claimed",
+    "code_contract": {
+      "helper": {
+        "bytes": 84,
+        "end_exclusive": "0x02026dd4",
+        "read_failure_rollback": "if wrapper returns zero, restore original r1 and use stock-copy helper",
+        "rows": [
+          {
+            "address": "0x02026d80",
+            "asm": "mov r7,r1",
+            "bytes": "1716",
+            "meaning": "keep stock source for read failure rollback",
+            "name": "helper.save_stock_source",
+            "size": 2
+          },
+          {
+            "address": "0x02026d82",
+            "asm": "mov r1,#0x7d20",
+            "bytes": "c1ff207d0000",
+            "meaning": "raw record 96 storage offset",
+            "name": "helper.storage_base",
+            "size": 6
+          },
+          {
+            "address": "0x02026d88",
+            "asm": "mul r3,r3,#0xa3",
+            "bytes": "e3e1a330",
+            "meaning": "slot * raw record stride",
+            "name": "helper.slot_stride",
+            "size": 4
+          },
+          {
+            "address": "0x02026d8c",
+            "asm": "add r1,r3",
+            "bytes": "3118",
+            "meaning": "storage offset for selected slot",
+            "name": "helper.storage_slot",
+            "size": 2
+          },
+          {
+            "address": "0x02026d8e",
+            "asm": "mov r0,r4",
+            "bytes": "4016",
+            "meaning": "read into destination prefix",
+            "name": "helper.read_dest",
+            "size": 2
+          },
+          {
+            "address": "0x02026d90",
+            "asm": "mov r2,#0x9c",
+            "bytes": "623c",
+            "meaning": "full prefix length",
+            "name": "helper.read_len",
+            "size": 2
+          },
+          {
+            "address": "0x02026d92",
+            "asm": "call 0x2004870",
+            "bytes": "80ffd8dafdff",
+            "meaning": "0x02004870 full-length checked read wrapper",
+            "name": "helper.read_wrapper",
+            "size": 6
+          },
+          {
+            "address": "0x02026d98",
+            "asm": "jne r0,#0,read_ok",
+            "bytes": "80f80200",
+            "meaning": "wrapper returns zero on short/failing read",
+            "name": "helper.read_ok",
+            "size": 4,
+            "target": "0x02026da0"
+          },
+          {
+            "address": "0x02026d9c",
+            "asm": "mov r1,r7",
+            "bytes": "7116",
+            "meaning": "restore original source on read failure",
+            "name": "helper.restore_stock_source",
+            "size": 2
+          },
+          {
+            "address": "0x02026d9e",
+            "asm": "goto stock_copy",
+            "bytes": "0489",
+            "meaning": "rollback to stock copy path",
+            "name": "helper.goto_stock_copy",
+            "size": 2,
+            "target": "0x02026db2"
+          },
+          {
+            "address": "0x02026da0",
+            "asm": "add r0,r4,#0x9b",
+            "bytes": "00e19b40",
+            "meaning": "point at persisted Playback Note byte",
+            "name": "helper.voice_note_ptr",
+            "size": 4
+          },
+          {
+            "address": "0x02026da4",
+            "asm": "lb.z r5,[r0]",
+            "bytes": "0d40",
+            "meaning": "load persisted Playback Note",
+            "name": "helper.load_note",
+            "size": 2
+          },
+          {
+            "address": "0x02026da6",
+            "asm": "mov r6,#0x3f",
+            "bytes": "4e3f",
+            "meaning": "restore voice byte 0x9b",
+            "name": "helper.restore_3f",
+            "size": 2
+          },
+          {
+            "address": "0x02026da8",
+            "asm": "sb [r0],r6",
+            "bytes": "8e40",
+            "meaning": "force voice[0x9b]=0x3f",
+            "name": "helper.store_3f",
+            "size": 2
+          },
+          {
+            "address": "0x02026daa",
+            "asm": "add r0,r4,#0x9c",
+            "bytes": "00e19c40",
+            "meaning": "metadata return pointer",
+            "name": "helper.metadata_pointer",
+            "size": 4
+          },
+          {
+            "address": "0x02026dae",
+            "asm": "sb [r0],r5",
+            "bytes": "8d40",
+            "meaning": "store Playback Note metadata",
+            "name": "helper.metadata_store",
+            "size": 2
+          },
+          {
+            "address": "0x02026db0",
+            "asm": "pop {pc,r9..r4}",
+            "bytes": "5904",
+            "meaning": "return to selector caller",
+            "name": "helper.return_persistent",
+            "size": 2
+          },
+          {
+            "address": "0x02026db2",
+            "asm": "mov r0,r4",
+            "bytes": "4016",
+            "meaning": "stock/armed destination",
+            "name": "helper.stock_restore_dest",
+            "size": 2
+          },
+          {
+            "address": "0x02026db4",
+            "asm": "call 0x2048cce",
+            "bytes": "80ff141f0200",
+            "meaning": "copy resident/stock source prefix",
+            "name": "helper.stock_memcpy",
+            "size": 6
+          },
+          {
+            "address": "0x02026dba",
+            "asm": "add r0,r4,#0x9c",
+            "bytes": "00e19c40",
+            "meaning": "metadata return pointer",
+            "name": "helper.stock_metadata_pointer",
+            "size": 4
+          },
+          {
+            "address": "0x02026dbe",
+            "asm": "sb [r0],r5",
+            "bytes": "8d40",
+            "meaning": "store mapped/default metadata",
+            "name": "helper.stock_metadata_store",
+            "size": 2
+          },
+          {
+            "address": "0x02026dc0",
+            "asm": "pop {pc,r9..r4}",
+            "bytes": "5904",
+            "meaning": "return to selector caller",
+            "name": "helper.stock_return",
+            "size": 2
+          }
+        ],
+        "sha256": "e9ea13c277736c000e5b7f275f97d319b725b2376e9ac15aac97209a8b0f4396",
+        "start": "0x02026d80",
+        "stock_copy_entry": "0x02026db2",
+        "uses_read_wrapper": "0x02004870"
+      },
+      "producer": {
+        "end_exclusive": "0x0201e254",
+        "sha256": "53bc57acd7e787320400d0d945ec6b3f2e59f2074ae81c9053eb2c11f72560d4",
+        "start": "0x0201e196",
+        "status": "preserved byte-for-byte from S1C5 to keep Chrome segmented-final and reset"
+      },
+      "save_ui_skip": {
+        "address": "0x02026d7a",
+        "bytes": "04ac00160016",
+        "target": "0x02026dd4"
+      },
+      "selector": {
+        "bytes": 88,
+        "end_exclusive": "0x0201e196",
+        "rows": [
+          {
+            "address": "0x0201e13e",
+            "asm": "mov r3,r5",
+            "bytes": "5316",
+            "meaning": "normalize Note Off trigger note",
+            "name": "selector.note_off_adapter",
+            "size": 2
+          },
+          {
+            "address": "0x0201e140",
+            "asm": "goto core",
+            "bytes": "0481",
+            "meaning": "skip Note On adapter",
+            "name": "selector.note_off_goto_core",
+            "size": 2,
+            "target": "0x0201e144"
+          },
+          {
+            "address": "0x0201e142",
+            "asm": "mov r3,r6",
+            "bytes": "6316",
+            "meaning": "normalize Note On trigger note",
+            "name": "selector.note_on_adapter",
+            "size": 2
+          },
+          {
+            "address": "0x0201e144",
+            "asm": "push {rets,r9..r4}",
+            "bytes": "7904",
+            "meaning": "preserve trigger registers and velocity",
+            "name": "selector.push_saved",
+            "size": 2
+          },
+          {
+            "address": "0x0201e146",
+            "asm": "mov r4,r0",
+            "bytes": "0416",
+            "meaning": "save payload destination",
+            "name": "selector.save_dest",
+            "size": 2
+          },
+          {
+            "address": "0x0201e148",
+            "asm": "mov r5,r3",
+            "bytes": "3516",
+            "meaning": "default metadata note",
+            "name": "selector.default_note",
+            "size": 2
+          },
+          {
+            "address": "0x0201e14a",
+            "asm": "mov r6,r9",
+            "bytes": "9616",
+            "meaning": "channel temp",
+            "name": "selector.channel_tmp",
+            "size": 2
+          },
+          {
+            "address": "0x0201e14c",
+            "asm": "jne r6,#9,stock_copy",
+            "bytes": "86f81b12",
+            "meaning": "non-Ch10 uses original stock source",
+            "name": "selector.gate_channel",
+            "size": 4,
+            "target": "0x0201e186"
+          },
+          {
+            "address": "0x0201e150",
+            "asm": "jl r3,#36,stock_copy",
+            "bytes": "83fd1948",
+            "meaning": "below pad range uses original stock source",
+            "name": "selector.gate_low",
+            "size": 4,
+            "target": "0x0201e186"
+          },
+          {
+            "address": "0x0201e154",
+            "asm": "jge r3,#52,stock_copy",
+            "bytes": "03fd1768",
+            "meaning": "above pad range uses original stock source",
+            "name": "selector.gate_high",
+            "size": 4,
+            "target": "0x0201e186"
+          },
+          {
+            "address": "0x0201e158",
+            "asm": "add r3,#-36",
+            "bytes": "f33c",
+            "meaning": "slot = trigger - 36",
+            "name": "selector.slot_index",
+            "size": 2
+          },
+          {
+            "address": "0x0201e15a",
+            "asm": "mov r8,#0x1c46520",
+            "bytes": "c8ff2065c401",
+            "meaning": "resident slot base",
+            "name": "selector.patch_base",
+            "size": 6
+          },
+          {
+            "address": "0x0201e160",
+            "asm": "add r6,r8,#0x9c",
+            "bytes": "06e19c80",
+            "meaning": "slot0 control base",
+            "name": "selector.state_base",
+            "size": 4
+          },
+          {
+            "address": "0x0201e164",
+            "asm": "lb.z r0,[r6+3]",
+            "bytes": "6843",
+            "meaning": "load ARMED state",
+            "name": "selector.state_load",
+            "size": 2
+          },
+          {
+            "address": "0x0201e166",
+            "asm": "jne r0,#2,persistent_fallback",
+            "bytes": "80f81104",
+            "meaning": "not ARMED reads host-seeded raw record",
+            "name": "selector.gate_state",
+            "size": 4,
+            "target": "0x0201e18c"
+          },
+          {
+            "address": "0x0201e16a",
+            "asm": "mov r6,r3",
+            "bytes": "3616",
+            "meaning": "copy slot",
+            "name": "selector.slot_offset_seed",
+            "size": 2
+          },
+          {
+            "address": "0x0201e16c",
+            "asm": "mul r6,r6,#0xa0",
+            "bytes": "e6e1a060",
+            "meaning": "resident slot offset",
+            "name": "selector.slot_offset",
+            "size": 4
+          },
+          {
+            "address": "0x0201e170",
+            "asm": "add r6,r8",
+            "bytes": "8618",
+            "meaning": "resident source pointer",
+            "name": "selector.slot_base_add",
+            "size": 2
+          },
+          {
+            "address": "0x0201e172",
+            "asm": "add r7,r6,#0x9c",
+            "bytes": "07e19c60",
+            "meaning": "valid pointer",
+            "name": "selector.valid_pointer",
+            "size": 4
+          },
+          {
+            "address": "0x0201e176",
+            "asm": "lb.z r0,[r7]",
+            "bytes": "7840",
+            "meaning": "selected slot valid",
+            "name": "selector.valid_load",
+            "size": 2
+          },
+          {
+            "address": "0x0201e178",
+            "asm": "jne r0,#1,persistent_fallback",
+            "bytes": "80f80802",
+            "meaning": "invalid resident source reads host-seeded raw record",
+            "name": "selector.gate_valid",
+            "size": 4,
+            "target": "0x0201e18c"
+          },
+          {
+            "address": "0x0201e17c",
+            "asm": "add r7,r8,#0xa00",
+            "bytes": "07e1008a",
+            "meaning": "Playback Note map base",
+            "name": "selector.map_base",
+            "size": 4
+          },
+          {
+            "address": "0x0201e180",
+            "asm": "add r7,r3",
+            "bytes": "3718",
+            "meaning": "Playback Note map slot",
+            "name": "selector.map_slot",
+            "size": 2
+          },
+          {
+            "address": "0x0201e182",
+            "asm": "lb.z r5,[r7]",
+            "bytes": "7d40",
+            "meaning": "mapped Playback Note",
+            "name": "selector.load_playback_note",
+            "size": 2
+          },
+          {
+            "address": "0x0201e184",
+            "asm": "mov r1,r6",
+            "bytes": "6116",
+            "meaning": "resident source pointer",
+            "name": "selector.select_source",
+            "size": 2
+          },
+          {
+            "address": "0x0201e186",
+            "asm": "call 0x2026db2",
+            "bytes": "80ff268c0000",
+            "meaning": "tail-call helper stock-copy return",
+            "name": "selector.call_ram_copy_helper",
+            "size": 6
+          },
+          {
+            "address": "0x0201e18c",
+            "asm": "call 0x2026d80",
+            "bytes": "80ffee8b0000",
+            "meaning": "tail-call helper persistent raw-record return",
+            "name": "selector.call_persistent_helper",
+            "size": 6
+          }
+        ],
+        "sha256": "b77f2787874ad37d724e1c6305e74f97c8a6eb9fe6b51627c8fce35dd257daeb",
+        "start": "0x0201e13e"
+      }
+    },
+    "format": "smk37-v15-s1c7-current-set-helper-checkpoint.app-manifest-v1",
+    "input_gates": [
+      {
+        "device_accessed": false,
+        "flash_performed": false,
+        "midi_transport_opened": false,
+        "name": "offline-scope",
+        "ota_performed": false,
+        "reset_performed": false,
+        "status": "PASS"
+      },
+      {
+        "name": "exact-s1c5-basis",
+        "parent_app_sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+        "parent_fwsc_sha256": "0a6ac1ae7d4bd34e252eb8f23a4d2c5f39d7454376ade1a3b75ff7d03155ea91",
+        "status": "PASS"
+      },
+      {
+        "helper_region": {
+          "bytes": 84,
+          "end_exclusive": "0x02026dd4",
+          "start": "0x02026d80"
+        },
+        "name": "s1c5-disabled-save-body",
+        "status": "PASS",
+        "ui_skip_patch_at": "0x02026d7a"
+      }
+    ],
+    "output_app_sha256": "71cfc1fcbeecd1a9277f88272be6b122a96f33fbd741d7486c670ffab6e58646",
+    "parent_relative_changed_byte_count": 104,
+    "parent_relative_changed_ranges": [
+      {
+        "end_exclusive": 123241,
+        "start": 123240
+      },
+      {
+        "end_exclusive": 123259,
+        "start": 123258
+      },
+      {
+        "end_exclusive": 123286,
+        "start": 123270
+      },
+      {
+        "end_exclusive": 159163,
+        "start": 159098
+      },
+      {
+        "end_exclusive": 159173,
+        "start": 159165
+      },
+      {
+        "end_exclusive": 159178,
+        "start": 159174
+      },
+      {
+        "end_exclusive": 159188,
+        "start": 159179
+      }
+    ],
+    "patches": [
+      {
+        "address": "0x0201e13e",
+        "byte_count": 88,
+        "end_exclusive": "0x0201e196",
+        "new_hex": "531604816316790404163516961686f81b1283fd194803fd1768f33cc8ff2065c40106e19c80684380f811043616e6e1a060861807e19c60784080f8080207e1008a37187d40611680ff268c000080ffee8b000000160016",
+        "new_sha256": "b77f2787874ad37d724e1c6305e74f97c8a6eb9fe6b51627c8fce35dd257daeb",
+        "old_hex": "531604816316790404163516961686f81b1283fd194803fd1768f33cc8ff2065c40106e19c80684380f80e043616e6e1a060861807e19c60784080f8050207e1008a37187d406116401680ff40ab020000e19c408d405904",
+        "old_sha256": "900e8f05c8157737e89a22338b9a4575aa3ff124bd70ff132de0226654fce29f",
+        "purpose": "replace selector with split-control selector that calls helper for raw fallback and stock copy helper for RAM path"
+      },
+      {
+        "address": "0x02026d7a",
+        "byte_count": 6,
+        "end_exclusive": "0x02026d80",
+        "new_hex": "04ac00160016",
+        "new_sha256": "e30b29b5f6b9c06c66b73f12d7b4c478bdba1350b5cc32acb8a0d4a66695baaa",
+        "old_hex": "60ffff602a00",
+        "old_sha256": "ea53c4af627f2848966fcdb1e44fca49a0677ce6bdeecf05ba08c89353c2236e",
+        "purpose": "patch SAVE UI path to skip disabled SAVE body before helper region"
+      },
+      {
+        "address": "0x02026d80",
+        "byte_count": 84,
+        "end_exclusive": "0x02026dd4",
+        "new_hex": "1716c1ff207d0000e3e1a33031184016623c80ffd8dafdff80f802007116048900e19b400d404e3f8e4000e19c408d405904401680ff141f020000e19c408d405904001600160016001600160016001600160016",
+        "new_sha256": "e9ea13c277736c000e5b7f275f97d319b725b2376e9ac15aac97209a8b0f4396",
+        "old_hex": "05e1a0835844d8ee001500a5d1ec802610180017e0e1a3002018e1e0800c14e1148a6a234016049600004016000000005844d8ee001500a5011810e19c82d8ee11f0d1ec8016c2ff8091000021186220beea97ee",
+        "old_sha256": "c34fb67977133b96263196ac9abad273bf045d4d5e9cdbe90f99930228dd84c8",
+        "purpose": "reuse unreachable S1C5-disabled SAVE body as standalone selector helper region"
+      }
+    ],
+    "runtime_base": "0x02000000"
+  },
+  "basis": {
+    "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "official_fwsc_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+    "parent_s1c5_app_sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+    "parent_s1c5_package_sha256": "0a6ac1ae7d4bd34e252eb8f23a4d2c5f39d7454376ade1a3b75ff7d03155ea91"
+  },
+  "candidate_built": true,
+  "code": {
+    "candidate_dir": "baselines/v15/analysis/flash-candidates/S1C7-current-set-helper-checkpoint/code-evidence",
+    "code_evidence_sha256": "4f9013b6de71b2ad1683871d3b70b32fac950f1a2182132e5a975b420b354ef0"
+  },
+  "decision": "PASS_CURRENT_SET_CHECKPOINT",
+  "flash": {
+    "artifact": "SMK37Pro-v15-S1C7-current-set-helper-checkpoint.fwsc",
+    "confirmation_token": "INSTALL-SMK37PRO-V15-S1C7-CURRENT-SET-HELPER-CHECKPOINT-3DFB7E23",
+    "default_check_offline_only": true
+  },
+  "format": "smk37-v15-s1c7-current-set-helper-checkpoint.release-evidence-v1",
+  "host_seeded_records": {
+    "affected_physical_range": [
+      "0x0fbd20",
+      "0x0fc748"
+    ],
+    "format": "smk37-v15-s1c7-current-set-helper-checkpoint.host-seeded-current-set-v1",
+    "normal_firmware_restore": "selector helper reads each prefix with 0x02004870 and falls back to stock copy if the full-length wrapper read returns zero",
+    "payload_crc32": "0xa400dfab",
+    "payload_record_count": 16,
+    "raw_physical_base": "0x0f8000",
+    "record_base": 96,
+    "record_stride": 163,
+    "records": [
+      {
+        "packet_file": "slot00-trigger36-playback60-all-c4-direct-product-163.bin",
+        "packet_sha256": "7c7a8ac8d57bd78b8d531fa8997e7d9c18ce4e0d8a267cc22549ba71d5e3e9c4",
+        "physical_offset": "0x0fbd20",
+        "playback_note": 60,
+        "prefix_file": "record-096-slot-00.prefix",
+        "prefix_sha256": "272e1b0ad872b881073ccfde023561fe7c8f14a0b30ca9d01db7259a7abf142e",
+        "prefix_size": 156,
+        "record_index": 96,
+        "slot": 0,
+        "storage_wrapper_offset": "0x7d20",
+        "tail_policy": "preserve live raw bytes 0x9c..0xa2; prefix artifacts never include tails"
+      },
+      {
+        "packet_file": "slot01-trigger37-playback60-all-c4-direct-product-163.bin",
+        "packet_sha256": "523ccbc81eef766fc73bda72a78d3a28ba3f1fcabc1146db78252673f8d5ed7a",
+        "physical_offset": "0x0fbdc3",
+        "playback_note": 60,
+        "prefix_file": "record-097-slot-01.prefix",
+        "prefix_sha256": "d71db9d238001f58f729def7221f471cf0fdcdb60c133fc689ddeb916a54aa37",
+        "prefix_size": 156,
+        "record_index": 97,
+        "slot": 1,
+        "storage_wrapper_offset": "0x7dc3",
+        "tail_policy": "preserve live raw bytes 0x9c..0xa2; prefix artifacts never include tails"
+      },
+      {
+        "packet_file": "slot02-trigger38-playback60-all-c4-direct-product-163.bin",
+        "packet_sha256": "14d65142c52fbd4775ab071639886c203cc03d860deb62e6de25c048cb9a712b",
+        "physical_offset": "0x0fbe66",
+        "playback_note": 60,
+        "prefix_file": "record-098-slot-02.prefix",
+        "prefix_sha256": "d700b2ba11f722eb1d5774c4c6709816e6ff348a059ef1d3615447014a78c594",
+        "prefix_size": 156,
+        "record_index": 98,
+        "slot": 2,
+        "storage_wrapper_offset": "0x7e66",
+        "tail_policy": "preserve live raw bytes 0x9c..0xa2; prefix artifacts never include tails"
+      },
+      {
+        "packet_file": "slot03-trigger39-playback60-all-c4-direct-product-163.bin",
+        "packet_sha256": "efab2e0db1e444d4ab8e96cd7125825fdbd0445e3e05b8436ae7bbd2ae830364",
+        "physical_offset": "0x0fbf09",
+        "playback_note": 60,
+        "prefix_file": "record-099-slot-03.prefix",
+        "prefix_sha256": "b03f4ed30de08b82226962bc14536aac374dd8f85ff9a22a94fb3ba4edd8c84f",
+        "prefix_size": 156,
+        "record_index": 99,
+        "slot": 3,
+        "storage_wrapper_offset": "0x7f09",
+        "tail_policy": "preserve live raw bytes 0x9c..0xa2; prefix artifacts never include tails"
+      },
+      {
+        "packet_file": "slot04-trigger40-playback60-all-c4-direct-product-163.bin",
+        "packet_sha256": "981e0772ac58174cb94a1794bbdac10da9c2679a0f69112b14a114d75d70481b",
+        "physical_offset": "0x0fbfac",
+        "playback_note": 60,
+        "prefix_file": "record-100-slot-04.prefix",
+        "prefix_sha256": "1211b7ecf3c03a3ecb893ab05236fc7832b0d39cfca8be748403dff12d1e8304",
+        "prefix_size": 156,
+        "record_index": 100,
+        "slot": 4,
+        "storage_wrapper_offset": "0x7fac",
+        "tail_policy": "preserve live raw bytes 0x9c..0xa2; prefix artifacts never include tails"
+      },
+      {
+        "packet_file": "slot05-trigger41-playback60-all-c4-direct-product-163.bin",
+        "packet_sha256": "d73e236482ecd7d9b791ea6119b13d63b09eae5565f682b8f2dc0b4678277579",
+        "physical_offset": "0x0fc04f",
+        "playback_note": 60,
+        "prefix_file": "record-101-slot-05.prefix",
+        "prefix_sha256": "b5c621c347a996f787bb33e036984766be53a58f09a42a52d52d600a62c40e44",
+        "prefix_size": 156,
+        "record_index": 101,
+        "slot": 5,
+        "storage_wrapper_offset": "0x804f",
+        "tail_policy": "preserve live raw bytes 0x9c..0xa2; prefix artifacts never include tails"
+      },
+      {
+        "packet_file": "slot06-trigger42-playback60-all-c4-direct-product-163.bin",
+        "packet_sha256": "85625d999b3c23b578362fde17e9022db16ef9ecde5926e198f3206977cdba17",
+        "physical_offset": "0x0fc0f2",
+        "playback_note": 60,
+        "prefix_file": "record-102-slot-06.prefix",
+        "prefix_sha256": "248adb209956ff2394fb61232c1800c17a4998b602880f1f1ee44e5869c4bae6",
+        "prefix_size": 156,
+        "record_index": 102,
+        "slot": 6,
+        "storage_wrapper_offset": "0x80f2",
+        "tail_policy": "preserve live raw bytes 0x9c..0xa2; prefix artifacts never include tails"
+      },
+      {
+        "packet_file": "slot07-trigger43-playback60-all-c4-direct-product-163.bin",
+        "packet_sha256": "3e06351976cdd90b3e888b32ccca8716de991c95ff44eb73e9c26a3b912150dd",
+        "physical_offset": "0x0fc195",
+        "playback_note": 60,
+        "prefix_file": "record-103-slot-07.prefix",
+        "prefix_sha256": "8b9d910f9deff1f5d5d602e426ffc199b24b7740551de0ad7e343f37baea18ad",
+        "prefix_size": 156,
+        "record_index": 103,
+        "slot": 7,
+        "storage_wrapper_offset": "0x8195",
+        "tail_policy": "preserve live raw bytes 0x9c..0xa2; prefix artifacts never include tails"
+      },
+      {
+        "packet_file": "slot08-trigger44-playback60-all-c4-direct-product-163.bin",
+        "packet_sha256": "ef96628a3f2cb2a2b6028687e1dc9fa89f147edf7b4c4eb229b7d27250704805",
+        "physical_offset": "0x0fc238",
+        "playback_note": 60,
+        "prefix_file": "record-104-slot-08.prefix",
+        "prefix_sha256": "e5c5df96d4588842b40cafac688c6dde8c9378bbbbcaf197eb37ef8436c0d13f",
+        "prefix_size": 156,
+        "record_index": 104,
+        "slot": 8,
+        "storage_wrapper_offset": "0x8238",
+        "tail_policy": "preserve live raw bytes 0x9c..0xa2; prefix artifacts never include tails"
+      },
+      {
+        "packet_file": "slot09-trigger45-playback60-all-c4-direct-product-163.bin",
+        "packet_sha256": "c6483dabc9e1a863f2682b5c11ea8a91e3ef38212926930d8de24afa3db6f9de",
+        "physical_offset": "0x0fc2db",
+        "playback_note": 60,
+        "prefix_file": "record-105-slot-09.prefix",
+        "prefix_sha256": "01b18f192056686ea6cb8805e78442c04ec1f17900e27852b32c9d56ec70bea5",
+        "prefix_size": 156,
+        "record_index": 105,
+        "slot": 9,
+        "storage_wrapper_offset": "0x82db",
+        "tail_policy": "preserve live raw bytes 0x9c..0xa2; prefix artifacts never include tails"
+      },
+      {
+        "packet_file": "slot10-trigger46-playback60-all-c4-direct-product-163.bin",
+        "packet_sha256": "11c7dfae80eb8ddaf88ec971ff1b3ce8b4d76894f4550ec3a0b5113c7e58bdde",
+        "physical_offset": "0x0fc37e",
+        "playback_note": 60,
+        "prefix_file": "record-106-slot-10.prefix",
+        "prefix_sha256": "01da00b4dc5bef384bf1d8491519cd803c844c77934543e909b66e6814fe3df4",
+        "prefix_size": 156,
+        "record_index": 106,
+        "slot": 10,
+        "storage_wrapper_offset": "0x837e",
+        "tail_policy": "preserve live raw bytes 0x9c..0xa2; prefix artifacts never include tails"
+      },
+      {
+        "packet_file": "slot11-trigger47-playback60-all-c4-direct-product-163.bin",
+        "packet_sha256": "a97d43e1351177f4b7e4770b2170d07ae7d7dbd33bd6bb6439a441cb66f74a68",
+        "physical_offset": "0x0fc421",
+        "playback_note": 60,
+        "prefix_file": "record-107-slot-11.prefix",
+        "prefix_sha256": "ec506d0d19fd3fb2da83f2875c4317502a3a20bc0a0824ce364c5a5905b2c834",
+        "prefix_size": 156,
+        "record_index": 107,
+        "slot": 11,
+        "storage_wrapper_offset": "0x8421",
+        "tail_policy": "preserve live raw bytes 0x9c..0xa2; prefix artifacts never include tails"
+      },
+      {
+        "packet_file": "slot12-trigger48-playback60-all-c4-direct-product-163.bin",
+        "packet_sha256": "3680c3abf14c6a13096fe56953789bc2572fe2fd0d82248f8e4e893482a3be19",
+        "physical_offset": "0x0fc4c4",
+        "playback_note": 60,
+        "prefix_file": "record-108-slot-12.prefix",
+        "prefix_sha256": "167aca4e29db4fcebe36ddd07326f33c3f4fea1b035784d34dee14e250208489",
+        "prefix_size": 156,
+        "record_index": 108,
+        "slot": 12,
+        "storage_wrapper_offset": "0x84c4",
+        "tail_policy": "preserve live raw bytes 0x9c..0xa2; prefix artifacts never include tails"
+      },
+      {
+        "packet_file": "slot13-trigger49-playback60-all-c4-direct-product-163.bin",
+        "packet_sha256": "6611e75bfb8b11206f6303a63fdf6d50ee9beb8a72be2e69f9233a8f87e93f3a",
+        "physical_offset": "0x0fc567",
+        "playback_note": 60,
+        "prefix_file": "record-109-slot-13.prefix",
+        "prefix_sha256": "281c35f888a1065a2c98a2ab26fa607dfb6e10d4584e6492ca300c33d82907c1",
+        "prefix_size": 156,
+        "record_index": 109,
+        "slot": 13,
+        "storage_wrapper_offset": "0x8567",
+        "tail_policy": "preserve live raw bytes 0x9c..0xa2; prefix artifacts never include tails"
+      },
+      {
+        "packet_file": "slot14-trigger50-playback60-all-c4-direct-product-163.bin",
+        "packet_sha256": "8b3bbbccf103bd41ea93430b694be1b8ab17d9a29ed0bee3d6fc0570e7d95721",
+        "physical_offset": "0x0fc60a",
+        "playback_note": 60,
+        "prefix_file": "record-110-slot-14.prefix",
+        "prefix_sha256": "b184b83c68d61a812d36dfe0644aac2a2b0b23af6a3b34bf11ff981080dfa05c",
+        "prefix_size": 156,
+        "record_index": 110,
+        "slot": 14,
+        "storage_wrapper_offset": "0x860a",
+        "tail_policy": "preserve live raw bytes 0x9c..0xa2; prefix artifacts never include tails"
+      },
+      {
+        "packet_file": "slot15-trigger51-playback60-all-c4-direct-product-163.bin",
+        "packet_sha256": "b06e83fdf0972a652ca4561eb08c6312b51be24c54c2619a1d6c2d67cc2bf30c",
+        "physical_offset": "0x0fc6ad",
+        "playback_note": 60,
+        "prefix_file": "record-111-slot-15.prefix",
+        "prefix_sha256": "f45bc93ef795d4e03a54d04df39b509d8f6c1773b0ed3c9b8bc4d6726039e9a9",
+        "prefix_size": 156,
+        "record_index": 111,
+        "slot": 15,
+        "storage_wrapper_offset": "0x86ad",
+        "tail_policy": "preserve live raw bytes 0x9c..0xa2; prefix artifacts never include tails"
+      }
+    ],
+    "requires_exact_host_seeded_records": true,
+    "rollback_policy": "target-specific pre-dump sectors only; rollback validator requires post-rollback dump equals pre-dump byte-for-byte",
+    "scope": {
+      "device_accessed": false,
+      "offline_only": true,
+      "persistent_storage_write_performed": false
+    }
+  },
+  "input_gates": [
+    {
+      "device_accessed": false,
+      "flash_performed": false,
+      "midi_transport_opened": false,
+      "name": "offline-scope",
+      "ota_performed": false,
+      "reset_performed": false,
+      "status": "PASS"
+    },
+    {
+      "name": "exact-s1c5-basis",
+      "parent_app_sha256": "8b16e9f5a3ec873ac9a51e64f12c5be20156a01a6e8eb65878eed9636179f189",
+      "parent_fwsc_sha256": "0a6ac1ae7d4bd34e252eb8f23a4d2c5f39d7454376ade1a3b75ff7d03155ea91",
+      "status": "PASS"
+    },
+    {
+      "helper_region": {
+        "bytes": 84,
+        "end_exclusive": "0x02026dd4",
+        "start": "0x02026d80"
+      },
+      "name": "s1c5-disabled-save-body",
+      "status": "PASS",
+      "ui_skip_patch_at": "0x02026d7a"
+    }
+  ],
+  "invariants": {
+    "chrome_segmented_final_preserved": true,
+    "producer_preserved_byte_for_byte": true,
+    "read_wrapper_full_length_gate": "0x02004870 returns zero unless full 0x9c prefix was read; helper rolls back to stock copy on zero",
+    "reset_wrapper_preserved": true,
+    "save_ui_path_skips_helper": true
+  },
+  "limitations": {
+    "checkpoint_semantics": "after install plus exact host-seeded raw prefixes, cold/not-ARMED selector restores the seeded current set; future WebMIDI updates remain volatile until a full writer successor exists",
+    "on_device_writer": "not included; full writer with 0x02004b02 write/readback/manifest commit-last still does not fit in this checkpoint"
+  },
+  "package": {
+    "candidate_flash_sha256": "27dc58ead7961be13e0b1189f9884dbeb07887841168e22b5e115a931d77dc2d",
+    "changed_app_byte_count_vs_official": 383,
+    "changed_app_ranges_vs_official": [
+      {
+        "end_exclusive": 34,
+        "start": 32
+      },
+      {
+        "end_exclusive": 116291,
+        "start": 116288
+      },
+      {
+        "end_exclusive": 116298,
+        "start": 116292
+      },
+      {
+        "end_exclusive": 116353,
+        "start": 116350
+      },
+      {
+        "end_exclusive": 116360,
+        "start": 116354
+      },
+      {
+        "end_exclusive": 123267,
+        "start": 123198
+      },
+      {
+        "end_exclusive": 123311,
+        "start": 123268
+      },
+      {
+        "end_exclusive": 123319,
+        "start": 123312
+      },
+      {
+        "end_exclusive": 123337,
+        "start": 123320
+      },
+      {
+        "end_exclusive": 123353,
+        "start": 123338
+      },
+      {
+        "end_exclusive": 123476,
+        "start": 123354
+      },
+      {
+        "end_exclusive": 124011,
+        "start": 124010
+      },
+      {
+        "end_exclusive": 124063,
+        "start": 124062
+      },
+      {
+        "end_exclusive": 159163,
+        "start": 159098
+      },
+      {
+        "end_exclusive": 159173,
+        "start": 159165
+      },
+      {
+        "end_exclusive": 159178,
+        "start": 159174
+      },
+      {
+        "end_exclusive": 159188,
+        "start": 159179
+      },
+      {
+        "end_exclusive": 387580,
+        "start": 387578
+      }
+    ],
+    "changed_flash_sectors_vs_official": [
+      "0x04000",
+      "0x20000",
+      "0x22000",
+      "0x2a000",
+      "0x62000"
+    ],
+    "official_flash_sha256": "f77e9ab3cee79113be78f3efacffb03c6cb9b87b78263010e16e81c472df0f9a",
+    "package_sha256": "3dfb7e23debbd3a3055945b121991cf7a58b5f1cb59ff98f6dfba7dd084f2593",
+    "package_size": 701140,
+    "rollback_manifest": "rollback/official-v15-recovery-sectors/manifest.json",
+    "rollback_restores_official_flash": true
+  },
+  "package_manifest_sha256": "c414c106d356527a7981afc2c1cd5e122952d6b0fd038d48c58a0e95acbb22ee",
+  "scope": {
+    "device_accessed": false,
+    "flash_performed": false,
+    "live_send_performed": false,
+    "midi_transport_opened": false,
+    "offline_only": true,
+    "ota_performed": false,
+    "reset_performed": false
+  }
+}

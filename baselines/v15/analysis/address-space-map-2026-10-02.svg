@@ -1,0 +1,791 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1720 3040" width="1720" height="3040" style="background-color: #0b0f19; font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Segoe UI', Roboto, sans-serif;">
+<defs>
+  <!-- Hatch pattern for unknown / blocked -->
+  <pattern id="pat-blocked" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="16" stroke="rgba(148, 163, 184, 0.2)" stroke-width="3" />
+  </pattern>
+  <!-- Hatch pattern for M09 brick / critical forbidden -->
+  <pattern id="pat-brick" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="16" stroke="rgba(239, 68, 68, 0.45)" stroke-width="4" />
+  </pattern>
+  <!-- Hatch pattern for undecoded 42% -->
+  <pattern id="pat-undecoded" width="20" height="20" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="20" stroke="rgba(234, 179, 8, 0.16)" stroke-width="2.5" />
+  </pattern>
+  <!-- Drop shadow filter -->
+  <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+    <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+  </filter>
+  <!-- Glow for Code Cave -->
+  <filter id="glow-cave" x="-10%" y="-10%" width="120%" height="120%">
+    <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#06b6d4" flood-opacity="0.7"/>
+  </filter>
+  <!-- Glow for Brick Warning -->
+  <filter id="glow-brick" x="-10%" y="-10%" width="120%" height="120%">
+    <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#ef4444" flood-opacity="0.8"/>
+  </filter>
+</defs>
+<style>
+  .title { font-size: 26px; font-weight: 800; fill: #ffffff; letter-spacing: -0.5px; }
+  .subtitle { font-size: 13px; fill: #9ca3af; }
+  .sec-title { font-size: 16px; font-weight: 700; fill: #f3f4f6; }
+  .sec-badge { font-size: 11px; font-weight: 600; padding: 2px 6px; }
+  .label-mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 12px; font-weight: 600; }
+  .label-mono-sm { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 11px; }
+  .text-body { font-size: 12px; fill: #d1d5db; }
+  .text-sub { font-size: 11.5px; fill: #9ca3af; }
+  .text-bold { font-weight: 700; }
+</style>
+
+<!-- ================= HEADER ================= -->
+<g transform="translate(40, 24)">
+  <rect width="1640" height="106" rx="8" fill="#111827" stroke="#1f2937" stroke-width="1.5" filter="url(#shadow)" />
+  <text x="24" y="38" class="title">SMK-37 Pro (JieLi AC7911B8 / WL82, Pi32v2) 주소 공간 통합 메모리 맵</text>
+  <text x="24" y="64" class="subtitle">기준일: 2026-10-02 · 범위: v15(1.15) &amp; v16(1.16) 오프라인 증거 통합 · 실기기 무접촉 분석</text>
+  <text x="24" y="86" class="subtitle" fill="#60a5fa">원칙: 3단 신뢰도 구분 | 미지는 자유 공간이 아님 (M09 사고 교훈) | XIP 커버리지 58.2% 한계 표기</text>
+
+  <!-- Spec Badges -->
+  <g transform="translate(1120, 22)">
+    <rect x="0" y="0" width="115" height="24" rx="4" fill="#1e293b" stroke="#334155" />
+    <text x="57" y="16" font-size="11" font-weight="600" fill="#93c5fd" text-anchor="middle">SoC: AC7911B8</text>
+
+    <rect x="125" y="0" width="105" height="24" rx="4" fill="#1e293b" stroke="#334155" />
+    <text x="177" y="16" font-size="11" font-weight="600" fill="#93c5fd" text-anchor="middle">Arch: Pi32v2</text>
+
+    <rect x="240" y="0" width="125" height="24" rx="4" fill="#1e293b" stroke="#334155" />
+    <text x="302" y="16" font-size="11" font-weight="600" fill="#93c5fd" text-anchor="middle">SPI NOR: 1 MiB</text>
+
+    <rect x="375" y="0" width="120" height="24" rx="4" fill="#1e293b" stroke="#334155" />
+    <text x="435" y="16" font-size="11" font-weight="600" fill="#93c5fd" text-anchor="middle">RAM0: 512 KiB</text>
+
+    <rect x="0" y="32" width="230" height="24" rx="4" fill="#1e293b" stroke="#334155" />
+    <text x="115" y="48" font-size="11" font-weight="600" fill="#c084fc" text-anchor="middle">XIP Base: 0x02000000</text>
+
+    <rect x="240" y="32" width="255" height="24" rx="4" fill="#1e293b" stroke="#334155" />
+    <text x="367" y="48" font-size="11" font-weight="600" fill="#f472b6" text-anchor="middle">v15 (617 KB) / v16 (619 KB)</text>
+  </g>
+</g>
+
+<!-- ================= LEGEND BAR ================= -->
+<g transform="translate(40, 144)">
+  <rect width="1640" height="66" rx="8" fill="#111827" stroke="#1f2937" stroke-width="1.5" filter="url(#shadow)" />
+  <text x="20" y="38" font-size="13" font-weight="700" fill="#ffffff">범례 (Legend):</text>
+
+  <!-- Confirmed -->
+  <rect x="130" y="18" width="18" height="18" rx="3" fill="#10b981" />
+  <text x="156" y="32" font-size="12" font-weight="700" fill="#34d399">확정 (Proven)</text>
+  <text x="156" y="47" font-size="11" fill="#9ca3af">바이트·실기 검증으로 경계 닫힘</text>
+
+  <!-- Inferred -->
+  <rect x="360" y="18" width="18" height="18" rx="3" fill="#f59e0b" />
+  <text x="386" y="32" font-size="12" font-weight="700" fill="#fbbf24">거의 확정 (Inferred)</text>
+  <text x="386" y="47" font-size="11" fill="#9ca3af">정확한 증거 있으나 경계/의미 일부 미확정</text>
+
+  <!-- Unknown / Blocked -->
+  <rect x="635" y="18" width="18" height="18" rx="3" fill="#64748b" />
+  <rect x="635" y="18" width="18" height="18" rx="3" fill="url(#pat-blocked)" />
+  <text x="661" y="32" font-size="12" font-weight="700" fill="#94a3b8">미지 / 차단 (BLOCKED)</text>
+  <text x="661" y="47" font-size="11" fill="#9ca3af">증거 없음 (자유 공간 아님, 접근 금지)</text>
+
+  <!-- Live Cave -->
+  <rect x="905" y="18" width="18" height="18" rx="3" fill="#06b6d4" filter="url(#glow-cave)" />
+  <text x="931" y="32" font-size="12" font-weight="700" fill="#22d3ee">실기 검증 코드 케이브</text>
+  <text x="931" y="47" font-size="11" fill="#9ca3af">0x0201DAFA (162 B) M08/S1C 입증</text>
+
+  <!-- Brick Warning -->
+  <rect x="1145" y="18" width="18" height="18" rx="3" fill="#ef4444" filter="url(#glow-brick)" />
+  <rect x="1145" y="18" width="18" height="18" rx="3" fill="url(#pat-brick)" />
+  <text x="1171" y="32" font-size="12" font-weight="700" fill="#f87171">M09 브릭 발생 (쓰기 금지)</text>
+  <text x="1171" y="47" font-size="11" fill="#9ca3af">0x020958CE..0x02095EDE 영구 벽돌 사고</text>
+
+  <!-- v16 Delta Badge -->
+  <rect x="1425" y="22" width="60" height="22" rx="4" fill="#6d28d9" stroke="#8b5cf6" />
+  <text x="1455" y="37" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">Δ v16</text>
+  <text x="1493" y="36" font-size="11" fill="#9ca3af">v15 대비 델타/신규</text>
+</g>
+
+<!-- ================= LEFT COLUMN: GLOBAL ADDRESS SPACE ================= -->
+<g transform="translate(40, 224)">
+  <rect width="335" height="2730" rx="8" fill="#111827" stroke="#1f2937" stroke-width="1.5" filter="url(#shadow)" />
+  
+  <!-- Header -->
+  <rect width="335" height="44" rx="8" fill="#1e293b" />
+  <text x="16" y="27" font-size="14" font-weight="700" fill="#ffffff">32-bit 전체 주소 공간 눈금</text>
+  <text x="319" y="27" font-size="11" font-weight="600" fill="#94a3b8" text-anchor="end">Global CPU Bus</text>
+
+  <!-- Ruler Spine Line -->
+  <line x1="110" y1="55" x2="110" y2="2705" stroke="#334155" stroke-width="3" stroke-dasharray="2,2" />
+
+    <!-- Ruler Item 0x00000000 -->
+    <line x1="95" y1="70" x2="115" y2="70" stroke="#94a3b8" stroke-width="2" />
+    <text x="90" y="74" class="label-mono-sm" fill="#f8fafc" text-anchor="end">0x00000000</text>
+
+    <rect x="120" y="70" width="199" height="64" rx="5" fill="rgba(100, 116, 139, 0.14)" stroke="#475569" stroke-width="1.5" />
+    <text x="130" y="88" font-size="12" font-weight="700" fill="#94a3b8">부트 ROM 예약</text>
+    <text x="130" y="104" font-size="11" fill="#9ca3af">low / Boot ROM (0x0..0xFFFF)</text>
+
+    <!-- Ruler Item 0x00010000 -->
+    <line x1="95" y1="150" x2="115" y2="150" stroke="#94a3b8" stroke-width="2" />
+    <text x="90" y="154" class="label-mono-sm" fill="#f8fafc" text-anchor="end">0x00010000</text>
+
+    <rect x="120" y="150" width="199" height="64" rx="5" fill="rgba(245, 158, 11, 0.12)" stroke="#d97706" stroke-width="1.5" />
+    <text x="130" y="168" font-size="12" font-weight="700" fill="#fbbf24">lsfr MMIO 창</text>
+    <text x="130" y="184" font-size="11" fill="#9ca3af">USB/Audio/EQ/ADC (50곳 접근)</text>
+
+    <!-- Ruler Item 0x00020000 -->
+    <line x1="95" y1="230" x2="115" y2="230" stroke="#94a3b8" stroke-width="2" />
+    <text x="90" y="234" class="label-mono-sm" fill="#f8fafc" text-anchor="end">0x00020000</text>
+
+    <rect x="120" y="230" width="199" height="59" rx="5" fill="rgba(245, 158, 11, 0.12)" stroke="#d97706" stroke-width="1.5" />
+    <text x="130" y="248" font-size="12" font-weight="700" fill="#fbbf24">bsfr MMIO 창</text>
+    <text x="130" y="264" font-size="11" fill="#9ca3af">BT / Wireless (5곳 접근)</text>
+
+    <!-- Ruler Item 0x00040000 -->
+    <line x1="95" y1="305" x2="115" y2="305" stroke="#94a3b8" stroke-width="2" />
+    <text x="90" y="309" class="label-mono-sm" fill="#f8fafc" text-anchor="end">0x00040000</text>
+
+    <rect x="120" y="305" width="199" height="59" rx="5" fill="rgba(245, 158, 11, 0.12)" stroke="#d97706" stroke-width="1.5" />
+    <text x="130" y="323" font-size="12" font-weight="700" fill="#fbbf24">hsfr MMIO 창</text>
+    <text x="130" y="339" font-size="11" fill="#9ca3af">SFC / Crypto (3곳, v16은 4곳)</text>
+
+    <rect x="273" y="311" width="38" height="16" rx="3" fill="#6d28d9" />
+    <text x="292" y="323" font-size="9.5" font-weight="700" fill="#ffffff" text-anchor="middle">Δ v16</text>
+
+    <!-- Ruler Item 0x00050000 -->
+    <line x1="95" y1="380" x2="115" y2="380" stroke="#94a3b8" stroke-width="2" />
+    <text x="90" y="384" class="label-mono-sm" fill="#f8fafc" text-anchor="end">0x00050000</text>
+
+    <rect x="120" y="380" width="199" height="59" rx="5" fill="rgba(245, 158, 11, 0.12)" stroke="#d97706" stroke-width="1.5" />
+    <text x="130" y="398" font-size="12" font-weight="700" fill="#fbbf24">psfr MMIO 창</text>
+    <text x="130" y="414" font-size="11" fill="#9ca3af">GPIO Ports (9곳 접근)</text>
+
+    <!-- Ruler Item 0x00060000 -->
+    <line x1="95" y1="455" x2="115" y2="455" stroke="#94a3b8" stroke-width="2" />
+    <text x="90" y="459" class="label-mono-sm" fill="#f8fafc" text-anchor="end">0x00060000</text>
+
+    <rect x="120" y="455" width="199" height="59" rx="5" fill="rgba(100, 116, 139, 0.14)" stroke="#475569" stroke-width="1.5" />
+    <text x="130" y="473" font-size="12" font-weight="700" fill="#94a3b8">미분류 MMIO</text>
+    <text x="130" y="489" font-size="11" fill="#9ca3af">0x60001, 0x70E04, 0x70F00</text>
+
+    <!-- Ruler Item 0x01C00000 -->
+    <line x1="95" y1="535" x2="115" y2="535" stroke="#94a3b8" stroke-width="2" />
+    <text x="90" y="539" class="label-mono-sm" fill="#f8fafc" text-anchor="end">0x01C00000</text>
+
+    <rect x="120" y="535" width="199" height="294" rx="5" fill="rgba(16, 185, 129, 0.12)" stroke="#059669" stroke-width="1.5" />
+    <text x="130" y="553" font-size="12" font-weight="700" fill="#34d399">RAM0 (512 KiB)</text>
+    <text x="130" y="569" font-size="11" fill="#9ca3af">.data → BSS/heap → UPDATA</text>
+
+    <rect x="273" y="541" width="38" height="16" rx="3" fill="#6d28d9" />
+    <text x="292" y="553" font-size="9.5" font-weight="700" fill="#ffffff" text-anchor="middle">Δ v16</text>
+
+    <!-- Ruler Item 0x01EE0000 -->
+    <line x1="95" y1="850" x2="115" y2="850" stroke="#94a3b8" stroke-width="2" />
+    <text x="90" y="854" class="label-mono-sm" fill="#f8fafc" text-anchor="end">0x01EE0000</text>
+
+    <rect x="120" y="850" width="199" height="64" rx="5" fill="rgba(245, 158, 11, 0.12)" stroke="#d97706" stroke-width="1.5" />
+    <text x="130" y="868" font-size="12" font-weight="700" fill="#fbbf24">csfr 코어 SFR</text>
+    <text x="130" y="884" font-size="11" fill="#9ca3af">관측: 0x01EEF100/1A0/300</text>
+
+    <!-- Ruler Item 0x01F20000 -->
+    <line x1="95" y1="930" x2="115" y2="930" stroke="#94a3b8" stroke-width="2" />
+    <text x="90" y="934" class="label-mono-sm" fill="#f8fafc" text-anchor="end">0x01F20000</text>
+
+    <rect x="120" y="930" width="199" height="64" rx="5" fill="rgba(245, 158, 11, 0.12)" stroke="#d97706" stroke-width="1.5" />
+    <text x="130" y="948" font-size="12" font-weight="700" fill="#fbbf24">cache RAM</text>
+    <text x="130" y="964" font-size="11" fill="#9ca3af">관측: 0x01F28000 (way RAM)</text>
+
+    <!-- Ruler Item 0x02000000 -->
+    <line x1="95" y1="1010" x2="115" y2="1010" stroke="#94a3b8" stroke-width="2" />
+    <text x="90" y="1014" class="label-mono-sm" fill="#f8fafc" text-anchor="end">0x02000000</text>
+
+    <rect x="120" y="1010" width="199" height="1564" rx="5" fill="rgba(16, 185, 129, 0.12)" stroke="#059669" stroke-width="1.5" />
+    <text x="130" y="1028" font-size="12" font-weight="700" fill="#34d399">XIP 플래시 앱</text>
+    <text x="130" y="1044" font-size="11" fill="#9ca3af">v15: 0x96A34 / v16: 0x974B8</text>
+
+    <rect x="273" y="1016" width="38" height="16" rx="3" fill="#6d28d9" />
+    <text x="292" y="1028" font-size="9.5" font-weight="700" fill="#ffffff" text-anchor="middle">Δ v16</text>
+
+    <line x1="120" y1="1060" x2="319" y2="1060" stroke="#1f2937" stroke-width="1" />
+    <text x="130" y="1080" font-size="11" fill="#67e8f9">· 코드케이브: 0x0201DAFA (162B)</text>
+    <text x="130" y="1100" font-size="11" fill="#fca5a5">· M09 브릭: 0x020958CE</text>
+    <text x="130" y="1120" font-size="11" fill="#eab308">· 커버리지 한계: 0x02058000</text>
+    <text x="130" y="1140" font-size="11" fill="#9ca3af">· JLFS 경계: 0x02096A34</text>
+
+    <!-- Ruler Item 0x04000000 -->
+    <line x1="95" y1="2600" x2="115" y2="2600" stroke="#94a3b8" stroke-width="2" />
+    <text x="90" y="2604" class="label-mono-sm" fill="#f8fafc" text-anchor="end">0x04000000</text>
+
+    <rect x="120" y="2600" width="199" height="84" rx="5" fill="rgba(245, 158, 11, 0.12)" stroke="#d97706" stroke-width="1.5" />
+    <text x="130" y="2618" font-size="12" font-weight="700" fill="#fbbf24">SDRAM 창</text>
+    <text x="130" y="2634" font-size="11" fill="#9ca3af">관측: ENTRY 0x04000120</text>
+</g>
+
+<!-- ================= SECTION 1: PHYSICAL SPI NOR ================= -->
+<g transform="translate(395, 224)">
+  <rect width="1285" height="286" rx="8" fill="#111827" stroke="#1f2937" stroke-width="1.5" filter="url(#shadow)" />
+  
+  <!-- Header Bar -->
+  <rect width="1285" height="38" rx="8" fill="#1e293b" />
+  <circle cx="20" cy="19" r="6" fill="#10b981" />
+  <text x="34" y="24" class="sec-title">물리 SPI NOR / 패키지 레이아웃 (파일 오프셋 0x000000 .. 0x00100000, 1 MiB)</text>
+  <rect x="635" y="8" width="55" height="22" rx="4" fill="rgba(16, 185, 129, 0.2)" stroke="#059669" />
+  <text x="662" y="23" font-size="11" font-weight="700" fill="#34d399" text-anchor="middle">확정</text>
+  <text x="1265" y="24" font-size="12" font-weight="600" fill="#f87171" text-anchor="end">상한 규칙: &gt;= 0x100000 절대 금지 (실장 SPI NOR 1 MiB 한계)</text>
+
+  <!-- Overview strip bar -->
+  <g transform="translate(20, 50)">
+    <!-- 0x000000 ~ 0x004000 (16 KiB) -->
+    <rect x="0" y="0" width="110" height="42" rx="4" fill="rgba(16, 185, 129, 0.12)" stroke="#059669" stroke-width="1.5" />
+    <text x="55" y="18" font-size="11" font-weight="700" fill="#34d399" text-anchor="middle">부트 헤더</text>
+    <text x="55" y="32" class="label-mono-sm" fill="#9ca3af" text-anchor="middle">0x000000 (16K)</text>
+
+    <!-- 0x004000 ~ 0x004300 (768 B) -->
+    <rect x="116" y="0" width="100" height="42" rx="4" fill="rgba(16, 185, 129, 0.12)" stroke="#059669" stroke-width="1.5" />
+    <text x="166" y="18" font-size="11" font-weight="700" fill="#34d399" text-anchor="middle">JLFS 헤더</text>
+    <text x="166" y="32" class="label-mono-sm" fill="#9ca3af" text-anchor="middle">0x004000 (768B)</text>
+
+    <!-- 0x004300 ~ 0x09A833 (598 KiB) -->
+    <rect x="222" y="0" width="520" height="42" rx="4" fill="rgba(16, 185, 129, 0.22)" stroke="#059669" stroke-width="2" />
+    <text x="482" y="18" font-size="12" font-weight="700" fill="#6ee7b7" text-anchor="middle">애플리케이션 영역 (598 KiB) — 앱 전용 OTA / 가드 복원만 허용</text>
+    <text x="482" y="33" class="label-mono-sm" fill="#a7f3d0" text-anchor="middle">0x004300 .. 0x09A833 [v15 stock] (v16: payload 705K, app_offset 0x4120)</text>
+
+    <!-- 0x09A833 ~ 0x09C000 (6 KiB) -->
+    <rect x="748" y="0" width="115" height="42" rx="4" fill="rgba(16, 185, 129, 0.12)" stroke="#059669" stroke-width="1.5" />
+    <text x="805" y="18" font-size="11" font-weight="700" fill="#34d399" text-anchor="middle">tail 메타데이터</text>
+    <text x="805" y="32" class="label-mono-sm" fill="#9ca3af" text-anchor="middle">0x09A833 (6K)</text>
+
+    <!-- 0x09C000 ~ 0x100000 (400 KiB) -->
+    <rect x="869" y="0" width="375" height="42" rx="4" fill="rgba(16, 185, 129, 0.12)" stroke="#059669" stroke-width="1.5" />
+    <text x="1056" y="18" font-size="11" font-weight="700" fill="#34d399" text-anchor="middle">패키지 밖 사용자 / 프리셋 데이터 (400 KiB)</text>
+    <text x="1056" y="32" class="label-mono-sm" fill="#9ca3af" text-anchor="middle">0x09C000 .. 0x100000 (PRESERVE)</text>
+  </g>
+
+  <!-- Detailed Table Cards -->
+  <g transform="translate(20, 105)">
+    <!-- Row 1: Headers -->
+    <rect x="0" y="0" width="240" height="85" rx="5" fill="#1e293b" stroke="#334155" />
+    <text x="12" y="20" class="label-mono" fill="#38bdf8">0x000000 .. 0x004000 (16 KiB)</text>
+    <text x="12" y="40" font-size="12" font-weight="700" fill="#ffffff">부트 헤더 / uboot / 레이아웃</text>
+    <text x="12" y="58" class="text-sub">정책: <tspan fill="#f87171" font-weight="700">PRESERVE</tspan> (절대 보호)</text>
+    <text x="12" y="74" class="text-sub">출처: [v15] [live] 검증</text>
+
+    <!-- Row 2: JLFS -->
+    <rect x="250" y="0" width="240" height="85" rx="5" fill="#1e293b" stroke="#334155" />
+    <text x="12" y="20" class="label-mono" fill="#38bdf8" transform="translate(250, 0)">0x004000 .. 0x004300 (768 B)</text>
+    <text x="262" y="40" font-size="12" font-weight="700" fill="#ffffff">JLFS 헤더 구조체</text>
+    <text x="262" y="58" class="text-sub">내용: plain ^ lfsr(0x132b) 암호화</text>
+    <text x="262" y="74" class="text-sub">정책: <tspan fill="#f87171" font-weight="700">PRESERVE</tspan> (OTA 시 보존)</text>
+
+    <!-- Row 3: tail -->
+    <rect x="500" y="0" width="240" height="85" rx="5" fill="#1e293b" stroke="#334155" />
+    <text x="512" y="20" class="label-mono" fill="#38bdf8">0x09A833 .. 0x09C000 (6 KiB)</text>
+    <text x="512" y="40" font-size="12" font-weight="700" fill="#ffffff">동적 tail 메타데이터</text>
+    <text x="512" y="58" class="text-sub">JLFS 파일시스템 tail 영역</text>
+    <text x="512" y="74" class="text-sub">정책: <tspan fill="#f87171" font-weight="700">PRESERVE</tspan> (변조 금지)</text>
+
+    <!-- Row 4: Presets -->
+    <rect x="750" y="0" width="494" height="85" rx="5" fill="#1e293b" stroke="#334155" />
+    <text x="762" y="20" class="label-mono" fill="#38bdf8">0x09C000 .. 0x100000 (400 KiB) — 사용자 / 프리셋 영역</text>
+    <text x="762" y="40" font-size="12" font-weight="700" fill="#ffffff">DX7 0xF4000 (0x0F4000..0x0F8000) &amp; Per-Preset 0xF8000 (0x0F8000..0x100000)</text>
+    <text x="762" y="58" class="text-sub">구조: packed banks (+0x0), raw records (128x0xA3), flags (+0x9180), selection (+0x9200)</text>
+    <text x="762" y="74" class="text-sub">정책: <tspan fill="#f87171" font-weight="700">PRESERVE</tspan> · 팩토리 프리셋 및 128개 사용자 사운드 영속 저장소</text>
+  </g>
+
+  <!-- v16 Note Footer -->
+  <g transform="translate(20, 202)">
+    <rect width="1244" height="70" rx="5" fill="#182234" stroke="#2563eb" stroke-width="1" />
+    <text x="16" y="24" font-size="12" font-weight="700" fill="#60a5fa">v16 패키지 물리 플래시 델타 참고:</text>
+    <text x="16" y="44" font-size="11" fill="#cbd5e1">· build/SMK-37_Pro_016.fwsc: payload_size 705,232 · flash_bin_payload_offset 0x410 · app_area_head offset 33,554,720 / size 620,375 · app_offset 0x4120</text>
+    <text x="16" y="60" font-size="11" fill="#94a3b8">· 물리 범위 자체는 1 MiB 안이지만 <tspan fill="#fbbf24">v16의 물리 배치 대응은 개별 검증되지 않음 (비주장 §10)</tspan></text>
+  </g>
+</g>
+
+<!-- ================= SECTION 2: MMIO & SPECIAL REGISTERS ================= -->
+<g transform="translate(395, 520)">
+  <rect width="1285" height="260" rx="8" fill="#111827" stroke="#1f2937" stroke-width="1.5" filter="url(#shadow)" />
+  
+  <!-- Header Bar -->
+  <rect width="1285" height="38" rx="8" fill="#1e293b" />
+  <circle cx="20" cy="19" r="6" fill="#f59e0b" />
+  <text x="34" y="24" class="sec-title">MMIO 창 및 주변장치 버스 실사용 실증 (0x00010000 .. 0x00070F00 &amp; csfr, cache, SDRAM)</text>
+  <rect x="670" y="8" width="80" height="22" rx="4" fill="rgba(245, 158, 11, 0.2)" stroke="#d97706" />
+  <text x="710" y="23" font-size="11" font-weight="700" fill="#fbbf24" text-anchor="middle">거의 확정</text>
+  <text x="1265" y="24" font-size="12" fill="#9ca3af" text-anchor="end">mov/movz 즉치 분석 기반 실증 (레지스터 개별 의미는 미단정)</text>
+
+  <!-- 4 Column Grid for MMIO Windows -->
+  <g transform="translate(20, 50)">
+    <!-- Col 1: lsfr -->
+    <g transform="translate(0, 0)">
+      <rect width="295" height="125" rx="5" fill="#1e293b" stroke="#d97706" stroke-width="1" />
+      <rect x="8" y="8" width="60" height="20" rx="3" fill="#78350f" />
+      <text x="38" y="22" font-size="11" font-weight="700" fill="#fde68a" text-anchor="middle">lsfr</text>
+      <text x="76" y="23" class="label-mono" fill="#fbbf24">0x00010000</text>
+      <text x="12" y="48" font-size="12" font-weight="700" fill="#ffffff">USB / Audio / EQ / ADC</text>
+      <text x="12" y="66" class="text-sub">공개 SDK: USB 0x18, USB2 0x27, audio 0x2f, ADC 0x31</text>
+      <text x="12" y="84" class="text-sub">앱 접근 빈도: <tspan fill="#34d399" font-weight="700">50곳 접근</tspan> (v15 50, v16 51)</text>
+      <text x="12" y="102" class="label-mono-sm" fill="#94a3b8">관측: 0x10000, 0x1000F, 0x10010, 0x11800</text>
+    </g>
+
+    <!-- Col 2: bsfr -->
+    <g transform="translate(310, 0)">
+      <rect width="295" height="125" rx="5" fill="#1e293b" stroke="#d97706" stroke-width="1" />
+      <rect x="8" y="8" width="60" height="20" rx="3" fill="#78350f" />
+      <text x="38" y="22" font-size="11" font-weight="700" fill="#fde68a" text-anchor="middle">bsfr</text>
+      <text x="76" y="23" class="label-mono" fill="#fbbf24">0x00020000</text>
+      <text x="12" y="48" font-size="12" font-weight="700" fill="#ffffff">BT / Wireless (블루투스 제어)</text>
+      <text x="12" y="66" class="text-sub">공개 SDK: Bluetooth 및 무선 베이스밴드</text>
+      <text x="12" y="84" class="text-sub">앱 접근 빈도: <tspan fill="#34d399" font-weight="700">5곳 접근</tspan> (v15/v16 동일)</text>
+      <text x="12" y="102" class="label-mono-sm" fill="#94a3b8">관측: 0x20000, 0x25800, 0x27FF8, 0x2B110</text>
+    </g>
+
+    <!-- Col 3: hsfr -->
+    <g transform="translate(620, 0)">
+      <rect width="310" height="125" rx="5" fill="#1e293b" stroke="#d97706" stroke-width="1" />
+      <rect x="8" y="8" width="60" height="20" rx="3" fill="#78350f" />
+      <text x="38" y="22" font-size="11" font-weight="700" fill="#fde68a" text-anchor="middle">hsfr</text>
+      <text x="76" y="23" class="label-mono" fill="#fbbf24">0x00040000</text>
+      <rect x="230" y="8" width="70" height="20" rx="3" fill="#6d28d9" />
+      <text x="265" y="22" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">Δ v16: +1곳</text>
+      <text x="12" y="48" font-size="12" font-weight="700" fill="#ffffff">SFC (SPI 플래시 컨트롤러) + Crypto</text>
+      <text x="12" y="66" class="text-sub">공개 SDK: SFC 0x02, SFC 암호화 0x03</text>
+      <text x="12" y="84" class="text-sub">접근: v15 3곳 (0x40200, 0x40204, 0x40400)</text>
+      <text x="12" y="102" class="label-mono-sm" fill="#c084fc">v16 추가: 0x41200 (v16 유일한 MMIO 차이점)</text>
+    </g>
+
+    <!-- Col 4: psfr -->
+    <g transform="translate(945, 0)">
+      <rect width="299" height="125" rx="5" fill="#1e293b" stroke="#d97706" stroke-width="1" />
+      <rect x="8" y="8" width="60" height="20" rx="3" fill="#78350f" />
+      <text x="38" y="22" font-size="11" font-weight="700" fill="#fde68a" text-anchor="middle">psfr</text>
+      <text x="76" y="23" class="label-mono" fill="#fbbf24">0x00050000</text>
+      <text x="12" y="48" font-size="12" font-weight="700" fill="#ffffff">GPIO Ports (포트 핀 및 I/O 제어)</text>
+      <text x="12" y="66" class="text-sub">공개 SDK: GPIO 포트 A/B/C/D 및 드라이브</text>
+      <text x="12" y="84" class="text-sub">앱 접근 빈도: <tspan fill="#34d399" font-weight="700">9곳 접근</tspan> (v15/v16 동일)</text>
+      <text x="12" y="102" class="label-mono-sm" fill="#94a3b8">관측: 0x50000, 0x50040, 0x51000, 0x51020</text>
+    </g>
+  </g>
+
+  <!-- Row 2: Special Peripheral Windows -->
+  <g transform="translate(20, 185)">
+    <!-- 0x00060000 / 0x00070F00 -->
+    <g transform="translate(0, 0)">
+      <rect width="295" height="62" rx="4" fill="#182234" stroke="#334155" />
+      <text x="12" y="20" class="label-mono-sm" fill="#fbbf24">0x00060000 / 0x00070E04 / 0x00070F00</text>
+      <text x="12" y="38" font-size="11" font-weight="700" fill="#ffffff">기타 미분류 MMIO 3곳 (0x60001 등)</text>
+      <text x="12" y="52" class="text-sub">상태: 미지 / 관측됨 [v15][v16 동일]</text>
+    </g>
+
+    <!-- csfr -->
+    <g transform="translate(310, 0)">
+      <rect width="295" height="62" rx="4" fill="#182234" stroke="#334155" />
+      <text x="12" y="20" class="label-mono-sm" fill="#fbbf24">csfr 0x01EE0000 (코어 SFR)</text>
+      <text x="12" y="38" font-size="11" font-weight="700" fill="#ffffff">코어 레지스터 0x01EEF000 서브블록</text>
+      <text x="12" y="52" class="text-sub">관측: 0x01EEF100, 0x01EEF1A0, 0x01EEF300</text>
+    </g>
+
+    <!-- cache RAM -->
+    <g transform="translate(620, 0)">
+      <rect width="310" height="62" rx="4" fill="#182234" stroke="#334155" />
+      <text x="12" y="20" class="label-mono-sm" fill="#fbbf24">cache RAM 0x01F20000 (Way RAM)</text>
+      <text x="12" y="38" font-size="11" font-weight="700" fill="#ffffff">캐시 웨이 RAM (SDK: 0x01F20000+)</text>
+      <text x="12" y="52" class="text-sub">관측: 앱은 <tspan fill="#34d399">0x01F28000</tspan> 1곳만 참조</text>
+    </g>
+
+    <!-- SDRAM Window -->
+    <g transform="translate(945, 0)">
+      <rect width="299" height="62" rx="4" fill="#182234" stroke="#334155" />
+      <text x="12" y="20" class="label-mono-sm" fill="#fbbf24">SDRAM 창 0x04000000</text>
+      <text x="12" y="38" font-size="11" font-weight="700" fill="#ffffff">ENTRY = 0x04000120 실증</text>
+      <text x="12" y="52" class="text-sub">부트 코드 0x0200004A / 68에서 참조 일치</text>
+    </g>
+  </g>
+</g>
+
+<!-- ================= SECTION 3: RAM0 ================= -->
+<g transform="translate(395, 790)">
+  <rect width="1285" height="360" rx="8" fill="#111827" stroke="#1f2937" stroke-width="1.5" filter="url(#shadow)" />
+  
+  <!-- Header Bar -->
+  <rect width="1285" height="38" rx="8" fill="#1e293b" />
+  <circle cx="20" cy="19" r="6" fill="#10b981" />
+  <text x="34" y="24" class="sec-title">RAM0 메모리 맵 (0x01C00000 .. 0x01C7FE00, 총 512 KiB)</text>
+  <rect x="480" y="8" width="55" height="22" rx="4" fill="rgba(16, 185, 129, 0.2)" stroke="#059669" />
+  <text x="507" y="23" font-size="11" font-weight="700" fill="#34d399" text-anchor="middle">확정</text>
+  <text x="1265" y="24" font-size="12" font-weight="600" fill="#f43f5e" text-anchor="end">경고: BSS 제로화는 소유권이 아님 · 미증명 230 KiB 접근 절대 금지</text>
+
+  <!-- Visual Span Bar -->
+  <g transform="translate(20, 50)">
+    <!-- .data 0x01C00000..0x01C099D4 (38.5 KiB) -->
+    <rect x="0" y="0" width="160" height="42" rx="4" fill="rgba(16, 185, 129, 0.12)" stroke="#059669" stroke-width="2" />
+    <text x="80" y="18" font-size="11" font-weight="700" fill="#34d399" text-anchor="middle">.data 초기화 데이터</text>
+    <text x="80" y="32" class="label-mono-sm" fill="#9ca3af" text-anchor="middle">0x01C00000 (38.5K)</text>
+
+    <!-- BSS/heap 0x01C099D4..0x01C4651C (243 KiB) -->
+    <rect x="168" y="0" width="550" height="42" rx="4" fill="rgba(245, 158, 11, 0.16)" stroke="#d97706" stroke-width="2" />
+    <text x="443" y="18" font-size="11" font-weight="700" fill="#fbbf24" text-anchor="middle">BSS / heap 제로 span (0x01C099D4 .. 0x01C4651C, 243 KiB) — 제로화는 소유권 아님!</text>
+    <text x="443" y="32" class="label-mono-sm" fill="#9ca3af" text-anchor="middle">S1C 런타임 (0x01C33260), 스냅샷 (0x01C34C74), SysEx (0x01C37FD0), 부트 스택 (0x01C3A2D4)</text>
+
+    <!-- S1C5 16slot 0x01C46E80..0x01C46F30 -->
+    <rect x="724" y="0" width="70" height="42" rx="4" fill="rgba(6, 182, 212, 0.22)" stroke="#0891b2" stroke-width="1.5" />
+    <text x="759" y="18" font-size="10.5" font-weight="700" fill="#22d3ee" text-anchor="middle">S1C5 RAM</text>
+    <text x="759" y="32" class="label-mono-sm" fill="#9ca3af" text-anchor="middle">0x01C46E80</text>
+
+    <!-- 미증명 0x01C4651C..0x01C7FD50 (230 KiB) -->
+    <rect x="800" y="0" width="340" height="42" rx="4" fill="rgba(100, 116, 139, 0.14)" stroke="#475569" stroke-width="1.5" />
+    <rect x="800" y="0" width="340" height="42" rx="4" fill="url(#pat-blocked)" />
+    <text x="970" y="18" font-size="11" font-weight="700" fill="#94a3b8" text-anchor="middle">미증명 영역 (230 KiB) [BLOCKED]</text>
+    <text x="970" y="32" class="label-mono-sm" fill="#9ca3af" text-anchor="middle">0x01C4651C .. 0x01C7FD50 (소유·별칭 미증명)</text>
+
+    <!-- BOOT_INFO & UPDATA -->
+    <rect x="1146" y="0" width="98" height="42" rx="4" fill="rgba(100, 116, 139, 0.14)" stroke="#475569" stroke-width="1.5" />
+    <text x="1195" y="18" font-size="10" font-weight="700" fill="#94a3b8" text-anchor="middle">BOOT/UPDATA</text>
+    <text x="1195" y="32" class="label-mono-sm" fill="#9ca3af" text-anchor="middle">0x01C7FD50</text>
+  </g>
+
+  <!-- Detailed Cards for RAM0 Sections -->
+  <g transform="translate(20, 105)">
+    <!-- Card 1: .data -->
+    <g transform="translate(0, 0)">
+      <rect width="395" height="152" rx="5" fill="#1e293b" stroke="#334155" />
+      <text x="14" y="24" class="label-mono" fill="#34d399">0x01C00000 .. 0x01C099D4 (38.5 KiB) [확정]</text>
+      <text x="14" y="46" font-size="12" font-weight="700" fill="#ffffff">초기화 데이터 RAM (.data)</text>
+      <text x="14" y="66" class="text-sub">부트 코드 (0x02000000)에서 플래시로부터 복사하는 데이터 목적지</text>
+      <text x="14" y="84" class="text-sub">v16 주소 증분 분석:</text>
+      <text x="14" y="102" class="label-mono-sm" fill="#c084fc">· 0x01C00000 → +0 | 0x01C07ABC → +0x40</text>
+      <text x="14" y="120" class="label-mono-sm" fill="#c084fc">· 0x01C08C40 / 0x01C092CC / 0x01C099D4 → +0x44</text>
+      <text x="14" y="138" class="text-sub" fill="#fbbf24">※ 주소별 증분이 다르므로 +0x40 일괄 변환 금지!</text>
+    </g>
+
+    <!-- Card 2: BSS / Heap Internal Objects -->
+    <g transform="translate(410, 0)">
+      <rect width="455" height="152" rx="5" fill="#1e293b" stroke="#334155" />
+      <text x="14" y="24" class="label-mono" fill="#fbbf24">0x01C099D4 .. 0x01C4651C 내부 핵심 객체 [확정/거의확정]</text>
+      <text x="14" y="46" font-size="11.5" fill="#ffffff">· <tspan font-weight="700" fill="#34d399">0x01C33260</tspan> → v16 <tspan fill="#c084fc">0x01C332A0 (+0x40)</tspan>: S1C 런타임 객체 [확정]</text>
+      <text x="14" y="66" font-size="11.5" fill="#ffffff">· <tspan font-weight="700" fill="#34d399">0x01C34C74</tspan> → v16 <tspan fill="#c084fc">0x01C34CFC (+0x88)</tspan>: 현재 스냅샷 0x9C 바이트 [확정]</text>
+      <text x="14" y="86" font-size="11.5" fill="#ffffff">· <tspan font-weight="700" fill="#fbbf24">0x01C37FD0</tspan>: SysEx 스테이징 버퍼 (0x9C + F7 바이트) [거의 확정]</text>
+      <text x="14" y="106" font-size="11.5" fill="#ffffff">· <tspan font-weight="700" fill="#fbbf24">0x01C3A2D4 .. 0x01C3C5D4</tspan>: 부트 스택 초기값 범위 [거의 확정]</text>
+      <text x="14" y="126" font-size="11.5" fill="#ffffff">· <tspan font-weight="700" fill="#38bdf8">0x01C46E80 .. 0x01C46F30</tspan>: S1C5 16슬롯 RAM + Note 맵 [확정/live]</text>
+      <text x="14" y="142" class="text-sub" fill="#94a3b8">BSS 제로화 영역 안이라도 런타임 사용 객체는 엄격히 보존해야 함</text>
+    </g>
+
+    <!-- Card 3: Blocked / Upper RAM -->
+    <g transform="translate(880, 0)">
+      <rect width="364" height="152" rx="5" fill="#1e293b" stroke="#dc2626" stroke-width="1" />
+      <text x="14" y="24" class="label-mono" fill="#f87171">0x01C4651C .. 0x01C7FE00 [미지 / BLOCKED]</text>
+      <text x="14" y="46" font-size="12" font-weight="700" fill="#ffffff">미증명 230 KiB 및 부트/업데이터 제어 플래그</text>
+      <text x="14" y="68" class="text-sub">· <tspan fill="#fca5a5" font-weight="700">0x01C4651C .. 0x01C7FD50 (230 KiB)</tspan>: 소유·별칭 미증명</text>
+      <text x="14" y="86" class="text-sub">· <tspan fill="#fca5a5">0x01C7FD50 .. 0x01C7FD80</tspan>: BOOT_INFO 슬롯 [SDK]</text>
+      <text x="14" y="104" class="text-sub">· <tspan fill="#fca5a5">0x01C7FD80 .. 0x01C7FE00</tspan>: UPDATA 갱신 플래그 [SDK]</text>
+      <text x="14" y="126" font-size="11" font-weight="700" fill="#f87171">★ 미지는 자유 공간이 아님! (임의 접근 금지)</text>
+      <text x="14" y="142" class="text-sub">0x01C7FE00은 v15/v16 모두 +0으로 불변 상한선</text>
+    </g>
+  </g>
+
+  <!-- RAM Profile Banner -->
+  <g transform="translate(20, 272)">
+    <rect width="1244" height="70" rx="5" fill="#1a1c2e" stroke="#8b5cf6" stroke-width="1.2" />
+    <text x="16" y="24" font-size="12" font-weight="700" fill="#c084fc">★ 정정 실증: RAM v16 증분 프로파일 (단일 +0x40이 아님!)</text>
+    <text x="16" y="44" font-size="11.5" fill="#e2e8f0">· mov/movz 즉치 23개 쌍 검증 결과: <tspan font-weight="700" fill="#fbbf24">+0x40 / +0x44 / +0x64 / +0x84 / +0x88</tspan> 로 주소 구간마다 증분이 다름.</text>
+    <text x="16" y="60" font-size="11" fill="#94a3b8">· 원인: v16에서 여러 지점에 걸쳐 런타임 객체들이 확장됨. 예컨대 스냅샷 0x01C34C74의 v16 주소는 0x01C34CFC로 <tspan fill="#38bdf8" font-weight="700">+0x88</tspan>임.</text>
+  </g>
+</g>
+
+<!-- ================= SECTION 4: XIP RUNTIME APPLICATION ================= -->
+<g transform="translate(395, 1160)">
+  <rect width="1285" height="1790" rx="8" fill="#111827" stroke="#1f2937" stroke-width="1.5" filter="url(#shadow)" />
+  
+  <!-- Header Bar -->
+  <rect width="1285" height="42" rx="8" fill="#1e293b" />
+  <circle cx="20" cy="21" r="6" fill="#10b981" />
+  <text x="34" y="26" class="sec-title">XIP 런타임 플래시 애플리케이션 상세 맵 (0x02000000 .. 0x020974B8)</text>
+  <rect x="580" y="10" width="55" height="22" rx="4" fill="rgba(16, 185, 129, 0.2)" stroke="#059669" />
+  <text x="607" y="25" font-size="11" font-weight="700" fill="#34d399" text-anchor="middle">확정</text>
+  <text x="1265" y="26" font-size="12" font-weight="600" fill="#93c5fd" text-anchor="end">v15 크기: 0x96A34 (617,012 B) / v16 크기: 0x974B8 (619,704 B, +2,692 B)</text>
+
+  <!-- App Delta Decomposition Banner -->
+  <g transform="translate(20, 52)">
+    <rect width="1244" height="50" rx="5" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.2" />
+    <text x="16" y="22" font-size="12" font-weight="700" fill="#a5b4fc">v15 vs v16 앱 크기 차이 (+2,692 B) 정밀 분해 내역 (확정):</text>
+    <text x="16" y="40" font-size="11.5" fill="#e0e7ff">신규 데이터 102 B (MinMaj 등 4곳) + 문자열 풀 순증 +4 B (추가6, 이동6) + 화음 테이블 인라인 +29 B + 재배치/패딩 | <tspan fill="#34d399" font-weight="700">★ 코드 영역 삽입은 0 B!</tspan></text>
+  </g>
+
+  <!-- XIP Card: 0x02000000 .. 0x020000A4 -->
+  <g transform="translate(20, 115)">
+    <rect width="1244" height="78" rx="5" fill="rgba(16, 185, 129, 0.12)" stroke="#059669" stroke-width="1.2"  />
+    <text x="14" y="20" class="label-mono" fill="#34d399">0x02000000 .. 0x020000A4 (164 B)</text>
+    
+    <!-- Badge -->
+    <rect x="1120" y="8" width="110" height="20" rx="3" fill="#10b981" />
+    <text x="1175" y="22" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">동일</text>
+
+    <text x="14" y="39" font-size="13" font-weight="700" fill="#ffffff">부트 초기화 코드 (Boot / Data Copy / BSS Zero)</text>
+    <text x="14" y="56" class="text-sub">하드웨어 초기 리셋 벡터 진입점. .data 영역을 RAM0(0x01C00000)으로 복사하고 BSS 제로화 루프 수행.</text>
+    <text x="14" y="71" font-size="11" fill="#93c5fd">v16 대응: 코드 및 오프셋 동일</text>
+  </g>
+
+  <!-- XIP Card: 0x02004870 .. 0x02004B14 -->
+  <g transform="translate(20, 201)">
+    <rect width="1244" height="78" rx="5" fill="rgba(16, 185, 129, 0.12)" stroke="#059669" stroke-width="1.2"  />
+    <text x="14" y="20" class="label-mono" fill="#34d399">0x02004870 .. 0x02004B14 (676 B)</text>
+    
+    <!-- Badge -->
+    <rect x="1120" y="8" width="110" height="20" rx="3" fill="#8b5cf6" />
+    <text x="1175" y="22" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">Δ +2B</text>
+
+    <text x="14" y="39" font-size="13" font-weight="700" fill="#ffffff">스토리지 read/write 래퍼 (Storage Helper)</text>
+    <text x="14" y="56" class="text-sub">물리 플래시 사용자 영역(프리셋, 설정) 읽기/쓰기 래퍼. 쓰기 시 return == len 검증 후 readback 비교 필수.</text>
+    <text x="14" y="71" font-size="11" fill="#93c5fd">v16 대응: +2 바이트 이동</text>
+  </g>
+
+  <!-- XIP Card: 0x02005660 .. 0x02005780 -->
+  <g transform="translate(20, 287)">
+    <rect width="1244" height="78" rx="5" fill="rgba(16, 185, 129, 0.12)" stroke="#059669" stroke-width="1.2"  />
+    <text x="14" y="20" class="label-mono" fill="#34d399">0x02005660 .. 0x02005780 (288 B)</text>
+    
+    <!-- Badge -->
+    <rect x="1120" y="8" width="110" height="20" rx="3" fill="#8b5cf6" />
+    <text x="1175" y="22" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">Δ 이동</text>
+
+    <text x="14" y="39" font-size="13" font-weight="700" fill="#ffffff">선택 레코드 로더 / 스냅샷 Producer (Record Loader)</text>
+    <text x="14" y="56" class="text-sub">부트 및 프리셋 변경 시 스토리지에서 선택된 레코드를 읽어 RAM 스냅샷(0x01C34C74)에 전개하는 핵심 함수.</text>
+    <text x="14" y="71" font-size="11" fill="#93c5fd">v16 대응: 함수 재배치 이동</text>
+  </g>
+
+  <!-- XIP Card: 0x0201A67C (v15) → 0x0201A6A0 (v16) -->
+  <g transform="translate(20, 373)">
+    <rect width="1244" height="78" rx="5" fill="rgba(245, 158, 11, 0.12)" stroke="#d97706" stroke-width="1.2"  />
+    <text x="14" y="20" class="label-mono" fill="#fbbf24">0x0201A67C (v15) → 0x0201A6A0 (v16) (함수)</text>
+    
+    <!-- Badge -->
+    <rect x="1120" y="8" width="110" height="20" rx="3" fill="#8b5cf6" />
+    <text x="1175" y="22" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">Δ 이동</text>
+
+    <text x="14" y="39" font-size="13" font-weight="700" fill="#ffffff">UI 객체 C-string Setter (FUN_0201A6A0)</text>
+    <text x="14" y="56" class="text-sub">2026-10-02 실증: [r4+0x24]에 문자열을 복사/설정하고 호출자 FUN_0201A710이 (obj, str) 인수로 호출하여 LCD에 표시.</text>
+    <text x="14" y="71" font-size="11" fill="#93c5fd">v16 대응: 0x0201A6A0 으로 이동 확인</text>
+  </g>
+
+  <!-- XIP Card: 0x0201C5EC .. 0x0201C6A0 -->
+  <g transform="translate(20, 459)">
+    <rect width="1244" height="78" rx="5" fill="rgba(16, 185, 129, 0.12)" stroke="#059669" stroke-width="1.2"  />
+    <text x="14" y="20" class="label-mono" fill="#34d399">0x0201C5EC .. 0x0201C6A0 (180 B)</text>
+    
+    <!-- Badge -->
+    <rect x="1120" y="8" width="110" height="20" rx="3" fill="#8b5cf6" />
+    <text x="1175" y="22" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">Δ 이동</text>
+
+    <text x="14" y="39" font-size="13" font-weight="700" fill="#ffffff">Note On/Off 디스패처 (MIDI Engine Ingress)</text>
+    <text x="14" y="56" class="text-sub">Ch10 드럼 채널 판별 분기점. 건반 입력 및 외부 MIDI 입력을 판별하여 사운드 엔진 또는 드럼 모듈로 라우팅.</text>
+    <text x="14" y="71" font-size="11" fill="#93c5fd">v16 대응: 함수 재배치 이동 [live]</text>
+  </g>
+
+  <!-- XIP Card: 0x0201DAFA .. 0x0201DBB0 -->
+  <g transform="translate(20, 545)">
+    <rect width="1244" height="88" rx="5" fill="rgba(6, 182, 212, 0.22)" stroke="#0891b2" stroke-width="2" filter="url(#glow-cave)" />
+    <text x="14" y="20" class="label-mono" fill="#22d3ee">0x0201DAFA .. 0x0201DBB0 (162 B)</text>
+    
+    <!-- Badge -->
+    <rect x="1120" y="8" width="110" height="20" rx="3" fill="#06b6d4" />
+    <text x="1175" y="22" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">LIVE PROVEN</text>
+
+    <text x="14" y="39" font-size="13" font-weight="700" fill="#ffffff">★ 실기 검증된 코드 케이브 (Live Validated Code Cave) ★</text>
+    <text x="14" y="56" class="text-sub">S1C5 및 M08 실기 구동 검증 완료! 패드 브릿지 및 채널 디스패처 커스텀 훅 코드가 실기기에서 안정적으로 실행 입증된 안전한 코드 영역.</text>
+    <text x="14" y="71" font-size="11" fill="#93c5fd">S1C5 훅 및 패치 기준점 [live 검증 완료]</text>
+  </g>
+
+  <!-- XIP Card: 0x0201E13E .. 0x0201E254 -->
+  <g transform="translate(20, 641)">
+    <rect width="1244" height="78" rx="5" fill="rgba(16, 185, 129, 0.12)" stroke="#059669" stroke-width="1.2"  />
+    <text x="14" y="20" class="label-mono" fill="#34d399">0x0201E13E .. 0x0201E254 (278 B)</text>
+    
+    <!-- Badge -->
+    <rect x="1120" y="8" width="110" height="20" rx="3" fill="#10b981" />
+    <text x="1175" y="22" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">바이트 동일</text>
+
+    <text x="14" y="39" font-size="13" font-weight="700" fill="#ffffff">S1C Producer / Selector (Ch10 드럼 분기 핵심)</text>
+    <text x="14" y="56" class="text-sub">직접 및 세그먼트 Ch10 경로에서 사용되는 셀렉터/프로듀서 hot window. 276B 사용, tail 2B. 보존 필수.</text>
+    <text x="14" y="71" font-size="11" fill="#93c5fd">v16 대응: 0x0201E340.. (코드 바이트 완전 동일)</text>
+  </g>
+
+  <!-- XIP Card: 0x0201E254 .. 0x0201E6A0 -->
+  <g transform="translate(20, 727)">
+    <rect width="1244" height="78" rx="5" fill="rgba(16, 185, 129, 0.12)" stroke="#059669" stroke-width="1.2"  />
+    <text x="14" y="20" class="label-mono" fill="#34d399">0x0201E254 .. 0x0201E6A0 (1,100 B)</text>
+    
+    <!-- Badge -->
+    <rect x="1120" y="8" width="110" height="20" rx="3" fill="#8b5cf6" />
+    <text x="1175" y="22" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">Δ 이동</text>
+
+    <text x="14" y="39" font-size="13" font-weight="700" fill="#ffffff">SysEx Ingress / Staging 핸들러</text>
+    <text x="14" y="56" class="text-sub">USB-MIDI SysEx 수신 패킷 파싱 및 스테이징 버퍼(0x01C37FD0) 전달 처리 함수군.</text>
+    <text x="14" y="71" font-size="11" fill="#93c5fd">v16 대응: 재배치 이동</text>
+  </g>
+
+  <!-- XIP Card: 0x02026D6C .. 0x02026DD4 -->
+  <g transform="translate(20, 813)">
+    <rect width="1244" height="78" rx="5" fill="rgba(245, 158, 11, 0.12)" stroke="#d97706" stroke-width="1.2"  />
+    <text x="14" y="20" class="label-mono" fill="#fbbf24">0x02026D6C .. 0x02026DD4 (104 B)</text>
+    
+    <!-- Badge -->
+    <rect x="1120" y="8" width="110" height="20" rx="3" fill="#f59e0b" />
+    <text x="1175" y="22" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">후보</text>
+
+    <text x="14" y="39" font-size="13" font-weight="700" fill="#ffffff">현재 Patch 저장 Writer (S1C7~9 영속화 실패 지점)</text>
+    <text x="14" y="56" class="text-sub">UI SAVE 버튼 클릭 시 스토리지에 패치를 기록하는 경로. 0x02029290/9528(UI 상태머신 후보)와 연계.</text>
+    <text x="14" y="71" font-size="11" fill="#93c5fd">상태: 미검증 / 주의 필요</text>
+  </g>
+
+  <!-- XIP Card: 0x0205773B .. 0x02058314 -->
+  <g transform="translate(20, 899)">
+    <rect width="1244" height="84" rx="5" fill="rgba(16, 185, 129, 0.12)" stroke="#059669" stroke-width="1.2"  />
+    <text x="14" y="20" class="label-mono" fill="#34d399">0x0205773B .. 0x02058314 (3,033 B)</text>
+    
+    <!-- Badge -->
+    <rect x="1120" y="8" width="110" height="20" rx="3" fill="#8b5cf6" />
+    <text x="1175" y="22" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">Δ 이동</text>
+
+    <text x="14" y="39" font-size="13" font-weight="700" fill="#ffffff">USB-MIDI 디스크립터 / 문자열 / 클래스 테이블</text>
+    <text x="14" y="56" class="text-sub">표준 USB 디바이스/설정/인터페이스/엔드포인트 디스크립터 및 클래스 정의. 0x02058248..0x02058314: 11엔트리 콜백 벡터.</text>
+    <text x="14" y="71" font-size="11" fill="#93c5fd">v16 대응: 테이블 재배치 이동</text>
+  </g>
+
+  <!-- v16 Delta Data Section (0x02057B51 .. 0x02058E94) -->
+  <g transform="translate(20, 991)">
+    <rect width="1244" height="168" rx="6" fill="#1e183a" stroke="#8b5cf6" stroke-width="1.5" />
+    <rect x="0" y="0" width="1244" height="28" rx="6" fill="#4c1d95" />
+    <text x="14" y="19" font-size="12" font-weight="700" fill="#ffffff">★ 1.16 신규 데이터 4곳 &amp; 화음 테이블 인라인 이동 (0x02057B51 .. 0x02058E94) [v16 오프라인 확정]</text>
+    
+    <!-- Row 1: Chord Table & MinMaj -->
+    <g transform="translate(14, 38)">
+      <!-- Chords table -->
+      <g transform="translate(0, 0)">
+        <rect width="595" height="54" rx="4" fill="#13112c" stroke="#6d28d9" />
+        <text x="12" y="20" class="label-mono-sm" fill="#c084fc">0x02057B51..0x02057B79 (+29 B): 화음 품질 인라인 테이블</text>
+        <text x="12" y="38" font-size="11" fill="#e2e8f0">· 문자열 풀의 7th, Maj, Min, Dim, Aug, Dom 6개 토큰이 데이터 테이블로 이동 인라인화됨</text>
+      </g>
+
+      <!-- MinMaj -->
+      <g transform="translate(615, 0)">
+        <rect width="601" height="54" rx="4" fill="#13112c" stroke="#6d28d9" />
+        <text x="12" y="20" class="label-mono-sm" fill="#38bdf8">① 0x02057DCD: MinMaj\0 + 7바이트 음정 테이블 (신규 삽입)</text>
+        <text x="12" y="38" font-size="11" fill="#e2e8f0">· Fader-, Latch-, Scale- 주변. Minor-Major 화음 음정 (01 02 03 05 06 08 09) 추정</text>
+      </g>
+    </g>
+
+    <!-- Row 2: mk4_ui_task & Pointer Tables -->
+    <g transform="translate(14, 102)">
+      <!-- mk4_ui_task -->
+      <g transform="translate(0, 0)">
+        <rect width="390" height="54" rx="4" fill="#13112c" stroke="#6d28d9" />
+        <text x="12" y="20" class="label-mono-sm" fill="#38bdf8">② 0x0205818C: mk4_ui_task\0</text>
+        <text x="12" y="38" font-size="11" fill="#e2e8f0">· Arpeggiator 옆 UI 태스크 이름 문자열</text>
+      </g>
+
+      <!-- Table A -->
+      <g transform="translate(405, 0)">
+        <rect width="400" height="54" rx="4" fill="#13112c" stroke="#6d28d9" />
+        <text x="12" y="20" class="label-mono-sm" fill="#38bdf8">③ 0x02058730: 6 × u32 포인터 테이블 A</text>
+        <text x="12" y="38" font-size="11" fill="#e2e8f0">· #, AVED#, Step-, es.bin 문자열 접미사 포인터</text>
+      </g>
+
+      <!-- Table B -->
+      <g transform="translate(820, 0)">
+        <rect width="396" height="54" rx="4" fill="#13112c" stroke="#6d28d9" />
+        <text x="12" y="20" class="label-mono-sm" fill="#38bdf8">④ 0x02058E94: 13 × u32 포인터 테이블 B</text>
+        <text x="12" y="38" font-size="11" fill="#e2e8f0">· Pad Bank-, Repeat-, Keys Channel- 포인터</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Descriptor Blob 0x02058400..0x02058F00 & Gap -->
+  <g transform="translate(20, 1169)">
+    <!-- Descriptor Blob -->
+    <g transform="translate(0, 0)">
+      <rect width="615" height="82" rx="5" fill="rgba(245, 158, 11, 0.12)" stroke="#d97706" stroke-width="1.2" />
+      <text x="14" y="22" class="label-mono" fill="#fbbf24">0x02058400 .. 0x02058F00: 혼합 디스크립터 블롭 [거의 확정]</text>
+      <text x="14" y="42" font-size="11.5" font-weight="700" fill="#ffffff">컴포넌트 레지스트리 / 코드 포인터 / RAM 컨텍스트 테이블</text>
+      <text x="14" y="60" class="text-sub">· NULL 종료 코드 포인터군 (0x0202C3D6..) + 이름 쌍 (sdfile_fat, bc_encoder)</text>
+      <text x="14" y="74" class="text-sub">· RAM 컨텍스트 포인터: 0x01C33814.. (stride 0x10), 0x01C33718.. (stride 0x0E)</text>
+    </g>
+
+    <!-- Unknown between USB & Strings -->
+    <g transform="translate(629, 0)">
+      <rect width="615" height="82" rx="5" fill="rgba(100, 116, 139, 0.14)" stroke="#475569" stroke-width="1.2" />
+      <rect width="615" height="82" rx="5" fill="url(#pat-blocked)" />
+      <text x="14" y="22" class="label-mono" fill="#94a3b8">0x02058314 .. 0x0205D7B5 (약 21 KiB) [미지 / 성격 미확정]</text>
+      <text x="14" y="42" font-size="11.5" font-weight="700" fill="#ffffff">USB 테이블 끝과 문자열 풀 사이 구간</text>
+      <text x="14" y="60" class="text-sub">· 성격 미확정: 데이터 테이블, 미분석 코드, 패딩 혼재 추정</text>
+      <text x="14" y="74" class="text-sub" fill="#f87171">★ 미지는 자유 공간이 아님 — 임의 패치 배치 금지</text>
+    </g>
+  </g>
+
+  <!-- String Pool Section (v15 0x0205D7B5 vs v16 0x0205E1F5) -->
+  <g transform="translate(20, 1261)">
+    <rect width="1244" height="104" rx="6" fill="#13231b" stroke="#059669" stroke-width="1.5" />
+    <rect x="0" y="0" width="1244" height="28" rx="6" fill="#064e3b" />
+    <text x="14" y="19" font-size="12" font-weight="700" fill="#6ee7b7">문자열 풀 (.rodata 136개 문자열) — 정확히 +0xA40 시프트 [확정]</text>
+    <rect x="1120" y="4" width="110" height="20" rx="3" fill="#6d28d9" />
+    <text x="1175" y="18" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">Δ +0xA40 Shift</text>
+
+    <text x="14" y="48" class="label-mono" fill="#34d399">v15: 0x0205D7B5 .. 0x0205DB80   →   v16: 0x0205E1F5 .. 0x0205E5C0 (정확히 +0xA40 이동)</text>
+    <text x="14" y="70" font-size="11.5" fill="#e2e8f0">· 추가 6개: b9, #9, #11, b13 (14B 삽입) + Local- (6B) + USB Rec- (8B)  [순증 +4 B]</text>
+    <text x="14" y="90" font-size="11" fill="#94a3b8">· 삭제 6개: 7th, Maj, Min, Dim, Aug, Dom → 데이터 영역 0x02057B5E 로 이동 · 참조 전수 조사: 메뉴 라벨 u32 포인터 0건</text>
+  </g>
+
+  <!-- Listing Coverage Boundary & Undecoded Area (Requirement 4) -->
+  <g transform="translate(20, 1375)">
+    <!-- Boundary line bar -->
+    <rect width="1244" height="34" rx="4" fill="#854d0e" stroke="#eab308" stroke-width="1.5" />
+    <text x="14" y="22" font-size="12" font-weight="800" fill="#fef08a">▲ 리스팅 커버리지 한계선: 0x02058000 (약 360 KiB / 619,704 B = 58.2 % 디코드 완료)</text>
+    <text x="1230" y="22" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="end">스윕 창(BASE+0x58000) 종료 경계</text>
+
+    <!-- Undecoded 42% Large Box with Hatch Pattern -->
+    <g transform="translate(0, 42)">
+      <rect width="1244" height="155" rx="6" fill="#1c1917" stroke="#ca8a04" stroke-width="1.5" stroke-dasharray="6,4" />
+      <rect width="1244" height="155" rx="6" fill="url(#pat-undecoded)" />
+      
+      <!-- Big Label -->
+      <rect x="420" y="18" width="400" height="38" rx="5" fill="#451a03" stroke="#f59e0b" stroke-width="1.5" />
+      <text x="620" y="42" font-size="16" font-weight="800" fill="#fef08a" text-anchor="middle">미디코드 42 % (창 밖 리스팅 미커버 영역)</text>
+
+      <text x="620" y="78" font-size="12.5" font-weight="700" fill="#ffffff" text-anchor="middle">0x02058000 .. 0x02096A34 (약 250 KiB) — 정적 리스팅 스윕 창 밖</text>
+      
+      <text x="620" y="102" font-size="12" fill="#fed7aa" text-anchor="middle">· 알려진 중요 코드 존재: 0x02060E2C .. 0x02060F20 (메모리 allocator / heap_init 후보, 부트 1회 호출)</text>
+      <text x="620" y="122" font-size="12" fill="#fed7aa" text-anchor="middle">· 설정 메뉴 라벨(Volume-, Local-, USB Rec-)의 실제 렌더링/디스패치 코드가 이 구간에 존재할 가능성</text>
+      <text x="620" y="142" font-size="11.5" font-weight="700" fill="#f87171" text-anchor="middle">★ 경고: 우리 맵에 없다는 것을 존재하지 않는다는 뜻으로 읽으면 안 된다! (미지는 자유 공간이 아님)</text>
+    </g>
+  </g>
+
+  <!-- M09 Brick Area & JLFS Boundary (Requirement 5) -->
+  <g transform="translate(20, 1582)">
+    <!-- M09 Brick Box (0x020958CE .. 0x02095EDE) -->
+    <rect width="1244" height="110" rx="6" fill="rgba(239, 68, 68, 0.28)" stroke="#dc2626" stroke-width="2.5" filter="url(#glow-brick)" />
+    <rect width="1244" height="110" rx="6" fill="url(#pat-brick)" />
+    
+    <rect x="0" y="0" width="1244" height="30" rx="6" fill="#991b1b" />
+    <text x="14" y="20" font-size="13" font-weight="800" fill="#ffffff">🚨 0x020958CE .. 0x02095EDE: M09 브릭 발생 (쓰기 금지) — 영구 복구 차단 사고 지점</text>
+    <rect x="1100" y="4" width="130" height="22" rx="3" fill="#450a0a" stroke="#f87171" />
+    <text x="1165" y="19" font-size="11" font-weight="800" fill="#fecaca" text-anchor="middle">DO NOT WRITE</text>
+
+    <text x="14" y="52" class="label-mono" fill="#fca5a5">0x020958CE .. 0x02095EDE (M09 드럼 템플릿/맵 0x020959EE..0x02095EDE 789 B 포함)</text>
+    <text x="14" y="74" font-size="12" font-weight="700" fill="#ffffff">사고 경위: 참조 없는 제로 패딩을 '안전한 데이터 케이브'로 오판하여 템플릿 데이터 기록 후 부팅 실패</text>
+    <text x="14" y="94" font-size="11.5" fill="#fecaca">결과: LCD 화면 먹통, USB 미열거, 앱 기반 OTA 복구 경로 영구 차단 (하드웨어 브릭 상태 초래). <tspan font-weight="800">절대 변경 금지!</tspan></text>
+  </g>
+
+  <!-- JLFS cfg_tool.bin Boundary & v16 App Limit (y: 1704) -->
+  <g transform="translate(20, 1704)">
+    <!-- 0x02096A34 JLFS Boundary -->
+    <rect width="1244" height="72" rx="5" fill="#182234" stroke="#059669" stroke-width="1.5" />
+    <text x="14" y="24" class="label-mono" fill="#34d399">0x02096A34: JLFS cfg_tool.bin 시작 경계 (v15 앱 종료선, 0x96A34 = 617,012 B) [OCCUPIED / 확정]</text>
+    <text x="14" y="44" font-size="12" font-weight="700" fill="#ffffff">· 첫 바이트가 named JLFS 파일 시작점 — 앱 확장 절대 금지 경계!</text>
+    <text x="14" y="62" class="text-sub">· 0x02096BB3 .. 0x02097EE0: app_area_head CRC 외곽 보호 구역 [BLOCKED] · <tspan fill="#c084fc">v16 애플리케이션 상한: 0x020974B8 (619,704 B)</tspan></text>
+  </g>
+</g>
+
+<!-- ================= FOOTER ================= -->
+<g transform="translate(40, 2975)">
+  <rect width="1640" height="48" rx="6" fill="#111827" stroke="#1f2937" stroke-width="1" />
+  <text x="20" y="28" font-size="11.5" fill="#9ca3af">문서 소스: baselines/v15/analysis/ADDRESS-SPACE-MAP-2026-10-02.md · string-pool-and-refs-2026-10-02.md · docs/m09-brick-incident.md</text>
+  <text x="1620" y="28" font-size="11.5" font-weight="600" fill="#38bdf8" text-anchor="end">SMK-37 Pro Reverse Engineering Project · Generated 2026-10-02</text>
+</g>
+</svg>

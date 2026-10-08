@@ -1,0 +1,16 @@
+range=0201dc5e..0201dc8b
+0201dc5e  7604  push {rets,r6,r5,r4}
+0201dc60  0416  mov r4,r0
+0201dc62  1516  mov r5,r1
+0201dc64  85f80100  jne r5,#0x0,0x0201dc6a
+0201dc68  5604  pop {pc,r6,r5,r4}
+0201dc6a  4016  mov r0,r4
+0201dc6c  5116  mov r1,r5
+0201dc6e  80ffa8e3ffff  call 0x0201c01c
+0201dc74  85f80906  jne r5,#0x3,0x0201dc8a
+0201dc78  4840  lb.z r0,[r4 + 0x0]
+0201dc7a  60e10f00  and r0,r0,#0xf
+0201dc7e  80f80412  jne r0,#0x9,0x0201dc8a
+0201dc82  4016  mov r0,r4
+0201dc84  80ffe8e5ffff  call 0x0201c272
+0201dc8a  5604  pop {pc,r6,r5,r4}

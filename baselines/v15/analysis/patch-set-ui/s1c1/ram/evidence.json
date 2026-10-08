@@ -1,0 +1,314 @@
+{
+  "format": "smk37-v15-s1c1-two-slot-ram-v2",
+  "date_utc": "2026-08-02",
+  "scope": {
+    "firmware_basis": "official-v15 plus recorded H0/H1/H2 evidence, with H2 as the live parent",
+    "v12_evidence_used": false,
+    "firmware_built": false,
+    "device_accessed": false,
+    "flash_performed": false
+  },
+  "inputs": [
+    {
+      "path": "build/v15-official-app.bin",
+      "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "role": "exact official-v15 boundary bytes"
+    },
+    {
+      "path": "build/SMK37Pro-v15-H2-owned-source-corrected-fallback/app.bin",
+      "sha256": "d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59",
+      "role": "existing live-proven H2 artifact, read only"
+    },
+    {
+      "path": "baselines/v15/analysis/flash-candidates/H0-memory-boundary-only/app-manifest.json",
+      "sha256": "660432ef55af030ff7c6ce02cd144acbd9e6e1e12acb389d039220d2775922ef",
+      "role": "exact H0 two-immediate boundary scope"
+    },
+    {
+      "path": "baselines/v15/analysis/flash-candidates/H0-memory-boundary-only/live-validation-20260802.md",
+      "sha256": "f12727956c962dd31f07c9a3126ce40841483bd9572c7363d5063bd669a88cab",
+      "role": "recorded H0 narrow boundary discriminator"
+    },
+    {
+      "path": "baselines/v15/analysis/flash-candidates/H1-producer-unconsumed/live-validation-20260802.md",
+      "sha256": "852cdc5287ae631a0d97d3e8a930696f3f9a34ad26b6cea4de0e4ff7f6c0e2dc",
+      "role": "recorded H1 producer discriminator"
+    },
+    {
+      "path": "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/app-manifest.json",
+      "sha256": "dc6fba4ddb887424d6bd76b6d1477f66f97096e2d6656f203eec423680572cf3",
+      "role": "exact H2 addresses and policy"
+    },
+    {
+      "path": "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/live-validation-20260802.md",
+      "sha256": "b2aca5903390cffe573f42c89aa6407a52c28f967124a07b407887959d1c8fd7",
+      "role": "recorded H2 owned-source consumption PASS"
+    },
+    {
+      "path": "baselines/v15/analysis/r03-owned-ram/heap-prefix-reservation/evidence.json",
+      "sha256": "905e19e6089cdd680a95eced428d7ac6249b816e0ad2db2003e371ab881faf3c",
+      "role": "recovered official-v15 sbrk HEAP_BEGIN and HEAP_END"
+    },
+    {
+      "path": "baselines/v15/analysis/r03-owned-ram/independent-ram-review/report.md",
+      "sha256": "3bd9b87eb02acc8d2521efc3995d9c73845df48dbf226661f9fd5256594f9239",
+      "role": "strict HEAP_END rejection semantics"
+    },
+    {
+      "path": "baselines/v15/analysis/patch-set-ui/architecture.md",
+      "sha256": "049732dc4eccc0b1e99fb7f1a6390a1e1bd774f560f461fd08cb4ccd3cd00993",
+      "role": "S1-C1 two-note immutable-selector requirement"
+    },
+    {
+      "path": "baselines/v15/analysis/patch-set-ui/checkpoints/report.md",
+      "sha256": "0d948334dc67fc76d0ad1fa65d3674dc5e5e06d355cc27ce309ea0aefe9a4cc5",
+      "role": "S1-C1 checkpoint and discriminator contract"
+    },
+    {
+      "path": "baselines/v15/analysis/patch-set-ui/s1c1/ingress/report.md",
+      "sha256": "c6b5e86fc1a0e66912c54aa361f8309ba6e918914ac5ed254b094935ed64b76c",
+      "role": "committed guarded-ingress metadata and publication contract"
+    },
+    {
+      "path": "baselines/v15/analysis/patch-set-ui/s1c1/ingress/evidence.json",
+      "sha256": "3b30cdb6904fd81156f4be1b919eda9b44259873055f9e1aad2b029c156bcf34",
+      "role": "machine-readable authoritative S1-C1 metadata addresses"
+    }
+  ],
+  "official_memory": {
+    "bss_start": "0x01c099d4",
+    "bss_size": 248648,
+    "bss_size_hex": "0x0003cb48",
+    "bss_end_exclusive": "0x01c4651c",
+    "linker_padding": "0x01c4651c..0x01c46520",
+    "heap_begin": "0x01c46520",
+    "heap_end": "0x01c7fd30",
+    "heap_span": 235536,
+    "heap_span_hex": "0x00039810"
+  },
+  "h2_memory": {
+    "bss_size": 248812,
+    "bss_size_hex": "0x0003cbec",
+    "bss_end_exclusive": "0x01c465c0",
+    "heap_begin": "0x01c465c0",
+    "heap_span": 235376,
+    "heap_span_hex": "0x00039770",
+    "owned_range": "0x01c46520..0x01c465c0",
+    "owned_size": 160,
+    "owned_size_hex": "0x000000a0",
+    "slot0_voice": "0x01c46520..0x01c465bc",
+    "slot0_valid": "0x01c465bc",
+    "global_lock": "0x01c465bd"
+  },
+  "minimum_two_note_layout": {
+    "base": "0x01c46520",
+    "end_exclusive": "0x01c46660",
+    "total_size": 320,
+    "total_size_hex": "0x00000140",
+    "slot_count": 2,
+    "slot_stride": 160,
+    "slot_stride_hex": "0x000000a0",
+    "payload_size": 156,
+    "payload_size_hex": "0x0000009c",
+    "functional_metadata_size": 7,
+    "functional_metadata_size_hex": "0x00000007",
+    "tail_capacity": 8,
+    "tail_capacity_hex": "0x00000008",
+    "reserved_tail_bytes": 1,
+    "metadata_is_embedded_in_both_slot_tails": true,
+    "layout": [
+      {
+        "range": "0x01c46520..0x01c465bc",
+        "size": 156,
+        "purpose": "slot 0 immutable voice; exact live-proven H2 source"
+      },
+      {
+        "range": "0x01c465bc",
+        "size": 1,
+        "purpose": "valid0; exact H2 valid address and legacy H2 publication byte"
+      },
+      {
+        "range": "0x01c465bd",
+        "size": 1,
+        "purpose": "global nonblocking producer lock; exact H2 lock address"
+      },
+      {
+        "range": "0x01c465be",
+        "size": 1,
+        "purpose": "allowlisted MIDI note selecting slot 0"
+      },
+      {
+        "range": "0x01c465bf",
+        "size": 1,
+        "purpose": "state; 0 EMPTY, 1 LOADING, 2 ARMED"
+      },
+      {
+        "range": "0x01c465c0..0x01c4665c",
+        "size": 156,
+        "purpose": "slot 1 immutable voice"
+      },
+      {
+        "range": "0x01c4665c",
+        "size": 1,
+        "purpose": "valid1; written after the complete slot 1 copy"
+      },
+      {
+        "range": "0x01c4665d",
+        "size": 1,
+        "purpose": "transaction ID joining LOAD0 and LOAD1_COMMIT"
+      },
+      {
+        "range": "0x01c4665e",
+        "size": 1,
+        "purpose": "allowlisted MIDI note selecting slot 1"
+      },
+      {
+        "range": "0x01c4665f",
+        "size": 1,
+        "purpose": "reserved zero"
+      }
+    ],
+    "publication": {
+      "boot_state": 0,
+      "loading_state": 1,
+      "armed_state": 2,
+      "rules": [
+        "producer takes the H2 nonblocking lock",
+        "LOAD0 is admitted only from EMPTY with valid0==0 and valid1==0",
+        "LOAD0 writes state=LOADING then csync before note0, transaction ID, and the complete slot0 copy; valid0=1 is written last",
+        "LOAD1_COMMIT requires matching transaction ID, valid0==1, valid1==0, bounded distinct note1, and a valid full-set checksum",
+        "LOAD1_COMMIT writes note1 and the complete slot1 copy, then valid1=1, then state=ARMED last",
+        "reject every mutation after state becomes ARMED until reboot",
+        "consumers never lock; LOADING and invalid state use stock fallback"
+      ]
+    },
+    "lookup": [
+      "if channel is not Ch10, use stock fallback",
+      "if state is EMPTY and valid0 is exactly 1, use 0x01c46520 for all Ch10 events to preserve exact H2 behavior",
+      "if state is LOADING or any value other than EMPTY or ARMED, use stock fallback",
+      "if state is ARMED and note equals note0, use 0x01c46520",
+      "else if state is ARMED and note equals note1, use 0x01c465c0",
+      "else use stock fallback"
+    ],
+    "minimality": "The committed two-message ingress needs seven functional bytes: exact H2 valid0 and lock, note0, three-state publication state, valid1, transaction ID, and note1. They occupy seven of the eight tail bytes already present in the two required 0xa0 records; the final byte remains reserved zero, so no header or third range is required.",
+    "h2_compatibility": "EMPTY and valid0==1 selects exact H2 slot0 for all Ch10 events; private loading is rejected after a legacy H2 publication until reboot"
+  },
+  "boundary_changes": {
+    "new_bss_size": 248972,
+    "new_bss_size_hex": "0x0003cc8c",
+    "new_bss_end_exclusive": "0x01c46660",
+    "new_heap_begin": "0x01c46660",
+    "new_heap_span": 235216,
+    "new_heap_span_hex": "0x000396d0",
+    "reservation_from_official_heap_begin": 320,
+    "reservation_from_official_heap_begin_hex": "0x00000140",
+    "bss_growth_from_official": 324,
+    "bss_growth_from_official_hex": "0x00000144",
+    "bss_growth_from_h2": 160,
+    "bss_growth_from_h2_hex": "0x000000a0",
+    "heap_loss_from_official": 320,
+    "heap_loss_from_official_hex": "0x00000140",
+    "heap_loss_from_h2": 160,
+    "heap_loss_from_h2_hex": "0x000000a0",
+    "instruction_patches": [
+      {
+        "address": "0x0200001e",
+        "official_hex": "c2ff48cb0300",
+        "h2_hex": "c2ffeccb0300",
+        "proposed_hex": "c2ff8ccc0300",
+        "meaning": "BSS zero size 0x3cb48 -> 0x3cc8c; relative to H2 0x3cbec -> 0x3cc8c"
+      },
+      {
+        "address": "0x0205e9f8",
+        "official_hex": "c5ff2065c401",
+        "h2_hex": "c5ffc065c401",
+        "proposed_hex": "c5ff6066c401",
+        "meaning": "HEAP_BEGIN 0x01c46520 -> 0x01c46660; relative to H2 0x01c465c0 -> 0x01c46660"
+      }
+    ],
+    "heap_end_unchanged": "0x01c7fd30"
+  },
+  "live_evidence_assessment": {
+    "h0": {
+      "result": "PASS_NARROW",
+      "establishes": "The H2-sized 0xa0 BSS/HEAP boundary change alone did not cause an immediate reboot on the tested first stock Pad event.",
+      "does_not_establish": "heap high-water, long-duration allocator safety, or the additional 0xa0 loss required by S1-C1"
+    },
+    "h1": {
+      "result": "PASS_NARROW",
+      "establishes": "The same H2 boundary tolerated the accepted-packet producer and a 0x9c write/publication under the tested sequence.",
+      "does_not_establish": "any larger boundary or second-slot allocation"
+    },
+    "h2": {
+      "result": "PASS_NARROW",
+      "establishes": "The same H2 boundary tolerated live consumption of slot 0 at the exact retained addresses after fallback correction.",
+      "does_not_establish": "allocator headroom after moving HEAP_BEGIN another 0xa0 or two-slot selector behavior"
+    },
+    "boundary_discriminator_verdict": "DEFENSIBLE_ONLY_FOR_H2_0xA0_IMMEDIATE_SMOKE",
+    "s1c1_headroom_verdict": "BLOCK"
+  },
+  "headroom_gate": {
+    "delta_from_h2": 160,
+    "delta_from_h2_hex": "0x000000a0",
+    "strict_sbrk_rule": "A positive increment ending at or beyond HEAP_END is rejected.",
+    "offline_pass_condition": [
+      "Use exact H2 allocator/sbrk semantics and an allocation trace or complete allocation/lifetime model covering the admitted worst-case workload.",
+      "Let Bmax be the greatest H2 current-break endpoint reached by any successful positive sbrk increment. Require Bmax + 0xa0 < 0x01c7fd30.",
+      "Replay every H2 successful increment with the initial break advanced by 0xa0 and prove every result remains successful in the same order.",
+      "Account for allocator alignment, headers, fragmentation, concurrent task stacks, and every allocation failure path. Aggregate free-byte totals alone do not pass."
+    ],
+    "offline_status": "BLOCK_NO_HIGH_WATER_OR_COMPLETE_MODEL",
+    "paired_live_gate_if_offline_proof_is_incomplete": {
+      "baseline": "exact H2 with fixed, nonallocating telemetry",
+      "test_arm": "same telemetry and H2 behavior, changing only BSS size 0x3cbec -> 0x3cc8c and HEAP_BEGIN 0x01c465c0 -> 0x01c46660; do not access slot 1",
+      "workload": [
+        "boot and idle soak",
+        "USB disconnect/reconnect and device-info probes",
+        "accepted and rejected loader/product packets",
+        "Ch1 control before, during, and after Ch10 activity",
+        "repeated and overlapping Ch10 Note On/Off including reversed release order",
+        "CC64 and all-notes-off",
+        "all existing nonpersistent S1-C1 guard paths"
+      ],
+      "pass_condition": [
+        "identical successful allocation/sbrk result sequence in both arms",
+        "no new allocation failure, null return, reboot, hang, audio guard failure, or reconnect failure",
+        "measured H2 Bmax satisfies Bmax + 0xa0 < 0x01c7fd30",
+        "the boundary-only arm retains strictly positive measured headroom at its worst point"
+      ],
+      "status": "REQUIRED_BEFORE_S1C1_SELECTOR"
+    }
+  },
+  "gates": [
+    {
+      "id": "exact-static-placement",
+      "status": "PASS",
+      "reason": "Two exact 0xa0 strides occupy 0x01c46520..0x01c46660, and paired BSS/HEAP_BEGIN changes constructively exclude allocator alias."
+    },
+    {
+      "id": "h2-slot0-address-compatibility",
+      "status": "PASS",
+      "reason": "Slot 0 voice, valid0, and lock remain at 0x01c46520, 0x01c465bc, and 0x01c465bd."
+    },
+    {
+      "id": "minimum-ingress-map-state-metadata",
+      "status": "PASS",
+      "reason": "Seven functional ingress/map/state bytes plus one reserved byte fit exactly in the two slot tails and preserve exact H2 valid0/lock semantics."
+    },
+    {
+      "id": "existing-live-boundary-discriminator",
+      "status": "PASS_NARROW",
+      "reason": "H0/H1/H2 defend the existing one-slot 0xa0 boundary only for their recorded smoke sequences."
+    },
+    {
+      "id": "additional-0xa0-headroom",
+      "status": "BLOCK",
+      "reason": "No recorded max-break trace or complete allocator/lifetime model proves the strict Bmax + 0xa0 < HEAP_END condition."
+    },
+    {
+      "id": "s1c1-firmware-build-or-live-selector",
+      "status": "BLOCK",
+      "reason": "The additional offline/paired-live headroom gate must pass first; other S1-C1 code/parser/note-ABI gates remain outside this RAM-only analysis."
+    }
+  ]
+}

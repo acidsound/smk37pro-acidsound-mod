@@ -1,0 +1,449 @@
+{
+  "byte_budget": {
+    "active_code_total": 170,
+    "audited_replacement_body": 278,
+    "h2_extent_expansion": 0,
+    "internal_gap_before_producer": 4,
+    "selector": 96,
+    "total_unoccupied": 108,
+    "unchanged_h2_producer": 74,
+    "unchanged_tail_after_producer": 104
+  },
+  "callsite_proof": {
+    "channel": "0x0201c5fe: r9 = status & 0x0f",
+    "h2_window_rule": "H2 is byte-identical to official in both note-load-to-metadata windows except the six-byte call instruction at each hook.",
+    "note_off": {
+      "count": "0x0201c63a: r2 = 0x9c",
+      "destination": "0x0201c636: r0 = r6 + 0xa2",
+      "hook": "0x0201c63e",
+      "note_load": "0x0201c62e: 1d41, r5 = msg[1]",
+      "post_call_identity": "0x0201c648: event metadata note = r5",
+      "source": "0x0201c63c: r1 = r8 = stock 0x01c34c74"
+    },
+    "note_on": {
+      "count": "0x0201c678: r2 = 0x9c",
+      "destination": "0x0201c674: r0 = r7 + 0xa2",
+      "hook": "0x0201c67c",
+      "note_load": "0x0201c670: r6 = msg[1]",
+      "post_call_identity": "0x0201c686: event metadata note = r6; 0x0201c68c velocity = r5",
+      "source": "0x0201c67a: r1 = r8 = stock 0x01c34c74",
+      "velocity_load": "0x0201c66a: r5 = msg[2]"
+    }
+  },
+  "checks": [
+    "PASS\tinput-hash-official_app\t36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+    "PASS\tinput-hash-h2_app\td71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59",
+    "PASS\tinput-hash-quarkslab_listing\tf51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347",
+    "PASS\tinput-hash-kagaimiq_listing\t814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013",
+    "PASS\tinput-hash-h2_manifest\tdc6fba4ddb887424d6bd76b6d1477f66f97096e2d6656f203eec423680572cf3",
+    "PASS\tinput-hash-h2_live\tb2aca5903390cffe573f42c89aa6407a52c28f967124a07b407887959d1c8fd7",
+    "PASS\tofficial-app-size\t617012",
+    "PASS\th2-app-size\t617012",
+    "PASS\tofficial-bytes-0x020002ac\t08e14412",
+    "PASS\tofficial-bytes-0x02001426\t05e18883",
+    "PASS\tofficial-bytes-0x0201c5fe\t79e1f030",
+    "PASS\tofficial-bytes-0x0201c62e\t1d41",
+    "PASS\tofficial-bytes-0x0201c636\t00e1a260",
+    "PASS\tofficial-bytes-0x0201c63a\t623c",
+    "PASS\tofficial-bytes-0x0201c63c\t8116",
+    "PASS\tofficial-bytes-0x0201c63e\t80ff8ac60200",
+    "PASS\tofficial-bytes-0x0201c648\t8d40",
+    "PASS\tofficial-bytes-0x0201c66a\t1d42",
+    "PASS\tofficial-bytes-0x0201c670\t1e41",
+    "PASS\tofficial-bytes-0x0201c674\t00e1a270",
+    "PASS\tofficial-bytes-0x0201c678\t623c",
+    "PASS\tofficial-bytes-0x0201c67a\t8116",
+    "PASS\tofficial-bytes-0x0201c67c\t80ff4cc60200",
+    "PASS\tofficial-bytes-0x0201c686\t8e40",
+    "PASS\tofficial-bytes-0x0201c68c\t8d42",
+    "PASS\tofficial-bytes-0x0201c650\t049f",
+    "PASS\tofficial-bytes-0x02003624\t3819",
+    "PASS\th2-note-off-window-only-call-redirected\t1d41e1e1a0200e1c00e1a260623c811680fffa1a000000e13e618d40",
+    "PASS\th2-note-off-call-target\t0x0201e13e",
+    "PASS\th2-note-on-window-only-call-redirected\t1d42e1f1a0201e410f1c00e1a270623c811680ffee1a000000e13e718e4052ee01908d42",
+    "PASS\th2-note-on-call-target\t0x0201e170",
+    "PASS\tquarkslab-row-coverage\t19",
+    "PASS\tkagaimiq-note-row-coverage\t13",
+    "PASS\tquarkslab-decode-0x020002ac\tr8,r1,#0x244",
+    "PASS\tquarkslab-decode-0x02001426\tr5,r8,#0x388",
+    "PASS\tquarkslab-decode-0x0201c5fe\tand r9,r3,#0xffffff0f",
+    "PASS\tquarkslab-decode-0x0201c62e\tr5,[r1 + 0x1]",
+    "PASS\tquarkslab-decode-0x0201c636\tr0,r6,#0xa2",
+    "PASS\tquarkslab-decode-0x0201c63a\tr2,#0x9c",
+    "PASS\tquarkslab-decode-0x0201c63c\tr1,r8",
+    "PASS\tquarkslab-decode-0x0201c648\tr5,[r0 + 0x0]",
+    "PASS\tquarkslab-decode-0x0201c66a\tr5,[r1 + 0x2]",
+    "PASS\tquarkslab-decode-0x0201c670\tr6,[r1 + 0x1]",
+    "PASS\tquarkslab-decode-0x0201c674\tr0,r7,#0xa2",
+    "PASS\tquarkslab-decode-0x0201c678\tr2,#0x9c",
+    "PASS\tquarkslab-decode-0x0201c67a\tr1,r8",
+    "PASS\tquarkslab-decode-0x0201c686\tr6,[r0 + 0x0]",
+    "PASS\tquarkslab-decode-0x0201c68c\tr5,[r0 + 0x2]",
+    "PASS\tquarkslab-decode-0x0201c650\tgoto 0x0201c690",
+    "PASS\tquarkslab-decode-0x02003624\txor r0,r3",
+    "PASS\tkagaimiq-decode-0x02003624\txor r0,r3",
+    "PASS\tkagaimiq-decode-0x0201c62e\tr5,[r1 + 0x1]",
+    "PASS\tkagaimiq-decode-0x0201c648\tr5,[r0 + 0x0]",
+    "PASS\tkagaimiq-decode-0x0201c66a\tr5,[r1 + 0x2]",
+    "PASS\tkagaimiq-decode-0x0201c670\tr6,[r1 + 0x1]",
+    "PASS\tkagaimiq-decode-0x0201c686\tr6,[r0 + 0x0]",
+    "PASS\tkagaimiq-decode-0x0201c68c\tr5,[r0 + 0x2]",
+    "PASS\tofficial-forward-goto-encoder\t049f",
+    "PASS\tofficial-forward-goto-decoder",
+    "PASS\tofficial-xor-r0-r3-encoder\t3819",
+    "PASS\tofficial-add-imm12-encoder-r0-r6-a2\t00e1a260",
+    "PASS\tofficial-add-imm12-encoder-r8-r1-244\t08e14412",
+    "PASS\tofficial-add-imm12-encoder-r5-r8-388\t05e18883",
+    "PASS\th2-layout-off-entry",
+    "PASS\th2-layout-on-entry",
+    "PASS\th2-layout-producer",
+    "PASS\th2-layout-end",
+    "PASS\th2-push-0x0201e13e\t7904",
+    "PASS\th2-pop-0x0201e164\t5904",
+    "PASS\th2-pop-0x0201e16e\t5904",
+    "PASS\th2-push-0x0201e170\t7904",
+    "PASS\th2-pop-0x0201e196\t5904",
+    "PASS\th2-pop-0x0201e1a0\t5904",
+    "PASS\th2-live-marker-verdict: **H2 LIVE PASS**",
+    "PASS\th2-live-marker-Ch10 Note Off: **normal**",
+    "PASS\th2-live-marker-first-Pad reboot: **none**",
+    "PASS\tselector-layout-exact",
+    "PASS\tselector-size-96\t53160481631679040416951685f82312c8ff2065c40105e19c80584380f80500584080f818028116049680f814045842381980f80500584080f80d028116048b05e1a0505842381980f80500584080f8020201e1a080401680ff32ab02005904",
+    "PASS\tselector-before-h2-producer\tgap=4",
+    "PASS\th2-producer-byte-for-byte-preserved\t83e94729938f37eaa4c57286cfb2a2ad8de070d8110371883b929feb444357e8",
+    "PASS\th2-producer-size-74",
+    "PASS\tselector-plus-producer-active-bytes",
+    "PASS\taudited-body-byte-budget",
+    "PASS\ttotal-unoccupied-byte-budget",
+    "PASS\tinternal-gap-before-producer",
+    "PASS\tunchanged-tail-after-producer",
+    "PASS\tproposed-off-hook-equals-h2\t80fffa1a0000",
+    "PASS\tproposed-on-hook-target\t80ffc01a0000",
+    "PASS\tlocal-branch-reach-0x0201e14a\thalfwords=35 bytes=85f82312",
+    "PASS\tlocal-branch-reach-0x0201e15a\thalfwords=5 bytes=80f80500",
+    "PASS\tlocal-branch-reach-0x0201e160\thalfwords=24 bytes=80f81802",
+    "PASS\tlocal-branch-reach-0x0201e168\thalfwords=20 bytes=80f81404",
+    "PASS\tlocal-branch-reach-0x0201e170\thalfwords=5 bytes=80f80500",
+    "PASS\tlocal-branch-reach-0x0201e176\thalfwords=13 bytes=80f80d02",
+    "PASS\tlocal-branch-reach-0x0201e186\thalfwords=5 bytes=80f80500",
+    "PASS\tlocal-branch-reach-0x0201e18c\thalfwords=2 bytes=80f80202",
+    "PASS\tforward-goto-reach-0x0201e140\t0481",
+    "PASS\tforward-goto-reach-0x0201e166\t0496",
+    "PASS\tforward-goto-reach-0x0201e17c\t048b",
+    "PASS\tshared-memcpy-call-reach\t80ff32ab0200",
+    "PASS\th2-product-short-call-preserved-0x0201e468\tbfea9bfe",
+    "PASS\th2-product-short-call-preserved-0x0201e49c\tbfea81fe",
+    "PASS\tslot0-source-range",
+    "PASS\tslot0-metadata-addresses",
+    "PASS\tslot1-source-range",
+    "PASS\tslot1-metadata-addresses",
+    "PASS\texact-pointer-derivations\tslot0 literal; +0x9c metadata; +0xa0 slot1 metadata/source",
+    "PASS\texplicit-selected-slot-valid-checks\tARMED selection rechecks valid0/valid1 before r1 write",
+    "PASS\texact-three-r1-writers-two-source-values\tH2-compatible slot0, private slot0, private slot1",
+    "PASS\tno-r2-write-in-selector\tcallsite r2=0x9c is consumed unchanged",
+    "PASS\tfallback-branches-bypass-r1-writers\tnon-Ch10, invalid/LOADING state, invalid selected slots, and unmapped ARMED notes reach copy without slot source writes",
+    "PASS\tdestination-restored-immediately-before-memcpy",
+    "PASS\tchannel-r9-preserved\tr9 only read then restored by pop",
+    "PASS\tnative-note-registers-restored\tr5/r6/r8 saved by shared push; temporary use is after note normalization; pop restores all",
+    "PASS\treport-marker-Note Off `r5 = msg[1]`: PASS",
+    "PASS\treport-marker-Note On `r6 = msg[1]`: PASS",
+    "PASS\treport-marker-Selector code: `96` bytes",
+    "PASS\treport-marker-Total unoccupied budget: `108` bytes",
+    "PASS\treport-marker-Cross-artifact metadata integration: PASS",
+    "PASS\treport-marker-Firmware candidate: BLOCK",
+    "PASS\treport-marker-No firmware candidate was produced"
+  ],
+  "decisions": {
+    "abi_preservation_by_construction": "PASS",
+    "cross_artifact_metadata_integration": "PASS",
+    "executable_placement_within_live_h2_extent": "PASS",
+    "firmware_candidate": "BLOCK",
+    "note_register_identity": "PASS",
+    "pi32_encoding_and_reach": "PASS"
+  },
+  "design_contract": {
+    "armed_value": 2,
+    "empty_value": 0,
+    "fallback": "non-Ch10, LOADING/invalid state, invalid selected slot, or note matching neither immutable note byte reaches common copy with original r1/r2 and restored r0",
+    "h2_compatibility": "EMPTY and valid0 == 1 selects slot0 for all Ch10, preserving exact H2 product-packet behavior",
+    "metadata_integration": "PASS: reconciled RAM, ingress, and consumer contract",
+    "note0_address": "0x01c465be",
+    "note1_address": "0x01c4665e",
+    "publication_gate": "external BLOCK: state may become ARMED only after both immutable 0x9c slots, both bounded distinct notes, and both valid bytes are complete",
+    "slot0": "0x01c46520",
+    "slot1": "0x01c465c0",
+    "state": "0x01c465bf",
+    "valid0": "0x01c465bc",
+    "valid1": "0x01c4665c"
+  },
+  "format": "smk37-v15-h2-s1c1-code-audit-v1",
+  "inputs": [
+    {
+      "id": "official_app",
+      "path": "build/v15-official-app.bin",
+      "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055"
+    },
+    {
+      "id": "h2_app",
+      "path": "build/SMK37Pro-v15-H2-owned-source-corrected-fallback/app.bin",
+      "sha256": "d71f6c58b4fade00aebb8a0b7d9d024641c37c41ca4bbf3e525fd28773087f59"
+    },
+    {
+      "id": "quarkslab_listing",
+      "path": "baselines/v15/analysis/quarkslab/results/quarkslab-exhaustive-listing.tsv.gz",
+      "sha256": "f51e384f5f0efc415f321bbfbbe15d051301953338191282872807dcf8683347"
+    },
+    {
+      "id": "kagaimiq_listing",
+      "path": "baselines/v15/analysis/quarkslab/results/kagaimiq-patched-exhaustive-listing.tsv.gz",
+      "sha256": "814510c15ba600c7420026204c5f4121bce6a5d074422cc20204755d3280e013"
+    },
+    {
+      "id": "h2_manifest",
+      "path": "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/app-manifest.json",
+      "sha256": "dc6fba4ddb887424d6bd76b6d1477f66f97096e2d6656f203eec423680572cf3"
+    },
+    {
+      "id": "h2_live",
+      "path": "baselines/v15/analysis/flash-candidates/H2-owned-source-corrected-fallback/live-validation-20260802.md",
+      "sha256": "b2aca5903390cffe573f42c89aa6407a52c28f967124a07b407887959d1c8fd7"
+    }
+  ],
+  "scope": {
+    "device_accessed": false,
+    "firmware_candidate_created": false,
+    "flash_performed": false,
+    "live_parent": "H2",
+    "official_v15_only": true,
+    "v12_evidence_used": false
+  },
+  "wrapper": {
+    "hex": "53160481631679040416951685f82312c8ff2065c40105e19c80584380f80500584080f818028116049680f814045842381980f80500584080f80d028116048b05e1a0505842381980f80500584080f8020201e1a080401680ff32ab02005904",
+    "hook_encodings": {
+      "0x0201c63e": "80fffa1a0000",
+      "0x0201c67c": "80ffc01a0000"
+    },
+    "instructions": [
+      {
+        "address": "0x0201e13e",
+        "bytes": "5316",
+        "meaning": "r3 = Note Off r5 note; native r5 remains untouched",
+        "name": "off_note_adapter"
+      },
+      {
+        "address": "0x0201e140",
+        "bytes": "0481",
+        "meaning": "compact forward goto shared core",
+        "name": "off_to_core"
+      },
+      {
+        "address": "0x0201e142",
+        "bytes": "6316",
+        "meaning": "r3 = Note On r6 note; fall through to shared core",
+        "name": "on_note_adapter"
+      },
+      {
+        "address": "0x0201e144",
+        "bytes": "7904",
+        "meaning": "save original rets and r4..r9, including r5/r6 note/velocity state",
+        "name": "push_saved"
+      },
+      {
+        "address": "0x0201e146",
+        "bytes": "0416",
+        "meaning": "r4 = original memcpy destination",
+        "name": "save_destination"
+      },
+      {
+        "address": "0x0201e148",
+        "bytes": "9516",
+        "meaning": "temporary r5 = exact dispatcher channel nibble r9",
+        "name": "normalize_channel"
+      },
+      {
+        "address": "0x0201e14a",
+        "bytes": "85f82312",
+        "meaning": "r5 != 9 -> common stock copy",
+        "name": "non_ch10_branch"
+      },
+      {
+        "address": "0x0201e14e",
+        "bytes": "c8ff2065c401",
+        "meaning": "temporary r8 = exact H2/private slot0 source",
+        "name": "slot0_source_pointer"
+      },
+      {
+        "address": "0x0201e154",
+        "bytes": "05e19c80",
+        "meaning": "r5 = r8 + 0x9c = H2 valid0 / slot0 metadata base",
+        "name": "slot0_metadata_pointer"
+      },
+      {
+        "address": "0x0201e158",
+        "bytes": "5843",
+        "meaning": "r0 = EMPTY/LOADING/ARMED state",
+        "name": "state_load"
+      },
+      {
+        "address": "0x0201e15a",
+        "bytes": "80f80500",
+        "meaning": "state != EMPTY -> LOADING/ARMED discriminator",
+        "name": "state_nonempty_branch"
+      },
+      {
+        "address": "0x0201e15e",
+        "bytes": "5840",
+        "meaning": "EMPTY compatibility: r0 = exact H2 valid0",
+        "name": "h2_valid0_load"
+      },
+      {
+        "address": "0x0201e160",
+        "bytes": "80f81802",
+        "meaning": "EMPTY and valid0 != 1 -> stock copy",
+        "name": "h2_invalid_branch"
+      },
+      {
+        "address": "0x0201e164",
+        "bytes": "8116",
+        "meaning": "EMPTY and valid0 == 1 preserves exact H2 slot0 source",
+        "name": "h2_slot0_source"
+      },
+      {
+        "address": "0x0201e166",
+        "bytes": "0496",
+        "meaning": "skip private ARMED lookup and use common copy",
+        "name": "h2_slot0_to_copy"
+      },
+      {
+        "address": "0x0201e168",
+        "bytes": "80f81404",
+        "meaning": "state != ARMED -> stock copy; LOADING never exposes owned RAM",
+        "name": "state_armed_branch"
+      },
+      {
+        "address": "0x0201e16c",
+        "bytes": "5842",
+        "meaning": "r0 = immutable slot0 note byte",
+        "name": "note0_load"
+      },
+      {
+        "address": "0x0201e16e",
+        "bytes": "3819",
+        "meaning": "r0 = slot0 note XOR normalized event note",
+        "name": "note0_compare"
+      },
+      {
+        "address": "0x0201e170",
+        "bytes": "80f80500",
+        "meaning": "slot0 note != event note -> note1 test",
+        "name": "note0_branch"
+      },
+      {
+        "address": "0x0201e174",
+        "bytes": "5840",
+        "meaning": "matched slot0: r0 = valid0",
+        "name": "slot0_valid_load"
+      },
+      {
+        "address": "0x0201e176",
+        "bytes": "80f80d02",
+        "meaning": "matched slot0 but valid0 != 1 -> stock copy",
+        "name": "slot0_invalid_branch"
+      },
+      {
+        "address": "0x0201e17a",
+        "bytes": "8116",
+        "meaning": "selected r1 = immutable slot0 voice",
+        "name": "slot0_source"
+      },
+      {
+        "address": "0x0201e17c",
+        "bytes": "048b",
+        "meaning": "skip note1 test/source and use common copy",
+        "name": "slot0_to_copy"
+      },
+      {
+        "address": "0x0201e17e",
+        "bytes": "05e1a050",
+        "meaning": "r5 += 0xa0 = slot1 valid/transaction/note metadata base",
+        "name": "slot1_metadata_pointer"
+      },
+      {
+        "address": "0x0201e182",
+        "bytes": "5842",
+        "meaning": "r0 = immutable slot1 note byte",
+        "name": "note1_load"
+      },
+      {
+        "address": "0x0201e184",
+        "bytes": "3819",
+        "meaning": "r0 = slot1 note XOR normalized event note",
+        "name": "note1_compare"
+      },
+      {
+        "address": "0x0201e186",
+        "bytes": "80f80500",
+        "meaning": "slot1 note != event note -> common stock copy",
+        "name": "note1_branch"
+      },
+      {
+        "address": "0x0201e18a",
+        "bytes": "5840",
+        "meaning": "matched slot1: r0 = valid1",
+        "name": "slot1_valid_load"
+      },
+      {
+        "address": "0x0201e18c",
+        "bytes": "80f80202",
+        "meaning": "matched slot1 but valid1 != 1 -> stock copy",
+        "name": "slot1_invalid_branch"
+      },
+      {
+        "address": "0x0201e190",
+        "bytes": "01e1a080",
+        "meaning": "selected r1 = r8 + 0xa0 = immutable slot1 voice",
+        "name": "slot1_source"
+      },
+      {
+        "address": "0x0201e194",
+        "bytes": "4016",
+        "meaning": "restore original r0 immediately before memcpy",
+        "name": "restore_destination"
+      },
+      {
+        "address": "0x0201e196",
+        "bytes": "80ff32ab0200",
+        "meaning": "call memcpy with original r2 == 0x9c",
+        "name": "memcpy"
+      },
+      {
+        "address": "0x0201e19c",
+        "bytes": "5904",
+        "meaning": "pop pc,r9..r4; restore native r5/r6 and channel r9",
+        "name": "return_restore"
+      }
+    ],
+    "layout": {
+      "channel_branch": "0x0201e14a",
+      "copy": "0x0201e194",
+      "core": "0x0201e144",
+      "end": "0x0201e19e",
+      "h2_invalid_branch": "0x0201e160",
+      "h2_slot0_goto": "0x0201e166",
+      "memcpy_call": "0x0201e196",
+      "note0_branch": "0x0201e170",
+      "note1_branch": "0x0201e186",
+      "note1_test": "0x0201e17e",
+      "off_entry": "0x0201e13e",
+      "off_goto": "0x0201e140",
+      "on_entry": "0x0201e142",
+      "slot0_goto": "0x0201e17c",
+      "slot0_invalid_branch": "0x0201e176",
+      "slot1_invalid_branch": "0x0201e18c",
+      "state_armed_branch": "0x0201e168",
+      "state_nonempty": "0x0201e168",
+      "state_nonempty_branch": "0x0201e15a"
+    },
+    "sha256": "adb8774971811f6dbdce8b7338f2265f18b8bb22544ccab746e74610366d4e35"
+  }
+}

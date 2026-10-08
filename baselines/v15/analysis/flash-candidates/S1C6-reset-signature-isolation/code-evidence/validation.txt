@@ -1,0 +1,9 @@
+S1-C6 Reset Signature Isolation code evidence: PASS
+PASS	reset-wrapper	0x0201e228..0x0201e254	2-byte impossible signature 0x64 0x65; reset returns without producer; voice path calls 0x0201e196
+PASS	reset-semantics	reset packet clears lock/count/state and is NOT loaded as a voice; no slot consumed
+PASS	callsites	unchanged direct/segmented callsites still target reset entry
+PASS	frame	r4..r9 preserved by push/pop (segmented caller r7 contract); r0/r1 scratch as in S1-C5
+PASS	reset-wrapper	0x0201e228..0x0201e254	2-byte impossible signature 0x64 0x65; reset returns without producer; voice path calls 0x0201e196
+PASS	reset-semantics	reset packet clears lock/count/state and is NOT loaded as a voice; no slot consumed
+PASS	callsites	unchanged direct/segmented callsites still target reset entry
+PASS	frame	r4..r9 preserved by push/pop (segmented caller r7 contract); r0/r1 scratch as in S1-C5

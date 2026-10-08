@@ -1,0 +1,116 @@
+{
+  "candidate_records_blob_sha256": "641227ea5e302471c97d2cd0594761d9db2765cacd925e6a75221d0f86e3103c",
+  "device_accessed": false,
+  "files": [
+    {
+      "file": "record-095-official.bin",
+      "record_index": 95,
+      "sha256": "70721f83f029ccbbc99a13c380e7ff15e0b407aa4099824039889cf9c12b39e3"
+    },
+    {
+      "file": "record-112-official.bin",
+      "record_index": 112,
+      "sha256": "70721f83f029ccbbc99a13c380e7ff15e0b407aa4099824039889cf9c12b39e3"
+    },
+    {
+      "file": "record-113-official.bin",
+      "record_index": 113,
+      "sha256": "70721f83f029ccbbc99a13c380e7ff15e0b407aa4099824039889cf9c12b39e3"
+    },
+    {
+      "file": "record-114-official.bin",
+      "record_index": 114,
+      "sha256": "70721f83f029ccbbc99a13c380e7ff15e0b407aa4099824039889cf9c12b39e3"
+    },
+    {
+      "file": "record-115-official.bin",
+      "record_index": 115,
+      "sha256": "70721f83f029ccbbc99a13c380e7ff15e0b407aa4099824039889cf9c12b39e3"
+    },
+    {
+      "file": "record-116-official.bin",
+      "record_index": 116,
+      "sha256": "70721f83f029ccbbc99a13c380e7ff15e0b407aa4099824039889cf9c12b39e3"
+    },
+    {
+      "file": "record-117-official.bin",
+      "record_index": 117,
+      "sha256": "70721f83f029ccbbc99a13c380e7ff15e0b407aa4099824039889cf9c12b39e3"
+    },
+    {
+      "file": "record-118-official.bin",
+      "record_index": 118,
+      "sha256": "70721f83f029ccbbc99a13c380e7ff15e0b407aa4099824039889cf9c12b39e3"
+    },
+    {
+      "file": "record-119-official.bin",
+      "record_index": 119,
+      "sha256": "70721f83f029ccbbc99a13c380e7ff15e0b407aa4099824039889cf9c12b39e3"
+    },
+    {
+      "file": "record-120-official.bin",
+      "record_index": 120,
+      "sha256": "70721f83f029ccbbc99a13c380e7ff15e0b407aa4099824039889cf9c12b39e3"
+    },
+    {
+      "file": "record-121-official.bin",
+      "record_index": 121,
+      "sha256": "70721f83f029ccbbc99a13c380e7ff15e0b407aa4099824039889cf9c12b39e3"
+    },
+    {
+      "file": "record-122-official.bin",
+      "record_index": 122,
+      "sha256": "70721f83f029ccbbc99a13c380e7ff15e0b407aa4099824039889cf9c12b39e3"
+    },
+    {
+      "file": "record-123-official.bin",
+      "record_index": 123,
+      "sha256": "70721f83f029ccbbc99a13c380e7ff15e0b407aa4099824039889cf9c12b39e3"
+    },
+    {
+      "file": "record-124-official.bin",
+      "record_index": 124,
+      "sha256": "70721f83f029ccbbc99a13c380e7ff15e0b407aa4099824039889cf9c12b39e3"
+    },
+    {
+      "file": "record-125-official.bin",
+      "record_index": 125,
+      "sha256": "70721f83f029ccbbc99a13c380e7ff15e0b407aa4099824039889cf9c12b39e3"
+    },
+    {
+      "file": "record-126-official.bin",
+      "record_index": 126,
+      "sha256": "70721f83f029ccbbc99a13c380e7ff15e0b407aa4099824039889cf9c12b39e3"
+    },
+    {
+      "file": "record-127-official.bin",
+      "record_index": 127,
+      "sha256": "70721f83f029ccbbc99a13c380e7ff15e0b407aa4099824039889cf9c12b39e3"
+    }
+  ],
+  "flash_performed": false,
+  "format": "smk37-v15-s1c6-raw-record-persistence.rollback-v1",
+  "official_records_blob_sha256": "4361ce6ca2c1285fe4ef4ab8691c47234b24ac8f1560524dc0bdca9be933812e",
+  "offline_only": true,
+  "record_size": 163,
+  "reserved_record_indices": [
+    95,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127
+  ],
+  "rollback_restores_original_reserved_records": true
+}

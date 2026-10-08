@@ -1,0 +1,26 @@
+validated_utc: 2026-08-01T19:03:37Z
+platform: macOS arm64
+libusb: 1.0.30
+compiler_flags: -std=c11 -O2 -g -Wall -Wextra -Wpedantic -Werror
+compile: PASS
+wrapper_dry_run: PASS
+wrapper_execute_without_EXECUTE_V15_USB_MIDI_YES: REFUSED exit 2
+fixed_matrix_outbound_events: 50
+maximum_outbound_events_per_process: 80
+cleanup_events_maximum: 10
+source_sha256: 62e28bf49e71a6203bca10b433de4da48752533b99cead0eef302423b84b7170
+v12_vid_pid_constants: ABSENT
+matrix_f0_22_24_upgrade_prefix: ABSENT
+libusb_control_transfer: ABSENT
+libusb_reset_device: ABSENT
+libusb_set_configuration: ABSENT
+libusb_detach_kernel_driver: ABSENT
+libusb_set_auto_detach_kernel_driver: ABSENT
+live_exact_v15_enumeration_at_2026-08-01T19:02:20Z: REFUSED found 0
+live_exact_v15_watch_60_checks_2026-08-01T19:02:30Z_to_19:07:32Z: REFUSED found 0
+live_execute_all_attempt_at_2026-08-01T19:07:42Z: REFUSED found 0 before claim
+live_interface_claims: 0
+live_out_transfers: 0
+flash_writes: 0
+ota_or_upgrade_commands: 0
+git_commit_created: NO

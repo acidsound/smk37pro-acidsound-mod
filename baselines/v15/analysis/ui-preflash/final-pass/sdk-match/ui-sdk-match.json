@@ -1,0 +1,4588 @@
+{
+  "archives": {
+    "cpu/wl82/liba/event.a": {
+      "elf_member_count": 0,
+      "member_count": 6,
+      "relocation_matching": "not_run_no_elf_ui_members",
+      "sha256": "a9d779087da1fc5f83566c55624036b81215260015dd3551bab1f5a69ae21cef",
+      "size": 50076,
+      "ui_named_members": [
+        {
+          "format": "llvm-bitcode",
+          "name": "event.c.o",
+          "sha256": "72c28fb0a248ca52fe6c15cafa527e35b7b1cb2fff071e9dc743e51c3000496b",
+          "size": 29836
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "bt_event.c.o",
+          "sha256": "11d93fba3d59c46ee630a67208268f8aefa0f470a045e693b9626a9c836773c3",
+          "size": 3476
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "net_event.c.o",
+          "sha256": "4dc9b5b6c6db9c0236e27859574aa4e88680a7f93b291d9baa0f7501e5b3b578",
+          "size": 3220
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "key_event.c.o",
+          "sha256": "b75e858f3dea23a15fec18b7f6b4b2ed877bee371d67548a7cb0f39a41dc0146",
+          "size": 8068
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "device_event.c.o",
+          "sha256": "0a6c44544460b2c105ca198e36a0a9b6d3bbbc5acc40c9d8cbe1be1d4d2edf3d",
+          "size": 4000
+        }
+      ]
+    },
+    "cpu/wl82/liba/led_ui_server.a": {
+      "elf_member_count": 0,
+      "member_count": 1,
+      "relocation_matching": "not_run_no_elf_ui_members",
+      "sha256": "19d24aafc9c3062d5fe806f8eb4929e7956f3310b4a07c72089306e838cc11d1",
+      "size": 24422,
+      "ui_named_members": [
+        {
+          "format": "llvm-bitcode",
+          "name": "led_ui_server.c.o",
+          "sha256": "b4c280f39a2dd9ae27c16baa691cedc268f919f682b2601ff59721551b416287",
+          "size": 24048
+        }
+      ]
+    },
+    "cpu/wl82/liba/ui.a": {
+      "elf_member_count": 0,
+      "member_count": 21,
+      "relocation_matching": "not_run_no_elf_ui_members",
+      "sha256": "54a5ab0877599f022c2f3979684772a33668fb41068e13bc9e355a29bc645b7e",
+      "size": 1022106,
+      "ui_named_members": [
+        {
+          "format": "llvm-bitcode",
+          "name": "window.c.o",
+          "sha256": "c6704bbd60c3c80729c85daa0348ae3e7e540a4d11c63382a7b542cf36f3adb1",
+          "size": 30940
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "layer.c.o",
+          "sha256": "7a94ca632d3817ff38e8daabca23e584d9a7f4069d04f1f3bd2a78989729da65",
+          "size": 32844
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_core_api.c.o",
+          "sha256": "9118be6044219c92d3f2fe3dcf7af67e146074ccf26d2a983ab5418b1f05c564",
+          "size": 43688
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_core.c.o",
+          "sha256": "515e46762409e5e6a4d1a878662d204d7e6b90ffae27c0493f2dc94731c4a9df",
+          "size": 139320
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_battery.c.o",
+          "sha256": "a8f78c0b0c9e74ff4b53190f42765580b8b7a4eec681f3eaa33ecd28540c6ea0",
+          "size": 26932
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_button.c.o",
+          "sha256": "6aaf81abb7a5e07bdbc98f833a00d250581d5d7626f29ba821337527a00ded02",
+          "size": 23788
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_grid.c.o",
+          "sha256": "27cabe35db2536f41f9937f8747c9d469f3b17ad81a377886c15995c35f39190",
+          "size": 201004
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_p.c.o",
+          "sha256": "45051607b960132e65eaf9fc6fc0b6edc1c5978a68462d39f498698988f14d0d",
+          "size": 20148
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_pic.c.o",
+          "sha256": "3dbc8881bd39e2ba2db7075b549ca31cc849d4d7f469c3947668123c731279a3",
+          "size": 30536
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_text.c.o",
+          "sha256": "e56858aab13decc6e32a4ee0d655687b2f118d4496855dcb14093553e51f931e",
+          "size": 41436
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_time.c.o",
+          "sha256": "692a88dce4fabea8398335c4c1493ec65f68ffedc2dee5b4bf2f4809b9265217",
+          "size": 34824
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_number.c.o",
+          "sha256": "c0a332f3f3abe191ba5a2522f70a269321353c016e42cf7795942eb698f58136",
+          "size": 34560
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_slider.c.o",
+          "sha256": "baf60d3182bb095b9283c39126849fb7cfdb1059a558924e7dc07a70c350f610",
+          "size": 38276
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_slider_vert.c.o",
+          "sha256": "5222e635f634baf98f41ea8e7deb4aadcef8899e61775d07faafd3ab25ef9f12",
+          "size": 37096
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_watch.c.o",
+          "sha256": "787a64fc6526924debb15cdb2532260ce91b0445c02144ef79e8e948e0e99402",
+          "size": 59664
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_progress.c.o",
+          "sha256": "58d8afe69529756c3fa0d0470c8f03959b79e95f6b2e10bf9565b4cdc0c5f94d",
+          "size": 39052
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_progress_multi.c.o",
+          "sha256": "0a2a30047935e6ed10337f6ecb905044ef91c591fa03c11e268a9254ac0c8ba1",
+          "size": 42624
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_rotate.c.o",
+          "sha256": "c1e7e894ec140c6a2eb5bf125877ffff976d2f3369b25d97ca295383e31a41d1",
+          "size": 36448
+        }
+      ]
+    },
+    "cpu/wl82/liba/ui_draw.a": {
+      "elf_member_count": 0,
+      "member_count": 5,
+      "relocation_matching": "not_run_no_elf_ui_members",
+      "sha256": "a617711a02896b5db6f0226ed0e727d94bb744a76722a57d3665cbfba0f7314b",
+      "size": 164960,
+      "ui_named_members": [
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_circle.c.o",
+          "sha256": "9d32fd51f67d8e89042a215d511dde7ee25f302d167dedaad764d6e6a235ee83",
+          "size": 31596
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_figure.c.o",
+          "sha256": "9b70dc0736c48afe58514f13f77b295d4273cc034d581e0481481eb54298a41e",
+          "size": 55952
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_wave.c.o",
+          "sha256": "09112da8c591274c057f69b745001f1f9063c38c16b86e21b6fbce1c1ea7f0d9",
+          "size": 49172
+        },
+        {
+          "format": "llvm-bitcode",
+          "name": "ui_bar_chart.c.o",
+          "sha256": "3cf43b871bcad80fb73f7486173ab97a6065f0037faf021100d3263e5f5317ab",
+          "size": 26712
+        }
+      ]
+    },
+    "cpu/wl82/tools/loader_tools/sdk.elf": {
+      "sha256": "250b0534fee9f57208b42e38c97c36982875fac901db1d9979e781f0d26e0cf3",
+      "size": 1295788
+    }
+  },
+  "format": "smk37-v15-ui-preflash-final-sdk-match-v1",
+  "inputs": {
+    "app": {
+      "path": "build/v15-official-app.bin",
+      "runtime_base": "0x02000000",
+      "sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "size": 617012
+    },
+    "sdk": {
+      "branch": "release/AC79NN_SDK_V1.2.0",
+      "commit": "e30b1ee375d1f2993fc23bf92c8b99006a6e5f9d",
+      "url": "https://gitee.com/Jieli-Tech/fw-AC79_AIoT_SDK"
+    }
+  },
+  "relocation_aware": {
+    "accepted": [],
+    "accepted_count": 0,
+    "reason": "Pinned SDK UI archives are LLVM bitcode in this checkout; no official-toolchain rebuilt UI ELF objects were available in approved existing sdk-signatures. Exact sdk.elf scan below is the only accepted matcher run here."
+  },
+  "scope": {
+    "allowed_sources": [
+      "official v15 app.bin",
+      "pinned public Jieli AC79 SDK",
+      "existing baselines/v15 sdk-signatures/ui-preflash evidence"
+    ],
+    "forbidden_sources": [
+      "v12 firmware or v12 analysis"
+    ],
+    "read_only": true
+  },
+  "sdk_elf_exact": {
+    "accepted": [],
+    "functions_considered": 740,
+    "rejected_non_ui_exact": [
+      {
+        "app_address": "0x0202e7a2",
+        "app_offset": "0x0002e7a2",
+        "body_sha256": "2b703e7f8cef719539a1152792df47af3571fc04e9b9380fb884c5ccd42c13d8",
+        "match_type": "exact_unique_body",
+        "name": "sync_window",
+        "rejection_reason": "name matched broad UI term but SDK/source context is filesystem window or CPU cache, not LCD/display/widget/key/event task code",
+        "sdk_address": "0x0200e3fc",
+        "section": ".text",
+        "size": 66
+      },
+      {
+        "app_address": "0x0202e7e4",
+        "app_offset": "0x0002e7e4",
+        "body_sha256": "30e44d5f30b3ffb79913944835b436575b7f34cfc8fad3fc76b6cb1eb05ac4fa",
+        "match_type": "exact_unique_body",
+        "name": "move_window",
+        "rejection_reason": "name matched broad UI term but SDK/source context is filesystem window or CPU cache, not LCD/display/widget/key/event task code",
+        "sdk_address": "0x0200e43e",
+        "section": ".text",
+        "size": 86
+      },
+      {
+        "app_address": "0x0208ddc0",
+        "app_offset": "0x0008ddc0",
+        "body_sha256": "f257f25d080eb85975e3a4b34a14f085321462118ccddc9d8313ef77c76a4323",
+        "match_type": "exact_unique_body",
+        "name": "icache_flush",
+        "rejection_reason": "name matched broad UI term but SDK/source context is filesystem window or CPU cache, not LCD/display/widget/key/event task code",
+        "sdk_address": "0x01c0106c",
+        "section": ".ram0_data",
+        "size": 50
+      }
+    ],
+    "ui_named_unique_exact_matches": 0
+  },
+  "sdk_source_evidence": {
+    "files_considered": 131,
+    "files_with_focused_terms": [
+      {
+        "focused_terms": [
+          "text"
+        ],
+        "path": "apps/common/ui/GUI_GIF.c",
+        "sha256": "2d736530cb3e8122e76f4d20fcac2cb02fd0019b820dfb02b0325112b4ab3183"
+      },
+      {
+        "focused_terms": [
+          "lcd"
+        ],
+        "path": "apps/common/ui/font/fontinit.c",
+        "sha256": "c7a91b109a41c5a397cbbb873b5c65ea09a87490285bf22afc36d5ded0460fce"
+      },
+      {
+        "focused_terms": [
+          "lcd"
+        ],
+        "path": "apps/common/ui/gif_api.c",
+        "sha256": "7604d9d77b3017529382ae16a247342bbd9d61a4ec8de3435e8aa40c07289052"
+      },
+      {
+        "focused_terms": [
+          "text"
+        ],
+        "path": "apps/common/ui/include/GUI_GIF_Private.h",
+        "sha256": "388f459252d9b3a2214bb1719faf0b6f0819370974f89989c1f05750c23382c7"
+      },
+      {
+        "focused_terms": [
+          "lcd"
+        ],
+        "path": "apps/common/ui/include/lcd_config.h",
+        "sha256": "cea9b08350120239c474ea10724418c74571bd23e79ad22f0c2fcf0924aa9ab5"
+      },
+      {
+        "focused_terms": [
+          "lcd",
+          "task"
+        ],
+        "path": "apps/common/ui/include/lcd_data_driver.h",
+        "sha256": "66146cd13f088c7d145769852b934a81415d9895afd40836c8cc57008839f00c"
+      },
+      {
+        "focused_terms": [
+          "lcd",
+          "task"
+        ],
+        "path": "apps/common/ui/include/lcd_drive.h",
+        "sha256": "18da6b48891977af8e42e830b41e60f859873c3e60f8ac3bd4f30bd5d1ccc0cf"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "key",
+          "lcd"
+        ],
+        "path": "apps/common/ui/include/ui_api.h",
+        "sha256": "81ca66648298fd466a708c173fcf2a058fc607bf764791d0772cc5ec319b96ac"
+      },
+      {
+        "focused_terms": [
+          "display",
+          "event",
+          "key",
+          "lcd",
+          "task"
+        ],
+        "path": "apps/common/ui/lcd/lcd_ui_api.c",
+        "sha256": "3e970d4cff3dee1e4a5a737369013fe1d57190c7727b9aee5af403e41eced4c6"
+      },
+      {
+        "focused_terms": [
+          "display",
+          "lcd"
+        ],
+        "path": "apps/common/ui/lcd/ui_sys_param_api.c",
+        "sha256": "3c49672542b231c81b939fcc0290f4d3e5d23d439223f3aea1cb700593806edf"
+      },
+      {
+        "focused_terms": [
+          "lcd",
+          "text"
+        ],
+        "path": "apps/common/ui/lcd_driver/lcd_480x272_8bits.c",
+        "sha256": "819b2e680774d7363ab0ab6447ea38b4e65216ddd4567efc0441577d04a49373"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "lcd",
+          "task"
+        ],
+        "path": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "sha256": "5af3d1bfc40a2bf4a1b4a8d00bba9fe5ad51a29a041a7e286d0a588df95c0920"
+      },
+      {
+        "focused_terms": [
+          "flush",
+          "lcd",
+          "task"
+        ],
+        "path": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "sha256": "b8fc96dc4d6e8531c92c104d7ab8cfa3e6359e215c89d44bc1d40d417c808844"
+      },
+      {
+        "focused_terms": [
+          "lcd"
+        ],
+        "path": "apps/common/ui/lcd_driver/lcd_hx8357.c",
+        "sha256": "cdf19a2c29ad4ce081430fb6d2bb4d099ddf3e8a3f2acf81fbc36a998b46626e"
+      },
+      {
+        "focused_terms": [
+          "display",
+          "lcd"
+        ],
+        "path": "apps/common/ui/lcd_driver/lcd_ili9341.c",
+        "sha256": "b6d7ee60a89289484c3aaa7c29e3964efe156b77ec84fcbbd8fba0ec57aa92e1"
+      },
+      {
+        "focused_terms": [
+          "lcd",
+          "task"
+        ],
+        "path": "apps/common/ui/lcd_driver/lcd_ili9481.c",
+        "sha256": "5ad82c273fb5a7e93d6f6ce9c29d2d519b19482ffa6e4a7892d7006762833345"
+      },
+      {
+        "focused_terms": [
+          "lcd",
+          "task"
+        ],
+        "path": "apps/common/ui/lcd_driver/lcd_ili9488.c",
+        "sha256": "8de9ca2598fde415b8e2aec46b462a0814b0eca342db1bc76bf9c4446f00218c"
+      },
+      {
+        "focused_terms": [
+          "display",
+          "flush",
+          "lcd"
+        ],
+        "path": "apps/common/ui/lcd_driver/lcd_st7735s.c",
+        "sha256": "b089fee9bd28058761cacf603ef9079903db2931275fa0eff9c36f2e7faccb51"
+      },
+      {
+        "focused_terms": [
+          "lcd"
+        ],
+        "path": "apps/common/ui/lcd_driver/lcd_st7789s.c",
+        "sha256": "93cf496e1da4cacdc6b4023a3bdc1794fc8948edeaaa848d22e0a3653b90f351"
+      },
+      {
+        "focused_terms": [
+          "lcd",
+          "task"
+        ],
+        "path": "apps/common/ui/lcd_driver/lcd_st7789t3.c",
+        "sha256": "20a3a8554e7f90025c5655c6db38f1d266ece2d247d27022816451304c3c902c"
+      },
+      {
+        "focused_terms": [
+          "lcd"
+        ],
+        "path": "apps/common/ui/lcd_driver/lcd_st7789v.c",
+        "sha256": "620c082ac5a4a9499aae0f007d0c6533bb0109ddc67d8f763435d15ce287d2f9"
+      },
+      {
+        "focused_terms": [
+          "lcd"
+        ],
+        "path": "apps/common/ui/lcd_driver/lcd_tm9486.c",
+        "sha256": "42cdfbd84d1fc64dad65fab729a2d06cea603ed94cdb26918ae1b35020df8090"
+      },
+      {
+        "focused_terms": [
+          "display",
+          "event",
+          "key",
+          "lcd",
+          "task",
+          "text"
+        ],
+        "path": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "sha256": "b5138007fbfdd6389e2c1fc72eda1fff8cbbdd4fcedebd62079fa1db102d8e64"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "key",
+          "lcd",
+          "task"
+        ],
+        "path": "apps/common/ui/lcd_simple/ui.c",
+        "sha256": "dffd894ee37d9decf13acbb8c07bee4d92b7cff77daacbc9814a9ba96b085b8e"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "key",
+          "lcd",
+          "task"
+        ],
+        "path": "apps/common/ui/lcd_simple/ui_mainmenu.c",
+        "sha256": "61f6658ee6160df09d7b92622a6d648be367cd852db4ce1a25c84fa6a30d3410"
+      },
+      {
+        "focused_terms": [
+          "display",
+          "lcd",
+          "task"
+        ],
+        "path": "apps/common/ui/led7/led7_ui_api.c",
+        "sha256": "7d6e863962bdb2fdf1605bf01d9d2f32e7434e17aa7b9b30d8117359a059cd13"
+      },
+      {
+        "focused_terms": [
+          "display"
+        ],
+        "path": "apps/common/ui/oled/oled.c",
+        "sha256": "1fa958ebd1bc90420372ee308b212b0b857d5f253ab625349d2996df84b0acab"
+      },
+      {
+        "focused_terms": [
+          "display",
+          "task"
+        ],
+        "path": "apps/common/ui/oled/oled.h",
+        "sha256": "1db2096246c26c0ab9233d800f73e03d336d55410be07d83f56f4614375ff79b"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "lcd",
+          "task"
+        ],
+        "path": "apps/common/ui/touch_panel/ft6236.c",
+        "sha256": "62bbd1d48edfde7923972ad97ab056236402e9be37f17d7de0906ec99031a643"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "lcd",
+          "task"
+        ],
+        "path": "apps/common/ui/touch_panel/gt911.c",
+        "sha256": "3daaaee383d7c59289b18d33f0d8ca4a78d26771c83117de6f9ebfc1e993fc77"
+      },
+      {
+        "focused_terms": [
+          "display",
+          "event",
+          "lcd",
+          "task"
+        ],
+        "path": "apps/common/ui/ui_action_video.c",
+        "sha256": "239c2580e48827accc473578fd1a07765ba6c31fa868355ebeed318f31ecb28b"
+      },
+      {
+        "focused_terms": [
+          "flush",
+          "key",
+          "lcd",
+          "task",
+          "text",
+          "widget"
+        ],
+        "path": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "sha256": "df69b644967ec791429f7386e30ed84d988ace07e3eb5e05b706eb7210220d3c"
+      },
+      {
+        "focused_terms": [
+          "lcd",
+          "task"
+        ],
+        "path": "apps/demo/demo_DevKitBoard/camera_lcd_demo.c",
+        "sha256": "a9a75fd79bd14e0a68c4dcfc7f17ed6ddba9dd8fcd9d79404960c3ef588ca6e0"
+      },
+      {
+        "focused_terms": [
+          "key"
+        ],
+        "path": "apps/demo/demo_DevKitBoard/hid_keyboard.c",
+        "sha256": "890e7824c187ada6e6712b64a142e932c808ca59142498783d579a0756222d1c"
+      },
+      {
+        "focused_terms": [
+          "lcd",
+          "task"
+        ],
+        "path": "apps/demo/demo_DevKitBoard/raw_stream_to_lcd.c",
+        "sha256": "67ed72d2ef4bd4d92e9e9004671080ab4124e23fb8732d72f82fcea82a940a16"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "lcd",
+          "task"
+        ],
+        "path": "apps/demo/demo_ui/app_main.c",
+        "sha256": "52305f2d1894b9905053a924866ffe2c02a48916f5f185ecadb6c3274cfb5d4e"
+      },
+      {
+        "focused_terms": [
+          "key",
+          "lcd"
+        ],
+        "path": "apps/demo/demo_ui/board/wl82/JL_AC79_DevKitBoard.c",
+        "sha256": "cac9b0ab861b2e2c6a9dcaaba988e6a21366b6cfada224f77af8e0fdd5fd3f94"
+      },
+      {
+        "focused_terms": [
+          "display",
+          "event",
+          "key",
+          "lcd",
+          "redraw",
+          "task",
+          "text"
+        ],
+        "path": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "sha256": "1754f8c55c7368d27750e91049d6baca038e50e9205896d86f4e4e2bb9ee01cf"
+      },
+      {
+        "focused_terms": [
+          "lcd",
+          "task",
+          "text"
+        ],
+        "path": "apps/demo/demo_ui/demo/ui_demo_1_1.c",
+        "sha256": "a6a1de24b17cf77631abcbdb9ef958336bf74d48ff7814cc41996cce6ee5bd6a"
+      },
+      {
+        "focused_terms": [
+          "lcd",
+          "task",
+          "text"
+        ],
+        "path": "apps/demo/demo_ui/demo/ui_demo_1_2.c",
+        "sha256": "330b33b9525ee112d3a3d6dd9e8fb35a008fba5a76a9d12842b954b1885e7dec"
+      },
+      {
+        "focused_terms": [
+          "lcd",
+          "task",
+          "text"
+        ],
+        "path": "apps/demo/demo_ui/demo/ui_demo_1_3.c",
+        "sha256": "bcdd5d4d7d8fcd174f59c7fb83fcfb34881d7d8e332d7a02d4ac3965864b2e53"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "lcd",
+          "task",
+          "text"
+        ],
+        "path": "apps/demo/demo_ui/demo/ui_demo_2_0.c",
+        "sha256": "972ccdc82120110169874a1891f41b615e0556537091fa3472bcddeeb9426d0a"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "key",
+          "lcd",
+          "task",
+          "text"
+        ],
+        "path": "apps/demo/demo_ui/demo/ui_demo_2_1.c",
+        "sha256": "6e48e49dae8477f939ca8de052183e0ec57097e54ca0870ad4e918c6afa2edf1"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "lcd",
+          "redraw",
+          "task",
+          "text"
+        ],
+        "path": "apps/demo/demo_ui/demo/ui_demo_2_2.c",
+        "sha256": "1eb3b2fb93521557acb5c0a65f74f776c36de9d0cc35dced30d70ebf7855fa7a"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "lcd",
+          "redraw",
+          "task",
+          "text"
+        ],
+        "path": "apps/demo/demo_ui/demo/ui_demo_2_3.c",
+        "sha256": "cabd025ffd0ef87fde48f8bc69729a60326b743b6a7de2f294a021b4ca460cb8"
+      },
+      {
+        "focused_terms": [
+          "lcd",
+          "task",
+          "text"
+        ],
+        "path": "apps/demo/demo_ui/demo/ui_demo_2_4.c",
+        "sha256": "cea3899724720ffa5f02dbb399faaec4585eeabd5b056bc0751474d2a3cdead1"
+      },
+      {
+        "focused_terms": [
+          "task"
+        ],
+        "path": "apps/demo/demo_ui/get_yuv_data.c",
+        "sha256": "cab9480379702cb7f5750feed4a3599bce2bc3574b483729e78ad29249d2cb6e"
+      },
+      {
+        "focused_terms": [
+          "key"
+        ],
+        "path": "include_lib/driver/device/key/adkey.h",
+        "sha256": "c8fa4c76913a1b67cf7be38a39a3348cfc8fd3f480e6756fb538c31ba152c8c5"
+      },
+      {
+        "focused_terms": [
+          "key"
+        ],
+        "path": "include_lib/driver/device/key/ctmu_key.h",
+        "sha256": "55f089db6f84794b438ae47c7de068583d3d3789803e578662c2929016996329"
+      },
+      {
+        "focused_terms": [
+          "key"
+        ],
+        "path": "include_lib/driver/device/key/iokey.h",
+        "sha256": "be4b7a1663a8c06ed5909b85e78ba2a7f2448ddcb1ebee8c95f530d371d77e1e"
+      },
+      {
+        "focused_terms": [
+          "key"
+        ],
+        "path": "include_lib/driver/device/key/irkey.h",
+        "sha256": "7f606fa73e3594db056227f075102b632c54d26521c8c627afb287eda7f8aeaa"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "key"
+        ],
+        "path": "include_lib/driver/device/key/key_driver.h",
+        "sha256": "d7291ff9647d15ba05cece3d8c453cf04d1fc99930f0fb39951765630d7df0ee"
+      },
+      {
+        "focused_terms": [
+          "key"
+        ],
+        "path": "include_lib/driver/device/key/rdec_key.h",
+        "sha256": "ccd5e7015f0940b58994853b5bd757792bbb257a992b365a35da040c008efed7"
+      },
+      {
+        "focused_terms": [
+          "key"
+        ],
+        "path": "include_lib/driver/device/key/slidekey.h",
+        "sha256": "63525f9bc4f7e53b9b9779776fc05f48cd6b93e609528dfb7a5c0fd1ad54ec29"
+      },
+      {
+        "focused_terms": [
+          "key"
+        ],
+        "path": "include_lib/driver/device/key/tent600_key.h",
+        "sha256": "8591e88719293c0977e08781730dd565fe162c0654a315cb55b8ff400f6f9859"
+      },
+      {
+        "focused_terms": [
+          "key"
+        ],
+        "path": "include_lib/driver/device/key/touch_key.h",
+        "sha256": "65d6d8685a08f672b62c173161dfddce5ce5511b0c965f32c333faf91b19faf7"
+      },
+      {
+        "focused_terms": [
+          "task"
+        ],
+        "path": "include_lib/system/task.h",
+        "sha256": "28085a9cd8d1da3bac0c467ad476e6a29d987293decb16962a1483f15d818c2e"
+      },
+      {
+        "focused_terms": [
+          "event"
+        ],
+        "path": "include_lib/utils/event/bt_event.h",
+        "sha256": "4f6af51eeff062c3a5af9eb612d16f5bdc691e635f3f186167a2cbacf31619d0"
+      },
+      {
+        "focused_terms": [
+          "event"
+        ],
+        "path": "include_lib/utils/event/device_event.h",
+        "sha256": "134706220a1851aabaccc68b1bedb65a146e4eae8c4c3d81cade4cd2ec296ce0"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "key"
+        ],
+        "path": "include_lib/utils/event/event.h",
+        "sha256": "04ab24e04a9a5ab2cf0153bc2fa9824dc7210ee7327bcab6bc3b0d18b6d96c57"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "key"
+        ],
+        "path": "include_lib/utils/event/key_event.h",
+        "sha256": "ca6bad560ad840eb57cf6b28bddec5705741dfce151fcdd3eaf39d64eb5f7dcc"
+      },
+      {
+        "focused_terms": [
+          "event"
+        ],
+        "path": "include_lib/utils/event/net_event.h",
+        "sha256": "7941b34ad42fa9c07b8ee8c92b1426d58212adf9bc5fbcdbc69004060746f603"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "key"
+        ],
+        "path": "include_lib/utils/event/touch_event.h",
+        "sha256": "5fa13b1a3dc9d101b74869c48ab2960da392d9c5668477a698fa52cbfaa7782a"
+      },
+      {
+        "focused_terms": [
+          "text"
+        ],
+        "path": "include_lib/utils/ui/font/font_Arabic.h",
+        "sha256": "6c953106ba7f94efd0232f04d31b7ba2c61f728be9f2f034b1f461ec333ac53c"
+      },
+      {
+        "focused_terms": [
+          "text"
+        ],
+        "path": "include_lib/utils/ui/font/font_all.h",
+        "sha256": "d9fea4da58890984427f2dc5ecf4fdda604caca98424790e6ac05de6f83e847e"
+      },
+      {
+        "focused_terms": [
+          "text"
+        ],
+        "path": "include_lib/utils/ui/font/font_big5.h",
+        "sha256": "25ceb57fb6da33bcce4104533585f13c05b46f2e2caee9bb8e8e44d1cd58ddc9"
+      },
+      {
+        "focused_terms": [
+          "text"
+        ],
+        "path": "include_lib/utils/ui/font/font_gbk.h",
+        "sha256": "183017005c3cb80fbd9bc0bcd835dad0a218b0edb0cd6f1d98851dab5f29db40"
+      },
+      {
+        "focused_terms": [
+          "text"
+        ],
+        "path": "include_lib/utils/ui/font/font_ksc.h",
+        "sha256": "39c253d7262b36404e53f888f98aef0db58912d2ebdf80391eb5ff1ce2e8d3d5"
+      },
+      {
+        "focused_terms": [
+          "text"
+        ],
+        "path": "include_lib/utils/ui/font/font_other_language.h",
+        "sha256": "f9dfb763e62c0ced24afd97683bb57a15eb013d164412ad5a4c4b15bde0ef51e"
+      },
+      {
+        "focused_terms": [
+          "text"
+        ],
+        "path": "include_lib/utils/ui/font/font_sjis.h",
+        "sha256": "dee4a883218fe8943a6e7358d70a95cd7f1d2616597f8aac5d50ea4d31d7e5b4"
+      },
+      {
+        "focused_terms": [
+          "text"
+        ],
+        "path": "include_lib/utils/ui/font/font_textout.h",
+        "sha256": "ee23cc49d0a61fe8eea8ef08a495d092f7247daae6ea06df723ff84894249dd7"
+      },
+      {
+        "focused_terms": [
+          "text"
+        ],
+        "path": "include_lib/utils/ui/font/font_thai.h",
+        "sha256": "d1d2bcaa59673fba026bee86766fc1b774a4de617f8412b3c5040ddfc8b0fc17"
+      },
+      {
+        "focused_terms": [
+          "key"
+        ],
+        "path": "include_lib/utils/ui/font/language_list.h",
+        "sha256": "eb9505e930b2ec81a52859a5753014124505e30e33a01030608785e67f2cd2f4"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "text"
+        ],
+        "path": "include_lib/utils/ui/ui/control.h",
+        "sha256": "77eaab62df0609af8607e2fa2b92cb58369c595df8429cf7acba83a06dd05f5a"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "text"
+        ],
+        "path": "include_lib/utils/ui/ui/layer.h",
+        "sha256": "d894be69d7354637dfd33e985f7e876b74d9ef537b09b243b017321d59708633"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "key"
+        ],
+        "path": "include_lib/utils/ui/ui/layout.h",
+        "sha256": "5a77d2b292222890704db4cf1eb176f288ac4c69fa679c76ce71a45d410e081e"
+      },
+      {
+        "focused_terms": [
+          "lcd",
+          "text"
+        ],
+        "path": "include_lib/utils/ui/ui/lyrics.h",
+        "sha256": "157361e34867568bab8664950aa70477334798e85e6a0c042250b786dfbcdb12"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "text"
+        ],
+        "path": "include_lib/utils/ui/ui/p.h",
+        "sha256": "f44d06016505a9afd5bda35abd55cde486f0c0a6d3bbe23d1ec3566f2c1596e0"
+      },
+      {
+        "focused_terms": [
+          "event"
+        ],
+        "path": "include_lib/utils/ui/ui/play_control.h",
+        "sha256": "f910e6def826e3298e7681a07570eaa80169f040945350174fe5fc7500d7d0be"
+      },
+      {
+        "focused_terms": [
+          "text"
+        ],
+        "path": "include_lib/utils/ui/ui/slider.h",
+        "sha256": "51ede2f77563534c8e6408a3fb3689aa4fe87ec9eb19a8aa11fecd4a91935161"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "key",
+          "redraw",
+          "text"
+        ],
+        "path": "include_lib/utils/ui/ui/ui.h",
+        "sha256": "ed3664a36c89ea4b8d872b7ba508a78c0432d03e64aec0ba9c25811e2415efa7"
+      },
+      {
+        "focused_terms": [
+          "event"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_animation.h",
+        "sha256": "6b841d844bedaf6e7367c2d15d66dee7b814df3ee7ae679cc41ab78063d32961"
+      },
+      {
+        "focused_terms": [
+          "redraw",
+          "text"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_bar_chart.h",
+        "sha256": "096738d2ec1702ed9e8e41f718b63749e05b37ab1badf42c42f6bb9ecaa312cf"
+      },
+      {
+        "focused_terms": [
+          "event"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_battery.h",
+        "sha256": "c61c110b6219fe8fba1a56fb08b5b50272e229036bbd3423671c23c47f58cbd5"
+      },
+      {
+        "focused_terms": [
+          "event"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_browser.h",
+        "sha256": "bfdbb9ff3d98811e5ee2b88c4196a4775051a245aae36fbeeed655918bcfa82c"
+      },
+      {
+        "focused_terms": [
+          "event"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_button.h",
+        "sha256": "f9804ee6e26077f6f1c5fa3e5a80a81e9080615cb99428b07b997cef199df67b"
+      },
+      {
+        "focused_terms": [
+          "event"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_camera.h",
+        "sha256": "c2b021c46b9f613335d0d4029e608ec5f0c07b5ce6364810fc44ae9dc485b956"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "flush",
+          "key",
+          "redraw",
+          "text",
+          "widget"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_core.h",
+        "sha256": "c2efcd5b575998025de7fb1643b7f77d46372771a3dc01be2414c0d2316a732a"
+      },
+      {
+        "focused_terms": [
+          "event"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_file_attrs.h",
+        "sha256": "ba1f70e35982b2440c26c4f837be6a45a7e68ab055ba4e5fd881d60d1f2f0555"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "redraw",
+          "text"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_grid.h",
+        "sha256": "0afd757fc7359f1b3253a92ff04273e559ced2186d7f722105c5276e169bd001"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "text"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_number.h",
+        "sha256": "045f2cae2ceada443dd767479560489210db47ca3238f20b9f8482786235914c"
+      },
+      {
+        "focused_terms": [
+          "event"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_pic.h",
+        "sha256": "9f9725a89e76c882ef15358999759ff2a8a7959610fe7df5408178d26d517502"
+      },
+      {
+        "focused_terms": [
+          "event"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_player.h",
+        "sha256": "51aae52b414ca0ed131f1be70f3e544303163993096bf3ee95474fbcc8428ea0"
+      },
+      {
+        "focused_terms": [
+          "event"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_progress.h",
+        "sha256": "40fc9c703d392b3bea66e5e03876fdf6ad8fbf6f61ec2ac6576b2cd65c4b7e89"
+      },
+      {
+        "focused_terms": [
+          "event"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_progress_multi.h",
+        "sha256": "e6ba4701db12fef43c5f9f369781b77cbea37ae023767ed280277b8d4a81d3e5"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "text"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_slider.h",
+        "sha256": "3c631cd325f0b3e8b0ea373712d570b8495bbe02251ec816e5c695751894f33e"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "text"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_slider_vert.h",
+        "sha256": "0061e0b2a4d62b4bd59003f6ad6831033fd1982d12a24097fe9240b09ce97de5"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "text"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_text.h",
+        "sha256": "561dcdb64707720a1e00180d8da76b627506aa952762ac15aaa0ec29ca12fcc9"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "text"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_time.h",
+        "sha256": "5a63fd9f8b2a786ffbfcfa4845f2e0cf7ef9f8ec0f253c3d2838847955233b74"
+      },
+      {
+        "focused_terms": [
+          "event"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_watch.h",
+        "sha256": "8547a4001c8647d1e4eceeffa594251974d13ec3d4be99c22c024e7c379f5424"
+      },
+      {
+        "focused_terms": [
+          "redraw",
+          "text"
+        ],
+        "path": "include_lib/utils/ui/ui/ui_wave.h",
+        "sha256": "9695f89e55232ed99bf0aa92bc70f6b7a7bd4679d57c191f68e31a5c23b9b687"
+      },
+      {
+        "focused_terms": [
+          "event",
+          "key"
+        ],
+        "path": "include_lib/utils/ui/ui/window.h",
+        "sha256": "fa720c1cb4274875ad2b5f210cc65aa3d8d233036c54b2350cf517aeeb052000"
+      },
+      {
+        "focused_terms": [
+          "lcd"
+        ],
+        "path": "include_lib/utils/ui/ui_simple/ui_res.h",
+        "sha256": "b0f39d2987ca7f5a71d72ca577ba986214fea777bab1673e9d95944b192b0fd9"
+      }
+    ],
+    "functions": [
+      {
+        "file": "apps/common/ui/GUI_GIF.c",
+        "name": "GUI__Read16"
+      },
+      {
+        "file": "apps/common/ui/GUI_GIF.c",
+        "name": "GUI__Read32"
+      },
+      {
+        "file": "apps/common/ui/GUI_GIF.c",
+        "name": "GUI_GIF__GetNextByte"
+      },
+      {
+        "file": "apps/common/ui/GUI_GIF.c",
+        "name": "GUI_GIF__InitLZW"
+      },
+      {
+        "file": "apps/common/ui/GUI_GIF.c",
+        "name": "GUI_GIF__ReadData"
+      },
+      {
+        "file": "apps/common/ui/GUI_GIF.c",
+        "name": "GUI_GIF__GetData"
+      },
+      {
+        "file": "apps/common/ui/GUI_GIF.c",
+        "name": "GUI_GIF_GetInfo"
+      },
+      {
+        "file": "apps/common/ui/GUI_GIF.c",
+        "name": "Picture_DrawFromData"
+      },
+      {
+        "file": "apps/common/ui/font/fontinit.c",
+        "name": "ui_simple_putchar"
+      },
+      {
+        "file": "apps/common/ui/gif_api.c",
+        "name": "play_gif_to_lcd"
+      },
+      {
+        "file": "apps/common/ui/include/GUI_GIF_Private.h",
+        "name": "GUI_GET_DATA_FUNC"
+      },
+      {
+        "file": "apps/common/ui/include/GUI_GIF_Private.h",
+        "name": "GUI_GIF__ReadData"
+      },
+      {
+        "file": "apps/common/ui/include/GUI_GIF_Private.h",
+        "name": "GUI_GIF__GetData"
+      },
+      {
+        "file": "apps/common/ui/include/GUI_GIF_Private.h",
+        "name": "GUI_GIF__InitLZW"
+      },
+      {
+        "file": "apps/common/ui/include/GUI_GIF_Private.h",
+        "name": "GUI_GIF__GetNextByte"
+      },
+      {
+        "file": "apps/common/ui/include/GUI_GIF_Private.h",
+        "name": "GUI_GIF_GetInfo"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_data_driver.h",
+        "name": "set_lcd_data_driver_lcd_h_w"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_data_driver.h",
+        "name": "set_lcd_data_size"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_data_driver.h",
+        "name": "set_lcd_yuv420_data_size"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_data_driver.h",
+        "name": "set_lcd_bk_on"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_data_driver.h",
+        "name": "set_lcd_te_pgio"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_data_driver.h",
+        "name": "ui_send_data_ready"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_data_driver.h",
+        "name": "set_lcd_show_data_mode"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_data_driver.h",
+        "name": "get_lcd_show_deta_mode"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_data_driver.h",
+        "name": "set_lcd_ui_x_y"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_data_driver.h",
+        "name": "get_lcd_turn_mode"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_data_driver.h",
+        "name": "picture_compose_task_init"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_data_driver.h",
+        "name": "lcd_data_free_camera_lbuf"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_rst_pinstate"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_cs_pinstate"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_rs_pinstate"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_bl_pinstate"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "touch_int_pinstate"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "touch_reset_pinstate"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_send_byte"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_send_map"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_req_buf_update"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_read_data"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "user_lcd_init"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "user_ui_lcd_init"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "ui_show_frame"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_show_frame"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "play_gif_to_lcd"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_set_draw_area"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_interface_set_non_block"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_interface_non_block_wait"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_interface_get_non_block"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_check_pin_io_dir"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_TE_wakeup_send_data_task_init"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_lvgl_full"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "led7_ui_init"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_set_main_menu"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_menu_reflash"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_get_app_menu"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_set_led"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_set_auto_reflash"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_close_main_menu"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_set_tmp_menu"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_common"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "lcd_ui_init"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_hide_main"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_show_main"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_server_msg_post"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_hide_curr_main"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_touch_msg_post"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_touch_msg_post_withcallback"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_key_msg_post"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "key_ui_takeover"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "key_is_ui_takeover"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_touch_timer_delete"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_touch_timer_start"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_auto_shut_down_modify"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_auto_shut_down_enable"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_auto_shut_down_disable"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_set_touch_event"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "lcd_backlight_status"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "lcd_backlight_ctrl"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_backlight_open"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_backlight_close"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "lcd_sleep_ctrl"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "key_is_ui_takeover"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "key_ui_takeover"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "post_ui_msg"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_show_main"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_hide_main"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_hide_curr_main"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_return_page_pop"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_return_page_push"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_return_page_clear"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_server_msg_post"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_key_msg_post"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_touch_msg_post"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_touch_msg_post_withcallback"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_message_handler"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_touch_timer_delete"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_touch_timer_start"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_set_touch_event"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_auto_shut_down_enable"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_auto_shut_down_disable"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_set_shut_down_time"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_get_shut_down_time"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_auto_shut_down_modify"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "lcd_bl_idle_query"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_sysinfo_init"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_task"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_file_check_valid"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_upgrade_file_check_valid"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "lcd_ui_init"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_480x272_8bits.c",
+        "name": "lcd_480x272_8bits_text"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_480x272_8bits.c",
+        "name": "ui_data_handle"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_480x272_8bits.c",
+        "name": "lcd_480x272_clearscreen"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_480x272_8bits.c",
+        "name": "lcd_480x272_8bits_init"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_480x272_8bits.c",
+        "name": "lcd_480x272_8bit_SetRange"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_480x272_8bits.c",
+        "name": "lcd_480x272_8bit_reset"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_480x272_8bits.c",
+        "name": "lcd_480x272_8bit_led_ctrl"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "set_lcd_data_driver_lcd_h_w"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "set_lcd_data_size"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "set_lcd_yuv420_data_size"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "set_lcd_bk_on"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "set_lcd_te_pgio"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "malloc_lcd_buf"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "free_lcd_buf"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "malloc_lcd_lbuf_size"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "free_lcd_lbuf"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "get_lcd_turn_mode"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "get_lcd_show_deta_mode"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "set_lcd_show_data_mode"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "set_lcd_ui_x_y"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "send_data_to_lcd"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "lcd_send_ok"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "te_send_task"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "ui_send_data_ready"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "picture_compose_task_0"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "picture_compose_task_1"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "picture_compose_task_init"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_rst_pinstate"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_cs_pinstate"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_check_pin_io_dir"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_rs_pinstate"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_bl_pinstate"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "touch_int_pinstate"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "touch_reset_pinstate"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_send_byte"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_send_map"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_read_data"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_req_buf_update"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_send_ok"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "get_lcd_send_ok"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_interface_init"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_interface_get_non_block"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_interface_set_non_block"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_interface_non_block_wait"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_init"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "malloc_lcd_buf"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "user_lcd_init"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "user_ui_lcd_init"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_ui_init"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_get_screen_info"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_buffer_malloc"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_buffer_free"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "ui_draw"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_draw"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "user_draw"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_draw_to_dev"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_set_draw_area"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_clear_screen"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_backlight_power"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_backlight_ctrl"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_sleep_control"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_backlight_status"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_get_width_height"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_get_color_format_rgb24"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_lvgl_full"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_hx8357.c",
+        "name": "HX8357_clear_screen"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_ili9341.c",
+        "name": "ILI9341_clear_screen"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_ili9481.c",
+        "name": "ili9481_clear_screen"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_ili9481.c",
+        "name": "FT6236_task_init"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_ili9488.c",
+        "name": "ili9488_clear_screen"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_ili9488.c",
+        "name": "FT6236_task_init"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_st7735s.c",
+        "name": "ST7735S_clear_screen"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_st7789s.c",
+        "name": "ST7789S_clear_screen"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_st7789t3.c",
+        "name": "DispColor"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_st7789t3.c",
+        "name": "LCD_Init"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_st7789t3.c",
+        "name": "spi_task"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_st7789t3.c",
+        "name": "spi_task_init"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_st7789v.c",
+        "name": "ST7789V_clear_screen"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_tm9486.c",
+        "name": "HX8357_clear_screen"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_tm9486.c",
+        "name": "lcd_35510_init"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "name": "post_ui_msg"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "name": "ui_simple_key_msg_post"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "name": "clear_lcd"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "name": "draw_lcd"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "name": "clear_lcd_area"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "name": "app_get_curr_task"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "name": "demo_simple_ui_mode"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "name": "ui_task_loop"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "name": "test_ui"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "name": "ui_simple_putchar"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "name": "ui_task"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "name": "lcd_ui_init"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/ui.c",
+        "name": "draw_slider"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/ui.c",
+        "name": "UI_Slider"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/ui.c",
+        "name": "UI_Progress"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/ui.c",
+        "name": "ClearLcdBuf_Page"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/ui_mainmenu.c",
+        "name": "findtaskexist"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/ui_mainmenu.c",
+        "name": "draw_mainmenu"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/ui_mainmenu.c",
+        "name": "UI_mainmenu"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "post_ui_msg"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "ui_set_tmp_menu"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "ui_set_main_menu"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "ui_close_main_menu"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "ui_get_app_menu"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "ui_strick_loop"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "__ui_menu_reflash_action"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "__ui_user_action"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "__ui_main_close_action"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "__ui_main_open_action"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "__ui_strick_action"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "ui_task"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "led7_ui_init"
+      },
+      {
+        "file": "apps/common/ui/oled/oled.c",
+        "name": "OLED_Display_On"
+      },
+      {
+        "file": "apps/common/ui/oled/oled.c",
+        "name": "OLED_Display_Off"
+      },
+      {
+        "file": "apps/common/ui/oled/oled.c",
+        "name": "OLED_DrawBMP"
+      },
+      {
+        "file": "apps/common/ui/oled/oled.h",
+        "name": "OLED_Display_On"
+      },
+      {
+        "file": "apps/common/ui/oled/oled.h",
+        "name": "OLED_Display_Off"
+      },
+      {
+        "file": "apps/common/ui/oled/oled.h",
+        "name": "OLED_DrawPoint"
+      },
+      {
+        "file": "apps/common/ui/oled/oled.h",
+        "name": "OLED_DrawBMP"
+      },
+      {
+        "file": "apps/common/ui/oled/oled.h",
+        "name": "OLED_Task"
+      },
+      {
+        "file": "apps/common/ui/touch_panel/ft6236.c",
+        "name": "get_touch_x_y_status"
+      },
+      {
+        "file": "apps/common/ui/touch_panel/ft6236.c",
+        "name": "ui_touch_msg_post"
+      },
+      {
+        "file": "apps/common/ui/touch_panel/ft6236.c",
+        "name": "set_touch_enable"
+      },
+      {
+        "file": "apps/common/ui/touch_panel/ft6236.c",
+        "name": "set_touch_disable"
+      },
+      {
+        "file": "apps/common/ui/touch_panel/ft6236.c",
+        "name": "my_touch_test_task"
+      },
+      {
+        "file": "apps/common/ui/touch_panel/ft6236.c",
+        "name": "FT6236_task_init"
+      },
+      {
+        "file": "apps/common/ui/touch_panel/gt911.c",
+        "name": "my_touch_test_task"
+      },
+      {
+        "file": "apps/common/ui/touch_panel/gt911.c",
+        "name": "GT911_task_init"
+      },
+      {
+        "file": "apps/common/ui/touch_panel/gt911.c",
+        "name": "ui_touch_msg_post"
+      },
+      {
+        "file": "apps/common/ui/ui_action_video.c",
+        "name": "vdec_server_event_handler"
+      },
+      {
+        "file": "apps/common/ui/ui_action_video.c",
+        "name": "display_task"
+      },
+      {
+        "file": "apps/common/ui/ui_action_video.c",
+        "name": "ui_server_init"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_platform_ok"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "draw_rect_range_check"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "watch_get_uuid"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "br23_unload_window"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "br23_open_draw_context"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "br23_get_draw_context"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "br23_put_draw_context"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "br23_set_draw_context"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "br23_close_draw_context"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "__draw_vertical_line"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "__draw_line"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "br23_draw_rect"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "br23_draw_image"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "reinit_text_font_init"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "br23_show_text"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "br23_draw_point"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_fill_rect"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_draw_image"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_draw_ascii"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_draw_text"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_draw_strpic"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_draw_set_pixel"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_draw_get_pixel"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_draw_get_mixed_pixel"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_platform_init"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_style_file_version_compare"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_watch_poweron_update_check"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_upgrade_file_check_valid"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_file_check_valid"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/camera_lcd_demo.c",
+        "name": "lcd_get_color_format_rgb24"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/camera_lcd_demo.c",
+        "name": "lcd_show_frame_to_dev"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/camera_lcd_demo.c",
+        "name": "lcd_get_width_height"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/camera_lcd_demo.c",
+        "name": "user_lcd_init"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/camera_lcd_demo.c",
+        "name": "camera_show_lcd"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/camera_lcd_demo.c",
+        "name": "yuv2rgb_task"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/camera_lcd_demo.c",
+        "name": "yuv2rgb_task_kill"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/camera_lcd_demo.c",
+        "name": "uvc_video_jpeg2yuv_task"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/camera_lcd_demo.c",
+        "name": "camera_to_lcd_init"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/hid_keyboard.c",
+        "name": "hid_keyboard_get_report_desc_size"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/hid_keyboard.c",
+        "name": "hid_keyboard_send_onekey"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/hid_keyboard.c",
+        "name": "hid_keyboard_send_wc_gbk"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/hid_keyboard.c",
+        "name": "hid_keyboard_send"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/hid_keyboard.c",
+        "name": "hid_keyboard_output"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/hid_keyboard.c",
+        "name": "hid_keyboard_set_usb_dev"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/raw_stream_to_lcd.c",
+        "name": "lcd_get_color_format_rgb24"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/raw_stream_to_lcd.c",
+        "name": "lcd_show_frame_to_dev"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/raw_stream_to_lcd.c",
+        "name": "lcd_get_width_height"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/raw_stream_to_lcd.c",
+        "name": "user_lcd_init"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/raw_stream_to_lcd.c",
+        "name": "camera_show_lcd"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/raw_stream_to_lcd.c",
+        "name": "yuv2rgb_task"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/raw_stream_to_lcd.c",
+        "name": "yuv2rgb_task_kill"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/raw_stream_to_lcd.c",
+        "name": "uvc_video_jpeg2yuv_task"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/raw_stream_to_lcd.c",
+        "name": "raw_stream_to_lcd"
+      },
+      {
+        "file": "apps/demo/demo_ui/board/wl82/JL_AC79_DevKitBoard.c",
+        "name": "read_power_key"
+      },
+      {
+        "file": "apps/demo/demo_ui/board/wl82/JL_AC79_DevKitBoard.c",
+        "name": "sys_power_poweroff_wait_powerkey_up"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "v_grid_onkey"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "doub_grid_onkey"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "utf8_text_display_handler"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "utf8_text_onchange"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "number_display_handler"
+      }
+    ],
+    "macros": [
+      {
+        "file": "apps/common/ui/GUI_GIF.c",
+        "name": "GUI_GIF_INPUT_BUFFER_SIZE",
+        "value": "0"
+      },
+      {
+        "file": "apps/common/ui/GUI_GIF.c",
+        "name": "GIF_PLAINTEXT",
+        "value": "0x01"
+      },
+      {
+        "file": "apps/common/ui/font/fontinit.c",
+        "name": "TCFG_SPI_LCD_ENABLE",
+        "value": "1"
+      },
+      {
+        "file": "apps/common/ui/include/GUI_GIF_Private.h",
+        "name": "GUI_GIF_PRIVATE_H",
+        "value": "#include \"system"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_config.h",
+        "name": "__LCD_CONFIG_H__",
+        "value": "#include \"app_config.h\""
+      },
+      {
+        "file": "apps/common/ui/include/lcd_config.h",
+        "name": "LCD_W",
+        "value": "320"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_config.h",
+        "name": "LCD_H",
+        "value": "480"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_config.h",
+        "name": "LCD_YUV420_DATA_SIZE",
+        "value": "LCD_W*LCD_H*3"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_config.h",
+        "name": "LCD_RGB565_DATA_SIZE",
+        "value": "LCD_W*LCD_H*2"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_config.h",
+        "name": "LCD_RGB888_DATA_SIZE",
+        "value": "LCD_W*LCD_H*3"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_data_driver.h",
+        "name": "_LCD_DATA_DRIVER_H_",
+        "value": "#if 0"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "__ALL_LCD_DRIVER_H__",
+        "value": "#include \"app_config.h\""
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "LCD_DEBUG_ENABLE",
+        "value": "0"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "_UI_API_H_",
+        "value": "#include \"app_config.h\""
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "UI_SHOW_MENU",
+        "value": "ui_set_tmp_menu"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "UI_MSG_POST",
+        "value": "ui_server_msg_post"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "CURR_WINDOW_MAIN",
+        "value": "(0)"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "UI_NO_ARG",
+        "value": "(-1)"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "UI_TASK_NAME",
+        "value": "\"ui\""
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_480x272_8bits.c",
+        "name": "LCD_W",
+        "value": "480"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_480x272_8bits.c",
+        "name": "LCD_H",
+        "value": "272"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_480x272_8bits.c",
+        "name": "LCD_RGB888_DATA_SIZE",
+        "value": "LCD_W*LCD_H*3"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_hx8357.c",
+        "name": "LCD_W",
+        "value": "480"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_hx8357.c",
+        "name": "LCD_H",
+        "value": "320"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_hx8357.c",
+        "name": "LCD_W",
+        "value": "320"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_hx8357.c",
+        "name": "LCD_H",
+        "value": "480"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_ili9341.c",
+        "name": "LCD_W",
+        "value": "320"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_ili9341.c",
+        "name": "LCD_H",
+        "value": "240"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_ili9341.c",
+        "name": "LCD_W",
+        "value": "240"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_ili9341.c",
+        "name": "LCD_H",
+        "value": "320"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_ili9481.c",
+        "name": "LCD_W",
+        "value": "480"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_ili9481.c",
+        "name": "LCD_H",
+        "value": "320"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_ili9481.c",
+        "name": "LCD_W",
+        "value": "320"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_ili9481.c",
+        "name": "LCD_H",
+        "value": "480"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_ili9488.c",
+        "name": "LCD_W",
+        "value": "480"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_ili9488.c",
+        "name": "LCD_H",
+        "value": "320"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_ili9488.c",
+        "name": "LCD_W",
+        "value": "320"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_ili9488.c",
+        "name": "LCD_H",
+        "value": "480"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_st7735s.c",
+        "name": "st7735s_lcd_w",
+        "value": "128"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_st7735s.c",
+        "name": "st7735s_lcd_h",
+        "value": "128"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_st7789s.c",
+        "name": "LCD_W",
+        "value": "320"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_st7789s.c",
+        "name": "LCD_H",
+        "value": "240"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_st7789s.c",
+        "name": "LCD_W",
+        "value": "240"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_st7789s.c",
+        "name": "LCD_H",
+        "value": "320"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_st7789t3.c",
+        "name": "LCD_SDA",
+        "value": "IO_PORTA_04"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_st7789t3.c",
+        "name": "LCD_SCL",
+        "value": "IO_PORTA_03"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_st7789t3.c",
+        "name": "LCD_RS",
+        "value": "IO_PORTA_02"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_st7789t3.c",
+        "name": "LCD_REST",
+        "value": "IO_PORTA_05"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_st7789t3.c",
+        "name": "LCD_CS",
+        "value": "IO_PORTA_06"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_tm9486.c",
+        "name": "LCD_W",
+        "value": "480"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_tm9486.c",
+        "name": "LCD_H",
+        "value": "800"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "name": "UI_TASK_NAME",
+        "value": "\"ui\""
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "name": "__ui_display",
+        "value": "(&__ui_display_env)"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/ui.c",
+        "name": "LCDPAGE",
+        "value": "8"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/ui.c",
+        "name": "LCDCOLUMN",
+        "value": "128"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/ui_mainmenu.c",
+        "name": "LCDPAGE",
+        "value": "8"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/ui_mainmenu.c",
+        "name": "LCDCOLUMN",
+        "value": "128"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "UI_DEBUG_ENABLE",
+        "value": "#ifdef UI_DEBUG_ENABLE"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "UI_NO_ARG",
+        "value": "(-1)"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "UI_TASK_NAME",
+        "value": "\"ui\""
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "__ui_display",
+        "value": "(&__ui_display_env)"
+      },
+      {
+        "file": "apps/common/ui/touch_panel/ft6236.c",
+        "name": "FTS_REG_LCD_BUSY_NUM",
+        "value": "0xAB"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "UI_DEBUG",
+        "value": "0"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "UI_PUTS",
+        "value": "puts"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "UI_PRINTF",
+        "value": "printf"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "TEXT_MONO_CLR",
+        "value": "0x555aaa"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "TEXT_MONO_INV",
+        "value": "0xaaa555"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/camera_lcd_demo.c",
+        "name": "USE_CUT_TO_LCD",
+        "value": "1"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/camera_lcd_demo.c",
+        "name": "YUV2RGB_TASK_NAME",
+        "value": "\"yuv2rgb\""
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/raw_stream_to_lcd.c",
+        "name": "USE_CUT_TO_LCD",
+        "value": "0"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/raw_stream_to_lcd.c",
+        "name": "YUV2RGB_TASK_NAME",
+        "value": "\"yuv2rgb\""
+      },
+      {
+        "file": "apps/demo/demo_ui/board/wl82/JL_AC79_DevKitBoard.c",
+        "name": "ADKEY_UPLOAD_R",
+        "value": "22"
+      },
+      {
+        "file": "apps/demo/demo_ui/board/wl82/JL_AC79_DevKitBoard.c",
+        "name": "ADKEY_V_9",
+        "value": "((ADC_09 + ADC_VDDIO)"
+      },
+      {
+        "file": "apps/demo/demo_ui/board/wl82/JL_AC79_DevKitBoard.c",
+        "name": "ADKEY_V_8",
+        "value": "((ADC_08 + ADC_09)"
+      },
+      {
+        "file": "apps/demo/demo_ui/board/wl82/JL_AC79_DevKitBoard.c",
+        "name": "ADKEY_V_7",
+        "value": "((ADC_07 + ADC_08)"
+      },
+      {
+        "file": "apps/demo/demo_ui/board/wl82/JL_AC79_DevKitBoard.c",
+        "name": "ADKEY_V_6",
+        "value": "((ADC_06 + ADC_07)"
+      },
+      {
+        "file": "apps/demo/demo_ui/board/wl82/JL_AC79_DevKitBoard.c",
+        "name": "ADKEY_V_5",
+        "value": "((ADC_05 + ADC_06)"
+      },
+      {
+        "file": "apps/demo/demo_ui/board/wl82/JL_AC79_DevKitBoard.c",
+        "name": "ADKEY_V_4",
+        "value": "((ADC_04 + ADC_05)"
+      },
+      {
+        "file": "apps/demo/demo_ui/board/wl82/JL_AC79_DevKitBoard.c",
+        "name": "ADKEY_V_3",
+        "value": "((ADC_03 + ADC_04)"
+      },
+      {
+        "file": "apps/demo/demo_ui/board/wl82/JL_AC79_DevKitBoard.c",
+        "name": "ADKEY_V_2",
+        "value": "((ADC_02 + ADC_03)"
+      },
+      {
+        "file": "apps/demo/demo_ui/board/wl82/JL_AC79_DevKitBoard.c",
+        "name": "ADKEY_V_1",
+        "value": "((ADC_01 + ADC_02)"
+      },
+      {
+        "file": "apps/demo/demo_ui/board/wl82/JL_AC79_DevKitBoard.c",
+        "name": "ADKEY_V_0",
+        "value": "((ADC_00 + ADC_01)"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "UI_INTERFACE_DEMO",
+        "value": ""
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "UI_BATTERY_TEST",
+        "value": ""
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "UI_SD_TEST",
+        "value": ""
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "UI_PAGE_CHANGE_TEST",
+        "value": ""
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "UI_TIMER_TEST",
+        "value": ""
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "UI_TEXT_TEST",
+        "value": ""
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "UI_ANI_TEST",
+        "value": ""
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "UI_CHANGE_ATTRIBUTE",
+        "value": ""
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "UI_SLIDER_TEST",
+        "value": ""
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "LCD_SIZE",
+        "value": "(240*320)"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_2_1.c",
+        "name": "TEXT_WIFI0",
+        "value": "BASEFORM_33"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_2_1.c",
+        "name": "TEXT_WIFI1",
+        "value": "BASEFORM_34"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_2_1.c",
+        "name": "TEXT_WIFI2",
+        "value": "BASEFORM_35"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_2_1.c",
+        "name": "TEXT_WIFI3",
+        "value": "BASEFORM_38"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_2_1.c",
+        "name": "TEXT_WIFI4",
+        "value": "BASEFORM_39"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_2_1.c",
+        "name": "TITLE_TEXT",
+        "value": "BASEFORM_41"
+      },
+      {
+        "file": "include_lib/driver/device/key/adkey.h",
+        "name": "DEVICE_ADKEY_H",
+        "value": "#include \"generic"
+      },
+      {
+        "file": "include_lib/driver/device/key/adkey.h",
+        "name": "ADKEY_MAX_NUM",
+        "value": "10"
+      },
+      {
+        "file": "include_lib/driver/device/key/ctmu_key.h",
+        "name": "DEVICE_CTMU_KEY_H",
+        "value": "#include \"generic"
+      },
+      {
+        "file": "include_lib/driver/device/key/iokey.h",
+        "name": "DEVICE_IOKEY_H",
+        "value": "#include \"generic"
+      },
+      {
+        "file": "include_lib/driver/device/key/irkey.h",
+        "name": "DEVICE_IRKEY_H",
+        "value": "#include \"generic"
+      },
+      {
+        "file": "include_lib/driver/device/key/key_driver.h",
+        "name": "SYS_KEY_DRIVER_H",
+        "value": "#include \"generic"
+      },
+      {
+        "file": "include_lib/driver/device/key/key_driver.h",
+        "name": "KEY_NOT_SUPPORT",
+        "value": "0x01"
+      },
+      {
+        "file": "include_lib/driver/device/key/rdec_key.h",
+        "name": "RDEC_KEY_H",
+        "value": "#include \"generic"
+      },
+      {
+        "file": "include_lib/driver/device/key/slidekey.h",
+        "name": "DEVICE_SLIDEKEY_H",
+        "value": "#include \"generic"
+      },
+      {
+        "file": "include_lib/driver/device/key/tent600_key.h",
+        "name": "DEVICE_TENT600_KEY_H",
+        "value": "#include \"generic"
+      },
+      {
+        "file": "include_lib/driver/device/key/touch_key.h",
+        "name": "DEVICE_TOUCH_KEY_H",
+        "value": "#include \"generic"
+      },
+      {
+        "file": "include_lib/system/task.h",
+        "name": "TASK_PRIORITY_H",
+        "value": "#include \"os"
+      },
+      {
+        "file": "include_lib/utils/event/bt_event.h",
+        "name": "BT_EVENT_H",
+        "value": "#include \"event"
+      },
+      {
+        "file": "include_lib/utils/event/event.h",
+        "name": "SYS_EVENT_H",
+        "value": "#include \"generic"
+      },
+      {
+        "file": "include_lib/utils/event/event.h",
+        "name": "SYS_ALL_EVENT",
+        "value": "0xffff"
+      },
+      {
+        "file": "include_lib/utils/event/event.h",
+        "name": "SYS_KEY_EVENT",
+        "value": "0x0001"
+      },
+      {
+        "file": "include_lib/utils/event/event.h",
+        "name": "SYS_TOUCH_EVENT",
+        "value": "0x0002"
+      },
+      {
+        "file": "include_lib/utils/event/event.h",
+        "name": "SYS_DEVICE_EVENT",
+        "value": "0x0004"
+      },
+      {
+        "file": "include_lib/utils/event/event.h",
+        "name": "SYS_NET_EVENT",
+        "value": "0x0008"
+      },
+      {
+        "file": "include_lib/utils/event/event.h",
+        "name": "SYS_BT_EVENT",
+        "value": "0x0010"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_EVENT_H",
+        "value": "#include \"event"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_POWER",
+        "value": "0"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_PREV",
+        "value": "1"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_NEXT",
+        "value": "2"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_PLAY",
+        "value": "3"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_VOLUME_DEC",
+        "value": "4"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_VOLUME_INC",
+        "value": "5"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_MODE",
+        "value": "6"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_MENU",
+        "value": "7"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_ENC",
+        "value": "8"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_PHONE",
+        "value": "9"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_PHOTO",
+        "value": "10"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_F1",
+        "value": "11"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_OK",
+        "value": "12"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_CANCLE",
+        "value": "13"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_LEFT",
+        "value": "14"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_UP",
+        "value": "15"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_RIGHT",
+        "value": "16"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_DOWN",
+        "value": "17"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_MUTE",
+        "value": "18"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_COLLECT",
+        "value": "19"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_LOCAL",
+        "value": "20"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_ADD",
+        "value": "21"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_MINUS",
+        "value": "22"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_0",
+        "value": "30"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_1",
+        "value": "31"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_2",
+        "value": "32"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_3",
+        "value": "33"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_4",
+        "value": "34"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_5",
+        "value": "35"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_6",
+        "value": "36"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_7",
+        "value": "37"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_8",
+        "value": "38"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_9",
+        "value": "39"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "NO_KEY",
+        "value": "255"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_K1",
+        "value": "13"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_K2",
+        "value": "6"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_K3",
+        "value": "4"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_K4",
+        "value": "5"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_K5",
+        "value": "12"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_K6",
+        "value": "10"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_K7",
+        "value": "8"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "KEY_K8",
+        "value": "0"
+      },
+      {
+        "file": "include_lib/utils/event/net_event.h",
+        "name": "NET_EVENT_H",
+        "value": "#include \"event"
+      },
+      {
+        "file": "include_lib/utils/event/touch_event.h",
+        "name": "TOUCH_EVENT_H",
+        "value": "#include \"event"
+      },
+      {
+        "file": "include_lib/utils/event/touch_event.h",
+        "name": "NO_TOUCH",
+        "value": "255"
+      },
+      {
+        "file": "include_lib/utils/ui/font/language_list.h",
+        "name": "Turkey",
+        "value": "17"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "UI_CONTROL_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "CTRL_TYPE_WINDOW",
+        "value": "2"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "CTRL_TYPE_LAYER",
+        "value": "4"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "CTRL_TYPE_TEXT",
+        "value": "12"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "CTRL_TYPE_PLAYER",
+        "value": "14"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "SLIDER_CHILD_PERSENT_TEXT",
+        "value": "(SLIDER_CHILD_BEGIN+3)"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "VSLIDER_CHILD_PERSENT_TEXT",
+        "value": "(VSLIDER_CHILD_BEGIN+3)"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "UI_TEXT_LIST_MAX_NUM",
+        "value": "3"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/layer.h",
+        "name": "LAYER_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/p.h",
+        "name": "UI_P_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui.h",
+        "name": "UI_CORE_H",
+        "value": "#include \"window.h\""
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_animation.h",
+        "name": "UI_PIC_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_bar_chart.h",
+        "name": "__UI_BAT_CHART_H__",
+        "value": "#include \"typedef.h\""
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_battery.h",
+        "name": "UI_BATTERY_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_browser.h",
+        "name": "UI_BROWSER_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_button.h",
+        "name": "UI_BUTTON_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_camera.h",
+        "name": "UI_CAMERA_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_core.h",
+        "name": "UI_ELEMENT_CORE_H",
+        "value": "#include \"typedef.h\""
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_core.h",
+        "name": "UI_CTRL_BUTTON",
+        "value": "0"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_file_attrs.h",
+        "name": "UI_FILE_ATTRS_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_grid.h",
+        "name": "UI_GRID_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_number.h",
+        "name": "UI_NUMBER_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_pic.h",
+        "name": "UI_PIC_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_player.h",
+        "name": "UI_PLAYER_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_progress.h",
+        "name": "UI_PROGRESS_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_progress_multi.h",
+        "name": "UI_PROGRESS_MULTI_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_slider.h",
+        "name": "UI_SLIDER_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_slider_vert.h",
+        "name": "UI_SLIDER_VERT_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_text.h",
+        "name": "UI_TEXT_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_time.h",
+        "name": "UI_TIME_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_watch.h",
+        "name": "UI_WATCH_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_wave.h",
+        "name": "__UI_WAVE_H__",
+        "value": "#include \"typedef.h\""
+      },
+      {
+        "file": "include_lib/utils/ui/ui/window.h",
+        "name": "UI_WINDOW_H",
+        "value": "#include \"ui"
+      },
+      {
+        "file": "include_lib/utils/ui/ui_simple/ui_res.h",
+        "name": "uint8",
+        "value": "u8"
+      },
+      {
+        "file": "include_lib/utils/ui/ui_simple/ui_res.h",
+        "name": "uint16",
+        "value": "u16"
+      },
+      {
+        "file": "include_lib/utils/ui/ui_simple/ui_res.h",
+        "name": "uint32",
+        "value": "u32"
+      },
+      {
+        "file": "include_lib/utils/ui/ui_simple/ui_res.h",
+        "name": "LCDPAGE",
+        "value": "8"
+      },
+      {
+        "file": "include_lib/utils/ui/ui_simple/ui_res.h",
+        "name": "LCDCOLUMN",
+        "value": "128"
+      },
+      {
+        "file": "include_lib/utils/ui/ui_simple/ui_res.h",
+        "name": "MENUICONWIDTH",
+        "value": "12"
+      },
+      {
+        "file": "include_lib/utils/ui/ui_simple/ui_res.h",
+        "name": "MENUITEMHEIGHT",
+        "value": "16"
+      }
+    ],
+    "structs": [
+      {
+        "file": "apps/common/ui/include/lcd_data_driver.h",
+        "name": "lcd_task_info"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_data_driver.h",
+        "name": "lcd_compose_info"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_info"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "ui_lcd_platform_data"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_device"
+      },
+      {
+        "file": "apps/common/ui/include/lcd_drive.h",
+        "name": "lcd_interface"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_devices_cfg"
+      },
+      {
+        "file": "apps/common/ui/include/ui_api.h",
+        "name": "ui_touch_event"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_server_env"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "touch_event"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "uimsg_handl"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "window"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_msg"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "element_key_event"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "ui_style"
+      },
+      {
+        "file": "apps/common/ui/lcd/lcd_ui_api.c",
+        "name": "element_touch_event"
+      },
+      {
+        "file": "apps/common/ui/lcd/ui_sys_param_api.c",
+        "name": "UI_DISPLAY"
+      },
+      {
+        "file": "apps/common/ui/lcd/ui_sys_param_api.c",
+        "name": "_UI_SYS_PARAM"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "lcd_task_info"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_data_driver.c",
+        "name": "lcd_compose_info"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_device"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "ui_lcd_platform_data"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "ui_devices_cfg"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_info"
+      },
+      {
+        "file": "apps/common/ui/lcd_driver/lcd_drive.c",
+        "name": "lcd_interface"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "name": "ui_dis_api"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "name": "ui_display_env"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "name": "lcd_interface"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/lcd_simple_api.c",
+        "name": "lcd_info"
+      },
+      {
+        "file": "apps/common/ui/lcd_simple/ui.c",
+        "name": "sys_event"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "ui_display_env"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "ui_dis_api"
+      },
+      {
+        "file": "apps/common/ui/led7/led7_ui_api.c",
+        "name": "ui_devices_cfg"
+      },
+      {
+        "file": "apps/common/ui/touch_panel/ft6236.c",
+        "name": "touch_hdl"
+      },
+      {
+        "file": "apps/common/ui/touch_panel/ft6236.c",
+        "name": "touch_event"
+      },
+      {
+        "file": "apps/common/ui/touch_panel/ft6236.c",
+        "name": "ui_devices_cfg"
+      },
+      {
+        "file": "apps/common/ui/touch_panel/ft6236.c",
+        "name": "ui_lcd_platform_data"
+      },
+      {
+        "file": "apps/common/ui/touch_panel/gt911.c",
+        "name": "touch_hdl"
+      },
+      {
+        "file": "apps/common/ui/touch_panel/gt911.c",
+        "name": "touch_event"
+      },
+      {
+        "file": "apps/common/ui/touch_panel/gt911.c",
+        "name": "ui_devices_cfg"
+      },
+      {
+        "file": "apps/common/ui/touch_panel/gt911.c",
+        "name": "ui_lcd_platform_data"
+      },
+      {
+        "file": "apps/common/ui/ui_action_video.c",
+        "name": "lcd_interface"
+      },
+      {
+        "file": "apps/common/ui/ui_action_video.c",
+        "name": "lcd_info"
+      },
+      {
+        "file": "apps/common/ui/ui_action_video.c",
+        "name": "ui_devices_cfg"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "fb_var_screeninfo"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "window_head"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_file_head"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_load_info"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_platform_api"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_priv"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "lcd_interface"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "lcd_info"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "draw_context"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_file_browser"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_file_attrs"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_style"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "window_info"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_ctrl_info_head"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_image_list_t"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_image_list"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_text_list_t"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_image_attrs"
+      },
+      {
+        "file": "apps/common/ui/ui_driver/interface/ui_platform.c",
+        "name": "ui_text_attrs"
+      },
+      {
+        "file": "apps/demo/demo_DevKitBoard/hid_keyboard.c",
+        "name": "usb_hid_keyboard"
+      },
+      {
+        "file": "apps/demo/demo_ui/app_main.c",
+        "name": "task_info"
+      },
+      {
+        "file": "apps/demo/demo_ui/board/wl82/JL_AC79_DevKitBoard.c",
+        "name": "adkey_platform_data"
+      },
+      {
+        "file": "apps/demo/demo_ui/board/wl82/JL_AC79_DevKitBoard.c",
+        "name": "ui_lcd_platform_data"
+      },
+      {
+        "file": "apps/demo/demo_ui/board/wl82/JL_AC79_DevKitBoard.c",
+        "name": "ui_devices_cfg"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "lcd_interface"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "lcd_info"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "element_key_event"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "ui_grid"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "ui_battery"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "ui_time"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "ui_text"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "element_touch_event"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_0.c",
+        "name": "ui_devices_cfg"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_1.c",
+        "name": "ui_devices_cfg"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_1_2.c",
+        "name": "lcd_device"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_2_0.c",
+        "name": "ui_battery"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_2_0.c",
+        "name": "ui_touch_event"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_2_1.c",
+        "name": "ui_grid"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_2_1.c",
+        "name": "element_touch_event"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_2_1.c",
+        "name": "ui_text"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_2_1.c",
+        "name": "ui_touch_event"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_2_3.c",
+        "name": "ui_text"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_2_3.c",
+        "name": "element_touch_event"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_2_3.c",
+        "name": "ui_grid"
+      },
+      {
+        "file": "apps/demo/demo_ui/demo/ui_demo_2_3.c",
+        "name": "ui_touch_event"
+      },
+      {
+        "file": "include_lib/driver/device/key/adkey.h",
+        "name": "adkey_platform_data"
+      },
+      {
+        "file": "include_lib/driver/device/key/adkey.h",
+        "name": "adkey_rtcvdd_platform_data"
+      },
+      {
+        "file": "include_lib/driver/device/key/ctmu_key.h",
+        "name": "touch_key_platform_data"
+      },
+      {
+        "file": "include_lib/driver/device/key/iokey.h",
+        "name": "one_io_key"
+      },
+      {
+        "file": "include_lib/driver/device/key/iokey.h",
+        "name": "two_io_key"
+      },
+      {
+        "file": "include_lib/driver/device/key/iokey.h",
+        "name": "iokey_port"
+      },
+      {
+        "file": "include_lib/driver/device/key/iokey.h",
+        "name": "iokey_platform_data"
+      },
+      {
+        "file": "include_lib/driver/device/key/irkey.h",
+        "name": "irkey_platform_data"
+      },
+      {
+        "file": "include_lib/driver/device/key/key_driver.h",
+        "name": "key_driver_para"
+      },
+      {
+        "file": "include_lib/driver/device/key/key_driver.h",
+        "name": "key_remap"
+      },
+      {
+        "file": "include_lib/driver/device/key/key_driver.h",
+        "name": "key_remap_data"
+      },
+      {
+        "file": "include_lib/driver/device/key/slidekey.h",
+        "name": "slidekey_port"
+      },
+      {
+        "file": "include_lib/driver/device/key/slidekey.h",
+        "name": "slidekey_platform_data"
+      },
+      {
+        "file": "include_lib/driver/device/key/tent600_key.h",
+        "name": "tent600_key_platform_data"
+      },
+      {
+        "file": "include_lib/driver/device/key/touch_key.h",
+        "name": "touch_key_port"
+      },
+      {
+        "file": "include_lib/driver/device/key/touch_key.h",
+        "name": "touch_key_platform_data"
+      },
+      {
+        "file": "include_lib/system/task.h",
+        "name": "task_info"
+      },
+      {
+        "file": "include_lib/utils/event/bt_event.h",
+        "name": "bt_event"
+      },
+      {
+        "file": "include_lib/utils/event/device_event.h",
+        "name": "device_event"
+      },
+      {
+        "file": "include_lib/utils/event/event.h",
+        "name": "rcsp_event"
+      },
+      {
+        "file": "include_lib/utils/event/event.h",
+        "name": "sys_event"
+      },
+      {
+        "file": "include_lib/utils/event/event.h",
+        "name": "static_event_handler"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "key_event"
+      },
+      {
+        "file": "include_lib/utils/event/key_event.h",
+        "name": "key_event_msg_table"
+      },
+      {
+        "file": "include_lib/utils/event/net_event.h",
+        "name": "net_event"
+      },
+      {
+        "file": "include_lib/utils/event/touch_event.h",
+        "name": "touch_event"
+      },
+      {
+        "file": "include_lib/utils/event/touch_event.h",
+        "name": "touch_event_msg_table"
+      },
+      {
+        "file": "include_lib/utils/ui/font/font_all.h",
+        "name": "dispbuf"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_ctrl_info_head"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_image_list"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_text_list"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_image_list_t"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_text_list_t"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_button_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "element_event_action"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_camera_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_player_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_time_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_number_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_pic_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_battery_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_text_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_grid_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_animation_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_slider_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_vslider_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_watch_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_progress_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_multiprogress_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_browser_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "ui_fattrs_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "layer_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "window_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/control.h",
+        "name": "control_event_header"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/layer.h",
+        "name": "layer"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/layer.h",
+        "name": "draw_context"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/layer.h",
+        "name": "layer_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/layer.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/layout.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/layout.h",
+        "name": "element_key_event"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/p.h",
+        "name": "ui_str"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/p.h",
+        "name": "element_text"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/p.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/p.h",
+        "name": "element_event_action"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/play_control.h",
+        "name": "touch_event"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/slider.h",
+        "name": "text"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui.h",
+        "name": "uimsg_handl"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui.h",
+        "name": "ui_style"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui.h",
+        "name": "element_key_event"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui.h",
+        "name": "element_touch_event"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui.h",
+        "name": "draw_context"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_animation.h",
+        "name": "ui_animation"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_animation.h",
+        "name": "ui_animation_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_animation.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_bar_chart.h",
+        "name": "barchart_text_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_bar_chart.h",
+        "name": "ui_barchart"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_bar_chart.h",
+        "name": "draw_context"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_battery.h",
+        "name": "ui_battery"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_battery.h",
+        "name": "ui_battery_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_battery.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_browser.h",
+        "name": "ui_browser"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_browser.h",
+        "name": "ui_file_browser"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_browser.h",
+        "name": "ui_grid"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_browser.h",
+        "name": "ui_browser_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_browser.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_browser.h",
+        "name": "ui_file_attrs"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_button.h",
+        "name": "ui_button_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_button.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_camera.h",
+        "name": "ui_camera"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_camera.h",
+        "name": "ui_camera_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_camera.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_core.h",
+        "name": "element_touch_event"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_core.h",
+        "name": "element_key_event"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_core.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_core.h",
+        "name": "event_action"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_core.h",
+        "name": "element_event_action"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_core.h",
+        "name": "draw_context"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_core.h",
+        "name": "ui_style"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_core.h",
+        "name": "ui_file_attrs"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_core.h",
+        "name": "ui_image_attrs"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_core.h",
+        "name": "ui_text_attrs"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_core.h",
+        "name": "ui_file_browser"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_core.h",
+        "name": "ui_platform_api"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_core.h",
+        "name": "ui_style_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_file_attrs.h",
+        "name": "ui_fattrs"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_file_attrs.h",
+        "name": "ui_file_attrs"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_file_attrs.h",
+        "name": "ui_fattrs_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_file_attrs.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_grid.h",
+        "name": "ui_grid_item_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_grid.h",
+        "name": "ui_grid_dynamic"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_grid.h",
+        "name": "ui_grid"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_grid.h",
+        "name": "draw_context"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_grid.h",
+        "name": "ui_grid_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_grid.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_number.h",
+        "name": "ui_number"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_number.h",
+        "name": "element_text"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_number.h",
+        "name": "ui_number_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_number.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_pic.h",
+        "name": "ui_pic"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_pic.h",
+        "name": "ui_pic_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_pic.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_player.h",
+        "name": "ui_player"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_player.h",
+        "name": "ui_player_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_player.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_progress.h",
+        "name": "ui_ctrl_info_head"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_progress.h",
+        "name": "ui_image_list"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_progress.h",
+        "name": "ui_progress"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_progress.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_progress_multi.h",
+        "name": "ui_ctrl_info_head"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_progress_multi.h",
+        "name": "ui_image_list"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_progress_multi.h",
+        "name": "ui_multiprogress"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_progress_multi.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_slider.h",
+        "name": "slider_text_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_slider.h",
+        "name": "ui_slider"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_slider.h",
+        "name": "ui_slider_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_slider.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_slider.h",
+        "name": "element_touch_event"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_slider_vert.h",
+        "name": "vslider_text_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_slider_vert.h",
+        "name": "ui_vslider"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_slider_vert.h",
+        "name": "ui_slider_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_slider_vert.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_slider_vert.h",
+        "name": "element_touch_event"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_text.h",
+        "name": "ui_text"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_text.h",
+        "name": "ui_text_attrs"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_text.h",
+        "name": "ui_text_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_text.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_time.h",
+        "name": "ui_time"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_time.h",
+        "name": "element_text"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_time.h",
+        "name": "ui_time_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_time.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_watch.h",
+        "name": "ui_ctrl_info_head"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_watch.h",
+        "name": "ui_image_list"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_watch.h",
+        "name": "ui_watch"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_watch.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/ui_wave.h",
+        "name": "draw_context"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/window.h",
+        "name": "window"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/window.h",
+        "name": "layer"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/window.h",
+        "name": "window_info"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/window.h",
+        "name": "element_event_handler"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/window.h",
+        "name": "element_touch_event"
+      },
+      {
+        "file": "include_lib/utils/ui/ui/window.h",
+        "name": "element_key_event"
+      }
+    ]
+  },
+  "summary": {
+    "accepted_count": 0,
+    "conclusion": "No official/public AC79 SDK UI/input/LCD/display/widget function is promoted to a v15 product identity unless listed in accepted. Product-side v15 UI evidence remains candidate-only when not backed by exact or relocation-aware SDK match.",
+    "exact_accepted_count": 0,
+    "relocation_aware_accepted_count": 0
+  },
+  "v15_context": {
+    "baselines/v15/analysis/ui-preflash/events/ui_events.json": {
+      "conclusions": {
+        "candidates": [
+          "0x02058248 is a button/encoder callback vector candidate. It has no raw direct pointer xref to the table base, so the dispatcher/caller remains unresolved.",
+          "0x0202439e is the strongest encoder handler candidate because it interprets a centered 0x3f delta, clamps 0..0x7f, stores 0x00c6, and raises redraw/timer fields.",
+          "Short press appears to enter through one-shot bytes [0x309]..[0x30f] copied to [0x39]..[0x3f] with helper calls at 0x02028e46/64/86/a6/ec8/eea.",
+          "Long press/hold candidate uses [0xbe] countdown gated by [0xb4] bit mask and 0x1c08b10+1, then sets [0x1fc]=1 and calls 0x0201e06c(0x14).",
+          "Pad Bank/SAVE labels are confirmed in app-resident string pools and pointer tables, but exact physical button-to-screen transition labels require caller resolution."
+        ],
+        "confirmed": [
+          "Official app identity is fixed by SHA-256 and runtime base 0x02000000.",
+          "0x02058248 is an 11-word table of internal v15 code pointers, not a plain UI text pointer table.",
+          "The target cluster 0x020297f2..0x02029aaa and 0x0202439e mutates RAM bases 0x1c33260 and 0x1c34894, proving these are internal UI/state callees rather than SDK-only hints.",
+          "0x02029290 is a state-machine/render-update candidate using RAM base 0x1c33260, with screen/submode byte [0x302], screen byte [0x200], timers [0xc0]/[0xbe], and pending event bytes [0x309]..[0x30f].",
+          "0x02029528 dispatches [0x302]-2 through a tbh jump table for values 2..6, producing separate 16-slot grid/render paths.",
+          "0x0201e06c is called from UI/event paths with small IDs such as 0x19 and 0x14 after dirty flags/timers are set, making it an internal redraw/event-trigger candidate."
+        ],
+        "unresolved": [
+          "No literal 'Patch' or mixed-case 'Para/Fx' screen names were found. 'PARA' exists at 0x0205729d, and FX-like parameter labels exist, but screen names are not confirmed by string evidence.",
+          "The caller of the 0x02058248 vector and exact physical short/long button IDs are not resolved by current static evidence.",
+          "The renderer ABI for mid-string/markup pointers around 0x02057c00 and 0x02058300 remains unresolved. These tables are evidence for state/UI labels, not safe patch schemas.",
+          "Public SDK key/ui APIs were not used as proof. No public-SDK function name is promoted without v15 caller/callee/RAM evidence."
+        ]
+      },
+      "sha256": "4e2fe8e7742eadf79e58dd89dae0fa13b6b36d6d2b24b042d656c3d82fc59f5e"
+    },
+    "baselines/v15/analysis/ui-preflash/renderer/evidence.json": {
+      "function_evidence_keys": [
+        "FUN_0200ea9a_text_extent_or_markup_candidate",
+        "FUN_0200f74c_object_render_traversal_candidate",
+        "FUN_0201a67c_object_string_setter_candidate",
+        "FUN_02030e50_halfword_table_decoder_confirmed",
+        "FUN_02005152_12byte_state_copy_candidate",
+        "FUN_0201bac2_signed_clamp_confirmed"
+      ],
+      "sha256": "11d72bfac2d50e0f8846bbf412df7c123071500f1707a88d3dedc62a414e6916",
+      "st7789_like_sequence": {
+        "classification": "candidate_or_data_false_positive_not_confirmed_lcd_path",
+        "contradictory_evidence": [
+          "no literal pointer or listing xref to table start",
+          "recursive function FUN_02030e50 loads 0x02058b50 and treats overlapping bytes as a halfword table"
+        ],
+        "entries": [
+          {
+            "command_byte": "0x11",
+            "entry18_hex": "110000000000000000000000000000000000",
+            "expected_payload_match": true,
+            "file_offset": "0x058aec",
+            "flash_offset": "0x05cc0c",
+            "label": "sleep_out_or_table_prefix",
+            "length_byte": 0,
+            "payload_hex": "",
+            "runtime_va": "0x02058aec"
+          },
+          {
+            "command_byte": "0x36",
+            "entry18_hex": "360100000000000000000000000000000000",
+            "expected_payload_match": true,
+            "file_offset": "0x058b10",
+            "flash_offset": "0x05cc30",
+            "label": "MADCTL",
+            "length_byte": 1,
+            "payload_hex": "00",
+            "runtime_va": "0x02058b10"
+          },
+          {
+            "command_byte": "0x3a",
+            "entry18_hex": "3a0105000000000000000000000000000000",
+            "expected_payload_match": true,
+            "file_offset": "0x058b22",
+            "flash_offset": "0x05cc42",
+            "label": "COLMOD_RGB565",
+            "length_byte": 1,
+            "payload_hex": "05",
+            "runtime_va": "0x02058b22"
+          },
+          {
+            "command_byte": "0xb2",
+            "entry18_hex": "b2050c0c0033330000000000000000000000",
+            "expected_payload_match": true,
+            "file_offset": "0x058b34",
+            "flash_offset": "0x05cc54",
+            "label": "PORCTRL",
+            "length_byte": 5,
+            "payload_hex": "0c 0c 00 33 33",
+            "runtime_va": "0x02058b34"
+          },
+          {
+            "command_byte": "0xb7",
+            "entry18_hex": "b70135000000000000000000000000000000",
+            "expected_payload_match": true,
+            "file_offset": "0x058b46",
+            "flash_offset": "0x05cc66",
+            "label": "GCTRL",
+            "length_byte": 1,
+            "payload_hex": "35",
+            "runtime_va": "0x02058b46"
+          },
+          {
+            "command_byte": "0xbb",
+            "entry18_hex": "bb0132000000000000000000000000000000",
+            "expected_payload_match": true,
+            "file_offset": "0x058b58",
+            "flash_offset": "0x05cc78",
+            "label": "VCOMS",
+            "length_byte": 1,
+            "payload_hex": "32",
+            "runtime_va": "0x02058b58"
+          },
+          {
+            "command_byte": "0xc2",
+            "entry18_hex": "c20101000000000000000000000000000000",
+            "expected_payload_match": true,
+            "file_offset": "0x058b6a",
+            "flash_offset": "0x05cc8a",
+            "label": "VDVVRHEN",
+            "length_byte": 1,
+            "payload_hex": "01",
+            "runtime_va": "0x02058b6a"
+          },
+          {
+            "command_byte": "0xc3",
+            "entry18_hex": "c30115000000000000000000000000000000",
+            "expected_payload_match": true,
+            "file_offset": "0x058b7c",
+            "flash_offset": "0x05cc9c",
+            "label": "VRHS",
+            "length_byte": 1,
+            "payload_hex": "15",
+            "runtime_va": "0x02058b7c"
+          },
+          {
+            "command_byte": "0xc4",
+            "entry18_hex": "c40120000000000000000000000000000000",
+            "expected_payload_match": true,
+            "file_offset": "0x058b8e",
+            "flash_offset": "0x05ccae",
+            "label": "VDVS",
+            "length_byte": 1,
+            "payload_hex": "20",
+            "runtime_va": "0x02058b8e"
+          },
+          {
+            "command_byte": "0xc6",
+            "entry18_hex": "c6010f000000000000000000000000000000",
+            "expected_payload_match": true,
+            "file_offset": "0x058ba0",
+            "flash_offset": "0x05ccc0",
+            "label": "FRCTRL2",
+            "length_byte": 1,
+            "payload_hex": "0f",
+            "runtime_va": "0x02058ba0"
+          },
+          {
+            "command_byte": "0xd0",
+            "entry18_hex": "d002a4a10000000000000000000000000000",
+            "expected_payload_match": true,
+            "file_offset": "0x058bb2",
+            "flash_offset": "0x05ccd2",
+            "label": "PWCTRL1",
+            "length_byte": 2,
+            "payload_hex": "a4 a1",
+            "runtime_va": "0x02058bb2"
+          },
+          {
+            "command_byte": "0xe0",
+            "entry18_hex": "e00ed0080e09090531334817141531340000",
+            "expected_payload_match": true,
+            "file_offset": "0x058bc4",
+            "flash_offset": "0x05cce4",
+            "label": "PVGAMCTRL",
+            "length_byte": 14,
+            "payload_hex": "d0 08 0e 09 09 05 31 33 48 17 14 15 31 34",
+            "runtime_va": "0x02058bc4"
+          },
+          {
+            "command_byte": "0xe1",
+            "entry18_hex": "e10ed0080e09090531334817141531340000",
+            "expected_payload_match": true,
+            "file_offset": "0x058bd6",
+            "flash_offset": "0x05ccf6",
+            "label": "NVGAMCTRL",
+            "length_byte": 14,
+            "payload_hex": "d0 08 0e 09 09 05 31 33 48 17 14 15 31 34",
+            "runtime_va": "0x02058bd6"
+          },
+          {
+            "command_byte": "0x21",
+            "entry18_hex": "210000000000000000000000000000000000",
+            "expected_payload_match": true,
+            "file_offset": "0x058be8",
+            "flash_offset": "0x05cd08",
+            "label": "INVON",
+            "length_byte": 0,
+            "payload_hex": "",
+            "runtime_va": "0x02058be8"
+          }
+        ],
+        "positive_evidence": [
+          "canonical command bytes and payloads including COLMOD 0x3a/0x05 and gamma 0xe0/0xe1"
+        ]
+      }
+    },
+    "string_offsets": {
+      "#D9D9D9": [
+        "0x00057730",
+        "0x00057d5c",
+        "0x00057d85",
+        "0x00057d92",
+        "0x00057dbb",
+        "0x0005d97a"
+      ],
+      "#F5BC27": [
+        "0x00057ce4",
+        "0x00057d6a",
+        "0x00057d77",
+        "0x0005d8ed",
+        "0x0005da05"
+      ],
+      "Keys Channel-": [
+        "0x0005d9e9"
+      ],
+      "Pad Bank-": [
+        "0x0005d9c5"
+      ],
+      "SAVE": [
+        "0x00057298",
+        "0x0005d982",
+        "0x0005d990"
+      ],
+      "SAVED": [
+        "0x0005d990"
+      ]
+    }
+  }
+}
