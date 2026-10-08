@@ -65,8 +65,10 @@ reset or rewiring.
 The mux PCB is the preferred implementation, not the only possible one. A
 six-terminal DPDT center-off switch can provide the same two-pole handoff for
 an experimental Full-Speed path if its paired wiring is extremely short.
-Manual cable replacement after key transmission removes the switch but remains
-unverified because the target may lose forced mode during VBUS disconnect.
+Manual cable replacement after key acknowledgement removes the switch and may
+work because the SMK remains powered independently. It remains unverified on
+WL82: the target must receive valid host SOF timing after acknowledgement, the
+AC7911 retry budget is not documented, and USB-C removal also removes VBUS.
 
 The SuperMini by itself cannot replace any of these handoff methods. Its native
 USB-C is a USB Serial/JTAG device used for the Mac console, not a transparent
@@ -93,4 +95,4 @@ Set `ESP_PORT` to the board's rediscovered serial device after reconnecting it.
 
 Protocol reference:
 
-- <https://kagaimiq.github.io/jielie/isp/usb/usb-key.html>
+- <https://github.com/kagaimiq/jielie/blob/main/isp/usb/usb-key.md>

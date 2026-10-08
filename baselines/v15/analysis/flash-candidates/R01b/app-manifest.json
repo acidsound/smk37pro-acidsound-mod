@@ -1,0 +1,64 @@
+{
+  "changes": [
+    {
+      "address": "0x0201e13e",
+      "file_offset": 123198,
+      "new_hex": "7904931683f80a120416c1ff62e101024016623c80ff76ab0200590480ff6eab0200590462636200634262002063130100020000500003000c634d4f232c625a0020000000000500006300000005633163636363620030000000000200004c00020006634d4f3629625a0020000001000300005f00000007631f0032634a000020000000000000005a0000000b63000c626363630020000000000100005f0000000800000000323232320d0201212a04630000040c42555a5a2042415353203f",
+      "old_hex": "7604e2808980c13042201492831c34e1f01f3516108a5607c60758ee3b4074f1fc403d4155a265e10c5054199c5b3c4274f1f8403d4955a365e1785054199c5c3c4374f1fc403d4455a265e11c5054199c5d3c459c5e3c4674f1fe403d4755a165e13e5054199c5f3b48d2ee1131c23582f8ccfd8b8001e17e0002e16630141610884507a5071a4972f1f8201c4a44a364e108404219dee96f2002e170301c8b10834507a5071a4f58ee0e4872f1fe200d4144a164e10e40421954a464e17040"
+    },
+    {
+      "address": "0x0201c67c",
+      "file_offset": 116348,
+      "new_hex": "80ffbc1a0000",
+      "old_hex": "80ff4cc60200"
+    },
+    {
+      "address": "0x0201c63e",
+      "file_offset": 116286,
+      "new_hex": "80fffa1a0000",
+      "old_hex": "80ff8ac60200"
+    },
+    {
+      "address": "0x0201e468",
+      "file_offset": 124008,
+      "new_hex": "00000000",
+      "old_hex": "bfea69fe"
+    },
+    {
+      "address": "0x0201e49c",
+      "file_offset": 124060,
+      "new_hex": "00000000",
+      "old_hex": "bfea4ffe"
+    }
+  ],
+  "evidence": {
+    "channel_10_nibble": 9,
+    "channel_register": "r9",
+    "dispatcher": "0x0201c5ec",
+    "factory_loader": "0x02005660",
+    "live_root_cause": "R01 Note On used HAND DRUM snapshot while Note Off retained the current UI patch snapshot, producing a stuck Ch10 voice",
+    "memcpy": "0x02048cce",
+    "note_off_memcpy": "0x0201c63e",
+    "note_on_memcpy": "0x0201c67c"
+  },
+  "format": "smk37-v15-r01b-channel10-factory-buzz-bass-noteoff-v1",
+  "input_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+  "layout": {
+    "end": "0x0201e1fe",
+    "entry": "0x0201e13e",
+    "snapshot": "0x0201e162",
+    "special": "0x0201e146",
+    "stock": "0x0201e15a"
+  },
+  "output_app_sha256": "1bd69fa20d4e4dab35d1d9df12bda36e25516ce2d0c1dff00fd2b7c9e3e96c7f",
+  "runtime_base": "0x02000000",
+  "source_dump_sha256": "1c202201a81ed6d956ec5398adff75ffcd805594a27370a56caafaf18223383b",
+  "voice": {
+    "bank": 3,
+    "name": "BUZZ BASS ",
+    "packed_flash_offset": "0x000f7000",
+    "packed_sha256": "c1c4588cb0396ba257e95d31a022e339564e337b41c65adb3ab0a1c50b863b18",
+    "preset": 0,
+    "runtime_sha256": "e2beb705a28e83940b2708f8ba0976e8c093ca12f45d0045f290b1589760d76b"
+  }
+}

@@ -11,8 +11,10 @@
 #include <string.h>
 
 enum {
-    SMK37_VID = 0x4c4a,
-    SMK37_PID = 0xc755,
+    SMK37_V12_VID = 0x4c4a,
+    SMK37_V12_PID = 0xc755,
+    SMK37_V15_VID = 0x4353,
+    SMK37_V15_PID = 0xcf4d,
     SMK37_INTERFACE = 4,
     SMK37_ENDPOINT_OUT = 0x04,
     SMK37_ENDPOINT_IN = 0x84,
@@ -20,6 +22,17 @@ enum {
     SMK37_FLASH_TYPE_MAIN = 0,
     SMK37_MAX_READ_DATA = 0x400 - 15,
 };
+
+static libusb_device_handle *open_supported_device(libusb_context *context) {
+    libusb_device_handle *handle = libusb_open_device_with_vid_pid(
+        context, SMK37_V15_VID, SMK37_V15_PID);
+
+    if (handle == NULL) {
+        handle = libusb_open_device_with_vid_pid(context, SMK37_V12_VID,
+                                                 SMK37_V12_PID);
+    }
+    return handle;
+}
 
 static int receive_binary(libusb_device_handle *handle, uint8_t *binary,
                           size_t capacity, size_t *binary_length) {
@@ -123,7 +136,7 @@ static int open_flash_device(libusb_context **context,
         return 1;
     }
 
-    *handle = libusb_open_device_with_vid_pid(*context, SMK37_VID, SMK37_PID);
+    *handle = open_supported_device(*context);
     if (*handle == NULL) {
         fputs("SMK-37 Pro could not be opened\n", stderr);
         libusb_exit(*context);

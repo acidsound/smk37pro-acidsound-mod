@@ -2,8 +2,8 @@
 """Prepare read/verify-first M09 forced-recovery sector artifacts.
 
 This tool never accesses a USB device and never writes flash. It extracts the
-raw Flash images from the exact stock-v12 and failed-M09 packages, then emits
-only the 4 KiB stock sectors whose bytes differ.
+FWSC-unpacked `flash.bin` images from the exact stock-v12 and failed-M09
+packages, then emits only the 4 KiB stock sectors whose bytes differ.
 """
 
 from __future__ import annotations
@@ -94,10 +94,15 @@ def main() -> int:
 
     manifest = {
         "format": "smk37-m09-forced-recovery-plan-v1",
+        "hash_representation": (
+            "FWSC-unpacked flash.bin bytes; not directly comparable to "
+            "a forced-loader dump until its returned representation is validated"
+        ),
         "safety_policy": {
             "device_access": "none; offline artifact preparation only",
             "required_before_write": (
-                "forced-loader full dump and exact M09 sector hash match"
+                "two identical forced-loader dumps plus separately validated "
+                "dump/package representation semantics"
             ),
             "write_scope": "six audited 4 KiB application sectors only",
             "forbidden": "chip erase, full-flash write, key burn, or boot-prefix write",

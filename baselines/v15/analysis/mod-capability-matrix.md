@@ -28,12 +28,12 @@ python3 tools/validate_v15_mod_capabilities.py
 
 | ID | 수정 가능한 요소 | 정적 근거 | 빌드 검증 | 실기 검증 | 현재 확실한 범위 |
 |---|---|:---:|:---:|:---:|---|
-| `PKG-01` | 공식 v15 앱만 변경해 FWSC 재패키징 | [x] | [x] | [ ] | 앱과 CRC 필드만 변경하고 boot/config/resources를 동일하게 유지하는 R01 패키지를 생성할 수 있다. R01 자체의 설치·부팅은 미검증이다. |
-| `MIDI-01` | MIDI 채널 번호 판별 | [x] | [x] | [ ] | dispatcher `0x0201c5ec`에서 채널 니블이 `r9`에 있으므로 human Ch10인 값 `9`를 분기할 수 있다. R01 분기의 실기 도달은 미검증이다. |
-| `VOICE-01` | Ch10 Note On의 음색 소스 교체 | [x] | [x] | [ ] | Note On 음색 복사 지점 `0x0201c67c`에서 현재 UI Patch 대신 유효한 156-byte runtime voice snapshot을 공급할 수 있다. |
-| `VOICE-02` | Ch1 및 비-Ch10 채널의 현재 UI Patch 유지 | [x] | [x] | [ ] | R01 wrapper의 stock 분기는 원래 memcpy와 현재 Patch 포인터를 그대로 사용한다. 실제 동시 채널 분리는 미검증이다. |
-| `VOICE-03` | 공식 factory voice를 runtime voice로 변환 | [x] | [x] | [ ] | 공식 full-flash bank의 128-byte `HAND DRUM ` voice를 v15 loader 동작과 동일한 156-byte snapshot으로 확장한다. 생성 snapshot SHA는 manifest로 고정한다. |
-| `NOTE-01` | Note Off 경로를 원본 그대로 유지 | [x] | [x] | [ ] | Note Off memcpy `0x0201c63e`의 원본 바이트를 변경하지 않는다. R01에서 stuck note가 없는지는 실기 확인 전이다. |
+| `PKG-01` | 공식 v15 앱만 변경해 FWSC 재패키징 | [x] | [x] | [x] | 앱과 CRC 필드만 변경하고 boot/config/resources를 동일하게 유지한 R01 계열 패키지의 설치·부팅과 공식 v15 복원을 실기 확인했다. |
+| `MIDI-01` | MIDI 채널 번호 판별 | [x] | [x] | [x] | dispatcher `0x0201c5ec`의 `r9 == 9` 분기가 물리 Pad의 human Ch10 입력에서 실제로 도달하며 Ch1과 다른 경로를 선택함을 청취 확인했다. |
+| `VOICE-01` | Ch10 Note On의 음색 소스 경로 분리 | [x] | [x] | [x] | Note On 복사 지점 `0x0201c67c`에서 Ch10만 stock Ch1과 다른 source로 라우팅할 수 있다. 단, 그 source에 의도한 factory 음색을 설정하는 방법은 아직 실패 상태다. |
+| `VOICE-02` | Ch1 및 비-Ch10 채널의 현재 UI Patch 유지 | [x] | [x] | [x] | R01 계열에서 Ch1은 현재 UI Patch 음색을 유지하고 Ch10은 다른 소리를 냈다. 채널별 음색 경로 분리 자체는 실기 입증됐다. |
+| `VOICE-03` | 공식 factory voice를 dispatcher runtime source로 변환 | [ ] | [x] | [ ] | 128-byte factory entry를 156-byte로 확장하는 코드는 재현되지만, HAND DRUM·BUZZ BASS·Mooger #1 실기 비교가 모두 의도한 음색과 불일치했다. 직접 snapshot 주입 가설은 폐기했다. |
+| `NOTE-01` | Ch10 Note On/Off에 동일한 음색 source 사용 | [x] | [x] | [x] | R01은 Note Off 불일치로 고착음이 발생했다. R01b/R01c에서 `0x0201c67c`와 `0x0201c63e`를 같은 Ch10 source로 라우팅하자 Note Off가 정상화됐다. |
 | `NOTE-02` | 원래 note number와 velocity 사용 | [x] | [x] | [ ] | R01은 음색 복사 원본만 바꾸며 Note On 이벤트의 note/velocity 처리 코드는 바꾸지 않는다. HAND DRUM이 입력 음정에 따라 transpose되는 결과는 아직 청취하지 않았다. |
 | `UI-01` | 펌웨어 버전 표시 문자열 변경 | [x] | [ ] | [x] | 과거 v15 marker-only M01/M02에서 화면 표시 변경과 정상 부팅을 사용자가 확인했다. 현재 R01 빌더에는 이 변경이 포함되지 않으며, 재사용 가능한 v15 UI 패치 API로 정리되지 않았다. |
 | `OTA-01` | exact-hash 전용 사용자 패키지 OTA 경로 | [x] | [x] | [ ] | `upload-v15-r01`은 R01 SHA와 확인 token만 허용하고 packet/bounds dry-run을 통과한다. R01 실전 OTA는 미실행이다. |
@@ -61,8 +61,8 @@ R01은 다음 네 앱 주소 범위만 직접 수정한다.
 
 | ID | 항목 | 상태 | 필요한 추가 근거 또는 시험 |
 |---|---|---|---|
-| `DRUM-01` | note별 16개 드럼 음색 매핑 | [ ] 미구현 | note number별 voice/sample 선택 구조와 동시발음 비용을 입증하고 별도 패치를 작성해야 한다. R01은 하나의 HAND DRUM 음색만 사용한다. |
-| `PAD-01` | 물리 패드 스캔 및 MIDI/로컬 음원 연결 | [ ] 미확인 | 공식 v15의 pad scan callback과 dispatcher caller chain을 찾아야 한다. R01은 물리 패드를 수정하지 않는다. |
+| `DRUM-01` | note별 16개 드럼 음색 매핑 | [ ] 미구현 | 먼저 하나의 알려진 factory Patch를 Ch10에 정확히 선택하는 runtime 객체 생성 경로를 입증해야 한다. 그 뒤 note number별 객체/sample 선택과 동시발음 비용을 검증한다. |
+| `PAD-01` | 물리 패드의 Ch10 MIDI 및 분기 도달 | [x] 실기 확인 | 물리 문제 해결 후 Pad가 `99 24 66`을 출력했고 R01의 Ch10 분기에서 Ch1과 다른 소리를 냈다. Pad scan callback 주소 자체는 여전히 정적 미확정이다. |
 | `FM-01` | 156-byte voice 내부 FM 파라미터의 의미별 편집 | [ ] 부분 확인 | packed-to-runtime 변환은 재현했지만 각 operator/envelope 필드의 runtime 의미와 범위는 완전히 검증하지 않았다. |
 | `UI-02` | 화면 renderer, 메뉴, Patch 이름, 상태 갱신 | [ ] 미조사 | 렌더링 함수, UI 객체, 호출자와 갱신 트리거를 v15 내부에서 교차 입증해야 한다. |
 | `UI-03` | 버튼 이벤트 및 LED 제어 | [ ] 미조사 | 후보로 보인 SDK 구조는 operation size가 달라 폐기됐다. 현재 주소나 ABI를 주장하지 않는다. |
@@ -77,10 +77,10 @@ R01을 Flash할 수 있는 장치가 연결되면 아래 순서로 체크한다.
 
 - [ ] `device-info`가 `SMK-37 Pro_015`를 반환한다.
 - [ ] R01 `upload-check`와 exact SHA gate가 통과한다.
-- [ ] R01 OTA 설치 후 정상 모드로 재부팅한다.
-- [ ] Ch1 세 음이 현재 UI Patch로 들린다.
-- [ ] Ch10 세 음이 `HAND DRUM ` 음색으로 들리고 Ch1과 구별된다.
-- [ ] Ch1과 Ch10 모두 Note Off가 정상이며 고착음이 없다.
+- [x] R01 OTA 설치 후 정상 모드로 재부팅한다.
+- [x] Ch1 세 음이 현재 UI Patch로 들린다.
+- [ ] Ch10 세 음이 의도한 알려진 factory 음색으로 들리고 Ch1과 구별된다. Ch1과의 분리만 통과했고 음색 지정은 실패했다.
+- [x] R01b/R01c에서 Ch1과 Ch10 모두 Note Off가 정상이며 고착음이 없다. 원 R01은 실패했다.
 - [ ] Ch1/Ch10 겹침 발음과 양쪽 release 순서가 정상이다.
 - [ ] note number와 velocity 변화가 발음에 반영된다.
 - [ ] Program Change, CC, pitch bend가 재부팅을 유발하지 않는다.
@@ -88,8 +88,8 @@ R01을 Flash할 수 있는 장치가 연결되면 아래 순서로 체크한다.
 - [ ] 10분 반복 재생에서 재부팅, 음 고착, 음색 교차 오염이 없다.
 - [ ] 실패 시 exact official v15 패키지로 복원되고 identity `015`를 확인한다.
 
-실기 체크가 끝나기 전에는 `MIDI-01`부터 `NOTE-02`, `OTA-01`까지의
-**실기 검증 칸을 `[x]`로 바꾸지 않는다.**
+실기 결과는 기능별로만 승격한다. 채널 분기와 Note Off 수정의 성공을
+factory 음색 선택 성공으로 확대 해석하지 않는다.
 
 ## 근거 문서
 

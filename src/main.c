@@ -19,6 +19,8 @@ static void usage(FILE *stream, const char *program) {
             "  claim-test Open and release interface 4; sends no device command\n"
             "  midi-monitor <seconds>\n"
             "             Read raw USB-MIDI input only; sends no device command\n"
+            "  midi-channel-test\n"
+            "             Send three Ch1 notes, then three Ch10 notes over raw USB-MIDI\n"
             "  device-info Send the read-only product/version query\n"
             "  flash-read <address> <length>\n"
             "             Read 1..1009 bytes from main flash and print them\n"
@@ -48,6 +50,12 @@ static void usage(FILE *stream, const char *program) {
             "             Install exact per-note channel-10 FM M07 package\n"
             "  upload-m08 <firmware.fwsc> <transcript> --confirm <token>\n"
             "             Install exact isolated fixed-map channel-10 M08 package\n"
+            "  upload-m10 <firmware.fwsc> <transcript> --confirm <token>\n"
+            "             Install exact M08 data-only follow-up package\n"
+            "  upload-v15 <firmware.fwsc> <transcript> --confirm <token>\n"
+            "             Restore exact official v15 baseline package\n"
+            "  upload-v15-r01 <firmware.fwsc> <transcript> --confirm <token>\n"
+            "             Install evidence-based Ch10 HAND DRUM checkpoint\n"
             "  upload-resume-v12 <firmware.fwsc> <transcript> --confirm <token>\n"
             "             Resume stage 2 from the exact archived v12 image\n"
             "  self-test  Verify build-time invariants without a device\n",
@@ -90,6 +98,14 @@ int main(int argc, char **argv) {
             return 2;
         }
         return smk37_midi_monitor((unsigned)seconds);
+    }
+
+    if (strcmp(argv[1], "midi-channel-test") == 0) {
+        if (argc != 2) {
+            usage(stderr, argv[0]);
+            return 2;
+        }
+        return smk37_midi_channel_test();
     }
 
     if (strcmp(argv[1], "device-info") == 0) {
@@ -234,6 +250,30 @@ int main(int argc, char **argv) {
             return 2;
         }
         return smk37_ota_upload_m08(argv[2], argv[3], argv[5]);
+    }
+
+    if (strcmp(argv[1], "upload-m10") == 0) {
+        if (argc != 6 || strcmp(argv[4], "--confirm") != 0) {
+            usage(stderr, argv[0]);
+            return 2;
+        }
+        return smk37_ota_upload_m10(argv[2], argv[3], argv[5]);
+    }
+
+    if (strcmp(argv[1], "upload-v15") == 0) {
+        if (argc != 6 || strcmp(argv[4], "--confirm") != 0) {
+            usage(stderr, argv[0]);
+            return 2;
+        }
+        return smk37_ota_upload_v15(argv[2], argv[3], argv[5]);
+    }
+
+    if (strcmp(argv[1], "upload-v15-r01") == 0) {
+        if (argc != 6 || strcmp(argv[4], "--confirm") != 0) {
+            usage(stderr, argv[0]);
+            return 2;
+        }
+        return smk37_ota_upload_v15_r01(argv[2], argv[3], argv[5]);
     }
 
     if (strcmp(argv[1], "upload-resume-v12") == 0) {

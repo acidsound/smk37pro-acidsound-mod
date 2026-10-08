@@ -1,15 +1,15 @@
-Picked up JAVA_TOOL_OPTIONS: -Duser.home=/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/home-kagaimiq-full1
-Picked up JAVA_TOOL_OPTIONS: -Duser.home=/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/home-kagaimiq-full1
-Picked up JAVA_TOOL_OPTIONS: -Duser.home=/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/home-kagaimiq-full1
-Picked up JAVA_TOOL_OPTIONS: -Duser.home=/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/home-kagaimiq-full1
-openjdk version "21.0.11" 2026-04-21
-OpenJDK Runtime Environment Homebrew (build 21.0.11)
-OpenJDK 64-Bit Server VM Homebrew (build 21.0.11, mixed mode)
-INFO  Using log config file: jar:file:/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
-INFO  Using log file: /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/home-kagaimiq-full1/Library/ghidra/ghidra_12.1.2_PUBLIC/application.log (LoggingInitialization)  
-INFO  Loading user preferences: /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/home-kagaimiq-full1/Library/ghidra/ghidra_12.1.2_PUBLIC/preferences (Preferences)  
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/home-kagaimiq-patched
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/home-kagaimiq-patched
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/home-kagaimiq-patched
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/home-kagaimiq-patched
+openjdk version "25.0.2" 2026-01-20
+OpenJDK Runtime Environment Homebrew (build 25.0.2)
+OpenJDK 64-Bit Server VM Homebrew (build 25.0.2, mixed mode)
+INFO  Using log config file: jar:file:/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/home-kagaimiq-patched/Library/ghidra/ghidra_12.1.2_PUBLIC/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/home-kagaimiq-patched/Library/ghidra/ghidra_12.1.2_PUBLIC/preferences (Preferences)  
 INFO  Searching for classes... (ClassSearcher)  
-INFO  Class search complete (871 ms) (ClassSearcher)  
+INFO  Class search complete (793 ms) (ClassSearcher)  
 INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
 INFO  Initializing Random Number Generator... (SecureRandomFactory)  
 INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
@@ -17,37 +17,41 @@ INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFact
 WARN  NOP detected at pi32v2_ins_stack.sinc:39 (SleighCompile)  
 WARN  NOP detected at pi32v2_ins_stack.sinc:67 (SleighCompile)  
 WARN  2 NOP constructors found (SleighCompile)  
-INFO  Headless startup complete (2500 ms) (AnalyzeHeadless)  
+INFO  Headless startup complete (2170 ms) (AnalyzeHeadless)  
 INFO  Class searcher loaded 92 extension points (46 false positives) (ClassSearcher)  
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::staticFieldOffset has been called by org.apache.felix.framework.util.SecureAction (file:/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Features/Base/lib/org.apache.felix.framework-7.0.5.jar)
+WARNING: Please consider reporting this to the maintainers of class org.apache.felix.framework.util.SecureAction
+WARNING: sun.misc.Unsafe::staticFieldOffset will be removed in a future release
 INFO  HEADLESS Script Paths:
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Features/SystemEmulation/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Features/FunctionID/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Processors/8051/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Features/BytePatterns/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Processors/DATA/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Features/FileFormats/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Processors/JVM/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Debug/Debugger/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Processors/JVM/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Processors/PIC/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Processors/Atmel/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Features/BSim/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Features/BytePatterns/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Features/VersionTracking/ghidra_scripts
     /Users/spectrum/Documents/SMK37ProMod/baselines/v15/analysis/quarkslab
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Features/GnuDemangler/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Features/Base/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Features/PyGhidra/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Processors/PIC/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Debug/Debugger/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Processors/Atmel/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Features/Decompiler/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Features/BSim/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Features/SwiftDemangler/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Features/VersionTracking/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Features/PDB/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-kagaimiq-patched/Ghidra/Features/WildcardAssembler/ghidra_scripts (HeadlessAnalyzer)  
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Processors/DATA/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Features/FunctionID/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Features/Decompiler/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Processors/8051/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Features/PyGhidra/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Features/FileFormats/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Features/PDB/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-kagaimiq-patched/Ghidra/Features/Base/ghidra_scripts (HeadlessAnalyzer)  
 INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
-INFO  Creating project: /Users/spectrum/jcode-v15-quarkslab-work/projects-kagaimiq-full1/v15-kagaimiq-full1 (HeadlessAnalyzer)  
-INFO  Creating project: /Users/spectrum/jcode-v15-quarkslab-work/projects-kagaimiq-full1/v15-kagaimiq-full1 (DefaultProject)  
+INFO  Creating project: /Users/spectrum/jcode-v15-quarkslab-work/20260802T091433Z-kagaimiq-patched/v15-20260802T091433Z-kagaimiq-patched (HeadlessAnalyzer)  
+INFO  Creating project: /Users/spectrum/jcode-v15-quarkslab-work/20260802T091433Z-kagaimiq-patched/v15-20260802T091433Z-kagaimiq-patched (DefaultProject)  
 INFO  REPORT: Processing input files:  (HeadlessAnalyzer)  
-INFO       project: /Users/spectrum/jcode-v15-quarkslab-work/projects-kagaimiq-full1/v15-kagaimiq-full1 (HeadlessAnalyzer)  
+INFO       project: /Users/spectrum/jcode-v15-quarkslab-work/20260802T091433Z-kagaimiq-patched/v15-20260802T091433Z-kagaimiq-patched (HeadlessAnalyzer)  
 INFO  IMPORTING: file:///Users/spectrum/Documents/SMK37ProMod/build/v15-official-app.bin (HeadlessAnalyzer)  
 INFO  Successfully applied "-loader-baseAddr" to "Base Address" (old: "null", new: "0x02000000") (ProgramLoader)  
 INFO  Using Loader: Raw Binary (ProgramLoader)  
@@ -58,25 +62,25 @@ INFO  ANALYZING all memory and code: file:///Users/spectrum/Documents/SMK37ProMo
 INFO  Packed database cache: /var/tmp/spectrum-ghidra/packed-db-cache (PackedDatabaseCache)  
 INFO  Applied data type archive: generic_clib (ApplyDataArchiveAnalyzer)  
 INFO  -----------------------------------------------------
-    ASCII Strings                              0.227 secs
-    Apply Data Archives                        0.494 secs
-    Basic Constant Reference Analyzer          0.057 secs
-    Call-Fixup Installer                       0.003 secs
-    Create Address Tables                      0.124 secs
-    Create Address Tables - One Time           0.153 secs
-    Create Function                            0.015 secs
-    Data Reference                             0.040 secs
-    Decompiler Switch Analysis                 0.366 secs
-    Demangler GNU                              0.000 secs
+    ASCII Strings                              0.223 secs
+    Apply Data Archives                        0.382 secs
+    Basic Constant Reference Analyzer          0.043 secs
+    Call-Fixup Installer                       0.000 secs
+    Create Address Tables                      0.083 secs
+    Create Address Tables - One Time           0.115 secs
+    Create Function                            0.013 secs
+    Data Reference                             0.039 secs
+    Decompiler Switch Analysis                 0.419 secs
+    Demangler GNU                              0.001 secs
     Disassemble Entry Points                   0.001 secs
     Embedded Media                             0.021 secs
     External Entry References                  0.001 secs
-    Function ID                                0.029 secs
-    Non-Returning Functions - Discovered       0.012 secs
-    Reference                                  0.076 secs
+    Function ID                                0.026 secs
+    Non-Returning Functions - Discovered       0.008 secs
+    Reference                                  0.044 secs
     Shared Return Calls                        0.005 secs
-    Stack                                      0.009 secs
-    Subroutine References                      0.029 secs
+    Stack                                      0.008 secs
+    Subroutine References                      0.022 secs
 -----------------------------------------------------
      Total Time   1 secs
 -----------------------------------------------------
@@ -439,25 +443,25 @@ ghidra.util.exception.AssertException: Not a valid Address on instruction at 020
 INFO  Applied data type archive: generic_clib (ApplyDataArchiveAnalyzer)  
 INFO  -----------------------------------------------------
     ASCII Strings                              0.018 secs
-    Apply Data Archives                        0.010 secs
-    Basic Constant Reference Analyzer          0.150 secs
+    Apply Data Archives                        0.009 secs
+    Basic Constant Reference Analyzer          0.127 secs
     Call Convention ID                         0.004 secs
-    Call-Fixup Installer                       0.020 secs
+    Call-Fixup Installer                       0.018 secs
     Create Address Tables                      0.040 secs
-    Create Address Tables - One Time           0.029 secs
-    Create Function                            0.062 secs
-    Data Reference                             0.018 secs
-    Decompiler Switch Analysis                 2.499 secs
+    Create Address Tables - One Time           0.023 secs
+    Create Function                            0.073 secs
+    Data Reference                             0.019 secs
+    Decompiler Switch Analysis                 2.566 secs
     Demangler GNU                              0.002 secs
-    Disassemble Entry Points                   0.003 secs
+    Disassemble Entry Points                   0.002 secs
     Embedded Media                             0.006 secs
     External Entry References                  0.000 secs
     Function ID                                0.000 secs
-    Non-Returning Functions - Discovered       0.560 secs
+    Non-Returning Functions - Discovered       0.508 secs
     Reference                                  0.033 secs
-    Shared Return Calls                        0.083 secs
-    Stack                                      0.080 secs
-    Subroutine References                      0.060 secs
+    Shared Return Calls                        0.064 secs
+    Stack                                      0.067 secs
+    Subroutine References                      0.053 secs
 -----------------------------------------------------
      Total Time   3 secs
 -----------------------------------------------------
@@ -856,5 +860,5 @@ INFO  V15DecoderAnalysis.java> LISTING phase=exhaustive path=/Users/spectrum/Doc
 INFO  ANALYZING changes made by post scripts: file:///Users/spectrum/Documents/SMK37ProMod/build/v15-official-app.bin (HeadlessAnalyzer)  
 INFO  REPORT: Post-analysis succeeded for file: file:///Users/spectrum/Documents/SMK37ProMod/build/v15-official-app.bin (HeadlessAnalyzer)  
 INFO  /v15-official-app.bin: file created (spectrum) (LocalFileSystem)  
-INFO  REPORT: Save succeeded for: /v15-official-app.bin (v15-kagaimiq-full1:/v15-official-app.bin) (HeadlessAnalyzer)  
+INFO  REPORT: Save succeeded for: /v15-official-app.bin (v15-20260802T091433Z-kagaimiq-patched:/v15-official-app.bin) (HeadlessAnalyzer)  
 INFO  REPORT: Import succeeded (HeadlessAnalyzer)  

@@ -234,6 +234,38 @@ Historical upload action: `upload-m09` with confirmation token
 `INSTALL-SMK37PRO-M09-5AC1264E`. It is deliberately not presented as a
 copyable command.
 
+## M10 data-only boot probe
+
+M10 starts from the byte-exact M08 application. It keeps the M08 execution
+path, code cave, hooks, and call targets unchanged, then populates only the
+candidate application data range `0x020959EE..0x02095EDE` and changes the
+display marker to `M10`. No new M10 code reads this data; the purpose is to
+separate the M09 data-range hypothesis from the M09 wrapper hypothesis.
+
+Package SHA-256:
+`6ad99ed15232a5d8e55be836f3cb13561b68b152aaae2642964e6855bd6628b5`.
+
+The host tool has a dedicated exact-package gate:
+
+```sh
+scripts/smk37-fw-direct upload-m10 \
+  build/SMK37ProMod-M10-data-only-base012.fwsc \
+  backups/ota-M10-install-20260801.log \
+  --confirm INSTALL-SMK37PRO-M10-6AD99ED1
+```
+
+Before this command, preserve two identical 1-MiB read-only dumps and verify
+the normal device identity is `SMK-37 Pro_012`. If M10 does not return normal
+USB, use the prepared M10 rollback bundle
+`build/SMK37Pro-WL82-M10-rollback-20260801-v4.zip`; it erases/writes only the
+six audited 4-KiB application sectors and has no chip-erase, full-flash,
+key-write, reset, or run-app operation.
+
+Live result on 2026-08-01: the command was executed once, both OTA stages
+completed and request 1241 acknowledged `0xf0000000`, but post-update identity
+verification failed and `4c4a:c755` was not found afterward. Do not execute
+`upload-m10` again; proceed to forced recovery.
+
 ## Confirmed live result
 
 The verification stage completed with 49 requests. The resumed write stage

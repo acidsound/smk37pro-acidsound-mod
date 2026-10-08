@@ -65,3 +65,11 @@ The current clean-room PI32 and USB MIDI result is documented in
 초기 clean-room PI32 분석만으로는 receive/dispatch entry point를 방어적으로
 식별하지 못했다. 이후 공식 SDK signature와 공식 v15 내부 데이터 흐름을 별도로
 교차검증해 R01 정적 후보를 만들었지만, R01은 아직 실제 장치에 Flash하지 않았다.
+
+2026-08-15 SDK 앱 브릭 이후, "무엇이 참이어야 다시 USB로 플래싱할 수 있는가"를
+기준으로 메모리 맵을 확장한 결과는
+[`usb-flash-readiness/`](usb-flash-readiness/README.md)에 있다. 물리 플래시
+1 MiB 전체 타일링, 런타임 `0x02000000` 창의 UI→Synth 소유권, 미해독 256 KiB,
+그리고 SDK 기본 레이아웃이 요구하는 SDRAM 창(`0x04000000`)의 BLOCKED 판정을
+포함한다. 링크 맵 게이트는 `tools/check_sdk_app_layout.py`이고, 운영 절차는
+[`docs/usb-flash-safety-case.md`](../../../docs/usb-flash-safety-case.md)이다.

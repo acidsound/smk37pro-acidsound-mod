@@ -7,9 +7,15 @@ Status: `BOOT-FAILED / NO-USB`; root cause narrowed but not proven
 ## Executive conclusion
 
 M09 was transferred and accepted by the normal OTA protocol, but the resulting
-application produced neither display nor USB initialization. After a true
-power cycle the display and pad LEDs remained off, and macOS detected neither
-the normal `4c4a:c755` identity nor the updater `4d4a:4155` identity.
+application produced neither visible UI content nor USB initialization. The
+latest owner observation on 2026-07-16 is that the instrument powers on and
+the LCD backlight illuminates, but the LCD has no visible pixels/UI and USB
+does not enumerate. There is no observed battery fault.
+
+Immediately after the failure, one true-power-cycle observation had the LCD
+and pad LEDs dark. That remains a valid timeline observation, but it is not the
+current electrical symptom. The stable recovery-relevant symptom is the lack
+of application UI and both known USB identities.
 
 The strongest established failure boundary is therefore the M09 application
 package/change set, not a demonstrated OTA protocol error. The exact
@@ -49,6 +55,25 @@ damage.
 8. After a real power-off and power-on, the display remained black and the pad
    LEDs remained off.
 9. A fresh descriptor scan found neither normal nor updater USB identity.
+10. On 2026-07-16 the owner clarified the current steady state: instrument
+    power and LCD backlight are on, LCD content is absent, and USB still does
+    not enumerate.
+11. The battery and USB were both disconnected for five minutes, with the
+    power switch used only while unpowered to discharge residual rails. After
+    reconnecting the battery and booting without USB, the symptom was
+    unchanged: instrument power, panel LEDs, and LCD backlight are present,
+    but the LCD contains no pixels/UI. A latched PMU or residual-power state
+    is therefore no longer a useful leading hypothesis.
+12. During a direct Mac connection, macOS detected USB-C CC attachment and
+    powered the host port, but no `IOUSBHostDevice` was created. This confirms
+    cable attachment at the Type-C layer but does not prove D+/D- continuity;
+    no normal, updater, or forced-loader USB identity was observed. Reversing
+    the USB-C plug reproduced the same result: a clean detach/attach event and
+    USB2 host-port power-on, but no USB device node.
+13. The instrument was reassembled after the photo inspection. Its behavior
+    remained unchanged: instrument power and LCD backlight are present, the
+    LCD has no pixels/UI, and normal USB enumeration is absent. No new
+    functional symptom was introduced by reassembly.
 
 The OTA transcript is `backups/ota-M09-install-20260715.log`.
 
@@ -60,6 +85,9 @@ The OTA transcript is `backups/ota-M09-install-20260715.log`.
 | Confirmed | M08 booted through the same packaging and upload path; M09 did not. |
 | Confirmed | M09 remained non-booting after a true power cycle. |
 | Confirmed | Neither known USB identity was present after the failure. |
+| Confirmed | macOS detects USB-C physical attachment and activates the host port, but the SMK does not reach USB device enumeration. |
+| Confirmed | Both USB-C plug orientations produce the same no-enumeration result. |
+| Confirmed | Reassembly did not change the established failure signature. |
 | Confirmed | The intended stock-to-M09 Flash delta is confined to six audited 4 KiB application sectors. |
 | Inferred | The application failed before display and USB initialization, or reset repeatedly before reaching them. |
 | Inferred | The boot ROM and USB hardware probably remain intact because no boot-prefix sector was intentionally modified. |

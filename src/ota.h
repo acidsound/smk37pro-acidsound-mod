@@ -29,6 +29,15 @@ int smk37_ota_upload_m07(const char *firmware_path,
 int smk37_ota_upload_m08(const char *firmware_path,
                          const char *transcript_path,
                          const char *confirmation);
+int smk37_ota_upload_m10(const char *firmware_path,
+                         const char *transcript_path,
+                         const char *confirmation);
+int smk37_ota_upload_v15(const char *firmware_path,
+                         const char *transcript_path,
+                         const char *confirmation);
+int smk37_ota_upload_v15_r01(const char *firmware_path,
+                             const char *transcript_path,
+                             const char *confirmation);
 int smk37_ota_resume_v12(const char *firmware_path,
                          const char *transcript_path,
                          const char *confirmation);

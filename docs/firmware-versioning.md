@@ -1,6 +1,6 @@
 # Custom firmware versioning
 
-Last updated: 2026-07-15 (KST)
+Last updated: 2026-08-01 (KST)
 
 ## Two independent identities
 
@@ -42,6 +42,7 @@ recovery semantics.
 | M07 | updater 012 / display 1.05 | Intended Ch10 notes 36-51 = same-bank patches `N+1` through `N+16` | `b80ed7480152f07652eb8f809305f50d2bdb2990fb89875c317f27d5e99de082` | INSTALLED; 16 per-note timbres PASS, Ch1 isolation FAIL because local keys also received per-note timbres |
 | M08 | updater 012 / display 1.05 | Ch1 = UI patch; Ch10 notes 36-51 = fixed Bank 0 presets 0-15 | `4498a935951e32d21b85167e5ba369a5051d32d93ba66e51229d5d255c8dc31f` | INSTALLED and VERIFIED; Ch1/Ch10 isolation and UI Patch independence pass, maximum-polyphony stress pending |
 | M09 | updater 012 / display 1.05 | Ch1 = UI patch; Ch10 notes 36-51 = app-resident DX7 FM drum templates | `5ac1264eba85ce5f1747458a90203bc144d21f87dc66f189ca055b74700ab5c8` | BOOT-FAILED / NO-USB; OTA request 1241 and completion acknowledgement passed, then display remained black; a true power cycle left display and pad LEDs off, with neither normal nor updater USB identity present |
+| M10 | updater 012 / display 1.05 | M08 execution path unchanged; populate the M09 candidate data range only | `6ad99ed15232a5d8e55be836f3cb13561b68b152aaae2642964e6855bd6628b5` | BOOT-FAILED / NO-USB; both OTA stages and `0xf0000000` acknowledgement passed, then normal identity `4c4a:c755` did not return |
 
 M001 artifact paths:
 
@@ -216,6 +217,26 @@ black display. USB-only reconnection did not help; after a true power cycle,
 the display and all pad LEDs remained off and a fresh scan again found neither
 USB identity. M09 is therefore a demonstrated pre-USB boot failure, not a
 verified build. Do not reinstall it.
+
+M10 artifact paths:
+
+- `build/SMK37ProMod-M10-data-only-base012.fwsc`
+- `build/SMK37ProMod-M10-data-only-base012-manifest.json`
+- `build/SMK37ProMod-M10-app.bin`
+- `build/SMK37ProMod-M10-app-manifest.json`
+- `build/SMK37Pro-WL82-M10-rollback-20260801-v4.zip`
+
+M10 is a data-only diagnostic derivative of M08. Its execution bytes, code
+cave, hooks, and call targets are unchanged from the recorded M08 app. It
+populates `0x020959EE..0x02095EDE` with 1,264 bytes (789 nonzero changes) and
+changes only the display marker from `M08` to `M10`. It must be classified by
+boot/USB return separately from audio behavior; the embedded data is not read
+by any new M10 code.
+
+Live M10 attempt on 2026-08-01: stage 1 and stage 2 completed through request
+1241 and acknowledged `0xf0000000`, but post-update normal identity failed and
+the subsequent descriptor-only probe found no `4c4a:c755`. Do not retry the
+M10 upload; forced recovery is pending.
 
 The incident analysis is `docs/m09-brick-incident.md`. It separates the
 confirmed M09 application failure boundary from the still-unproven exact root

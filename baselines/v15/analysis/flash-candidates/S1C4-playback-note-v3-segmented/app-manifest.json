@@ -1,0 +1,216 @@
+{
+  "basis_app": "S1-C3-16slot-functional-v2-r3-reload/app.bin",
+  "basis_app_sha256": "7c672938023beee74d599f43ccd5c7642396b89819e929501274239aed5e5d4b",
+  "callsite_contract": {
+    "direct_product_callsite": {
+      "address": "0x0201e468",
+      "bytes": "bfeadefe",
+      "target": "0x0201e228"
+    },
+    "direct_reload_callsite": {
+      "address": "0x0201e46c",
+      "bytes": "bfeaf838",
+      "status": "preserved"
+    },
+    "note_off_hook": {
+      "address": "0x0201c63e",
+      "bytes": "80fffa1a0000",
+      "status": "unchanged",
+      "target": "0x0201e13e"
+    },
+    "note_off_neutralized": {
+      "address": "0x0201c644",
+      "bytes": "001600160016",
+      "inert_instruction": "mov r0,r0 x3"
+    },
+    "note_on_hook": {
+      "address": "0x0201c67c",
+      "bytes": "80ffc01a0000",
+      "status": "unchanged",
+      "target": "0x0201e142"
+    },
+    "note_on_neutralized": {
+      "address": "0x0201c682",
+      "bytes": "001600160016",
+      "inert_instruction": "mov r0,r0 x3"
+    },
+    "note_on_velocity_store": {
+      "address": "0x0201c68c",
+      "bytes": "8d42",
+      "status": "preserved"
+    },
+    "segmented_product_callsite": {
+      "address": "0x0201e49c",
+      "bytes": "bfeac4fe",
+      "target": "0x0201e228"
+    },
+    "segmented_reload_callsite": {
+      "address": "0x0201e4a0",
+      "bytes": "bfeade38",
+      "status": "preserved"
+    }
+  },
+  "format": "smk37-v15-s1c4-playback-note-v3-segmented.app-manifest-v1",
+  "input_gates": [
+    {
+      "name": "official-v15-basis",
+      "official_app_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055",
+      "official_fwsc_sha256": "f7f1831cd7c9ad8b4831b6e71ea0bdbcdff9ae4c4077276b3c965511bf4d4fff",
+      "status": "PASS"
+    },
+    {
+      "name": "proven-s1c3-r3-reload-parent",
+      "parent_app_sha256": "7c672938023beee74d599f43ccd5c7642396b89819e929501274239aed5e5d4b",
+      "parent_fwsc_sha256": "0f1c4bf42329a0ca184ac38bb228195b239ed07820fcc0d39be352c2f15982b9",
+      "status": "PASS"
+    },
+    {
+      "name": "current-hook-and-metadata-neutralization-anchors",
+      "note_off_hook": "80fffa1a0000",
+      "note_off_post_store": "00e13e618d40",
+      "note_on_hook": "80ffc01a0000",
+      "note_on_post_store": "00e13e718e40",
+      "status": "PASS"
+    },
+    {
+      "name": "exact-direct-packet-templates",
+      "packet_count": 16,
+      "status": "PASS",
+      "template_byte": 63,
+      "wire_playback_note_offset": 161
+    }
+  ],
+  "output_app_sha256": "c6e4cf567b2f22d7e39d3b4e0f6cae8c7fd140661e31763567b15a9fcf1e3a3d",
+  "parent_relative_changed_byte_count": 265,
+  "parent_relative_changed_ranges": [
+    {
+      "end_exclusive": 116298,
+      "start": 116293
+    },
+    {
+      "end_exclusive": 116360,
+      "start": 116355
+    },
+    {
+      "end_exclusive": 123209,
+      "start": 123208
+    },
+    {
+      "end_exclusive": 123284,
+      "start": 123210
+    },
+    {
+      "end_exclusive": 123287,
+      "start": 123286
+    },
+    {
+      "end_exclusive": 123319,
+      "start": 123288
+    },
+    {
+      "end_exclusive": 123325,
+      "start": 123320
+    },
+    {
+      "end_exclusive": 123346,
+      "start": 123326
+    },
+    {
+      "end_exclusive": 123383,
+      "start": 123347
+    },
+    {
+      "end_exclusive": 123427,
+      "start": 123384
+    },
+    {
+      "end_exclusive": 123429,
+      "start": 123428
+    },
+    {
+      "end_exclusive": 123431,
+      "start": 123430
+    },
+    {
+      "end_exclusive": 123456,
+      "start": 123432
+    },
+    {
+      "end_exclusive": 123458,
+      "start": 123457
+    },
+    {
+      "end_exclusive": 123467,
+      "start": 123459
+    },
+    {
+      "end_exclusive": 123469,
+      "start": 123468
+    },
+    {
+      "end_exclusive": 123476,
+      "start": 123470
+    },
+    {
+      "end_exclusive": 124011,
+      "start": 124010
+    },
+    {
+      "end_exclusive": 124063,
+      "start": 124062
+    }
+  ],
+  "patches": [
+    {
+      "address": "0x0201e13e",
+      "byte_count": 278,
+      "end_exclusive": "0x0201e254",
+      "new_hex": "531604816316790404163516961686f81b1283fd194803fd1768f33cc8ff2065c40106e19c80684380f80e043616e6e1a060861807e19c60784080f8050207e1008a37187d406116401680ff40ab020000e19c408d40590479040416c0ffbd65c4012000b00040e83d0020000516584280f807005b4183f831004021d8422000048380f82b025b4103fd28203616e6e1a060c7ff2065c401671806e19c704020e840c0ff206fc401301801e19b401a408a404a3f9a4070164116623c80ffceaa0200483fe85f20004021e8405b41c321db4183f8032020004022d84220004020d840200059047904590479040416494081f80bc4494181f808c6c5ffbd65c4014020d840d841d8422000401680ff46ffffff59040016",
+      "new_sha256": "4293474041bd40b697be88dcdc936eb92a2b6ce6d20fb95dc2e9dcbe9205cae1",
+      "old_hex": "53160481631679040416951685f8171283fd154803fd1368f33cc8ff2065c40105e19c80584380f80a04e3e1a0308516351806e19c50684080f801025116401680ff4aab0200590459045904590459045904590459045904590459045904590402005904790404169016e020f03d80f83800c0ffbd65c4012000b00040e8310020000516584280f807005b4183f825004021d8422000048380f81f025b4103fd1c203616e6e1a060c7ff2065c401671806e19c704020e84070164116623c80ffccaa020020004021e8405b41c321db4183f8032020004022d84220004020d840200059047904590479040416494081f80bc4494181f808c6c5ffbd65c4014020d840d841d8422000401680ff54ffffff590422805604",
+      "old_sha256": "d9a3c76a074c15093fc0be02544dca13055949a88e7417473d3384c6fe0c122b",
+      "purpose": "install contiguous selector+producer"
+    },
+    {
+      "address": "0x0201e468",
+      "byte_count": 4,
+      "end_exclusive": "0x0201e46c",
+      "new_hex": "bfeadefe",
+      "new_sha256": "0803bed7fe80f239fd8047854fbcba82ff86a51c7f3b3196487b4b119a9e1e22",
+      "old_hex": "bfeaddfe",
+      "old_sha256": "74dd54612d99e7e66cbff4a2efe16e3d41b79ff19c28a80941d89cd5f1816f72",
+      "purpose": "direct product -> reset wrapper"
+    },
+    {
+      "address": "0x0201e49c",
+      "byte_count": 4,
+      "end_exclusive": "0x0201e4a0",
+      "new_hex": "bfeac4fe",
+      "new_sha256": "2c5cf10473608eadb366bd3ba6166bb418c034a6d2d9b35d09ed2858dda84574",
+      "old_hex": "bfeac1fe",
+      "old_sha256": "de909cb18b68bba5418898a374655eff0cb164c69cb853bcdf5d19e2c74c157a",
+      "purpose": "segmented final product -> reset wrapper"
+    },
+    {
+      "address": "0x0201c644",
+      "byte_count": 6,
+      "end_exclusive": "0x0201c64a",
+      "new_hex": "001600160016",
+      "new_sha256": "1bbb9b600c24d72b153d3edd59cbbbcad74f7b1e96aac3a4af83286bebcf2097",
+      "old_hex": "00e13e618d40",
+      "old_sha256": "6daf8d63e9278fb469ffb78a12abbc6d4d7a2f56105beb84a2c24bf31c910867",
+      "purpose": "neutralize Note Off stock add+note store with mov r0,r0 x3"
+    },
+    {
+      "address": "0x0201c682",
+      "byte_count": 6,
+      "end_exclusive": "0x0201c688",
+      "new_hex": "001600160016",
+      "new_sha256": "1bbb9b600c24d72b153d3edd59cbbbcad74f7b1e96aac3a4af83286bebcf2097",
+      "old_hex": "00e13e718e40",
+      "old_sha256": "70cb4e9cc53ac88b659ca30e554068ed9acd4fa049a345155a8ff02dcab4811a",
+      "purpose": "neutralize Note On stock add+note store with mov r0,r0 x3"
+    }
+  ],
+  "runtime_base": "0x02000000"
+}

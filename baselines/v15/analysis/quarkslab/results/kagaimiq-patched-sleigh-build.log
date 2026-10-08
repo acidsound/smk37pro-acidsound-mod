@@ -1,21 +1,18 @@
-openjdk version "21.0.11" 2026-04-21
-OpenJDK Runtime Environment Homebrew (build 21.0.11)
-OpenJDK 64-Bit Server VM Homebrew (build 21.0.11, mixed mode)
+openjdk version "25.0.2" 2026-01-20
+OpenJDK Runtime Environment Homebrew (build 25.0.2)
+OpenJDK 64-Bit Server VM Homebrew (build 25.0.2, mixed mode)
 INFO  Using log config file: jar:file:/opt/homebrew/Cellar/ghidra/12.1.2/libexec/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
 INFO  Using log file: /Users/spectrum/Library/ghidra/ghidra_12.1.2_PUBLIC/application.log (LoggingInitialization)  
 Compiling ./pi32.slaspec:
-WARN  NOP detected at pi32_ins_stack.sinc:7 (SleighCompile)  
-WARN  NOP detected at pi32_ins_stack.sinc:19 (SleighCompile)  
 WARN  2 NOP constructors found (SleighCompile)  
+WARN  Use -n switch to list each individually (SleighCompile)  
 
 Compiling ./pi32v2.slaspec:
-WARN  NOP detected at pi32v2_ins_stack.sinc:39 (SleighCompile)  
-WARN  NOP detected at pi32v2_ins_stack.sinc:67 (SleighCompile)  
 WARN  2 NOP constructors found (SleighCompile)  
+WARN  Use -n switch to list each individually (SleighCompile)  
 
 Compiling ./q32s.slaspec:
-WARN  NOP detected at q32s_ins_stack.sinc:30 (SleighCompile)  
-WARN  NOP detected at q32s_ins_stack.sinc:60 (SleighCompile)  
 WARN  2 NOP constructors found (SleighCompile)  
+WARN  Use -n switch to list each individually (SleighCompile)  
 
 3 languages successfully compiled

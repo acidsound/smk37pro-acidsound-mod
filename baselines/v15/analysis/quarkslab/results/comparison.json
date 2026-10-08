@@ -50,7 +50,7 @@
           "undecoded_even_slots": 175867
         }
       },
-      "path": "baselines/v15/analysis/quarkslab/results/kagaimiq-patched-headless.log",
+      "path": "/Users/spectrum/Documents/SMK37ProMod/baselines/v15/analysis/quarkslab/results/kagaimiq-patched-headless.log",
       "provenance": {
         "image_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055 (GhidraScript)",
         "image_size": "617012 (GhidraScript)",
@@ -246,7 +246,7 @@
           "undecoded_even_slots": 103510
         }
       },
-      "path": "baselines/v15/analysis/quarkslab/results/quarkslab-headless.log",
+      "path": "/Users/spectrum/Documents/SMK37ProMod/baselines/v15/analysis/quarkslab/results/quarkslab-headless.log",
       "provenance": {
         "image_sha256": "36fe8299667d06d4e2c195ea0b125b8e3400a4dc010b45d6989354dd4e172055 (GhidraScript)",
         "image_size": "617012 (GhidraScript)",

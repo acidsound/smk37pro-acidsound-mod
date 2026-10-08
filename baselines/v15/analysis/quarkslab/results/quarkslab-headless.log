@@ -1,50 +1,109 @@
-Picked up JAVA_TOOL_OPTIONS: -Duser.home=/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/home-quarkslab-full2
-Picked up JAVA_TOOL_OPTIONS: -Duser.home=/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/home-quarkslab-full2
-Picked up JAVA_TOOL_OPTIONS: -Duser.home=/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/home-quarkslab-full2
-Picked up JAVA_TOOL_OPTIONS: -Duser.home=/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/home-quarkslab-full2
-openjdk version "21.0.11" 2026-04-21
-OpenJDK Runtime Environment Homebrew (build 21.0.11)
-OpenJDK 64-Bit Server VM Homebrew (build 21.0.11, mixed mode)
-INFO  Using log config file: jar:file:/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
-INFO  Using log file: /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/home-quarkslab-full2/Library/ghidra/ghidra_12.1.2_PUBLIC/application.log (LoggingInitialization)  
-INFO  Loading user preferences: /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/home-quarkslab-full2/Library/ghidra/ghidra_12.1.2_PUBLIC/preferences (Preferences)  
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/home-quarkslab
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/home-quarkslab
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/home-quarkslab
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/home-quarkslab
+openjdk version "25.0.2" 2026-01-20
+OpenJDK Runtime Environment Homebrew (build 25.0.2)
+OpenJDK 64-Bit Server VM Homebrew (build 25.0.2, mixed mode)
+INFO  Using log config file: jar:file:/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/home-quarkslab/Library/ghidra/ghidra_12.1.2_PUBLIC/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/home-quarkslab/Library/ghidra/ghidra_12.1.2_PUBLIC/preferences (Preferences)  
 INFO  Searching for classes... (ClassSearcher)  
-INFO  Class search complete (792 ms) (ClassSearcher)  
+INFO  Class search complete (798 ms) (ClassSearcher)  
 INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
 INFO  Initializing Random Number Generator... (SecureRandomFactory)  
 INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
 INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
-INFO  Headless startup complete (1834 ms) (AnalyzeHeadless)  
+WARN  pi32v2.slaspec:427: Delay slot used in table "parainst" constructor from pi32v2.slaspec:427 (SleighCompile)  
+WARN  pi32v2.slaspec:441: Delay slot used in table "parainst" constructor from pi32v2.slaspec:441 (SleighCompile)  
+WARN  NOP detected at pi32v2.slaspec:510 (SleighCompile)  
+WARN  NOP detected at pi32v2.slaspec:515 (SleighCompile)  
+WARN  NOP detected at pi32v2.slaspec:521 (SleighCompile)  
+WARN  NOP detected at pi32v2.slaspec:538 (SleighCompile)  
+WARN  NOP detected at pi32v2.slaspec:542 (SleighCompile)  
+WARN  NOP detected at pi32v2.slaspec:549 (SleighCompile)  
+WARN  NOP detected at pi32v2.slaspec:553 (SleighCompile)  
+WARN  NOP detected at pi32v2.slaspec:560 (SleighCompile)  
+WARN  NOP detected at pi32v2.slaspec:563 (SleighCompile)  
+WARN  NOP detected at pi32v2.slaspec:567 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:62 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:63 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:64 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:65 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:66 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:67 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:68 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:69 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:70 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:71 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:72 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:73 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:78 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:79 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:85 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:86 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:91 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:92 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:98 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:99 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:123 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:124 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:129 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:130 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:135 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:136 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:141 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_stack.sinc:142 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_loadstore.sinc:52 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_loadstore.sinc:54 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_loadstore.sinc:55 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_loadstore.sinc:56 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_loadstore.sinc:57 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_loadstore.sinc:58 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_loadstore.sinc:59 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_loadstore.sinc:60 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_loadstore.sinc:65 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_loadstore.sinc:66 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_loadstore.sinc:72 (SleighCompile)  
+WARN  NOP detected at pi32v2_ins_loadstore.sinc:73 (SleighCompile)  
+WARN  50 NOP constructors found (SleighCompile)  
+WARN  1 unnecessary extensions/truncations were converted to copies (SleighCompile)  
+WARN  Use -u switch to list each individually (SleighCompile)  
+INFO  Headless startup complete (2542 ms) (AnalyzeHeadless)  
 INFO  Class searcher loaded 92 extension points (46 false positives) (ClassSearcher)  
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::staticFieldOffset has been called by org.apache.felix.framework.util.SecureAction (file:/Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Features/Base/lib/org.apache.felix.framework-7.0.5.jar)
+WARNING: Please consider reporting this to the maintainers of class org.apache.felix.framework.util.SecureAction
+WARNING: sun.misc.Unsafe::staticFieldOffset will be removed in a future release
 INFO  HEADLESS Script Paths:
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Features/FileFormats/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Features/PDB/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Features/WildcardAssembler/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Features/SystemEmulation/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Processors/Atmel/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Features/BytePatterns/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Processors/8051/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Features/Base/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Features/PDB/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Features/BSim/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Features/BytePatterns/ghidra_scripts
     /Users/spectrum/Documents/SMK37ProMod/baselines/v15/analysis/quarkslab
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Processors/DATA/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Features/FunctionID/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Features/Decompiler/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Features/PyGhidra/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Features/SwiftDemangler/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Processors/JVM/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Features/Base/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Features/BSim/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Debug/Debugger/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Processors/PIC/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Features/DecompilerDependent/ghidra_scripts
-    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/ghidra-quarkslab/Ghidra/Features/VersionTracking/ghidra_scripts (HeadlessAnalyzer)  
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Features/Decompiler/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Features/FunctionID/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Processors/Atmel/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Debug/Debugger/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Features/FileFormats/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Features/PyGhidra/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Processors/PIC/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Processors/JVM/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Processors/DATA/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Features/VersionTracking/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Processors/8051/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /Users/spectrum/.jcode/scratch/smk37-v15-quarkslab/runs/20260802T091433Z/ghidra-quarkslab/Ghidra/Features/DecompilerDependent/ghidra_scripts (HeadlessAnalyzer)  
 INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
-INFO  Creating project: /Users/spectrum/jcode-v15-quarkslab-work/projects-quarkslab-full2/v15-quarkslab-full2 (HeadlessAnalyzer)  
-INFO  Creating project: /Users/spectrum/jcode-v15-quarkslab-work/projects-quarkslab-full2/v15-quarkslab-full2 (DefaultProject)  
+INFO  Creating project: /Users/spectrum/jcode-v15-quarkslab-work/20260802T091433Z-quarkslab/v15-20260802T091433Z-quarkslab (HeadlessAnalyzer)  
+INFO  Creating project: /Users/spectrum/jcode-v15-quarkslab-work/20260802T091433Z-quarkslab/v15-20260802T091433Z-quarkslab (DefaultProject)  
 INFO  REPORT: Processing input files:  (HeadlessAnalyzer)  
-INFO       project: /Users/spectrum/jcode-v15-quarkslab-work/projects-quarkslab-full2/v15-quarkslab-full2 (HeadlessAnalyzer)  
+INFO       project: /Users/spectrum/jcode-v15-quarkslab-work/20260802T091433Z-quarkslab/v15-20260802T091433Z-quarkslab (HeadlessAnalyzer)  
 INFO  IMPORTING: file:///Users/spectrum/Documents/SMK37ProMod/build/v15-official-app.bin (HeadlessAnalyzer)  
 INFO  Successfully applied "-loader-baseAddr" to "Base Address" (old: "null", new: "0x02000000") (ProgramLoader)  
 INFO  Using Loader: Raw Binary (ProgramLoader)  
@@ -57,16 +116,6 @@ INFO  Applied data type archive: generic_clib (ApplyDataArchiveAnalyzer)
 ERROR Pcode error at 0201a204: Program does not contain referenced instruction: 0201a208 (SleighInstructionPrototype)  
 ERROR Pcode error at 0201a204: Program does not contain referenced instruction: 0201a208 (SleighInstructionPrototype)  
 WARN  Decompiling 0207d4ba, pcode error at 0207d6b6: Unable to resolve constructor at 0207d6b6 (DecompileCallback)  
-WARN  Decompiling 0200392a, pcode error at 0200325e: Unable to resolve constructor at 0200325e (DecompileCallback)  
-WARN  Decompiling 0200392a, pcode error at 02003a6e: Unable to resolve constructor at 02003a6e (DecompileCallback)  
-WARN  Decompiling 0200392a, pcode error at 02003b1a: Unable to resolve constructor at 02003b1a (DecompileCallback)  
-WARN  Decompiling 0200392a, pcode error at 020039e8: Unable to resolve constructor at 020039e8 (DecompileCallback)  
-WARN  Decompiling 0200392a, pcode error at 02003a8a: Unable to resolve constructor at 02003a8a (DecompileCallback)  
-WARN  Decompiling 0200392a, pcode error at 02003a36: Unable to resolve constructor at 02003a36 (DecompileCallback)  
-WARN  Decompiling 0200392a, pcode error at 02003972: Unable to resolve constructor at 02003972 (DecompileCallback)  
-WARN  Decompiling 0200392a, pcode error at 02003a4a: Unable to resolve constructor at 02003a4a (DecompileCallback)  
-WARN  Decompiling 0200392a, pcode error at 02003aa6: Unable to resolve constructor at 02003aa6 (DecompileCallback)  
-WARN  Decompiling 0200392a, pcode error at 0200396e: Unable to resolve constructor at 0200396e (DecompileCallback)  
 WARN  Decompiling 02003aac, pcode error at 02003b1a: Unable to resolve constructor at 02003b1a (DecompileCallback)  
 WARN  Decompiling 02003aac, pcode error at 02003b1e: Unable to resolve constructor at 02003b1e (DecompileCallback)  
 WARN  Decompiling 02003aac, pcode error at 02003d1c: Unable to resolve constructor at 02003d1c (DecompileCallback)  
@@ -84,6 +133,16 @@ WARN  Decompiling 02003aac, pcode error at 02003c1a: Unable to resolve construct
 WARN  Decompiling 02003aac, pcode error at 02003bea: Unable to resolve constructor at 02003bea (DecompileCallback)  
 WARN  Decompiling 02003aac, pcode error at 02003bca: Unable to resolve constructor at 02003bca (DecompileCallback)  
 WARN  Decompiling 02003aac, pcode error at 02003c28: Unable to resolve constructor at 02003c28 (DecompileCallback)  
+WARN  Decompiling 0200392a, pcode error at 0200325e: Unable to resolve constructor at 0200325e (DecompileCallback)  
+WARN  Decompiling 0200392a, pcode error at 02003a6e: Unable to resolve constructor at 02003a6e (DecompileCallback)  
+WARN  Decompiling 0200392a, pcode error at 02003b1a: Unable to resolve constructor at 02003b1a (DecompileCallback)  
+WARN  Decompiling 0200392a, pcode error at 020039e8: Unable to resolve constructor at 020039e8 (DecompileCallback)  
+WARN  Decompiling 0200392a, pcode error at 02003a8a: Unable to resolve constructor at 02003a8a (DecompileCallback)  
+WARN  Decompiling 0200392a, pcode error at 02003a36: Unable to resolve constructor at 02003a36 (DecompileCallback)  
+WARN  Decompiling 0200392a, pcode error at 02003972: Unable to resolve constructor at 02003972 (DecompileCallback)  
+WARN  Decompiling 0200392a, pcode error at 02003a4a: Unable to resolve constructor at 02003a4a (DecompileCallback)  
+WARN  Decompiling 0200392a, pcode error at 02003aa6: Unable to resolve constructor at 02003aa6 (DecompileCallback)  
+WARN  Decompiling 0200392a, pcode error at 0200396e: Unable to resolve constructor at 0200396e (DecompileCallback)  
 ERROR Pcode error at 02031a2c: Program does not contain referenced instruction: 02031a30 (SleighInstructionPrototype)  
 ERROR Pcode error at 020336f4: Program does not contain referenced instruction: 020336f8 (SleighInstructionPrototype)  
 WARN  Decompiling 0202fb8c, pcode error at 0202fe90: Unable to resolve constructor at 0202fe90 (DecompileCallback)  
@@ -95,25 +154,25 @@ ERROR Pcode error at 02031a2c: Program does not contain referenced instruction: 
 ERROR Pcode error at 0201a204: Program does not contain referenced instruction: 0201a208 (SleighInstructionPrototype)  
 ERROR Pcode error at 02031212: Program does not contain referenced instruction: 02031216 (SleighInstructionPrototype)  
 INFO  -----------------------------------------------------
-    ASCII Strings                              0.204 secs
-    Apply Data Archives                        0.585 secs
-    Basic Constant Reference Analyzer          0.524 secs
+    ASCII Strings                              0.191 secs
+    Apply Data Archives                        0.383 secs
+    Basic Constant Reference Analyzer          0.497 secs
     Call-Fixup Installer                       0.004 secs
-    Create Address Tables                      0.090 secs
-    Create Address Tables - One Time           0.232 secs
-    Create Function                            0.081 secs
-    Data Reference                             0.145 secs
-    Decompiler Switch Analysis                 3.526 secs
-    Demangler GNU                              0.000 secs
+    Create Address Tables                      0.081 secs
+    Create Address Tables - One Time           0.227 secs
+    Create Function                            0.084 secs
+    Data Reference                             0.141 secs
+    Decompiler Switch Analysis                 3.735 secs
+    Demangler GNU                              0.001 secs
     Disassemble Entry Points                   0.000 secs
-    Embedded Media                             0.022 secs
+    Embedded Media                             0.021 secs
     External Entry References                  0.000 secs
-    Function ID                                0.019 secs
-    Non-Returning Functions - Discovered       0.031 secs
-    Reference                                  0.195 secs
-    Shared Return Calls                        0.040 secs
-    Stack                                      0.328 secs
-    Subroutine References                      0.657 secs
+    Function ID                                0.027 secs
+    Non-Returning Functions - Discovered       0.036 secs
+    Reference                                  0.179 secs
+    Shared Return Calls                        0.047 secs
+    Stack                                      0.307 secs
+    Subroutine References                      0.659 secs
     Subroutine References - One Time           0.000 secs
 -----------------------------------------------------
      Total Time   6 secs
@@ -154,8 +213,8 @@ ERROR Pcode error at 02056ba2: Could not find cached delayslot parser context (S
 INFO  V15DecoderAnalysis.java> RECURSIVE pointer_derived_seeds=663 accepted=663 (GhidraScript)  
 ERROR Pcode error at 0201a204: Program does not contain referenced instruction: 0201a208 (SleighInstructionPrototype)  
 ERROR Pcode error at 0200d346: Program does not contain referenced instruction: 0200d34a (SleighInstructionPrototype)  
-WARN  Decompiling 0201fec8, pcode error at 02020194: Unable to resolve constructor at 02020194 (DecompileCallback)  
-WARN  Decompiling 0201b63c, pcode error at 0201b730: Unable to resolve constructor at 0201b730 (DecompileCallback)  
+WARN  Decompiling 02002e7e, pcode error at 02003382: Unable to resolve constructor at 02003382 (DecompileCallback)  
+WARN  Decompiling 02002e7e, pcode error at 02003360: Unable to resolve constructor at 02003360 (DecompileCallback)  
 WARN  Decompiling 0202c238, pcode error at 0202ccc2: Unable to resolve constructor at 0202ccc2 (DecompileCallback)  
 WARN  Decompiling 0202c238, pcode error at 020404f8: Unable to resolve constructor at 020404f8 (DecompileCallback)  
 WARN  Decompiling 0202c238, pcode error at 02030834: Unable to resolve constructor at 02030834 (DecompileCallback)  
@@ -209,8 +268,7 @@ WARN  Decompiling 0202c238, pcode error at 02049c82: Unable to resolve construct
 WARN  Decompiling 0202c238, pcode error at 0202d59c: Unable to resolve constructor at 0202d59c (DecompileCallback)  
 WARN  Decompiling 0202c238, pcode error at 0204c0ec: Unable to resolve constructor at 0204c0ec (DecompileCallback)  
 WARN  Decompiling 0202c238, pcode error at 0204c0da: Unable to resolve constructor at 0204c0da (DecompileCallback)  
-WARN  Decompiling 02002e7e, pcode error at 02003382: Unable to resolve constructor at 02003382 (DecompileCallback)  
-WARN  Decompiling 02002e7e, pcode error at 02003360: Unable to resolve constructor at 02003360 (DecompileCallback)  
+WARN  Decompiling 0201fec8, pcode error at 02020194: Unable to resolve constructor at 02020194 (DecompileCallback)  
 WARN  Decompiling 0202c238, pcode error at 02039fae: Unable to resolve constructor at 02039fae (DecompileCallback)  
 WARN  Decompiling 0202c238, pcode error at 02039b58: Unable to resolve constructor at 02039b58 (DecompileCallback)  
 WARN  Decompiling 0202c238, pcode error at 02039e26: Unable to resolve constructor at 02039e26 (DecompileCallback)  
@@ -231,16 +289,17 @@ WARN  Decompiling 0202c238, pcode error at 0202c4b8: Unable to resolve construct
 WARN  Decompiling 0202c238, pcode error at 0202c35a: Unable to resolve constructor at 0202c35a (DecompileCallback)  
 WARN  Decompiling 0202c238, pcode error at 0202c372: Unable to resolve constructor at 0202c372 (DecompileCallback)  
 WARN  Decompiling 0202c238, pcode error at 0202c428: Unable to resolve constructor at 0202c428 (DecompileCallback)  
+WARN  Decompiling 0201b63c, pcode error at 0201b730: Unable to resolve constructor at 0201b730 (DecompileCallback)  
 ERROR Pcode error at 0202cc02: Program does not contain referenced instruction: 0202cc04 (SleighInstructionPrototype)  
 ERROR Pcode error at 02031696: Program does not contain referenced instruction: 0203169a (SleighInstructionPrototype)  
 ERROR Pcode error at 02033e36: Program does not contain referenced instruction: 02033e38 (SleighInstructionPrototype)  
 ERROR Pcode error at 0203486c: Program does not contain referenced instruction: 0203486e (SleighInstructionPrototype)  
+WARN  Decompiling 02027c5e, pcode error at 020274ba: Unable to resolve constructor at 020274ba (DecompileCallback)  
+WARN  Decompiling 02027c5e, pcode error at 02027d5e: Unable to resolve constructor at 02027d5e (DecompileCallback)  
+ERROR Pcode error at 0204d5d8: Program does not contain referenced instruction: 0204d5da (SleighInstructionPrototype)  
 WARN  Decompiling 02039a02, pcode error at 02039fae: Unable to resolve constructor at 02039fae (DecompileCallback)  
 WARN  Decompiling 02039a02, pcode error at 02039b58: Unable to resolve constructor at 02039b58 (DecompileCallback)  
 WARN  Decompiling 02039a02, pcode error at 02039e26: Unable to resolve constructor at 02039e26 (DecompileCallback)  
-ERROR Pcode error at 0204d5d8: Program does not contain referenced instruction: 0204d5da (SleighInstructionPrototype)  
-WARN  Decompiling 02027c5e, pcode error at 020274ba: Unable to resolve constructor at 020274ba (DecompileCallback)  
-WARN  Decompiling 02027c5e, pcode error at 02027d5e: Unable to resolve constructor at 02027d5e (DecompileCallback)  
 WARN  Decompiling 0202c238, pcode error at 0202ccc2: Unable to resolve constructor at 0202ccc2 (DecompileCallback)  
 WARN  Decompiling 0202c238, pcode error at 020404f8: Unable to resolve constructor at 020404f8 (DecompileCallback)  
 WARN  Decompiling 0202c238, pcode error at 02030834: Unable to resolve constructor at 02030834 (DecompileCallback)  
@@ -342,29 +401,29 @@ ERROR Pcode error at 0208bb52: Program does not contain referenced instruction: 
 ERROR Pcode error at 0205548a: Program does not contain referenced instruction: 0205548c (SleighInstructionPrototype)  
 ERROR Pcode error at 0201fda6: Program does not contain referenced instruction: 0201fdaa (SleighInstructionPrototype)  
 INFO  -----------------------------------------------------
-    ASCII Strings                              0.037 secs
-    Apply Data Archives                        0.011 secs
-    Basic Constant Reference Analyzer          0.828 secs
-    Call Convention ID                         0.005 secs
+    ASCII Strings                              0.053 secs
+    Apply Data Archives                        0.012 secs
+    Basic Constant Reference Analyzer          0.815 secs
+    Call Convention ID                         0.004 secs
     Call-Fixup Installer                       0.004 secs
-    Create Address Tables                      0.036 secs
-    Create Address Tables - One Time           0.026 secs
-    Create Function                            0.068 secs
+    Create Address Tables                      0.034 secs
+    Create Address Tables - One Time           0.024 secs
+    Create Function                            0.069 secs
     Data Reference                             0.033 secs
-    Decompiler Switch Analysis                16.587 secs
+    Decompiler Switch Analysis                14.348 secs
     Demangler GNU                              0.002 secs
-    Disassemble Entry Points                   0.008 secs
-    Embedded Media                             0.010 secs
+    Disassemble Entry Points                   0.007 secs
+    Embedded Media                             0.012 secs
     External Entry References                  0.000 secs
     Function ID                                0.000 secs
-    Non-Returning Functions - Discovered       0.597 secs
-    Reference                                  0.077 secs
-    Shared Return Calls                        0.070 secs
-    Stack                                      0.520 secs
-    Subroutine References                      0.045 secs
+    Non-Returning Functions - Discovered       0.539 secs
+    Reference                                  0.055 secs
+    Shared Return Calls                        0.063 secs
+    Stack                                      0.515 secs
+    Subroutine References                      0.056 secs
     Subroutine References - One Time           0.000 secs
 -----------------------------------------------------
-     Total Time   18 secs
+     Total Time   16 secs
 -----------------------------------------------------
  (AutoAnalysisManager)  
 INFO  V15DecoderAnalysis.java> EVIDENCE_REF phase=recursive from=0200082a text=mov r0,#0x205785b to=0205785b type=PARAM function=FUN_02000812@02000812 (GhidraScript)  
@@ -1551,13 +1610,11 @@ ERROR Pcode error at 020555ea: Delay Slot recursion problem for Instruction at 0
 ERROR Pcode error at 0205576c: Program does not contain referenced instruction: 0205576e (SleighInstructionPrototype)  
 ERROR Pcode error at 02055836: Program does not contain referenced instruction: 02055838 (SleighInstructionPrototype)  
 ERROR Pcode error at 02056d5c: Program does not contain referenced instruction: 02056d5e (SleighInstructionPrototype)  
-ERROR Pcode error at 020555ea: Delay Slot recursion problem for Instruction at 020555ec (SleighInstructionPrototype)  
 ERROR Pcode error at 0205558c: Program does not contain referenced instruction: 0205558e (SleighInstructionPrototype)  
+ERROR Pcode error at 020555ea: Delay Slot recursion problem for Instruction at 020555ec (SleighInstructionPrototype)  
 ERROR Pcode error at 0205576c: Program does not contain referenced instruction: 0205576e (SleighInstructionPrototype)  
 ERROR Pcode error at 02055836: Program does not contain referenced instruction: 02055838 (SleighInstructionPrototype)  
 ERROR Pcode error at 02056d5c: Program does not contain referenced instruction: 02056d5e (SleighInstructionPrototype)  
-WARN  Decompiling 02031bde, pcode error at 02031bdc: Unable to resolve constructor at 02031bdc (DecompileCallback)  
-WARN  Decompiling 02031bde, pcode error at 02031d62: Unable to resolve constructor at 02031d62 (DecompileCallback)  
 WARN  Decompiling 0203f10c, pcode error at 0203f69e: Unable to resolve constructor at 0203f69e (DecompileCallback)  
 WARN  Decompiling 0203c058, pcode error at 0203c116: Unable to resolve constructor at 0203c116 (DecompileCallback)  
 WARN  Decompiling 0203c058, pcode error at 0203c202: Unable to resolve constructor at 0203c202 (DecompileCallback)  
@@ -1568,6 +1625,8 @@ WARN  Decompiling 0203c058, pcode error at 0203c278: Unable to resolve construct
 WARN  Decompiling 0203c058, pcode error at 0203c0fa: Unable to resolve constructor at 0203c0fa (DecompileCallback)  
 WARN  Decompiling 0203c058, pcode error at 0203c20e: Unable to resolve constructor at 0203c20e (DecompileCallback)  
 WARN  Decompiling 0203c058, pcode error at 0203c206: Unable to resolve constructor at 0203c206 (DecompileCallback)  
+WARN  Decompiling 02031bde, pcode error at 02031bdc: Unable to resolve constructor at 02031bdc (DecompileCallback)  
+WARN  Decompiling 02031bde, pcode error at 02031d62: Unable to resolve constructor at 02031d62 (DecompileCallback)  
 WARN  Decompiling 0204b858, pcode error at 0204b86a: Unable to resolve constructor at 0204b86a (DecompileCallback)  
 ERROR Pcode error at 0204ba64: Could not find cached delayslot parser context (SleighInstructionPrototype)  
 WARN  Decompiling 0204b858, pcode error at 0204b66a: Unable to resolve constructor at 0204b66a (DecompileCallback)  
@@ -1576,22 +1635,22 @@ WARN  Decompiling 0204119e, pcode error at 020413cc: Unable to resolve construct
 WARN  Decompiling 0204119e, pcode error at 0204155a: Unable to resolve constructor at 0204155a (DecompileCallback)  
 WARN  Decompiling 0204119e, pcode error at 020415c6: Unable to resolve constructor at 020415c6 (DecompileCallback)  
 ERROR Pcode error at 0203d84c: Program does not contain referenced instruction: 0203d850 (SleighInstructionPrototype)  
-WARN  Decompiling 0204119e, pcode error at 020411fa: Unable to resolve constructor at 020411fa (DecompileCallback)  
 WARN  Decompiling 0203d306, pcode error at 0203da78: Unable to resolve constructor at 0203da78 (DecompileCallback)  
+WARN  Decompiling 0204119e, pcode error at 020411fa: Unable to resolve constructor at 020411fa (DecompileCallback)  
 WARN  Decompiling 0202ec4a, pcode error at 0202eee2: Unable to resolve constructor at 0202eee2 (DecompileCallback)  
-WARN  Decompiling 02050c04, pcode error at 02050c0c: Unable to resolve constructor at 02050c0c (DecompileCallback)  
 WARN  Decompiling 02055c02, pcode error at 02055c06: Unable to resolve constructor at 02055c06 (DecompileCallback)  
+WARN  Decompiling 02050c04, pcode error at 02050c0c: Unable to resolve constructor at 02050c0c (DecompileCallback)  
 WARN  Decompiling 0204d032, pcode error at 0204d038: Unable to resolve constructor at 0204d038 (DecompileCallback)  
+ERROR Pcode error at 02055836: Program does not contain referenced instruction: 02055838 (SleighInstructionPrototype)  
 WARN  Decompiling 0204ec04, pcode error at 0204eba4: Unable to resolve constructor at 0204eba4 (DecompileCallback)  
 WARN  Decompiling 0204de32, pcode error at 0204de3c: Unable to resolve constructor at 0204de3c (DecompileCallback)  
-ERROR Pcode error at 02055836: Program does not contain referenced instruction: 02055838 (SleighInstructionPrototype)  
-WARN  Decompiling 0205623c, pcode error at 02056262: Unable to resolve constructor at 02056262 (DecompileCallback)  
-WARN  Decompiling 0205623c, pcode error at 02056214: Unable to resolve constructor at 02056214 (DecompileCallback)  
 WARN  Decompiling 0204ea26, pcode error at 0204ea2c: Unable to resolve constructor at 0204ea2c (DecompileCallback)  
-WARN  Decompiling 0205623c, pcode error at 02056b06: Unable to resolve constructor at 02056b06 (DecompileCallback)  
+WARN  Decompiling 0205623c, pcode error at 02056262: Unable to resolve constructor at 02056262 (DecompileCallback)  
 WARN  Decompiling 0204ea26, pcode error at 0204e8b0: Unable to resolve constructor at 0204e8b0 (DecompileCallback)  
-WARN  Decompiling 0204ea30, pcode error at 0204e938: Unable to resolve constructor at 0204e938 (DecompileCallback)  
+WARN  Decompiling 0205623c, pcode error at 02056214: Unable to resolve constructor at 02056214 (DecompileCallback)  
+WARN  Decompiling 0205623c, pcode error at 02056b06: Unable to resolve constructor at 02056b06 (DecompileCallback)  
 WARN  Decompiling 02050a72, pcode error at 02050a76: Unable to resolve constructor at 02050a76 (DecompileCallback)  
+WARN  Decompiling 0204ea30, pcode error at 0204e938: Unable to resolve constructor at 0204e938 (DecompileCallback)  
 WARN  Decompiling 0203fe44, pcode error at 0203fe40: Unable to resolve constructor at 0203fe40 (DecompileCallback)  
 WARN  Decompiling 0204a49a, pcode error at 0204a29e: Unable to resolve constructor at 0204a29e (DecompileCallback)  
 WARN  Decompiling 0203fe44, pcode error at 0203fe5c: Unable to resolve constructor at 0203fe5c (DecompileCallback)  
@@ -1615,14 +1674,14 @@ WARN  Decompiling 0204d2d6, pcode error at 0204d0f4: Unable to resolve construct
 WARN  Decompiling 0204d2d6, pcode error at 0204d0ee: Unable to resolve constructor at 0204d0ee (DecompileCallback)  
 ERROR Pcode error at 0204d10e: Could not find cached delayslot parser context (SleighInstructionPrototype)  
 WARN  Decompiling 0204d2d6, pcode error at 0204cf20: Unable to resolve constructor at 0204cf20 (DecompileCallback)  
-WARN  Decompiling 0204caca, pcode error at 0204cad0: Unable to resolve constructor at 0204cad0 (DecompileCallback)  
 WARN  Decompiling 0204d2d6, pcode error at 0204cf18: Unable to resolve constructor at 0204cf18 (DecompileCallback)  
 ERROR Pcode error at 0204d064: Program does not contain referenced instruction: 0204d066 (SleighInstructionPrototype)  
+WARN  Decompiling 0204caca, pcode error at 0204cad0: Unable to resolve constructor at 0204cad0 (DecompileCallback)  
 WARN  Decompiling 0204d2d6, pcode error at 0204cf82: Unable to resolve constructor at 0204cf82 (DecompileCallback)  
 WARN  Decompiling 0204d2d6, pcode error at 0204cf8e: Unable to resolve constructor at 0204cf8e (DecompileCallback)  
 WARN  Decompiling 020274bc, pcode error at 020274ba: Unable to resolve constructor at 020274ba (DecompileCallback)  
-WARN  Decompiling 0204c312, pcode error at 0204c31a: Unable to resolve constructor at 0204c31a (DecompileCallback)  
 WARN  Decompiling 02055b12, pcode error at 02055b18: Unable to resolve constructor at 02055b18 (DecompileCallback)  
+WARN  Decompiling 0204c312, pcode error at 0204c31a: Unable to resolve constructor at 0204c31a (DecompileCallback)  
 WARN  Decompiling 0204c312, pcode error at 0204c71e: Unable to resolve constructor at 0204c71e (DecompileCallback)  
 WARN  Decompiling 02056b10, pcode error at 02056b12: Unable to resolve constructor at 02056b12 (DecompileCallback)  
 WARN  Decompiling 0204c312, pcode error at 0204c734: Unable to resolve constructor at 0204c734 (DecompileCallback)  
@@ -1636,11 +1695,11 @@ WARN  Decompiling 0204c312, pcode error at 0204c91a: Unable to resolve construct
 WARN  Decompiling 0204c312, pcode error at 0204c92c: Unable to resolve constructor at 0204c92c (DecompileCallback)  
 WARN  Decompiling 0204c312, pcode error at 0204c882: Unable to resolve constructor at 0204c882 (DecompileCallback)  
 WARN  Decompiling 0204c312, pcode error at 0204c7d4: Unable to resolve constructor at 0204c7d4 (DecompileCallback)  
+WARN  Decompiling 0202573c, pcode error at 020257b0: Unable to resolve constructor at 020257b0 (DecompileCallback)  
 WARN  Decompiling 0204c312, pcode error at 0204c8a0: Unable to resolve constructor at 0204c8a0 (DecompileCallback)  
 WARN  Decompiling 0204c312, pcode error at 0204c78a: Unable to resolve constructor at 0204c78a (DecompileCallback)  
 WARN  Decompiling 0204c312, pcode error at 0204c834: Unable to resolve constructor at 0204c834 (DecompileCallback)  
 WARN  Decompiling 0204c312, pcode error at 0204c846: Unable to resolve constructor at 0204c846 (DecompileCallback)  
-WARN  Decompiling 0202573c, pcode error at 020257b0: Unable to resolve constructor at 020257b0 (DecompileCallback)  
 WARN  Decompiling 0202573c, pcode error at 020274ba: Unable to resolve constructor at 020274ba (DecompileCallback)  
 WARN  Decompiling 0204c528, pcode error at 0204c532: Unable to resolve constructor at 0204c532 (DecompileCallback)  
 WARN  Decompiling 0204c528, pcode error at 0204b0e2: Unable to resolve constructor at 0204b0e2 (DecompileCallback)  
@@ -1648,17 +1707,17 @@ WARN  Decompiling 0204c528, pcode error at 0204aee2: Unable to resolve construct
 WARN  Decompiling 0204c528, pcode error at 0204c2fe: Unable to resolve constructor at 0204c2fe (DecompileCallback)  
 WARN  Decompiling 0204c312, pcode error at 0204c78e: Unable to resolve constructor at 0204c78e (DecompileCallback)  
 WARN  Decompiling 0204c312, pcode error at 0204c918: Unable to resolve constructor at 0204c918 (DecompileCallback)  
+WARN  Decompiling 0205075e, pcode error at 02050900: Unable to resolve constructor at 02050900 (DecompileCallback)  
 WARN  Decompiling 0204c312, pcode error at 0204c7f6: Unable to resolve constructor at 0204c7f6 (DecompileCallback)  
 WARN  Decompiling 0204c312, pcode error at 0204c81e: Unable to resolve constructor at 0204c81e (DecompileCallback)  
 WARN  Decompiling 0204c312, pcode error at 0204c86e: Unable to resolve constructor at 0204c86e (DecompileCallback)  
 WARN  Decompiling 0204c312, pcode error at 0204c84a: Unable to resolve constructor at 0204c84a (DecompileCallback)  
 WARN  Decompiling 0204c312, pcode error at 0204c7b0: Unable to resolve constructor at 0204c7b0 (DecompileCallback)  
-WARN  Decompiling 0205075e, pcode error at 02050900: Unable to resolve constructor at 02050900 (DecompileCallback)  
 WARN  Decompiling 0204c312, pcode error at 0204c81a: Unable to resolve constructor at 0204c81a (DecompileCallback)  
 WARN  Decompiling 0204c312, pcode error at 0204c91e: Unable to resolve constructor at 0204c91e (DecompileCallback)  
 WARN  Decompiling 0204c312, pcode error at 0204c76c: Unable to resolve constructor at 0204c76c (DecompileCallback)  
-WARN  Decompiling 02055b4a, pcode error at 02055b50: Unable to resolve constructor at 02055b50 (DecompileCallback)  
 ERROR Pcode error at 02056d5c: Program does not contain referenced instruction: 02056d5e (SleighInstructionPrototype)  
+WARN  Decompiling 02055b4a, pcode error at 02055b50: Unable to resolve constructor at 02055b50 (DecompileCallback)  
 WARN  Decompiling 0205174e, pcode error at 02051812: Unable to resolve constructor at 02051812 (DecompileCallback)  
 WARN  Decompiling 02052146, pcode error at 0205233e: Unable to resolve constructor at 0205233e (DecompileCallback)  
 ERROR Pcode error at 0205579c: Program does not contain referenced instruction: 0205579e (SleighInstructionPrototype)  
@@ -1672,42 +1731,42 @@ WARN  Decompiling 02028f0c, pcode error at 020290de: Unable to resolve construct
 WARN  Decompiling 02028f0c, pcode error at 02029020: Unable to resolve constructor at 02029020 (DecompileCallback)  
 WARN  Decompiling 02028f0c, pcode error at 02029016: Unable to resolve constructor at 02029016 (DecompileCallback)  
 WARN  Decompiling 02028f0c, pcode error at 02028fe6: Unable to resolve constructor at 02028fe6 (DecompileCallback)  
-WARN  Decompiling 02050d96, pcode error at 02050e52: Unable to resolve constructor at 02050e52 (DecompileCallback)  
 WARN  Decompiling 02028f0c, pcode error at 02028ff6: Unable to resolve constructor at 02028ff6 (DecompileCallback)  
 WARN  Decompiling 02028f0c, pcode error at 02028ffa: Unable to resolve constructor at 02028ffa (DecompileCallback)  
+WARN  Decompiling 02050d96, pcode error at 02050e52: Unable to resolve constructor at 02050e52 (DecompileCallback)  
 WARN  Decompiling 02028f0c, pcode error at 02029006: Unable to resolve constructor at 02029006 (DecompileCallback)  
 WARN  Decompiling 02028f0c, pcode error at 02029048: Unable to resolve constructor at 02029048 (DecompileCallback)  
 WARN  Decompiling 02028f0c, pcode error at 02029044: Unable to resolve constructor at 02029044 (DecompileCallback)  
+WARN  Decompiling 02042434, pcode error at 0204a4c2: Unable to resolve constructor at 0204a4c2 (DecompileCallback)  
 WARN  Decompiling 0204b58e, pcode error at 0204b592: Unable to resolve constructor at 0204b592 (DecompileCallback)  
 ERROR Pcode error at 0205558c: Program does not contain referenced instruction: 0205558e (SleighInstructionPrototype)  
-WARN  Decompiling 02042434, pcode error at 0204a4c2: Unable to resolve constructor at 0204a4c2 (DecompileCallback)  
+WARN  Decompiling 020274bc, pcode error at 02027d5e: Unable to resolve constructor at 02027d5e (DecompileCallback)  
 WARN  Decompiling 020557be, pcode error at 020557c0: Unable to resolve constructor at 020557c0 (DecompileCallback)  
 WARN  Decompiling 020557be, pcode error at 02055778: Unable to resolve constructor at 02055778 (DecompileCallback)  
 WARN  Decompiling 0204ddda, pcode error at 0204dde8: Unable to resolve constructor at 0204dde8 (DecompileCallback)  
+WARN  Decompiling 02042434, pcode error at 02045264: Unable to resolve constructor at 02045264 (DecompileCallback)  
 WARN  Decompiling 0204ddda, pcode error at 0204f1f2: Unable to resolve constructor at 0204f1f2 (DecompileCallback)  
 WARN  Decompiling 02053bdc, pcode error at 02053cd4: Unable to resolve constructor at 02053cd4 (DecompileCallback)  
 WARN  Decompiling 020557dc, pcode error at 0205580a: Unable to resolve constructor at 0205580a (DecompileCallback)  
-WARN  Decompiling 0204dbd0, pcode error at 0204dd84: Unable to resolve constructor at 0204dd84 (DecompileCallback)  
-WARN  Decompiling 0204dbd0, pcode error at 0204df62: Unable to resolve constructor at 0204df62 (DecompileCallback)  
-WARN  Decompiling 020274bc, pcode error at 02027d5e: Unable to resolve constructor at 02027d5e (DecompileCallback)  
-WARN  Decompiling 0200d9cc, pcode error at 0200e36e: Unable to resolve constructor at 0200e36e (DecompileCallback)  
-WARN  Decompiling 02042434, pcode error at 02045264: Unable to resolve constructor at 02045264 (DecompileCallback)  
-ERROR Pcode error at 020555ea: Delay Slot recursion problem for Instruction at 020555ec (SleighInstructionPrototype)  
 WARN  Decompiling 02042434, pcode error at 0205e592: Unable to resolve constructor at 0205e592 (DecompileCallback)  
 WARN  Decompiling 02042434, pcode error at 0204a5fe: Unable to resolve constructor at 0204a5fe (DecompileCallback)  
-ERROR Pcode error at 02055614: Delay Slot recursion problem for Instruction at 02055616 (SleighInstructionPrototype)  
-WARN  Decompiling 02025bea, pcode error at 020274ba: Unable to resolve constructor at 020274ba (DecompileCallback)  
-WARN  Decompiling 0202573c, pcode error at 02027d5e: Unable to resolve constructor at 02027d5e (DecompileCallback)  
+WARN  Decompiling 0204dbd0, pcode error at 0204dd84: Unable to resolve constructor at 0204dd84 (DecompileCallback)  
+WARN  Decompiling 0204dbd0, pcode error at 0204df62: Unable to resolve constructor at 0204df62 (DecompileCallback)  
+WARN  Decompiling 0200d9cc, pcode error at 0200e36e: Unable to resolve constructor at 0200e36e (DecompileCallback)  
 WARN  Decompiling 02042434, pcode error at 020424cc: Unable to resolve constructor at 020424cc (DecompileCallback)  
+ERROR Pcode error at 020555ea: Delay Slot recursion problem for Instruction at 020555ec (SleighInstructionPrototype)  
 WARN  Decompiling 02042434, pcode error at 02047afc: Unable to resolve constructor at 02047afc (DecompileCallback)  
+ERROR Pcode error at 02055614: Delay Slot recursion problem for Instruction at 02055616 (SleighInstructionPrototype)  
+WARN  Decompiling 0202573c, pcode error at 02027d5e: Unable to resolve constructor at 02027d5e (DecompileCallback)  
 WARN  Decompiling 02042434, pcode error at 0204a92c: Unable to resolve constructor at 0204a92c (DecompileCallback)  
+WARN  Decompiling 02025bea, pcode error at 020274ba: Unable to resolve constructor at 020274ba (DecompileCallback)  
 WARN  Decompiling 02042434, pcode error at 0204b4d4: Unable to resolve constructor at 0204b4d4 (DecompileCallback)  
 WARN  Decompiling 02042434, pcode error at 0204a92e: Unable to resolve constructor at 0204a92e (DecompileCallback)  
-WARN  Decompiling 02025bea, pcode error at 02027d5e: Unable to resolve constructor at 02027d5e (DecompileCallback)  
 WARN  Decompiling 020274bc, pcode error at 0202581e: Unable to resolve constructor at 0202581e (DecompileCallback)  
 WARN  Decompiling 020274bc, pcode error at 020256d2: Unable to resolve constructor at 020256d2 (DecompileCallback)  
 WARN  Decompiling 020274bc, pcode error at 020257fa: Unable to resolve constructor at 020257fa (DecompileCallback)  
 WARN  Decompiling 020274bc, pcode error at 02025cb4: Unable to resolve constructor at 02025cb4 (DecompileCallback)  
+WARN  Decompiling 02025bea, pcode error at 02027d5e: Unable to resolve constructor at 02027d5e (DecompileCallback)  
 WARN  Decompiling 020274bc, pcode error at 020257b0: Unable to resolve constructor at 020257b0 (DecompileCallback)  
 WARN  Decompiling 020274bc, pcode error at 02025d1c: Unable to resolve constructor at 02025d1c (DecompileCallback)  
 WARN  Decompiling 02042434, pcode error at 0204284c: Unable to resolve constructor at 0204284c (DecompileCallback)  
@@ -1809,8 +1868,8 @@ ERROR Pcode error at 0200f10e: Program does not contain referenced instruction: 
 ERROR Pcode error at 020141ca: Program does not contain referenced instruction: 020141cc (SleighInstructionPrototype)  
 ERROR Pcode error at 02031212: Program does not contain referenced instruction: 02031216 (SleighInstructionPrototype)  
 ERROR Pcode error at 02031696: Program does not contain referenced instruction: 0203169a (SleighInstructionPrototype)  
-ERROR Pcode error at 020316d8: Program does not contain referenced instruction: 020316da (SleighInstructionPrototype)  
 ERROR Pcode error at 0208bb52: Program does not contain referenced instruction: 0208bb56 (SleighInstructionPrototype)  
+ERROR Pcode error at 020316d8: Program does not contain referenced instruction: 020316da (SleighInstructionPrototype)  
 ERROR Pcode error at 0204b6c2: Could not find cached delayslot parser context (SleighInstructionPrototype)  
 ERROR Pcode error at 0203d84c: Program does not contain referenced instruction: 0203d850 (SleighInstructionPrototype)  
 ERROR Pcode error at 02057626: Delay Slot recursion problem for Instruction at 02057628 (SleighInstructionPrototype)  
@@ -2253,26 +2312,26 @@ ERROR Pcode error at 0204e94a: Could not find cached delayslot parser context (S
 ERROR Pcode error at 0204b4f8: Program does not contain referenced instruction: 0204b4fa (SleighInstructionPrototype)  
 ERROR Pcode error at 0204b572: Program does not contain referenced instruction: 0204b576 (SleighInstructionPrototype)  
 INFO  -----------------------------------------------------
-    ASCII Strings                              0.019 secs
-    Apply Data Archives                        0.014 secs
-    Basic Constant Reference Analyzer          1.534 secs
-    Call Convention ID                         0.007 secs
+    ASCII Strings                              0.017 secs
+    Apply Data Archives                        0.013 secs
+    Basic Constant Reference Analyzer          1.455 secs
+    Call Convention ID                         0.006 secs
     Call-Fixup Installer                       0.005 secs
-    Create Address Tables                      0.025 secs
-    Create Address Tables - One Time           0.006 secs
-    Create Function                            0.036 secs
-    Data Reference                             0.043 secs
-    Decompiler Switch Analysis                 6.133 secs
+    Create Address Tables                      0.023 secs
+    Create Address Tables - One Time           0.005 secs
+    Create Function                            0.032 secs
+    Data Reference                             0.044 secs
+    Decompiler Switch Analysis                 6.003 secs
     Demangler GNU                              0.003 secs
-    Disassemble Entry Points                   0.013 secs
+    Disassemble Entry Points                   0.011 secs
     Embedded Media                             0.004 secs
     External Entry References                  0.000 secs
     Function ID                                0.000 secs
-    Non-Returning Functions - Discovered       1.294 secs
-    Reference                                  0.068 secs
-    Shared Return Calls                        0.120 secs
-    Stack                                      0.542 secs
-    Subroutine References                      0.064 secs
+    Non-Returning Functions - Discovered       1.120 secs
+    Reference                                  0.071 secs
+    Shared Return Calls                        0.094 secs
+    Stack                                      0.532 secs
+    Subroutine References                      0.057 secs
     Subroutine References - One Time           0.001 secs
 -----------------------------------------------------
      Total Time   9 secs
@@ -3922,5 +3981,5 @@ INFO  V15DecoderAnalysis.java> LISTING phase=exhaustive path=/Users/spectrum/Doc
 INFO  ANALYZING changes made by post scripts: file:///Users/spectrum/Documents/SMK37ProMod/build/v15-official-app.bin (HeadlessAnalyzer)  
 INFO  REPORT: Post-analysis succeeded for file: file:///Users/spectrum/Documents/SMK37ProMod/build/v15-official-app.bin (HeadlessAnalyzer)  
 INFO  /v15-official-app.bin: file created (spectrum) (LocalFileSystem)  
-INFO  REPORT: Save succeeded for: /v15-official-app.bin (v15-quarkslab-full2:/v15-official-app.bin) (HeadlessAnalyzer)  
+INFO  REPORT: Save succeeded for: /v15-official-app.bin (v15-20260802T091433Z-quarkslab:/v15-official-app.bin) (HeadlessAnalyzer)  
 INFO  REPORT: Import succeeded (HeadlessAnalyzer)  
