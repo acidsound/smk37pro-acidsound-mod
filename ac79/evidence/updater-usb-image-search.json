@@ -1,0 +1,162 @@
+{
+  "schema": "smk37-updater-image-search/1",
+  "purpose": "Search the update-mode firmware image usb_hid_ota.bin (flash 0xB9000..0xBDE01, the tail of the vendor package's ota.bin entry) for configuration/interface/endpoint/string descriptors in wire format.",
+  "derivation": {
+    "vendor_package": "build/SMK-37_Pro_012.fwsc, UFW entry 4 name='ota.bin' size=0x4E01, parsed with tools/smk37_app_patch.py",
+    "descriptor_offset_in_entry": "0x04DE5",
+    "flash_site": "0x0BDDE5",
+    "flash_base": "0xB9000",
+    "flash_end": "0xBDE01"
+  },
+  "dumps": [
+    {
+      "path": "/Users/spectrum/Documents/SMK37ProMod/build/M10-baseline-before-flash-20260801-a.bin",
+      "size": 1048576,
+      "sha256": "0cd4b8253ae979d428e9821eb451bcae10b4188891cad291bd6c831ae967b62f",
+      "identity_occurrences": 1,
+      "verdict": "searched",
+      "flash_base": "0xB9000",
+      "descriptor_offset_in_image": "0x04DE5",
+      "image": {
+        "size": 19969,
+        "sha256": "deab4fd4247c882ebf188e894b8ffd1accabac451471b183355b475f365bd2df",
+        "first_16_bytes": "5aedffff00900b00014e000041ffffff",
+        "updater_image_name_present": true,
+        "config_chains": [],
+        "interface_records": [
+          {
+            "offset": "0x01074",
+            "bInterfaceNumber": 130,
+            "bAlternateSetting": 191,
+            "bNumEndpoints": 234,
+            "bInterfaceClass": "0xC1",
+            "bInterfaceSubClass": "0xFD",
+            "plausible": false
+          },
+          {
+            "offset": "0x02512",
+            "bInterfaceNumber": 34,
+            "bAlternateSetting": 3,
+            "bNumEndpoints": 74,
+            "bInterfaceClass": "0x00",
+            "bInterfaceSubClass": "0x69",
+            "plausible": false
+          },
+          {
+            "offset": "0x025E6",
+            "bInterfaceNumber": 138,
+            "bAlternateSetting": 0,
+            "bNumEndpoints": 144,
+            "bInterfaceClass": "0x01",
+            "bInterfaceSubClass": "0x00",
+            "plausible": false
+          }
+        ],
+        "interface_records_plausible": 0,
+        "endpoint_records": [],
+        "endpoint_records_plausible": 0,
+        "ms_header_ms_072401": 0,
+        "ms_header_uac_072406": 0,
+        "cs_endpoint_0725": 0,
+        "jack_in_records": [
+          {
+            "offset": "0x0261E",
+            "bJackType": 2,
+            "bJackID": 7,
+            "iJack": 87
+          }
+        ],
+        "jack_out_records": [],
+        "endpoint_out_0x04_bulk": 0,
+        "endpoint_in_0x84_bulk": 0,
+        "langid_descriptors": [
+          "0x02510"
+        ],
+        "walkable_string_tables": [],
+        "product_name_utf16_offsets": [
+          "0x02558"
+        ],
+        "product_name_prefix_2_bytes": "2a03",
+        "product_name_length_utf16": 40
+      }
+    },
+    {
+      "path": "/Users/spectrum/Documents/SMK37ProMod/baselines/v15/device-dumps/v15-clean-baseline-a.bin",
+      "size": 1048576,
+      "sha256": "1c202201a81ed6d956ec5398adff75ffcd805594a27370a56caafaf18223383b",
+      "identity_occurrences": 1,
+      "verdict": "searched",
+      "flash_base": "0xB9000",
+      "descriptor_offset_in_image": "0x04DE5",
+      "image": {
+        "size": 19969,
+        "sha256": "deab4fd4247c882ebf188e894b8ffd1accabac451471b183355b475f365bd2df",
+        "first_16_bytes": "5aedffff00900b00014e000041ffffff",
+        "updater_image_name_present": true,
+        "config_chains": [],
+        "interface_records": [
+          {
+            "offset": "0x01074",
+            "bInterfaceNumber": 130,
+            "bAlternateSetting": 191,
+            "bNumEndpoints": 234,
+            "bInterfaceClass": "0xC1",
+            "bInterfaceSubClass": "0xFD",
+            "plausible": false
+          },
+          {
+            "offset": "0x02512",
+            "bInterfaceNumber": 34,
+            "bAlternateSetting": 3,
+            "bNumEndpoints": 74,
+            "bInterfaceClass": "0x00",
+            "bInterfaceSubClass": "0x69",
+            "plausible": false
+          },
+          {
+            "offset": "0x025E6",
+            "bInterfaceNumber": 138,
+            "bAlternateSetting": 0,
+            "bNumEndpoints": 144,
+            "bInterfaceClass": "0x01",
+            "bInterfaceSubClass": "0x00",
+            "plausible": false
+          }
+        ],
+        "interface_records_plausible": 0,
+        "endpoint_records": [],
+        "endpoint_records_plausible": 0,
+        "ms_header_ms_072401": 0,
+        "ms_header_uac_072406": 0,
+        "cs_endpoint_0725": 0,
+        "jack_in_records": [
+          {
+            "offset": "0x0261E",
+            "bJackType": 2,
+            "bJackID": 7,
+            "iJack": 87
+          }
+        ],
+        "jack_out_records": [],
+        "endpoint_out_0x04_bulk": 0,
+        "endpoint_in_0x84_bulk": 0,
+        "langid_descriptors": [
+          "0x02510"
+        ],
+        "walkable_string_tables": [],
+        "product_name_utf16_offsets": [
+          "0x02558"
+        ],
+        "product_name_prefix_2_bytes": "2a03",
+        "product_name_length_utf16": 40
+      }
+    },
+    {
+      "path": "/Users/spectrum/Documents/SMK37ProMod/backups/smk37-pro-v012-live-20260714.bin",
+      "size": 1048576,
+      "sha256": "ba1b40a0b4b6234b384b1d812e851c659ded292b57ac55bfee4e04d8489cb1fa",
+      "identity_occurrences": 0,
+      "verdict": "no updater site: identity occurs 0 times, so there is no single site to search"
+    }
+  ]
+}

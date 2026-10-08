@@ -1,0 +1,523 @@
+{
+  "format": "smk37-ac79-target-v1",
+  "purpose": "Memory/boot/build target definition for a custom Jieli AC79 (wl82/SFC) application on the SMK-37 Pro. Every value carries the artifact it came from. This is the input to tools/check_sdk_app_layout.py (the P4 gate in docs/usb-flash-safety-case.md). Offline only: no device access, no flash, no OTA.",
+  "local_build_workspace": {
+    "sdk_root": "~/Documents/SMK37ProMod/linux-build/fw-AC79_AIoT_SDK",
+    "note": "Not part of this repository. Paths below starting with 'linux-build/' are relative to ~/Documents/SMK37ProMod.",
+    "toolchain_payloads": [
+      "linux-build/linux-toolchain.bin (x86-64 Linux, XZ, 26,009,040 B)",
+      "linux-build/linux-postbuild.bin (x86-64 Linux, XZ, 41,151,180 B)"
+    ],
+    "toolchain_status": "RESOLVED 2026-10-08. The x86-64 toolchain runs natively under Rosetta 2 inside an amd64 Apple-container VM (`container run -d --name smk-build --arch amd64 ubuntu:24.04`): uname -m reports x86_64 and every toolchain binary executes unmodified. The qemu-user + LD_PRELOAD shim of docs/from-scratch-platform-plan.md section 7 is superseded and is not needed. One non-obvious dependency: the linker driver /opt/jieli/pi32v2/bin/lto-wrapper is a '#!/usr/bin/env python3' script, so the base image needs python3 (without it the link stops at \"/usr/bin/env: 'python3': No such file or directory\", make Error 127, after all 17 sources compiled cleanly). Exact reproduction commands: docs/linux-build-flash-procedure.md section 3. Working build: known_builds[1]."
+  },
+
+  "target": {
+    "part_marking": "C108221-11B8 -> AC7911B8 (family AC791N / WL82, dual-core 32-bit DSP, <=320 MHz, 578 KiB on-chip SRAM)",
+    "part_evidence": [
+      "baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-sd-005: datasheet memory code 8 = 8 Mbit flash)",
+      "docs/from-scratch-platform-plan.md (section 2: Jieli AC791N, internal name WL82)",
+      "https://doc.zh-jieli.com/AC79/zh-cn/release_v1.0.3/board_description/board_overview/index.html (JL_AC79_DevKit V1.0: AC7916, 320 MHz dual-core FP DSP, 578 KiB SRAM; devkit board, not this unit)"
+    ],
+    "flash_bytes": 1048576,
+    "flash_evidence": [
+      "baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-fl-001: two independent 1 MiB forced-loader dumps; flash id 0x856014)",
+      "docs/usb-flash-safety-case.md (header: Jieli AC791N/WL82, 1 MiB SPI NOR)"
+    ],
+    "sdk_devkit_flash_setting": "FLASH_SIZE=4M in linux-build/fw-AC79_AIoT_SDK/cpu/wl82/tools/isd_config.ini -- a devkit value; do not transfer to this unit",
+    "clock_devkit_setting": "OSC=OSC0 / OSC_FREQ=24MHz / SYS_CLK=320MHz (same isd_config.ini). Crystal on this unit is NOT verified.",
+    "sdram_presence": "UNPROVEN on this unit; datasheet memory code 8 excludes SDRAM/PSRAM members and the stock v15 app never addresses 0x04000000"
+  },
+
+  "windows": {
+    "allowed": [
+      {
+        "id": "xip",
+        "name": "SFC/XIP application window",
+        "start": "0x02000120",
+        "end_exclusive": "0x02096B54",
+        "reason": "SDK XIP entry 0x02000120 (ENTRY in isd_config.ini; verified as the .text VMA of the real sdk.elf) grown by the v15 application size 617,012 B (0x96A34)",
+        "evidence": [
+          "linux-build/fw-AC79_AIoT_SDK/cpu/wl82/tools/isd_config.ini (ENTRY=0x2000120)",
+          "linux-build/fw-AC79_AIoT_SDK/cpu/wl82/tools/sdk.elf (.text VMA 0x02000120)",
+          "baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-rx-001)"
+        ]
+      },
+      {
+        "id": "ram0_proven",
+        "name": "RAM0 below the stock v15 high-water mark",
+        "start": "0x01C00000",
+        "end_exclusive": "0x01C4651C",
+        "reason": "On-chip SRAM span the stock v15 image provably initializes/uses (initialized-data copy destination through the BSS/heap zero span). Boot stack sits inside it (sp=0x01c3a2d4).",
+        "evidence": [
+          "baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-rm-001, v2-rm-002, v2-rm-010)",
+          "baselines/v15/analysis/r03-owned-ram/heap-boundary/report.md"
+        ]
+      },
+      {
+        "id": "cache_ram",
+        "name": "wl82 cache RAM window (envelope)",
+        "start": "0x01F20000",
+        "end_exclusive": "0x01F30000",
+        "reason": "Envelope of the SDK cache_ram region: ORIGIN = 0x1f20000 + (8-FREE_IACHE_WAY)*4K, LENGTH = (FREE_DACHE_WAY + FREE_IACHE_WAY)*4K, so the exact extent depends on the freed cache ways of a given build",
+        "evidence": [
+          "linux-build/fw-AC79_AIoT_SDK/cpu/wl82/sdk_ld_sdram.c (line 32: cache_ram(rw) : ORIGIN = 0x1f20000+((8-FREE_IACHE_WAY)*4K), LENGTH = CACHE_RAM_SIZE)"
+        ]
+      },
+      {
+        "id": "boot_info_slot",
+        "name": "SDK BOOT_INFO slot (48 B)",
+        "start": "0x01C7FD50",
+        "end_exclusive": "0x01C7FD80",
+        "reason": "Shared platform convention, live in stock firmware: boot code 0x020000C6 copies six fields into this 48-byte slot. SDK linker emits .boot_info here.",
+        "evidence": [
+          "baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-rm-004)",
+          "linux-build/fw-AC79_AIoT_SDK/cpu/wl82/sdk_ld_sfc.c"
+        ]
+      },
+      {
+        "id": "updata_beg",
+        "name": "SDK UPDATA_BEG update-flag region (128 B)",
+        "start": "0x01C7FD80",
+        "end_exclusive": "0x01C7FE00",
+        "reason": "Shared platform convention, read by the stock boot chain (FUN_02007424).",
+        "evidence": [
+          "baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-rm-005)"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "sdram",
+        "name": "SDRAM window declared by the SDK default ('sdram') layout",
+        "start": "0x04000000",
+        "end_exclusive": "0x04200000",
+        "reason": "SDRAM presence and controller bring-up on this unit are UNPROVEN, the part-number memory code excludes SDRAM/PSRAM members, and the stock v15 app never addresses it. The 2026-08-15 flashed SDK app placed .data/.bss/heap here and the unit never re-enumerated. This is the P4 gate's reason for refusing a build.",
+        "evidence": [
+          "baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-sd-001 .. v2-sd-005)",
+          "docs/usb-flash-safety-case.md (section 0 and gate P4)",
+          "linux-build/fw-AC79_AIoT_SDK/cpu/wl82/tools/sdk.map (.data 0x04000000, .bss 0x040009a0)"
+        ]
+      }
+    ],
+    "unproven": [
+      {
+        "id": "ram0_above_stock",
+        "name": "RAM0 above the stock v15 high-water mark",
+        "start": "0x01C4651C",
+        "end_exclusive": "0x01C7FD50",
+        "reason": "No evidence of ownership or absence of alias. M09 was lost to exactly this reasoning error ('undecoded and zero' treated as available). An SDK app must not place .data/.bss/heap here until ownership is proven.",
+        "evidence": [
+          "baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-rm-003)",
+          "docs/m09-brick-incident.md"
+        ]
+      }
+    ]
+  },
+
+  "flash_layout": [
+    {
+      "id": "boot_prefix",
+      "start": "0x00000000",
+      "end_exclusive": "0x00004000",
+      "policy": "PRESERVE. Not reconstructible from any package.",
+      "evidence": ["baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-fl-002)", "docs/flash-layout-cipher-analysis.md"]
+    },
+    {
+      "id": "jlfs_header",
+      "start": "0x00004000",
+      "end_exclusive": "0x00004300",
+      "policy": "PRESERVE. Live form is plain ^ lfsr(0x132b).",
+      "evidence": ["baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-fl-003)", "docs/flash-layout-cipher-analysis.md"]
+    },
+    {
+      "id": "app_area",
+      "start": "0x00004300",
+      "end_exclusive": "0x0009A833",
+      "policy": "WRITE ONLY through a validated package + rollback manifest, or guarded sector restore.",
+      "note": "This is the v15 measured replaceable region, NOT the app.bin size ceiling. See resolved question app_area_vs_app_bin_size: the payload slot is 617,012 B from flash 0x4120, which is 480 B before this region's start and 801 B past its end.",
+      "evidence": ["baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-fl-004)", "tools/smk37_guarded_restore.py"]
+    },
+    {
+      "id": "tail_metadata",
+      "start": "0x0009A833",
+      "end_exclusive": "0x0009C000",
+      "policy": "PRESERVE. Later S1C packages end the app area at 0x9AD33; this span is version-dependent.",
+      "evidence": ["baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-fl-005)"]
+    },
+    {
+      "id": "beyond_package",
+      "start": "0x0009C000",
+      "end_exclusive": "0x00100000",
+      "policy": "PRESERVE. Owner data: four DX7 banks at 0xF4000..0xF7FFF and per-preset records from 0xF8000.",
+      "evidence": ["baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-fl-006)"]
+    }
+  ],
+
+  "build": {
+    "entry_address": "0x02000120",
+    "entry_evidence": ["linux-build/fw-AC79_AIoT_SDK/cpu/wl82/tools/isd_config.ini (ENTRY=0x2000120)", "linux-build/fw-AC79_AIoT_SDK/cpu/wl82/tools/sdk.elf (.text VMA)"],
+    "app_slot_max_bytes": 617012,
+    "app_slot_max_evidence": ["baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-rx-001: official v15 app.bin = 617,012 B = 0x96A34)"],
+    "required_defines": [
+      {
+        "define": "CONFIG_NO_SDRAM_ENABLE",
+        "effect": "Selects the no-SDRAM linker configuration: sdk_ld.c includes sdk_ld_sfc.c instead of sdk_ld_sdram.c",
+        "evidence": [
+          "linux-build/fw-AC79_AIoT_SDK/cpu/wl82/sdk_ld.c (lines 9-13)",
+          "linux-build/fw-AC79_AIoT_SDK/apps/demo/demo_hello/board/wl82/Makefile (line 94: -DCONFIG_NO_SDRAM_ENABLE)",
+          "docs/usb-flash-safety-case.md (section 0)"
+        ]
+      }
+    ],
+    "post_build": {
+      "sections": [".text", ".data", ".ram0_data", ".cache_ram_data"],
+      "app_bin": "cat text.bin data.bin ram0_data.bin cache_ram_data.bin > app.bin",
+      "evidence": [
+        "linux-build/fw-AC79_AIoT_SDK/cpu/wl82/tools/download.bat (line 26)",
+        "docs/linux-build-flash-procedure.md (section 2.1)"
+      ]
+    },
+    "flash_command_reference_only": "isd_download isd_config.ini -tonorflash -dev wl82 -boot 0x1c02000 -div1 -wait 300 -uboot uboot.boot -app app.bin cfg_tool.bin -res audlogo cfg -reboot 500 -update_files normal",
+    "flash_command_evidence": ["linux-build/fw-AC79_AIoT_SDK/cpu/wl82/tools/download.bat (line 47)", "docs/linux-build-flash-procedure.md (section 2.2)"],
+    "sdk_devkit_config_deltas": [
+      "FLASH_SIZE=4M (devkit) -> 1 MiB on this unit",
+      "ENABLE_SDRAM=1 / SDRAM_SIZE=2M (devkit) -> must not be enabled for this unit",
+      "PID=AC791N_STORY / VID=0.01 (devkit identity) -> do not transfer",
+      "ENTRY=0x2000120 (shared, keep)",
+      "CHIP_NAME=AC791N (shared, keep)"
+    ]
+  },
+
+  "known_builds": [
+    {
+      "id": "sdk-2026-08-15",
+      "what": "The SDK app inside the FWSC flashed on 2026-08-15 (pre-USB boot failure, then recovered).",
+      "app_bin_bytes": 125024,
+      "app_bin_sha256": "5caaaf32d214e04617ff03e3dd4a40221a578e01be06e4188316bc0568ee8daa",
+      "sdk_elf_bytes": 1077632,
+      "layout_sections": {
+        ".text": "0x02000120 + 0x15DE0",
+        ".data": "0x04000000 + 0x988",
+        ".bss": "0x040009A0 + 0x2BB0",
+        ".ram0_data": "0x01C00000 + 0x80F8",
+        ".ram0_bss": "0x01C080F8 + 0x2670",
+        ".boot_info": "0x01C7FD50 + 0x28"
+      },
+      "verdict": "REFUSED by tools/check_sdk_app_layout.py (SDRAM window)",
+      "evidence": [
+        "baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-sd-002: app.bin SHA-256 5caaaf32... = the exact app inside the FWSC flashed 2026-08-15)",
+        "linux-build/fw-AC79_AIoT_SDK/cpu/wl82/tools/sdk.map, sdk.elf, app.bin (verified on 2026-10-08: sha256 of app.bin matches the recorded prefix)"
+      ]
+    },
+    {
+      "id": "sdk-2026-10-08-sfc",
+      "what": "First from-scratch no-SDRAM (SFC) AC79 SDK app built on this host. Stock demo_hello application, linked through sdk_ld_sfc.c by the -DCONFIG_NO_SDRAM_ENABLE that the app Makefile already carries (line 94). OFFLINE ARTIFACT ONLY: never flashed, never packed into a package, no device contact of any kind.",
+      "app_bin_bytes": 119748,
+      "app_bin_sha256": "c7463a0e04711b53933054e00c2b8b4bbdfb12a729fa813ad227a68de3ff8fe4",
+      "app_bin_composition": "text.bin 85,696 + data.bin 0 + ram0_data.bin 34,036 + cache_ram_data.bin 16 = 119,748 exactly (the post-build cat order of cpu/wl82/tools/download.sh; the empty .data contributes nothing)",
+      "app_bin_headroom_bytes": 497264,
+      "sdk_elf_bytes": 1024408,
+      "sdk_elf_sha256": "5525df2a42f47afc9084aa717137f3057db36310c3007ab8142605d5b32bfd4c",
+      "sdk_map_sha256": "c0da41defc13e23c1d65e9a0bbf2d0916eb68d876d3ba10892843245b4f1eedd",
+      "layout_sections": {
+        ".text": "0x02000120 + 0x14EC0 (85,696 B)",
+        ".data": "0x04000000 + 0x0 (EMPTY: the no-SDRAM layout keeps the section header but allocates zero bytes, so nothing is placed in the forbidden window)",
+        ".bss": "0x04000000 + 0x0 (EMPTY, same reason)",
+        ".ram0_data": "0x01C00000 + 0x84F4 (34,036 B)",
+        ".ram0_bss": "0x01C084F4 + 0x3CB0 (15,536 B)",
+        ".boot_info": "0x01C7FD50 + 0x28 (40 B, the 48 B slot)",
+        ".cache_ram_data": "0x01F28000 + 0x10 (16 B)",
+        ".cache_ram_bss": "0x01F28010 + 0x0 (EMPTY)"
+      },
+      "verdict": "PASS by tools/check_sdk_app_layout.py, exit 0 from BOTH input paths (sdk.elf and sdk.map): 5 allocatable non-empty sections, all inside allowed windows; zero-size allocated sections are dropped by the gate because they carry no bytes. Identical input to the same gate under the 2026-08-15 build gives REFUSE (SDRAM window).",
+      "toolchain": "/opt/jieli/jieli-linux-toolchains-20250324.1 (clang 4.0.1): CC/TOOL_DIR=/opt/jieli/pi32v2/bin/clang, CFLAGS -target pi32v2 -mcpu=r3 -integrated-as -flto -Oz, LD=/opt/jieli/pi32v2/bin/lto-wrapper (python3), AR=lto-ar. Host payload linux-toolchain.bin sha256 f686586bcfb45e0f0bb27fd2b39c7a7f313cb4f0e88a66a14da621ffa8225958, identical to the in-container download.",
+      "sdk_mirror": "github.com/jeffreywugz/fw-AC79_AIoT_SDK branch release/AC79NN_SDK_V1.0.3, depth-1 blob-filtered clone with sparse checkout (apps cpu lib include_lib tools)",
+      "cross_check": "docs/linux-build-flash-procedure.md section 2.1 (written 2026-08-14, before the 2026-08-15 brick) records app.bin = 119,748 B for the stock demo_hello build — the same size this build produces from a different container and a different mirror clone. Byte identity with that lost artifact is NOT checkable: no copy of it survives (the only app.bin under linux-build/ is the 125,024 B brick build), so this is size corroboration, not hash corroboration.",
+      "evidence": [
+        "tools/check_sdk_app_layout.py (invoked on linux-build/ac79-build-2026-10-08/sdk.elf and sdk.map with --app app.bin, 2026-10-08, exit 0)",
+        "docs/linux-build-flash-procedure.md (section 3: the exact reproduction commands)",
+        "linux-build/ac79-build-2026-10-08/ (private workspace: sdk.elf, sdk.map, app.bin, symbol_tbl.txt, sdk.ld)"
+      ]
+    },
+    {
+      "id": "sdk-2026-10-09-ota-transport",
+      "what": "FIRST ARTIFACT THAT ORIGINATES FROM THE PROJECT'S OWN SOURCE. Same no-SDRAM demo_hello base and same app Makefile as known_builds[1], but the device-side SMK OTA transport/packet layer ac79/app/smk_ota_transport.c is compiled into the app, linked into the image, and called once from app_main(), which stores the result in a static volatile and prints PASS/FAIL on the normal demo console. The layer is the packet/transport half of the device-side mirror that docs/self-recovering-sdk-app.md section 6 designates src/protocol.c for: it encodes the 15-byte device->host request packets and decodes the host->device update/ACK packets exactly as src/protocol.c does on the host, using the same checksum and 7-bit framing. It carries NO USB descriptor or enumeration work (stage B1), NO MIDI endpoint I/O (stage B2), NO session or flash policy (stage B3); it never reads or writes flash and never touches USB. OFFLINE ARTIFACT ONLY: never flashed, never packed into a package, no device contact of any kind, and its run-time behaviour on hardware is UNVERIFIED (the boot-time self-test result has not been observed on a device).",
+      "app_bin_bytes": 120868,
+      "app_bin_sha256": "ef26db6b5f4b46637991183fe43e5b6e3336f509be286cba63a3f3026692c9ac",
+      "app_bin_composition": "text.bin 86,816 + data.bin 0 + ram0_data.bin 34,036 + cache_ram_data.bin 16 = 120,868 exactly (same post-build cat order as known_builds[1]); 1,120 B larger than the stock demo_hello build, all of it the project TU and its app_main() call site.",
+      "app_bin_headroom_bytes": 496144,
+      "sdk_elf_bytes": 1033220,
+      "sdk_elf_sha256": "04f02eb0e32ea9e13bb54447fedbcfa98d2419b819598319df29f191b25b551b",
+      "sdk_symbol_tbl_sha256": "9f7d3864e348fcf100d374c9f45d3a5b3082a963bd483f5bea7b56f61e789035",
+      "sdk_map_sha256": "01962e29ec77f5e18a8b374bc957b3e0f2c062dbc71b04fb267d52b44ccd27ad",
+      "layout_sections": {
+        ".text": "0x02000120 + 0x15320 (86,816 B); stock demo_hello is 0x14EC0 = 85,696 B, so the project code and its call site add 1,120 B",
+        ".data": "0x04000000 + 0x0 (EMPTY: the no-SDRAM layout keeps the section header but allocates zero bytes, so nothing is placed in the forbidden window)",
+        ".bss": "0x04000000 + 0x0 (EMPTY, same reason)",
+        ".ram0_data": "0x01C00000 + 0x84F4 (34,036 B, unchanged from stock)",
+        ".ram0_bss": "0x01C084F4 + 0x3CB4 (15,540 B; +4 B vs stock, the static volatile smk_ota_selftest_result at 0x01C08A68)",
+        ".boot_info": "0x01C7FD50 + 0x28 (40 B, the 48 B slot, unchanged)",
+        ".cache_ram_data": "0x01F28000 + 0x10 (16 B)",
+        ".cache_ram_bss": "0x01F28010 + 0x0 (EMPTY)"
+      },
+      "project_code_evidence": [
+        "sdk.map lists objs/apps/demo/demo_hello/smk_ota_transport.c.o as a link input, one line above the existing app_main.c.o",
+        "symbol_tbl.txt carries smk_ota_transport_self_test (0x0200285C, 0x2FA B), smk_ota_parse_response (0x020027C6, 0x8A B), smk_ota_complement_checksum (0x02002792), smk_ota_bytes_equal (0x020027A8), smk_ota_copy (0x02002850), the four static self-test vector constants, and the linked-in app_main variable smk_ota_selftest_result (.ram0_bss 0x01C08A68, 4 B). The buffer-level helpers are LTO-inlined into smk_ota_transport_self_test at -Oz and so have no separate symbol; that is expected, not missing code.",
+        "app.bin carries the project source's own constant pool: the 15-byte expected request 00 59 30 08 00 00 01 78 56 34 12 F1 03 00 F6 and the 23-byte success ACK 00 59 30 10 00 00 00 00 00 00 F0 08 00 00 73 75 63 63 65 73 73 00 0E each appear exactly once here and zero times in the known_builds[1] app.bin",
+        "symbol_tbl.txt has the same four zero-size 0x04000000 .data/.bss markers as the stock build, so no symbol was placed in the forbidden SDRAM window"
+      ],
+      "differential_test": "ac79/test/host_compat_test.c links ac79/app/smk_ota_transport.c against the host reference src/protocol.c and compares every shared function over all lengths 0..96 plus randomized cases, and (added 2026-10-09) drives every output-capacity guard to its limit: the exact fit must succeed, every smaller capacity must be refused, and no byte may be written past the declared capacity (canary bytes behind the declared capacity). 24,694 comparisons / 0 failures self-contained; 25,984 comparisons / 0 failures with 1,290 real request triples replayed from the captured v15 install transcript (logs/v15/ota-v15-s1c6-reset-sig-20260814.log). Wired into the repo Makefile as 'make test-ota-transport', which 'make test' now runs. Negative controls, all verified by mutation on 2026-10-09 and then restored: a mutated checksum fails, and each of the seven capacity refusals fails the suite when weakened (pack loop, pack tail, unpack, packetize, unpacketize, build_request's 15-byte minimum, frame_binary's 2-byte minimum).",
+      "verdict": "PASS by tools/check_sdk_app_layout.py, exit 0 from BOTH input paths (sdk.elf and sdk.map) with --app app.bin: 5 allocatable non-empty sections, all inside allowed windows; app.bin 120,868 B is well inside the 617,012 B slot.",
+      "build_recipe": "ac79/build/build_sdk_app_project_source.sh (host side, run from the repo root; defaults to container smk-build). It streams ac79/app/smk_ota_transport.{c,h} into the container, restores the SDK app tree from git, adds the TU to c_SRC_FILES, calls the self-test from app_main(), builds, asserts the project symbols and the app.bin test vectors, copies the four artifacts out, runs the gate on both ELF and map, and restores the app tree to stock so the stock procedure (docs/linux-build-flash-procedure.md section 3) still builds pristine demo_hello afterwards. The script pins the two source SHA-256s and refuses to build if they changed (override SMK_ALLOW_SOURCE_CHANGE=1).",
+      "toolchain": "same as known_builds[1]: /opt/jieli/pi32v2 clang 4.0.1, CFLAGS -target pi32v2 -mcpu=r3 -integrated-as -flto -Oz, LD=lto-wrapper; built in the smk-build container from the same SDK mirror.",
+      "reproducibility_measured": "RUN TWICE on 2026-10-09 with the same recipe: identical app.bin size (120,868 B), identical layout, identical sdk.map SHA-256 (01962e29...) and identical symbol_tbl.txt SHA-256, and the two app.bin files differed in exactly 3 bytes inside the embedded __TIME__ string (0x012AFB..0x012AFE: '15:36:29' vs '15:37:32'). So the artifact is layout-, size- and symbol-reproducible but not byte-reproducible, exactly like known_builds[1].",
+      "evidence": [
+        "tools/check_sdk_app_layout.py (invoked on linux-build/ac79-build-2026-10-09-ota-transport/sdk.elf and sdk.map with --app app.bin, 2026-10-09, exit 0)",
+        "ac79/app/smk_ota_transport.h (the project source compiled into this artifact: device-side SMK OTA transport API)",
+        "ac79/app/smk_ota_transport.c (the project source object linked into this image)",
+        "ac79/test/host_compat_test.c (the differential proof against src/protocol.c)",
+        "Makefile target test-ota-transport (added with this build)",
+        "ac79/build/build_sdk_app_project_source.sh (the build recipe: streams ac79/app sources into the container, patches the SDK app tree, builds, proves project origin, extracts, runs the gate, restores the SDK tree to stock)",
+        "linux-build/ac79-build-2026-10-09-ota-transport/ (private workspace: sdk.elf, sdk.map, app.bin, symbol_tbl.txt)"
+      ]
+    },
+    {
+      "id": "sdk-2026-10-09-b1-usb-descriptors",
+      "what": "STAGE B1: the app now carries the updater USB personality 4d4a:4155. Built on known_builds[2] (same base, Makefile and call site) and adding ac79/app/smk_usb_descriptors.c: the 18-byte device descriptor recovered byte for byte from flash 0x0BDDE5 of the live dumps, an AUTHORED 39-byte config set (one MIDIStreaming interface, bulk OUT 0x04 / IN 0x84, bus powered, 100 mA), a GET_DESCRIPTOR-style table lookup, and a boot self-test called from app_main() next to the transport self-test. GROUND TRUTH vs AUTHORED is kept strictly apart in the source: the device descriptor is evidence, the config/interface/endpoint bytes are authored because no artifact contains them, and the parts the plan does not specify (MIDI jack descriptors, CS_ENDPOINT descriptors, string descriptors) are omitted rather than invented - the string indices the recovered descriptor names (iManufacturer=1, iProduct=2) are reported absent, not filled with made-up text. WHAT IT DOES NOT DO: it does not initialise any USB controller, does not hand any descriptor to a USB engine, does not enumerate, and does no endpoint or transfer work - so the identity is what the app WOULD present, verified at source level against the flash dump, not an observed enumeration. No flash access, no boot-sector involvement, never flashed or packed, no device contact of any kind, and no run-time behaviour on hardware has been observed.",
+      "superseded_by": "sdk-2026-10-09-b2-evidence-set",
+      "corrections_applied_2026-10-09": "A read-only audit found this artifact's config set was NOT evidence-based, and its own test could not tell: the authored bInterfaceNumber was 0 while docs/research-notes.md records update mode as MIDI Streaming interface 1 (and product 'USB Composite Device', so a single-interface configuration is wrong too), and the host test's MIDIStreaming-header assertion searched for 07 24 06 01, a pattern that can never match a real header (bcdADC 0x0100), so the claim 'no CS_HEADER exists' was vacuous. Mutating endpoint wMaxPacketSize, bInterfaceNumber, the CS_HEADER wTotalLength and bmAttributes all left the suite green. Finally this entry's own prose ('16 of 18 whole-flash dumps', 'absent from every corpus in the workspace') counted one image twice and overstated the reconnaissance scope, which had left 32 of 707 .bin files unscanned. Kept as a record; its descriptor set must not be reused. See known_builds[4].",
+      "app_bin_bytes": 121188,
+      "app_bin_sha256": "7110628ad50b758ccb3132b2fbd1f361ef4fa866c76e1a05a35b3b033c9d2331",
+      "app_bin_composition": "text.bin 87,136 + data.bin 0 + ram0_data.bin 34,036 + cache_ram_data.bin 16 = 121,188 exactly (same post-build cat order as known_builds[1]); 1,440 B larger than the stock demo_hello build and 320 B larger than known_builds[2], the difference being the B1 translation unit and its call site.",
+      "app_bin_headroom_bytes": 495824,
+      "sdk_elf_bytes": 1036480,
+      "sdk_elf_sha256": "d77c76a044b5c3beaf5f72d76aa6fea6905517c5793e711702084aa5aba99eb9",
+      "sdk_symbol_tbl_sha256": "e9cc04f04419ae4370f0dedd67e2d497c0f4beba3b88bd9504cec6ac814d493f",
+      "sdk_map_sha256": "ecffbcc20e4ca855828d9c672b179605f6e100a4d2f34f33be2817151e509c03",
+      "layout_sections": {
+        ".text": "0x02000120 + 0x15460 (87,136 B); stock demo_hello is 0x14EC0 = 85,696 B and known_builds[2] is 0x15320 = 86,816 B, so B1 adds 320 B of code and descriptor data",
+        ".data": "0x04000000 + 0x0 (EMPTY: the no-SDRAM layout keeps the section header but allocates zero bytes, so nothing is placed in the forbidden window)",
+        ".bss": "0x04000000 + 0x0 (EMPTY, same reason)",
+        ".ram0_data": "0x01C00000 + 0x84F4 (34,036 B, unchanged from stock)",
+        ".ram0_bss": "0x01C084F4 + 0x3CB8 (15,544 B; +8 B vs stock: the two static volatiles smk_ota_selftest_result at 0x01C08A68 and smk_usb_selftest_result at 0x01C08A6C)",
+        ".boot_info": "0x01C7FD50 + 0x28 (40 B, the 48 B slot, unchanged)",
+        ".cache_ram_data": "0x01F28000 + 0x10 (16 B)",
+        ".cache_ram_bss": "0x01F28010 + 0x0 (EMPTY)"
+      },
+      "project_code_evidence": [
+        "sdk.map lists objs/apps/demo/demo_hello/smk_usb_descriptors.c.o alongside smk_ota_transport.c.o as link inputs",
+        "symbol_tbl.txt carries smk_usb_device_descriptor (0x02012BC7, 0x12 = the 18 recovered bytes) and smk_usb_config_descriptor (0x02012BA0, 0x27 = the 39 authored bytes) as real .text data, plus smk_usb_selftest_result (.ram0_bss 0x01C08A6C, 4 B) and all six smk_ota_* symbols of known_builds[2]. The USB lookup and self-test functions are LTO-inlined into app_main at -Oz and so have no separate symbol, the same way the OTA buffer helpers do not - expected, not missing code.",
+        "app.bin carries the project's own bytes, each EXACTLY ONCE, and zero times in the stock, known_builds[2] and brick-known_builds[0] images: the 18-byte recovered device descriptor 12 01 00 02 00 00 00 40 4A 4D 55 41 00 01 01 02 00 01, the 39-byte authored config set 09 02 27 00 01 01 00 80 32 09 04 00 00 02 01 03 00 00 07 24 06 00 01 07 00 07 05 04 02 40 00 00 07 05 84 02 40 00 00, and the two OTA vectors of known_builds[2]",
+        "__attribute__((used)) on both descriptor tables is load-bearing: without it the FIRST attempt at this build produced an app.bin that contained the 18 recovered bytes ZERO times, because with -flto -Oz nothing in the image could observe the table yet and the optimizer folded it into immediate compare constants. Kept as bytes because USB will serve them at run time, and because it makes the artifact itself checkable."
+      ],
+      "usb_descriptor_evidence": {
+        "recon": "ac79/evidence/recon_updater_usb_identity.py -> ac79/evidence/updater-usb-identity.json. Searched 18 whole-flash 1 MiB dumps, 47 app-slot payloads, 607 other captures and the project's own SDK builds. The updater identity 4d4a:4155 occurs in 16 of the 18 whole-flash dumps, always at flash 0x0BDDED, always with the identical 18-byte device descriptor at 0x0BDDE5; 0 occurrences in all 47 app-slot payloads, which is why a replacement app cannot inherit it. The two dumps without it are the pre-restore 2026-07-14 image and its copy, used as the negative control.",
+        "site_structure": "In the dumps the descriptor is not part of a USB descriptor table: it sits inside a short package record introduced by an ASCII marker (2f 2a 2e 75 66 77 = a slash, a star, \".ufw\"), 17 bytes before the descriptor, then the 10-byte trailer 01 04 F0 22 24 07 35 7D F7 00, then 0xFF fill to the 4 KiB sector boundary 0x0BE000. Nothing descriptor-shaped adjoins it.",
+        "not_recoverable": "0 config descriptor chains (bLength 9, type 2, chaining to an interface descriptor and summing to its wTotalLength), 0 MIDIStreaming CS_INTERFACE headers (07 24 06), and 0 endpoint descriptors for 0x04 or 0x84 (07 05 04 ... / 07 05 84 ...) across every corpus searched. So of the descriptor set the plan needs, only the 18-byte device descriptor is recoverable; the config, interface, endpoint and string descriptors are authored, and this is stated as authored in the source and in the test output rather than presented as ground truth.",
+        "host_check": "ac79/test/usb_descriptor_test.c (make test-usb-descriptors) checks the descriptor set the app would present against real dumps: 12 checks / 0 failures without a dump, 22 checks / 0 failures with one, and a sweep of 18 files gave 175 checks / 0 failures with 15 whole-flash dumps verified byte for byte against flash 0x0BDDE5 plus 1 negative control. It re-runs the absence searches on every invocation, so the authored bytes stay falsifiable: if a future dump contains a config/interface/endpoint set, the test fails and demands the authored bytes be replaced by the recovered ones."
+      },
+      "verdict": "PASS by tools/check_sdk_app_layout.py, exit 0 from BOTH input paths (sdk.elf and sdk.map) with --app app.bin: 5 allocatable non-empty sections, all inside allowed windows, and no .data/.bss at 0x04000000. app.bin 121,188 B is well inside the 617,012 B slot.",
+      "build_recipe": "same script as known_builds[2], extended: ac79/build/build_sdk_app_project_source.sh (host side, run from the repo root; defaults to container smk-build). It streams ac79/app/smk_ota_transport.{c,h} and ac79/app/smk_usb_descriptors.{c,h} into the container, restores the SDK app tree from git, adds BOTH translation units to c_SRC_FILES, calls both self-tests from app_main(), builds, asserts the project symbols and that the 18-byte descriptor and 39-byte config set are present verbatim in app.bin, copies the four artifacts out, runs the gate on both ELF and map, and restores the app tree to stock. It pins all four source SHA-256s and refuses to build if they changed (override SMK_ALLOW_SOURCE_CHANGE=1). Verified after every run of this build: the container app tree is stock (no copied sources, no stale objects) and the stock procedure of docs/linux-build-flash-procedure.md section 3 then builds pristine demo_hello, +app.bin 119748 bytes.",
+      "toolchain": "same as known_builds[1] and [2]: /opt/jieli/pi32v2 clang 4.0.1, CFLAGS -target pi32v2 -mcpu=r3 -integrated-as -flto -Oz, LD=lto-wrapper; built in the smk-build container from the same SDK mirror.",
+      "reproducibility_measured": "RUN TWICE on 2026-10-09 with the same recipe: identical app.bin size (121,188 B), identical layout, identical sdk.map SHA-256 (ecffbcc2...) and identical symbol_tbl.txt SHA-256, and the two app.bin files differed in exactly 2 bytes inside the embedded __TIME__ string (0x012C1D..0x012C1E: '16:18:01' vs '16:18:52'). Layout-, size- and symbol-reproducible but not byte-reproducible, the same finding as known_builds[1] and [2].",
+      "evidence": [
+        "tools/check_sdk_app_layout.py (invoked on linux-build/ac79-build-2026-10-09-b1-usb-descriptors/sdk.elf and sdk.map with --app app.bin, 2026-10-09, exit 0)",
+        "ac79/app/smk_usb_descriptors.h (the provenance split: what is recovered ground truth and what is authored, with the searched-and-absent list)",
+        "ac79/app/smk_usb_descriptors.c (the project source object linked into this image)",
+        "ac79/test/usb_descriptor_test.c (the host check against the live dumps; make test-usb-descriptors)",
+        "ac79/evidence/updater-usb-identity.json (the search table: every corpus, every pattern, every occurrence)",
+        "ac79/evidence/recon_updater_usb_identity.py (the read-only reconnaissance that regenerates the table)",
+        "ac79/build/build_sdk_app_project_source.sh (the build recipe, extended to both translation units)",
+        "linux-build/ac79-build-2026-10-09-b1-usb-descriptors/ (private workspace: sdk.elf, sdk.map, app.bin, symbol_tbl.txt)"
+      ]
+    },
+    {
+      "id": "sdk-2026-10-09-b2-evidence-set",
+      "what": "STAGE B1, REBUILT FROM THE RECORD after an audit showed the previous revision's descriptor set contradicted evidence the repo already held. ac79/app/smk_usb_descriptors.{h,c} now export an EVIDENCE LEDGER rather than an invented configuration: (a) the 18-byte device descriptor recovered byte for byte from flash 0x0BDDE5; (b) a 30-byte MIDIStreaming interface fragment whose every field is pinned by a named source - docs/research-notes.md (update-mode interface 1, endpoints 0x04/0x84, composite product string), baselines/v15/device-info/probe.txt (interface index 4 in normal mode, class 0x01 / subclass 0x03, exactly two bulk endpoints, no alternate setting, max-packet 64, interval 0) and the USB MIDI 1.0 definition (descriptor shapes, bcdADC 0x0100, protocol 0); (c) a fact table (smk_usb_fact_table, 400 B, 25 fields) that travels in the image; (d) an explicit unrecovered list (smk_usb_unrecovered_table, 48 B) naming the configuration descriptor, the rest of the composite, string contents, jack descriptors and CS_ENDPOINT descriptors. The lookup now WITHHOLDS GET_DESCRIPTOR(CONFIG, 0): serving a fabricated composite would be exactly the invention this rebuild removed, and the previous revision did serve one. WHAT IT DOES NOT DO: no USB controller init, no descriptor handed to any USB engine, no enumeration, no endpoint or transfer work, no flash access, no boot-sector involvement, never flashed or packed, no device contact; no run-time behaviour on hardware has been observed. Byte-for-byte: 18 recovered bytes + 30 evidence-pinned bytes authored.",
+      "superseded_by": "sdk-2026-10-09-b3-updater-image-evidence",
+      "corrections_applied_2026-10-09b": "A second read-only audit found this entry's prose overbroad and contradicted by its own evidence: it claimed 'no raw descriptor byte capture anywhere in this project' and 'not one of them holds a descriptor chain', but raw STRING bytes do exist (the update-mode firmware image usb_hid_ota.bin, shipped inside every vendor .fwsc and mapped at flash 0x0B9000..0x0BDE01, holds the UTF-16LE product-name text at flash 0x0BB558) and the only config chain in the workspace was in the superseded known_builds[3] build output that the cited recon JSON itself recorded. The 'cannot inherit the site' claim needed the precision that a full .fwsc reflash does write the ota.bin entry while an app-delivered payload cannot. Its host check also passed with the two evidence documents missing, and its reconnaissance scanned only *.bin. All corrected in known_builds[5]; this artifact remains valid as a record. (2) 2026-10-09c: the field count in evidence_pinned says 24; the ledger is 25 rows - 0x190 bytes in this build's own symbol_tbl.txt, as docs/linux-build-flash-procedure.md section 3.4 already notes.",
+      "app_bin_bytes": 122820,
+      "app_bin_sha256": "c2bca0d71a44166d832ac331d73185353fd2d04a2ab27aa9dcd4c5a17e67bedc",
+      "app_bin_composition": "text.bin 88,768 + data.bin 0 + ram0_data.bin 34,036 + cache_ram_data.bin 16 = 122,820 exactly (same post-build cat order as known_builds[1]); 1,632 B larger than known_builds[3] - the evidence ledger, the unrecovered list, the fragment and the withholding lookup.",
+      "app_bin_headroom_bytes": 494192,
+      "sdk_elf_bytes": 1039628,
+      "sdk_elf_sha256": "4c2e8af5a6719c65568892068fbe40409ae9d48cf563cc735e898f95f2b535b0",
+      "sdk_symbol_tbl_sha256": "fcad0a7ca4be07eb74e82a5c07319125177c88798cc4c1ea0caca7fb01bde35b",
+      "sdk_map_sha256": "80b7ca5e257bf6cc6378a8d77707d28f0498ff6122584492ae032a894a3d5331",
+      "layout_sections": {
+        ".text": "0x02000120 + 0x15AC0 (88,768 B): stock demo_hello 0x14EC0 = 85,696 B, known_builds[3] 0x15460 = 87,136 B",
+        ".data": "0x04000000 + 0x0 (EMPTY: nothing is placed in the forbidden SDRAM window)",
+        ".bss": "0x04000000 + 0x0 (EMPTY, same reason)",
+        ".ram0_data": "0x01C00000 + 0x84F4 (34,036 B, unchanged from stock)",
+        ".ram0_bss": "0x01C084F4 + 0x3CB8 (15,544 B; both static volatile self-test results, 0x01C08A68 and 0x01C08A6C)",
+        ".boot_info": "0x01C7FD50 + 0x28 (40 B)",
+        ".cache_ram_data": "0x01F28000 + 0x10 (16 B)",
+        ".cache_ram_bss": "0x01F28010 + 0x0 (EMPTY)"
+      },
+      "project_code_evidence": [
+        "sdk.map lists both project translation units (smk_ota_transport.c.o, smk_usb_descriptors.c.o) as link inputs",
+        "symbol_tbl.txt carries smk_usb_device_descriptor (0x02013050, 0x12 = the 18 recovered bytes), smk_usb_midi_fragment_bytes (0x02013062, 0x1E = the 30-byte fragment), smk_usb_fact_table (0x020143F4, 0x190 = 400 B of ledger), smk_usb_unrecovered_table (0x02013C4C, 0x30), smk_usb_selftest_result (.ram0_bss 0x01C08A6C) and all six smk_ota_* symbols",
+        "app.bin contains the 18-byte recovered descriptor once and the 30-byte evidence-pinned fragment once; both are absent from the stock, known_builds[2] and brick images",
+        "the evidence ledger travels in the image, so the artifact itself states which fields are evidence and which are declared unrecovered"
+      ],
+      "usb_descriptor_evidence": {
+        "recovered": "18 bytes, byte exact, at flash 0x0BDDE5: device descriptor of 4d4a:4155 (bcdUSB 0x0200, bMaxPacketSize0 64, bcdDevice 0x0100, iManufacturer 1, iProduct 2, bNumConfigurations 1).",
+        "evidence_pinned": "30-byte MIDIStreaming interface fragment, 25 fields, each with a named source: interface number 1 (update-mode record), 2 endpoints (probe), class 0x01/subclass 0x03 (probe + spec), alt 0 (probe lists one alt), endpoints 0x04 OUT / 0x84 IN bulk 64 B interval 0 (probe + record), CS_HEADER with bcdADC 0x0100 (spec).",
+        "authored_bytes": "Nothing outside those 30 bytes and the ledger: the fragment's iInterface byte (offset 8) is the only value set without evidence and is named in the unrecovered list; the device descriptor's string indices stay dangling because no string is recoverable.",
+        "declared_unrecovered": "configuration descriptor entirely, the other interfaces of the composite, iConfiguration/iInterface contents, MIDI jack descriptors, CS_ENDPOINT descriptors."
+      },
+      "verdict": "PASS by tools/check_sdk_app_layout.py, exit 0 from BOTH input paths (sdk.elf and sdk.map) with --app app.bin: 5 allocatable non-empty sections, all inside allowed windows, no .data/.bss at 0x04000000. app.bin 122,820 B is well inside the 617,012 B slot.",
+      "host_check": "ac79/test/usb_descriptor_test.c (make test-usb-descriptors): 109 checks / 0 failures with no dump, 118 / 0 with one; 707 of 707 workspace .bin files scanned by the reconnaissance. The evidence-pinned half is RE-DERIVED from docs/research-notes.md and baselines/v15/device-info/probe.txt at run time, not restated. Mutation battery, every case run and restored on 2026-10-09: recovered idVendor change caught; fragment wMaxPacketSize (both endpoints), bInterfaceNumber, CS_HEADER wTotalLength and bmAttributes changes each caught by the fact they cite; editing the ledger to match a wrong fragment caught by the document check; deleting the iInterface entry from the unrecovered list caught by the no-silent-byte check; editing probe.txt to say max-packet 32 caught. Dump injection: descriptor byte flip, identity removal, second identity copy, destroyed trailer, an injected valid config chain, an injected real MS header 07 24 06 00 01 07 00 and injected endpoint descriptors are all caught - the last MS-header case is the one the previous revision missed because its pattern was 07 24 06 01.",
+      "build_recipe": "same script as known_builds[2]/[3]: ac79/build/build_sdk_app_project_source.sh, with the pinned source hashes updated and the byte-presence proof extended to the 18-byte descriptor and the 30-byte fragment. It streams the sources, restores the SDK app tree from git, patches c_SRC_FILES and app_main(), builds, proves project origin, copies the four artifacts out, runs the gate on both inputs, and restores the tree to stock.",
+      "toolchain": "same as known_builds[1]: /opt/jieli/pi32v2 clang 4.0.1, -target pi32v2 -mcpu=r3 -integrated-as -flto -Oz, LD=lto-wrapper, in the smk-build container.",
+      "reproducibility_measured": "RUN TWICE on 2026-10-09: identical app.bin size (122,820 B), identical layout, identical sdk.map SHA-256 (80b7ca5e...) and symbol_tbl.txt SHA-256, and the two app.bin files differed in exactly 7 bytes inside the embedded __TIME__ strings (0x130CB..0x130E0: '16:48:13' vs '16:49:21').",
+      "side_effects": "none: after every run the container app tree is stock (git status clean, no copied sources, no stale objects) and the stock procedure of docs/linux-build-flash-procedure.md section 3 then builds +app.bin: 119748 bytes.",
+      "evidence": [
+        "tools/check_sdk_app_layout.py (linux-build/ac79-build-2026-10-09-b2-evidence-set/sdk.elf and sdk.map with --app app.bin, 2026-10-09, exit 0)",
+        "ac79/app/smk_usb_descriptors.h (the three kinds of claim and the source of each)",
+        "ac79/app/smk_usb_descriptors.c (the fact table and the unrecovered list that travel in the image)",
+        "ac79/test/usb_descriptor_test.c (the host check that re-derives the pinned fields from the record)",
+        "ac79/evidence/updater-usb-identity.json (every *.bin in the workspace, with per-image counts)",
+        "ac79/evidence/recon_updater_usb_identity.py (the read-only reconnaissance that regenerated it)",
+        "docs/research-notes.md (the update-mode enumeration record this set is pinned to)",
+        "baselines/v15/device-info/probe.txt (the normal-mode probe used for endpoint and interface facts)",
+        "linux-build/ac79-build-2026-10-09-b2-evidence-set/ (private workspace: sdk.elf, sdk.map, app.bin, symbol_tbl.txt)"
+      ]
+    },
+    {
+      "id": "sdk-2026-10-09-b3-updater-image-evidence",
+      "what": "STAGE B1, CORRECTED AND EXTENDED (2026-10-09b), still without touching the composite: known_builds[4]'s evidence story was narrowed to what the bytes support, and the one image that actually carries the updater's descriptor site was searched directly. The site is the tail of the update-mode firmware image usb_hid_ota.bin - the vendor package's ota.bin UFW entry (0x4E01 bytes) mapped at flash 0x0B9000..0x0BDE01, with the recovered descriptor 0x4DE5 into it. A new evidence tool (ac79/evidence/search_updater_usb_image.py) slices that image out of every whole-flash dump that carries the site and searches it in wire format: 0 configuration chains, 0 plausible interface records, 0 endpoint records, 0 MIDIStreaming MS headers (both 07 24 01 and 07 24 06 forms), 0 CS_ENDPOINT records - the configuration is genuinely absent there, not merely outside the earlier scan. What DOES exist is string bytes: the 40-byte UTF-16LE product-name text at flash 0x0BB558 (image offset 0x2558), present in exactly the same 8 of 9 distinct whole-flash images as the device descriptor and absent in the pre-restore negative, decoding exactly to the 'USB Composite Device' name docs/research-notes.md records for update mode. The 2 bytes before it are 2a 03, but the surrounding records do not chain, so it is exported as recovered EVIDENCE (smk_usb_updater_product_name, byte-compared with the dump on every check run) and the serve class stays withheld: GET_DESCRIPTOR(CONFIG, 0) and every string request still report absent rather than serving an invented composite. The claim set is now explicit about the three channels: recovered bytes (device descriptor, served), recovered text (product name, evidence only), authored bytes (the 30-byte MIDIStreaming fragment, pinned by the two documents). The host oracle fails closed if either evidence document is missing, asserts the updater-image search results per dump, and cross-checks the recovered name against research-notes.md. WHAT IT STILL DOES NOT DO: no USB controller initialisation, no descriptor transfer, no enumeration, no endpoint I/O, no flash access, no device contact; nothing has been flashed or packed, and no run-time behaviour on hardware has been observed.",
+      "corrections_applied_2026-10-09c": "A read-only final verification pass fixed three defects in this record without touching the evidence itself: (1) project_code_evidence carried the superseded known_builds[4] symbol addresses for three symbols; re-recorded from this build's staged symbol_tbl.txt (the staged artifact was rebuilt from the corrected sources, so pins, artifact and record agree again). (2) The chain attribution aggregated all chains into the vendor SDK's MP-test tools while the recon JSON attributed one to this project's own superseded B1 build output; the recon now states chains per file, and its scan set excludes this project's own regenerated build outputs. (3) The recon scope figures were an un-timestamped snapshot that grew with every build of this project; the scan set now excludes linux-build/ac79-build-* and records scope.excluded (per-file size and sha256) plus scope.manifest_sha256, so the headline counts no longer drift with our own builds.",
+      "app_bin_bytes": 123332,
+      "app_bin_sha256": "a3fc85eb68c9fccb3000cb38f22671d80c558003d18eb331c4bd39d79d409a3a",
+      "app_bin_composition": "text.bin 89,280 + data.bin 0 + ram0_data.bin 34,036 + cache_ram_data.bin 16 = 123,332 exactly (same post-build cat order as known_builds[1]); 512 B larger than known_builds[4]: the recovered 40-byte product-name table and the longer unrecovered-list wording in .text",
+      "app_bin_headroom_bytes": 493680,
+      "sdk_elf_bytes": 1040392,
+      "sdk_elf_sha256": "467c61ff68583d4fb2437cf1e9379123bab4cf8b174a12dd7ac351a8fd663da2",
+      "sdk_symbol_tbl_sha256": "81078e822fceaa81240281bbb344b2bfc433bf7ccee86628bbd4efce5b3aa179",
+      "sdk_map_sha256": "ab2f27c3dbdfd7abf83cb0d802e2bfee02dc1b33878a2acda377be62b35d73bf",
+      "layout_sections": {
+        ".text": "0x02000120 + 0x15CC0 (89,280 B); stock demo_hello is 0x14EC0 = 85,696 B, known_builds[4] is 0x15AC0 = 88,768 B, so this build adds 512 B of code and evidence data",
+        ".data": "0x04000000 + 0x0 (EMPTY: the no-SDRAM layout keeps the section header but allocates zero bytes, so nothing is placed in the forbidden window)",
+        ".bss": "0x04000000 + 0x0 (EMPTY, same reason)",
+        ".ram0_data": "0x01C00000 + 0x84F4 (34,036 B, unchanged from stock)",
+        ".ram0_bss": "0x01C084F4 + 0x3CB8 (15,544 B, unchanged from known_builds[3]/[4]: smk_ota_selftest_result 0x01C08A68, smk_usb_selftest_result 0x01C08A6C)",
+        ".boot_info": "0x01C7FD50 + 0x28 (40 B, the 48 B slot, unchanged)",
+        ".cache_ram_data": "0x01F28000 + 0x10 (16 B)",
+        ".cache_ram_bss": "0x01F28010 + 0x0 (EMPTY)"
+      },
+      "project_code_evidence": [
+        "sdk.map lists both project translation units (smk_ota_transport.c.o, smk_usb_descriptors.c.o) as LOAD inputs",
+        "symbol_tbl.txt carries smk_usb_device_descriptor (0x02013230, 0x12 = the 18 recovered bytes), smk_usb_midi_fragment_bytes (0x02013242, 0x1E = the 30 authored bytes), smk_usb_updater_product_name_utf16 (0x02013260, 0x28 = the 40 recovered UTF-16LE name bytes), smk_usb_fact_table (0x020145F4, 0x190), smk_usb_unrecovered_table (0x02013E4C, 0x30), smk_usb_selftest_result (.ram0_bss 0x01C08A6C), plus all six smk_ota_* symbols (addresses re-recorded 2026-10-09c against this build's staged symbol_tbl.txt; the first edition had copied the superseded known_builds[4] addresses for the first three)",
+        "app.bin carries every project byte string exactly once, proven by the build recipe before it copies the artifact out: the OTA vectors, the 18-byte device descriptor, the 30-byte interface fragment and the new 40-byte product-name text",
+        "__attribute__((used)) on all three tables is the LTO guard, not decoration: with -flto -Oz a table nothing observes at compile time is folded away (the first attempt at known_builds[3] lost the descriptor from app.bin that way), so the recipe asserts the bytes' presence in the artifact itself"
+      ],
+      "usb_descriptor_evidence": {
+        "recon": "ac79/evidence/recon_updater_usb_identity.py -> ac79/evidence/updater-usb-identity.json (schema smk37-usb-identity-recon/4). Scans every *.bin, *.fwsc and *.elf in the workspace except this project's own regenerated build outputs under linux-build/ac79-build-*, which are listed with size and sha256 in scope.excluded so nothing is hidden (scanned plus excluded is every candidate file); scope.manifest_sha256 pins exactly which files the counts are over. Scan set: 765 files / 179,592,140 bytes - 704 .bin (19 whole-flash images, 47 app-slot payloads, 24 SDK tool images and build inputs, 614 other captures), 56 .fwsc packages, 5 .elf tools. The identity 4d4a:4155 occurs 16 times across 19 whole-flash paths (8 of 9 distinct images, always at flash 0x0BDDED with the identical 18 bytes), in all 56 .fwsc packages (their ota.bin entry) and 0 times in app-slot payloads. The one distinct image without it is the pre-restore 2026-07-14 image (3 stored paths), the negative control.",
+        "updater_image": "The site is not a free-standing record: it is the tail of the update-mode firmware image usb_hid_ota.bin, which the vendor ships as the ota.bin UFW entry of every .fwsc (entry size 0x4E01; descriptor 0x4DE5 into it; flash base derived as 0x0BDDE5 - 0x4DE5 = 0x0B9000, end 0x0BDE01). Two consequences, previously conflated: an APP-DELIVERED payload (app slot ends at 0x9C000) can never cover it, so a replacement app cannot inherit the site; a FULL .fwsc reflash does write it, because the package ships it. ac79/evidence/search_updater_usb_image.py verifies both numbers against every dump it is given instead of trusting them.",
+        "updater_image_search": "Inside that 19,969-byte image, in wire format: 0 configuration chains (chain parses and sums to wTotalLength), 0 plausible interface records (length 9 / type 4 with in-range fields; the 3 raw (9,4) byte pairs are class-0x?? coincidences), 0 endpoint records (length 7 / type 5 with legal bmAttributes), 0 MIDIStreaming MS headers (both 07 24 01 and 07 24 06), 0 CS_ENDPOINT records, and 0 walkable string tables. The one isolated jack-shaped 6-byte sequence at image 0x261E sits inside a config blob with no companion record or chain, so it is not a recovered interface. ac79/evidence/updater-usb-image-search.json holds the record; the host test asserts these results on every dump it checks.",
+        "string_recovery": "Raw STRING bytes DO exist and this build records them: the 40-byte UTF-16LE text 'USB Composite Device' at flash 0x0BB558 (image offset 0x2558), in exactly the same 8 of 9 distinct images as the device descriptor and absent in the pre-restore negative, preceded by the 2 bytes 2a 03. Whether that prefix is a served string-descriptor header is NOT established - walking records from the LANGID anchor (04 03 09 04, image offset 0x2510) stops at the second record - so the text is exported as evidence (smk_usb_updater_product_name, byte-compared against every dump) and never served. Normal-mode app images, by contrast, do store wire-format strings ('SMK-37 Pro Midi' x 45, 'SMK-37 Pro Audio' x 45 across app-slot payloads), which is why the string channel was searched at all.",
+        "not_recoverable": "No configuration, interface, endpoint, MIDI jack or CS_ENDPOINT descriptor exists as wire-format bytes anywhere scanned - not in the 19 whole-flash paths, not in the 47 app-slot payloads, not in the 56 .fwsc packages, not in the targeted search of the updater image itself. The chains the scan finds are stated per file: one in the vendor SDK's own AC790N MP-test tool ELF and one in its AC791N MP-test tool ELF; no chain sits in a recovered corpus, and this project's own regenerated build outputs (including the superseded B1 build's authored 39-byte set) are excluded from the scan by the scope rule and listed in scope.excluded. So the configuration stays withheld: GET_DESCRIPTOR(CONFIG, 0) returns absent, and the 30-byte fragment remains the authored placeholder for the assembly step.",
+        "host_check": "ac79/test/usb_descriptor_test.c (make test-usb-descriptors): 112 checks / 0 failures without a dump, 131 / 0 with one. The run FAILS CLOSED if either evidence document is missing (the earlier revision reported the missing file and still exited 0), re-derives every pinned field from docs/research-notes.md and baselines/v15/device-info/probe.txt, cross-checks the recovered product-name text against the name research-notes.md records, asserts the updater-image search results per dump, and byte-compares the recovered text and descriptor against flash. Mutation battery on this revision: probe.txt max-packet 64->32 caught (2 failures), research-notes interface 1->0 caught (1), fact table bInterfaceNumber 1->0 caught (3, incl. the document cross-check), fragment wMaxPacketSize 64->8 caught, deleting the iInterface unrecovered entry caught (no-silent-byte), serving an invented composite caught (3), recovered product-name byte flip caught (3), descriptor byte flip / injected MS header+endpoints / second identity / truncated and tiny dumps all caught, non-1MiB dumps exit 2."
+      },
+      "verdict": "PASS by tools/check_sdk_app_layout.py, exit 0 from BOTH input paths (sdk.elf and sdk.map) with --app app.bin: 5 allocatable non-empty sections, all inside allowed windows, no .data/.bss at 0x04000000. app.bin 123,332 B is well inside the 617,012 B slot (493,680 B headroom).",
+      "build_recipe": "same script as known_builds[4]: ac79/build/build_sdk_app_project_source.sh, with the two USB source SHA-256 pins updated and the byte-presence proof extended to the 40-byte product-name text. Streams ac79/app/*.{c,h}, restores the SDK app tree from git, adds both TUs to c_SRC_FILES, calls both self-tests from app_main(), builds, asserts the project symbols and all five byte strings in app.bin, copies the four artifacts out, runs the gate on both ELF and map, then restores the app tree to stock. Verified after this build: the container app tree is stock (no copied sources, no stale objects) and the stock procedure of docs/linux-build-flash-procedure.md section 3 builds pristine demo_hello, +app.bin 119748 bytes.",
+      "toolchain": "same as known_builds[1]: /opt/jieli/pi32v2 clang 4.0.1, CFLAGS -target pi32v2 -mcpu=r3 -integrated-as -flto -Oz, LD=lto-wrapper; built in the smk-build container from the same SDK mirror.",
+      "reproducibility_measured": "RUN TWICE on 2026-10-09 with the same recipe and the same sources (the staged artifact and one more build, 2026-10-09c): identical app.bin size (123,332 B), identical layout, identical sdk.map SHA-256 (ab2f27c3...) and identical symbol_tbl.txt SHA-256 (81078e82...). The two app.bin files differ only inside the embedded __TIME__ string, and only in its minute/seconds digits - 3 bytes at 0x132CB/0x132CD/0x132CE ('18:00:18' vs '18:03:57') in this pair, 2 bytes in the first pair measured before the 2026-10-09c comment-only corrections - and sdk.elf likewise (the same 3 bytes at 0x1C1EB/0x1C1ED/0x1C1EE). No code, data or layout byte differs. Layout-, size- and symbol-reproducible, not byte-reproducible, like every earlier known_build.",
+      "side_effects": "none: after every run the container app tree is stock (the only git status entries are untracked build outputs) and the stock procedure of docs/linux-build-flash-procedure.md section 3 builds pristine demo_hello afterwards (+app.bin: 119748 bytes, re-verified after this build).",
+      "evidence": [
+        "tools/check_sdk_app_layout.py (invoked on linux-build/ac79-build-2026-10-09-b3-updater-image-evidence/sdk.elf and sdk.map with --app app.bin, 2026-10-09, exit 0)",
+        "ac79/app/smk_usb_descriptors.h (the corrected claim set: recovered bytes vs recovered text vs authored fragment vs declared unrecovered)",
+        "ac79/app/smk_usb_descriptors.c (the recovered product-name table and the updated unrecovered list)",
+        "ac79/test/usb_descriptor_test.c (fail-closed evidence documents, updater-image wire-format search, product-name cross-check)",
+        "ac79/evidence/search_updater_usb_image.py + ac79/evidence/updater-usb-image-search.json (the targeted search of usb_hid_ota.bin)",
+        "ac79/evidence/recon_updater_usb_identity.py + ac79/evidence/updater-usb-identity.json (schema /4: .bin + .fwsc + .elf, project build outputs excluded and listed, string descriptors)",
+        "ac79/build/build_sdk_app_project_source.sh (the build recipe with the updated pins and byte-presence proof)",
+        "linux-build/ac79-build-2026-10-09-b3-updater-image-evidence/ (private workspace: sdk.elf, sdk.map, app.bin, symbol_tbl.txt)"
+      ]
+    }
+  ],
+
+  "transfers_from_fm1_project": [
+    {
+      "item": "SoC/toolchain model (Jieli pi32v2 GCC, isd_tools packaging)",
+      "verdict": "TRANSFERS",
+      "note": "Same AC79/WL82 family; the SMK project already builds with the official SDK and post-build tools.",
+      "evidence": ["https://github.com/aroum/fm1-custom-fw (section 6.2)", "docs/from-scratch-platform-plan.md (section 7, P0a)"]
+    },
+    {
+      "item": "App placed at flash offset 0x4000 with an isd_config.ini app_dir_head",
+      "verdict": "TRANSFERS",
+      "note": "SMK app area starts at flash 0x4300 (JLFS header sector 0x4000..0x4300 before it); same partition concept.",
+      "evidence": ["https://github.com/aroum/fm1-custom-fw (section 6.1)", "baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-fl-003, v2-fl-004)"]
+    },
+    {
+      "item": "Mandatory bootloader/update re-entry in custom firmware",
+      "verdict": "TRANSFERS_AND_STRONGER",
+      "note": "On the FM-1 the update channel is host-push MIDI; on the SMK the update mode (4D4A:4155) is implemented inside the application data, so replacing the app removes the only software update path unless the new app reimplements it. M09 is the in-repo precedent.",
+      "evidence": ["https://github.com/aroum/fm1-custom-fw (section 6.2 caution)", "docs/self-recovering-sdk-app.md (section 2)", "baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-ot-002)"]
+    },
+    {
+      "item": "FM-1 flashing transport and tools (M-UPGRADE, fm1_flasher.py, MIDI SysEx framing)",
+      "verdict": "DOES_NOT_TRANSFER",
+      "note": "The SMK update mode shares the Jieli 4D4A:4155 identity but uses its own 00 59 30 read-request/data-response framing; the stock SDK usb_update2.bin does not match it either.",
+      "evidence": ["docs/self-recovering-sdk-app.md (sections 2 and 3)", "https://github.com/aroum/fm1-custom-fw (sections 5.2, 5.3)"]
+    },
+    {
+      "item": "Web-installer / web-editor product model (Felucca and forks)",
+      "verdict": "MODEL_ONLY",
+      "note": "The delivery pattern (browser tool over USB, stock restore path) transfers as a product idea, but the SMK installer would have to implement the SMK 00 59 30 protocol; no new hosting infrastructure is required for it.",
+      "evidence": ["https://github.com/aroum/fm1-custom-fw (section 2.1)"]
+    },
+    {
+      "item": "FM-1 firmware sources, synth engines, sequencer and UI",
+      "verdict": "DOES_NOT_TRANSFER",
+      "note": "Different board, controls and audio path; no code reuse implied by the shared SoC family.",
+      "evidence": ["https://github.com/aroum/fm1-custom-fw (sections 2.1, 3)", "docs/from-scratch-platform-plan.md (section 2)"]
+    },
+    {
+      "item": "4/8 MB flash and populated-SDRAM/DDR assumptions",
+      "verdict": "DOES_NOT_TRANSFER",
+      "note": "This unit is 1 MiB SPI NOR with SDRAM presence unproven; the SDK demo defaults assume 4 MiB and a 2 MiB SDRAM window.",
+      "evidence": ["https://github.com/aroum/fm1-custom-fw (section 8.1)", "baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-fl-001, v2-sd-005)"]
+    },
+    {
+      "item": "Devkit peripherals (WiFi, DVP camera, RGB/8080 panels) from the JL_AC79_DevKit documentation",
+      "verdict": "PARTIAL",
+      "note": "The AC79 SoC peripherals (SPI/I2S/ADC/USB) transfer at the block level; the devkit board wiring does not. This unit's LCD is an ST7789V-class SPI panel driven by an external CS4344 I2S DAC for audio; the board pinout itself is still unmeasured.",
+      "evidence": ["https://doc.zh-jieli.com/AC79/zh-cn/release_v1.0.3/board_description/board_overview/index.html", "docs/from-scratch-platform-plan.md (section 2)", "docs/research-notes.md"]
+    }
+  ],
+
+  "open_questions": [
+    {
+      "id": "xip_base_convention",
+      "status": "RESOLVED 2026-10-08",
+      "question": "The SDK links at 0x02000120 (ENTRY) while the stock v15 runtime window is recorded as 0x02000000 + file offset. The 0x120 offset's meaning for an app-only OTA package is not resolved.",
+      "resolution": "No conflict existed: the two conventions are one mapping seen from two anchors, and 0x120 is declared by the image itself. The app.bin JLFS entry header sits at flash 0x4020 and declares offset = 0x120 (the module's own assertion is require(app.offset == 0x120 and app.size == APP_DATA_SIZE)), while APP_DATA_OFFSET = 0x4120 is declared in that module as a plain literal, not as a base-plus-offset expression; this map DERIVES 0x4120 == 0x4000 + 0x120 by checked arithmetic rather than quoting a declared 'base + 0x120', and that derivation is what places the offset relative to the app-area base 0x4000. Therefore flash 0x4000 (app_area_head, which is also app-image file offset 0) maps to VA 0x02000000, and the payload's first byte at flash 0x4120 maps to VA 0x02000120 = the SDK .text VMA = ENTRY = isd_config.ini ENTRY. v2-rx-001's 'file offset + 0x02000000' is the app-image-relative convention, not flash-absolute (0x02000000 + 0x4120 = 0x02004120 would be wrong). Arithmetic proof that the window is exactly the payload slot: v2-rx-001 end 0x02096A34 - ENTRY 0x02000120 = 0x96914 = 616,724 = 617,012 - 0x120, i.e. the window spans precisely APP_DATA_SIZE bytes from the declared offset onward. The new build lands .text at 0x02000120..0x02014FE0, inside the window with 531,028 B of headroom.",
+      "resolution_evidence": [
+        "baselines/v15/analysis/flash-candidates/S1C2-two-slot-selector-live-v2/smk37_v15_app_patch.py (lines 40-44: APP_AREA_BASE 0x4000, APP_ENTRY_HEADER 0x4020, APP_DATA_OFFSET 0x4120, APP_DATA_SIZE 617012; line 308: require(app.offset == 0x120 and app.size == APP_DATA_SIZE))",
+        "baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-rx-001: 0x02000000..0x02096A34 = 617,012 B)",
+        "tools/check_sdk_app_layout.py (run 2026-10-08 on linux-build/ac79-build-2026-10-08/sdk.elf: .text 0x02000120..0x02014fe0 ok)"
+      ],
+      "evidence": ["linux-build/fw-AC79_AIoT_SDK/cpu/wl82/tools/isd_config.ini", "baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-rx-001)"]
+    },
+    {
+      "id": "app_area_vs_app_bin_size",
+      "status": "RESOLVED 2026-10-08",
+      "question": "The flash app area is 615,731 B (0x4300..0x9A833) while the v15 app.bin ceiling used by the gate is 617,012 B. The 1,281 B difference must be resolved before any replacement app is flashed; neither number may be silently substituted for the other.",
+      "resolution": "Both numbers are correct and measure different spans of the same application; the 1,281 B decomposes exactly into 480 B + 801 B, one term per boundary. 617,012 B is the app-data payload slot: the app.bin entry header declares offset=0x120 and size=0x96A34, so the payload occupies flash 0x4120..0x9AB54, and this is the number the packer pads to with 0xFF, i.e. the only valid ceiling for a replacement app.bin (pack_sdk_app_fwsc.py: require(len(app_bin) <= APP_DATA_SIZE)). 615,731 B is the v15-image-specific region an app-only OTA/restore may replace, 0x4300..0x9A833 (v2-fl-004): it starts 480 B later because it excludes the whole JLFS header sector 0x4000..0x4300 (which carries app_area_head at 0x4000, the app.bin entry header at 0x4020, and the first 480 B of payload), and it ends 801 B earlier because v15's occupied app extent ends at 0x9A833 while the payload slot runs on to 0x9AB54. The near-miss 0x9AD33 - 0x9A833 = 0x500 = 1,280 that made an off-by-one explanation look plausible is unrelated: it is the version-dependent tail (v2-fl-005), not the ceiling. The declared area itself is 0x4000..0x9ACD3 = 617,683 B = 288 B headers (32 B area + 256 B entry) + 617,012 B payload + 383 B trailer. Practical rule: size a replacement app.bin against 617,012 B and never against 615,731 B; and never write 617,012 B starting at 0x4300 (that would overrun v15's app end into tail metadata).",
+      "resolution_evidence": [
+        "baselines/v15/analysis/flash-candidates/S1C2-two-slot-selector-live-v2/smk37_v15_app_patch.py (APP_AREA_BASE 0x4000, APP_ENTRY_HEADER 0x4020, APP_DATA_OFFSET 0x4120, APP_DATA_SIZE 617012, APP_AREA_END 0x9ACD3)",
+        "tools/pack_sdk_app_fwsc.py (0xFF pad to the fixed slot; refuses a larger app.bin)",
+        "baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-fl-004 615,731 B; v2-fl-005 version-dependent tail; v2-rx-001 617,012 B)"
+      ],
+      "evidence": ["baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-fl-004, v2-rx-001)"]
+    },
+    {
+      "id": "device_crystal_and_sdram",
+      "question": "The unit's crystal and the absence of an external SDRAM/PSRAM die are inferred from the part marking and dumps, not measured.",
+      "evidence": ["baselines/v15/analysis/usb-flash-readiness/memory-map-v2.json (v2-sd-005)", "docs/research-notes.md"]
+    }
+  ]
+}
