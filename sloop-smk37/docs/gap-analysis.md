@@ -119,6 +119,28 @@ To enable persistence (and with it the editor, user samples, and presets):
    `FELUCCA_FLASH=1` and extend the link gate's allowed list.
 Until then, RAM-only is the only build this repo can justify.
 
+### 5a. What the evidence now shows (review, Oct 2026)
+
+- **Official v15 JLFS directory** (`baselines/v15/analysis/patch-set-ui/persistence/report.md`,
+  [DECODED-repo]): `app.bin` `0x04120..0x9AB54`; `cfg_tool.bin` `0x9AB54..0x9ACD3`;
+  `VM` `0xA0000..0xC4000` (147,456 B); `BTIF` `0xC4000`; `USRTRIM` `0xC5000`;
+  `USRFLASH` `0xC6000..0xEF000` (167,936 B); `USR` `0xF8000..0x102000` (the 0xF8000
+  record store, occupied, do not write). The report's conclusion is that the **safe
+  unallocated budget is 0 bytes** until the VM and USRFLASH allocation maps are proven.
+- **Tail boundary**: the v15 directory says `app.bin` ends at `0x9AB54`; the packer
+  uses `0x9AB53`. Both leave `0x9AB54..0x9ACD3` to `cfg_tool.bin`, so the layout is
+  consistent but not byte-exact. Do not put anything after `0x9ACD3`.
+- **External precedent** (`amalahama/smk37-firmware-custom-mod`, v022, unverified):
+  a community custom `.fwsc` was flashed through the stock USB-MIDI SysEx OTA
+  (`tools/smk_ota_win.py`), and its BLE patch changes the flash **VM key** that holds the
+  static MAC from 102 to 108. This suggests that VM is a key/value store reached through
+  SDK key IDs, which would be the natural persistence entry point. It also gives a
+  different cfg offset (`0x9B757` for v016), which conflicts with v15, and no VM record
+  format, allocator, or free-key list. Treat it as a lead only. It is not an SDK fact.
+- **Decision**: no persistence write path is added. The next step is the owner's
+  read-only dump of the live device (VM and USRFLASH allocation maps), and the SDK VM
+  API must be confirmed before any key is written.
+
 ## 6. Identity and recovery
 
 - Normal USB: this build presents `1209:0001` (pid.codes test ID, from upstream

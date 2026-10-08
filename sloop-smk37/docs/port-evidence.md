@@ -25,6 +25,9 @@ Evidence labels:
 | FM-1 storage map | [DECODED-port] `storage.c` / `fm1_flash.h`: data `0x97000..0xDFFFF`, globals `0xFC000..` (inside the SMK app slot for `0x97000..0x9AB53`) | `FELUCCA_FLASH=0` in this build |
 | SFC plain window | [DECODED-port] `fm1_flash.h` `fl_plain_window_init()`: maps `0x93000` upward as plain XIP | runs only with `FELUCCA_FLASH`; not in this build |
 | Tail boundary conflict | [CONFLICT] `docs/flash-layout-cipher-analysis.md` says the tail starts at `0x9A833`; the packer says app data runs to `0x9AB53` | the packer is followed; owner to resolve with a dump |
+| Stock flash regions (v15) | [DECODED-repo] `baselines/v15/analysis/patch-set-ui/persistence/report.md`: `VM` `0xA0000..0xC4000`, `USRFLASH` `0xC6000..0xEF000`, `USR` `0xF8000..0x102000`; safe free budget 0 B | no write path; `docs/gap-analysis.md` §5a |
+| VM key store | [UNVERIFIED] `amalahama/smk37-firmware-custom-mod` (v022 BLE patch): stock flash VM key 102 holds the static MAC, redirected to key 108 | not used; needs an SDK VM API and a dump |
+| Community custom flash | [UNVERIFIED] same repo: custom `.fwsc` flashed over stock USB-MIDI SysEx OTA (`smk_ota_win.py`) | not used; this repo's exact-SHA gate and rollback still apply |
 | USB identity | [DECODED-repo] stock `4C4A:C755`, update mode `4d4a:4155`; this build `1209:0001` (upstream test ID) | `usb.c` `FELUCCA_USB_PID`; owner decision (`docs/gap-analysis.md` §6) |
 
 ## 2. Bring-up checklist (hardware, read-only first)
