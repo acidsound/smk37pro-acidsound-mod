@@ -25,7 +25,8 @@ map, the packaging path and the tests.
 
 The SMK-37 Pro has no silkscreen for nine of the FM-1's fourteen function
 buttons. **Those nine live on the pads** — hold a pad for the layer, tap it
-for its pages, pad RGB follows the button LED:
+for its pages, and the pad's LED shows the function's state (LED line map:
+`SMK37_LEDMAP`, [UNVERIFIED] wiring, see bring-up):
 
 | SLOOP (FM-1) | SMK-37 Pro | | SLOOP (FM-1) | SMK-37 Pro |
 |---|---|---|---|---|
@@ -62,8 +63,8 @@ sloop-smk37/
 ├── board/
 │   ├── hal/                SMK-37 Pro board HAL (shadows the FM-1 board HAL)
 │   │   ├── smk37_board.h     pin map + evidence labels ([DECODED]/[INFERRED]/[UNVERIFIED])
-│   │   ├── smk37_map.h       pure tables: matrix, key window, pad→slot wiring
-│   │   ├── fm1_input.h       scan glue: rows/strobe/SPI2 chain, debounce, quadrature, pad RGB
+│   │   ├── smk37_map.h       pure tables: scan matrix, LED map, key window, pad→slot wiring
+│   │   ├── fm1_input.h       scan glue: rows/strobe/SPI2 chain, debounce, quadrature, LEDs
 │   │   ├── fm1_lcd_hw.h      SPI1 LCD, D/C = PB5, CS = PC8, 240x240 RGB565
 │   │   ├── fm1_audio.h       ALNK0 -> CS4344 (PC0/1/2/6)
 │   │   ├── fm1_adc.h         SARADC: faders, wheels, pedal, battery
@@ -71,11 +72,12 @@ sloop-smk37/
 │   └── src/panel.c         panel table + settings (replaces upstream panel.c)
 ├── tools/
 │   ├── fetch_sloop.py      fetch/verify the pinned upstream tree
-│   ├── build_smk37.py      BSP-overlay target build + offline gates
+│   ├── build_smk37.py      BSP-overlay target build + gates + pass record (.check.json)
 │   └── make_smk37_fwsc.py  pack app.bin into the v15 FWSC container (exact_ota path)
 ├── tests/
-│   ├── panel_smk37_test.c     board-map unit test (host)
+│   ├── panel_smk37_test.c     board-map + LED-map unit test (host)
 │   ├── ui_pages_smk37_test.c  upstream live-UI fuzz, compiled with this panel
+│   ├── unity_syntax.sh        whole SLOOP unity TU vs this HAL (syntax/types)
 │   └── run_smk37_tests.sh
 └── docs/port-evidence.md   every board constant and where it was read from
 ```
@@ -100,6 +102,12 @@ tools/make_smk37_fwsc.py --app build/smk37-sloop.bin \
     --template /path/to/SMK-37_Pro_015.fwsc --output-dir build
 ```
 
+`make_smk37_fwsc.py` refuses any image that does not start with the entry
+stub `04818000`, is not within the v15 app slot, or lacks a `PASS` build
+record whose SHA-256 matches the bytes (`build/smk37-sloop.check.json`, written
+only after every `build_smk37.py` gate passed). Refusal exits 2 and writes
+nothing.
+
 `build_smk37.py` gates before it emits anything: entry stub and `_start` at
 `0x02000120`, `.ram_text` without calls, image within the 617,012 B v15 app
 slot, and — the 2026-08-15 brick lesson (RC-1) — **no section in the SDRAM
@@ -109,10 +117,16 @@ window `0x04000000`**, none outside the confirmed RAM/XIP windows.
 
 - 2026-10-08: port created. Host tests pass (board map; upstream live-UI
   fuzz incl. 20000-frame random use, through the SMK-37 panel).
+- 2026-10-09: audit after a network interruption. Found and fixed: the core's
+  LED lookup read the scan keymap (wrong LEDs, key landmarks could light pads);
+  added `SMK37_LEDMAP` and tested it. Found that the host UI test does not
+  compile the real HAL: added `unity_syntax.sh` (whole SLOOP TU against this
+  HAL, now clean). `make_smk37_fwsc.py` packaged a 100-byte dummy: now refuses
+  unless the image passes the gates. `upstream/` is git-ignored.
 - Board HAL electrical details carry evidence labels; the [INFERRED] /
   [UNVERIFIED] ones (column count of the scan chain, ADC channel order,
-  backlight pin, pad RGB serial path) are the bring-up checklist in
-  `docs/port-evidence.md` §8, relearnable on-device where calibration applies.
+  backlight pin, pad/LED line map, pad RGB serial path) are the bring-up checklist
+  in `docs/port-evidence.md` §2, relearnable on-device where calibration applies.
 - Not flashed, not run on hardware: the repo's no-live-device rule stands.
 
 ## Licence

@@ -20,7 +20,8 @@
 ## 패널: 실스크린에 없는 버튼은 패드가 담당
 
 SMK-37 Pro 실스크린에는 FM-1의 기능 버튼 14개 중 9개가 없습니다. **그 9개는 패드** —
-패드를 누르고 있으면 레이어, 탭하면 페이지, 패드 RGB 가 버튼 LED를 따릅니다:
+패드를 누르고 있으면 레이어, 탭하면 페이지, 패드 LED가 해당 기능의 상태를 보여줍니다
+(LED 라인 맵 `SMK37_LEDMAP`, 배선은 [UNVERIFIED], 브링업에서 확인):
 
 | SLOOP (FM-1) | SMK-37 Pro | | SLOOP (FM-1) | SMK-37 Pro |
 |---|---|---|---|---|
@@ -55,8 +56,8 @@ sloop-smk37/
 ├── board/
 │   ├── hal/                SMK-37 Pro 보드 HAL (FM-1 보드 HAL을 섀도)
 │   │   ├── smk37_board.h     핀맵 + 증거 라벨 ([DECODED]/[INFERRED]/[UNVERIFIED])
-│   │   ├── smk37_map.h       순수 테이블: 매트릭스, 건반 창, 패드→슬롯 배선
-│   │   ├── fm1_input.h       스캔 글루: 로/스트로브/SPI2 체인, 디바운스, quadrature, 패드 RGB
+│   │   ├── smk37_map.h       순수 테이블: 스캔 매트릭스, LED 맵, 건반 창, 패드→슬롯 배선
+│   │   ├── fm1_input.h       스캔 글루: 로/스트로브/SPI2 체인, 디바운스, quadrature, LED
 │   │   ├── fm1_lcd_hw.h      SPI1 LCD, D/C = PB5, CS = PC8, 240x240 RGB565
 │   │   ├── fm1_audio.h       ALNK0 -> CS4344 (PC0/1/2/6)
 │   │   ├── fm1_adc.h         SARADC: 페이더, 휠, 페달, 배터리
@@ -64,10 +65,11 @@ sloop-smk37/
 │   └── src/panel.c         패널 테이블 + 설정 (업스트림 panel.c 대체)
 ├── tools/
 │   ├── fetch_sloop.py      핀된 업스트림 트리 취득/검증
-│   ├── build_smk37.py      BSP 오버레이 타깃 빌드 + 오프라인 게이트
+│   ├── build_smk37.py      BSP 오버레이 타깃 빌드 + 게이트 + 통과 기록(.check.json)
 │   └── make_smk37_fwsc.py  app.bin을 v15 FWSC 컨테이너로 패키징 (exact_ota 경로)
 ├── tests/
-│   ├── panel_smk37_test.c     보드 맵 단위 테스트 (호스트)
+│   ├── panel_smk37_test.c     보드 맵 + LED 맵 단위 테스트 (호스트)
+│   ├── unity_syntax.sh        SLOOP 전체 unity TU를 이 HAL로 컴파일 (구문/타입)
 │   ├── ui_pages_smk37_test.c  업스트림 라이브 UI 퍼즈를 이 패널로 컴파일
 │   └── run_smk37_tests.sh
 └── docs/port-evidence.md   모든 보드 상수와 그 출처
@@ -92,6 +94,10 @@ tools/make_smk37_fwsc.py --app build/smk37-sloop.bin \
     --template /path/to/SMK-37_Pro_015.fwsc --output-dir build
 ```
 
+`make_smk37_fwsc.py`는 엔트리 스텁 `04818000`으로 시작하지 않거나, v15 앱 슬롯을 넘거나,
+SHA-256이 일치하는 `PASS` 빌드 기록(`build/smk37-sloop.check.json`)이 없는 이미지를 거부합니다
+(기록은 `build_smk37.py`의 모든 게이트 통과 후에만 기록). 거부 시 종료코드 2, 아무것도 쓰지 않음.
+
 `build_smk37.py`는 산출 전에 게이트합니다: `0x02000120`의 엔트리 스텁/`_start`,
 `.ram_text` 내 call 없음, 이미지 ≤ v15 앱 슬롯 617,012 B, 그리고 2026-08-15 브릭 교훈
 (RC-1) — **SDRAM 창 `0x04000000` 섹션 금지**, 확인된 RAM/XIP 창 밖 섹션 금지.
@@ -100,8 +106,13 @@ tools/make_smk37_fwsc.py --app build/smk37-sloop.bin \
 
 - 2026-10-08: 포트 작성. 호스트 테스트 통과 (보드 맵; SMK-37 패널로 돌린 업스트림
   라이브 UI 퍼즈 — 20000 프레임 랜덤 사용 포함).
+- 2026-10-09: 네트워크 단절 후 감사. 수정: 코어의 LED 조회가 스캔 키맵을 읽고 있었음 (잘못된
+  LED, 건반 표시가 패드를 점등할 수 있었음) → `SMK37_LEDMAP` 추가 + 테스트. 호스트 UI 테스트가
+  실제 HAL을 컴파일하지 않음을 발견 → `unity_syntax.sh` 추가 (SLOOP 전체 TU 구문 검사 통과).
+  `make_smk37_fwsc.py`가 100 B 더미를 패키징하던 문제 → 게이트 통과 전 거부하도록 수정.
+  `upstream/`은 git 무시.
 - 보드 HAL 전기 상세는 증거 라벨을 유지. [INFERRED]/[UNVERIFIED] 항목(스캔 체인의 컬럼
-  수, ADC 채널 순서, 백라이트 핀, 패드 RGB 시리얼 경로)은 `docs/port-evidence.md` §8의
+  수, ADC 채널 순서, 백라이트 핀, 패드/LED 라인 맵, 패드 RGB 시리얼 경로)은 `docs/port-evidence.md` §2의
   브링업 체크리스트이며, 캘리브레이션이 닿는 부분은 실기기에서 재학습 가능.
 - 플래시/실기기 실행 안 함: 저장소의 실기기 무접촉 룰 유지.
 

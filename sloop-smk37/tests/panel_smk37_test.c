@@ -148,12 +148,31 @@ int main(void)
         CHECK(memcmp(good, &panel, sizeof panel) == 0, "bad magic not restored");
     }
 
+    /* LED map: every logical slot 0..13 lit exactly once, rows 1..4 only
+     * (ui_input.c led_pos_init reads no other rows), each cell a valid slot */
+    {
+        int cnt[14] = {0}, bad = 0, r, c;
+        for (r = 0; r < SMK37_NROW; r++)
+            for (c = 0; c < SMK37_NCOL; c++) {
+                int8_t v = SMK37_LEDMAP[r][c];
+                if (v < 0)
+                    continue;
+                if (v >= 14 || r < 1 || r > 4)
+                    bad++;
+                else
+                    cnt[v]++;
+            }
+        CHECK(bad == 0, "LED map has %d bad cells", bad);
+        for (int i = 0; i < 14; i++)
+            CHECK(cnt[i] == 1, "slot %d has %d LED cells", i, cnt[i]);
+    }
+
     if (fails) {
         printf("panel_smk37_test: %d FAIL(s)\n", fails);
         return 1;
     }
     printf("panel_smk37_test: pads 1..9 carry FX ENV LFO EDIT GLO HOME SAVE OCT- OCT+; "
            "SCL/ARP/SEQ/PLAY/REC on silkscreen; 27-key window; matrix bijective; "
-           "corrupt calibration falls back\n");
+           "LED map complete; corrupt calibration falls back\n");
     return 0;
 }

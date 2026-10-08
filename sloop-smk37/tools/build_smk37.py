@@ -228,6 +228,14 @@ def main() -> int:
         print("  FAIL ", e)
     if errors:
         raise SystemExit("build_smk37: checks failed")
+    # pass record for make_smk37_fwsc.py: it packages only an image whose
+    # SHA-256 matches a record written here after every check above passed
+    import hashlib, json
+    (OUT / "smk37-sloop.bin").write_bytes(img)
+    rec = {"app": "smk37-sloop.bin", "bytes": len(img),
+           "sha256": hashlib.sha256(img).hexdigest(), "checks": "PASS",
+           "upstream_pin": (PORT / "SLOOP_PIN").read_text().split()[0]}
+    (OUT / "smk37-sloop.check.json").write_text(json.dumps(rec, indent=2) + "\n")
     print(f"app      {OUT / 'smk37-sloop.bin'}  {len(img)} B")
     print("next:    tools/make_smk37_fwsc.py --app build/smk37-sloop.bin (offline packaging)")
     return 0

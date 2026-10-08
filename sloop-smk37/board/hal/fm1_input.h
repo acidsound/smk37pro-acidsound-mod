@@ -56,6 +56,10 @@
  * the host tests can run the mapping with no chip behind them */
 #include "smk37_map.h"
 
+/* the core looks LED positions up in FM1_KEYMAP (ui_input.c led_pos_init);
+ * on this board that table is the LED map, not the scan map */
+#define FM1_KEYMAP SMK37_LEDMAP
+
 static volatile struct {
     uint32_t notes;              /* bit n = SLOOP note key n (0..26) */
     uint32_t buttons;            /* bit i = matrix button i (0..31) */
@@ -83,7 +87,6 @@ static volatile uint16_t fm1_led_bg_ns;
 static uint8_t smk37_pad_vel[16], smk37_pad_touch[16];
 static uint8_t smk37_key_vel[37];
 static uint16_t smk37_fader[SMK37_NFADER], smk37_wheel[SMK37_NWHEEL];
-static uint8_t smk37_pad_rgb[16];         /* pad glow 0..255 (fm1_led_key) */
 
 /* ------------------------------------------------------- shift chain ---- */
 /* the 4-byte SPI2 word: [cols lo, cols hi, leds lo, leds hi]; columns and
@@ -346,23 +349,17 @@ static uint32_t fm1_input_note_edges(void)
     return p;
 }
 
-/* LED of a logical button slot (0..13): the physical control that carries it
- * lights -- a pad's RGB glow, or the button's column/row line. Note keys
- * (14..40) have no per-key lights on this board (the keybed is unlit; the
- * landmarks the FM-1 keys light are on the SMK-37 Pro's LCD instead). */
+/* LED of a logical button slot (0..13): fm1_led[col] bit `row` per
+ * SMK37_LEDMAP (smk37_map.h). Note keys (14..40) have no LED on this board:
+ * the keybed is unlit; the landmarks the FM-1 keys light show on the LCD. */
 static void fm1_led_key(uint32_t id, int on)
 {
-    uint32_t p, r, phys;
+    uint32_t p, r;
     if (id >= 14u)
         return;
-    phys = SMK37_PHYS_OF_SLOT[id];
-    if (phys >= 16u && phys < 32u) {
-        smk37_pad_rgb[phys - 16u] = on ? 255u : 0u;
-        return;
-    }
     for (p = 0; p < FM1_NCOL; p++)
-        for (r = 0; r < SMK37_NROW; r++)
-            if (SMK37_KEYMAP[r][p] == (int8_t)phys) {
+        for (r = 1; r < 5u; r++)
+            if (SMK37_LEDMAP[r][p] == (int8_t)id) {
                 if (on)
                     fm1_led[p] |= (uint8_t)(1u << r);
                 else

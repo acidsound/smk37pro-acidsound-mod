@@ -34,9 +34,15 @@ Do these before any flash. Each item names what to observe and the file to fix.
 3. **[UNVERIFIED] LCD backlight pin** — `SMK37_LCD_BL_PORT -1` (none).
    If the panel stays dark with the image visible in the dump, look for a
    backlight GPIO and set it.
-4. **[UNVERIFIED] Pad-RGB serial path** — pad LEDs share the SPI2 column/LED
-   word. Verify pad colours change with `leds_*` bits; if not, the pad LED
-   data path is elsewhere and `fm1_input.h` LED writer must be revisited.
+4. **[UNVERIFIED] LED line map and pad LEDs** — `smk37_map.h` `SMK37_LEDMAP`.
+   The core lights a function by looking its slot up in FM1_KEYMAP (rows 1..4,
+   `ui_input.c` `led_pos_init`); the port's LEDMAP places slot s at column
+   `s % 4`, row `1 + s / 4`. This layout was assigned, not measured. Bring-up:
+   light each slot in turn (`fm1_led_key(slot, 1)`), and check that the LED
+   that lights is the intended function. Fix the table where it is not.
+   Pads are RGB: if a pad LED is not a single bit of the column word, the pad
+   colour path (SPI2 leds word vs a separate RGB line) must be added to
+   `fm1_input.h`. Note keys have no LED on this board (by design).
 5. **[UNVERIFIED] PC6 codec enable** — `fm1_audio.h`. Confirm audio output
    with the enable pin high. If silent, the enable line is wrong for this board
    and must be re-derived from the v15 codec init (`0x02006762` call sites).
@@ -48,12 +54,27 @@ Do these before any flash. Each item names what to observe and the file to fix.
 
 FM-1 controls with no SMK-37 counterpart are provided by the 16 RGB pads.
 The full table lives in `board/hal/smk37_map.h` (`SMK37_SLOT_OF`,
-`SMK37_PHYS_OF_SLOT`) and `README.md`. The core dispatches only logical slots
+`SMK37_PHYS_OF_SLOT`) and `README.md`. LEDs use their own table,
+`SMK37_LEDMAP` (`FM1_KEYMAP` for the core's LED lookup), so the scan layout
+and the LED layout do not have to agree. The core dispatches only logical slots
 0..13 (`ui_input.c` loop `id < 14u`), so physical ids are mapped to slots
 inside the HAL debounce, never in `panel.btn[]` directly.
 
-## 4. Safety
+## 4. Host verification (what is and is not checked)
 
+| Check | Covers | Does not cover |
+|---|---|---|
+| `panel_smk37_test` | slot wiring, bijection, key window, LED map complete, calibration fallback | the real chip registers (stubbed) |
+| `ui_pages_smk37_test` | upstream live-UI fuzz through this panel | HAL: its LED/key tables are stubbed |
+| `unity_syntax.sh` | whole SLOOP TU compiles against this HAL (names, types) | code generation, timing, pi32v2 intrinsics |
+
+Electrical behaviour (scan timing, LED lines, ADC order) is only checked on
+hardware, in the bring-up list above.
+
+## 5. Safety
+
+- `make_smk37_fwsc.py` packages only an image that starts with the entry stub,
+  fits the app slot, and has a PASS build record with the same SHA-256.
 - No flash has been performed. Flashing requires the repo's exact SHA-256
   gate (`exact_ota`), a read-only baseline (`device-info`/dump) and a tested
   rollback. Do not substitute switches.

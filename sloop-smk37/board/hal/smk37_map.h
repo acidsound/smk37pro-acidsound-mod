@@ -73,6 +73,25 @@ static const uint8_t SMK37_PHYS_OF_SLOT[14] = {
     16, 2, 17, 18, 19, 20, 21, 22, 0, 9, 6, 8, 23, 24,
 };
 
+/* LED lines, as the core sees them. ui_input.c (led_pos_init) finds each LED
+ * id (logical slot 0..13) in FM1_KEYMAP over rows 1..4 only, so the port sets
+ * FM1_KEYMAP = SMK37_LEDMAP (fm1_input.h). Entry = slot id; the slot's LED is
+ * fm1_led[col] bit `row`, driven while that column is scanned.
+ * Layout: slot s at column s % 4, row 1 + s / 4 (14 slots fit rows 1..4).
+ * Key LEDs (ids 14..40) have no entry: the keybed is unlit on this board.
+ * [UNVERIFIED] the physical LED line of each slot -- confirm at bring-up. */
+static const int8_t SMK37_LEDMAP[SMK37_NROW][SMK37_NCOL] = {
+    /* c0  c1  c2  c3  c4  c5  c6  c7  c8  c9  c10 c11 */
+    { -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1},   /* row 0 (unused) */
+    {  0,   1,   2,   3,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1},   /* row 1 */
+    {  4,   5,   6,   7,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1},   /* row 2 */
+    {  8,   9,  10,  11,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1},   /* row 3 */
+    { 12,  13,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1},   /* row 4 */
+    { -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1},   /* row 5 (unused) */
+    { -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1},   /* row 6 (unused) */
+    { -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1},   /* row 7 (unused) */
+};
+
 /* keybed key (chromatic from the low C) -> SLOOP note key 0..26, -1 = spare.
  * The window is F..G two octaves and a second (27 keys: 16 white + 11 black),
  * the same grid shape the FM-1's 25-key keyboard gives SLOOP; on a 37-key bed

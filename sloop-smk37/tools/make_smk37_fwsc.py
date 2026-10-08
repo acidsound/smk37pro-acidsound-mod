@@ -26,6 +26,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent.parent
+APP_SLOT = 617012          # v15 app-data slot (pack_sdk_app_fwsc.py)
 
 
 def main() -> int:
@@ -43,6 +44,28 @@ def main() -> int:
         sys.exit(f"make_smk37_fwsc: template {a.template} missing; copy the official "
                  "SMK-37_Pro_015.fwsc there (community mirror: jonathaslacerda/"
                  "smk-37-pro-docs firmware/smk37pro/)")
+    # gate 1: the image's own invariants (the same ones build_smk37.py checks)
+    import json
+    img = a.app.read_bytes()
+    bad = []
+    if img[:4] != bytes.fromhex("04818000"):
+        bad.append(f"starts with {img[:4].hex()}, not the entry stub 04818000")
+    if not 0 < len(img) <= APP_SLOT:
+        bad.append(f"{len(img)} B is outside (0, {APP_SLOT}] (v15 app slot)")
+    # gate 2: build_smk37.py wrote a pass record for exactly these bytes
+    rec_path = a.app.with_name(a.app.stem + ".check.json")
+    if not rec_path.exists():
+        bad.append(f"no {rec_path.name}: run tools/build_smk37.py (checks must pass)")
+    else:
+        rec = json.loads(rec_path.read_text())
+        if rec.get("checks") != "PASS":
+            bad.append("build record is not PASS")
+        if rec.get("sha256") != hashlib.sha256(img).hexdigest():
+            bad.append("image does not match its build record (rebuilt or edited?)")
+    if bad:
+        for b in bad:
+            print(f"make_smk37_fwsc: REFUSED: {b}", file=sys.stderr)
+        return 2
     a.output_dir.mkdir(parents=True, exist_ok=True)
     r = subprocess.run([sys.executable, str(REPO / "tools" / "pack_sdk_app_fwsc.py"),
                         "--app", str(a.app), "--template", str(a.template),

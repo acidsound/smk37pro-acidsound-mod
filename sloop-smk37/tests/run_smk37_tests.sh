@@ -39,7 +39,7 @@ GOT=$(git -C "$SLOOP_SRC" rev-parse HEAD 2>/dev/null || echo unknown)
 [ -f "$GEN/felucca_fm6.h" ] || python3 "$SLOOP_SRC/tools/gen_fm6_patches.py" "$GEN/felucca_fm6.h"
 
 $CC -Iboard/hal -o "$OUT/panel_smk37_test" tests/panel_smk37_test.c
-run "SMK-37 board map (pads = the missing FM-1 buttons)" "$OUT/panel_smk37_test"
+run "SMK-37 board map (pads = the missing FM-1 buttons, LED map)" "$OUT/panel_smk37_test"
 
 if [ "$SKIP_UI" != 1 ]; then
     for g in "gen_font.py felucca_font.h" "gen_icons.py felucca_icons.h" \
@@ -51,6 +51,11 @@ if [ "$SKIP_UI" != 1 ]; then
             exit $fail
         }
     done
+    # the whole SLOOP unity TU against this port's HAL and panel: every
+    # interface name and type the core uses must resolve (syntax only; the
+    # pi32v2 build itself runs in build_smk37.py on the owner's toolchain)
+    run "unity TU compiles against the SMK-37 HAL (syntax)" \
+        sh tests/unity_syntax.sh "$SLOOP_SRC" "$GEN"
     $CC -O2 -w -Iboard/hal -Iboard/src -I"$SLOOP_SRC/tests" -I"$SLOOP_SRC/firmware/src" \
         -I"$GEN" -o "$OUT/ui_pages_smk37_test" tests/ui_pages_smk37_test.c -lm
     mkdir -p "$OUT/ppm"
