@@ -24,6 +24,11 @@ enum {
     SMK37_MAX_OTA_CHUNK = 0x10000 - 15,
 };
 
+/* FELUCCA_ID as compiled into each pass. The cmd 0x11 handshake returns
+ * exactly these strings, so they are the post-install acceptance test. */
+static const char SMK37_SLOOP_P12_IDENTITY[] = "SMK37_900";
+static const char SMK37_SLOOP_P3_IDENTITY[] = "SMK37PRO_P3";
+
 static const uint32_t SMK37_VERIFY_COMPLETE = UINT32_C(0xe0000000);
 static const uint32_t SMK37_UPGRADE_COMPLETE = UINT32_C(0xf0000000);
 static const uint8_t SMK37_V012_PACKAGE_SHA256[SMK37_SHA256_LENGTH] = {
@@ -932,15 +937,206 @@ int smk37_ota_upload_v15_r01(const char *firmware_path,
         "v15 R01 install: USB identity 015 verified; test Ch1 and Ch10");
 }
 
+/* --- SLOOP OTA path -----------------------------------------------------
+ *
+ * ota_upload_exact() drives the stock firmware: it opens 4353:cf4d, sends
+ * the upgrade command, waits for the device to re-enumerate as a separate
+ * OTA-mode device, and serves stage 2 from there. A SLOOP build does not do
+ * that. It enumerates as 1209:0001 "Felucca" and serves the whole session
+ * in-application over the same MIDI link: the firmware pulls the payload with
+ * cmd 0x30, stages the loader, writes UPDATA_PARM and resets. Only after that
+ * reset does the bootloader pick the payload up.
+ *
+ * So the SLOOP path is:
+ *   stage 1  Felucca (1209:0001) serves the payload
+ *   reset    the firmware stages the loader and reboots
+ *   stage 2  the loader picks up at the same bus/port and completes
+ *   settle   wait for the new build, then re-read its Felucca identity
+ *
+ * Running ota_upload_exact() against a SLOOP build fails at the first
+ * open, because no 4353:cf4d device exists. That is what made the previous
+ * upload-sloop-pN commands report failure regardless of what the device did.
+ */
+
+/* Read the running build's FELUCCA_ID over the cmd 0x11 handshake. This is
+ * the only identity a SLOOP build exposes; there is no 4353:cf4d endpoint and
+ * no "SMK-37 Pro" name to compare against. */
+static int smk37_felucca_read_identity(char *out, size_t capacity) {
+    static const uint8_t handshake[] = {0xf0, 0x00, 0x59, 0x11, 0x00,
+                                        0x00, 0x00, 0xff, 0xf7};
+    struct ota_usb usb;
+    uint8_t reply[256];
+    int received;
+    size_t i;
+
+    if (capacity == 0) {
+        return 1;
+    }
+    out[0] = 0;
+    if (ota_usb_init(&usb) != 0) {
+        return 1;
+    }
+    if (ota_usb_open_felucca(&usb) != 0) {
+        fputs("no Felucca device (1209:0001); is a SLOOP build running?\n",
+              stderr);
+        ota_usb_shutdown(&usb, false);
+        return 1;
+    }
+    if (ota_send_stream(&usb, handshake, sizeof(handshake)) != 0) {
+        ota_usb_close_handle(&usb);
+        ota_usb_shutdown(&usb, false);
+        return 1;
+    }
+    received = libusb_bulk_transfer(usb.handle, usb.endpoint_in, reply,
+                                   (int)sizeof reply, NULL, 3000);
+    ota_usb_close_handle(&usb);
+    ota_usb_shutdown(&usb, false);
+    if (received < 0 || received < 9) {
+        return 1;
+    }
+    for (i = 7; i < (size_t)received - 1u && out[capacity - 1u] != 0; ++i) {
+        if (reply[i] == 0) {
+            break;
+        }
+        if (reply[i] < 0x20u || reply[i] >= 0x7fu) {
+            break;
+        }
+        out[strlen(out)] = (char)reply[i];
+    }
+    return out[0] == 0 ? 1 : 0;
+}
+
+static int ota_upload_sloop_exact(
+    const char *firmware_path, const char *transcript_path,
+    const char *confirmation, const char *expected_confirmation,
+    const uint8_t expected_sha256[SMK37_SHA256_LENGTH],
+    const char *package_description,
+    const char *expected_installed_identity,
+    const char *completion_message) {
+    static const uint8_t upgrade_command[] = {0xf0, 0x22, 0x24,
+                                               0x35, 0x7f, 0xf7};
+    struct smk37_fwsc firmware;
+    struct ota_usb usb;
+    FILE *transcript = NULL;
+    char identity[64] = {0};
+    unsigned waited_ms = 0;
+    int status = 1;
+    bool usb_initialized = false;
+    bool stable_device = true;
+
+    if (!smk37_fwsc_load(firmware_path, &firmware)) {
+        return 1;
+    }
+    if (strcmp(firmware.name, "SMK-37 Pro") != 0 ||
+        firmware.version != 15 ||
+        memcmp(firmware.file_sha256, expected_sha256,
+               SMK37_SHA256_LENGTH) != 0) {
+        fprintf(stderr, "package is not the exact %s image\n",
+                package_description);
+        return 1;
+    }
+    /* The running build is identified by FELUCCA_ID over the cmd 0x11
+     * handshake. The stock "SMK-37 Pro" identity query does not apply:
+     * a SLOOP build answers cmd 0x11 and nothing else. */
+    if (smk37_felucca_read_identity(identity, sizeof(identity)) != 0) {
+        fputs("running SLOOP build did not answer the cmd 0x11 handshake\n",
+              stderr);
+        return 1;
+    }
+    if (strcmp(confirmation, expected_confirmation) != 0) {
+        fprintf(stderr, "confirmation mismatch; required: %s\n",
+                expected_confirmation);
+        return 1;
+    }
+    transcript = fopen(transcript_path, "wx");
+    if (transcript == NULL) {
+        perror(transcript_path);
+        return 1;
+    }
+    fprintf(transcript,
+            "policy=%s device=%s package=%s_%03u payload=%zu\n",
+            package_description, identity, firmware.name, firmware.version,
+            firmware.payload_length);
+    fflush(transcript);
+
+    puts("OTA stage 1/2: package verification (Felucca transport)");
+    if (ota_usb_init(&usb) != 0) {
+        goto cleanup;
+    }
+    usb_initialized = true;
+    if (ota_usb_open_felucca(&usb) != 0 ||
+        ota_send_stream(&usb, upgrade_command, sizeof(upgrade_command)) != 0) {
+        goto usb_cleanup;
+    }
+    sleep_ms(2000);
+    if (serve_ota_stage(&usb, &firmware, SMK37_VERIFY_COMPLETE,
+                        transcript) != 0) {
+        goto usb_cleanup;
+    }
+    usb.transition_started = true;
+    stable_device = false;
+    ota_usb_close_handle(&usb);
+
+    puts("OTA stage 2/2: waiting for the bootloader loader");
+    /* The firmware stages the loader, writes UPDATA_PARM and resets. Poll
+     * for the device at the same bus path rather than sleeping a fixed
+     * three seconds: the reset lands anywhere in a second or two, and a
+     * fixed sleep either wastes time or opens too early on the stale
+     * handle. wait_for_ota_usb already polls at 250 ms. */
+    if (wait_for_ota_usb(&usb, 30000) != 0) {
+        fputs("the device did not come back after staging the loader\n",
+              stderr);
+        goto usb_cleanup;
+    }
+    if (ota_send_stream(&usb, upgrade_command, sizeof(upgrade_command)) != 0 ||
+        serve_ota_stage(&usb, &firmware, SMK37_UPGRADE_COMPLETE,
+                        transcript) != 0) {
+        goto usb_cleanup;
+    }
+    ota_usb_close_handle(&usb);
+
+    puts("OTA completed; waiting for the new build to enumerate");
+    /* The new build enumerates as Felucca again. wait_for_ota_usb matches on
+     * bus path and the loader may still hold the device, so give the
+     * rebuild room before asking it who it is. */
+    for (waited_ms = 0; waited_ms < 60000u; waited_ms += 500u) {
+        sleep_ms(500);
+        if (smk37_felucca_read_identity(identity, sizeof(identity)) == 0 &&
+            strcmp(identity, expected_installed_identity) == 0) {
+            break;
+        }
+    }
+    if (waited_ms >= 60000u) {
+        fprintf(stderr,
+                "post-update identity check failed; last seen: %s\n",
+                identity[0] ? identity : "(no response)");
+        goto cleanup;
+    }
+    fprintf(transcript, "post-update=%s verified\n", identity);
+    puts(completion_message);
+    stable_device = true;
+    status = 0;
+    goto usb_cleanup;
+
+usb_cleanup:
+    ota_usb_close_handle(&usb);
+cleanup:
+    if (usb_initialized) {
+        ota_usb_shutdown(&usb, stable_device);
+    }
+    if (transcript != NULL) {
+        fclose(transcript);
+    }
+    return status;
+}
 int smk37_ota_upload_sloop_p1(const char *firmware_path,
                                  const char *transcript_path,
                                  const char *confirmation) {
-    return ota_upload_exact(
+    return ota_upload_sloop_exact(
         firmware_path, transcript_path, confirmation,
-        15, SMK37_SLOOP_P1_PACKAGE_SHA256,
+        "INSTALL-SMK37PRO-SLOOP-P1-DB0E9D21", SMK37_SLOOP_P1_PACKAGE_SHA256,
         "SMK37Pro SLOOP FM-1 port pass 1",
-        "INSTALL-SMK37PRO-SLOOP-P1-DB0E9D21",
-        "SLOOP P1 install: USB identity 015 verified; check display for SLOOP");
+        SMK37_SLOOP_P12_IDENTITY, "SLOOP P1 install: USB identity 015 verified; check display for SLOOP");
 }
 
 int smk37_ota_resume_sloop_p1(const char *firmware_path,
@@ -1021,12 +1217,11 @@ cleanup:
 int smk37_ota_upload_sloop_p3(const char *firmware_path,
                               const char *transcript_path,
                               const char *confirmation) {
-    return ota_upload_exact(
+    return ota_upload_sloop_exact(
         firmware_path, transcript_path, confirmation,
-        15, SMK37_SLOOP_P3_PACKAGE_SHA256,
+        "INSTALL-SMK37PRO-SLOOP-P3-6EC25F3E", SMK37_SLOOP_P3_PACKAGE_SHA256,
         "SMK37Pro SLOOP FM-1 port pass 3 (ST7789V init, OTA re-enabled)",
-        "INSTALL-SMK37PRO-SLOOP-P3-6EC25F3E",
-        "SLOOP P3 install: stage 2 delivered");
+        SMK37_SLOOP_P3_IDENTITY, "SLOOP P3 install: stage 2 delivered");
 }
 
 static int validate_resume_sloop_p3_package(const struct smk37_fwsc *firmware) {
@@ -1117,58 +1312,19 @@ cleanup:
  * updated over USB MIDI and the forced path is the only way in.
  */
 int smk37_felucca_ident(void) {
-    /* decoded frame: 00 59 11 <len24=0> chk, and ~sum(dec[6..d-2]) == chk,
-     * so with an empty body the sum is 0 and the checksum is 0xFF. */
-    static const uint8_t handshake[] = {0xf0, 0x00, 0x59, 0x11, 0x00,
-                                        0x00, 0x00, 0xff, 0xf7};
-    struct ota_usb usb;
-    uint8_t reply[256];
-    int received;
-    int status = 1;
-    size_t i;
+    char identity[64];
 
-    if (ota_usb_init(&usb) != 0) {
-        return 1;
-    }
-    if (ota_usb_open_felucca(&usb) != 0) {
-        fputs("no Felucca device (1209:0001); is a SLOOP build running?\n",
-              stderr);
-        goto cleanup;
-    }
-    if (ota_send_stream(&usb, handshake, sizeof(handshake)) != 0) {
-        fputs("handshake send failed\n", stderr);
-        ota_usb_close_handle(&usb);
-        goto cleanup;
-    }
-    received = libusb_bulk_transfer(usb.handle, usb.endpoint_in, reply,
-                                   (int)sizeof reply, NULL, 3000);
-    ota_usb_close_handle(&usb);
-    if (received < 0) {
+    if (smk37_felucca_read_identity(identity, sizeof(identity)) != 0) {
         puts("no handshake reply");
         puts("the installed build does not answer cmd 0x11, so it is not an "
              "OTA-capable build");
-        status = 2;
-        goto cleanup;
+        return 2;
     }
-    printf("Felucca handshake reply: %d bytes\n", received);
-    printf("raw: ");
-    for (i = 0; i < (size_t)received; i++) {
-        printf("%02x%s", reply[i], (i + 1u) % 16u == 0 ? "\n    " : " ");
-    }
-    printf("\nidentity: ");
-    for (i = 6; i + 2u < (size_t)received; i++) {
-        if (reply[i] == 0) {
-            break;
-        }
-        printf("%c", reply[i] >= 0x20u && reply[i] < 0x7fu ? reply[i] : '?');
-    }
-    printf("\n");
-    status = 0;
-cleanup:
-    ota_usb_shutdown(&usb, false);
-    return status;
+    printf("Felucca handshake reply identity: %s\n", identity);
+    puts("  SMK37_900     pass 1 / pass 2, FELUCCA_OTA=0");
+    puts("  SMK37PRO_P3   pass 3, FELUCCA_OTA=1");
+    return 0;
 }
-
 
 int smk37_felucca_uboot_soft_key(void) {
     static const uint8_t uboot_key[] = {0xf0, 0x22, 0x24, 0x35, 0x7d, 0xf7};
@@ -1199,12 +1355,11 @@ cleanup:
 int smk37_ota_upload_sloop_p2(const char *firmware_path,
                               const char *transcript_path,
                               const char *confirmation) {
-    return ota_upload_exact(
+    return ota_upload_sloop_exact(
         firmware_path, transcript_path, confirmation,
-        15, SMK37_SLOOP_P2_PACKAGE_SHA256,
-        "SMK37Pro SLOOP FM-1 port pass 2 (Jieli ST7789V init)",
-        "INSTALL-SMK37PRO-SLOOP-P2-FDEB0244",
-        "SLOOP P2 install: stage 2 delivered; LCD should show the splash");
+        "INSTALL-SMK37PRO-SLOOP-P2-F39733B2", SMK37_SLOOP_P2_PACKAGE_SHA256,
+        "SMK37Pro SLOOP FM-1 port pass 2 (ST7789V init)",
+        SMK37_SLOOP_P12_IDENTITY, "SLOOP P2 install: USB identity 015 verified; check the display for the SLOOP UI");
 }
 
 static int validate_resume_sloop_p2_package(const struct smk37_fwsc *firmware) {
