@@ -56,6 +56,22 @@ static void usage(FILE *stream, const char *program) {
             "             Restore exact official v15 baseline package\n"
             "  upload-v15-r01 <firmware.fwsc> <transcript> --confirm <token>\n"
             "             Install evidence-based Ch10 HAND DRUM checkpoint\n"
+            "  upload-sloop-p1 <firmware.fwsc> <transcript> --confirm <token>\n"
+            "             Install the pinned SLOOP FM-1 port pass 1 package\n"
+            "  upload-sloop-p3 <firmware.fwsc> <transcript> --confirm <token>\n"
+            "             Install the pinned SLOOP pass 3 image (ST7789V init, OTA on)\n"
+            "  upload-resume-sloop-p3 <firmware.fwsc> <transcript> --confirm <token>\n"
+            "             Resume stage 2 for the pinned SLOOP pass 3 image\n"
+
+
+            "  upload-sloop-p2 <firmware.fwsc> <transcript> --confirm <token>\n"
+            "             Install the pinned SLOOP pass 2 image (Jieli ST7789V init)\n"
+            "  upload-resume-sloop-p2 <firmware.fwsc> <transcript> --confirm <token>\n"
+            "             Resume stage 2 for the pinned SLOOP pass 2 image\n"
+            "  uboot-sloop\n"
+            "             Send the Felucca UBOOT soft key, to re-enter the bootloader\n"
+            "  upload-resume-sloop-p1 <firmware.fwsc> <transcript> --confirm <token>\n"
+            "             Resume stage 2 for the pinned SLOOP pass 1 image\n"
             "  upload-resume-v12 <firmware.fwsc> <transcript> --confirm <token>\n"
             "             Resume stage 2 from the exact archived v12 image\n"
             "  self-test  Verify build-time invariants without a device\n",
@@ -274,6 +290,63 @@ int main(int argc, char **argv) {
             return 2;
         }
         return smk37_ota_upload_v15_r01(argv[2], argv[3], argv[5]);
+    }
+
+    if (strcmp(argv[1], "upload-sloop-p1") == 0) {
+        if (argc != 6 || strcmp(argv[4], "--confirm") != 0) {
+            usage(stderr, argv[0]);
+            return 2;
+        }
+        return smk37_ota_upload_sloop_p1(argv[2], argv[3], argv[5]);
+    }
+
+    if (strcmp(argv[1], "upload-sloop-p3") == 0) {
+        if (argc != 6 || strcmp(argv[4], "--confirm") != 0) {
+            usage(stderr, argv[0]);
+            return 2;
+        }
+        return smk37_ota_upload_sloop_p3(argv[2], argv[3], argv[5]);
+    }
+
+    if (strcmp(argv[1], "upload-resume-sloop-p3") == 0) {
+        if (argc != 6 || strcmp(argv[4], "--confirm") != 0) {
+            usage(stderr, argv[0]);
+            return 2;
+        }
+        return smk37_ota_resume_sloop_p3(argv[2], argv[3], argv[5]);
+    }
+
+
+    if (strcmp(argv[1], "upload-sloop-p2") == 0) {
+        if (argc != 6 || strcmp(argv[4], "--confirm") != 0) {
+            usage(stderr, argv[0]);
+            return 2;
+        }
+        return smk37_ota_upload_sloop_p2(argv[2], argv[3], argv[5]);
+    }
+
+    if (strcmp(argv[1], "upload-resume-sloop-p2") == 0) {
+        if (argc != 6 || strcmp(argv[4], "--confirm") != 0) {
+            usage(stderr, argv[0]);
+            return 2;
+        }
+        return smk37_ota_resume_sloop_p2(argv[2], argv[3], argv[5]);
+    }
+
+    if (strcmp(argv[1], "uboot-sloop") == 0) {
+        if (argc != 2) {
+            usage(stderr, argv[0]);
+            return 2;
+        }
+        return smk37_felucca_uboot_soft_key();
+    }
+
+    if (strcmp(argv[1], "upload-resume-sloop-p1") == 0) {
+        if (argc != 6 || strcmp(argv[4], "--confirm") != 0) {
+            usage(stderr, argv[0]);
+            return 2;
+        }
+        return smk37_ota_resume_sloop_p1(argv[2], argv[3], argv[5]);
     }
 
     if (strcmp(argv[1], "upload-resume-v12") == 0) {

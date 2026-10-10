@@ -62,8 +62,20 @@ CFLAGS = ["-Os", "-ffunction-sections", "-fno-builtin", "-Wall", "-Wno-unused-fu
 # FL_DATA 0x97000..) lies INSIDE this board's app-data slot (flash 0x4120 +
 # 617,012 B, tools/pack_sdk_app_fwsc.py), so the FM-1 settings / project
 # writes would overwrite running code. Enable only with a verified SMK map.
-FLAGS = ["-DFELUCCA_FLASH=0", "-DFELUCCA_OTA=0", "-DFELUCCA_CDC=1",
-         "-DFELUCCA_UART=0", "-DFELUCCA_UAC=1", '-DFELUCCA_ID="SMK37_900"']
+# Pass 3 profile. FELUCCA_FLASH is on ONLY to bring in the flash
+# primitives (st_read / fl_erase4k_quiet / fl_write); board/src/storage.c
+# replaces the preset store with a version whose st_save and st_load
+# always fail, so nothing linked here can erase or program a preset
+# sector. FELUCCA_OTA is on so the app answers the M-UPGRADE upgrade
+# command and the host can drive updates over USB MIDI again -- without
+# it, a SLOOP install ends the macOS session, because the only
+# alternative is the vendor-Windows UBOOT mass-storage path.
+#
+# The OTA hooks are self-bounded to OTA_AREA (0xE0000..0xE4FFF), clear of
+# this board's app-data slot (0x4120 + 617,012 B, ending 0x9AB34). See
+# board/src/storage.c for the full argument.
+FLAGS = ["-DFELUCCA_FLASH=1", "-DFELUCCA_OTA=1", "-DFELUCCA_CDC=1",
+         "-DFELUCCA_UART=0", "-DFELUCCA_UAC=1", '-DFELUCCA_ID="SMK37PRO_P3"']
 DOCKER_IMAGE = os.environ.get("JIELI_DOCKER_IMAGE", "debian:bookworm-slim")
 
 
@@ -195,11 +207,20 @@ def check(img: bytes, syms: str, dis: str, rt: str):
         errors.append(f"image starts with {img[:4].hex()}, not the entry stub")
     if [ln for ln in rt.splitlines() if re.search(r"\bcall\b", ln)]:
         errors.append(".ram_text contains calls")
-    # no flash-writing code may be linked: the FM-1 storage map is not this
-    # board's (see FLAGS). Any of these symbols means FELUCCA_FLASH got on.
-    bad_sym = re.findall(r"\b(fl_write|fl_erase4k_ram|fl_erase4k_quiet|st_save|fl_plain_window_init)\b", syms)
+    # The flash primitives ARE linked now (see FLAGS): the OTA staging area
+    # needs them, and board/src/storage.c is what keeps them harmless. What
+    # must never appear is FM-1's store machinery: st_save is the way into
+    # erasing a preset sector, and fl_plain_window_init opens the FM-1 map.
+    bad_sym = re.findall(r"\b(fl_plain_window_init)\b", syms)
     if bad_sym:
-        errors.append(f"flash-writing symbols linked: {sorted(set(bad_sym))}")
+        errors.append(f"FM-1 store machinery linked: {sorted(set(bad_sym))}")
+    # board/src/storage.c must be the stub that got linked. The real store
+    # defines st_body and st_head; the stub deliberately supplies st_buf,
+    # st_current, st_sector, st_crc32, st_load and st_save so the callers
+    # compile, so only the two the stub has no reason to define are forbidden.
+    for sym_name in ("st_body", "st_head"):
+        if sym_name in syms:
+            errors.append(f"FM-1 store internals linked: {sym_name}")
     if len(img) > APP_SLOT:
         errors.append(f"image {len(img)} B exceeds the v15 app slot {APP_SLOT}")
     # RC-1 gate: every loaded section inside the confirmed windows, never SDRAM

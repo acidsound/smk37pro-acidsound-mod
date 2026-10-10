@@ -38,6 +38,25 @@ int smk37_ota_upload_v15(const char *firmware_path,
 int smk37_ota_upload_v15_r01(const char *firmware_path,
                              const char *transcript_path,
                              const char *confirmation);
+int smk37_ota_upload_sloop_p1(const char *firmware_path,
+                                 const char *transcript_path,
+                                 const char *confirmation);
+int smk37_ota_resume_sloop_p1(const char *firmware_path,
+                              const char *transcript_path,
+                              const char *confirmation);
+int smk37_ota_upload_sloop_p3(const char *firmware_path,
+                              const char *transcript_path,
+                              const char *confirmation);
+int smk37_ota_resume_sloop_p3(const char *firmware_path,
+                              const char *transcript_path,
+                              const char *confirmation);
+int smk37_felucca_uboot_soft_key(void);
+int smk37_ota_upload_sloop_p2(const char *firmware_path,
+                              const char *transcript_path,
+                              const char *confirmation);
+int smk37_ota_resume_sloop_p2(const char *firmware_path,
+                              const char *transcript_path,
+                              const char *confirmation);
 int smk37_ota_resume_v12(const char *firmware_path,
                          const char *transcript_path,
                          const char *confirmation);

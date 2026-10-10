@@ -1345,6 +1345,164 @@ static void usage(const char *program) {
             program, program, program, program);
 }
 
+/* -----------------------------------------------------------------------
+ * sloop-write: install a pinned SLOOP package payload through the UBOOT
+ * bulk path, for an instrument already running SLOOP.
+ *
+ * A SLOOP build with FELUCCA_OTA=0 answers the M-UPGRADE upgrade command with
+ * nothing, so the stock two-stage OTA path is unreachable once SLOOP is the
+ * running app. It does answer the UBOOT soft key (SysEx F0 22 24 35 7D F7),
+ * which lands here: 4c4a:8057, vendor CDB, and the same vendor primitives
+ * the M09 six-sector restore uses.
+ *
+ * What it writes is exactly what stage 2 wrote on the way in: the FWSC
+ * payload, the de-interleaved image, at flash address 0. The captured P1
+ * transcript shows that verbatim -- request 1 at 0x00000000, request 48 at
+ * 0x000aafc0 + 481, which is 701120 bytes.
+ *
+ * Unlike restore, this is not gated on a sector list or on M09 evidence: the
+ * owner accepts that the instrument returns to factory state, and the P1
+ * package is byte-reproducible offline. What is pinned is the payload itself.
+ * ----------------------------------------------------------------------- */
+
+#define SLOOP_P2_PAYLOAD_SIZE 701120u
+static const char EXPECTED_SLOOP_P2_PAYLOAD_SHA256[] =
+    "f39733b22c7869dd1f8f66c3196a1376249497b5f28faacd98a2be8f00ce2717";
+
+static int run_sloop_write(const char *loader_path, const char *payload_path,
+                           unsigned wait_seconds) {
+    uint8_t *loader = NULL;
+    size_t loader_length = 0;
+    uint8_t *payload = NULL;
+    long payload_length = 0;
+    char hash[65] = {0};
+    size_t payload_size = 0;
+    BotInterface bot = {0};
+    int result = 2;
+    uint32_t chunk = 0;
+    uint32_t offset;
+    uint32_t sector_end;
+    uint32_t sector;
+
+    if (validate_loader(loader_path, &loader, &loader_length) != 0) {
+        return 2;
+    }
+    if (sha256_file(payload_path, hash, &payload_size) != 0) {
+        fprintf(stderr, "cannot read payload %s\n", payload_path);
+        goto done;
+    }
+    if (payload_size != SLOOP_P2_PAYLOAD_SIZE ||
+        strcmp(hash, EXPECTED_SLOOP_P2_PAYLOAD_SHA256) != 0) {
+        fprintf(stderr,
+                "SAFE STOP: payload is not the pinned SLOOP pass 2 image: "
+                "size=%zu sha256=%s\n", payload_size, hash);
+        goto done;
+    }
+    payload = malloc(payload_size);
+    if (payload == NULL) {
+        goto done;
+    }
+    FILE *file = fopen(payload_path, "rb");
+    if (file == NULL) {
+        perror(payload_path);
+        goto done;
+    }
+    if (fread(payload, 1, payload_size, file) != payload_size) {
+        fclose(file);
+        fprintf(stderr, "short read on payload\n");
+        goto done;
+    }
+    fclose(file);
+    payload_length = (long)payload_size;
+
+    if (bot_open(&bot, wait_seconds) != 0) {
+        goto done;
+    }
+    char vendor[9], product[17], revision[5];
+    if (bot_inquiry(&bot, vendor, product, revision) != kIOReturnSuccess) {
+        goto done;
+    }
+    printf("inquiry: vendor=%.8s product=%.16s rev=%.4s\n", vendor, product,
+           revision);
+    g_phase = "upload_loader";
+    if (upload_loader(&bot, loader, loader_length) != kIOReturnSuccess) {
+        goto done;
+    }
+    uint32_t loader_buffer = 0;
+    g_phase = "loader_info";
+    if (loader_info(&bot, &loader_buffer) != kIOReturnSuccess) {
+        goto done;
+    }
+    chunk = loader_buffer < MAX_IO_CHUNK ? loader_buffer : MAX_IO_CHUNK;
+    if (chunk == 0) {
+        goto done;
+    }
+
+    sector_end = (uint32_t)((payload_size + SECTOR_SIZE - 1) & ~(SECTOR_SIZE - 1));
+    printf("payload=%zu bytes, chunk=%u, erasing sectors 0x00000..0x%05x\n",
+           payload_size, chunk, sector_end - 1);
+
+    g_phase = "erase";
+    for (sector = 0; sector < sector_end; sector += SECTOR_SIZE) {
+        if (erase_sector(&bot, sector) != kIOReturnSuccess) {
+            fprintf(stderr, "erase failed at 0x%05x\n", sector);
+            goto done;
+        }
+    }
+    puts("erase: complete");
+
+    g_phase = "write";
+    for (offset = 0; offset < payload_size; offset += chunk) {
+        size_t n = payload_size - offset;
+        if (n > chunk) {
+            n = chunk;
+        }
+        if (write_flash(&bot, offset, payload + offset, n) != kIOReturnSuccess) {
+            fprintf(stderr, "write failed at 0x%05x\n", offset);
+            goto done;
+        }
+        if ((offset & 0xffff) == 0) {
+            printf("  wrote 0x%05x / 0x%05x\n", offset, (uint32_t)payload_size);
+            fflush(stdout);
+        }
+    }
+    puts("write: complete");
+
+    g_phase = "verify";
+    uint8_t *readback = malloc(chunk);
+    if (readback == NULL) {
+        goto done;
+    }
+    for (offset = 0; offset < payload_size; offset += chunk) {
+        size_t n = payload_size - offset;
+        if (n > chunk) {
+            n = chunk;
+        }
+        if (read_flash(&bot, offset, readback, n) != kIOReturnSuccess) {
+            fprintf(stderr, "verify read failed at 0x%05x\n", offset);
+            free(readback);
+            goto done;
+        }
+        if (memcmp(readback, payload + offset, n) != 0) {
+            fprintf(stderr, "VERIFY MISMATCH at 0x%05x\n", offset);
+            free(readback);
+            goto done;
+        }
+    }
+    free(readback);
+    puts("verify: payload read back byte-identical");
+    puts("PASS: SLOOP pass 2 payload written and verified");
+    result = 0;
+
+done:
+    g_phase = "close_bot_interface";
+    close_bot_interface(&bot);
+    free(loader);
+    free(payload);
+    (void)payload_length;
+    return result;
+}
+
 int main(int argc, char **argv) {
     signal(SIGSEGV, crash_handler);
     signal(SIGBUS, crash_handler);
@@ -1380,6 +1538,15 @@ int main(int argc, char **argv) {
         }
         if (loader == NULL || output == NULL) { usage(argv[0]); return 2; }
         return run_dump(loader, output, chunk, wait_seconds);
+    }
+    if (argc == 7 && strcmp(argv[1], "sloop-write") == 0 &&
+        strcmp(argv[5], "--confirm") == 0) {
+        if (strcmp(argv[6], "WRITE-SMK37PRO-SLOOP-P2-F39733B2") != 0) {
+            fputs("confirmation mismatch; required: "
+                  "WRITE-SMK37PRO-SLOOP-P2-F39733B2\n", stderr);
+            return 2;
+        }
+        return run_sloop_write(argv[2], argv[3], (unsigned)strtoul(argv[4], NULL, 10));
     }
     if (argc >= 12 && strcmp(argv[1], "restore") == 0) {
         const char *loader = NULL, *plan = NULL, *target = NULL;

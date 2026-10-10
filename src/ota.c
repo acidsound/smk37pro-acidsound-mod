@@ -19,6 +19,8 @@ enum {
     SMK37_V15_PID = 0xcf4d,
     SMK37_OTA_VID = 0x4d4a,
     SMK37_OTA_PID = 0x4155,
+    SMK37_FELUCCA_VID = 0x1209,   /* SLOOP running as its own app identity */
+    SMK37_FELUCCA_PID = 0x0001,
     SMK37_MAX_OTA_CHUNK = 0x10000 - 15,
 };
 
@@ -95,6 +97,28 @@ static const uint8_t SMK37_V15_R01_PACKAGE_SHA256[SMK37_SHA256_LENGTH] = {
     0x32, 0x61, 0x9a, 0xe3, 0x38, 0xdf, 0xb5, 0xbd,
     0x19, 0x54, 0x09, 0x60, 0x0f, 0x41, 0x7d, 0xe5,
     0xe8, 0xed, 0xb9, 0x81, 0x49, 0xf6, 0x64, 0x62,
+};
+// SLOOP FM-1 port, pass 1, built for pi32v2 from upstream pin
+// a1c5d68767ae10fafb6821dc63b9b1fc490342d2 (app sha256 c7a3ca9d..cd10,
+// 535628 bytes). Same 20-slot v15 container as the official baseline, so this
+// is a same-version OTA in exactly the upload-v15 shape.
+static const uint8_t SMK37_SLOOP_P1_PACKAGE_SHA256[SMK37_SHA256_LENGTH] = {
+    0xdb, 0x0e, 0x9d, 0x21, 0x0f, 0x8d, 0x6d, 0x2f,
+    0x83, 0x16, 0x19, 0x27, 0x75, 0xe0, 0x46, 0xb2,
+    0x5e, 0x76, 0xaa, 0x0e, 0x72, 0x23, 0xcb, 0x67,
+    0xe1, 0x85, 0x1b, 0x62, 0xf1, 0x51, 0xb9, 0xc4,
+};
+static const uint8_t SMK37_SLOOP_P2_PACKAGE_SHA256[SMK37_SHA256_LENGTH] = {
+    0xfd, 0xeb, 0x02, 0x44, 0xcc, 0xd2, 0x2d, 0xe7,
+    0xc5, 0x3a, 0x70, 0x92, 0x2c, 0x5e, 0x10, 0x7a,
+    0x27, 0x92, 0x14, 0xcc, 0x45, 0x07, 0x66, 0xb5,
+    0x25, 0xe1, 0x84, 0x1e, 0xe3, 0xee, 0x6f, 0x87,
+};
+static const uint8_t SMK37_SLOOP_P3_PACKAGE_SHA256[SMK37_SHA256_LENGTH] = {
+    0x6e, 0xc2, 0x5f, 0x3e, 0x11, 0x96, 0x03, 0xb8,
+    0x28, 0x2c, 0xc5, 0x00, 0x8c, 0x64, 0x05, 0xf4,
+    0xcb, 0x11, 0x31, 0xfe, 0x4b, 0x41, 0x33, 0xb2,
+    0x2a, 0x1d, 0x75, 0x96, 0xe1, 0x52, 0x38, 0x08,
 };
 
 struct ota_usb {
@@ -259,6 +283,30 @@ static int ota_usb_open_normal(struct ota_usb *usb) {
               descriptor.idProduct == SMK37_V12_PID) ||
              (descriptor.idVendor == SMK37_V15_VID &&
               descriptor.idProduct == SMK37_V15_PID))) {
+            status = claim_device(usb, devices[index], true);
+            break;
+        }
+    }
+    libusb_free_device_list(devices, 1);
+    return status;
+}
+
+/* SLOOP runs as 1209:0001 rather than the stock 4353:cf4d, so the stock
+ * normal-mode opener cannot reach it. Descriptor shape is otherwise the same. */
+static int ota_usb_open_felucca(struct ota_usb *usb) {
+    libusb_device **devices = NULL;
+    ssize_t count = libusb_get_device_list(usb->context, &devices);
+    int status = 3;
+
+    if (count < 0) {
+        return 1;
+    }
+    for (ssize_t index = 0; index < count; ++index) {
+        struct libusb_device_descriptor descriptor;
+        if (libusb_get_device_descriptor(devices[index], &descriptor) ==
+                LIBUSB_SUCCESS &&
+            descriptor.idVendor == SMK37_FELUCCA_VID &&
+            descriptor.idProduct == SMK37_FELUCCA_PID) {
             status = claim_device(usb, devices[index], true);
             break;
         }
@@ -548,6 +596,18 @@ static int validate_exact_same_version(
         device->version != firmware->version ||
         strcmp(device->name, "SMK-37 Pro") != 0) {
         fputs("device/package same-version validation failed\n", stderr);
+        return 1;
+    }
+    return 0;
+}
+
+static int validate_resume_sloop_p1_package(const struct smk37_fwsc *firmware) {
+    if (strcmp(firmware->name, "SMK-37 Pro") != 0 ||
+        firmware->version != 15 ||
+        memcmp(firmware->file_sha256, SMK37_SLOOP_P1_PACKAGE_SHA256,
+               sizeof(SMK37_SLOOP_P1_PACKAGE_SHA256)) != 0) {
+        fputs("resume rejected: package is not the pinned SLOOP FM-1 port "
+              "pass 1 image\n", stderr);
         return 1;
     }
     return 0;
@@ -870,6 +930,292 @@ int smk37_ota_upload_v15_r01(const char *firmware_path,
         "v15 R01 evidence-based Channel-10 HAND DRUM",
         "INSTALL-SMK37PRO-V15-R01-29280938",
         "v15 R01 install: USB identity 015 verified; test Ch1 and Ch10");
+}
+
+int smk37_ota_upload_sloop_p1(const char *firmware_path,
+                                 const char *transcript_path,
+                                 const char *confirmation) {
+    return ota_upload_exact(
+        firmware_path, transcript_path, confirmation,
+        15, SMK37_SLOOP_P1_PACKAGE_SHA256,
+        "SMK37Pro SLOOP FM-1 port pass 1",
+        "INSTALL-SMK37PRO-SLOOP-P1-DB0E9D21",
+        "SLOOP P1 install: USB identity 015 verified; check display for SLOOP");
+}
+
+int smk37_ota_resume_sloop_p1(const char *firmware_path,
+                              const char *transcript_path,
+                              const char *confirmation) {
+    static const uint8_t upgrade_command[] = {0xf0, 0x22, 0x24,
+                                               0x35, 0x7f, 0xf7};
+    struct smk37_fwsc firmware;
+    struct smk37_device_identity device;
+    struct ota_usb usb;
+    FILE *transcript = NULL;
+    int status = 1;
+    bool usb_initialized = false;
+    bool stable_device = false;
+
+    if (!smk37_fwsc_load(firmware_path, &firmware)) {
+        return 1;
+    }
+    if (validate_resume_sloop_p1_package(&firmware) != 0) {
+        goto cleanup;
+    }
+    if (strcmp(confirmation, "RESUME-SMK37PRO-SLOOP-P1-DB0E9D21") != 0) {
+        fputs("confirmation mismatch; required: "
+              "RESUME-SMK37PRO-SLOOP-P1-DB0E9D21\n", stderr);
+        goto cleanup;
+    }
+    transcript = fopen(transcript_path, "wx");
+    if (transcript == NULL) {
+        perror(transcript_path);
+        goto cleanup;
+    }
+    fprintf(transcript,
+            "resume-stage2 package=%s_%03u payload=%zu\n",
+            firmware.name, firmware.version, firmware.payload_length);
+    fflush(transcript);
+
+    if (ota_usb_init(&usb) != 0) {
+        goto cleanup;
+    }
+    usb_initialized = true;
+    usb.transition_started = true;
+    puts("OTA resume stage 2/2: claiming update-mode device");
+    if (ota_usb_open_update(&usb) != 0 ||
+        ota_send_stream(&usb, upgrade_command, sizeof(upgrade_command)) != 0 ||
+        serve_ota_stage(&usb, &firmware, SMK37_UPGRADE_COMPLETE,
+                        transcript) != 0) {
+        goto usb_cleanup;
+    }
+    ota_usb_close_handle(&usb);
+
+    puts("OTA completed; waiting for normal firmware");
+    sleep_ms(5000);
+    if (smk37_read_device_identity(&device, false) != 0 ||
+        strcmp(device.name, firmware.name) != 0 ||
+        device.version != firmware.version) {
+        fputs("post-update identity verification failed\n", stderr);
+        goto usb_cleanup;
+    }
+    fprintf(transcript, "post-update=%s_%03u verified\n", device.name,
+            device.version);
+    puts("SLOOP P1 resume: stage 2 delivered and identity verified");
+    stable_device = true;
+    status = 0;
+
+usb_cleanup:
+    if (usb_initialized) {
+        ota_usb_shutdown(&usb, stable_device);
+    }
+cleanup:
+    if (transcript != NULL && fclose(transcript) != 0) {
+        perror(transcript_path);
+        status = 1;
+    }
+    smk37_fwsc_free(&firmware);
+    return status;
+}
+
+int smk37_ota_upload_sloop_p3(const char *firmware_path,
+                              const char *transcript_path,
+                              const char *confirmation) {
+    return ota_upload_exact(
+        firmware_path, transcript_path, confirmation,
+        15, SMK37_SLOOP_P3_PACKAGE_SHA256,
+        "SMK37Pro SLOOP FM-1 port pass 3 (ST7789V init, OTA re-enabled)",
+        "INSTALL-SMK37PRO-SLOOP-P3-6EC25F3E",
+        "SLOOP P3 install: stage 2 delivered");
+}
+
+static int validate_resume_sloop_p3_package(const struct smk37_fwsc *firmware) {
+    if (strcmp(firmware->name, "SMK-37 Pro") != 0 ||
+        firmware->version != 15 ||
+        memcmp(firmware->file_sha256, SMK37_SLOOP_P3_PACKAGE_SHA256,
+               sizeof(SMK37_SLOOP_P3_PACKAGE_SHA256)) != 0) {
+        fputs("resume rejected: package is not the pinned SLOOP pass 3 "
+              "image\n", stderr);
+        return 1;
+    }
+    return 0;
+}
+
+int smk37_ota_resume_sloop_p3(const char *firmware_path,
+                              const char *transcript_path,
+                              const char *confirmation) {
+    static const uint8_t upgrade_command[] = {0xf0, 0x22, 0x24,
+                                               0x35, 0x7f, 0xf7};
+    struct smk37_fwsc firmware;
+    struct ota_usb usb;
+    FILE *transcript = NULL;
+    int status = 1;
+    bool usb_initialized = false;
+    bool stable_device = false;
+
+    if (!smk37_fwsc_load(firmware_path, &firmware)) {
+        return 1;
+    }
+    if (validate_resume_sloop_p3_package(&firmware) != 0) {
+        goto cleanup;
+    }
+    if (strcmp(confirmation, "RESUME-SMK37PRO-SLOOP-P3-6EC25F3E") != 0) {
+        fputs("confirmation mismatch; required: "
+              "RESUME-SMK37PRO-SLOOP-P3-6EC25F3E\n", stderr);
+        goto cleanup;
+    }
+    transcript = fopen(transcript_path, "wx");
+    if (transcript == NULL) {
+        perror(transcript_path);
+        goto cleanup;
+    }
+    fprintf(transcript, "resume-stage2 package=%s_%03u payload=%zu\n",
+            firmware.name, firmware.version, firmware.payload_length);
+    fflush(transcript);
+
+    if (ota_usb_init(&usb) != 0) {
+        goto cleanup;
+    }
+    usb_initialized = true;
+    usb.transition_started = true;
+    puts("OTA resume stage 2/2: claiming update-mode device");
+    if (ota_usb_open_update(&usb) != 0 ||
+        ota_send_stream(&usb, upgrade_command, sizeof(upgrade_command)) != 0 ||
+        serve_ota_stage(&usb, &firmware, SMK37_UPGRADE_COMPLETE,
+                        transcript) != 0) {
+        goto usb_cleanup;
+    }
+    ota_usb_close_handle(&usb);
+
+    puts("OTA stage 2 delivered");
+    stable_device = true;
+    status = 0;
+
+usb_cleanup:
+    if (usb_initialized) {
+        ota_usb_shutdown(&usb, stable_device);
+    }
+cleanup:
+    if (transcript != NULL && fclose(transcript) != 0) {
+        perror(transcript_path);
+        status = 1;
+    }
+    smk37_fwsc_free(&firmware);
+    return status;
+}
+
+int smk37_felucca_uboot_soft_key(void) {
+    static const uint8_t uboot_key[] = {0xf0, 0x22, 0x24, 0x35, 0x7d, 0xf7};
+    struct ota_usb usb;
+    int status = 1;
+
+    if (ota_usb_init(&usb) != 0) {
+        return 1;
+    }
+    puts("Felucca UBOOT soft key: F0 22 24 35 7D F7");
+    if (ota_usb_open_felucca(&usb) != 0) {
+        fputs("no Felucca device (1209:0001); is SLOOP running?\n", stderr);
+        goto cleanup;
+    }
+    if (ota_send_stream(&usb, uboot_key, sizeof(uboot_key)) != 0) {
+        fputs("soft key send failed\n", stderr);
+        ota_usb_close_handle(&usb);
+        goto cleanup;
+    }
+    puts("soft key sent; the instrument should re-enumerate as 4d4a:4155");
+    ota_usb_close_handle(&usb);
+    status = 0;
+cleanup:
+    ota_usb_shutdown(&usb, false);
+    return status;
+}
+
+int smk37_ota_upload_sloop_p2(const char *firmware_path,
+                              const char *transcript_path,
+                              const char *confirmation) {
+    return ota_upload_exact(
+        firmware_path, transcript_path, confirmation,
+        15, SMK37_SLOOP_P2_PACKAGE_SHA256,
+        "SMK37Pro SLOOP FM-1 port pass 2 (Jieli ST7789V init)",
+        "INSTALL-SMK37PRO-SLOOP-P2-FDEB0244",
+        "SLOOP P2 install: stage 2 delivered; LCD should show the splash");
+}
+
+static int validate_resume_sloop_p2_package(const struct smk37_fwsc *firmware) {
+    if (strcmp(firmware->name, "SMK-37 Pro") != 0 ||
+        firmware->version != 15 ||
+        memcmp(firmware->file_sha256, SMK37_SLOOP_P2_PACKAGE_SHA256,
+               sizeof(SMK37_SLOOP_P2_PACKAGE_SHA256)) != 0) {
+        fputs("resume rejected: package is not the pinned SLOOP pass 2 "
+              "image\n", stderr);
+        return 1;
+    }
+    return 0;
+}
+
+int smk37_ota_resume_sloop_p2(const char *firmware_path,
+                              const char *transcript_path,
+                              const char *confirmation) {
+    static const uint8_t upgrade_command[] = {0xf0, 0x22, 0x24,
+                                               0x35, 0x7f, 0xf7};
+    struct smk37_fwsc firmware;
+    struct smk37_device_identity device;
+    struct ota_usb usb;
+    FILE *transcript = NULL;
+    int status = 1;
+    bool usb_initialized = false;
+    bool stable_device = false;
+
+    if (!smk37_fwsc_load(firmware_path, &firmware)) {
+        return 1;
+    }
+    if (validate_resume_sloop_p2_package(&firmware) != 0) {
+        goto cleanup;
+    }
+    if (strcmp(confirmation, "RESUME-SMK37PRO-SLOOP-P2-FDEB0244") != 0) {
+        fputs("confirmation mismatch; required: "
+              "RESUME-SMK37PRO-SLOOP-P2-FDEB0244\n", stderr);
+        goto cleanup;
+    }
+    transcript = fopen(transcript_path, "wx");
+    if (transcript == NULL) {
+        perror(transcript_path);
+        goto cleanup;
+    }
+    fprintf(transcript, "resume-stage2 package=%s_%03u payload=%zu\n",
+            firmware.name, firmware.version, firmware.payload_length);
+    fflush(transcript);
+
+    if (ota_usb_init(&usb) != 0) {
+        goto cleanup;
+    }
+    usb_initialized = true;
+    usb.transition_started = true;
+    puts("OTA resume stage 2/2: claiming update-mode device");
+    if (ota_usb_open_update(&usb) != 0 ||
+        ota_send_stream(&usb, upgrade_command, sizeof(upgrade_command)) != 0 ||
+        serve_ota_stage(&usb, &firmware, SMK37_UPGRADE_COMPLETE,
+                        transcript) != 0) {
+        goto usb_cleanup;
+    }
+    ota_usb_close_handle(&usb);
+
+    puts("OTA stage 2 delivered");
+    stable_device = true;
+    status = 0;
+
+usb_cleanup:
+    if (usb_initialized) {
+        ota_usb_shutdown(&usb, stable_device);
+    }
+cleanup:
+    (void)device;
+    if (transcript != NULL && fclose(transcript) != 0) {
+        perror(transcript_path);
+        status = 1;
+    }
+    smk37_fwsc_free(&firmware);
+    return status;
 }
 
 int smk37_ota_resume_v12(const char *firmware_path,
