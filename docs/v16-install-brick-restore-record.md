@@ -63,20 +63,29 @@ community upload with no vendor signature. An **unofficial** image failing to
 boot and being recovered to a stock image is a materially weaker signal than a
 vendor-signed image doing the same.
 
-## Open question worth one cheap check
+## The 36-slot parse question: settled
 
-M-UPGRADE logs the metadata slot count when it parses a package:
-`Parsed OTA file (**20-slot**) - Name: SMK-37 Pro, Version: 15`.
-`15` is 20-slot. The offline analysis in
-[`tools/prepare_v16_to_v15_package_diff.py`](../tools/prepare_v16_to_v15_package_diff.py)
-verifies that `16` is **36-slot** — a different container shape. No retained
-M-UPGRADE log shows a 36-slot parse, and none of them shows a `016` install at
-all, so the 016 installation is not evidenced in the surviving logs.
+M-UPGRADE logs the metadata slot count when it parses a package, so `015` was
+logged as `Parsed OTA file (20-slot)`. The offline analysis verifies that `016`
+is 36-slot, a different container shape, which raised the possibility that the
+tool could not parse the newer package — and that a mis-parse caused the brick.
 
-Selecting `SMK-37 Pro_016.fwsc` in M-UPGRADE on a machine with no instrument
-attached would settle it: the tool emits the parse line straight after the file
-dialog, before any device handshake. That needs no device, no connection and no
-write, and a mis-parse would be a strong candidate explanation for the brick.
+Checked on 2026-10-11 with no instrument attached, no connection and no write:
+
+```
+[2026-10-11 07:30:41.314] [INFO] Selected file: .../firmware/SMK-37 Pro_016.fwsc
+[2026-10-11 07:30:41.318] [INFO] Parsed OTA file (36-slot) - Name: SMK-37 Pro, Version: 16
+[2026-10-11 07:30:41.318] [INFO] OTA file parsed successfully
+```
+
+**The parse hypothesis is rejected.** M-UPGRADE reads the 36-slot container
+correctly and agrees with the independent offline analysis on both counts. The
+container shape is not the fault, so the brick narrows to the image content of a
+community build that carries no vendor signature.
+
+The surviving logs still do not show the `016` installation itself — the only
+OTA in them is `012` → `015` on 2026-08-03 — so the date and host of that install
+rest on the owner's account alone.
 
 ## What this closes
 
@@ -108,8 +117,16 @@ the Windows-only V4.0 dongle.** M-UPGRADE is not a fallback for it.
 map at `0x97000` lies inside this board's app-data slot and would overwrite
 running code, producing exactly the failure just observed.
 
-## Still open
+## What is settled, and the one precondition
 
-- The 20-slot / 36-slot parse question above.
-- A paired forced-loader dump of a healthy unit, so the package-to-dump
-  representation mapping is established. Neither item blocks the restore path.
+For the question this project started with — can official `016` be installed and
+official `015` recovered afterwards — nothing further needs checking. Both
+halves are field-proven on this instrument: a successful `012` → `015` OTA and a
+`016` brick recovered to `015` in three minutes.
+
+The one item that is a precondition rather than a verification is hardware. The
+forced tier is Windows-only and needs a physical Jieli Forced Upgrade Tool 4.0
+dongle. `docs/forced-recovery-plan.md` records that as a purchase decision, not
+something already owned. Nothing about the v16 question depends on the dongle
+until the day the device bricks, and on that day it is the only route —
+M-UPGRADE cannot reach a device that no longer enumerates.
