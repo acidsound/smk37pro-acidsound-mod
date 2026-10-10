@@ -34,6 +34,10 @@ OFFICIAL_LOADER_SHA256 = (
     "9920e66626fc86b2db536050a4d23dec10c8d1081575553539835fd812276c27"
 )
 EXPECTED_RECOVERY_SECTORS = {0x04000, 0x20000, 0x21000, 0x27000, 0x5A000, 0x99000}
+# The M09 recovery plan above keeps its own report format. The generic
+# evidence path deliberately uses a different one so a session can never be
+# mistaken for an M09 plan result, and it takes no manifest at all.
+EVIDENCE_REPORT_FORMAT = "smk37-wl82-evidence-dump-v1"
 # The 0xFC14 response carries the loader USB buffer size in its first 4 bytes
 # (big-endian, effectively bytes[2:4]) followed by 10 bytes of flags/state.
 # The host conservatively reads Flash in min(buffer_size, 256) chunks, so the
@@ -584,6 +588,50 @@ def compare_recovery_sectors(dump_path: Path, manifest: dict[str, object]) -> li
     return results
 
 
+def compare_flash_images(
+    left: Path, right: Path, left_label: str, right_label: str
+) -> dict[str, object]:
+    """Sector-by-sector comparison of two 1 MiB Flash images.
+
+    This reports only what was observed. It draws no conclusion about which
+    representation is correct, and it never implies that either image may be
+    written: deciding that is an open recovery gate, not something a byte
+    comparison can settle.
+    """
+    left_bytes = left.read_bytes()
+    right_bytes = right.read_bytes()
+    if len(left_bytes) != FLASH_SIZE or len(right_bytes) != FLASH_SIZE:
+        raise SafetyError("both Flash images must be exactly 1 MiB")
+    sectors: list[dict[str, object]] = []
+    for address in range(0, FLASH_SIZE, SECTOR_SIZE):
+        before = left_bytes[address : address + SECTOR_SIZE]
+        after = right_bytes[address : address + SECTOR_SIZE]
+        if before == after:
+            continue
+        sectors.append(
+            {
+                "address": f"0x{address:05X}",
+                "length": SECTOR_SIZE,
+                "changed_byte_count": sum(a != b for a, b in zip(before, after)),
+                f"{left_label}_sha256": sha256_bytes(before),
+                f"{right_label}_sha256": sha256_bytes(after),
+            }
+        )
+    return {
+        "left": {"label": left_label, "sha256": sha256_bytes(left_bytes)},
+        "right": {"label": right_label, "sha256": sha256_bytes(right_bytes)},
+        "sector_size": SECTOR_SIZE,
+        "total_sectors": FLASH_SIZE // SECTOR_SIZE,
+        "identical_sector_count": (FLASH_SIZE // SECTOR_SIZE) - len(sectors),
+        "differing_sector_count": len(sectors),
+        "differing_sectors": sectors,
+        "interpretation": (
+            "observation only; equal bytes do not prove equal semantics and "
+            "this comparison does not authorize any write"
+        ),
+    }
+
+
 def make_session_directory(root: Path) -> Path:
     root.mkdir(parents=True, exist_ok=True)
     stamp = time.strftime("%Y%m%d-%H%M%S")
@@ -618,6 +666,117 @@ def run_loader_probe(device_path: str, loader_path: Path) -> int:
     result = {"identity": identity, "loader": info, "observed_cdbs": observed}
     print(json.dumps(result, indent=2))
     print("PASS: official loader ran from volatile RAM; Flash was not read or modified")
+    return 0
+
+
+def acquire_evidence(
+    transport,
+    loader: bytes,
+    session: Path,
+    *,
+    expected_size: int = OFFICIAL_LOADER_SIZE,
+    expected_sha256: str = OFFICIAL_LOADER_SHA256,
+) -> dict[str, object]:
+    """Identity, RAM loader, then two full 1 MiB reads. Read-only.
+
+    Shared by run_evidence_dump and the self-test so the tested path is the
+    production path. No manifest is consulted here by design. The expected_*
+    arguments default to the locked official loader; only the self-test
+    overrides them, exactly as ReadOnlyWl82.upload_official_loader allows.
+    """
+    target = ReadOnlyWl82(transport)
+    identity = target.inquiry()
+    target.upload_official_loader(
+        loader, expected_size=expected_size, expected_sha256=expected_sha256
+    )
+    loader_info = target.loader_info()
+    chunk_size = min(loader_info["usb_buffer_size"], 256)
+    LOG.info("using conservative Flash read size: %d", chunk_size)
+    dump_a = session / "flash-dump-a.bin"
+    dump_b = session / "flash-dump-b.bin"
+    digest_a = dump_once(target, dump_a, chunk_size)
+    digest_b = dump_once(target, dump_b, chunk_size)
+    observed = sorted(set(transport.observed_vendor_cdbs))
+    if dump_a.stat().st_size != FLASH_SIZE or dump_b.stat().st_size != FLASH_SIZE:
+        raise SafetyError("one or both Flash dumps are not exactly 1 MiB")
+    if digest_a != digest_b or dump_a.read_bytes() != dump_b.read_bytes():
+        raise SafetyError("the two Flash dumps differ; preserve output and stop")
+    return {
+        "identity": identity,
+        "loader_info": loader_info,
+        "chunk_size": chunk_size,
+        "dump_a": dump_a,
+        "dump_b": dump_b,
+        "digest_a": digest_a,
+        "digest_b": digest_b,
+        "observed": observed,
+    }
+
+
+def run_evidence_dump(
+    device_path: str,
+    loader_path: Path,
+    output_root: Path,
+    compare_path: Path | None,
+) -> int:
+    """Generic read-only double dump with no M09 manifest gate.
+
+    This exists so a healthy, known-version target can be captured in the
+    forced-loader representation before any version change, which is the only
+    way to compare that representation against a package. It is evidence
+    acquisition. It is not a recovery plan and produces no write list.
+    """
+    loader = loader_path.read_bytes()
+    validate_official_loader(loader)
+    session = make_session_directory(output_root)
+    configure_logging(session / "session.log")
+    LOG.info("read-only evidence session directory: %s", session)
+    with WindowsScsiTransport(device_path) as transport:
+        acquired = acquire_evidence(transport, loader, session)
+
+    dump_a: Path = acquired["dump_a"]  # type: ignore[assignment]
+    dump_b: Path = acquired["dump_b"]  # type: ignore[assignment]
+    report: dict[str, object] = {
+        "format": EVIDENCE_REPORT_FORMAT,
+        "command": "evidence-dump",
+        "device_path": device_path,
+        "identity": acquired["identity"],
+        "official_loader": {
+            "size": len(loader),
+            "sha256": sha256_bytes(loader),
+            "ram_address": f"0x{LOADER_ADDRESS:08X}",
+        },
+        "loader_info": acquired["loader_info"],
+        "flash_size": FLASH_SIZE,
+        "dump_a": {"file": dump_a.name, "sha256": acquired["digest_a"]},
+        "dump_b": {"file": dump_b.name, "sha256": acquired["digest_b"]},
+        "dumps_byte_identical": True,
+        "observed_vendor_cdbs": [f"0x{c:04X}" for c in acquired["observed"]],
+        "read_only_acquisition_pass": True,
+        "physical_write_supported": False,
+        "restore_authorized": False,
+        "restore_blocker": (
+            "evidence acquisition only. Package flash.bin sector hashes are "
+            "still not established as comparable to a forced-loader dump, no "
+            "v16 target manifest exists, and this report carries no write list."
+        ),
+    }
+    if compare_path is not None:
+        report["comparison"] = compare_flash_images(
+            dump_a, compare_path, "forced_loader_dump", "supplied_reference"
+        )
+    (session / "evidence-report.json").write_text(
+        json.dumps(report, indent=2) + "\n", encoding="utf-8"
+    )
+    (session / "SHA256SUMS.txt").write_text(
+        f"{acquired['digest_a']}  {dump_a.name}\n"
+        f"{acquired['digest_b']}  {dump_b.name}\n",
+        encoding="ascii",
+    )
+    print(json.dumps({"session": str(session), "read_only_acquisition_pass": True,
+                      "restore_authorized": False}, indent=2))
+    print("PASS: two byte-identical 1 MiB forced-loader dumps were acquired")
+    print("EVIDENCE ONLY: no restore authorized, no write list produced")
     return 0
 
 
@@ -821,6 +980,66 @@ def self_test(optional_loader: Path | None) -> int:
         if any(item["representations_directly_comparable"] for item in sector_results):
             raise AssertionError("package/dump sector hashes were incorrectly marked comparable")
 
+    with tempfile.TemporaryDirectory(prefix="smk37-evidence-selftest-") as directory:
+        session = Path(directory) / "session"
+        session.mkdir()
+        evidence_fake = FakeTransport(flash)
+        acquired = acquire_evidence(
+            evidence_fake,
+            fake_loader,
+            session,
+            expected_size=len(fake_loader),
+            expected_sha256=fake_loader_hash,
+        )
+        if acquired["digest_a"] != acquired["digest_b"]:
+            raise AssertionError("evidence double-dump digests differ")
+        evidence_dump: Path = acquired["dump_a"]  # type: ignore[assignment]
+        if evidence_dump.stat().st_size != FLASH_SIZE:
+            raise AssertionError("evidence dump is not 1 MiB")
+        if acquired["identity"]["vendor"] != EXPECTED_VENDOR:
+            raise AssertionError("evidence path did not record identity")
+        if set(evidence_fake.observed_vendor_cdbs) - ALLOWED_VENDOR_CDBS:
+            raise AssertionError("evidence path observed a non-allowlisted CDB")
+        if set(evidence_fake.observed_vendor_cdbs) & FORBIDDEN_FLASH_MUTATING_CDBS:
+            raise AssertionError("evidence path observed a Flash-mutating CDB")
+        # A comparison must be able to detect a difference and must not
+        # claim anything about what may be written.
+        altered = bytearray(flash)
+        altered[0x4000] ^= 0xFF
+        altered[0x9000 + 7] ^= 0x5A
+        altered_path = Path(directory) / "altered.bin"
+        altered_path.write_bytes(bytes(altered))
+        comparison = compare_flash_images(
+            evidence_dump, altered_path, "forced_loader_dump", "supplied_reference"
+        )
+        if comparison["differing_sector_count"] != 2:
+            raise AssertionError("comparison did not detect both altered sectors")
+        if comparison["identical_sector_count"] != FLASH_SIZE // SECTOR_SIZE - 2:
+            raise AssertionError("comparison miscounted identical sectors")
+        if "does not authorize" not in str(comparison["interpretation"]):
+            raise AssertionError("comparison lost its no-authorization wording")
+        if "write_list" in json.dumps(comparison):
+            raise AssertionError("comparison unexpectedly carried a write list")
+    if EVIDENCE_REPORT_FORMAT == "smk37-m09-forced-recovery-plan-v1":
+        raise AssertionError("evidence report format collides with the M09 plan")
+    # The M09 path must keep its manifest gate: dump without --manifest still
+    # has to be rejected, so the new path cannot have weakened it.
+    try:
+        parse_args(
+            [
+                "dump",
+                "--device",
+                r"\\.\PHYSICALDRIVE5",
+                "--loader",
+                "loader.bin",
+                "--output-root",
+                "out",
+            ]
+        )
+    except SystemExit:
+        pass
+    else:
+        raise AssertionError("dump accepted a run without --manifest")
     if set(fake.observed_vendor_cdbs) - ALLOWED_VENDOR_CDBS:
         raise AssertionError("self-test observed a non-allowlisted CDB")
     if set(fake.observed_vendor_cdbs) & FORBIDDEN_FLASH_MUTATING_CDBS:
@@ -829,6 +1048,7 @@ def self_test(optional_loader: Path | None) -> int:
         validate_official_loader(optional_loader.read_bytes())
         print(f"official loader validation PASS: {optional_loader}")
     print("self-test PASS: identity, RAM loader, double dump, manifest, CDB allowlist")
+    print("evidence path PASS: manifest-free double dump, sector comparison, M09 gate intact")
     print("Flash-mutating CDB count: 0")
     return 0
 
@@ -856,6 +1076,20 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     dump_parser.add_argument("--loader", required=True, type=Path)
     dump_parser.add_argument("--manifest", required=True, type=Path)
     dump_parser.add_argument("--output-root", required=True, type=Path)
+
+    evidence_parser = subparsers.add_parser(
+        "evidence-dump",
+        help="read the complete Flash twice with no M09 manifest; evidence only",
+    )
+    evidence_parser.add_argument("--device", required=True)
+    evidence_parser.add_argument("--loader", required=True, type=Path)
+    evidence_parser.add_argument("--output-root", required=True, type=Path)
+    evidence_parser.add_argument(
+        "--compare",
+        type=Path,
+        default=None,
+        help="optional 1 MiB image to diff against, e.g. a normal-mode dump",
+    )
     return parser.parse_args(argv)
 
 
@@ -871,6 +1105,10 @@ def main(argv: list[str]) -> int:
         if args.command == "dump":
             return run_double_dump(
                 args.device, args.loader, args.manifest, args.output_root
+            )
+        if args.command == "evidence-dump":
+            return run_evidence_dump(
+                args.device, args.loader, args.output_root, args.compare
             )
         raise AssertionError(f"unhandled command: {args.command}")
     except (SafetyError, OSError, json.JSONDecodeError) as error:
