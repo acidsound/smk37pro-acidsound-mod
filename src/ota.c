@@ -1104,6 +1104,72 @@ cleanup:
     return status;
 }
 
+/* Read the Felucca build identity over the M-UPGRADE handshake. Read-only:
+ * it sends a cmd 0x11 frame and prints the 27-byte reply. The firmware answers
+ * with FELUCCA_ID, which is how a build is identified without a flash dump:
+ *
+ *   FELUCCA_ID="SMK37_900"     pass 1 / pass 2   (FELUCCA_OTA=0)
+ *   FELUCCA_ID="SMK37PRO_P3"   pass 3           (FELUCCA_OTA=1)
+ *
+ * A pass-1 or pass-2 build does not answer at all, because ota_service() is
+ * inside #if FELUCCA_OTA in felucca.c. Silence is therefore a meaningful
+ * result, not a failed probe -- it means the installed build cannot be
+ * updated over USB MIDI and the forced path is the only way in.
+ */
+int smk37_felucca_ident(void) {
+    /* decoded frame: 00 59 11 <len24=0> chk, and ~sum(dec[6..d-2]) == chk,
+     * so with an empty body the sum is 0 and the checksum is 0xFF. */
+    static const uint8_t handshake[] = {0xf0, 0x00, 0x59, 0x11, 0x00,
+                                        0x00, 0x00, 0xff, 0xf7};
+    struct ota_usb usb;
+    uint8_t reply[256];
+    int received;
+    int status = 1;
+    size_t i;
+
+    if (ota_usb_init(&usb) != 0) {
+        return 1;
+    }
+    if (ota_usb_open_felucca(&usb) != 0) {
+        fputs("no Felucca device (1209:0001); is a SLOOP build running?\n",
+              stderr);
+        goto cleanup;
+    }
+    if (ota_send_stream(&usb, handshake, sizeof(handshake)) != 0) {
+        fputs("handshake send failed\n", stderr);
+        ota_usb_close_handle(&usb);
+        goto cleanup;
+    }
+    received = libusb_bulk_transfer(usb.handle, usb.endpoint_in, reply,
+                                   (int)sizeof reply, NULL, 3000);
+    ota_usb_close_handle(&usb);
+    if (received < 0) {
+        puts("no handshake reply");
+        puts("the installed build does not answer cmd 0x11, so it is not an "
+             "OTA-capable build");
+        status = 2;
+        goto cleanup;
+    }
+    printf("Felucca handshake reply: %d bytes\n", received);
+    printf("raw: ");
+    for (i = 0; i < (size_t)received; i++) {
+        printf("%02x%s", reply[i], (i + 1u) % 16u == 0 ? "\n    " : " ");
+    }
+    printf("\nidentity: ");
+    for (i = 6; i + 2u < (size_t)received; i++) {
+        if (reply[i] == 0) {
+            break;
+        }
+        printf("%c", reply[i] >= 0x20u && reply[i] < 0x7fu ? reply[i] : '?');
+    }
+    printf("\n");
+    status = 0;
+cleanup:
+    ota_usb_shutdown(&usb, false);
+    return status;
+}
+
+
 int smk37_felucca_uboot_soft_key(void) {
     static const uint8_t uboot_key[] = {0xf0, 0x22, 0x24, 0x35, 0x7d, 0xf7};
     struct ota_usb usb;

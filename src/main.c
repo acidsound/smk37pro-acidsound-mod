@@ -68,6 +68,8 @@ static void usage(FILE *stream, const char *program) {
             "             Install the pinned SLOOP pass 2 image (Jieli ST7789V init)\n"
             "  upload-resume-sloop-p2 <firmware.fwsc> <transcript> --confirm <token>\n"
             "             Resume stage 2 for the pinned SLOOP pass 2 image\n"
+            "  felucca-ident\n"
+            "             Report the running SLOOP build identity; no writes\n"
             "  uboot-sloop\n"
             "             Send the Felucca UBOOT soft key, to re-enter the bootloader\n"
             "  upload-resume-sloop-p1 <firmware.fwsc> <transcript> --confirm <token>\n"
@@ -331,6 +333,14 @@ int main(int argc, char **argv) {
             return 2;
         }
         return smk37_ota_resume_sloop_p2(argv[2], argv[3], argv[5]);
+    }
+
+    if (strcmp(argv[1], "felucca-ident") == 0) {
+        if (argc != 2) {
+            usage(stderr, argv[0]);
+            return 2;
+        }
+        return smk37_felucca_ident();
     }
 
     if (strcmp(argv[1], "uboot-sloop") == 0) {
