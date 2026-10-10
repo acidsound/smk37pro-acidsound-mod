@@ -111,7 +111,7 @@ protocol, not this board's, and
 [`sloop-smk37/docs/gap-analysis.md`](../sloop-smk37/docs/gap-analysis.md) lists
 in-app M-UPGRADE as MISSING. With the 016 incident on record, that has a sharp
 consequence: **a SLOOP build that fails to boot can only be recovered through
-the Windows-only V4.0 dongle.** M-UPGRADE is not a fallback for it.
+the Windows-only Jieli Forced Upgrade Tool 4.0.** M-UPGRADE is not a fallback for it.
 
 `FELUCCA_FLASH=0` is likewise no longer a precautionary choice. The FM-1 storage
 map at `0x97000` lies inside this board's app-data slot and would overwrite

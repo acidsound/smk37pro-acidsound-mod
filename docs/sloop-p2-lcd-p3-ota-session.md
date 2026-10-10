@@ -156,7 +156,8 @@ Pass 3 has to reach the instrument by the only route that still works from
 Windows: the Jieli Forced Upgrade Tool 4.0, with the pass-3 package.
 
 After that, the app answers the M-UPGRADE command again and every future update
-runs from macOS over USB MIDI through `smk37-fw`, no dongle and no Windows.
+runs from macOS over USB MIDI through `smk37-fw`, with no forced-upgrade
+hardware and no Windows host.
 
 Both pass-2 and pass-3 packages are pinned and built:
 
@@ -165,8 +166,8 @@ Both pass-2 and pass-3 packages are pinned and built:
 | P2 | `SMK37Pro-v15-SMK-37_Pro_015.fwsc` `fdeb0244…` | `f39733b2…` | LCD fix only; no OTA |
 | P3 | `SMK37Pro-v15-SLOOP-SMK37-P3.fwsc` `6ec25f3e…` | `52e9c656…` | LCD fix **and** OTA restored |
 
-**Flash P3, not P2.** P2 leaves the instrument in the same one-way state and
-would need the dongle again for the next change.
+**Flash P3, not P2.** P2 leaves the instrument in the same one-way state, so
+the next change would need Forced Upgrade Tool 4.0 again.
 
 ## 6. Rejected alternatives
 
