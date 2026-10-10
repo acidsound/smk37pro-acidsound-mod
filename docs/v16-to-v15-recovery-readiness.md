@@ -58,6 +58,26 @@ The manifest deliberately records `restore_authorized: false`,
    [`windows-readonly/smk37_wl82_readonly.py`](../windows-readonly/smk37_wl82_readonly.py)
    intentionally has no Flash erase/write commands.
 
+## Size gates in this repository are pinned to the v15 slot
+
+Every app-size ceiling in the tooling is the v15 number:
+
+- `tools/check_sdk_app_layout.py` — `app_slot_max_bytes: 617012`
+- `sloop-smk37/tools/build_smk37.py` — `APP_SLOT = 617012`
+- `sloop-smk37/tools/make_smk37_fwsc.py` — `APP_SLOT = 617012`
+
+Measured from the two packages: the v15 app is 617,012 B inside a `0x96CD3`
+app area; the v16 app is 619,704 B inside `0x97757` (+2,692 B each). The v16
+slot is therefore **larger**, so the hardcoded v15 ceiling cannot falsely
+reject a legitimate v16 image — it fails safe. The SLOOP port image is
+535,628 B and sits inside both.
+
+The residual risk is labelling, not refusal. An image that clears the 617,012 B
+gate could be packaged as v16 on the strength of that pass alone, without
+anyone re-deriving the v16 layout or its sector boundaries. Read "passed the
+617,012 B gate" as evidence about v15 only, and re-derive any v16 ceiling from
+the v16 package before packaging for 016.
+
 ## Gated Windows sequence (no write command authorized here)
 
 1. Before any v16 install, obtain written SMK/Jieli confirmation of the
