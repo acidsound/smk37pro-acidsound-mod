@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import posixpath
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -53,7 +54,7 @@ EXACT_OTA_TEMPLATE = """\
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include "../../../../../src/ota.c"
+#include "{ota_source}"
 static const uint8_t PACKAGE_SHA256[SMK37_SHA256_LENGTH] = {{ {bytes} }};
 static const char CONFIRM[] = "{token}";
 static const char DESCRIPTION[] = "{description}";
@@ -125,6 +126,8 @@ def write_exact_ota(out_dir: Path, result: PackResult, description: str) -> Path
     byte_list = ", ".join(f"0x{b:02x}" for b in digest)
     source = EXACT_OTA_TEMPLATE.format(
         name=result.name,
+        ota_source=posixpath.relpath((ROOT / "src" / "ota.c").as_posix(),
+                                     out_dir.resolve().as_posix()),
         bytes=byte_list,
         token=result.token,
         description=description,

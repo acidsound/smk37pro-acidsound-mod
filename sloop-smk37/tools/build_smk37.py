@@ -130,8 +130,13 @@ def generate(src: Path) -> None:
 
 
 def includes(src: Path) -> list:
-    return [f"-I{PORT / 'board' / 'hal'}", f"-I{PORT / 'board' / 'src'}",
-            f"-I{src / 'firmware' / 'hal'}", f"-I{src / 'firmware' / 'src'}", f"-I{GEN}"]
+    # The compiler may run in a Linux container with PORT mounted at /work;
+    # host absolute paths such as /Users/... do not exist there. Keep include
+    # paths relative to PORT, which is also the compiler's working directory.
+    upstream = src.relative_to(PORT)
+    return ["-Iboard/hal", "-Iboard/src",
+            f"-I{upstream / 'firmware' / 'hal'}",
+            f"-I{upstream / 'firmware' / 'src'}", "-Ibuild/gen"]
 
 
 def build(src: Path):
@@ -142,16 +147,22 @@ def build(src: Path):
            ("cc", "-c", src / "firmware" / "hal" / "fm1_vec.S", "-o", OUT / "fm1_vec.o"),
            ("cc", "-c", src / "firmware" / "hal" / "fm1_isr.S", "-o", OUT / "fm1_isr.o"))
     elf = OUT / "smk37-sloop.elf"
-    tc(src, "pi32v2/bin/ld", "-T", str(src / "firmware" / "app.ld"),
-       str(OUT / "crt0.o"), str(OUT / "fm1_vec.o"), str(OUT / "fm1_isr.o"),
-       str(OUT / "unity.o"), "-o", str(elf), "-Map", str(OUT / "smk37-sloop.map"))
+    tc(src, "pi32v2/bin/ld", "-T", str(src.relative_to(PORT) / "firmware" / "app.ld"),
+       str((OUT / "crt0.o").relative_to(PORT)), str((OUT / "fm1_vec.o").relative_to(PORT)),
+       str((OUT / "fm1_isr.o").relative_to(PORT)), str((OUT / "unity.o").relative_to(PORT)),
+       "-o", str(elf.relative_to(PORT)), "-Map",
+       str((OUT / "smk37-sloop.map").relative_to(PORT)))
     *_, syms, dis, rt = tc_all(
-        src, ("common/bin/objcopy", "-O", "binary", "-j", ".text", str(elf), str(OUT / "text.bin")),
-        ("common/bin/objcopy", "-O", "binary", "-j", ".data", str(elf), str(OUT / "data.bin")),
-        ("common/bin/objcopy", "-O", "binary", "-j", ".ram_text", str(elf), str(OUT / "ramtext.bin")),
-        ("common/bin/objdump", "-t", str(elf)),
-        ("common/bin/objdump", "-d", str(elf)),
-        ("common/bin/objdump", "-d", "-j", ".ram_text", str(elf)))
+        src, ("common/bin/objcopy", "-O", "binary", "-j", ".text", str(elf.relative_to(PORT)),
+         str((OUT / "text.bin").relative_to(PORT))),
+        ("common/bin/objcopy", "-O", "binary", "-j", ".data", str(elf.relative_to(PORT)),
+         str((OUT / "data.bin").relative_to(PORT))),
+        ("common/bin/objcopy", "-O", "binary", "-j", ".ram_text", str(elf.relative_to(PORT)),
+         str((OUT / "ramtext.bin").relative_to(PORT))),
+        ("common/bin/objdump", "-t", str(elf.relative_to(PORT))),
+        ("common/bin/objdump", "-d", str(elf.relative_to(PORT))),
+        ("common/bin/objdump", "-d", "-j", ".ram_text", str(elf.relative_to(PORT))))
+
     (OUT / "smk37-sloop.dis").write_text(dis)
 
     def symv(name: str) -> int:
