@@ -11,8 +11,13 @@ SLOOP_SRC=$1
 GEN=$2
 PORT=$(cd "$(dirname "$0")/.." && pwd)
 cd "$PORT"
-exec cc -fsyntax-only -Wall -Wno-unused-function \
-    -Wno-int-to-pointer-cast -Wno-pointer-to-int-cast -Wno-builtin-declaration-mismatch \
+# Checked for a bare-metal ELF triple, not the host: Mach-O rejects a bare
+# section name (".noinit" / ".pool", used by upstream and by this port), and a
+# freestanding triple is what the pi32v2 build actually is. -fsyntax-only needs
+# no linker and no libc, and it resolves every name and type the core takes
+# from this port's HAL. Override with SMK37_SYNTAX_TARGET= (host) if wanted.
+exec cc ${SMK37_SYNTAX_TARGET:--target arm-none-eabi} -fsyntax-only -Wall -Wno-unused-function \
+    -Wno-int-to-pointer-cast -Wno-pointer-to-int-cast \
     -DFELUCCA_FLASH=0 -DFELUCCA_OTA=0 -DFELUCCA_CDC=1 -DFELUCCA_UART=0 -DFELUCCA_UAC=1 \
     '-DFELUCCA_ID="SMK37_900"' \
     -Iboard/hal -Iboard/src -I"$SLOOP_SRC/firmware/hal" -I"$SLOOP_SRC/firmware/src" \

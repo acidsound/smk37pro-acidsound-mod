@@ -40,13 +40,23 @@ static const char *const E_NAME[NE] = {"SELECT", "ALGORITHM", "PRESETS", "KNOB 1
                                         "KNOB 3", "KNOB 4"};
 #define PANEL_MAGIC 0x50414E36u          /* "PAN6": SMK-37 Pro table; bump on change */
 
+/* .noinit = RAM the startup code must not clear (pi32v2/ELF). Mach-O rejects a
+ * bare section name, and on the host a zeroed .bss is exactly what .noinit must
+ * look like anyway: panel_init() only trusts the table when PANEL_MAGIC
+ * matches, so the host tests keep testing the same fallback path. */
+#if defined(__APPLE__)
+#define SMK37_NOINIT
+#else
+#define SMK37_NOINIT __attribute__((section(".noinit")))
+#endif
+
 typedef struct {
     uint32_t magic;
     uint8_t btn[NB];             /* logical button slot (0..13) per label */
     uint8_t enc[NE];             /* rotary encoder (0..7) per role */
     int8_t dir[NE];              /* +1 / -1 so that clockwise is + */
 } panel_t;
-panel_t panel __attribute__((section(".noinit")));
+panel_t panel SMK37_NOINIT;
 
 /* identity: slot n IS label n; the pad/button that drives each slot is
  * SMK37_SLOT_OF[] in hal/smk37_map.h (pads 1..9 carry FX, ENV, LFO, EDIT,
@@ -99,7 +109,7 @@ static int32_t panel_enc(uint32_t role)
 
 /* user settings that survive a reset */
 #define SETTINGS_MAGIC 0x53455433u              /* "SET3" */
-struct { uint32_t magic, palette, lowcut, zoom; } settings __attribute__((section(".noinit")));
+struct { uint32_t magic, palette, lowcut, zoom; } settings SMK37_NOINIT;
 
 /* the lights (menu LIGHTS / KEYS / NOTES), for playing in the dark: kept in flash with the settings
  * (project.c persist_t.lights), read at every boot; not in .noinit, so nothing there moves. The same
