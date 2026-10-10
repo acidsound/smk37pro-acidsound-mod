@@ -392,6 +392,27 @@ static int open_bot_interface(io_service_t service, BotInterface *bot) {
     }
 
     UInt8 endpoint_count = 0;
+
+    /* Plain open FIRST, with no parent seize anywhere near it.
+     *
+     * This order is the whole fix. macOS binds IOUSBMassStorageDriver to the
+     * WL80UBOOT1.00 device, and that driver holds the interface. Seizing the
+     * parent IOUSBHostDevice before opening the interface makes it worse: once
+     * the parent is seized, USBInterfaceOpen and USBInterfaceOpenSeize both
+     * return kIOReturnExclusiveAccess, and there is no recovery. Opening the
+     * interface on its own returns kIOReturnSuccess on the same device in the
+     * same state -- measured, not assumed.
+     *
+     * The seize path is kept below as a fallback, in case some other Mac
+     * config needs it. */
+    g_phase = "USBInterfaceOpen (shared, no parent seize)";
+    result = (*interface)->USBInterfaceOpen(interface);
+    if (result == kIOReturnSuccess) {
+        puts("interface opened without parent seize");
+        goto interface_opened;
+    }
+    fprintf(stderr, "[diag] plain USBInterfaceOpen: 0x%08x\n", (unsigned)result);
+
     g_phase = "USBInterfaceOpenSeize";
     result = (*interface)->USBInterfaceOpenSeize(interface);
     if (result != kIOReturnSuccess) {
