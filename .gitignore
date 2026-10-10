@@ -1,5 +1,6 @@
 /backups/
 /build/
+/firmware/*.fwsc
 .DS_Store
 __pycache__/
 *.py[cod]
