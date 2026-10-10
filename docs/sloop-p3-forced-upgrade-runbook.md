@@ -31,25 +31,76 @@ If it does not match, stop. Do not write.
 so it would leave the instrument needing this runbook again for the next
 change. Pass 3 has both.
 
-### A note on `.fwsc` vs `flash.bin`
+### What the bootloader actually presents
 
-`docs/forced-recovery-plan.md` §on the FWSC container says, before any
-hardware had been tried, that a `.fwsc` "is an application OTA container, not
-a file that V4's forced loader can consume directly."
+In forced-upgrade mode the WL82 bootloader exposes its **entire 1 MB flash as
+a USB mass-storage disk**. The 2026-08-14 recovery on Windows recorded it as:
 
-That prediction was wrong, and the record says so: on 2026-10-11 the official
-`015` `.fwsc` was supplied to this same tool on this same instrument and the
-instrument was restored in three minutes
-(`docs/v16-install-brick-restore-record.md`). The empirical result governs.
+```
+Device: \.\PHYSICALDRIVE5 (WL82 UBOOT1.00 USB Device, 1MB)
+```
 
-This package is the same shape as the official `015` that already worked: a
-version-015 FWSC container with 20 metadata slots, built from that same
-official container as its template. Supply the `.fwsc`.
+So writing the device is not a vendor protocol exchange. It is copying a raw
+flash image onto a disk. There is no loader to upload and no CDB to speak.
 
-If the tool refuses the `.fwsc` for some reason, the fallback representation
-is the FWSC-unpacked `flash.bin`, which `tools/extract_fwsc_flash.py`
-produces. Report it rather than substituting a different file; the two
-representations are not interchangeable and the tool may write the wrong one.
+This makes the host choice trivial:
+
+- **Windows** — the device is a normal physical drive. The repository already
+  ships a transport for it in
+  `build/SMK37Pro-WL82-M09-rollback-20260802-v1/tools/windows_scsi_transport.py`.
+- **Linux** — plain `dd` to the device node.
+- **macOS** — blocked, see below.
+
+The Jieli Forced Upgrade Tool 4.0 is one writer among several, not a
+requirement. It is used here only because it is the one already proven on this
+instrument.
+
+### `.fwsc` versus the raw image
+
+The two are not the same file and must not be substituted for one another.
+
+| file | size | what it is |
+| --- | --- | --- |
+| `SMK37Pro-v15-SLOOP-SMK37-P3.fwsc` | 701,140 | the OTA container the official updater consumes |
+| `SMK37Pro-v15-SLOOP-SMK37-P3-flash.bin` | 638,976 | the raw flash image, payload from `0x400` |
+
+The V4 tool takes the `.fwsc` and unpacks it itself. **Any other writer needs
+the `.bin`.** Produce it from the checked-out tree with:
+
+```sh
+./build/smk37-fw inspect \
+  sloop-smk37/build/fwsc-offline/SMK37Pro-v15-SLOOP-SMK37-P3.fwsc \
+  /tmp/p3-payload.bin
+python3 -c "
+import pathlib
+raw = pathlib.Path('/tmp/p3-payload.bin').read_bytes()
+pathlib.Path('SMK37Pro-v15-SLOOP-SMK37-P3-flash.bin').write_bytes(raw[0x400:0x400+638976])"
+```
+
+Verify it before writing anything:
+
+```
+sha256  8944c3a121446481b6bc30545b5d4c676e9c5a2cf9eea75c0820f596f2c4411c
+size    638,976 bytes
+```
+
+That is the "FWSC-unpacked `flash.bin` bytes" representation the repository has
+previously validated against WL82 forced-loader dumps, not a new one.
+
+### Why macOS cannot do this
+
+macOS binds its own mass-storage stack to the device
+(`IOUSBMassStorageDriver`, `IOBlockStorageDriver`), which takes the USB interface
+exclusively. The device does **not** appear in `diskutil list`, and an unsigned
+userland process cannot displace the driver: `IOServiceOpen` on
+`IOBlockStorageDriver` returns `kIOReturnNotPrivileged`. A plain `IOServiceOpen`
+on `IOUSBHostInterface` succeeds, so the interface is not refused outright — the
+*transfer* is what is unreachable. Measured detail in
+[`forced-recovery-plan.md`](forced-recovery-plan.md).
+
+This is a macOS host limitation. It is not a property of the device, of the
+bootloader, or of the flashing operation, and it does not apply on Windows or
+Linux.
 
 ## Steps
 
@@ -77,9 +128,22 @@ Go back to step 1. The tool is capable of writing to the wrong target and
 there is nothing on this instrument that needs protecting, but a misdirected
 write would end the session.
 
-### 3. Write the package
+### 3. Write the image
 
-In the tool, select `SMK37Pro-v15-SLOOP-SMK37-P3.fwsc` and run the upgrade.
+On Windows, either:
+
+- select `SMK37Pro-v15-SLOOP-SMK37-P3.fwsc` in the Jieli Forced Upgrade Tool 4.0
+  and run it, **or**
+- write `SMK37Pro-v15-SLOOP-SMK37-P3-flash.bin` to the 1 MB device yourself.
+
+On Linux:
+
+```sh
+sudo dd if=SMK37Pro-v15-SLOOP-SMK37-P3-flash.bin of=/dev/sdX bs=512 conv=fsync
+```
+
+where `/dev/sdX` is the 1 MB `WL82 UBOOT1.00` device. Check the size before
+writing; it is 1 MB, not a multi-terabyte disk.
 
 Expected duration: about three minutes, the same as the `016`→`015` restore.
 
