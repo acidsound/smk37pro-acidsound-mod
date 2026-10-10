@@ -541,6 +541,50 @@ Switch and electrical references:
   `SCSITaskDeviceInterface`, `CreateSCSITask`, `ExecuteTaskSync`, data-transfer
   buffers, sense data, and exclusive-access control. It would require a new
   backend plus device-side validation, so it must not debut with Flash writes.
+
+#### Measured on this Mac, 2026-10-11
+
+The earlier note in this document that macOS "refuses" the WL82 mass-storage
+interface was imprecise, and the distinction matters because it decides
+whether a Mac host is worth building. Measured on the instrument in the
+`4C4A:8057` forced-upgrade state, on this Apple Silicon host:
+
+| step | result |
+| --- | --- |
+| Enter the Storage state from macOS | **works** — the SLOOP soft key brings up `WL80UBOOT1.00` |
+| `USBInterfaceOpen` via the `IOUSBInterfaceInterface183` plug-in | `0xe00002c5` `kIOReturnExclusiveAccess` |
+| plain `IOServiceOpen` on the same `IOUSBHostInterface` service | `0x00000000` success, including immediately after the plug-in attempt failed |
+| detaching the claimant (`IOServiceOpen` on `IOBlockStorageDriver`) | `0x10000003` `kIOReturnNotPrivileged` |
+| modern `IOUSBHostDevice*` entry points | not exported by IOKit or CoreUSB for userland |
+| `libusb` 1.0.30, current stable | zero references to `IOUSBHostDevice`; legacy backend only |
+| `diskutil list` | the device is not exposed as a block device |
+
+So the exclusive claim is real and it comes from macOS's own mass-storage
+stack, which is present on the device: `IOUSBMassStorageDriverNub`,
+`IOUSBMassStorageDriver` and `IOBlockStorageDriver`. But the interface is not
+refused outright — a plain `IOServiceOpen` succeeds. What is blocked is the
+*transfer*, because reaching it means displacing the kernel driver, and that
+returns `kIOReturnNotPrivileged` for an unsigned userland process with SIP
+enabled.
+
+Two consequences worth keeping:
+
+- **Opening the interface first and seizing the parent device second makes it
+  worse.** Once the parent `IOUSBHostDevice` is seized, both `USBInterfaceOpen`
+  and `USBInterfaceOpenSeize` return `kIOReturnExclusiveAccess` with no
+  recovery. The probe therefore tries the plain open before any seize. This is
+  a correctness fix, not a workaround for the privilege limit.
+- **The `libusb_claim_interface` failure is a stale backend, not a permission
+  problem.** `LIBUSB_ERROR_ACCESS` (-3) on every attempt, including after
+  `libusb_reset_device`, is what a libusb whose macOS backend only knows the
+  legacy IOKit path returns on a current macOS. Installing a different libusb
+  version does not change this until a version with the modern backend exists.
+
+The net effect is that the macOS Storage path still requires either SIP-relaxed
+privilege or a private framework, neither of which this project should take on.
+Windows remains the only host for the forced write. What the Mac side *can* do
+is reach the Storage state, which is what makes the Windows session a short,
+bounded one rather than a fragile one.
   The first native checkpoint is implemented as
   `tools/smk37_wl82_macos.c`. It compiles on the current Apple Silicon macOS
   host and exposes only `self-test` and standard read-only SCSI `INQUIRY` via
