@@ -403,8 +403,11 @@ not a battery-fault hypothesis. The likely entry sequence is:
 5. Confirm a `WL82 UBOOT1.00`-style mass-storage identity before running any
    loader command.
 
-This sequence remains unverified on SMK-37 Pro. The forced tool operates on
-the existing USB data pair. Opening the instrument is useful only for the
+This sequence was unverified on SMK-37 Pro when written. It is now
+verified by use: an official `016` bricked with `BOOT-FAILED / NO-USB` symptoms
+and was restored to official `015` in three minutes with the V4.0 tool on
+Windows. See [`v16-install-brick-restore-record.md`](v16-install-brick-restore-record.md).
+The forced tool operates on the existing USB data pair. Opening the instrument is useful only for the
 documented photo-first reset/USB mapping in `docs/internal-recovery-entry.md`;
 do not probe or short the mainboard merely to try forced entry.
 
