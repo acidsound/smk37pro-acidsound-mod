@@ -1,0 +1,83 @@
+Release Notes 2026-08-12:
+
+和弦识别扩充
+Tempo
+解决了tempo不稳定的问题
+Midi
+解决了琴键midi发码延迟的问题
+Transpose
+开放了oct为-3时transpose可以调节到-12,达到note 0
+GLobe
+新增Usb rec，可以选择是否将音频输入混入音频输出
+Patch
+新增Local control，可以关闭本机的midi对fm音源的控制
+Pitch
+更新中点64
+Transpose
+开放了oct为-3时transpose可以调节到-12,达到note 0
+
+
+Chord Recognition Expansion
+Tempo
+Resolved unstable tempo issue
+MIDI
+ 	Resolved MIDI note‑sending latency issue for keys
+Transpose
+ 	When oct is set to ‑3, transpose can now be adjusted down to ‑12, reaching note 0
+Globe
+ 	Added USB Rec function. Option to mix audio input into audio output is available
+Patch
+ 	Added Local Control feature. Can disable local MIDI control over the FM sound source
+Pitch
+ 	Updated center point to 64
+Transpose
+ 	When oct is set to ‑3, transpose can now be adjusted down to ‑12, reaching note 0
+
+
+Release Notes 2026-01-26:
+解决部分手机蓝牙连接midisuite读不到数据的问题
+
+Release Notes : 
+
+· 增加了失效Pitch/Mod滚轮的校准模式
+· 增加了Patch/Para/Fx模式下Latch开关，关闭latch时旋钮正常发送MIDI码
+· 增加了一些UI界面的延时效果
+· 修复了Pitch/Mod 滚轮不平滑的问题
+· 修复了在某些设备下OTG连接后设别为错误的端口名
+· 修复了在转动MOD滚轮后，合成器声音会继续延音的
+· 修复了延音踏板接受错误的指令
+
+
+·  Added a calibration mode for malfunctioning Pitch/Mod wheels
+·  Added Latch toggle in Patch/Para/Fx modes — when Latch is off, the knobs send standard MIDI messages
+·  Added delay effects to some UI interface transitions
+·  Fixed the issue where Pitch/Mod wheels were not moving smoothly
+·  Fixed an issue where, on some devices, the OTG connection would register with an incorrect port name
+·  Fixed an issue where the synthesizer would continue sustaining notes after turning the MOD wheel
+·  Fixed an issue where the sustain pedal was receiving incorrect messages
+
+
+Release Notes 07-18:
+· 修复了切换预设偶发爆音
+· 修复了同时开启多组效果的爆音问题
+· 修复了关闭FX时的爆音问题
+· 修复了MONO/POLY延迟切换问题
+· 修复了个别SCALE错误显示问题
+· 优化了快速弹奏时混响的动态音量
+· 优化了不同UI界面的覆盖逻辑
+· 增加了短按时的界面延时
+· 增加了Sequencer的手动保存功能
+
+·Fixed occasional popping when switching presets.
+·Fixed popping when enabling multiple effect groups simultaneously.
+·Fixed popping when turning off FX.
+·Fixed latency when switching MONO/POLY modes.
+·Fixed incorrect display for specific SCALE types.
+·Improved reverb dynamics during fast playing.
+·Optimized UI overlay logic across interfaces.
+·Adjusted UI delay for short-press actions.
+·Added manual save for the Sequencer.
+
+
+
+ 
