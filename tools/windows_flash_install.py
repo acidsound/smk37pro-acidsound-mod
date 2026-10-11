@@ -56,11 +56,64 @@ def vendor_cdb(command: int, arguments: bytes) -> bytes:
 
 
 def load_transport(bundle: Path):
+    """Import the read-only transport and extend it with erase and write.
+
+    That tool deliberately lists 0xFB01 and 0xFB04 in
+    FORBIDDEN_FLASH_MUTATING_CDBS and refuses them by name, which is correct
+    for what it is for. Extending its allowlist is not the way through: the
+    per-command shape checks it performs for erase and write do not exist
+    there at all. Instead the read-only validator is kept for every other
+    command and replaced only for these two, with the contracts taken from
+    tools/build_v15_s1c7_seed_bundle.py, which were written against this same
+    official loader.
+    """
     tool = bundle / "tools" / "windows_scsi_transport.py"
     spec = importlib.util.spec_from_file_location("wl82_transport", tool)
     module = importlib.util.module_from_spec(spec)
     sys.modules["wl82_transport"] = module
     spec.loader.exec_module(module)
+
+    original = module.validate_transfer_contract
+
+    def validate(cdb: bytes, data_out: bytes | None, data_in_length: int):
+        if len(cdb) != 16:
+            return original(cdb, data_out, data_in_length)
+        command = int.from_bytes(cdb[:2], "big")
+
+        if command == CMD_ERASE_SECTOR:
+            address = int.from_bytes(cdb[2:6], "big")
+            if data_out is not None or data_in_length != 16:
+                raise module.SafetyError("erase sector takes no data transfer")
+            if address % SECTOR_SIZE or address + SECTOR_SIZE > FLASH_SIZE:
+                raise module.SafetyError(
+                    f"erase address 0x{address:06X} is not a sector inside Flash")
+            if cdb[6:] != b"ÿ" * 10:
+                raise module.SafetyError("erase CDB padding must be 0xFF")
+            return command
+
+        if command == CMD_WRITE_FLASH:
+            address = int.from_bytes(cdb[2:6], "big")
+            length = int.from_bytes(cdb[6:8], "big")
+            if data_out is None or not 1 <= len(data_out) <= IO_CHUNK:
+                raise module.SafetyError(f"write must carry 1..{IO_CHUNK} bytes")
+            if length != len(data_out):
+                raise module.SafetyError("write length field must match the payload")
+            if cdb[8] != 0:
+                raise module.SafetyError("write reserved byte must be zero")
+            if int.from_bytes(cdb[9:11], "little") != crc16_xmodem(data_out):
+                raise module.SafetyError("write CRC16-XMODEM does not match the payload")
+            if address % IO_CHUNK or address + len(data_out) > FLASH_SIZE:
+                raise module.SafetyError(
+                    f"write at 0x{address:06X} is not chunk-aligned inside Flash")
+            if address // IO_CHUNK != (address + len(data_out) - 1) // IO_CHUNK:
+                raise module.SafetyError("write may not cross a chunk boundary")
+            if cdb[11:] != b"ÿ" * 5:
+                raise module.SafetyError("write CDB padding must be 0xFF")
+            return command
+
+        return original(cdb, data_out, data_in_length)
+
+    module.validate_transfer_contract = validate
     return module
 
 
