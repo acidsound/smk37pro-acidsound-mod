@@ -54,3 +54,36 @@ success criteria carried the same error and are corrected in
   against hardware.
 - Recovery of a pass 3 instrument that fails to boot is still unproven, so
   acceptance criterion A4 in `docs/no-vendor-tool-policy.md` stays open.
+
+## The official 016 cannot answer LCD questions
+
+Checked on 2026-10-11 while chasing the dark panel. `firmware/SMK-37 Pro_016.fwsc`
+and `SMK-37 Pro_015.fwsc` both extract to a 638,976-byte payload at offset
+0x400 that is opaque: occurrences of `LCD`, `lcd`, `ST7789`, `st7789`, `240`
+and `0x52` are all zero, and of 2,758 printable runs five characters or longer
+every one is noise rather than a string. The only genuine ASCII sits in the
+container header (`AC791N_STORAGE`, a `dead` marker, version `0.01`).
+
+No decryption for the M-VAVE application section exists in this repository.
+Searching turns up `fm6_bank.c` and `editor_fm6.c`, which are FM-1's own sound
+bank encryption and unrelated, and the fact that M-UPGRADE parsed the
+container, which is the manifest layer and does not expose app code.
+
+So the panel cannot be identified from the official firmware. What remains is
+the FM-1 init sequence, which is the only configuration known to light this
+hardware:
+
+```c
+0x01, 0,      /* SWRESET */
+0x11, 0,      /* SLPOUT */
+0x3A, 1, 0x55,/* COLMOD */
+0x36, 1, 0x00,/* MADCTL */
+0x21, 0,      /* INVON */
+0x13, 0,      /* NORON */
+```
+
+Pass 3 replaced this with a longer table adding porch, gate, VCOM, power and
+gamma blocks plus CASET and RASET, transcribed from a Jieli SDK driver
+`apps/common/ui/lcd_driver/lcd_st7789v.c` that is not present in this
+repository and was never verified against this panel. It also dropped NORON.
+That table is the most likely cause of the dark screen.
