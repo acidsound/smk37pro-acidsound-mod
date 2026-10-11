@@ -87,7 +87,7 @@ def load_transport(bundle: Path):
             if address % SECTOR_SIZE or address + SECTOR_SIZE > FLASH_SIZE:
                 raise module.SafetyError(
                     f"erase address 0x{address:06X} is not a sector inside Flash")
-            if cdb[6:] != b"ÿ" * 10:
+            if cdb[6:] != b"\xff" * 10:
                 raise module.SafetyError("erase CDB padding must be 0xFF")
             return command
 
@@ -107,7 +107,7 @@ def load_transport(bundle: Path):
                     f"write at 0x{address:06X} is not chunk-aligned inside Flash")
             if address // IO_CHUNK != (address + len(data_out) - 1) // IO_CHUNK:
                 raise module.SafetyError("write may not cross a chunk boundary")
-            if cdb[11:] != b"ÿ" * 5:
+            if cdb[11:] != b"\xff" * 5:
                 raise module.SafetyError("write CDB padding must be 0xFF")
             return command
 
