@@ -112,6 +112,22 @@ reset its processor. The key has to be transmitted while it is coming up.
 1. Turn the instrument **fully off**.
 2. Put the Jieli Forced Upgrade Tool 4.0 into continuous `usbkey` mode
    (the switch position recorded in `docs/forced-recovery-plan.md`).
+
+   > **The tool is required here, and the reason is specific.** Measured
+   > 2026-10-11: the SLOOP soft key `F0 22 24 35 7D F7` sent over USB MIDI
+   > does reach the bootloader with no vendor hardware at all — the
+   > instrument enumerates as `4c4a:8057` and Windows binds it as Disk 5
+   > named `WL82 UBOOT1.00`. But that disk reports `Size 0`, `No Media`,
+   > and `Set-Disk -IsOffline $false` does not bring it up.
+   >
+   > Being in the bootloader is not the same as being in download mode. The
+   > `usbkey` is a USB-level signal present at reset; the soft key is a MIDI
+   > SysEx the application answers by resetting. Only the first makes the
+   > flash appear as media. `docs/forced-recovery-plan.md` says the same
+   > thing: once the key has been sent, software can operate the device
+   > independently of the dongle — independence applies after entry, not to
+   > entry itself.
+
 3. Connect the tool between an **isolated host USB port** and the instrument's
    **USB-C data port**, with a data-capable adapter.
 4. Turn the instrument **on once**, while the tool is transmitting the key.
