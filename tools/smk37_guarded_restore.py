@@ -5,9 +5,9 @@ Restores ONLY the app area (0x4300..0x9A832) from an FWSC package to a
 live flash dump, preserving all device-specific regions:
 
   0x0000..0x3FFF   Boot header     - device-specific, never touched
-  0x4000..0x42FF   JLFS header     - package=plain, live=plain^lfsr(0x132b)
-  0x4300..0x9A832  App area        - sfc_cipher base 0x4000 (RESTORED)
-  0x9A833..0x9BFFF Tail metadata   - dynamic/device-specific, never touched
+  0x4000..0x42FF   JLFS header     - restored together with the app area
+  0x4300..0x9ACD2  App area        - sfc_cipher base 0x4000 (RESTORED)
+  0x9ACD3..0x9BFFF Tail metadata   - dynamic/device-specific, never touched
   0x9C000..        Beyond package  - live-only, never touched
 
 The script works offline on flash dump files and produces a "restored"
@@ -46,8 +46,8 @@ BOOT_HEADER_END = 0x4000        # 0x0000..0x3FFF: boot header (device-specific)
 JLFS_START = 0x4000
 JLFS_END = 0x4300               # 0x4000..0x42FF: JLFS header
 APP_START = 0x4300
-APP_END = 0x9A833               # 0x4300..0x9A832: app area (sfc_cipher base 0x4000)
-TAIL_START = 0x9A833
+APP_END = 0x9ACD3               # 0x4300..0x9ACD2: app area (v15 area size 0x96CD3)
+TAIL_START = 0x9ACD3
 PACKAGE_END = 0x9C000           # 0x9A833..0x9BFFF: tail metadata (dynamic)
 
 CHIP_KEY = 0x980F
@@ -101,6 +101,19 @@ def extract_flash_from_fwsc(package_path: Path) -> bytes:
 
 # ── Core restore logic ─────────────────────────────────────────────────────
 
+def package_to_live(package_flash: bytes) -> bytes:
+    """
+    Convert the FWSC package flash.bin app area into the live flash form.
+
+    sfc_cipher is a self-inverse XOR keystream, so applying it over the app
+    area converts the package representation into the representation raw
+    device flash actually holds.
+    """
+    live = bytearray(package_flash)
+    sfc_cipher(live, APP_START, APP_END - APP_START, SFC_BASE, CHIP_KEY)
+    return bytes(live)
+
+
 def restore_app_area(
     dump: bytearray,
     package_flash: bytes,
@@ -145,11 +158,10 @@ def restore_app_area(
         app_plain = app_src[:APP_END - APP_START]
         source_label = "external app_src"
     else:
-        # Extract app area from package: the package stores it CIPHERED
-        # with sfc_cipher base 0x4000.  We need to read it as-is (ciphers)
-        # and write it as-is to the live dump (which also expects ciphers).
+        # package_flash is expected to already be in live form (main() runs
+        # it through package_to_live before calling here).
         app_plain = package_flash[APP_START:APP_END]
-        source_label = "package (ciphers)"
+        source_label = "package converted to live form"
 
     # ── Compute differences ──
     if not dry_run:
@@ -194,7 +206,7 @@ def verify_restore(
     dump: bytearray,
     package_flash: bytes,
 ) -> bool:
-    """Verify that the app area in the dump matches the package (ciphers)."""
+    """Verify that the dump app area matches the given live-form flash image."""
     mismatches = 0
     for i in range(APP_START, APP_END):
         if dump[i] != package_flash[i]:
@@ -245,6 +257,8 @@ def main() -> None:
     pkg_flash = extract_flash_from_fwsc(args.package)
     print(f"  Extracted flash: {len(pkg_flash):#x} bytes")
     print(f"  SHA-256: {hashlib.sha256(pkg_flash).hexdigest()[:16]}…")
+    live_flash = package_to_live(pkg_flash)
+    print("  Converted package -> live form (sfc_cipher over app area)")
 
     dump_raw = args.dump.read_bytes()
     if len(dump_raw) < FLASH_SIZE:
@@ -256,7 +270,7 @@ def main() -> None:
     # ── Optional: verify current state ──
     if args.verify:
         print("\nVerifying current dump against package…")
-        ok = verify_restore(dump, pkg_flash)
+        ok = verify_restore(dump, live_flash)
         if not ok:
             print("  (Continuing with restore regardless of verification)")
 
@@ -269,7 +283,7 @@ def main() -> None:
 
     # ── Restore ──
     print("\nRestoring app area…")
-    stats = restore_app_area(dump, pkg_flash, app_src, args.dry_run)
+    stats = restore_app_area(dump, live_flash, app_src, args.dry_run)
 
     # ── Write output ──
     if not args.dry_run:
