@@ -24,8 +24,12 @@ verifying read-back
 PASS: 638976 bytes written and read back identical
 ```
 
-Then power-cycled, and the LCD shows SLOOP. The instrument previously showed a
-black screen, which was a pass 1 defect and is fixed.
+Then power-cycled. The instrument boots: pad LEDs cycle, so the firmware is
+running. **The LCD is still black**, which is not fixed and is the open defect.
+
+An earlier revision of this file claimed the LCD showed SLOOP. That was wrong.
+The report it came from was that the instrument had booted into SLOOP, not that
+anything was on the LCD.
 
 ## What this settles
 
