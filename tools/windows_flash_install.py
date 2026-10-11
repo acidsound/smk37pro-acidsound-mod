@@ -150,6 +150,8 @@ def main() -> int:
     parser.add_argument("--backup", type=Path, default=None)
     parser.add_argument("--confirm", default="")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--read-only", type=Path, default=None,
+                        help="read the whole Flash and diff it against this image; writes nothing")
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(message)s")
@@ -193,6 +195,25 @@ def main() -> int:
             raise SystemExit(f"unexpected flash id {info['flash_id']}")
 
         io = Installer(target, transport)
+
+        if args.read_only:
+            want = args.read_only.read_bytes()
+            diff = []
+            for address in range(0, FLASH_SIZE, IO_CHUNK):
+                got = io.read(address, IO_CHUNK)
+                exp = want[address:address + IO_CHUNK] if address < len(want) else b"\xff" * IO_CHUNK
+                if got != exp:
+                    diff.append(address)
+            print("read-only diff:")
+            print("  bytes differing: %d of %d" % (len(diff) * IO_CHUNK, FLASH_SIZE))
+            if diff:
+                print("  first differing address: 0x%06X" % diff[0])
+                print("  last  differing address: 0x%06X" % diff[-1])
+                print("  sample got: %s" % io.read(diff[0], 32).hex(' '))
+                print("  sample exp: %s" % (want[diff[0]:diff[0]+32] if diff[0] < len(want) else b"\xff"*32).hex(' '))
+            else:
+                print("  Flash matches the image exactly.")
+            return 0
 
         if args.backup:
             LOG.info("reading full flash to %s", args.backup)
