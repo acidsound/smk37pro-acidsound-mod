@@ -142,7 +142,7 @@ class Installer:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--image", type=Path, required=True)
+    parser.add_argument("--image", type=Path, default=None)
     parser.add_argument("--device", default=r"\\.\PhysicalDrive5")
     parser.add_argument("--bundle", type=Path,
                         default=Path("build/SMK37Pro-WL82-v15-H0-rollback-20260802-v1"))
@@ -156,7 +156,12 @@ def main() -> int:
 
     logging.basicConfig(level=logging.INFO, format="%(message)s")
 
-    image = args.image.read_bytes()
+    if args.image is None and args.read_only is None:
+        raise SystemExit("--image is required unless --read-only is given")
+    if args.image is None:
+        image = b""
+    else:
+        image = args.image.read_bytes()
     if len(image) > FLASH_SIZE:
         raise SystemExit(f"image is {len(image)} bytes, flash holds {FLASH_SIZE}")
     LOG.info("image: %d bytes of %d", len(image), FLASH_SIZE)
