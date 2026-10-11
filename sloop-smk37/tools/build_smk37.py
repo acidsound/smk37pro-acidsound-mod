@@ -75,7 +75,7 @@ CFLAGS = ["-Os", "-ffunction-sections", "-fno-builtin", "-Wall", "-Wno-unused-fu
 # this board's app-data slot (0x4120 + 617,012 B, ending 0x9AB34). See
 # board/src/storage.c for the full argument.
 FLAGS = ["-DFELUCCA_FLASH=1", "-DFELUCCA_OTA=1", "-DFELUCCA_CDC=1",
-         "-DFELUCCA_UART=0", "-DFELUCCA_UAC=1", '-DFELUCCA_ID="SMK37PRO_P3"']
+         "-DFELUCCA_UART=0", "-DFELUCCA_UAC=1", '-DFELUCCA_ID="SMK37PRO_P4"']
 DOCKER_IMAGE = os.environ.get("JIELI_DOCKER_IMAGE", "debian:bookworm-slim")
 
 
